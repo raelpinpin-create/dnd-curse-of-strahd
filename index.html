@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curse of Strahd — Campaign 2 Portal Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-canvas: #07090e;
+            --bg-card: #111722;
+            --bg-card-hover: #172030;
+            --border-card: #263349;
+            --accent-gold: #c5a059;
+            --accent-crimson: #e15b67;
+            --accent-purple: #c084fc;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: radial-gradient(circle at top, #1f0e14 0%, #07090e 70%);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 34px 16px;
+        }
+        .container {
+            width: 100%;
+            max-width: 980px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        header {
+            text-align: center;
+            border: 1px solid #4c1d24;
+            background: rgba(15, 20, 31, 0.88);
+            border-radius: 16px;
+            padding: 28px 20px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+        }
+        .sub {
+            color: #fca5a5;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.05rem;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 0.92rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.45;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+            gap: 16px;
+        }
+        .portal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 12px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+            transition: all 0.2s ease;
+        }
+        .portal-card:hover {
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+            border-color: var(--accent-gold);
+            box-shadow: 0 8px 24px rgba(197, 160, 89, 0.18);
+        }
+        .card-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            align-self: flex-start;
+        }
+        .hero-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.22rem;
+            font-weight: 700;
+            color: #fde68a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hero-desc {
+            font-size: 0.84rem;
+            color: var(--text-dim);
+            line-height: 1.45;
+            flex: 1;
+        }
+        .btn-launch {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-card);
+            color: var(--accent-gold);
+            font-weight: 600;
+            font-size: 0.84rem;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-align: center;
+            margin-top: 4px;
+        }
+        .portal-card:hover .btn-launch {
+            background: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+        }
+        footer {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="sub">CAMPAIGN II OF THE GRAND TRILOGY • 15–20 SESSION DIRECTOR'S CUT</div>
+            <h1>🦇 CURSE OF STRAHD</h1>
+            <p class="subtitle">
+                Interactive D&amp;D 5e Character Sheets &amp; Lead DM Command Portal. Four Level 3 strangers abducted by the Mists of Ravenloft into a runaway Black Stagecoach on the Old Svalich Road.
+            </p>
+        </header>
+
+        <div class="grid">
+            <!-- PIPER THE INCOMPARABLE -->
+            <a href="PIPER_PLAYER_SHEET.html" class="portal-card" style="border-color:rgba(192,132,252,0.45);">
+                <span class="card-tag" style="background:rgba(192,132,252,0.18); color:var(--accent-purple); border:1px solid rgba(192,132,252,0.45);">Fierna Tiefling • Wild Magic Sorcerer</span>
+                <div class="hero-name">🎩 Piper ("The Incomparable")</div>
+                <div class="hero-desc">Theatrical travelling stage magician with automated Tides of Chaos, 50-effect d100 Wild Magic Surge engine, Font of Magic, and Barnaby's Brass Pocket Watch.</div>
+                <div class="btn-launch">Open Character Sheet ➔</div>
+            </a>
+
+            <!-- STRANGER 2 -->
+            <div class="portal-card" style="opacity:0.8;">
+                <span class="card-tag" style="background:rgba(148,163,184,0.12); color:var(--text-dim); border:1px solid #334155;">Level 3 • Hero Slot 2</span>
+                <div class="hero-name">⚔️ Stranger #2</div>
+                <div class="hero-desc">Awaiting Player 2 character build &amp; backstory for the Session 1 Black Coach Cold Open.</div>
+                <div class="btn-launch" style="color:var(--text-dim);">Awaiting Character Build</div>
+            </div>
+
+            <!-- STRANGER 3 -->
+            <div class="portal-card" style="opacity:0.8;">
+                <span class="card-tag" style="background:rgba(148,163,184,0.12); color:var(--text-dim); border:1px solid #334155;">Level 3 • Hero Slot 3</span>
+                <div class="hero-name">🛡️ Stranger #3</div>
+                <div class="hero-desc">Awaiting Player 3 character build &amp; backstory for the Session 1 Black Coach Cold Open.</div>
+                <div class="btn-launch" style="color:var(--text-dim);">Awaiting Character Build</div>
+            </div>
+
+            <!-- STRANGER 4 -->
+            <div class="portal-card" style="opacity:0.8;">
+                <span class="card-tag" style="background:rgba(148,163,184,0.12); color:var(--text-dim); border:1px solid #334155;">Level 3 • Hero Slot 4</span>
+                <div class="hero-name">🏹 Stranger #4</div>
+                <div class="hero-desc">Awaiting Player 4 character build &amp; backstory for the Session 1 Black Coach Cold Open.</div>
+                <div class="btn-launch" style="color:var(--text-dim);">Awaiting Character Build</div>
+            </div>
+
+            <!-- MASTER DM SCREEN -->
+            <a href="DM_SCREEN.html" class="portal-card" style="border-color:rgba(197,160,89,0.5);">
+                <span class="card-tag" style="background:rgba(168,45,56,0.25); color:#fca5a5; border:1px solid #a82d38;">Lead DM Command Center</span>
+                <div class="hero-name">👑 Master DM Screen</div>
+                <div class="hero-desc">4-Act 15–20 Session Roadmap, Curated Madam Eva Tarokka Deck, Barovian NPC Directory, Pointy Hat Boss Stat Cards, and World Loot Vault.</div>
+                <div class="btn-launch">Open DM Dashboard ➔</div>
+            </a>
+        </div>
+
+        <footer>
+            Curse of Strahd Interactive Campaign System • Tap <strong>[📋 Export Data]</strong> on any sheet to copy your session updates.
+        </footer>
+    </div>
+</body>
+</html>

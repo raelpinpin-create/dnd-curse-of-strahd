@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master DM Screen — Curse of Strahd (Director's Cut)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #07090e;
+            --bg-container: #0c1017;
+            --bg-card: #111722;
+            --bg-card-header: #172030;
+            --bg-card-subtle: #0d131d;
+            --accent-gold: #c5a059;
+            --accent-gold-soft: #dfc282;
+            --accent-gold-dark: #8c6d32;
+            --accent-crimson: #a82d38;
+            --accent-crimson-soft: #e15b67;
+            --accent-crimson-dark: #6e1820;
+            --accent-blue: #3d688a;
+            --accent-blue-soft: #6ca0c7;
+            --accent-green: #2e6b52;
+            --accent-green-soft: #5da684;
+            --accent-purple: #6b3e7a;
+            --accent-purple-soft: #aa6fc0;
+            --text-main: #e2e8f0;
+            --text-bright: #f8fafc;
+            --text-muted: #8b9bb4;
+            --border-color: #1f2a3c;
+            --border-subtle: #172233;
+            --border-highlight: #33445e;
+            --stat-bg: #090e18;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding-bottom: 115px;
+        }
+        header {
+            background: linear-gradient(180deg, #1a0d12 0%, #0b0f17 100%);
+            border-bottom: 2px solid var(--accent-crimson-dark);
+            padding: 16px 26px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.7);
+        }
+        header h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-gold);
+            font-size: 1.55rem;
+            letter-spacing: 0.6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        header p { color: var(--text-muted); font-size: 0.83rem; margin-top: 3px; }
+        .header-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .search-input {
+            background: #080c14;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 0.83rem;
+            width: 230px;
+        }
+        .search-input:focus { outline: none; border-color: var(--accent-gold); }
+        .badge-mode {
+            background: rgba(168, 45, 56, 0.2);
+            border: 1px solid var(--accent-crimson);
+            color: #fca5a5;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        nav.top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 95;
+            background: rgba(11, 15, 24, 0.94);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 24px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 5px 11px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.18s;
+        }
+        .nav-btn:hover { border-color: var(--accent-gold); color: var(--accent-gold-soft); }
+        .container {
+            max-width: 1320px;
+            margin: 22px auto;
+            padding: 0 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        section { scroll-margin-top: 62px; }
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-gold-soft);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.73rem;
+            background: rgba(197, 160, 89, 0.12);
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold-dark);
+            padding: 3px 9px;
+            border-radius: 4px;
+        }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 14px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 9px;
+            padding: 15px;
+            transition: border-color 0.2s, transform 0.15s;
+        }
+        .card.clickable { cursor: pointer; }
+        .card.clickable:hover { border-color: var(--accent-gold); transform: translateY(-2px); }
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.02rem;
+            color: var(--accent-gold-soft);
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+        .pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            padding: 2px 7px;
+            border-radius: 4px;
+            background: #172234;
+            color: #93c5fd;
+            border: 1px solid #283a56;
+            white-space: nowrap;
+        }
+        .pill.crimson { background: rgba(168,45,56,0.2); color: #fca5a5; border-color: var(--accent-crimson); }
+        .pill.gold { background: rgba(197,160,89,0.15); color: var(--accent-gold-soft); border-color: var(--accent-gold-dark); }
+        .pill.purple { background: rgba(107,62,122,0.25); color: #d8b4fe; border-color: var(--accent-purple); }
+        .pill.green { background: rgba(46,107,82,0.25); color: #86efac; border-color: var(--accent-green); }
+
+        /* Tables */
+        .table-wrap { overflow-x: auto; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-card); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+        th {
+            background: var(--bg-card-header);
+            color: var(--accent-gold-soft);
+            font-weight: 700;
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-highlight);
+        }
+        td { padding: 9px 12px; border-bottom: 1px solid var(--border-subtle); vertical-align: top; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        .link-btn {
+            color: var(--accent-gold-soft);
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            background: none;
+            border: none;
+            font-size: inherit;
+            font-family: inherit;
+            text-align: left;
+        }
+        .link-btn:hover { color: #fff; }
+        .status-select {
+            background: #090e18;
+            color: var(--text-main);
+            border: 1px solid var(--border-highlight);
+            border-radius: 5px;
+            padding: 4px 7px;
+            font-size: 0.76rem;
+            font-weight: 600;
+        }
+        tr.npc-dead td { opacity: 0.45; text-decoration: line-through; }
+
+        /* Categorized Loot Headers */
+        .loot-cat-title {
+            padding: 8px 12px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.4px;
+            border-radius: 6px 6px 0 0;
+        }
+        .loot-row-header-quest { background: #261738; color: #e9d5ff; border: 1px solid #4c2d73; }
+        .loot-row-header-weapon { background: #331419; color: #fecdd3; border: 1px solid #6e232e; }
+        .loot-row-header-heal { background: #122b22; color: #bbf7d0; border: 1px solid #245845; }
+        .loot-row-header-buff { background: #2e2210; color: #fde68a; border: 1px solid #6b4e21; }
+
+        /* Modal System */
+        dialog#dm-modal {
+            margin: auto;
+            width: min(940px, 94vw);
+            max-height: 88vh;
+            background: transparent;
+            border: none;
+            padding: 0;
+            color: var(--text-main);
+        }
+        dialog#dm-modal::backdrop {
+            background: rgba(3, 5, 10, 0.82);
+            backdrop-filter: blur(5px);
+        }
+        .modal-wrapper {
+            background: #0d131f;
+            border: 1.5px solid var(--accent-gold-dark);
+            border-radius: 11px;
+            overflow-y: auto;
+            max-height: 88vh;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+        }
+        .modal-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border-highlight);
+            padding-bottom: 12px;
+            margin-bottom: 14px;
+            gap: 12px;
+        }
+        .modal-close {
+            background: #1a2436;
+            border: 1px solid var(--border-highlight);
+            color: var(--text-bright);
+            border-radius: 6px;
+            padding: 4px 10px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        .modal-close:hover { border-color: var(--accent-crimson-soft); color: var(--accent-crimson-soft); }
+        .stat-strip {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--stat-bg);
+            border: 1px solid var(--border-highlight);
+            border-radius: 6px;
+            padding: 9px 12px;
+            font-size: 0.82rem;
+            color: var(--accent-gold-soft);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .nbox {
+            border-radius: 7px;
+            padding: 11px 14px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+        .nbox-blue { background: rgba(30, 58, 95, 0.25); border-left: 3px solid #3b82f6; }
+        .nbox-pink { background: rgba(131, 24, 67, 0.22); border-left: 3px solid #ec4899; }
+        .nbox-green { background: rgba(20, 83, 45, 0.25); border-left: 3px solid #22c55e; }
+        .nbox-yellow { background: rgba(113, 63, 18, 0.25); border-left: 3px solid #eab308; }
+        .ph-box {
+            background: #15111d;
+            border: 1px solid #4c2d73;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+        .roll-btn {
+            background: #1a2639;
+            border: 1px solid var(--accent-gold-dark);
+            color: var(--accent-gold-soft);
+            padding: 4px 9px;
+            border-radius: 5px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 5px;
+            margin-top: 4px;
+        }
+        .roll-btn:hover { background: var(--accent-gold-dark); color: #000; }
+
+        /* Sticky Bottom Party & Dice Bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 98;
+            background: rgba(9, 13, 21, 0.96);
+            backdrop-filter: blur(10px);
+            border-top: 1.5px solid var(--accent-gold-dark);
+            padding: 8px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .dice-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .dice-btn {
+            background: #162032;
+            border: 1px solid #334155;
+            color: var(--accent-gold-soft);
+            padding: 5px 9px;
+            border-radius: 5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .dice-btn:hover { border-color: var(--accent-gold); background: #1e293b; }
+        #dice-log {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #f8fafc;
+            background: #060911;
+            border: 1px solid #263349;
+            padding: 5px 12px;
+            border-radius: 5px;
+            min-width: 290px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>🦇 MASTER DM SCREEN — CURSE OF STRAHD</h1>
+        <p>Campaign 2 of the Grand Trilogy • 15–20 Session Director's Cut • Mode 2 Lead DM Co-Pilot</p>
+    </div>
+    <div class="header-controls">
+        <input type="text" id="global-search" class="search-input" placeholder="🔍 Filter NPCs, Monsters, Loot..." oninput="filterDashboard(this.value)">
+        <span class="badge-mode">🩸 LEVEL 3 COLD OPEN READY</span>
+    </div>
+</header>
+
+<nav class="top-nav">
+    <a href="#party-specs" class="nav-btn">🛡️ 0. Party & Allies</a>
+    <a href="#active-quests" class="nav-btn">🗺️ 1. 15–20 Session Roadmap & Tarokka</a>
+    <a href="#biomes-explorer" class="nav-btn">🌲 1.5 Biomes & Locations</a>
+    <a href="#npc-directory" class="nav-btn">👥 2. NPC Directory</a>
+    <a href="#monsters-section" class="nav-btn">👹 3. Enemies & Pointy Hat Bosses</a>
+    <a href="#loot-vault" class="nav-btn">💎 4. World Loot & Relics</a>
+    <a href="#dm-rules-guide" class="nav-btn">⚖️ 5. Barovian Laws & Rules</a>
+</nav>
+
+<div class="container">
+
+    <!-- SECTION 0: PARTY SPECS & ESCORT BAR -->
+    <section id="party-specs">
+        <div class="section-header">
+            <span>🛡️ SECTION 0: PARTY VITALS & TAROKKA ALLY ROSTER (LEVEL 3 START)</span>
+            <span class="section-tag">IN MEDIA RES CARRIAGE COLD OPEN</span>
+        </div>
+        <div class="grid-3">
+            <div class="card clickable" onclick="window.open('PIPER_PLAYER_SHEET.html', '_blank')">
+                <div class="card-title"><span>🎩 Piper ("The Incomparable")</span><span class="pill purple">HP 16/16 • AC 12 (15)</span></div>
+                <p style="font-size:0.83rem; color:var(--text-muted);"><strong>Lvl 3 Fierna Tiefling Wild Magic Sorcerer.</strong> Travelling stage magician searching for the tiefling parents in Barnaby's Brass Pocket Watch. Plays off Wild Magic explosions as stage props!</p>
+                <div style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:0.76rem; color:#d8b4fe;">
+                    ✨ 3/3 SP • 🃏 Tides of Chaos • 🌈 Chaos Bolt (+7, DC 15) • 🤝 2/2 Help
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title"><span>⚔️ Strangers 2–4 (Level 3 PCs)</span><span class="pill gold">Awaiting Builds</span></div>
+                <p style="font-size:0.83rem; color:var(--text-muted);">Abducted from separate homelands by the Mists of Ravenloft into the runaway Phantom Black Coach. Introduce appearances on <strong>Round 1, Turn 1 of Initiative</strong>!</p>
+                <div style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:#93c5fd;">
+                    🤝 Help Tokens: 2/2 Each • Short Rest: 25% Max HP (2/day)
+                </div>
+            </div>
+            <div class="card clickable" onclick="openNpcModal('ireena')">
+                <div class="card-title"><span>🌹 Ireena Kolyana (Escort Heroine)</span><span class="pill crimson">HP 28/28 • AC 15</span></div>
+                <p style="font-size:0.83rem; color:var(--text-muted);">Twice-bitten reincarnation of Tatyana. Refuses to be a helpless damsel—fights alongside the party with a Silvered Rapier.</p>
+                <div style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:var(--accent-gold-soft);">
+                    ⚔️ Silvered Rapier +5 (1d8+2) • 🛡️ Parry Reaction (+2 AC)
+                </div>
+            </div>
+            <div class="card clickable" onclick="openNpcModal('ezmerelda')">
+                <div class="card-title"><span>⚡ Ezmerelda d'Avenir (Fated Ally)</span><span class="pill purple">HP 82/82 • AC 17</span></div>
+                <p style="font-size:0.83rem; color:var(--text-muted);">Curated Tarokka Ally (Card: <em>The Mists</em>). Vistani vampire hunter with a silvered prosthetic leg, +1 Rapier, and 4th-level Wizard spells.</p>
+                <div style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:#d8b4fe;">
+                    ⚔️ 2x +1 Rapier (+8, 1d8+5) • ⚡ Lightning Bolt / Magic Circle
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: 15-20 SESSION ROADMAP & TAROKKA -->
+    <section id="active-quests">
+        <div class="section-header">
+            <span>🗺️ SECTION 1: THE 15–20 SESSION "DIRECTOR'S CUT" ROADMAP & TAROKKA ORACLE</span>
+            <span class="section-tag">CLICK ANY ACT CARD FOR FULL DM BRIEFING</span>
+        </div>
+        <div class="grid-2">
+            <div class="card clickable" onclick="openQuestModal('act1')">
+                <div class="card-title"><span>🐎 ACT I: Into the Mists (Sessions 1–4)</span><span class="pill crimson">Levels 3 ➔ 4</span></div>
+                <p style="font-size:0.84rem; color:var(--text-muted);"><strong>Session 1:</strong> Runaway Black Coach Chase (<em>Roll Initiative!</em>), Gates of Barovia Crash, Strahd in the Rain, Ismark & Ireena Manor Siege.<br><strong>Session 2:</strong> Dawn Funeral (Doru) & <strong>Madam Eva's Tarokka Reading</strong> at Tser Pool.<br><strong>Session 3–4:</strong> Old Bonegrinder Hags & Arrival in Vallaki.</p>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('act2')">
+                <div class="card-title"><span>🔥 ACT II: The Powderkeg of Vallaki (Sessions 5–9)</span><span class="pill gold">Levels 4 ➔ 6</span></div>
+                <p style="font-size:0.84rem; color:var(--text-muted);"><strong>Session 5–6:</strong> Coffin Maker's Ambush, Feast of St. Andral, Festival of the Blazing Sun & Wachterhaus Coup (Claim 📖 <strong>Tome of Strahd</strong>).<br><strong>Session 7–8:</strong> Wizard of Wines & Yester Hill (Wintersplinter).<br><strong>Session 9:</strong> <strong>Dinner at Castle Ravenloft</strong> with Count Strahd!</p>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('act3')">
+                <div class="card-title"><span>🐉 ACT III: Dragons, Saints & Witches (Sessions 10–14)</span><span class="pill blue">Levels 6 ➔ 8</span></div>
+                <p style="font-size:0.84rem; color:var(--text-muted);"><strong>Session 10–11:</strong> <strong>Argynvostholt</strong> (Order of the Silver Dragon Revenants — bridges directly to Campaign 3 Dragon Lore! Claim ☀️ <strong>Holy Symbol of Ravenkind</strong>).<br><strong>Session 12:</strong> Abbey of St. Markovia in Krezk.<br><strong>Session 13–14:</strong> Ruins of Berez (Baba Lysaga & Walking Hut — Claim 🗡️ <strong>The Sunsword</strong>).</p>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('act4')">
+                <div class="card-title"><span>👑 ACT IV: The Amber Corruption & Ravenloft Siege (Sessions 15–20)</span><span class="pill purple">Levels 8 ➔ 10 Finale</span></div>
+                <p style="font-size:0.84rem; color:var(--text-muted);"><strong>Session 15–16:</strong> Tsolenka Pass & <strong>The Amber Temple</strong> (Dark Gifts of Vampyr & Vecna's Obsidian Monolith Shard—corrupting the PCs for Campaign 3!).<br><strong>Session 17–20:</strong> Final Siege of Castle Ravenloft, Heart of Sorrow, Rahadin, & Fall of Count Strahd!</p>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('tarokka')">
+                <div class="card-title"><span>🃏 Curated Madam Eva Tarokka Deck (Session 2 Script)</span><span class="pill gold">5 Fated Cards</span></div>
+                <p style="font-size:0.84rem; color:var(--text-muted);">1. 📖 <strong>Tome of Strahd:</strong> Wachterhaus Cult Library (Vallaki)<br>2. ☀️ <strong>Holy Symbol of Ravenkind:</strong> Argynvostholt Beacon<br>3. 🗡️ <strong>The Sunsword:</strong> Baba Lysaga's Hut in Berez<br>4. 🤝 <strong>Ally:</strong> Ezmerelda d'Avenir • 5. 👑 <strong>Foe:</strong> Sergei's Tomb</p>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('trilogy')">
+                <div class="card-title"><span>🌌 Campaign 3 Crossover: The Dread Vanguard Twist</span><span class="pill purple">Trilogy Endgame</span></div>
+                <p style="font-size:0.84rem; color:var(--text-muted);">How the Dark Powers & Vecna's Monoliths tempt the CoS party across Acts I–IV so that defeating Strahd crowns them as the rival bosses who confront <strong>Eflein</strong> & <strong>Sylvar Link</strong> in Campaign 3!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1.5: BIOMES & ENVIRONMENT EXPLORER -->
+    <section id="biomes-explorer">
+        <div class="section-header">
+            <span>🌲 SECTION 1.5: BAROVIAN BIOMES & REGIONAL ENCOUNTER KEYS</span>
+            <span class="section-tag">CLICK FOR READ-ALOUD & HAZARDS</span>
+        </div>
+        <div class="grid-3">
+            <div class="card clickable" onclick="openBiomeModal('svalich')">
+                <div class="card-title"><span>🐎 1. Old Svalich Road & Gates of Barovia</span><span class="pill crimson">Session 1 Cold Open</span></div>
+                <p style="font-size:0.82rem; color:var(--text-muted);">Towering black pines, choking ground-mist, 200-ft Ivlis River gorge, and headless giant stone kings guarding the self-locking iron gates.</p>
+            </div>
+            <div class="card clickable" onclick="openBiomeModal('barovia_village')">
+                <div class="card-title"><span>🕯️ 2. Village of Barovia & Indirovich Manor</span><span class="pill gold">Sessions 1–2</span></div>
+                <p style="font-size:0.82rem; color:var(--text-muted);">Boarded windows, Mad Mary's sobs, Blood on the Vine Tavern, Kolyan's barricaded manor, and Father Donavich's haunted church undercroft.</p>
+            </div>
+            <div class="card clickable" onclick="openBiomeModal('vallaki')">
+                <div class="card-title"><span>🎭 3. Walled Town of Vallaki & Bonegrinder</span><span class="pill blue">Sessions 3–6</span></div>
+                <p style="font-size:0.82rem; color:var(--text-muted);">Wolf heads on pikes, mandatory smiling festivals, Blue Water Inn wereravens, Wachterhaus cultists, and St. Andral's vampire powderkeg.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: MASTER NPC DIRECTORY -->
+    <section id="npc-directory">
+        <div class="section-header">
+            <span>👥 SECTION 2: MASTER BAROVIAN NPC DIRECTORY</span>
+            <span class="section-tag">CLICK ANY NAME FOR FULL PSYCHOLOGICAL DOSSIER</span>
+        </div>
+        <div class="table-wrap">
+            <table id="npc-table">
+                <thead>
+                    <tr>
+                        <th>NPC Name & Tag</th>
+                        <th>Live Status</th>
+                        <th>Role & Location</th>
+                        <th>Key Offerings, Services, Quests & Advice</th>
+                        <th>🗣️ Voice & Roleplay Cue</th>
+                    </tr>
+                </thead>
+                <tbody id="npc-tbody"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SECTION 3: ENEMIES & POINTY HAT BOSSES -->
+    <section id="monsters-section">
+        <div class="section-header">
+            <span>👹 SECTION 3: MASTER ENEMY REFERENCE & POINTY HAT BOSS STAT CARDS</span>
+            <span class="section-tag">CLICK ANY MONSTER FOR LIVE HP, ROLLERS & POINTY HAT ACTIONS</span>
+        </div>
+        <div class="table-wrap">
+            <table id="monster-table">
+                <thead>
+                    <tr>
+                        <th>Act / Region</th>
+                        <th>Enemy Name & Role</th>
+                        <th>CR</th>
+                        <th>Init</th>
+                        <th>HP (3–4 PCs)</th>
+                        <th>AC</th>
+                        <th>Speed</th>
+                        <th>Main Attacks (+Hit, Dmg)</th>
+                        <th>Special / Pointy Hat Trigger</th>
+                    </tr>
+                </thead>
+                <tbody id="monster-tbody"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SECTION 4: WORLD LOOT VAULT -->
+    <section id="loot-vault">
+        <div class="section-header">
+            <span>💎 SECTION 4: BAROVIAN WORLD LOOT VAULT & FATED TAROKKA RELICS</span>
+            <span class="section-tag">CLICK ANY ITEM FOR FULL 5E MECHANICS & MANUSCRIPTS</span>
+        </div>
+        <div class="grid-2" id="loot-containers"></div>
+    </section>
+
+    <!-- SECTION 5: DM RULES & BAROVIAN LAWS -->
+    <section id="dm-rules-guide">
+        <div class="section-header">
+            <span>⚖️ SECTION 5: BAROVIAN GOTHIC LAWS & TABLE HOUSE RULES</span>
+            <span class="section-tag">GLANCEABLE TABLE RULINGS</span>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-title"><span>🚪 1. Vampire Forbiddance Law</span><span class="pill crimson">Crucial Lore</span></div>
+                <p style="font-size:0.83rem; color:var(--text-muted);">Neither Strahd nor any Vampire Spawn can enter a <strong>private residence</strong> without an explicit invitation from a living occupant. They must lure, charm, or drag PCs outside!</p>
+            </div>
+            <div class="card">
+                <div class="card-title"><span>☁️ 2. Overcast Sky vs True Sunlight</span><span class="pill gold">Barovian Sky</span></div>
+                <p style="font-size:0.83rem; color:var(--text-muted);">Barovia's natural daytime light is muted by perpetual storm clouds and does <strong>NOT</strong> trigger vampire sunlight damage. Only the <em>Sunsword</em>, <em>Holy Symbol</em>, and <em>Dawn</em> create true sunlight.</p>
+            </div>
+            <div class="card">
+                <div class="card-title"><span>💀 3. 2-Strike Death Saves & Dark Whispers</span><span class="pill purple">Trilogy Hook</span></div>
+                <p style="font-size:0.83rem; color:var(--text-muted);">1 Success stabilizes at 1 HP; 2 Failures = Death. In Barovia, a dying PC hears the Dark Powers whisper: accept a <strong>Dark Gift / Corruption Mark</strong> to rise immediately at 1 HP!</p>
+            </div>
+            <div class="card">
+                <div class="card-title"><span>💥 4. Brutal Critical Hits</span><span class="pill crimson">House Rule</span></div>
+                <p style="font-size:0.83rem; color:var(--text-muted);">On a Natural 20, deal <strong>Maximum Base Die + 1 Normal Die Roll + Ability Modifier</strong> (e.g., 1d8 Rapier crit = 8 + 1d8 + Mod).</p>
+            </div>
+            <div class="card">
+                <div class="card-title"><span>🧪 5. Potions & Short Rests</span><span class="pill green">Action Economy</span></div>
+                <p style="font-size:0.83rem; color:var(--text-muted);"><strong>Potion of Healing:</strong> Bonus Action self (<code>2d6 + 1 HP</code>), Action to feed ally.<br><strong>Short Rest (Max 2/day):</strong> Heals 25% Max HP + regains 1 Help Token.</p>
+            </div>
+            <div class="card">
+                <div class="card-title"><span>🤝 6. Help Tokens (+1d6) & Cover</span><span class="pill blue">Tactical Rules</span></div>
+                <p style="font-size:0.83rem; color:var(--text-muted);"><strong>Help Tokens (2/2):</strong> Spend 1 token with narrative justification to add <code>+1d6</code> to an ally's d20 roll.<br><strong>Cover:</strong> Partial Cover = <code>+2 AC</code> • Total Cover = Untargetable.</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- UNIVERSAL MODAL DIALOG -->
+<dialog id="dm-modal">
+    <div class="modal-wrapper" id="modal-content"></div>
+</dialog>
+
+<!-- STICKY DICE BAR -->
+<div class="bottom-bar">
+    <div class="dice-group">
+        <span style="font-family:'Cinzel',serif; font-weight:700; color:var(--accent-gold); font-size:0.85rem;">🎲 DM DICE TRAY:</span>
+        <button class="dice-btn" onclick="rollDie(20)">d20</button>
+        <button class="dice-btn" onclick="rollDie(12)">d12</button>
+        <button class="dice-btn" onclick="rollDie(10)">d10</button>
+        <button class="dice-btn" onclick="rollDie(8)">d8</button>
+        <button class="dice-btn" onclick="rollDie(6)">d6</button>
+        <button class="dice-btn" onclick="rollDie(4)">d4</button>
+        <button class="dice-btn" onclick="rollDie(100)">d100</button>
+    </div>
+    <div id="dice-log">🦇 Ready — Click any monster attack, loot table, or die to roll.</div>
+</div>
+
+<script>
+const QUEST_DATA = {
+    act1: {
+        title: "🐎 ACT I: Into the Mists (Sessions 1–4 • Levels 3 ➔ 4)",
+        tag: "SESSIONS 1 TO 4",
+        body: `
+            <div class="nbox nbox-blue"><strong>🎬 Session 1 — Blood on the Axle (Cold Open):</strong><br>
+            • Four Level 3 strangers wake inside the runaway Phantom Black Coach hurtling down the Old Svalich Road in a thunderstorm.<br>
+            • <strong>Turn 1 Action Reveals:</strong> Players describe their character's appearance and powers on their first turn of Initiative against <strong>2 Svalich Dire Wolves</strong> and <strong>2 Feral Strahd Thralls</strong>.<br>
+            • Crash through the self-locking <strong>Gates of Barovia</strong>; <strong>Count Strahd</strong> slow-claps in the rain before vanishing into bats.<br>
+            • Find Dalvan Olensky's body with the forged Kolyan letter; meet <strong>Ismark</strong> at <em>Blood on the Vine Tavern</em>; defend <strong>Ireena Kolyana</strong> at Indirovich Mansion against <strong>Bride Volenta's</strong> midnight pack.</div>
+            <div class="nbox nbox-pink"><strong>⛪ Session 2 — Funeral at Dawn & Tser Pool Tarokka Reading:</strong><br>
+            • Carry Burgomaster Kolyan's coffin to the Church at dawn; resolve Father Donavich's starving vampire son <strong>Doru</strong> in the cellar.<br>
+            • Travel the river road to <strong>Tser Pool Vistani Camp</strong>; receive <strong>Madam Eva's 5-Card Tarokka Prophecy</strong>.</div>
+            <div class="nbox nbox-green"><strong>🏚️ Sessions 3–4 — Old Bonegrinder & Arrival at Vallaki:</strong><br>
+            • Confront <strong>Morgantha's Night Hag Coven</strong> at the Old Bonegrinder windmill (saving the captive children).<br>
+            • Reach the walled town of <strong>Vallaki</strong>, meet the Keepers of the Feather at the Blue Water Inn, and reach <strong>Level 4</strong>!</div>
+        `
+    },
+    act2: {
+        title: "🔥 ACT II: The Powderkeg of Vallaki (Sessions 5–9 • Levels 4 ➔ 6)",
+        tag: "SESSIONS 5 TO 9",
+        body: `
+            <div class="nbox nbox-blue"><strong>⚰️ Sessions 5–6 — St. Andral's Feast & The Wachterhaus Coup:</strong><br>
+            • Track the stolen Bones of St. Andral to Henrik van der Voort's Coffin Shop; survive the Vampire Spawn ambush led by <strong>Bride Anastrasya</strong>.<br>
+            • Navigate the clash between paranoid <strong>Baron Vargas Vallakovich</strong> (and Izek Strazni) and cultist noblewoman <strong>Lady Fiona Wachter</strong> during the Festival of the Blazing Sun.<br>
+            • Recover 📖 <strong>The Tome of Strahd</strong> from Wachterhaus and reach <strong>Level 5</strong>!</div>
+            <div class="nbox nbox-yellow"><strong>🍷 Sessions 7–8 — Wizard of Wines & Yester Hill:</strong><br>
+            • Liberate the Martikovs' winery from Blights and Druids; pursue them to <strong>Yester Hill</strong> to stop the summoning of the colossal tree blight <strong>Wintersplinter</strong> and claim the <strong>Blood Spear of Kavan</strong>.</div>
+            <div class="nbox nbox-pink"><strong>🦇 Session 9 — Dinner at Castle Ravenloft:</strong><br>
+            • The Black Carriage arrives with Count Strahd's formal silver-embossed invitation. A tense, non-combat gothic dinner inside Castle Ravenloft with Strahd, Rahadin, and the Three Brides. Reach <strong>Level 6</strong>!</div>
+        `
+    },
+    act3: {
+        title: "🐉 ACT III: Dragons, Saints & Witches (Sessions 10–14 • Levels 6 ➔ 8)",
+        tag: "SESSIONS 10 TO 14",
+        body: `
+            <div class="nbox nbox-blue"><strong>🐉 Sessions 10–11 — Argynvostholt (The Silver Dragon Order):</strong><br>
+            • Explore the ruined fortress of the silver dragon <strong>Argynvost</strong> (tying directly into Campaign 1 & 3's Ancient Dragon mythos!).<br>
+            • Confront or redeem the Revenant Commander <strong>Vladimir Horngaard</strong>, light the Silver Dragon Beacon (+1 AC and +1 Saves to the party!), and claim ☀️ <strong>The Holy Symbol of Ravenkind</strong>. Reach <strong>Level 7</strong>!</div>
+            <div class="nbox nbox-green"><strong>⛪ Session 12 — Krezk & The Abbey of Saint Markovia:</strong><br>
+            • Discover the fallen angelic <strong>Abbot</strong> and his stitched flesh-golem bride <strong>Vasilka</strong>; recruit fated ally <strong>Ezmerelda d'Avenir</strong>.</div>
+            <div class="nbox nbox-pink"><strong>💀 Sessions 13–14 — The Drowned Ruins of Berez:</strong><br>
+            • Venture into the fetid marsh to face <strong>Baba Lysaga</strong> (flying in a giant skull) and her <strong>Creeping Walking Hut</strong>. Pull the Winery Gem from the hut floor and claim 🗡️ <strong>The Sunsword</strong>! Reach <strong>Level 8</strong>!</div>
+        `
+    },
+    act4: {
+        title: "👑 ACT IV: The Amber Corruption & Ravenloft Reckoning (Sessions 15–20 • Levels 8 ➔ 10)",
+        tag: "SESSIONS 15 TO 20 FINALE",
+        body: `
+            <div class="nbox nbox-pink"><strong>🏛️ Sessions 15–16 — The Amber Temple (The Campaign 3 Corruption Twist!):</strong><br>
+            • Ascend Mount Ghakis through Tsolenka Pass to the ancient vault of the <strong>Amber Temple</strong>.<br>
+            • Inside the dark vaults stand the Amber Sarcophagi of the Dark Powers—including <strong>Vampyr</strong> and a fractured <strong>Obsidian Monolith Sarcophagus of Vecna</strong>.<br>
+            • To gain the overwhelming strength to crush Strahd, the PCs accept <strong>Supreme Dark Gifts</strong>—sealing their fate for Campaign 3! Reach <strong>Level 9</strong>.</div>
+            <div class="nbox nbox-yellow"><strong>🦇 Sessions 17–20 — The Final Siege of Castle Ravenloft:</strong><br>
+            • Storm Castle Ravenloft at <strong>Level 10</strong>: shatter the crystal <strong>Heart of Sorrow</strong>, slay <strong>Rahadin</strong> and the surviving Brides, and confront <strong>Count Strahd von Zarovich</strong> from Sergei's Tomb to the storm-lashed Overlook.<br>
+            • <strong>Grand Finale Epilogue:</strong> As Strahd is staked in his crypt, the Mists and Vecna's Obsidian Monoliths crown the victorious party as their new Dread Champions—setting up the ultimate collision with <strong>Eflein</strong> and <strong>Sylvar Link</strong> in Campaign 3!</div>
+        `
+    },
+    tarokka: {
+        title: "🃏 Curated Madam Eva Tarokka Reading (Session 2 Script)",
+        tag: "TSER POOL ORACLE",
+        body: `
+            <div class="nbox nbox-blue"><strong>1. 📖 The Tome of Strahd (Card: The Master of Stars):</strong><br>
+            <em>"I see a walled town where smiles are painted over terror. Look to a noble house of cats and whispers, where a widow sleeps beside the dead and bows to the Devil in secret."</em><br>
+            ➔ <strong>Location:</strong> Lady Fiona Wachter's Cult Library in Vallaki (Act II).</div>
+            <div class="nbox nbox-green"><strong>2. ☀️ The Holy Symbol of Ravenkind (Card: The Paladin):</strong><br>
+            <em>"I see a fallen house of silver wings and broken oaths. Seek the fortress of the dead dragon knight who hates so deeply he refuses to let the Devil die. Light the beacon of the silver wyrm."</em><br>
+            ➔ <strong>Location:</strong> Argynvostholt Beacon Sanctum (Act III).</div>
+            <div class="nbox nbox-yellow"><strong>3. 🗡️ The Sunsword (Card: The Tempter):</strong><br>
+            <em>"I see a drowned village in a fetid marsh where no bird dares to sing. There, the woman who rocked the Devil's cradle rides in a skull of bone, and her hut walks upon the roots of a dead tree."</em><br>
+            ➔ <strong>Location:</strong> Baba Lysaga's Creeping Hut in Berez (Act III).</div>
+            <div class="nbox nbox-pink"><strong>4. 🤝 Strahd's Enemy (Card: The Mists):</strong> <strong>Ezmerelda d'Avenir</strong>.<br>
+            <strong>5. 👑 Strahd's Location (Card: The Darklord):</strong> <strong>Sergei's Tomb (Catacombs K85)</strong>.</div>
+        `
+    },
+    trilogy: {
+        title: "🌌 The Trilogy Twist: From Barovian Heroes to Campaign 3 Bosses",
+        tag: "TRILOGY ARCHITECTURE",
+        body: `
+            <div class="nbox nbox-pink"><strong>How to Seed the Corruption Naturally Across 15–20 Sessions:</strong><br>
+            1. <strong>Death Save Whispers (Acts I–II):</strong> Whenever a PC drops to 0 HP, a voice from the Amber Temple freezes time and offers immediate revival or temp HP in exchange for a minor gothic mark.<br>
+            2. <strong>Strahd's Successor Gambit (Act II Dinner):</strong> At the Castle Ravenloft dinner, Strahd openly tells the PCs that he brought them here to see which of them is ruthless enough to take his crown.<br>
+            3. <strong>The Amber Temple Pact (Sessions 15–16):</strong> In the Amber Temple, the party finds an obsidian fissure from Campaign 1's Baldur's Gate sky-tear—<strong>The Whisper of Vecna & Vampyr</strong>—offering godlike boons (+2 stats, 5th-level spells, necrotic lifesteal) to defeat Strahd.<br>
+            4. <strong>The Session 20 Mic-Drop:</strong> When Strahd falls, the Mists part not to send the PCs home, but to reveal the uncharted western sea where <strong>Eflein</strong> and <strong>Sylvar Link's</strong> ship <em>The Star-Seeker</em> is sailing toward the Lost Dragon Lands!</div>
+        `
+    }
+};
+
+const BIOME_DATA = {
+    svalich: {
+        title: "🐎 Old Svalich Road & The Gates of Barovia",
+        tag: "SESSION 1 COLD OPEN BIOME",
+        body: `
+            <div class="nbox nbox-blue"><strong>🎙️ Read-Aloud Sensory Palette:</strong><br>
+            <em>"Towering black pines press in from both sides like prison bars, their branches dripping with freezing rain and strands of pale, suffocating ground-fog. Two hundred feet below the mud-slicked cliff edge, the black waters of the Ivlis River roar over jagged stones."</em></div>
+            <div class="nbox nbox-yellow"><strong>⚠️ Environmental Hazards & Carriage Mechanics:</strong><br>
+            • <strong>Slick Carriage Roof:</strong> Taking damage on the roof requires a <strong>DC 10 Acrobatics/Athletics check</strong> or fall Prone grabbing the brass rail.<br>
+            • <strong>Hairpin Gorge Curve:</strong> Driver must pass a <strong>DC 13 Animal Handling / Land Vehicles check</strong> or the rear wheels skid over the cliff edge.<br>
+            • <strong>The Choking Mists:</strong> Lingering outside the Gates of Barovia in the white fog forces a <strong>DC 15 CON Save</strong> per minute against Exhaustion.</div>
+        `
+    },
+    barovia_village: {
+        title: "🕯️ The Village of Barovia & Indirovich Manor",
+        tag: "SESSIONS 1–2 HUB",
+        body: `
+            <div class="nbox nbox-blue"><strong>🎙️ Read-Aloud Sensory Palette:</strong><br>
+            <em>"Every shutter in the village is nailed tight with splintered planks. Chalk symbols of the Morninglord are smeared across oak doors, and a thousand feet directly overhead on a sheer pillar of black rock looms Castle Ravenloft."</em></div>
+            <div class="nbox nbox-green"><strong>🛡️ Manor Barricade & Forbiddance Mechanics:</strong><br>
+            • <strong>Private Home Forbiddance:</strong> Vampire Spawn and Bride Volenta <strong>cannot cross the doorway threshold</strong> of Indirovich Manor unless invited by Ireena, Ismark, or a charmed PC!<br>
+            • <strong>Window Barricades:</strong> Each boarded window has <strong>AC 12, 20 HP</strong> (reinforceable to 35 HP with DC 12 Athletics/Carpenter's Tools/Mending).</div>
+        `
+    },
+    vallaki: {
+        title: "🎭 Walled Town of Vallaki & Old Bonegrinder",
+        tag: "SESSIONS 3–6 HUB",
+        body: `
+            <div class="nbox nbox-blue"><strong>🎙️ Read-Aloud Sensory Palette:</strong><br>
+            <em>"Wolf heads impaled on iron pikes flank the muddy palisade gates of Vallaki. Rain-soaked papier-mâché sun banners sag across the streets while town guards in rusted chainmail arrest anyone caught frowning."</em></div>
+            <div class="nbox nbox-pink"><strong>⚡ Key Locations:</strong><br>
+            • <strong>Blue Water Inn:</strong> Safe haven run by the Martikov Wereravens.<br>
+            • <strong>St. Andral's Church:</strong> Lost its protective sacred bones (hidden in Henrik's Coffin Shop with 6 Vampire Spawn!).<br>
+            • <strong>Wachterhaus:</strong> Cult mansion housing 📖 <strong>The Tome of Strahd</strong>.</div>
+        `
+    }
+};
+
+const NPC_DATA = {
+    strahd: {
+        name: "🧛‍♂️ Count Strahd von Zarovich", tag: "[Darklord of Barovia]", status: "🟢 Met & Active",
+        role: "Supreme Ruler • Castle Ravenloft",
+        offerings: "Dinner Invitation (Act II), corrupting bargains, psychological tests. Seeks Ireena & worthy heirs.",
+        voice: "Deep, velvety aristocratic baritone. 'I am the Ancient. I am the Land.'",
+        philosophy: "Aristocratic Fatalism & Possessive Obsession. Views mortals as fleeting candles and believes Tatyana (Ireena) is his by cosmic right.",
+        dilemma: "Forcing Ireena by brute kidnapping always triggers the Dark Powers to kill her; he is systematically destroying her safe havens so she surrenders willingly.",
+        redlines: "Never breaks formal Hospitality at his dinner table until guests violate it first; executes anyone who harms Ireena."
+    },
+    ireena: {
+        name: "🌹 Ireena Kolyana", tag: "[Twice-Bitten / Tatyana]", status: "⚪ Not Met",
+        role: "Escort Heroine • Barovia Village",
+        offerings: "Fights alongside party (AC 15, 28 HP, Silvered Rapier +5 [1d8+2], Parry +2 AC).",
+        voice: "Fierce, sleepless noble resolve. 'Give me a blade and tell me where to stand.'",
+        philosophy: "Defiant Self-Sovereignty. Refuses to be treated as luggage or surrender to Castle Ravenloft.",
+        dilemma: "Refuses to flee Barovia Village until her adoptive father Kolyan is buried at dawn.",
+        redlines: "Will never willingly submit to Strahd without magical charm."
+    },
+    ismark: {
+        name: "🗡️ Ismark Indirovich", tag: "[New Burgomaster]", status: "⚪ Not Met",
+        role: "Veteran Swordsman • Blood on the Vine Tavern",
+        offerings: "Father's Armory Cache (1 Silvered Weapon, 2 Healing Potions, 2 Holy Waters, 5 GP 40 SP). AC 17, 58 HP.",
+        voice: "Exhausted, earnest gravelly baritone. 'They call me the Lesser...'",
+        philosophy: "Crushing Filial Duty. Willing to die holding the line if it gets his sister Ireena to Vallaki.",
+        dilemma: "Father's corpse has lain unburied for 3 days due to midnight wolf sieges.",
+        redlines: "Will never abandon Ireena or betray the party."
+    },
+    volenta: {
+        name: "🎭 Bride Volenta Popofsky", tag: "[Porcelain Skull-Mask]", status: "⚪ Not Met",
+        role: "Youngest Bride (Act I Boss) • Barovia Village",
+        offerings: "Commands the Session 1 Midnight Siege on Indirovich Manor. Drops Porcelain Fang Charm & +1 Bone Dagger.",
+        voice: "High, playful, unhinged giggling. 'Little sister Ireena! Come out, come out!'",
+        philosophy: "Sadistic Cruelty & Jealous Devotion. Fears Strahd will discard her once he claims Ireena.",
+        dilemma: "Ordered by Strahd to terrorize Indirovich Manor without harming a hair on Ireena's head.",
+        redlines: "Cannot cross Indirovich Manor's threshold uninvited (Forbiddance)."
+    },
+    donavich: {
+        name: "⛪ Father Donavich & Doru", tag: "[Broken Priest & Vampire Son]", status: "⚪ Not Met",
+        role: "Village Priest • Church of Barovia (Session 2)",
+        offerings: "Performs Kolyan's funeral at dawn; blesses 2 vials of Holy Water; points party to Vallaki/Krezk.",
+        voice: "Hoarse, weeping prayers above Doru's starving screams from the cellar.",
+        philosophy: "Desperate Paternal Denial. Believes prayer alone can cure his vampire-spawn son Doru.",
+        dilemma: "Doru has been locked in the church cellar for months without blood and is on the verge of frenzy.",
+        redlines: "Will beg the party not to kill Doru unless restrained or shown mercy."
+    },
+    madam_eva: {
+        name: "🃏 Madam Eva", tag: "[Ancient Vistani Seer]", status: "⚪ Not Met",
+        role: "Tarokka Oracle • Tser Pool Camp (Session 2)",
+        offerings: "Performs the 5-Card Tarokka Prophecy; safe Long Rest & Vistani silvered weapon trade.",
+        voice: "Cracking, ancient, woodsmoke-thick voice. 'The cards have been waiting for your hands.'",
+        philosophy: "Cryptic Fate-Weaving. Secret half-sister to Strahd seeking to end his centuries of torment.",
+        dilemma: "Senses the Amber Temple's Dark Powers and Vecna's monoliths reaching for the four strangers.",
+        redlines: "Never takes sides in direct combat; speaks through prophecy."
+    },
+    morgantha: {
+        name: "🥧 Morgantha ('Granny')", tag: "[Night Hag Matron]", status: "⚪ Not Met",
+        role: "Coven Leader • Old Bonegrinder (Session 3)",
+        offerings: "Sells addictive Dream Pastries (1 GP: 1d6 Temp HP + 8hr trance, baked from children's bones).",
+        voice: "Sweet grandmotherly cackle hiding iron malice. 'Just one warm pie, dearies!'",
+        philosophy: "Parasitic Despair Harvesting. Feeds on the hopeless addiction of Barovian parents.",
+        dilemma: "Two kidnapped children (Myrtle & Lucian) are locked in cages on the 3rd floor of the windmill.",
+        redlines: "Bargains with secrets or escapes into the Ethereal Plane if reduced below 25 HP."
+    },
+    martikov: {
+        name: "🪶 Urwin & Danika Martikov", tag: "[Keepers of the Feather]", status: "⚪ Not Met",
+        role: "Wereraven Innkeepers • Blue Water Inn (Vallaki)",
+        offerings: "Free room & hot food in Vallaki; raven scouts warn of ambushes; Winery quest (Session 7).",
+        voice: "Warm, observant hospitality. 'A warm bowl of soup and a locked door...'",
+        philosophy: "Covert Resistance. Watch from the rooftops in raven form and aid true enemies of Strahd.",
+        dilemma: "Wine shipments from the Wizard of Wines have abruptly stopped, threatening their cover.",
+        redlines: "Never reveal their wereraven secret unless the party proves completely trustworthy."
+    },
+    vargas: {
+        name: "☀️ Baron Vargas Vallakovich", tag: "[Paranoid Mayor]", status: "⚪ Not Met",
+        role: "Burgomaster of Vallaki • Sessions 4–6",
+        offerings: "Town authority & shelter if party praises his festivals; enforcer Izek Strazni.",
+        voice: "Manic, booming forced cheer. 'ALL WILL BE WELL!'",
+        philosophy: "Delusional Authoritarian Optimism. Believes forced weekly festivals literally ward off Strahd.",
+        dilemma: "The Wicker Sun for the upcoming festival is soaked by rain, and Lady Wachter is plotting a coup.",
+        redlines: "Throws anyone who says the name 'Strahd' in public into the stocks."
+    },
+    wachter: {
+        name: "📖 Lady Fiona Wachter", tag: "[Cult Noblewoman]", status: "⚪ Not Met",
+        role: "Rival Noble • Wachterhaus (Vallaki — Sessions 5–6)",
+        offerings: "Political coup against Baron Vargas; holds 📖 The Tome of Strahd in her locked cult library!",
+        voice: "Aristocratic, purring pragmatism. 'The Count is a negligent landlord; the Baron is a lunatic.'",
+        philosophy: "Aristocratic Collaborator. Openly favors Zarovich rule over Vallakovich madness.",
+        dilemma: "Needs outsiders to eliminate Baron Vargas's bodyguard Izek Strazni so she can seize Vallaki.",
+        redlines: "Guards her husband Nikolai's preserved corpse and her cult book club fiercely."
+    },
+    ezmerelda: {
+        name: "⚔️ Ezmerelda d'Avenir", tag: "[Fated Tarokka Ally]", status: "⚪ Not Met",
+        role: "Vistani Vampire Hunter • Vallaki / Krezk / Argynvostholt",
+        offerings: "Curated Tarokka Ally (AC 17, 82 HP, +1 Rapier, +1 Silver Handaxe, 4th-Lvl Wizard Spells).",
+        voice: "Sharp, fearless confidence. 'Silver for the wolves, running water for the spawn.'",
+        philosophy: "Relentless Monster Hunter. Protects the innocent despite the prejudice against Vistani.",
+        dilemma: "Searching for her estranged mentor Rudolph van Richten before Strahd finds him.",
+        redlines: "Refuses to allow innocents to be sacrificed for tactical gain."
+    },
+    horngaard: {
+        name: "🐉 Vladimir Horngaard", tag: "[Revenant Dragon-Knight]", status: "⚪ Not Met",
+        role: "Commander of the Silver Dragon • Argynvostholt (Sessions 10–11)",
+        offerings: "Guards ☀️ The Holy Symbol of Ravenkind; lighting the Dragon Beacon grants party +1 AC & +1 Saves!",
+        voice: "Hollow, frost-bitten voice of undying hatred. 'Let the Devil rot in the prison he built.'",
+        philosophy: "Eternal Vengeance Over Mercy. Wants Strahd to suffer forever in Barovia rather than be killed.",
+        dilemma: "Bound in undead hatred until the spirit of the silver dragon Argynvost is ignited in the beacon.",
+        redlines: "Attacks anyone seeking to 'free' Strahd by killing him unless redeemed by the Silver Dragon's light."
+    },
+    baba_lysaga: {
+        name: "💀 Baba Lysaga", tag: "[Mother of Night]", status: "⚪ Not Met",
+        role: "Arch-Hag of the Swamp • Ruins of Berez (Sessions 13–14)",
+        offerings: "Guards 🗡️ The Sunsword and a stolen Winery Life-Gem inside her Creeping Walking Hut!",
+        voice: "Croaking, fanatical maternal delusion. 'My sweet baby Strahd!'",
+        philosophy: "Twisted Maternal Obsession. Midwife who delivered baby Strahd and considers herself his true mother.",
+        dilemma: "Waging an endless occult war against the Martikov Wereravens using scarecrows and blood magic.",
+        redlines: "Flies out of reach inside her floating giant skull while her Walking Hut crushes melee fighters."
+    },
+    rahadin: {
+        name: "🗡️ Rahadin", tag: "[Dusk Elf Executioner]", status: "⚪ Not Met",
+        role: "Chamberlain of Castle Ravenloft • Act IV Boss",
+        offerings: "Drops Rahadin's Dusk-Blade (+2 Scimitar) & Master Keys to Castle Ravenloft.",
+        voice: "Quiet, emotionless whisper beneath the phantom screams of his Deathly Choir.",
+        philosophy: "Absolute Feudal Fidelity Beyond Damnation. Slaughtered his own Dusk Elf kin for Strahd.",
+        dilemma: "Haunted by the psychic chorus of thousands of ghosts swirling within 10 ft of him.",
+        redlines: "Fights to the death for Count Strahd without hesitation."
+    }
+};
+
+const MONSTER_DATA = {
+    dire_wolf: {
+        icon: "🐺", name: "Svalich Dire Wolf", rank: "Session 1 Carriage Chase Predator",
+        cr: "CR 1 (200 XP)", init: "+2", lineage: "Large Beast • Servants of Count Strahd",
+        hp: 35, maxHp: 35, ac: 14, speed: "50 ft.",
+        stats: "STR 17 (+3) | DEX 15 (+2) | CON 15 (+2) | INT 3 (-4) | WIS 12 (+1) | CHA 7 (-2)",
+        senses: "Perception +3, Stealth +4 • Passive Perception 13 • Pack Tactics (Adv when ally within 5ft)",
+        attacks: [
+            { name: "Crushing Fangs (Bite)", hit: 5, dmg: "2d6+3", type: "Piercing", note: "Target must pass DC 13 STR Save or be knocked Prone (or dragged halfway out the carriage window!)." }
+        ],
+        pointyHat: [],
+        visual: "A horse-sized, gaunt black wolf with scarred flanks, foaming jaws, and glowing yellow-red eyes that obey Count Strahd's silent mental whistle.",
+        philosophy: "Pack Predation & Absolute Obedience to the Land. They hunt not for meat, but to herd travelers through the Gates of Barovia at Strahd's command.",
+        dilemma: "Ordered to chase the runaway Black Stagecoach into Barovia and test the four strangers without killing them if they reach the iron gates.",
+        weaknesses: "Recoils from open fire (alchemical lantern oil) and radiant magic; bows immediately if Count Strahd appears.",
+        tactics: "Uses Pack Tactics to lunge through broken carriage windows and bite at the lead draft horse's harness.",
+        loot: ["Thick Svalich Wolf Pelt (15 SP)", "Iron Collar stamped with Ravenloft Crest", "Fresh Wolf Fang Trophy"]
+    },
+    strahd_thrall: {
+        icon: "🧛", name: "Feral Strahd Thrall (Mist Claw)", rank: "Session 1 Carriage Roof Stalker",
+        cr: "CR 1 (200 XP)", init: "+2", lineage: "Medium Undead • Starved Former Adventurer",
+        hp: 28, maxHp: 28, ac: 12, speed: "30 ft., Climb 30 ft.",
+        stats: "STR 13 (+1) | DEX 15 (+2) | CON 10 (+0) | INT 7 (-2) | WIS 10 (+0) | CHA 6 (-2)",
+        senses: "Darkvision 60 ft. • Immune: Poison, Charmed, Exhaustion • Spider Climb",
+        attacks: [
+            { name: "Ravenous Claws", hit: 4, dmg: "2d4+2", type: "Slashing", note: "DC 10 CON Save or Paralyzed until end of next turn (Elves & Undead immune)." },
+            { name: "Starving Bite", hit: 4, dmg: "1d6+2", type: "Piercing + 1d4 Necrotic", note: "Heals Thrall for necrotic damage dealt." }
+        ],
+        pointyHat: [],
+        visual: "A gaunt, corpse-pale former adventurer in rusted armor whose fingernails have split into black talons, clinging upside-down to the stagecoach roof.",
+        philosophy: "Maddened Starvation. Driven insane by months buried in the Svalich mud.",
+        dilemma: "Desperate for warm blood before the carriage reaches the Gates of Barovia.",
+        weaknesses: "Low AC (12); can be shoved off the moving carriage roof (contested Athletics/Acrobatics or Thunderwave) for instant road-crash elimination!",
+        tactics: "Drops from pine trees onto the carriage roof and claws through the timber ceiling.",
+        loot: ["Tarnished Adventurer's Signet Ring (1 GP)", "2x Silvered Crossbow Bolts", "Rusted Coin Pouch (8 SP)"]
+    },
+    strahd_zombie: {
+        icon: "🧟", name: "Strahd Zombie", rank: "Session 1 Manor Siege Undead",
+        cr: "CR 1 (200 XP)", init: "-2", lineage: "Medium Undead • Castle Ravenloft Guard Corpse",
+        hp: 30, maxHp: 30, ac: 8, speed: "20 ft.",
+        stats: "STR 13 (+1) | DEX 6 (-2) | CON 16 (+3) | INT 3 (-4) | WIS 6 (-2) | CHA 5 (-3)",
+        senses: "Darkvision 60 ft. • Immune: Poison • Trait: Loathsome Limbs (Severed limbs keep attacking!)",
+        attacks: [
+            { name: "Multiattack (Bite + 2 Claws)", hit: 3, dmg: "1d6+1", type: "Slashing / Piercing", note: "Whenever it takes 5+ bludgeoning/slashing damage in one hit, a limb or head severs and keeps crawling!" }
+        ],
+        pointyHat: [],
+        visual: "A rotting Barovian soldier in tattered Zarovich livery whose gray flesh splits apart on impact—yet the severed arms keep clawing across the floorboards.",
+        philosophy: "Mindless Necrotic Attrition.",
+        dilemma: "Driven by Bride Volenta's giggling whistle to tear down the shutters of Indirovich Mansion.",
+        weaknesses: "AC 8; Radiant damage instantly vaporizes severed limbs and prevents Loathsome Limbs splitting.",
+        tactics: "Batters boarded windows (AC 12, 20 HP) to open breach gaps for the pack.",
+        loot: ["Rotted Zarovich Guard Badge", "4 Silver Pieces", "Tattered Linen Bandages"]
+    },
+    vampire_spawn: {
+        icon: "🩸", name: "Vampire Spawn Stalker / Doru", rank: "Session 1–2 Elite Undead",
+        cr: "CR 3–5 (1,100 XP)", init: "+3", lineage: "Medium Undead • Ravenous Blood-Thrall",
+        hp: 60, maxHp: 60, ac: 15, speed: "30 ft., Climb 30 ft.",
+        stats: "STR 16 (+3) | DEX 16 (+3) | CON 16 (+3) | INT 11 (+0) | WIS 10 (+0) | CHA 12 (+1)",
+        senses: "Darkvision 60 ft. • Saves: Dex +6, Wis +3 • Resist: Necrotic, Non-Silvered B/P/S • Regen 10 HP/turn",
+        attacks: [
+            { name: "Claw Slash / Grapple", hit: 6, dmg: "2d4+3", type: "Slashing", note: "Instead of damage, can automatically Grapple target (Escape DC 13)." },
+            { name: "Exsanguinating Bite", hit: 6, dmg: "1d6+3", type: "Piercing + 2d6 Necrotic", note: "Target must be Grappled/Incapacitated. Reduces Max HP by necrotic dealt and heals Spawn." }
+        ],
+        pointyHat: [],
+        visual: "Feral, hollow-cheeked undead with distended fangs and spider-like agility, crawling effortlessly along church rafters and manor walls.",
+        philosophy: "Tragic Hunger vs Predatory Instinct.",
+        dilemma: "Bound by Vampire Forbiddance (cannot enter Indirovich Manor uninvited) or starving in Father Donavich's church cellar (Doru).",
+        weaknesses: "Forbiddance (cannot enter private homes uninvited); Regeneration (10 HP/turn) shuts off for 1 round when hit by Radiant damage or Holy Water.",
+        tactics: "Grapples a PC near a broken window and attempts to drag them outside into the rain.",
+        loot: ["Silvered Locket of Barovia (2 GP)", "Vial of Coagulated Vampire Vitae", "12 Silver Pieces"]
+    },
+    volenta: {
+        icon: "🎭", name: "Bride Volenta Popofsky", rank: "🏆 ACT I BOSS • Porcelain Bride of Strahd",
+        cr: "CR 5 (1,800 XP)", init: "+4", lineage: "Medium Undead (Shapechanger) • Youngest Bride of Ravenloft",
+        hp: 85, maxHp: 85, ac: 16, speed: "35 ft., Climb 35 ft.",
+        stats: "STR 16 (+3) | DEX 18 (+4) | CON 16 (+3) | INT 13 (+1) | WIS 12 (+1) | CHA 16 (+3)",
+        senses: "Darkvision 120 ft. • Saves: Dex +7, Wis +4, Cha +6 • Regen 10 HP/turn (halted by Radiant/Holy Water)",
+        attacks: [
+            { name: "Bone-Spiked Dagger (2x)", hit: 7, dmg: "1d4+4", type: "Piercing + 2d6 Necrotic", note: "Melee or Ranged (20/60 ft); returns on blood-thread." },
+            { name: "Crimson Kiss (Bite)", hit: 7, dmg: "1d6+4", type: "Piercing + 3d6 Necrotic", note: "Heals Volenta equal to necrotic damage dealt." }
+        ],
+        pointyHat: [
+            {
+                name: "1. CORPSE-PUPPET BLOOD STRINGS",
+                tell: "📢 Tell (End of Turn): Volenta giggles and flicks her fingers—glowing crimson threads of blood-magic lash from her claws to 2 zombies/thralls or a grappled PC!",
+                counter: "🛡️ Counterplay: Deal 15+ damage to Volenta, hit her with Radiant/Holy Water, or sever the threads (AC 13, 10 HP) before her next turn.",
+                resolve: "💥 Resolve (Start of Next Turn): All tethered undead immediately move 20 ft and make a free Frenzy Attack with Advantage (or the tethered PC is yanked 15 ft toward the window!)."
+            },
+            {
+                name: "2. SHATTERING SKULL-MASK SHRIEK",
+                tell: "📢 Tell (End of Turn): Volenta spider-climbs to the porch roof and cracks open the jaw of her porcelain skull-mask, inhaling a swirling vortex of graveyard fog.",
+                counter: "🛡️ Counterplay: Duck behind Total Cover inside the manor walls, cast Silence/Calm Emotions, or hit her with a Readied ranged attack (DC 13 CON save).",
+                resolve: "💥 Resolve (Start of Next Turn): 30-ft cone psychic scream: DC 13 WIS Save or take 3d8 Psychic damage and be Frightened until the end of your next turn."
+            }
+        ],
+        visual: "A lithe vampire bride in a tattered crimson lace gown woven with finger-bones, wearing a cracked white porcelain skull-mask over her smiling face.",
+        philosophy: "Sadistic Theatricality & Jealous Hunger for Strahd's Approval.",
+        dilemma: "Wants to prove to Strahd that she is more entertaining than Ireena by breaking the new strangers.",
+        weaknesses: "Forbiddance (cannot enter Indirovich Manor unless invited!); retreats into mist if reduced to 25 HP in Session 1 to recur at the Feast/Castle.",
+        tactics: "Uses Spider Climb from the iron fence and porch roof, commanding zombies to breach shutters while pulling PCs outside.",
+        loot: ["Bone-Spiked Dagger +1 (Returns on throw)", "Cracked Porcelain Fang Charm (Grants 1/day False Life 1d4+4)", "25 Silver Pieces & Ruby Hairpin (5 GP)"]
+    },
+    morgantha: {
+        icon: "🥧", name: "Morgantha, Night Hag Matron", rank: "🏆 ACT II BOSS • Mistress of Old Bonegrinder",
+        cr: "CR 5 (1,800 XP)", init: "+2", lineage: "Medium Fiend • Night Hag Coven Leader",
+        hp: 105, maxHp: 105, ac: 17, speed: "30 ft.",
+        stats: "STR 18 (+4) | DEX 15 (+2) | CON 16 (+3) | INT 16 (+3) | WIS 14 (+2) | CHA 16 (+3)",
+        senses: "Darkvision 120 ft. • Magic Resistance (Adv on spell saves) • Resist: Cold, Fire, Non-Silvered B/P/S",
+        attacks: [
+            { name: "Iron Talons", hit: 7, dmg: "2d8+4", type: "Slashing", note: "Magical attacks." },
+            { name: "Coven Lightning / Magic Missile", hit: 6, dmg: "3d4+3", type: "Force / Lightning", note: "Auto-hit bolts or DC 14 Save." }
+        ],
+        pointyHat: [
+            {
+                name: "1. BONE-FLOUR COMBUSTION CLOUD",
+                tell: "📢 Tell: Morgantha kicks open three sacks of ground bone-flour across the windmill gears while sparking her iron claws!",
+                counter: "🛡️ Counterplay: Open the windmill shutters/doors, cast Gust of Wind/Thunderwave to disperse the flour, or douse the oven brazier.",
+                resolve: "💥 Resolve: The entire windmill floor ignites in a dust explosion—DC 14 DEX Save or 3d10 Fire damage (half on save)!"
+            },
+            {
+                name: "2. ETHEREAL NIGHTMARE TETHER",
+                tell: "📢 Tell: Morgantha clutches her black Heartstone against her chest, her body turning half-translucent as shadow-chains wrap around the highest-HP PC.",
+                counter: "🛡️ Counterplay: Strike the Heartstone in her hand (AC 16 or Disarm) or cast Protection from Evil and Good / Bless.",
+                resolve: "💥 Resolve: Target makes a DC 14 WIS Save or takes 3d8 Psychic damage and is Restrained by waking nightmares for 1 round."
+            }
+        ],
+        visual: "An ancient, hunched crone in a flour-dusted apron whose kindly grandmotherly mask melts away into iron-toothed, blue-skinned fiendish horror.",
+        philosophy: "Corrupting Innocence Through Sweet Despair.",
+        dilemma: "Protecting her flour-mill operation and the two captive children on the top floor.",
+        weaknesses: "Destroying the mother-of-pearl toad chest or threatening her Heartstone forces her to bargain immediately.",
+        tactics: "Fights inside the cramped circular windmill floors using flour explosions and coven spells.",
+        loot: ["Morgantha's Cracked Heartstone (Cures 1 disease/curse 1/day)", "3x Dream Pastries", "Iron Cage Key & 18 GP"]
+    },
+    wintersplinter: {
+        icon: "🌳", name: "Wintersplinter, The Blood-Tree", rank: "🏆 ACT II BOSS • Yester Hill Siege Colossus",
+        cr: "CR 7 (2,900 XP)", init: "-1", lineage: "Huge Plant • Gulthias Blood-Animated Tree Blight",
+        hp: 138, maxHp: 138, ac: 15, speed: "30 ft.",
+        stats: "STR 23 (+6) | DEX 8 (-1) | CON 20 (+5) | INT 6 (-2) | WIS 10 (+0) | CHA 3 (-4)",
+        senses: "Blindsight 60 ft. • Siege Monster (2x dmg to structures) • Vulnerable: Fire (or takes extra axe damage)",
+        attacks: [
+            { name: "2x Crushing Branches", hit: 9, dmg: "3d6+6", type: "Bludgeoning", note: "Reach 15 ft." },
+            { name: "Grasping Blood-Roots & Bite", hit: 9, dmg: "3d8+6", type: "Piercing", note: "DC 15 STR Grapple + Bite against grappled target." }
+        ],
+        pointyHat: [
+            {
+                name: "1. SUBTERRANEAN BLOOD-ROOT ERUPTION",
+                tell: "📢 Tell: Wintersplinter drives its trunk into the mud; glowing red veins pulse beneath the boots of all PCs within 30 ft!",
+                counter: "🛡️ Counterplay: Move 15 ft off the glowing soil veins or leap onto the stone cairn wall.",
+                resolve: "💥 Resolve: Barbed roots erupt—DC 15 DEX Save or take 3d10 Piercing damage and be Restrained (Escape DC 15)."
+            },
+            {
+                name: "2. GULTHIASHEART SIPHON",
+                tell: "📢 Tell: The green Winery Gem embedded in Wintersplinter's chest cavity flares bright emerald as it drinks the mist.",
+                counter: "🛡️ Counterplay: Target the glowing chest cavity (AC 16, 20+ Fire/Slashing damage) to disrupt the siphon.",
+                resolve: "💥 Resolve: Wintersplinter regenerates 25 HP and spawns 3 Twig Blights unless disrupted!"
+            }
+        ],
+        visual: "A thirty-foot-tall horror of twisted black oak and dripping crimson sap, animated by a stolen emerald life-gem from the Wizard of Wines.",
+        philosophy: "Primal Annihilation of Civilization.",
+        dilemma: "Summoned by the Yester Hill druids to march on the Wizard of Wines and crush the winery.",
+        weaknesses: "Removing or shattering the glowing green Winery Gem in its chest staggers it instantly.",
+        tactics: "Grapples frontliners with roots while sweeping ranged casters with 15-ft branches.",
+        loot: ["✨ Stolen Wizard of Wines Life-Gem #1", "Gulthias Heartwood Shard", "Blood Spear of Kavan (at Cairn)"]
+    },
+    horngaard: {
+        icon: "🐉", name: "Vladimir Horngaard", rank: "🏆 ACT III BOSS • Commander of the Silver Dragon",
+        cr: "CR 7 (2,900 XP)", init: "+2", lineage: "Medium Undead (Revenant) • Order of Argynvost",
+        hp: 145, maxHp: 145, ac: 17, speed: "30 ft.",
+        stats: "STR 18 (+4) | DEX 14 (+2) | CON 18 (+4) | INT 13 (+1) | WIS 16 (+3) | CHA 18 (+4)",
+        senses: "Darkvision 60 ft. • Regen 10 HP/turn • Immune: Charmed, Frightened, Paralyzed, Poison",
+        attacks: [
+            { name: "+2 Silver Greatsword (2x)", hit: 9, dmg: "4d6+7", type: "Slashing", note: "Deals extra 4d6 against sworn foes." }
+        ],
+        pointyHat: [
+            {
+                name: "1. PHANTOM CAVALRY OF ARGYNVOST",
+                tell: "📢 Tell: Vladimir raises his greatsword to the broken stained-glass window—spectral silver dragon-knights materialize in a 20-ft line across the throne room!",
+                counter: "🛡️ Counterplay: Step out of the 20-ft spectral lane, invoke Argynvost's name (DC 15 Religion/Persuasion), or Turn Undead.",
+                resolve: "💥 Resolve: The spectral charge tramples the line—DC 15 DEX Save or 4d10 Cold/Slashing damage and knocked Prone."
+            },
+            {
+                name: "2. SHACKLES OF UNDYING GRIEF",
+                tell: "📢 Tell: Frosty chains of silver mist coil from Vladimir's armor toward the party's healer/caster.",
+                counter: "🛡️ Counterplay: Deal Radiant/Fire damage to Vladimir or interpose a martial defender between him and the target.",
+                resolve: "💥 Resolve: Target makes a DC 15 WIS Save or is Paralyzed until the end of their next turn."
+            }
+        ],
+        visual: "An imposing undead knight in frosted silver dragon-plate, sitting on a ruined wooden throne with a massive two-handed greatsword across his gauntlets.",
+        philosophy: "Vengeance Consuming Honor. He hates Strahd so much he wants Barovia to remain Strahd's eternal hell.",
+        dilemma: "Blind to the fact that his hatred has corrupted his own sacred dragon order.",
+        weaknesses: "Returning Argynvost's Skull to the mausoleum and lighting the Silver Dragon Beacon instantly redeems Vladimir without combat!",
+        tactics: "Commands phantom knights and focuses down anyone who claims they will 'slay and free' Strahd.",
+        loot: ["☀️ The Holy Symbol of Ravenkind (Tarokka Relic!)", "+2 Silvered Greatsword of Argynvost", " Party Boon: Beacon of the Silver Dragon (+1 AC & +1 Saves)"]
+    },
+    baba_lysaga: {
+        icon: "💀", name: "Baba Lysaga & The Creeping Hut", rank: "🏆 ACT III BOSS • Mother of Night (Berez)",
+        cr: "CR 11 (7,200 XP)", init: "+3", lineage: "Medium Humanoid (Shapechanger) + Gargantuan Construct",
+        hp: 120, maxHp: 120, ac: 15, speed: "30 ft. / Fly 40 ft. (Inside Giant Skull: +5 AC Three-Quarters Cover!)",
+        stats: "STR 18 (+4) | DEX 10 (+0) | CON 16 (+3) | INT 20 (+5) | WIS 17 (+3) | CHA 13 (+1)",
+        senses: "Saves: Wis +7 • 8th-Level Spellcaster (Spell DC 17, +9 Hit) • Hut HP: 140, AC 16",
+        attacks: [
+            { name: "Baba: Witch-Bolt / Blight / Fireball", hit: 9, dmg: "8d6", type: "Fire / Necrotic", note: "DC 17 Save." },
+            { name: "Walking Hut: 3x Giant Root Slams", hit: 11, dmg: "3d10+7", type: "Bludgeoning", note: "Reach 15 ft; shuts down instantly if Winery Gem is removed!" }
+        ],
+        pointyHat: [
+            {
+                name: "1. THE CREEPING HUT CRUSH",
+                tell: "📢 Tell: The colossal walking hut rears up on its giant gnarled tree-roots, preparing to slam its entire ton-weight down on a 20x20 ft swamp zone!",
+                counter: "🛡️ Counterplay: Dash out of the 20x20 shadow—OR climb inside the hut (DC 14 Athletics/Acrobatics) and wrench the glowing green Winery Gem from the floorboards (DC 14 Athletics/Sleight of Hand)!",
+                resolve: "💥 Resolve: If Gem is pulled, the Hut collapses lifelessly! Otherwise, creatures in the zone take 6d10 Bludgeoning damage (DC 16 DEX half)."
+            },
+            {
+                name: "2. SWARM OF SWAMP CROWS & HEX",
+                tell: "📢 Tell: Baba Lysaga cackles from her flying giant skull, smearing goat blood across her brow as hundreds of crows dive-bomb the party.",
+                counter: "🛡️ Counterplay: Cast AoE damage (Fireball/Shatter/Spirit Guardians) on the crow cloud or ground her flying skull (AC 15, 50 HP).",
+                resolve: "💥 Resolve: Uncountered crows blind and deal 4d8 Piercing/Necrotic damage across the party (DC 16 CON half)."
+            }
+        ],
+        visual: "A blood-smeared ancient witch riding inside the floating upside-down skull of a dead giant while her entire rotting cabin marches on colossal tree roots.",
+        philosophy: "Delusional Maternal Fanaticism for Count Strahd.",
+        dilemma: "Guarding the Sunsword and the second stolen Winery Gem in the drowned ruins of Berez.",
+        weaknesses: "Pulling the glowing green Winery Gem from under the crib inside the Walking Hut immediately deactivates the CR 11 Hut!",
+        tactics: "Hovers 30 ft up in her flying skull casting spells while the Walking Hut smashes the frontline.",
+        loot: ["🗡️ THE SUNSWORD (Legendary Sentient Blade of True Sunlight!)", "✨ Stolen Wizard of Wines Life-Gem #2", "Baba Lysaga's Spellbook & Pipes of Haunting"]
+    },
+    rahadin: {
+        icon: "🗡️", name: "Rahadin, Dusk Elf Executioner", rank: "🏆 ACT IV BOSS • Chamberlain of Ravenloft",
+        cr: "CR 10 (5,900 XP)", init: "+6", lineage: "Medium Humanoid (Dusk Elf) • Strahd's Right Hand",
+        hp: 135, maxHp: 135, ac: 18, speed: "35 ft.",
+        stats: "STR 14 (+2) | DEX 22 (+6) | CON 17 (+3) | INT 15 (+2) | WIS 16 (+3) | CHA 18 (+4)",
+        senses: "Darkvision 60 ft. • Saves: Con +7, Wis +7 • Mask of the Wild • Deathly Choir (10ft Psychic Aura)",
+        attacks: [
+            { name: "3x Dusk-Scimitar Strikes", hit: 10, dmg: "1d6+6", type: "Slashing + 1d8 Poison", note: "Magical blade." },
+            { name: "Deathly Choir (Bonus Action Aura)", hit: 0, dmg: "3d10", type: "Psychic", note: "All creatures within 10 ft of Rahadin: DC 16 WIS Save or 3d10 Psychic damage (half on save)." }
+        ],
+        pointyHat: [
+            {
+                name: "1. CRESCENDO OF TEN THOUSAND GHOSTS",
+                tell: "📢 Tell: Rahadin closes his eyes and raises his bloodied scimitar—the phantom screaming around him swells into a visible tempest of weeping Dusk Elf spirits!",
+                counter: "🛡️ Counterplay: Cast Silence (completely mutes the choir!), move 20+ ft away from Rahadin, or stagger him with 25+ Radiant damage.",
+                resolve: "💥 Resolve: 20-ft radius burst: DC 16 WIS Save or take 5d10 Psychic damage and be Deafened/Stunned until end of next turn."
+            },
+            {
+                name: "2. PHANTOM STEP EXECUTION",
+                tell: "📢 Tell: Rahadin's silhouette blurs into shadow-mist, locking his cold eyes onto the lowest-HP party member.",
+                counter: "🛡️ Counterplay: Cast Shield of Faith/Sanctuary on the target, surround them, or Ready a grapple/trip.",
+                resolve: "💥 Resolve: Rahadin teleports 30 ft behind the target and makes 2 Scimitar attacks with Advantage."
+            }
+        ],
+        visual: "A silver-haired Dusk Elf in silent black leather armor, surrounded constantly by the agonizing wails of the thousands of souls he butchered for King Barov.",
+        philosophy: "Unwavering Feudal Loyalty Beyond Redemption.",
+        dilemma: "Defending the descent to Castle Ravenloft's catacombs to the last drop of his blood.",
+        weaknesses: "The Silence spell completely shuts down his devastating Deathly Choir aura!",
+        tactics: "Dashes into the middle of the party to trigger Deathly Choir every Bonus Action while carving casters.",
+        loot: ["Rahadin's Dusk-Blade (+2 Scimitar)", "Master Key Ring of Castle Ravenloft", "Signet of the Zarovich Throne"]
+    },
+    strahd: {
+        icon: "🧛‍♂️", name: "Count Strahd von Zarovich", rank: "👑 CAMPAIGN FINAL BOSS • The Ancient, The Land",
+        cr: "CR 15 (13,000 XP)", init: "+4", lineage: "Medium Undead (Shapechanger) • Supreme Darklord of Barovia",
+        hp: 144, maxHp: 144, ac: 16, speed: "30 ft., Climb 30 ft. (+50 HP Heart of Sorrow Buffer)",
+        stats: "STR 18 (+4) | DEX 18 (+4) | CON 18 (+4) | INT 20 (+5) | WIS 15 (+2) | CHA 18 (+4)",
+        senses: "Darkvision 120 ft. • Saves: Dex +9, Wis +7, Cha +9 • Legendary Resistance (3/Day) • Regen 20 HP/turn",
+        attacks: [
+            { name: "2x Vampire Strike / Grapple", hit: 9, dmg: "1d8+4", type: "Bludgeoning + 4d6 Necrotic", note: "Can auto-Grapple (Escape DC 18) instead of bludgeoning." },
+            { name: "Lord's Bite", hit: 9, dmg: "1d6+4", type: "Piercing + 3d6 Necrotic", note: "Reduces Max HP and heals Strahd." },
+            { name: "9th-Level Wizard Spells (DC 18, +10 Hit)", hit: 10, dmg: "8d6", type: "Fireball / Blight / Polymorph / Greater Invisibility", note: "Counterspell, Shield (+5 AC), Mirror Image, Animate Objects." }
+        ],
+        pointyHat: [
+            {
+                name: "1. LAIR PHASE-SHIFT & SHADOW REND",
+                tell: "📢 Tell: Strahd smiles coldly as his shadow detaches from his boots and stretches across the stone floor toward 2 party members while he steps half-way into the castle wall!",
+                counter: "🛡️ Counterplay: Shine True Sunlight (Sunsword / Holy Symbol of Ravenkind) on the floor—instantly burning away his detached shadows and blocking his wall-phase!",
+                resolve: "💥 Resolve: Target shadows erupt (DC 18 DEX Save or 6d10 Necrotic damage + Restrained) while Strahd phases cleanly through the wall into the next room."
+            },
+            {
+                name: "2. GAZE OF THE ANCIENT SOVEREIGN (MASS CHARM)",
+                tell: "📢 Tell: Strahd sweeps his crimson cloak wide; his eyes blaze like twin blood-moons as he speaks in the ancient tongue of the Amber Temple.",
+                counter: "🛡️ Counterplay: Hold up 📖 The Tome of Strahd (grants party Advantage & can Stun Strahd!), avert eyes, or cast Counterspell/Calm Emotions.",
+                resolve: "💥 Resolve: Up to 2 creatures looking at Strahd must pass a DC 17 WIS Save or be Charmed for 1 round and use their Reaction to strike an ally!"
+            },
+            {
+                name: "3. TEMPEST OF CASTLE RAVENLOFT",
+                tell: "📢 Tell: On the Overlook/Tower, Strahd raises his hand to the boiling black sky; crimson lightning arcs down the castle spires!",
+                counter: "🛡️ Counterplay: Move beneath stone archways or inside the chapel/crypt cover before his next turn.",
+                resolve: "💥 Resolve: 9d10 Lightning & Necrotic storm strike across exposed balcony tiles (DC 18 DEX Save half)."
+            }
+        ],
+        visual: "The immortal Vampire Lord of Barovia in resplendent black-and-crimson royal armor, wielding the elements of the land and the architecture of Castle Ravenloft itself as his weapon.",
+        philosophy: "I Am The Ancient, I Am The Land.",
+        dilemma: "Torn between his consuming grief/rage over Sergei & Tatyana and testing whether these dark-gifted heroes will claim his throne.",
+        weaknesses: "True Sunlight (Sunsword & Holy Symbol of Ravenkind) deals 20 Radiant damage/turn, disables his 20 HP Regeneration, and prevents Mist-Form escape! Reading the Tome of Strahd aloud forces a DC 15 WIS save against Stun.",
+        tactics: "Uses Lair Action to walk through Castle Ravenloft walls/floors, baiting party resources until confronted with the 3 Tarokka Relics.",
+        loot: ["👑 The Crown & Ruby Medallion of Ravenloft (250 GP)", "🌌 Campaign 3 Transition: The Mists Part to the Uncharted Sea & Vecna's Monoliths!"]
+    }
+};
+
+const LOOT_DATA = {
+    tome_of_strahd: {
+        cat: "quest", name: "📖 The Tome of Strahd (Tarokka Relic #1)", rarity: "Legendary Artifact • No Attunement",
+        location: "Wachterhaus Cult Library (Vallaki — Act II)",
+        mechanics: "• <strong>Passive Party Ward:</strong> While carried, all allies within 30 ft have <strong>Advantage on Saving Throws against Strahd's Charm</strong>.<br>• <strong>Recite the Brother's Murder (1/Day Action):</strong> Read aloud Strahd's confession of murdering Sergei; Strahd or any Bride within 30 ft must pass a <strong>DC 15 WIS Save or be Stunned until the end of their next turn</strong>!",
+        lore: "Bound in thick black leather with silver clasps, written in Strahd's own hand centuries ago:\n\n\"I am the Ancient. I am the Land. My beginnings are lost in the darkness of the past. I was the warrior, I was good and just. I thundered across the land like the wrath of a just god, relevance and youth bleeding from my veins while my brother Sergei bloomed in the sun. In the Amber Vaults I made my pact with death—and sealed it with Sergei's blood on Tatyana's wedding day...\""
+    },
+    holy_symbol: {
+        cat: "quest", name: "☀️ The Holy Symbol of Ravenkind (Tarokka Relic #2)", rarity: "Legendary Amulet • Attunement (Good/Cleric/Paladin)",
+        location: "Argynvostholt Beacon Sanctum (Act III)",
+        mechanics: "Platinum sun-amulet with a giant crystal winged raven. Holds <strong>10 Charges</strong> (regains 1d6+4 at dawn):<br>• <strong>Hold Vampires (1 Charge):</strong> Action; vampires within 30 ft make a <strong>DC 15 WIS Save or are Paralyzed for 1 minute</strong>!<br>• <strong>Sunlight Burst (5 Charges):</strong> Action; sheds <strong>30-ft True Sunlight</strong> for 10 minutes (20 Radiant dmg/turn to vampires & halts regen!).",
+        lore: "Forged by the High Priest Lugdana and blessed by a giant celestial raven in the early days of Barovia."
+    },
+    sunsword: {
+        cat: "weapon", name: "🗡️ The Sunsword (Tarokka Relic #3)", rarity: "Legendary Sentient Blade • Attunement",
+        location: "Guarded by Baba Lysaga in Berez (Act III)",
+        mechanics: "• <strong>Finesse & Versatile Longsword:</strong> Uses <strong>STR or DEX</strong>!<br>• <strong>Hit & Damage:</strong> <strong>+2 to Attack and Damage rolls</strong>. Deals <strong>1d8 Radiant damage</strong> (1d10 two-handed) instead of slashing, PLUS an extra <strong>+1d8 Radiant damage against Undead</strong> (<code>2d8+2+Mod Radiant</code> per hit vs vampires!).<br>• <strong>True Sunlight Blade:</strong> Sheds 15-ft bright True Sunlight (expandable to 30 ft).",
+        lore: "Once the crystal-hilted platinum sword of Prince Sergei von Zarovich. Its steel blade was shattered by Strahd's court wizard Khazan, leaving a sentient hilt that ignites with a blade of pure, burning morning sunlight!"
+    },
+    kolyan_letter: {
+        cat: "quest", name: "📜 Kolyan's Plea (The Forged Bait Letter)", rarity: "Session 1 Story Manuscript",
+        location: "Found on Dalvan Olensky's body inside the Gates of Barovia (Session 1 Act II)",
+        mechanics: "DC 14 Investigation/Insight reveals the handwriting is actually Count Strahd's—used to lure the strangers into Barovia.",
+        lore: "\"Hail to thee of might and valor: I, a lowly servant of the township of Barovia, send honor to thee. The love of my life, Ireena Kolyana, has been afflicted by an evil so deadly that even the good people of our village cannot protect her... Come quickly, for her time is at hand! — Kolyan Indirovich, Burgomaster\""
+    },
+    silvered_weapon: {
+        cat: "weapon", name: "🗡️ Silvered Barovian Weapon (Rapier / Shortsword / Dagger / 10 Bolts)", rarity: "Uncommon Martial Gear • 5 GP",
+        location: "Ismark's Armory Cache (Session 1 Reward) / Tser Pool Vistani",
+        mechanics: "Alchemically bonded with pure silver. <strong>Bypasses the Non-Magical Weapon Resistance</strong> of Werewolves, Night Hags, Wight Lords, and Vampire Thralls.",
+        lore: "Stamped with the wolf-head mark of Kolyan Indirovich's household guard."
+    },
+    blood_spear: {
+        cat: "weapon", name: "🩸 The Blood Spear of Kavan", rarity: "Rare Magic Weapon • Attunement",
+        location: "Yester Hill Ancient Cairn (Act II — Session 8)",
+        mechanics: "• <strong>+2 Bonus</strong> to Attack and Damage rolls (`1d6+2` / `1d8+2` versatile piercing).<br>• <strong>Vampiric Triumph:</strong> Whenever you hit and reduce a hostile creature to 0 HP with this spear, you immediately gain <strong>2d6 Temporary HP</strong>!",
+        lore: "The flint-tipped war spear of Kavan, a ruthless chieftain who drank blood from the mountain stones before Strahd conquered the valley."
+    },
+    potion_healing: {
+        cat: "heal", name: "🧪 Potion of Healing (Barovian Ruby Vial)", rarity: "Common Consumable • 5 GP",
+        location: "Ismark's Cache, Tser Pool, Blue Water Inn",
+        mechanics: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong>.<br>• <strong>Action (Ally):</strong> Administer to an adjacent downed ally to restore 2d6 + 1 HP.",
+        lore: "Distilled from mountain winterberries and blessed at the shrines of the Morninglord."
+    },
+    holy_water: {
+        cat: "heal", name: "💧 Flask of St. Andral's Holy Water", rarity: "Uncommon Consumable • 2 GP 5 SP",
+        location: "Ismark's Cache / Father Donavich / St. Andral's Church",
+        mechanics: "• <strong>Ranged Splash (20 ft) or Weapon Coat (1 Action):</strong> Deals <strong>2d6 Radiant damage</strong> to Undead and Fiends, and <strong>completely shuts off Vampire Regeneration for 1 round</strong>!",
+        lore: "Crystal vial etched with the rising sun of the Morninglord."
+    },
+    dream_pastry: {
+        cat: "buff", name: "🥧 Morgantha's Dream Pastry", rarity: "Cursed Consumable • 1 GP",
+        location: "Peddled by Granny Morgantha in Barovia Village & Old Bonegrinder",
+        mechanics: "• <strong>Action to Eat:</strong> Grants <strong>1d6 Temporary HP</strong>, removes 1 level of Exhaustion, and puts the eater into 8 hours of blissful dreams of their homeland.<br>• <strong>Addiction Save:</strong> Next dawn, pass a <strong>DC 13 CON Save</strong> or suffer <code>-1d4</code> to Wisdom checks until eating another pastry!",
+        lore: "Smells of warm nutmeg, honey, and savory meat—secretly baked from bone-flour and the stolen innocence of Barovian children."
+    },
+    dark_gifts: {
+        cat: "buff", name: "🟣 Supreme Dark Gifts of the Amber Temple (Vampyr & Vecna)", rarity: "Legendary Corruption Boons • Act IV",
+        location: "The Amber Temple Sarcophagi (Sessions 15–16)",
+        mechanics: "• <strong>Gift of Vampyr:</strong> +20 Max HP; melee crits heal HP equal to necrotic damage dealt.<br>• <strong>Gift of the Whispering Hand (Vecna's Monolith):</strong> +2 Primary Stat (up to 22) and 1 free 5th-level spell slot per Long Rest.<br>• <strong>Trilogy Price:</strong> Binds the hero's soul to the Mists & Obsidian Monoliths—transforming them into the Dread Vanguard bosses for <strong>Campaign 3</strong>!",
+        lore: "Black amber sarcophagi humming with the ancient voices of Vampyr and the multiversal whisper of Vecna."
+    }
+};
+
+function renderDashboard() {
+    // Render NPCs
+    const npcTbody = document.getElementById('npc-tbody');
+    npcTbody.innerHTML = Object.entries(NPC_DATA).map(([key, n]) => {
+        const savedStatus = localStorage.getItem('cos_npc_' + key) || n.status;
+        const deadClass = savedStatus.includes('Fallen') ? 'npc-dead' : '';
+        return `
+            <tr id="npc-row-${key}" class="searchable-row ${deadClass}">
+                <td><button class="link-btn" onclick="openNpcModal('${key}')">${n.name}</button><br><span class="pill" style="margin-top:4px; display:inline-block;">${n.tag}</span></td>
+                <td>
+                    <select class="status-select" onchange="updateNpcStatus('${key}', this.value)">
+                        <option value="🟢 Met & Active" ${savedStatus==='🟢 Met & Active'?'selected':''}>🟢 Met & Active</option>
+                        <option value="⚪ Not Met" ${savedStatus==='⚪ Not Met'?'selected':''}>⚪ Not Met</option>
+                        <option value="☠️ Fallen / Dead" ${savedStatus==='☠️ Fallen / Dead'?'selected':''}>☠️ Fallen / Dead</option>
+                    </select>
+                </td>
+                <td>${n.role}</td>
+                <td>${n.offerings}</td>
+                <td style="color:var(--accent-gold-soft); font-style:italic;">${n.voice}</td>
+            </tr>
+        `;
+    }).join('');
+
+    // Render Monsters
+    const monTbody = document.getElementById('monster-tbody');
+    monTbody.innerHTML = Object.entries(MONSTER_DATA).map(([key, m]) => `
+        <tr class="searchable-row">
+            <td><span class="pill">${m.rank.split('•')[0]}</span></td>
+            <td><button class="link-btn" onclick="openMonsterModal('${key}')">${m.icon} ${m.name}</button></td>
+            <td><span class="pill crimson">${m.cr.split(' ')[1]}</span></td>
+            <td style="font-family:'JetBrains Mono',monospace;">${m.init}</td>
+            <td style="font-family:'JetBrains Mono',monospace; color:#86efac;">${m.hp} HP</td>
+            <td style="font-family:'JetBrains Mono',monospace; color:#93c5fd;">AC ${m.ac}</td>
+            <td>${m.speed}</td>
+            <td>${m.attacks.map(a => `<strong>${a.name}:</strong> +${a.hit} (${a.dmg})`).join('<br>')}</td>
+            <td>${m.pointyHat.length ? `<span class="pill purple">👑 ${m.pointyHat.length} Pointy Hat Actions</span>` : `<span style="color:var(--text-muted); font-size:0.78rem;">Standard Mob</span>`}</td>
+        </tr>
+    `).join('');
+
+    // Render Loot
+    const cats = [
+        { id: 'quest', title: '📜 Fated Tarokka Relics & Story Manuscripts', cls: 'loot-row-header-quest' },
+        { id: 'weapon', title: '⚔️ Sun-Blades, Silvered Weapons & Offensive Gear', cls: 'loot-row-header-weapon' },
+        { id: 'heal', title: '🧪 Potions, Holy Water & Restoratives', cls: 'loot-row-header-heal' },
+        { id: 'buff', title: '🟣 Dark Gifts, Dream Pastries & Buffs', cls: 'loot-row-header-buff' }
+    ];
+    document.getElementById('loot-containers').innerHTML = cats.map(c => {
+        const items = Object.entries(LOOT_DATA).filter(([_, item]) => item.cat === c.id);
+        return `
+            <div class="table-wrap">
+                <div class="loot-cat-title ${c.cls}">${c.title}</div>
+                <table>
+                    <thead><tr><th>Item Name</th><th>Rarity / Cost</th><th>Location / Source</th></tr></thead>
+                    <tbody>
+                        ${items.map(([k, it]) => `
+                            <tr class="searchable-row">
+                                <td><button class="link-btn" onclick="openItemModal('${k}')">${it.name}</button></td>
+                                <td><span class="pill gold">${it.rarity}</span></td>
+                                <td style="font-size:0.8rem; color:var(--text-muted);">${it.location}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }).join('');
+}
+
+function updateNpcStatus(key, val) {
+    localStorage.setItem('cos_npc_' + key, val);
+    const row = document.getElementById('npc-row-' + key);
+    if (row) row.classList.toggle('npc-dead', val.includes('Fallen'));
+}
+
+const dmModalEl = document.getElementById('dm-modal');
+const modalContent = document.getElementById('modal-content');
+
+function openModalHtml(html) {
+    modalContent.innerHTML = html;
+    dmModalEl.showModal();
+}
+function closeDmModal() { dmModalEl.close(); }
+
+// Universal Backdrop Click-To-Close Engine
+if (dmModalEl) {
+    dmModalEl.addEventListener('click', (e) => {
+        const wrapper = dmModalEl.querySelector('.modal-wrapper');
+        if (e.target === dmModalEl || (wrapper && !wrapper.contains(e.target))) {
+            closeDmModal();
+        }
+    });
+}
+
+function openQuestModal(key) {
+    const q = QUEST_DATA[key];
+    if (!q) return;
+    openModalHtml(`
+        <div class="modal-top">
+            <div><h2 style="font-family:'Cinzel',serif; color:var(--accent-gold);">${q.title}</h2><span class="pill gold">${q.tag}</span></div>
+            <button class="modal-close" onclick="closeDmModal()">✕</button>
+        </div>
+        ${q.body}
+    `);
+}
+
+function openBiomeModal(key) {
+    const b = BIOME_DATA[key];
+    if (!b) return;
+    openModalHtml(`
+        <div class="modal-top">
+            <div><h2 style="font-family:'Cinzel',serif; color:var(--accent-gold);">${b.title}</h2><span class="pill crimson">${b.tag}</span></div>
+            <button class="modal-close" onclick="closeDmModal()">✕</button>
+        </div>
+        ${b.body}
+    `);
+}
+
+function openNpcModal(key) {
+    const n = NPC_DATA[key];
+    if (!n) return;
+    openModalHtml(`
+        <div class="modal-top">
+            <div>
+                <h2 style="font-family:'Cinzel',serif; color:var(--accent-gold);">${n.name}</h2>
+                <span class="pill gold">${n.tag}</span> <span class="pill">${n.role}</span>
+            </div>
+            <button class="modal-close" onclick="closeDmModal()">✕</button>
+        </div>
+        <div class="nbox nbox-blue"><strong>🧭 Core Philosophy & Worldview:</strong><br>${n.philosophy}</div>
+        <div class="nbox nbox-pink"><strong>⚡ Immediate Problem & Motive:</strong><br>${n.dilemma}</div>
+        <div class="nbox nbox-green"><strong>⚖️ Moral Red Lines & Offerings:</strong><br>${n.redlines}<br><br><strong>Offerings:</strong> ${n.offerings}</div>
+        <div class="nbox nbox-yellow"><strong>🗣️ Voice & Roleplay Cue:</strong><br><em>${n.voice}</em></div>
+    `);
+}
+
+function openMonsterModal(key) {
+    const m = MONSTER_DATA[key];
+    if (!m) return;
+    const phHtml = m.pointyHat.length ? `
+        <div style="margin-top:14px;">
+            <h3 style="font-family:'Cinzel',serif; color:#d8b4fe; font-size:0.98rem;">👑 POINTY HAT BATTLEFIELD ACTIONS (TELL ➔ COUNTERPLAY ➔ RESOLVE)</h3>
+            ${m.pointyHat.map(p => `
+                <div class="ph-box">
+                    <div style="font-weight:700; color:var(--accent-gold-soft); margin-bottom:5px;">⚡ ${p.name}</div>
+                    <div style="font-size:0.83rem; margin-bottom:4px; color:#fca5a5;">${p.tell}</div>
+                    <div style="font-size:0.83rem; margin-bottom:4px; color:#86efac;">${p.counter}</div>
+                    <div style="font-size:0.83rem; color:#fde68a;">${p.resolve}</div>
+                </div>
+            `).join('')}
+        </div>
+    ` : '';
+
+    openModalHtml(`
+        <div class="modal-top">
+            <div>
+                <h2 style="font-family:'Cinzel',serif; color:var(--accent-gold);">${m.icon} ${m.name} — ${m.rank}</h2>
+                <span class="pill crimson">${m.cr}</span> <span class="pill">Init ${m.init}</span> <span class="pill gold">${m.lineage}</span>
+            </div>
+            <button class="modal-close" onclick="closeDmModal()">✕</button>
+        </div>
+        <div class="stat-strip">${m.stats}</div>
+        <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px; text-align:center;">${m.senses}</div>
+
+        <div class="card" style="background:#090e18; margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <div>
+                    <strong style="color:#86efac; font-family:'JetBrains Mono',monospace; font-size:1rem;">HP: <span id="mon-hp-${key}">${m.hp}</span> / ${m.maxHp}</strong>
+                    <span style="margin-left:14px; color:#93c5fd; font-family:'JetBrains Mono',monospace;">AC ${m.ac} • Speed ${m.speed}</span>
+                </div>
+                <div>
+                    <button class="roll-btn" onclick="stepMonHp('${key}', -10)">-10</button>
+                    <button class="roll-btn" onclick="stepMonHp('${key}', -5)">-5</button>
+                    <button class="roll-btn" onclick="stepMonHp('${key}', -1)">-1</button>
+                    <button class="roll-btn" onclick="stepMonHp('${key}', 1)">+1</button>
+                    <button class="roll-btn" onclick="stepMonHp('${key}', 5)">+5</button>
+                    <button class="roll-btn" onclick="stepMonHp('${key}', 10)">+10</button>
+                </div>
+            </div>
+            <div style="margin-top:10px; border-top:1px solid #1e293b; padding-top:8px;">
+                ${m.attacks.map(a => `
+                    <div style="margin-bottom:7px; font-size:0.84rem;">
+                        <strong style="color:var(--accent-gold-soft);">${a.name}:</strong> +${a.hit} to hit (${a.dmg} ${a.type}) — <span style="color:var(--text-muted);">${a.note}</span><br>
+                        <button class="roll-btn" onclick="rollAttack('${m.name} - ${a.name}', ${a.hit})">🎲 Attack (+${a.hit})</button>
+                        <button class="roll-btn" onclick="rollFormula('${m.name} - ${a.name}', '${a.dmg}', '${a.type}')">💥 Damage (${a.dmg})</button>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+
+        ${phHtml}
+
+        <div class="nbox" style="background:#111827; border-left:3px solid var(--accent-gold);"><strong>👁️ Visual & Lore Description:</strong><br>${m.visual}</div>
+        <div class="nbox nbox-blue"><strong>🧭 Moral & Creature Philosophy:</strong><br>${m.philosophy}</div>
+        <div class="nbox nbox-pink"><strong>⚡ Purpose & Immediate Dilemma:</strong><br>${m.dilemma}</div>
+        <div class="nbox nbox-green"><strong>⚖️ Weaknesses & Things Need to Know:</strong><br>${m.weaknesses}</div>
+        <div class="nbox nbox-yellow"><strong>🎯 DM Tactics & Combat Strategy:</strong><br>${m.tactics}</div>
+
+        <div class="card" style="margin-top:12px; background:#090e18;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--accent-gold);">🎲 Possible Loot Drops:</strong>
+                <button class="roll-btn" onclick="rollLoot('${key}')">🎲 Roll Loot Drop</button>
+            </div>
+            <ul style="margin:6px 0 0 18px; font-size:0.83rem; color:var(--text-muted);">
+                ${m.loot.map(l => `<li>${l}</li>`).join('')}
+            </ul>
+            <div id="loot-res-${key}" style="margin-top:6px; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#86efac;"></div>
+        </div>
+    `);
+}
+
+function stepMonHp(key, delta) {
+    const m = MONSTER_DATA[key];
+    m.hp = Math.max(0, Math.min(m.maxHp + 50, m.hp + delta));
+    const el = document.getElementById('mon-hp-' + key);
+    if (el) el.textContent = m.hp;
+}
+
+function rollLoot(key) {
+    const m = MONSTER_DATA[key];
+    const pick = m.loot[Math.floor(Math.random() * m.loot.length)];
+    const el = document.getElementById('loot-res-' + key);
+    if (el) el.textContent = `🎁 Rolled Drop: ${pick}`;
+    document.getElementById('dice-log').textContent = `🎁 ${m.name} Loot: ${pick}`;
+}
+
+function openItemModal(key) {
+    const it = LOOT_DATA[key];
+    if (!it) return;
+    openModalHtml(`
+        <div class="modal-top">
+            <div>
+                <h2 style="font-family:'Cinzel',serif; color:var(--accent-gold);">${it.name}</h2>
+                <span class="pill gold">${it.rarity}</span> <span class="pill">${it.location}</span>
+            </div>
+            <button class="modal-close" onclick="closeDmModal()">✕</button>
+        </div>
+        <div class="nbox nbox-green"><strong>⚙️ D&D 5e Mechanics & Effects:</strong><br>${it.mechanics}</div>
+        <div class="nbox nbox-blue" style="white-space:pre-line;"><strong>📜 Lore & Verbatim Text:</strong><br><em>${it.lore}</em></div>
+    `);
+}
+
+function rollDie(sides) {
+    const r = Math.floor(Math.random() * sides) + 1;
+    const tag = (sides === 20 && r === 20) ? ' 🔥 NAT 20!' : (sides === 20 && r === 1) ? ' 💀 NAT 1!' : '';
+    document.getElementById('dice-log').textContent = `🎲 d${sides} Roll: ${r}${tag}`;
+}
+
+function rollAttack(label, bonus) {
+    const r = Math.floor(Math.random() * 20) + 1;
+    const total = r + bonus;
+    const tag = r === 20 ? ' 🔥 BRUTAL CRIT!' : (r === 1 ? ' 💀 MISS!' : '');
+    document.getElementById('dice-log').textContent = `⚔️ ${label}: [${r}] + ${bonus} = ${total}${tag}`;
+}
+
+function rollFormula(label, formula, type) {
+    const m = formula.match(/(\d+)d(\d+)([+-]\d+)?/);
+    if (!m) return;
+    const count = parseInt(m[1]), sides = parseInt(m[2]), mod = m[3] ? parseInt(m[3]) : 0;
+    let rolls = [], sum = 0;
+    for (let i = 0; i < count; i++) {
+        const v = Math.floor(Math.random() * sides) + 1;
+        rolls.push(v); sum += v;
+    }
+    const total = sum + mod;
+    document.getElementById('dice-log').textContent = `💥 ${label}: [${rolls.join('+')}]${mod? (mod>0?'+'+mod:mod):''} = ${total} ${type}`;
+}
+
+function filterDashboard(q) {
+    const term = q.toLowerCase().trim();
+    document.querySelectorAll('.searchable-row').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(term) ? '' : 'none';
+    });
+}
+
+renderDashboard();
+</script>
+</body>
+</html>
