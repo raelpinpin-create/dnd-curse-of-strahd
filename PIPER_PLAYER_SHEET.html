@@ -782,9 +782,9 @@
                         <span class="vital-mini-lbl">INIT 🎲</span>
                         <span class="vital-mini-val" style="color:var(--accent-blue);">+2</span>
                     </div>
-                    <div class="vital-mini-box" title="Charisma +5, Proficiency Bonus +2">
+                    <div class="vital-mini-box" title="Charisma +4, Proficiency Bonus +2">
                         <span class="vital-mini-lbl">SPELL DC / HIT</span>
-                        <span class="vital-mini-val" id="dc-hit-disp" style="font-size:0.86rem; color:#93c5fd;">DC 15 | +7</span>
+                        <span class="vital-mini-val" id="dc-hit-disp" style="font-size:0.86rem; color:#93c5fd;">DC 14 | +6</span>
                     </div>
                 </div>
 
@@ -869,15 +869,15 @@
                         <div class="ability-score">12</div>
                         <div class="ability-mod">+1</div>
                     </div>
-                    <div class="ability-box" onclick="rollD20('Wisdom Check', 1)" title="Click to roll WIS Check (+1)">
+                    <div class="ability-box" onclick="rollD20('Wisdom Check', 0)" title="Click to roll WIS Check (+0)">
                         <div class="ability-name">WIS</div>
-                        <div class="ability-score">12</div>
-                        <div class="ability-mod">+1</div>
+                        <div class="ability-score">11</div>
+                        <div class="ability-mod">+0</div>
                     </div>
-                    <div class="ability-box active-key" onclick="rollD20('Charisma Check ★', 5)" title="Key Spellcasting Stat • Click to roll CHA Check (+5)">
+                    <div class="ability-box active-key" onclick="rollD20('Charisma Check ★', 4)" title="Key Spellcasting Stat • Click to roll CHA Check (+4)">
                         <div class="ability-name">CHA ★</div>
-                        <div class="ability-score">20</div>
-                        <div class="ability-mod">+5</div>
+                        <div class="ability-score">18</div>
+                        <div class="ability-mod">+4</div>
                     </div>
                 </div>
 
@@ -888,11 +888,11 @@
                         <span style="font-size:0.68rem; color:var(--text-dim);">CON & CHA Proficient</span>
                     </div>
                     <ul class="stat-row-list">
-                        <li class="stat-row-item prof-item" onclick="rollSave('Charisma Saving Throw ★', 5, true)"><span>Charisma Save ★</span><span id="save-cha-disp">+7 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSave('Charisma Saving Throw ★', 4, true)"><span>Charisma Save ★</span><span id="save-cha-disp">+6 🎲</span></li>
                         <li class="stat-row-item prof-item" onclick="rollSave('Constitution Saving Throw ★', 1, true)"><span>Constitution Save ★</span><span id="save-con-disp">+3 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSave('Dexterity Saving Throw', 2, false)"><span>Dexterity Save</span><span>+2 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSave('Intelligence Saving Throw', 1, false)"><span>Intelligence Save</span><span>+1 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSave('Wisdom Saving Throw', 1, false)"><span>Wisdom Save</span><span>+1 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSave('Wisdom Saving Throw', 0, false)"><span>Wisdom Save</span><span>+0 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSave('Strength Saving Throw', 0, false)"><span>Strength Save</span><span>+0 🎲</span></li>
                     </ul>
                 </div>
@@ -905,23 +905,23 @@
                     </div>
                     <ul class="stat-row-list">
                         <li class="stat-row-item prof-item" onclick="rollSkill('Acrobatics (DEX) ★', 2, true)"><span>Acrobatics (DEX) ★</span><span class="prof-skill-val" data-base="2">+4 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 1, false)"><span>Animal Handling (WIS)</span><span>+1 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 0, false)"><span>Animal Handling (WIS)</span><span>+0 🎲</span></li>
                         <li class="stat-row-item prof-item" onclick="rollSkill('Arcana (INT) ★', 1, true)"><span>Arcana (INT) ★</span><span class="prof-skill-val" data-base="1">+3 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Athletics (STR)', 0, false)"><span>Athletics (STR)</span><span>+0 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 5, false)"><span>Deception (CHA)</span><span>+5 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 4, false)"><span>Deception (CHA)</span><span>+4 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('History (INT)', 1, false)"><span>History (INT)</span><span>+1 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 1, true)"><span>Insight (WIS) ★</span><span class="prof-skill-val" data-base="1">+3 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Intimidation (CHA)', 5, false)"><span>Intimidation (CHA)</span><span>+5 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 0, true)"><span>Insight (WIS) ★</span><span class="prof-skill-val" data-base="0">+2 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Intimidation (CHA)', 4, false)"><span>Intimidation (CHA)</span><span>+4 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Investigation (INT)', 1, false)"><span>Investigation (INT)</span><span>+1 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 1, false)"><span>Medicine (WIS)</span><span>+1 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 0, false)"><span>Medicine (WIS)</span><span>+0 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Nature (INT)', 1, false)"><span>Nature (INT)</span><span>+1 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Perception (WIS)', 1, false)"><span>Perception (WIS)</span><span>+1 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Performance (CHA) ★', 5, true)"><span>Performance (CHA) ★</span><span class="prof-skill-val" data-base="5">+7 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Persuasion (CHA)', 5, false)"><span>Persuasion (CHA)</span><span>+5 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Perception (WIS)', 0, false)"><span>Perception (WIS)</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Performance (CHA) ★', 4, true)"><span>Performance (CHA) ★</span><span class="prof-skill-val" data-base="4">+6 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Persuasion (CHA)', 4, false)"><span>Persuasion (CHA)</span><span>+4 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Religion (INT)', 1, false)"><span>Religion (INT)</span><span>+1 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Sleight of Hand (DEX)', 2, false)"><span>Sleight of Hand (DEX)</span><span>+2 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Stealth (DEX)', 2, false)"><span>Stealth (DEX)</span><span>+2 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Survival (WIS)', 1, false)"><span>Survival (WIS)</span><span>+1 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Survival (WIS)', 0, false)"><span>Survival (WIS)</span><span>+0 🎲</span></li>
                     </ul>
                 </div>
 
@@ -1060,9 +1060,9 @@
                                 </div>
                                 <span style="font-size:0.64rem; color:#f87171; font-weight:700;">EVOCATION</span>
                             </div>
-                            <div class="action-desc">Ranged 120ft. <strong id="firebolt-hit-txt">+7 to Hit</strong>, <strong id="firebolt-dmg-txt">1d10</strong> Fire &amp; ignites flammable objects.</div>
+                            <div class="action-desc">Ranged 120ft. <strong id="firebolt-hit-txt">+6 to Hit</strong>, <strong id="firebolt-dmg-txt">1d10</strong> Fire &amp; ignites flammable objects.</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" onclick="rollSpellAttack('Fire Bolt (Thumb-Fire Trick)')" id="btn-firebolt-atk">🔥 Attack (+7)</button>
+                                <button class="btn-roll-action" onclick="rollSpellAttack('Fire Bolt (Thumb-Fire Trick)')" id="btn-firebolt-atk">🔥 Attack (+6)</button>
                                 <button class="btn-roll-action btn-roll-dmg" onclick="rollFireBoltDamage()" id="btn-firebolt-dmg">💥 1d10 Fire</button>
                             </div>
                         </div>
@@ -1112,9 +1112,9 @@
                                 </div>
                                 <span style="font-size:0.64rem; color:#c084fc; font-weight:700;">ILLUSION</span>
                             </div>
-                            <div class="action-desc">Create a 5-ft cube visual illusion or phantom sound (applause, footsteps, screams). Investigation DC 15.</div>
+                            <div class="action-desc">Create a 5-ft cube visual illusion or phantom sound (applause, footsteps, screams). Investigation DC 14.</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#7c3aed;" onclick="castUtility('🎭 <strong>Minor Illusion (30ft • 1 min):</strong> Piper conjures a 5-ft visual decoy or phantom theatrical sound (DC 15 INT Investigation to discern)!')">🎭 Conjure Illusion</button>
+                                <button class="btn-roll-action" style="background:#7c3aed;" onclick="castUtility('🎭 <strong>Minor Illusion (30ft • 1 min):</strong> Piper conjures a 5-ft visual decoy or phantom theatrical sound (DC 14 INT Investigation to discern)!')">🎭 Conjure Illusion</button>
                             </div>
                         </div>
 
@@ -1509,10 +1509,10 @@
         return characterLevel >= 9 ? 4 : (characterLevel >= 5 ? 3 : 2);
     }
     function getSpellSaveDC() {
-        return 8 + getProfBonus() + 5; // CHA +5
+        return 8 + getProfBonus() + 4; // CHA +4
     }
     function getSpellAttackMod() {
-        return getProfBonus() + 5; // CHA +5
+        return getProfBonus() + 4; // CHA +4
     }
 
     // ==========================================
@@ -1522,16 +1522,16 @@
         { min: 1, max: 2, range: "01–02", title: "Cascading Minute of Chaos", effect: "Roll on this table at the start of each of your turns for the next 1 minute, ignoring this result on subsequent rolls.", flavor: "Piper's sleeves start aggressively shooting out endless doves, sparklers, and confetti cannons every six seconds while she screams, 'WAIT FOR THE GRAND FINALE!'", btnLabel: "🎲 Next Turn Surge", btnFn: "triggerWildMagicSurge('01-02 Minute Cascade')" },
         { min: 3, max: 4, range: "03–04", title: "Spectral Aura Sight", effect: "For the next 1 minute, you can see any invisible creature if you have line of sight to it, and creatures within 30 ft glow with a faint pink-purple outline.", flavor: "'Aha! My mystic stage spectacles see right through your cheap vanishing act!'", btnLabel: null },
         { min: 5, max: 6, range: "05–06", title: "Unexpected Understudy (Modron)", effect: "A confused Modron (or clockwork stage-automaton) chosen and controlled by the DM appears in an unoccupied space within 5 feet of you, then disappears 1 minute later.", flavor: "A brass clockwork stagehand pops out of Piper's hat holding a 'APPLAUSE' sign before ticking loudly in confusion.", btnLabel: null },
-        { min: 7, max: 8, range: "07–08", title: "Self-Centered Fireball Mishap!", effect: "You cast <strong>Fireball</strong> as a 3rd-level spell centered on yourself! Every creature within 20 ft makes a <strong>DC 15 DEX Save</strong> or takes <strong>8d6 Fire Damage</strong> (half on save). <em>Note: Piper has Hellish Resistance (Fire Resistance = half damage)!</em>", flavor: "'Ta-daaa—OH GODS THE FLASH POWDER WAS REAL!' Piper's thumb-lighter detonates into a 20-foot theatrical inferno!", btnLabel: "🔥 Roll 8d6 Fireball", btnFn: "rollFormulaDamage('Wild Surge #07-08 Self-Fireball (20ft Radius • Piper has Fire Resist!)', 6, 0, 'Fire', 8)" },
+        { min: 7, max: 8, range: "07–08", title: "Self-Centered Fireball Mishap!", effect: "You cast <strong>Fireball</strong> as a 3rd-level spell centered on yourself! Every creature within 20 ft makes a <strong>DC 14 DEX Save</strong> or takes <strong>8d6 Fire Damage</strong> (half on save). <em>Note: Piper has Hellish Resistance (Fire Resistance = half damage)!</em>", flavor: "'Ta-daaa—OH GODS THE FLASH POWDER WAS REAL!' Piper's thumb-lighter detonates into a 20-foot theatrical inferno!", btnLabel: "🔥 Roll 8d6 Fireball", btnFn: "rollFormulaDamage('Wild Surge #07-08 Self-Fireball (20ft Radius • Piper has Fire Resist!)', 6, 0, 'Fire', 8)" },
         { min: 9, max: 10, range: "09–10", title: "5th-Level Magic Missile Barrage", effect: "You cast <strong>Magic Missile</strong> as a 5th-level spell (<strong>7 glowing darts</strong>, each dealing <strong>1d4 + 1 Force damage</strong>, auto-hitting targets of your choice within 120 ft)!", flavor: "Seven glowing ace-of-spades cards rocket out of Piper's cufflinks and home in on the enemies!", btnLabel: "⚡ Roll 7 Darts (7d4+7)", btnFn: "rollFormulaDamage('Wild Surge #09-10 (5th-Lvl Magic Missile • 7 Darts)', 4, 7, 'Force', 7)" },
         { min: 11, max: 12, range: "11–12", title: "Theatrical Growth / Shrink", effect: "Roll a d10. Your height changes by a number of inches equal to the roll. If the roll is odd, you shrink. If the roll is even, you grow.", flavor: "'Perspective illusion, folks! Nothing wrong with the floorboards at all!'", btnLabel: "📏 Roll d10 Height Shift", btnFn: "rollHeightShift()" },
-        { min: 13, max: 14, range: "13–14", title: "Center-Stage Confusion", effect: "You cast <strong>Confusion</strong> centered on yourself (10-ft radius sphere, DC 15 WIS save).", flavor: "Swirling hypnotic stage spotlights disorient everyone standing too close to Piper's cape sweep!", btnLabel: null },
+        { min: 13, max: 14, range: "13–14", title: "Center-Stage Confusion", effect: "You cast <strong>Confusion</strong> centered on yourself (10-ft radius sphere, DC 14 WIS save).", flavor: "Swirling hypnotic stage spotlights disorient everyone standing too close to Piper's cape sweep!", btnLabel: null },
         { min: 15, max: 16, range: "15–16", title: "Regenerative Encore", effect: "For the next 1 minute, you regain <strong>5 Hit Points</strong> at the start of each of your turns.", flavor: "Warm golden footlight energy knits Piper's bruises back together every round!", btnLabel: "💚 Heal +5 HP Now", btnFn: "stepHPMulti(5, 'Wild Surge #15-16 Regeneration (+5 HP/turn)')" },
         { min: 17, max: 18, range: "17–18", title: "Beard of Stage Feathers", effect: "You grow a long, magnificent beard made of purple-and-gold peacock feathers that remains until you sneeze, at which point the feathers explode outward from your face.", flavor: "Piper freezes mid-monologue with a massive beard of showgirl feathers before sneezing a cloud of down across the room.", btnLabel: null },
-        { min: 19, max: 20, range: "19–20", title: "Slippery Stage Floor (Grease)", effect: "You cast <strong>Grease</strong> centered on yourself (10-ft square becomes difficult terrain; creatures in area must succeed on a <strong>DC 15 DEX Save</strong> or fall Prone).", flavor: "A gallon of slick stage-wax and banana-peel ectoplasm erupts beneath Piper's boots!", btnLabel: null },
+        { min: 19, max: 20, range: "19–20", title: "Slippery Stage Floor (Grease)", effect: "You cast <strong>Grease</strong> centered on yourself (10-ft square becomes difficult terrain; creatures in area must succeed on a <strong>DC 14 DEX Save</strong> or fall Prone).", flavor: "A gallon of slick stage-wax and banana-peel ectoplasm erupts beneath Piper's boots!", btnLabel: null },
         { min: 21, max: 22, range: "21–22", title: "Unstoppable Showstopper", effect: "Creatures have <strong>Disadvantage on saving throws</strong> against the next spell you cast in the next 1 minute that involves a saving throw!", flavor: "The ambient Mists of Barovia bend toward Piper's dramatic finger-snap—her next spell is almost impossible to resist!", btnLabel: null },
         { min: 23, max: 24, range: "23–24", title: "Azure Stage Makeup", effect: "Your skin turns a vibrant shade of cobalt blue. A <em>Remove Curse</em> spell (or Long Rest / theatrical scrubbing) can end this effect.", flavor: "'It's... avant-garde mime lighting! Very popular in Vallaki!'", btnLabel: null },
-        { min: 25, max: 26, range: "25–26", title: "The All-Seeing Third Eye", effect: "An eye appears on your forehead for the next 1 minute. During that time, you have <strong>Advantage on Wisdom (Perception) checks</strong> that rely on sight.", flavor: "A glowing neon-purple fortune-teller eye opens on Piper's brow between her horns!", btnLabel: "👁️ Roll Perception (Adv)", btnFn: "rollWithForcedAdv('Third Eye Perception Check', 1)" },
+        { min: 25, max: 26, range: "25–26", title: "The All-Seeing Third Eye", effect: "An eye appears on your forehead for the next 1 minute. During that time, you have <strong>Advantage on Wisdom (Perception) checks</strong> that rely on sight.", flavor: "A glowing neon-purple fortune-teller eye opens on Piper's brow between her horns!", btnLabel: "👁️ Roll Perception (Adv)", btnFn: "rollWithForcedAdv('Third Eye Perception Check', 0)" },
         { min: 27, max: 28, range: "27–28", title: "Quickened Encore!", effect: "For the next 1 minute, all your spells with a casting time of <strong>1 Action</strong> have a casting time of <strong>1 Bonus Action</strong>!", flavor: "Piper's hands move in a blur of rapid-fire sleight of hand—every full spell casts at Bonus Action speed!", btnLabel: null },
         { min: 29, max: 30, range: "29–30", title: "Smoke-Bomb Teleport", effect: "You teleport up to <strong>60 feet</strong> to an unoccupied space of your choice that you can see.", flavor: "POP! A cloud of purple flash-smoke bursts where Piper stood as she reappears 60 feet away striking a pose!", btnLabel: null },
         { min: 31, max: 32, range: "31–32", title: "Astral Intermission", effect: "You are transported to the Astral Plane until the end of your next turn, after which time you return to the space you previously occupied (or nearest unoccupied space).", flavor: "'And for my next trick, I disappear into the velvet curtains of the cosmos! Be right back!'", btnLabel: null },
@@ -1556,8 +1556,8 @@
         { min: 69, max: 70, range: "69–70", title: "Vanishing Curtain Call", effect: "Each creature within 30 feet of you becomes <strong>Invisible</strong> for the next 1 minute (ends for a creature when it attacks or casts a spell).", flavor: "Piper waves her green cape and accidentally vanishes the entire battlefield!", btnLabel: null },
         { min: 71, max: 72, range: "71–72", title: "Unbreakable Performer (Damage Resistance)", effect: "You gain <strong>Resistance to ALL damage types</strong> for the next 1 minute!", flavor: "A shimmering prism of stage light wraps around Piper—halving ALL incoming damage for 1 minute!", btnLabel: null },
         { min: 73, max: 74, range: "73–74", title: "Bad Batch of Prop Candy", effect: "A random creature within 60 feet of you becomes Poisoned for 1d4 hours.", flavor: "Someone inhales a puff of glitter-smoke and starts coughing.", btnLabel: null },
-        { min: 75, max: 76, range: "75–76", title: "Blinding Spotlight!", effect: "You glow with bright light in a 30-foot radius for the next 1 minute. Any creature that ends its turn within 5 feet of you must succeed on a <strong>DC 15 CON Save</strong> or be <strong>Blinded</strong> until the end of its next turn.", flavor: "A blinding theatrical spotlight beams straight out of Piper's chest, dazzling adjacent enemies!", btnLabel: null },
-        { min: 77, max: 78, range: "77–78", title: "Baa-d Trick (Polymorph Sheep)", effect: "You cast <strong>Polymorph</strong> on yourself. Make a <strong>DC 15 WIS Save</strong>; on a failure, you turn into a fluffy sheep for the spell's duration!", flavor: "Piper snaps her fingers and turns into a very confused sheep wearing a green magician's cape.", btnLabel: "🐑 Roll DC 15 WIS Save", btnFn: "rollSave('Polymorph Sheep Save (DC 15 WIS)', 1, false)" },
+        { min: 75, max: 76, range: "75–76", title: "Blinding Spotlight!", effect: "You glow with bright light in a 30-foot radius for the next 1 minute. Any creature that ends its turn within 5 feet of you must succeed on a <strong>DC 14 CON Save</strong> or be <strong>Blinded</strong> until the end of its next turn.", flavor: "A blinding theatrical spotlight beams straight out of Piper's chest, dazzling adjacent enemies!", btnLabel: null },
+        { min: 77, max: 78, range: "77–78", title: "Baa-d Trick (Polymorph Sheep)", effect: "You cast <strong>Polymorph</strong> on yourself. Make a <strong>DC 14 WIS Save</strong>; on a failure, you turn into a fluffy sheep for the spell's duration!", flavor: "Piper snaps her fingers and turns into a very confused sheep wearing a green magician's cape.", btnLabel: "🐑 Roll DC 14 WIS Save", btnFn: "rollSave('Polymorph Sheep Save (DC 14 WIS)', 0, false)" },
         { min: 79, max: 80, range: "79–80", title: "Fluttering Confetti & Butterflies", effect: "Illusory butterflies and flower petals flutter in the air within 10 feet of you for the next 1 minute.", flavor: "A hurricane of neon butterflies and paper roses swirls around Piper's horns.", btnLabel: null },
         { min: 81, max: 82, range: "81–82", title: "ACTION SURGE ENCORE!", effect: "You can take <strong>one additional Action immediately</strong> on this turn!", flavor: "'Wait, I wasn't finished with the trick!' Time stutters and grants Piper a free extra Action right now!", btnLabel: null },
         { min: 83, max: 84, range: "83–84", title: "Soul-Drain Spotlight (1d10 Necrotic + Temp HP)", effect: "Each creature within 30 feet of you takes <strong>1d10 Necrotic Damage</strong>. You regain Hit Points equal to the sum of the necrotic damage dealt!", flavor: "Dark Barovian shadows siphon life from everyone nearby and pour it into Piper!", btnLabel: "🩸 Roll 1d10 Siphon", btnFn: "rollFormulaDamage('Wild Surge #83-84 (30ft AoE Necrotic Siphon & Heal)', 10, 0, 'Necrotic', 1)" },
@@ -1917,10 +1917,10 @@
             components: "V, S",
             duration: "Instantaneous",
             wikiUrl: "https://5e.tools/spells.html#chaos%20bolt_xge",
-            attackMod: "+7 Ranged Spell Attack (CHA +5, PB +2)",
+            attackMod: "+6 Ranged Spell Attack (CHA +4, PB +2)",
             damage: "2d8 + 1d6 Elemental Damage (Matching d8s = Leaps to 2nd Target!)",
-            desc: "+7 Hit (120ft): 2d8 + 1d6 random elemental dmg. Matching d8s leap to a 2nd target within 30ft!",
-            fullRules: "You hurl an undulating, warbling mass of chaotic energy at one creature in range. Make a ranged spell attack against the target (<strong>+7 to hit</strong>). On a hit, the target takes <strong>2d8 + 1d6</strong> damage. Choose one of the d8s. The number rolled on that die determines the attack's damage type:<br><br>• <strong>1:</strong> Acid • <strong>2:</strong> Cold • <strong>3:</strong> Fire • <strong>4:</strong> Force<br>• <strong>5:</strong> Lightning • <strong>6:</strong> Poison • <strong>7:</strong> Psychic • <strong>8:</strong> Thunder<br><br>⚡ <strong>Chaotic Leap (Doubles!):</strong> If you roll the <strong>same number on both d8s</strong>, the chaotic energy leaps from the target to a different creature of your choice within 30 feet of it! Make a new attack roll against the new target, and make a new damage roll, which could cause the chaotic energy to leap again!",
+            desc: "+6 Hit (120ft): 2d8 + 1d6 random elemental dmg. Matching d8s leap to a 2nd target within 30ft!",
+            fullRules: "You hurl an undulating, warbling mass of chaotic energy at one creature in range. Make a ranged spell attack against the target (<strong>+6 to hit</strong>). On a hit, the target takes <strong>2d8 + 1d6</strong> damage. Choose one of the d8s. The number rolled on that die determines the attack's damage type:<br><br>• <strong>1:</strong> Acid • <strong>2:</strong> Cold • <strong>3:</strong> Fire • <strong>4:</strong> Force<br>• <strong>5:</strong> Lightning • <strong>6:</strong> Poison • <strong>7:</strong> Psychic • <strong>8:</strong> Thunder<br><br>⚡ <strong>Chaotic Leap (Doubles!):</strong> If you roll the <strong>same number on both d8s</strong>, the chaotic energy leaps from the target to a different creature of your choice within 30 feet of it! Make a new attack roll against the new target, and make a new damage roll, which could cause the chaotic energy to leap again!",
             upcastNotes: "When you cast this spell using a spell slot of 2nd level or higher, each target takes 1d6 extra damage of the type rolled for each slot level above 1st (2d8+2d6 at 2nd lvl, 2d8+3d6 at 3rd lvl).",
             flavor: "Piper flicks a 'trick coin' from her thumb that violently warps into a screaming, color-shifting bolt of primordial chaos!",
             prepared: true,
@@ -1931,7 +1931,7 @@
                 3: "Lvl 3 (2d8+3d6)"
             },
             buttons: [
-                { label: "🎯 Attack (+7)", class: "btn-roll-action", costSlot: false, onClick: () => rollSpellAttack('Chaos Bolt Attack') },
+                { label: "🎯 Attack (+6)", class: "btn-roll-action", costSlot: false, onClick: () => rollSpellAttack('Chaos Bolt Attack') },
                 { label: "🌈 Cast & Roll Chaos (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => rollChaosBoltScaled(lvl) }
             ]
         },
@@ -1976,10 +1976,10 @@
             components: "V, S",
             duration: "1 hour (No Concentration)",
             wikiUrl: "https://5e.tools/spells.html#charm%20person_phb",
-            attackMod: "DC 15 Wisdom Saving Throw",
+            attackMod: "DC 14 Wisdom Saving Throw",
             damage: "Charmed for 1 Hour (Friendly Acquaintance + Social Advantage)",
-            desc: "DC 15 WIS save (30ft) or Charmed 1 hr. Free 2nd-Lvl cast 1/LR (2 targets) via Fierna Lineage!",
-            fullRules: "You attempt to charm a humanoid you can see within range. It must make a <strong>DC 15 Wisdom saving throw</strong>, and does so with Advantage if you or your companions are fighting it. If it fails the saving throw, it is <strong>Charmed</strong> by you until the spell ends or until you or your companions do anything harmful to it. The charmed creature regards you as a friendly acquaintance.<br><br>🔥 <strong>Legacy of Phlegethos (Fierna Tiefling Trait):</strong> Once per Long Rest, Piper can cast <em>Charm Person</em> as a <strong>2nd-level spell (targeting up to 2 humanoids)</strong> without expending a spell slot!",
+            desc: "DC 14 WIS save (30ft) or Charmed 1 hr. Free 2nd-Lvl cast 1/LR (2 targets) via Fierna Lineage!",
+            fullRules: "You attempt to charm a humanoid you can see within range. It must make a <strong>DC 14 Wisdom saving throw</strong>, and does so with Advantage if you or your companions are fighting it. If it fails the saving throw, it is <strong>Charmed</strong> by you until the spell ends or until you or your companions do anything harmful to it. The charmed creature regards you as a friendly acquaintance.<br><br>🔥 <strong>Legacy of Phlegethos (Fierna Tiefling Trait):</strong> Once per Long Rest, Piper can cast <em>Charm Person</em> as a <strong>2nd-level spell (targeting up to 2 humanoids)</strong> without expending a spell slot!",
             upcastNotes: "When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each slot level above 1st (2 targets at 2nd lvl, 3 targets at 3rd lvl).",
             flavor: "Piper flashes a dazzling showbiz grin and hands the target a paper rose—leaving them utterly starstruck.",
             prepared: true,
@@ -2006,10 +2006,10 @@
             components: "V, S, M (a bit of spiderweb)",
             duration: "Concentration, up to 1 hour",
             wikiUrl: "https://5e.tools/spells.html#web_phb",
-            attackMod: "DC 15 Dexterity Save (Restrained) / DC 15 Strength Check to Escape",
+            attackMod: "DC 14 Dexterity Save (Restrained) / DC 14 Strength Check to Escape",
             damage: "Restrained + Difficult Terrain (Flammable: 2d4 Fire Dmg)",
-            desc: "60ft • 20ft cube. DC 15 DEX save or Restrained! Flammable webs burn for 2d4 Fire.",
-            fullRules: "You conjure a mass of thick, sticky webbing at a point of your choice within range. The webs fill a <strong>20-foot cube</strong> from that point for the duration. The webs are difficult terrain and lightly obscure their area.<br><br>• <strong>Restraining Trap:</strong> Each creature that starts its turn in the webs or that enters them during its turn must make a <strong>DC 15 Dexterity saving throw</strong>. On a failed save, the creature is <strong>Restrained</strong> as long as it remains in the webs or until it breaks free (Attacks against Restrained creatures have Advantage; their attacks have Disadvantage!).<br>• <strong>Breaking Free:</strong> A creature Restrained by the webs can use its Action to make a <strong>DC 15 Strength check</strong>.<br>• <strong>Flammable Combo:</strong> The webs are flammable. Any 5-foot cube of webs exposed to fire (like Piper's <em>Fire Bolt</em>!) burns away in 1 round, dealing <strong>2d4 fire damage</strong> to any creature that starts its turn in the fire.",
+            desc: "60ft • 20ft cube. DC 14 DEX save or Restrained! Flammable webs burn for 2d4 Fire.",
+            fullRules: "You conjure a mass of thick, sticky webbing at a point of your choice within range. The webs fill a <strong>20-foot cube</strong> from that point for the duration. The webs are difficult terrain and lightly obscure their area.<br><br>• <strong>Restraining Trap:</strong> Each creature that starts its turn in the webs or that enters them during its turn must make a <strong>DC 14 Dexterity saving throw</strong>. On a failed save, the creature is <strong>Restrained</strong> as long as it remains in the webs or until it breaks free (Attacks against Restrained creatures have Advantage; their attacks have Disadvantage!).<br>• <strong>Breaking Free:</strong> A creature Restrained by the webs can use its Action to make a <strong>DC 14 Strength check</strong>.<br>• <strong>Flammable Combo:</strong> The webs are flammable. Any 5-foot cube of webs exposed to fire (like Piper's <em>Fire Bolt</em>!) burns away in 1 round, dealing <strong>2d4 fire damage</strong> to any creature that starts its turn in the fire.",
             upcastNotes: "Casting at higher levels provides no additional mechanical benefit.",
             flavor: "Piper pulls a 'never-ending handkerchief streamer' from her sleeve that explodes into a 20-foot tangle of adhesive stage-ropes and silk!",
             prepared: true,
@@ -2064,12 +2064,12 @@
             components: "V, S",
             duration: "Instantaneous",
             wikiUrl: "https://5e.tools/spells.html#fire%20bolt_phb",
-            attackMod: "+7 Ranged Spell Attack (CHA +5, PB +2)",
+            attackMod: "+6 Ranged Spell Attack (CHA +4, PB +2)",
             damage: "1d10 Fire Damage (Scales to 2d10 at Level 5)",
-            fullRules: "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack against the target (<strong>+7 to hit</strong>). On a hit, the target takes <strong>1d10 fire damage</strong> (2d10 at Level 5). A flammable object hit by this spell ignites if it isn't being worn or carried.",
+            fullRules: "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack against the target (<strong>+6 to hit</strong>). On a hit, the target takes <strong>1d10 fire damage</strong> (2d10 at Level 5). A flammable object hit by this spell ignites if it isn't being worn or carried.",
             flavor: "Piper snaps her thumb-flint for a harmless magician's spark, and Barovia's dark magic turns it into a roaring bolt of spectral hellfire!",
             modalButtons: [
-                { label: "🔥 Attack (+7)", class: "btn-roll-action", onClick: () => rollSpellAttack('Fire Bolt Attack') },
+                { label: "🔥 Attack (+6)", class: "btn-roll-action", onClick: () => rollSpellAttack('Fire Bolt Attack') },
                 { label: "💥 Roll Fire Damage", class: "btn-roll-action btn-roll-dmg", onClick: () => rollFireBoltDamage() }
             ]
         },
@@ -2116,12 +2116,12 @@
             components: "S, M (a bit of fleece)",
             duration: "1 minute (No Concentration!)",
             wikiUrl: "https://5e.tools/spells.html#minor%20illusion_phb",
-            attackMod: "Investigation Check vs Spell Save DC 15 to discern",
+            attackMod: "Investigation Check vs Spell Save DC 14 to discern",
             damage: "5-ft Cube Visual Image or Phantom Sound",
-            fullRules: "You create a sound or an image of an object within range that lasts for 1 minute.<br>• <strong>Sound:</strong> Ranges from a whisper to a scream, footsteps, drumroll, or roaring crowd.<br>• <strong>Image:</strong> Must fit inside a 5-foot cube (e.g., a crate to hide inside, a false wall, a treasure chest). Physical interaction reveals it to be an illusion, or a creature can use its action to make an <strong>Intelligence (Investigation) check against DC 15</strong>.",
+            fullRules: "You create a sound or an image of an object within range that lasts for 1 minute.<br>• <strong>Sound:</strong> Ranges from a whisper to a scream, footsteps, drumroll, or roaring crowd.<br>• <strong>Image:</strong> Must fit inside a 5-foot cube (e.g., a crate to hide inside, a false wall, a treasure chest). Physical interaction reveals it to be an illusion, or a creature can use its action to make an <strong>Intelligence (Investigation) check against DC 14</strong>.",
             flavor: "Piper throws down a smoke pellet and leaves behind an illusory stage dummy or the sound of running footsteps.",
             modalButtons: [
-                { label: "🎭 Conjure Illusion", class: "btn-roll-action", onClick: () => castUtility('🎭 <strong>Minor Illusion (30ft • DC 15 Investigation):</strong> Piper creates a 5-ft visual illusion or phantom sound!') }
+                { label: "🎭 Conjure Illusion", class: "btn-roll-action", onClick: () => castUtility('🎭 <strong>Minor Illusion (30ft • DC 14 Investigation):</strong> Piper creates a 5-ft visual illusion or phantom sound!') }
             ]
         },
         "magehand": {
@@ -2260,7 +2260,7 @@
             modalButtons: [
                 { label: "🔥 Log Fire Resistance (Half Dmg)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); castUtility('🔥 <strong>Hellish Resistance (Fierna Tiefling Passive):</strong> Piper is <strong>Resistant to Fire Damage</strong> (takes half damage from all fire attacks &amp; Wild Surge Fireballs)!'); } },
                 { label: "👁️ Log Darkvision (60 ft)", class: "btn-roll-action", onClick: () => { closeSpellModal(); castUtility('👁️ <strong>Darkvision (60 ft Passive):</strong> Piper sees in dim light within 60 ft as bright light, and in darkness as dim light!'); } },
-                { label: "🎩 Perform (+7 CHA)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollSkill('By Popular Demand — Stage Performance (CHA) ★', 5, true); } }
+                { label: "🎩 Perform (+6 CHA)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollSkill('By Popular Demand — Stage Performance (CHA) ★', 4, true); } }
             ]
         }
     };
@@ -2369,7 +2369,7 @@
         document.getElementById('char-subtitle-disp').innerText = `Level ${characterLevel} Fierna Tiefling Wild Magic Sorcerer • Entertainer Background • 5'4" (Age 24)`;
         document.getElementById('dc-hit-disp').innerText = `DC ${dc} | +${hit}`;
         document.getElementById('prof-bonus-disp').innerText = `Prof: +${pb}`;
-        document.getElementById('save-cha-disp').innerText = `+${5 + pb} 🎲`;
+        document.getElementById('save-cha-disp').innerText = `+${4 + pb} 🎲`;
         document.getElementById('save-con-disp').innerText = `+${1 + pb} 🎲`;
 
         document.querySelectorAll('.prof-skill-val').forEach(el => {

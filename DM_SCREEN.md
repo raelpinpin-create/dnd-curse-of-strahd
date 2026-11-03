@@ -9,7 +9,7 @@
 
 | Slot | Hero / Companion | Class & Level | HP | AC | Init | Key Passive / Resource |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **PC 1** | 🎩 **Piper ("The Incomparable")** | Level 3 Wild Magic Sorcerer (Fierna Tiefling) | `16/16` | `12 (15)` | `+2` | ✨ `3/3 SP` • 🃏 `Tides of Chaos` • 🔥 Fire Resist • `DC 15 / +7` |
+| **PC 1** | 🎩 **Piper ("The Incomparable")** | Level 3 Wild Magic Sorcerer (Fierna Tiefling) | `16/16` | `12 (15)` | `+2` | ✨ `3/3 SP` • 🃏 `Tides of Chaos` • 🔥 Fire Resist • `DC 14 / +6` |
 | **PC 2** | 🔮 **Stranger #2** *(TBD)* | Level 3 *[TBD]* | `--/--` | `--` | `+--` | 🤝 Help Tokens: `2 / 2` |
 | **PC 3** | 🛡️ **Stranger #3** *(TBD)* | Level 3 *[TBD]* | `--/--` | `--` | `+--` | 🤝 Help Tokens: `2 / 2` |
 | **PC 4** | 🏹 **Stranger #4** *(TBD)* | Level 3 *[TBD]* | `--/--` | `--` | `+--` | 🤝 Help Tokens: `2 / 2` |

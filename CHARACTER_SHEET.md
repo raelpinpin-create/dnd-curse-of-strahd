@@ -14,10 +14,10 @@
 * **Background & Alignment:** **Entertainer** • **Chaotic Neutral** *(Height: 5'4" • Age: 24)*
 * **Interactive HTML Sheet:** [`PIPER_PLAYER_SHEET.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/PIPER_PLAYER_SHEET.html)
 * **Vitals:** **HP:** `16 / 16` *(3d6 + CON)* | **AC:** `12` *(15 with Mage Armor)* | **Init:** `+2` | **Speed:** `30 ft` | **PB:** `+2`
-* **Spellcasting (Charisma):** **Spell Save DC:** `15` | **Spell Attack Bonus:** `+7`
-* **Ability Scores:** `STR 11 (+0) | DEX 15 (+2) | CON 13 (+1) | INT 12 (+1) | WIS 12 (+1) | CHA 20 (+5) ★`
-* **Saving Throws:** **CON ★ `+3`**, **CHA ★ `+7`**, DEX `+2`, INT `+1`, WIS `+1`, STR `+0`
-* **Proficient Skills:** **Performance (CHA) ★ `+7`**, **Acrobatics (DEX) ★ `+4`**, **Arcana (INT) ★ `+3`**, **Insight (WIS) ★ `+3`** *(Plus Deception/Intimidation/Persuasion `+5`)*
+* **Spellcasting (Charisma):** **Spell Save DC:** `14` | **Spell Attack Bonus:** `+6`
+* **Ability Scores (5.5e Statgen):** `STR 11 (+0) | DEX 15 (+2) | CON 13 (+1) | INT 12 (+1) | WIS 11 (+0) | CHA 18 (+4) ★`
+* **Saving Throws:** **CON ★ `+3`**, **CHA ★ `+6`**, DEX `+2`, INT `+1`, WIS `+0`, STR `+0`
+* **Proficient Skills:** **Performance (CHA) ★ `+6`**, **Acrobatics (DEX) ★ `+4`**, **Arcana (INT) ★ `+3`**, **Insight (WIS) ★ `+2`** *(Plus Deception/Intimidation/Persuasion `+4`)*
 * **Class & Lineage Resources:**
   - ✨ **Sorcery Points (`Font of Magic`):** `3 / 3` *(Long Rest)* — **Metamagic:** *Subtle Spell (1 SP)*, *Twinned Spell (1–2 SP)*, *Bend Fate ("Is That Your Card?!" — 2 SP for ±1d4 to a roll)*
   - 🃏 **Tides of Chaos ("Pick-a-Card, Any Card!"):** `1 / 1 Ready` *(Gain Advantage on 1 Attack/Check/Save; once spent, her next 1st+ level spell automatically triggers a d100 Wild Magic Surge and recharges Tides of Chaos!)*
@@ -25,9 +25,9 @@
   - 🔥 **Hellish Resistance & Darkvision:** **Resistance to Fire Damage** • **Darkvision 60 ft**
   - 🤝 **Help Tokens:** `2 / 2`
 * **Spell Slots & Known Spells:**
-  - **1st-Level Slots (`4 / 4`):** *Chaos Bolt* (`+7 hit`, `2d8+1d6` elemental + Chaos Leap on matching d8s), *Mage Armor* (`15 AC`), *Charm Person* (`DC 15 WIS`)
-  - **2nd-Level Slots (`2 / 2`):** *Web* (`DC 15 DEX` Restrained), *Misty Step* (`30ft Bonus Action teleport`), *Charm Person (Fierna 2nd-Lvl)*
-  - **Cantrips (At-Will):** *Fire Bolt* (`+7 hit`, `1d10` Fire), *Friends*, *Prestidigitation*, *Minor Illusion* (`DC 15`), *Mage Hand*
+  - **1st-Level Slots (`4 / 4`):** *Chaos Bolt* (`+6 hit`, `2d8+1d6` elemental + Chaos Leap on matching d8s), *Mage Armor* (`15 AC`), *Charm Person* (`DC 14 WIS`)
+  - **2nd-Level Slots (`2 / 2`):** *Web* (`DC 14 DEX` Restrained), *Misty Step* (`30ft Bonus Action teleport`), *Charm Person (Fierna 2nd-Lvl)*
+  - **Cantrips (At-Will):** *Fire Bolt* (`+6 hit`, `1d10` Fire), *Friends*, *Prestidigitation*, *Minor Illusion* (`DC 14`), *Mage Hand*
 * **Equipment & Inventory (`15 GP, 0 SP`):**
   - 🕰️ *Barnaby's Brass Pocket Watch* (Blurred portrait of her purple-horned tiefling parents)
   - 🎩 *False-Bottom Stage Props & Rigged Card Deck*
