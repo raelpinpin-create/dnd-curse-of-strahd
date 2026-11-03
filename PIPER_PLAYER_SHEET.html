@@ -978,9 +978,6 @@
                             <span onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--accent-gold)'" style="transition:color 0.15s;">📓 Player Notes</span>
                             <span id="player-notes-count-badge" style="font-size:0.64rem; padding:1px 6px; border-radius:999px; background:rgba(167,139,250,0.16); color:#c4b5fd; border:1px solid rgba(167,139,250,0.35);">2</span>
                         </div>
-                        <div style="display:flex; align-items:center; gap:4px;">
-                            <button class="btn-act btn-act-pre" onclick="event.stopPropagation(); openPlayerNotesModal();" style="font-size:0.68rem; padding:2px 7px; color:#fde68a; border:1px solid rgba(245,158,11,0.4);">📖 Open Notes</button>
-                        </div>
                     </div>
                     <div id="player-notes-mini-list" style="display:flex; flex-direction:column; gap:4px; max-height:110px; overflow-y:auto;"></div>
                 </div>
@@ -3511,7 +3508,7 @@
         // Render compact mini list on left column below Gold Purse (click any note to open it directly!)
         if (miniList) {
             if (notes.length === 0) {
-                miniList.innerHTML = `<div style="font-size:0.72rem; color:var(--text-muted); font-style:italic; padding:3px 2px;">No notes saved yet. Click [📖 Open Notes] to write one!</div>`;
+                miniList.innerHTML = `<div style="font-size:0.72rem; color:var(--text-muted); font-style:italic; padding:3px 2px;">No notes saved yet. Click Player Notes to write one!</div>`;
             } else {
                 miniList.innerHTML = notes.map(n => {
                     const isNew = !defaultPlayerNotes.some(b => b.id === n.id && b.title === n.title && b.text === n.text);
@@ -3522,7 +3519,6 @@
                                 ${isNew ? '<span style="font-size:0.6rem; color:#4ade80; margin-left:4px; font-weight:700;">[NEW]</span>' : ''}
                                 <span style="color:var(--text-dim);"> — ${escapeNoteHtml(n.text)}</span>
                             </div>
-                            <span style="font-size:0.66rem; color:#c4b5fd; font-weight:700; flex-shrink:0;">Read ↗</span>
                         </div>
                     `;
                 }).join('');
@@ -3549,7 +3545,6 @@
                                 </div>
                             </div>
                             <div style="display:flex; align-items:center; gap:4px; flex-shrink:0;" onclick="event.stopPropagation();">
-                                <button class="btn-act btn-act-pre" onclick="openNoteReader('${n.id}')" style="padding:3px 8px; font-size:0.68rem; color:#fde68a; border-color:rgba(245,158,11,0.35);">📖 Open</button>
                                 <button class="btn-act btn-act-dmg" onclick="deletePlayerNote('${n.id}')" style="padding:3px 7px; font-size:0.68rem;" title="Remove Note">🗑️</button>
                             </div>
                         </div>
