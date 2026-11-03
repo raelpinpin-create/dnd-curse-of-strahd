@@ -722,15 +722,15 @@
                 <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.filter='brightness(1.18)'" onmouseout="this.style.filter='none'" title="Click to open Piper's Origin Story, Backstory & Passive Abilities">
                     🎩 PIPER <span style="font-size:0.95rem; color:#cbd5e1; font-weight:600;">("Piper the Incomparable")</span>
                 </h1>
-                <div style="margin-top:4px; display:flex; align-items:center; gap:6px;">
+                <div style="margin-top:5px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                     <span class="pill-badge pill-gold" style="font-size:0.72rem; padding:2px 10px; letter-spacing:0.6px;">⭐ LEVEL 3</span>
+                    <span class="pill-badge pill-neutral" style="font-size:0.7rem; padding:2px 9px;">CHAOTIC NEUTRAL</span>
+                    <span class="pill-badge pill-purple" style="font-size:0.7rem; padding:2px 9px;">WILD MAGIC SORCERER</span>
                 </div>
             </div>
             <div class="pill-badge-group">
                 <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">🏰 Portal</a>
                 <button class="btn-act btn-act-pre" onclick="exportSheetState()" style="color:var(--accent-gold); border:1px solid rgba(245, 158, 11, 0.5); display:flex; align-items:center; gap:4px;" title="Copy live HP, Sorcery Points, Tides of Chaos, Spell Slots, and session inventory delta">📋 Export Data</button>
-                <span class="pill-badge pill-neutral">CHAOTIC NEUTRAL</span>
-                <span class="pill-badge pill-purple">WILD MAGIC SORCERER</span>
             </div>
         </header>
 
@@ -758,11 +758,6 @@
                     <button class="btn-act btn-act-pre" id="btn-adv" onclick="toggleAdvantage('adv')">Adv</button>
                     <button class="btn-act btn-act-pre" id="btn-dis" onclick="toggleAdvantage('dis')">Dis</button>
                 </div>
-            </div>
-
-            <!-- RESULT BANNER -->
-            <div class="roll-result-display" id="roll-res">
-                🎩 <strong>"All Part of the Act!"</strong> — Piper initialized (Level 3 Wild Magic Sorcerer • CHA 20 (+5) • Spell Save DC 15 • Spell Attack +7). Click <strong>🎩 PIPER</strong> above to view her Origin Story &amp; Passive Abilities!
             </div>
         </section>
 
@@ -1568,16 +1563,14 @@
         // 2. Otherwise, if Auto-Check is enabled, roll the d20 Wild Magic Check!
         if (isAuto) {
             const d20 = Math.floor(Math.random() * 20) + 1;
-            const resEl = document.getElementById('roll-res');
             if (d20 === 1) {
                 setTimeout(() => {
                     triggerWildMagicSurge(`Nat 1 on Wild Magic Check [d20 = 1] after ${spellName}!`, false);
                 }, 60);
             } else {
                 const checkBadge = ` <span style="margin-left:6px; padding:2px 7px; border-radius:4px; background:#1e293b; border:1px solid #475569; font-size:0.76rem; color:#cbd5e1;">🎲 Wild Check d20: <strong>${d20}</strong> (Safe) <button class="btn-act btn-act-pre" style="padding:1px 6px; font-size:0.68rem; margin-left:4px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Surge Override')">💥 Surge Anyway</button></span>`;
-                resEl.innerHTML += checkBadge;
                 const hudBody = document.getElementById('floating-roll-body');
-                if (hudBody) hudBody.innerHTML = resEl.innerHTML;
+                if (hudBody) hudBody.innerHTML += checkBadge;
             }
         }
     }
@@ -2773,14 +2766,19 @@
     // ==========================================
     // 🎲 DICE ROLLER ENGINE (WITH BRUTAL CRITS & FLOATING BOTTOM HUD)
     // ==========================================
-    function logRoll(htmlMsg) {
-        const res = document.getElementById('roll-res');
-        res.innerHTML = htmlMsg;
-        res.classList.remove('highlight-roll');
-        void res.offsetWidth;
-        res.classList.add('highlight-roll');
+    let lastHudShowTime = 0;
 
-        // Also pop up the Floating Bottom HUD Drawer so players never have to scroll up!
+    function logRoll(htmlMsg) {
+        lastHudShowTime = Date.now();
+        const res = document.getElementById('roll-res');
+        if (res) {
+            res.innerHTML = htmlMsg;
+            res.classList.remove('highlight-roll');
+            void res.offsetWidth;
+            res.classList.add('highlight-roll');
+        }
+
+        // Pop up the Floating Bottom HUD Drawer so players never have to scroll up!
         const hud = document.getElementById('floating-roll-hud');
         const hudBody = document.getElementById('floating-roll-body');
         const hudTime = document.getElementById('floating-roll-time');
@@ -2801,6 +2799,21 @@
         const hud = document.getElementById('floating-roll-hud');
         if (hud) hud.classList.remove('visible');
     }
+
+    // Dismiss Floating Bottom HUD Drawer when clicking/tapping anywhere outside it
+    document.addEventListener('click', (e) => {
+        const hud = document.getElementById('floating-roll-hud');
+        if (!hud || !hud.classList.contains('visible')) return;
+        // If this click just triggered a roll/action within the last 120ms, keep the newly updated HUD visible
+        if (Date.now() - lastHudShowTime < 120) return;
+        if (!hud.contains(e.target)) {
+            dismissFloatingHud();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') dismissFloatingHud();
+    });
 
     function modDiceMod(delta) {
         const input = document.getElementById('dice-mod');
