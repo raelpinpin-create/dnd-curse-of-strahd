@@ -38,9 +38,9 @@
 
 ---
 
-### 2. 👑 Jacomir Yulle ("King Jacomir") — Exiled Sovereign of Oakhaven
+### 2. 👑 Jacomir Yulle ("King of Oakenshire") — Exiled Sovereign of Oakenshire
 * **Species & Class:** **Level 3 Human Battle Master Fighter (5.5e / 2024 Rules)**
-* **Background & Alignment:** **Noble (Former King of Oakhaven / Oakenshire)** • **Lawful Neutral** *(Height: 5'11" • Age: 32)*
+* **Background & Alignment:** **Noble (Former King of Oakenshire)** • **Lawful Neutral** *(Height: 5'11" • Age: 32)*
 * **Interactive HTML Sheet:** [`JACOMIR_PLAYER_SHEET.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/JACOMIR_PLAYER_SHEET.html)
 * **Vitals:** **HP:** `28 / 28` *(3d10 + CON)* | **AC:** `17` *(Chain Mail 16 + Defense Fighting Style +1)* | **Init:** `+0` | **Speed:** `30 ft` | **PB:** `+2` | **Passive Perception:** `14`
 * **Ability Scores (27-Point Buy + Noble Background +2 STR / +1 CON):** `STR 17 (+3) ★ | DEX 10 (+0) | CON 16 (+3) ★ | INT 10 (+0) | WIS 14 (+2) | CHA 10 (+0)`
@@ -65,7 +65,7 @@
   - 🗡️ *Ancestral Greatsword*, 🪓 *2x Handaxes*, ⛓️ *Chain Mail (AC 16)*
   - 💍 *Signet Ring bearing the Lost Crest of Oakenshire*, 🧥 *Tattered Royal Traveling Cloak with Fur Mantle*, 📜 *Empty Scroll Case*
   - ♟️ *Dragonchess Gaming Set*, 👔 *Fine Traveler's Garments*, 🎒 *Explorer's Pack*
-* **Origin Lore & Roleplay Traits:** Former King of **Oakhaven (Oakenshire)** whose realm and vanguard were swallowed overnight by the creeping Mists. He carries himself as an anointed sovereign who will bleed for his companions as his royal vanguard, sworn to tear Barovia apart stone by stone to find his lost people.
+* **Origin Lore & Roleplay Traits:** Former King of **Oakenshire** whose realm and vanguard were swallowed overnight by the creeping Mists. He carries himself as an anointed sovereign who will bleed for his companions as his royal vanguard, sworn to tear Barovia apart stone by stone to find his lost people.
 
 ---
 

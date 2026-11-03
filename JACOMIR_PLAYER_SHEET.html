@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jacomir Yulle (King Jacomir) — Battle Master Fighter Sheet (Curse of Strahd)</title>
+    <title>Jacomir Yulle (King of Oakenshire) — Battle Master Fighter Sheet (Curse of Strahd)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
@@ -654,8 +654,8 @@
         <!-- HEADER BANNER -->
         <header class="header-banner">
             <div class="header-title">
-                <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.filter='brightness(1.18)'" onmouseout="this.style.filter='none'" title="Click to open King Jacomir's Origin Story, Feats & Passive Abilities">
-                    👑 JACOMIR YULLE <span style="font-size:0.95rem; color:#cbd5e1; font-weight:600;">("King Jacomir")</span>
+                <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.filter='brightness(1.18)'" onmouseout="this.style.filter='none'" title="Click to open Jacomir's Origin Story, Feats & Passive Abilities">
+                    👑 JACOMIR YULLE <span style="font-size:0.95rem; color:#cbd5e1; font-weight:600;">("King of Oakenshire")</span>
                 </h1>
                 <div style="margin-top:5px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                     <span class="pill-badge pill-gold" style="font-size:0.72rem; padding:2px 10px; letter-spacing:0.6px;">⭐ LEVEL 3</span>
@@ -1635,7 +1635,7 @@
             attackMod: "+5 to Hit (STR +3, PB +2)",
             damage: "2d6 + 3 Slashing (Savage Attacker rolls 2d6 twice!) • Graze: 3 Slashing on Miss",
             fullRules: "• <strong>Heavy Two-Handed Cleave:</strong> Deals <strong>2d6 + 3 Slashing damage</strong> on a hit.<br>• <strong>Origin Feat — Savage Attacker (1/Turn):</strong> Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either total! The <em>[💥 2d6+3 (Savage)]</em> button automatically rolls two sets of 2d6 and picks the higher total.<br>• <strong>5.5e Weapon Mastery — Graze:</strong> If your attack roll with this Greatsword misses a creature, you can deal damage to that creature equal to the ability modifier you used to make the attack roll (<strong>3 Slashing damage</strong>).",
-            flavor: "Forged in the royal smithies of Oakhaven before the Mists swallowed the realm, its steel never leaves an enemy unscathed—even when they parry.",
+            flavor: "Forged in the royal smithies of Oakenshire before the Mists swallowed the realm, its steel never leaves an enemy unscathed—even when they parry.",
             modalButtons: [
                 { label: "🗡️ Attack (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Ancestral Greatsword (+5)', 5); } },
                 { label: "💥 Roll Savage 2d6+3", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageGreatswordDamage(); } },
@@ -1723,7 +1723,7 @@
             attackMod: "Grants 1 Additional Action on Your Turn",
             damage: "Double Greatsword Attack Routine in a Single Turn!",
             fullRules: "You can push yourself beyond your normal limits for a moment. On your turn, you can take <strong>one additional action</strong> (except the Magic action).<br><br>Once you use this feature, you can't do so again until you finish a <strong>Short or Long Rest</strong>.",
-            flavor: "When the frontline wavers, the King of Oakhaven strikes twice before the thunder finishes rolling.",
+            flavor: "When the frontline wavers, the King of Oakenshire strikes twice before the thunder finishes rolling.",
             modalButtons: [
                 { label: "⚡ Activate Action Surge!", class: "btn-roll-action btn-roll-martial", onClick: () => { closeSpellModal(); useActionSurge(); } }
             ]
@@ -1764,9 +1764,9 @@
         },
         "backstory_full": {
             id: "backstory_full",
-            name: "👑 Jacomir Yulle (\"King Jacomir\") — Origin & Passive Abilities",
+            name: "👑 Jacomir Yulle (\"King of Oakenshire\") — Origin & Passive Abilities",
             school: "Level 3 Human Battle Master Fighter",
-            castingTime: "Noble Background (Former King of Oakhaven / Oakenshire) • Lawful Neutral",
+            castingTime: "Noble Background (Former King of Oakenshire) • Lawful Neutral",
             range: "5'11\" • Age 32",
             components: "Common, Draconic, Dwarvish • Dragonchess Set",
             duration: "« The Wandering Sovereign • Exiled Monarch of the Swallowed Realm »",
@@ -1805,7 +1805,7 @@
                 <div style="display:flex; flex-direction:column; gap:10px;">
                     <!-- Identity Header Box -->
                     <div style="padding:8px 12px; background:linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(15,23,42,0.9) 100%); border:1px solid rgba(245,158,11,0.35); border-radius:6px;">
-                        <div style="color:#fde68a; font-weight:800; font-size:0.86rem; letter-spacing:0.3px;">« The Wandering Sovereign • Former King of Oakhaven (Oakenshire) »</div>
+                        <div style="color:#fde68a; font-weight:800; font-size:0.86rem; letter-spacing:0.3px;">« The Wandering Sovereign • Former King of Oakenshire »</div>
                         <div style="color:#cbd5e1; font-size:0.75rem; margin-top:2px;">Level 3 Human Battle Master Fighter • Noble Background • 5'11" (Age 32) • Lawful Neutral</div>
                     </div>
 
@@ -1832,11 +1832,11 @@
                         </div>
                     </div>
 
-                    <!-- SEPARATE BOX 2: ORIGIN STORY & THE FALL OF OAKHAVEN -->
+                    <!-- SEPARATE BOX 2: ORIGIN STORY & THE FALL OF OAKENSHIRE -->
                     <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.22); border-left:3px solid var(--accent-blue); border-radius:6px; padding:10px 12px; font-size:0.77rem; color:#f8fafc; line-height:1.5;">
-                        <div style="font-size:0.74rem; font-weight:800; color:var(--accent-blue); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:5px;">🕰️ Origin Story &amp; The Swallowing of Oakhaven (Oakenshire)</div>
+                        <div style="font-size:0.74rem; font-weight:800; color:var(--accent-blue); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:5px;">🕰️ Origin Story &amp; The Swallowing of Oakenshire</div>
                         <div>
-                            Once the anointed sovereign of <strong>Oakhaven (Oakenshire)</strong>, <strong>King Jacomir Yulle</strong> was no decadent palace monarch—he was a battle-hardened commander who stood in the mud of the shield-wall beside his soldiers. When an unnatural, freezing gray fog rolled across the borders of his kingdom, Jacomir rode out at the head of his royal vanguard with his ancestral two-handed greatsword drawn to hold the line.<br><br>
+                            Once the anointed sovereign of <strong>Oakenshire</strong>, <strong>King Jacomir Yulle</strong> was no decadent palace monarch—he was a battle-hardened commander who stood in the mud of the shield-wall beside his soldiers. When an unnatural, freezing gray fog rolled across the borders of his kingdom, Jacomir rode out at the head of his royal vanguard with his ancestral two-handed greatsword drawn to hold the line.<br><br>
                             The Mists did not fight with steel. In a single silent night, the creeping fog swallowed his borders, his bannermen, and his people, leaving Jacomir standing alone in the choking dark with only his signet ring, a tattered fur-mantled royal cloak, and an empty scroll case.<br><br>
                             Following the phantom tracks of his vanished subjects into the fog, Jacomir was wrenched across the planes and jolted awake inside the runaway Phantom Black Stagecoach hurtling down the Old Svalich Road—swearing an unbreakable oath to find his people and bring Barovia's tyrant to heel.
                         </div>
@@ -1847,7 +1847,7 @@
                         <div style="font-size:0.72rem; font-weight:800; color:#fde68a; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px;">🎭 Royal Persona, Ideals, Bonds &amp; Flaws</div>
                         <div>• <strong>Personality:</strong> <em>"I still carry myself as an anointed king; I will bleed for these traveling companions as if they were my royal vanguard."</em></div>
                         <div>• <strong>Ideal (Duty):</strong> <em>"A crown is not a privilege; it is an unbreakable debt owed to every soul living under my banner."</em></div>
-                        <div>• <strong>Bond:</strong> <em>"Oakhaven (Oakenshire) was dragged into these cursed mists. I will find my people, even if I have to tear Barovia apart stone by stone."</em></div>
+                        <div>• <strong>Bond:</strong> <em>"Oakenshire was dragged into these cursed mists. I will find my people, even if I have to tear Barovia apart stone by stone."</em></div>
                         <div>• <strong>Flaw:</strong> <em>"I struggle to accept that my titles hold no power here. I refuse to see Strahd as a mythic terror—he is merely a tyrant occupying land where my people are trapped."</em></div>
                     </div>
 
@@ -2387,7 +2387,7 @@
         "💍 Signet Ring Bearing the Lost Crest of Oakenshire",
         "🧥 Tattered Royal Traveling Cloak with Fur Mantle",
         "📜 Empty Scroll Case (Royal Decree Container)",
-        "♟️ Dragonchess Gaming Set (Carved Oakhaven Ivory)",
+        "♟️ Dragonchess Gaming Set (Carved Oakenshire Ivory)",
         "👔 Fine Traveler's Garments",
         "🎒 Explorer's Pack (Bedroll, Mess Kit, Tinderbox)",
         "🔥 10x Torches",
@@ -2399,7 +2399,7 @@
         "greatsword": {
             name: "🗡️ Ancestral Greatsword of Oakenshire",
             category: "MARTIAL MELEE WEAPON • Heavy, Two-Handed",
-            origin: "Royal Armory of Oakhaven (Oakenshire)",
+            origin: "Royal Armory of Oakenshire",
             desc: "A heavy, battle-worn two-handed greatsword bearing the faint oak-and-crown etching of King Jacomir's vanished homeland.",
             effect: "• <strong>Attack:</strong> +5 to Hit, <strong>2d6 + 3 Slashing damage</strong> (rolls 2d6 twice via <em>Savage Attacker</em>).<br>• <strong>Weapon Mastery — Graze:</strong> When an attack roll misses, the target still takes <strong>3 Slashing damage</strong> (STR modifier)."
         },
@@ -2420,9 +2420,9 @@
         "signet ring": {
             name: "💍 Signet Ring of the Lost Crest of Oakenshire",
             category: "ROYAL RELIC • Noble Regalia",
-            origin: "Sovereign Seal of Oakhaven / Oakenshire",
+            origin: "Sovereign Seal of Oakenshire",
             desc: "A heavy gold-and-iron signet ring stamped with the ancient crest of Oakenshire—proof of Jacomir's bloodline and sworn duty to his vanished subjects.",
-            effect: "• Marks Jacomir Yulle as the rightful sovereign of Oakhaven.<br>• Can press royal wax seals and resonates with any surviving relics or citizens of Oakenshire trapped inside the Mists."
+            effect: "• Marks Jacomir Yulle as the rightful sovereign of Oakenshire.<br>• Can press royal wax seals and resonates with any surviving relics or citizens of Oakenshire trapped inside the Mists."
         },
         "cloak": {
             name: "🧥 Tattered Royal Traveling Cloak with Fur Mantle",
@@ -2434,8 +2434,8 @@
         "scroll case": {
             name: "📜 Empty Royal Scroll Case",
             category: "PERSONAL KEEPSAKE • Noble Gear",
-            origin: "Oakhaven War Tent",
-            desc: "A brass-capped leather scroll tube that once held the royal decrees and muster rolls of Oakhaven—now hollow, waiting to record the names of the rescued.",
+            origin: "Oakenshire War Tent",
+            desc: "A brass-capped leather scroll tube that once held the royal decrees and muster rolls of Oakenshire—now hollow, waiting to record the names of the rescued.",
             effect: "• Watertight case ideal for protecting Barovian maps, Kolyan's letter, or sacred scrolls from the rain."
         },
         "dragonchess": {
@@ -2462,16 +2462,16 @@
     };
 
     function getStoredItems() {
-        const stored = localStorage.getItem('cos_inv_jacomir_v1');
+        const stored = localStorage.getItem('cos_inv_jacomir_v2');
         if (!stored) {
-            localStorage.setItem('cos_inv_jacomir_v1', JSON.stringify(defaultItems));
+            localStorage.setItem('cos_inv_jacomir_v2', JSON.stringify(defaultItems));
             return [...defaultItems];
         }
         try { return JSON.parse(stored); } catch(e) { return [...defaultItems]; }
     }
 
     function saveStoredItems(items) {
-        localStorage.setItem('cos_inv_jacomir_v1', JSON.stringify(items));
+        localStorage.setItem('cos_inv_jacomir_v2', JSON.stringify(items));
     }
 
     function parseItemInfo(itemStr) {
@@ -2637,8 +2637,8 @@
     const MAX_NOTE_CHARS = 220;
     const defaultPlayerNotes = [
         {
-            id: 'base_oakhaven',
-            title: "The Fall of Oakhaven (Oakenshire)",
+            id: 'base_oakenshire',
+            title: "The Fall of Oakenshire",
             text: "Unnatural freezing gray fog swallowed my kingdom and royal vanguard overnight. I carry the Signet Ring of Oakenshire and will tear Barovia apart to find my people."
         },
         {
@@ -2650,16 +2650,16 @@
     let editingNoteId = null;
 
     function getStoredNotes() {
-        const stored = localStorage.getItem('cos_notes_jacomir_v1');
+        const stored = localStorage.getItem('cos_notes_jacomir_v2');
         if (!stored) {
-            localStorage.setItem('cos_notes_jacomir_v1', JSON.stringify(defaultPlayerNotes));
+            localStorage.setItem('cos_notes_jacomir_v2', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
         try { return JSON.parse(stored); } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {
-        localStorage.setItem('cos_notes_jacomir_v1', JSON.stringify(notes));
+        localStorage.setItem('cos_notes_jacomir_v2', JSON.stringify(notes));
     }
 
     function getRemovedNoteTitles() {

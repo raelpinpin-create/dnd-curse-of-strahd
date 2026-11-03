@@ -10,7 +10,7 @@
 | Slot | Hero / Companion | Class & Level | HP | AC | Init | Key Passive / Resource |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **PC 1** | 🎩 **Piper ("The Incomparable")** | Level 3 Wild Magic Sorcerer (Fierna Tiefling) | `16/16` | `12 (15)` | `+2` | ✨ `3/3 SP` • 🃏 `Tides of Chaos` • 🔥 Fire Resist • `DC 14 / +6` |
-| **PC 2** | 👑 **Jacomir Yulle ("King Jacomir")** | Level 3 Battle Master Fighter (Human • Noble) | `28/28` | `17` | `+0` | ⚔️ `4/4 d8` *(Parry/Riposte/Menacing DC 13)* • 💨 `3/3 SW` • ⚡ `Action Surge` |
+| **PC 2** | 👑 **Jacomir Yulle ("King of Oakenshire")** | Level 3 Battle Master Fighter (Human • Noble) | `28/28` | `17` | `+0` | ⚔️ `4/4 d8` *(Parry/Riposte/Menacing DC 13)* • 💨 `3/3 SW` • ⚡ `Action Surge` |
 | **PC 3** | 🛡️ **Stranger #3** *(TBD)* | Level 3 *[TBD]* | `--/--` | `--` | `+--` | 🤝 Help Tokens: `2 / 2` |
 | **PC 4** | 🏹 **Stranger #4** *(TBD)* | Level 3 *[TBD]* | `--/--` | `--` | `+--` | 🤝 Help Tokens: `2 / 2` |
 | **Escort** | 🌹 **Ireena Kolyana** | Noble Swordswoman | `28/28` | `15` | `+2` | Silvered Rapier `+5 (1d8+2)` • Parry `+2 AC` |
