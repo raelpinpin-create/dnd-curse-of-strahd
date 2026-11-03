@@ -680,35 +680,35 @@
             background: rgba(168, 85, 247, 0.1);
         }
 
-        /* Floating Bottom Roll Result HUD Drawer */
+        /* Center-Screen Floating Roll Result HUD Window */
         .floating-roll-hud {
             position: fixed;
-            bottom: 14px;
+            top: 50%;
             left: 50%;
-            transform: translate(-50%, 130%);
+            transform: translate(-50%, -50%) scale(0.92);
             opacity: 0;
             pointer-events: none;
             z-index: 950;
-            width: min(720px, 95vw);
-            background: linear-gradient(180deg, rgba(19, 27, 46, 0.98) 0%, rgba(10, 15, 29, 0.98) 100%);
-            backdrop-filter: blur(10px);
-            border: 1.5px solid var(--accent-gold);
-            border-radius: 10px;
-            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.88), 0 0 20px rgba(245, 158, 11, 0.25);
-            padding: 9px 13px;
+            width: min(640px, 92vw);
+            background: linear-gradient(180deg, rgba(19, 27, 46, 0.99) 0%, rgba(10, 15, 29, 0.99) 100%);
+            backdrop-filter: blur(12px);
+            border: 2px solid var(--accent-gold);
+            border-radius: 12px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.92), 0 0 28px rgba(245, 158, 11, 0.3);
+            padding: 13px 16px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease, box-shadow 0.2s ease;
+            gap: 8px;
+            transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.18s ease, box-shadow 0.2s ease;
         }
         .floating-roll-hud.visible {
-            transform: translate(-50%, 0);
+            transform: translate(-50%, -50%) scale(1);
             opacity: 1;
             pointer-events: auto;
         }
         .floating-roll-hud.pulse-hud {
             border-color: #fde68a;
-            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.92), 0 0 26px rgba(245, 158, 11, 0.45);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.95), 0 0 36px rgba(245, 158, 11, 0.55);
         }
     </style>
 </head>
