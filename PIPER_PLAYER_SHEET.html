@@ -973,13 +973,13 @@
 
                 <!-- 📓 PLAYER NOTES PANEL -->
                 <div class="panel" style="padding: 8px 10px;">
-                    <div class="panel-title" style="margin-bottom:4px;">
+                    <div class="panel-title" style="margin-bottom:4px; cursor:pointer;" onclick="openPlayerNotesModal()" title="Click to open Player Notes">
                         <div style="display:flex; align-items:center; gap:6px;">
-                            <span>📓 Player Notes</span>
+                            <span onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--accent-gold)'" style="transition:color 0.15s;">📓 Player Notes</span>
                             <span id="player-notes-count-badge" style="font-size:0.64rem; padding:1px 6px; border-radius:999px; background:rgba(167,139,250,0.16); color:#c4b5fd; border:1px solid rgba(167,139,250,0.35);">2</span>
                         </div>
                         <div style="display:flex; align-items:center; gap:4px;">
-                            <button class="btn-act btn-act-pre" onclick="openPlayerNotesModal()" style="font-size:0.68rem; padding:2px 7px; color:#fde68a; border:1px solid rgba(245,158,11,0.4);">📖 Open Notes</button>
+                            <button class="btn-act btn-act-pre" onclick="event.stopPropagation(); openPlayerNotesModal();" style="font-size:0.68rem; padding:2px 7px; color:#fde68a; border:1px solid rgba(245,158,11,0.4);">📖 Open Notes</button>
                         </div>
                     </div>
                     <div id="player-notes-mini-list" style="display:flex; flex-direction:column; gap:4px; max-height:110px; overflow-y:auto;"></div>
@@ -3470,7 +3470,7 @@
         const baseMatch = defaultPlayerNotes.find(b => b.id === target.id);
         const isNewOrEdited = !baseMatch || baseMatch.title !== target.title || baseMatch.text !== target.text;
 
-        document.getElementById('reader-note-title').innerText = `📌 ${target.title}`;
+        document.getElementById('reader-note-title').innerText = target.title;
         document.getElementById('reader-note-body').innerText = target.text;
         document.getElementById('reader-note-status').innerHTML = isNewOrEdited
             ? '<span style="color:#4ade80; font-weight:700;">● Unsynced / New Note</span>'
@@ -3518,7 +3518,7 @@
                     return `
                         <div class="inv-row-item" onclick="openNoteReader('${n.id}')" style="cursor:pointer; padding:5px 8px;" title="Click to read full note">
                             <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.73rem; color:#f8fafc; flex:1;">
-                                <strong style="color:#fde68a;">📌 ${escapeNoteHtml(n.title)}</strong>
+                                <strong style="color:#fde68a;">${escapeNoteHtml(n.title)}</strong>
                                 ${isNew ? '<span style="font-size:0.6rem; color:#4ade80; margin-left:4px; font-weight:700;">[NEW]</span>' : ''}
                                 <span style="color:var(--text-dim);"> — ${escapeNoteHtml(n.text)}</span>
                             </div>
@@ -3541,7 +3541,7 @@
                         <div onclick="openNoteReader('${n.id}')" style="background:var(--panel-sub); border:1px solid ${isNewOrEdited ? '#6d529e' : 'var(--card-border)'}; border-radius:6px; padding:9px 11px; display:flex; justify-content:space-between; align-items:center; gap:10px; cursor:pointer; transition:border-color 0.15s, background 0.15s;" onmouseover="this.style.borderColor='#a78bfa'; this.style.background='#151f34';" onmouseout="this.style.borderColor='${isNewOrEdited ? '#6d529e' : 'var(--card-border)'}'; this.style.background='var(--panel-sub)';" title="Click to open and read this note">
                             <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;">
                                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                                    <span style="font-size:0.82rem; font-weight:800; color:#fde68a;">📌 ${escapeNoteHtml(n.title)}</span>
+                                    <span style="font-size:0.82rem; font-weight:800; color:#fde68a;">${escapeNoteHtml(n.title)}</span>
                                     ${isNewOrEdited ? '<span style="font-size:0.6rem; padding:1px 6px; border-radius:999px; background:rgba(74,222,128,0.15); color:#4ade80; border:1px solid rgba(74,222,128,0.4); font-weight:700;">New</span>' : ''}
                                 </div>
                                 <div style="font-size:0.75rem; color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
