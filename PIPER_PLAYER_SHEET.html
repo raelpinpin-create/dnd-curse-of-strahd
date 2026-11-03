@@ -475,13 +475,13 @@
         .btn-roll-dmg:hover { background: #b91c1c; }
         .btn-roll-heal { background: #065f46; color: #d1fae5; }
         .btn-roll-heal:hover { background: #047857; }
-        .btn-roll-wild { background: #312e59; color: #e2e8f0; border: 1px solid #4f46e5; }
-        .btn-roll-wild:hover { background: #3e3a6d; border-color: #818cf8; }
+        .btn-roll-wild { background: linear-gradient(135deg, #6d28d9 0%, #4338ca 100%); color: #f5f3ff; border: 1px solid #8b5cf6; }
+        .btn-roll-wild:hover { filter: brightness(1.12); border-color: #c4b5fd; }
 
         /* Wild Magic Banner Box */
         .wild-surge-live-box {
-            background: #0b111e;
-            border: 1px solid #334155;
+            background: linear-gradient(135deg, rgba(88, 28, 135, 0.18) 0%, rgba(30, 27, 75, 0.32) 100%);
+            border: 1px solid #6d529e;
             border-radius: 7px;
             padding: 9px 11px;
             font-size: 0.78rem;
@@ -686,19 +686,20 @@
     <div class="sheet-container">
         
         <!-- HEADER BANNER -->
-        <header class="header-banner" style="background: linear-gradient(180deg, #171f32 0%, #0f172a 100%);">
+        <header class="header-banner" style="background: linear-gradient(180deg, #1b162e 0%, #0f172a 100%);">
             <div class="header-title">
-                <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.filter='brightness(1.18)'" onmouseout="this.style.filter='none'" title="Click to open Piper's Origin Story, Backstory & Passive Abilities (Hellish Resistance, Darkvision, Entertainer)">
+                <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.filter='brightness(1.18)'" onmouseout="this.style.filter='none'" title="Click to open Piper's Origin Story, Backstory & Passive Abilities">
                     🎩 PIPER <span style="font-size:0.95rem; color:#cbd5e1; font-weight:600;">("Piper the Incomparable")</span>
-                    <span style="font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:700; color:#fde68a; background:rgba(245,158,11,0.14); border:1px solid rgba(245,158,11,0.4); padding:2px 8px; border-radius:999px; letter-spacing:0.3px;">📖 Origin &amp; Passives ℹ️</span>
                 </h1>
+                <div style="margin-top:4px; display:flex; align-items:center; gap:6px;">
+                    <span class="pill-badge pill-gold" style="font-size:0.72rem; padding:2px 10px; letter-spacing:0.6px;">⭐ LEVEL 3</span>
+                </div>
             </div>
             <div class="pill-badge-group">
                 <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">🏰 Portal</a>
                 <button class="btn-act btn-act-pre" onclick="exportSheetState()" style="color:var(--accent-gold); border:1px solid rgba(245, 158, 11, 0.5); display:flex; align-items:center; gap:4px;" title="Copy live HP, Sorcery Points, Tides of Chaos, Spell Slots, and session inventory delta">📋 Export Data</button>
-                <span class="pill-badge pill-gold" style="font-size:0.76rem; padding:3px 11px; letter-spacing:0.5px;">⭐ LEVEL 3</span>
                 <span class="pill-badge pill-neutral">CHAOTIC NEUTRAL</span>
-                <span class="pill-badge pill-neutral" style="color:#cbd5e1; border-color:#475569;">WILD MAGIC SORCERER</span>
+                <span class="pill-badge pill-purple">WILD MAGIC SORCERER</span>
             </div>
         </header>
 
@@ -949,22 +950,22 @@
             <div>
 
                 <!-- 🎇 WILD MAGIC SURGE & TIDES OF CHAOS ENGINE -->
-                <div class="panel" style="background: var(--panel-bg); border: 1px solid #334155;">
-                    <div class="panel-title">
-                        <span style="color:var(--accent-gold); font-size:0.86rem;">🎇 Wild Magic Surge &amp; Tides of Chaos Engine</span>
+                <div class="panel" style="background: linear-gradient(135deg, #1b162f 0%, #121a2d 100%); border: 1.5px solid #6d529e;">
+                    <div class="panel-title" style="border-bottom-color: rgba(167, 139, 250, 0.22);">
+                        <span style="color:#d8b4fe; font-size:0.86rem;">🎇 Wild Magic Surge &amp; Tides of Chaos Engine</span>
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                            <label style="font-size:0.68rem; color:var(--text-dim); display:flex; align-items:center; gap:4px; cursor:pointer; text-transform:none;" title="When checked, casting any 1st+ level Sorcerer spell automatically rolls the d20 Wild Magic check (or auto-triggers d100 Surge if Tides of Chaos was spent!)">
-                                <input type="checkbox" id="auto-surge-check" checked style="accent-color:#64748b;"> Auto-Check on Spell Cast
+                            <label style="font-size:0.68rem; color:#c4b5fd; display:flex; align-items:center; gap:4px; cursor:pointer; text-transform:none;" title="When checked, casting any 1st+ level Sorcerer spell automatically rolls the d20 Wild Magic check (or auto-triggers d100 Surge if Tides of Chaos was spent!)">
+                                <input type="checkbox" id="auto-surge-check" checked style="accent-color:#8b5cf6;"> Auto-Check on Spell Cast
                             </label>
-                            <button class="btn-act btn-act-pre" onclick="openWildSurgeTableModal()" style="font-size:0.68rem; color:#fde68a; border-color:#475569;">📜 All 50 Surge Effects (d100 Table)</button>
+                            <button class="btn-act btn-act-pre" onclick="openWildSurgeTableModal()" style="font-size:0.68rem; color:#fde68a; border-color:#7c3aed; background:rgba(109, 40, 217, 0.2);">📜 All 50 Surge Effects (d100 Table)</button>
                         </div>
                     </div>
 
                     <!-- TIDES OF CHAOS INTERACTIVE BAR -->
-                    <div id="tides-card" style="background:var(--panel-sub); border:1px solid #334155; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <div id="tides-card" style="background:rgba(15, 23, 42, 0.85); border:1px solid #6d529e; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                         <div style="flex:1; min-width:220px;">
                             <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="font-size:0.82rem; font-weight:800; color:#f8fafc; cursor:pointer;" onclick="openSpellDetailsModal('tides_of_chaos')" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">🃏 Tides of Chaos ("Pick-a-Card") ℹ️</span>
+                                <span style="font-size:0.82rem; font-weight:800; color:#fde68a; cursor:pointer;" onclick="openSpellDetailsModal('tides_of_chaos')" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#fde68a'">🃏 Tides of Chaos ("Pick-a-Card") ℹ️</span>
                                 <span id="tides-status-badge" style="font-size:0.66rem; font-weight:800; padding:2px 7px; border-radius:999px; background:rgba(34,197,94,0.16); color:#4ade80; border:1px solid #22c55e;">🟢 READY (1/LR)</span>
                             </div>
                             <div style="font-size:0.71rem; color:var(--text-dim); margin-top:2px;" id="tides-desc-line">
@@ -972,32 +973,32 @@
                             </div>
                         </div>
                         <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
-                            <button id="btn-use-tides" class="btn-roll-action" style="background:#334155; border:1px solid #64748b; padding:5px 10px; font-size:0.74rem;" onclick="useTidesOfChaos()">🃏 Use Tides (+Advantage)</button>
+                            <button id="btn-use-tides" class="btn-roll-action" style="background:linear-gradient(135deg, #5b21b6 0%, #3730a3 100%); border:1px solid #8b5cf6; padding:5px 10px; font-size:0.74rem;" onclick="useTidesOfChaos()">🃏 Use Tides (+Advantage)</button>
                             <button class="btn-act btn-act-pre" onclick="toggleTidesManual()" style="font-size:0.68rem; padding:4px 7px;" title="Manually toggle Ready / Primed">🔄 Toggle</button>
                         </div>
                     </div>
 
                     <!-- DIRECT WILD MAGIC ROLLER BUTTONS -->
                     <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
-                        <button class="btn-roll-action" style="background:#1e293b; border:1px solid #475569; padding:5px 10px; font-size:0.74rem;" onclick="rollWildMagicD20Check('Manual Spell Check')">🎲 Roll Wild Magic Check (d20)</button>
+                        <button class="btn-roll-action" style="background:#312e81; border:1px solid #6366f1; padding:5px 10px; font-size:0.74rem;" onclick="rollWildMagicD20Check('Manual Spell Check')">🎲 Roll Wild Magic Check (d20)</button>
                         <button class="btn-roll-action btn-roll-wild" style="padding:5px 12px; font-size:0.74rem; font-weight:700;" onclick="triggerWildMagicSurge('Direct Surge Trigger')">💥 Trigger Wild Magic Surge (d100)</button>
                         <div style="display:flex; align-items:center; gap:4px; margin-left:auto;">
-                            <span style="font-size:0.68rem; color:#94a3b8;">Lookup d100:</span>
+                            <span style="font-size:0.68rem; color:#c4b5fd;">Lookup d100:</span>
                             <input type="number" id="manual-d100-input" class="hp-input-num" placeholder="1-100" min="1" max="100" style="width:52px; height:25px; font-size:0.74rem;">
-                            <button class="btn-act btn-act-pre" onclick="lookupSpecificSurge()" style="font-size:0.68rem; padding:3px 7px; color:#cbd5e1;">Go</button>
+                            <button class="btn-act btn-act-pre" onclick="lookupSpecificSurge()" style="font-size:0.68rem; padding:3px 7px; color:#d8b4fe; border-color:#6d529e;">Go</button>
                         </div>
                     </div>
 
                     <!-- ACTIVE WILD MAGIC SURGE RESULT DISPLAY -->
                     <div class="wild-surge-live-box" id="wild-surge-live-box">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:0.72rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.4px;" id="surge-box-header">✨ Active Wild Magic Surge Output</span>
-                            <span style="font-size:0.68rem; color:#94a3b8; font-family:'JetBrains Mono',monospace;" id="surge-box-roll-tag">Awaiting Surge...</span>
+                            <span style="font-size:0.72rem; font-weight:800; color:#fde68a; text-transform:uppercase; letter-spacing:0.4px;" id="surge-box-header">✨ Active Wild Magic Surge Output</span>
+                            <span style="font-size:0.68rem; color:#c4b5fd; font-family:'JetBrains Mono',monospace;" id="surge-box-roll-tag">Awaiting Surge...</span>
                         </div>
                         <div id="surge-box-effect" style="color:#f8fafc; font-size:0.78rem;">
                             Cast a 1st-level or higher spell or click <strong>[💥 Trigger Wild Magic Surge (d100)]</strong> to automatically roll and announce the effect!
                         </div>
-                        <div id="surge-box-flavor" style="color:#cbd5e1; font-size:0.72rem; font-style:italic;"></div>
+                        <div id="surge-box-flavor" style="color:#fde68a; font-size:0.72rem; font-style:italic;"></div>
                         <div id="surge-box-actions" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:2px;"></div>
                     </div>
                 </div>
@@ -2618,25 +2619,80 @@
             </a>
         ` : '';
 
-        body.innerHTML = `
-            <div style="display:flex; flex-direction:column; gap:8px;">
-                <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
-                    <span class="pill-badge" style="background:rgba(245,158,11,0.15); border:1px solid var(--accent-gold); color:#fde68a; font-size:0.68rem;">${sp.school || 'Sorcerer'}</span>
-                    <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#93c5fd; font-size:0.68rem;">⏱️ ${sp.castingTime || '1 Action'}</span>
-                    <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; font-size:0.68rem;">📏 ${sp.range || 'Self'}</span>
-                    <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; font-size:0.68rem;">🧩 ${sp.components || 'V, S'}</span>
-                    <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; font-size:0.68rem;">⏳ ${sp.duration || 'Instantaneous'}</span>
+        if (spellId === 'backstory_full') {
+            body.innerHTML = `
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <!-- Identity Header Box -->
+                    <div style="padding:8px 12px; background:linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(15,23,42,0.9) 100%); border:1px solid rgba(245,158,11,0.35); border-radius:6px;">
+                        <div style="color:#fde68a; font-weight:800; font-size:0.86rem; letter-spacing:0.3px;">« Travelling Stage Magician • Prophesied Child of the Pocket Watch »</div>
+                        <div style="color:#cbd5e1; font-size:0.75rem; margin-top:2px;">Level 3 Fierna Tiefling Wild Magic Sorcerer • Entertainer Background • 5'4" (Age 24) • Chaotic Neutral</div>
+                    </div>
+
+                    <!-- SEPARATE BOX 1: PASSIVE ABILITIES & TRAITS -->
+                    <div style="background:rgba(15,23,42,0.85); border:1px solid #334155; border-left:3px solid #ef4444; border-radius:6px; padding:10px 12px;">
+                        <div style="font-size:0.74rem; font-weight:800; color:#fca5a5; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:7px;">🛡️ Passive Abilities, Resistances &amp; Traits</div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:7px; font-size:0.75rem;">
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#f87171;">🔥 Hellish Resistance (Fierna)</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Resistant to <strong>Fire Damage</strong> (takes half damage from all fire sources, including self-centered Wild Surge Fireballs!).</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#38bdf8;">👁️ Darkvision (60 Feet)</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Sees in dim light within 60 ft as bright light, and in darkness as dim light (shades of gray).</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#fde68a;">🎩 By Popular Demand (Entertainer)</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Can perform nightly in any tavern or inn (e.g., <em>Blood on the Vine</em>, <em>Blue Water Inn</em>) for free lodging &amp; food.</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#c4b5fd;">🗣️ Languages &amp; Tool Proficiencies</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;"><strong>Languages:</strong> Common, Infernal, Elvish.<br><strong>Tools:</strong> Disguise Kit, Playing Cards / Musical Instrument.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEPARATE BOX 2: ORIGIN STORY & BACKSTORY -->
+                    <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.22); border-left:3px solid var(--accent-blue); border-radius:6px; padding:10px 12px; font-size:0.77rem; color:#f8fafc; line-height:1.5;">
+                        <div style="font-size:0.74rem; font-weight:800; color:var(--accent-blue); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:5px;">🕰️ Origin Story &amp; Awakening in the Svalich Woods</div>
+                        <div>
+                            Growing up in a cold, overcrowded elvish orphanage, Piper was shunned for her purple-tinted horns and Fierna blood. Her only comfort came from an old retired performer named <strong>Barnaby</strong>, who taught her sleight-of-hand card tricks and false-bottom props. Before he passed, Barnaby gave her a <strong>brass pocket watch</strong> containing a blurred portrait of a tiefling couple and whispered: <em>"Only you can find them, O prophesied one."</em><br><br>
+                            Leaving at 18, she billed herself as <strong>"Piper the Incomparable"</strong>, hoping her parents would see her posters in taverns. Determined to prove she wasn't an infernal weapon of mass destruction, she swore one rule: <strong>never do real magic</strong>.<br><br>
+                            Haunted by a terrifyingly real dream of the Svalich Woods where a tiefling couple with purple-tinted horns fought off a shadowy horror, Piper followed the vision into Barovia. Dropping her parents' watch in the dark fog, she snapped her fingers for her fake thumb-fire trick—and Barovia's dark magic ignited her suppressed bloodline into a blast of spectral hellfire. Now every fake trick triggers wildly dangerous real spells, which she frantically plays off with a sweat-drenched smile as <em>"All part of the act!"</em>
+                        </div>
+                    </div>
+
+                    <!-- SEPARATE BOX 3: PERSONALITY, IDEALS & FLAWS -->
+                    <div style="background:rgba(168,85,247,0.06); border:1px solid rgba(168,85,247,0.25); border-left:3px solid #a855f7; border-radius:6px; padding:9px 12px; font-size:0.75rem; color:#e2e8f0; line-height:1.45;">
+                        <div style="font-size:0.72rem; font-weight:800; color:#d8b4fe; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px;">🎭 Stage Persona, Ideals &amp; Flaws</div>
+                        <div>• <strong>Ideals:</strong> <em>Wonder</em> (laughter in the dark), <em>Innocence</em> (harmless tricks over infernal blood), <em>Independence</em>, &amp; <em>Connection</em>.</div>
+                        <div>• <strong>Flaws:</strong> <em>Pathological Denial</em> (never admits losing control of a spell), <em>Rejection Panic</em>, &amp; <em>Compulsive Misdirection</em> (nervously palms mugs/cards).</div>
+                    </div>
+
+                    ${flavorHtml}
+                    ${wikiBtnHtml}
                 </div>
-                ${combatStatsHtml}
-                <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.22); border-radius:6px; padding:9px 11px; font-size:0.78rem; color:#f8fafc; line-height:1.5;">
-                    <div style="font-size:0.7rem; font-weight:700; color:var(--accent-blue); text-transform:uppercase; margin-bottom:4px;">📖 Official D&amp;D 5e / 5.5e Rules &amp; Mechanics:</div>
-                    <div>${sp.fullRules || sp.desc}</div>
+            `;
+        } else {
+            body.innerHTML = `
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+                        <span class="pill-badge" style="background:rgba(245,158,11,0.15); border:1px solid var(--accent-gold); color:#fde68a; font-size:0.68rem;">${sp.school || 'Sorcerer'}</span>
+                        <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#93c5fd; font-size:0.68rem;">⏱️ ${sp.castingTime || '1 Action'}</span>
+                        <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; font-size:0.68rem;">📏 ${sp.range || 'Self'}</span>
+                        <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; font-size:0.68rem;">🧩 ${sp.components || 'V, S'}</span>
+                        <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; font-size:0.68rem;">⏳ ${sp.duration || 'Instantaneous'}</span>
+                    </div>
+                    ${combatStatsHtml}
+                    <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.22); border-radius:6px; padding:9px 11px; font-size:0.78rem; color:#f8fafc; line-height:1.5;">
+                        <div style="font-size:0.7rem; font-weight:700; color:var(--accent-blue); text-transform:uppercase; margin-bottom:4px;">📖 Official D&amp;D 5e / 5.5e Rules &amp; Mechanics:</div>
+                        <div>${sp.fullRules || sp.desc}</div>
+                    </div>
+                    ${upcastHtml}
+                    ${flavorHtml}
+                    ${wikiBtnHtml}
                 </div>
-                ${upcastHtml}
-                ${flavorHtml}
-                ${wikiBtnHtml}
-            </div>
-        `;
+            `;
+        }
 
         const actionsContainer = document.getElementById('spell-modal-actions');
         actionsContainer.innerHTML = '';
