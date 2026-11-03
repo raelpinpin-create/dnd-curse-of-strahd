@@ -782,7 +782,7 @@
                     </div>
                 </div>
 
-                <!-- 6 ABILITY SCORES STRIP (5.5e Validated: STR 15+2=17, CON 15+1=16, WIS 14, DEX/INT/CHA 10) -->
+                <!-- 6 ABILITY SCORES STRIP (5.5e Validated: STR 15+2=17, CON 15+1=16, WIS 12, CHA 12, DEX/INT 10) -->
                 <div class="ability-strip">
                     <div class="ability-box active-key" onclick="rollD20('Strength Check ★', 3)" title="Key Fighter Stat • Click to roll STR Check (+3)">
                         <div class="ability-name">STR ★</div>
@@ -804,15 +804,15 @@
                         <div class="ability-score">10</div>
                         <div class="ability-mod">+0</div>
                     </div>
-                    <div class="ability-box" onclick="rollD20('Wisdom Check', 2)" title="Click to roll WIS Check (+2)">
+                    <div class="ability-box" onclick="rollD20('Wisdom Check', 1)" title="Click to roll WIS Check (+1)">
                         <div class="ability-name">WIS</div>
-                        <div class="ability-score">14</div>
-                        <div class="ability-mod">+2</div>
+                        <div class="ability-score">12</div>
+                        <div class="ability-mod">+1</div>
                     </div>
-                    <div class="ability-box" onclick="rollD20('Charisma Check', 0)" title="Click to roll CHA Check (+0)">
+                    <div class="ability-box" onclick="rollD20('Charisma Check', 1)" title="Click to roll CHA Check (+1)">
                         <div class="ability-name">CHA</div>
-                        <div class="ability-score">10</div>
-                        <div class="ability-mod">+0</div>
+                        <div class="ability-score">12</div>
+                        <div class="ability-mod">+1</div>
                     </div>
                 </div>
 
@@ -825,10 +825,10 @@
                     <ul class="stat-row-list">
                         <li class="stat-row-item prof-item" onclick="rollSave('Strength Saving Throw ★', 3, true)"><span>Strength Save ★</span><span id="save-str-disp">+5 🎲</span></li>
                         <li class="stat-row-item prof-item" onclick="rollSave('Constitution Saving Throw ★', 3, true)"><span>Constitution Save ★</span><span id="save-con-disp">+5 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSave('Wisdom Saving Throw', 2, false)"><span>Wisdom Save</span><span>+2 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSave('Wisdom Saving Throw', 1, false)"><span>Wisdom Save</span><span>+1 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSave('Charisma Saving Throw', 1, false)"><span>Charisma Save</span><span>+1 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSave('Dexterity Saving Throw', 0, false)"><span>Dexterity Save</span><span>+0 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSave('Intelligence Saving Throw', 0, false)"><span>Intelligence Save</span><span>+0 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSave('Charisma Saving Throw', 0, false)"><span>Charisma Save</span><span>+0 🎲</span></li>
                     </ul>
                 </div>
 
@@ -836,27 +836,27 @@
                 <div class="panel">
                     <div class="panel-title">
                         <span>🎯 All 18 Skills (Individual Rolls)</span>
-                        <span id="prof-bonus-disp" style="font-size:0.7rem; color:var(--text-dim);">Prof: +2 • Pass. Perc: 14</span>
+                        <span id="prof-bonus-disp" style="font-size:0.7rem; color:var(--text-dim);">Prof: +2 • Pass. Perc: 13</span>
                     </div>
                     <ul class="stat-row-list">
                         <li class="stat-row-item" onclick="rollSkill('Acrobatics (DEX)', 0, false)"><span>Acrobatics (DEX)</span><span>+0 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 2, false)"><span>Animal Handling (WIS)</span><span>+2 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 1, false)"><span>Animal Handling (WIS)</span><span>+1 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Arcana (INT)', 0, false)"><span>Arcana (INT)</span><span>+0 🎲</span></li>
                         <li class="stat-row-item prof-item" onclick="rollSkill('Athletics (STR) ★', 3, true)"><span>Athletics (STR) ★</span><span class="prof-skill-val" data-base="3">+5 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 0, false)"><span>Deception (CHA)</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 1, false)"><span>Deception (CHA)</span><span>+1 🎲</span></li>
                         <li class="stat-row-item prof-item" onclick="rollSkill('History (INT) ★', 0, true)"><span>History (INT) ★</span><span class="prof-skill-val" data-base="0">+2 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 2, true)"><span>Insight (WIS) ★</span><span class="prof-skill-val" data-base="2">+4 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Intimidation (CHA) ★ [Skilled]', 0, true)"><span>Intimidation (CHA) ★ <small style="color:#cbd5e1;">(Skilled)</small></span><span class="prof-skill-val" data-base="0">+2 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 1, true)"><span>Insight (WIS) ★</span><span class="prof-skill-val" data-base="1">+3 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Intimidation (CHA) ★ [Skilled]', 1, true)"><span>Intimidation (CHA) ★ <small style="color:#cbd5e1;">(Skilled)</small></span><span class="prof-skill-val" data-base="1">+3 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Investigation (INT)', 0, false)"><span>Investigation (INT)</span><span>+0 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 2, false)"><span>Medicine (WIS)</span><span>+2 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 1, false)"><span>Medicine (WIS)</span><span>+1 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Nature (INT)', 0, false)"><span>Nature (INT)</span><span>+0 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Perception (WIS) ★', 2, true)"><span>Perception (WIS) ★</span><span class="prof-skill-val" data-base="2">+4 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Performance (CHA)', 0, false)"><span>Performance (CHA)</span><span>+0 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Persuasion (CHA) ★', 0, true)"><span>Persuasion (CHA) ★</span><span class="prof-skill-val" data-base="0">+2 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Perception (WIS) ★', 1, true)"><span>Perception (WIS) ★</span><span class="prof-skill-val" data-base="1">+3 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Performance (CHA)', 1, false)"><span>Performance (CHA)</span><span>+1 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Persuasion (CHA) ★', 1, true)"><span>Persuasion (CHA) ★</span><span class="prof-skill-val" data-base="1">+3 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Religion (INT)', 0, false)"><span>Religion (INT)</span><span>+0 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Sleight of Hand (DEX)', 0, false)"><span>Sleight of Hand (DEX)</span><span>+0 🎲</span></li>
                         <li class="stat-row-item" onclick="rollSkill('Stealth (DEX)', 0, false)" title="Disadvantage while wearing Chain Mail"><span>Stealth (DEX) <small style="color:#f87171;">(Disadv)</small></span><span>+0 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Survival (WIS) ★ [Skilled]', 2, true)"><span>Survival (WIS) ★ <small style="color:#cbd5e1;">(Skilled)</small></span><span class="prof-skill-val" data-base="2">+4 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Survival (WIS) ★ [Skilled]', 1, true)"><span>Survival (WIS) ★ <small style="color:#cbd5e1;">(Skilled)</small></span><span class="prof-skill-val" data-base="1">+3 🎲</span></li>
                     </ul>
                 </div>
 
@@ -1756,7 +1756,7 @@
             wikiUrl: "https://5e.tools/races.html#human_xphb",
             attackMod: "Heroic Inspiration: Reroll Any Die Immediately After Rolling",
             damage: "Skillful (Perception Proficiency) + Versatile (Extra Origin Feat)",
-            fullRules: "• <strong>Resourceful:</strong> You gain <strong>Heroic Inspiration</strong> whenever you finish a Long Rest. If you have Heroic Inspiration, you can expend it to reroll <em>any die</em> immediately after rolling it, and you must use the new roll.<br>• <strong>Skillful:</strong> You gain proficiency in one skill of your choice (<strong>Perception +4</strong>).<br>• <strong>Versatile:</strong> You gain an Origin feat of your choice (<strong>Savage Attacker</strong>, in addition to <strong>Skilled</strong> from the Noble background).",
+            fullRules: "• <strong>Resourceful:</strong> You gain <strong>Heroic Inspiration</strong> whenever you finish a Long Rest. If you have Heroic Inspiration, you can expend it to reroll <em>any die</em> immediately after rolling it, and you must use the new roll.<br>• <strong>Skillful:</strong> You gain proficiency in one skill of your choice (<strong>Perception +3</strong>).<br>• <strong>Versatile:</strong> You gain an Origin feat of your choice (<strong>Savage Attacker</strong>, in addition to <strong>Skilled</strong> from the Noble background).",
             flavor: "Human grit and royal discipline refuse to break beneath Barovia's gloom.",
             modalButtons: [
                 { label: "🌟 Spend Heroic Inspiration", class: "btn-roll-action btn-roll-martial", onClick: () => { closeSpellModal(); useHeroicInspiration(); } }
@@ -1827,7 +1827,7 @@
                             </div>
                             <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
                                 <div style="font-weight:700; color:#c4b5fd;">🗣️ Languages, Tools &amp; Senses</div>
-                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;"><strong>Passive Perception:</strong> 14 (Perception +4).<br><strong>Languages &amp; Tools:</strong> Common, Draconic, Dwarvish • Dragonchess Gaming Set.</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;"><strong>Passive Perception:</strong> 13 (Perception +3).<br><strong>Languages &amp; Tools:</strong> Common, Draconic, Dwarvish • Dragonchess Gaming Set.</div>
                             </div>
                         </div>
                     </div>
