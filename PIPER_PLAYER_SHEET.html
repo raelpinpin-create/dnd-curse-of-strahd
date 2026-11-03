@@ -680,35 +680,35 @@
             background: rgba(168, 85, 247, 0.1);
         }
 
-        /* Center-Screen Floating Roll Result HUD Window */
+        /* Floating Bottom Roll Result HUD Drawer */
         .floating-roll-hud {
             position: fixed;
-            top: 50%;
+            bottom: 18px;
             left: 50%;
-            transform: translate(-50%, -50%) scale(0.92);
+            transform: translate(-50%, 130%);
             opacity: 0;
             pointer-events: none;
             z-index: 950;
-            width: min(640px, 92vw);
-            background: linear-gradient(180deg, rgba(19, 27, 46, 0.99) 0%, rgba(10, 15, 29, 0.99) 100%);
+            width: min(820px, 96vw);
+            background: linear-gradient(180deg, rgba(19, 27, 46, 0.98) 0%, rgba(10, 15, 29, 0.99) 100%);
             backdrop-filter: blur(12px);
             border: 2px solid var(--accent-gold);
             border-radius: 12px;
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.92), 0 0 28px rgba(245, 158, 11, 0.3);
-            padding: 13px 16px;
+            box-shadow: 0 18px 46px rgba(0, 0, 0, 0.92), 0 0 24px rgba(245, 158, 11, 0.3);
+            padding: 14px 18px;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.18s ease, box-shadow 0.2s ease;
+            transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease, box-shadow 0.2s ease;
         }
         .floating-roll-hud.visible {
-            transform: translate(-50%, -50%) scale(1);
+            transform: translate(-50%, 0);
             opacity: 1;
             pointer-events: auto;
         }
         .floating-roll-hud.pulse-hud {
             border-color: #fde68a;
-            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.95), 0 0 36px rgba(245, 158, 11, 0.55);
+            box-shadow: 0 18px 52px rgba(0, 0, 0, 0.95), 0 0 32px rgba(245, 158, 11, 0.5);
         }
     </style>
 </head>
@@ -1391,14 +1391,14 @@
 
     <!-- 🎲 FLOATING BOTTOM ROLL RESULT HUD DRAWER -->
     <div class="floating-roll-hud" id="floating-roll-hud" role="status" aria-live="polite">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:4px;">
-            <div style="display:flex; align-items:center; gap:6px;">
-                <span style="font-size:0.7rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.5px;">🎲 Live Roll &amp; Action Result</span>
-                <span id="floating-roll-time" style="font-size:0.65rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;"></span>
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:0.78rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.5px;">🎲 Live Roll &amp; Action Result</span>
+                <span id="floating-roll-time" style="font-size:0.72rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;"></span>
             </div>
-            <button class="btn-act btn-act-pre" onclick="dismissFloatingHud()" style="padding:1px 7px; font-size:0.68rem; color:#cbd5e1;" title="Dismiss floating roll drawer">✕ Dismiss</button>
+            <button class="btn-act btn-act-pre" onclick="dismissFloatingHud()" style="padding:3px 10px; font-size:0.74rem; color:#cbd5e1;" title="Dismiss floating roll drawer">✕ Dismiss</button>
         </div>
-        <div id="floating-roll-body" style="font-size:0.86rem; color:#f8fafc; line-height:1.45; display:flex; align-items:center; flex-wrap:wrap; gap:6px;"></div>
+        <div id="floating-roll-body" style="font-size:0.98rem; color:#f8fafc; line-height:1.5; display:flex; align-items:center; flex-wrap:wrap; gap:8px;"></div>
     </div>
 <script>
     // ==========================================
