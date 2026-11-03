@@ -1412,26 +1412,52 @@
                 <button class="modal-close-btn" onclick="closePlayerNotesModal()" aria-label="Close">✕</button>
             </div>
             <div class="modal-body" style="display:flex; flex-direction:column; gap:10px;">
-                <!-- ADD / EDIT NOTE FORM -->
-                <div style="background:rgba(15, 23, 42, 0.9); border:1px solid #4c1d95; border-radius:7px; padding:10px; display:flex; flex-direction:column; gap:7px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span id="note-form-header-lbl" style="font-size:0.74rem; font-weight:800; color:#fde68a; text-transform:uppercase;">➕ Write a New Note</span>
-                        <span id="note-char-counter" style="font-size:0.68rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">0 / 220 chars</span>
+                
+                <!-- VIEW 1: ALL NOTES LIST (DEFAULT WHEN OPENED) -->
+                <div id="notes-list-view" style="display:flex; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span style="font-size:0.74rem; font-weight:800; color:#c4b5fd; text-transform:uppercase;">All Saved Notes (<span id="modal-notes-count">0</span>)</span>
+                            <span style="font-size:0.68rem; color:var(--text-dim);">• Click any note to open &amp; read</span>
+                        </div>
+                        <div style="display:flex; gap:5px; align-items:center;">
+                            <button class="btn-act btn-act-heal" onclick="openNoteEditorForm()" style="padding:4px 10px; font-size:0.72rem; font-weight:700; background:linear-gradient(135deg, #6d28d9 0%, #4338ca 100%); color:#fff; border:1px solid #8b5cf6;">➕ Write New Note</button>
+                            <button class="btn-act btn-act-pre" onclick="resetPlayerNotes()" style="padding:3px 7px; font-size:0.66rem; color:#94a3b8;" title="Restore baseline notes">🔄 Reset</button>
+                        </div>
                     </div>
-                    <input type="text" id="note-title-input" maxlength="55" placeholder="Note Title (e.g., Madame Eva's Reading, Old Bonegrinder Clue)..." style="width:100%; padding:6px 9px; font-size:0.8rem; font-weight:700; background:#090d16; border:1px solid #334155; border-radius:5px; color:#f8fafc;">
-                    <textarea id="note-body-input" maxlength="220" rows="3" placeholder="Concise note content (up to 220 characters so exports stay super clean)..." oninput="updateNoteCharCounter()" style="width:100%; padding:6px 9px; font-size:0.78rem; background:#090d16; border:1px solid #334155; border-radius:5px; color:#cbd5e1; resize:vertical; font-family:'Inter',sans-serif;"></textarea>
+                    <div id="player-notes-full-list" style="display:flex; flex-direction:column; gap:6px; max-height:52vh; overflow-y:auto;"></div>
+                </div>
+
+                <!-- VIEW 2: SINGLE NOTE FULL READER VIEW (WHEN A NOTE IS PRESSED) -->
+                <div id="note-reader-view" style="display:none; flex-direction:column; gap:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <button class="btn-act btn-act-pre" onclick="showNotesListView()" style="padding:4px 10px; font-size:0.73rem; color:#fde68a; border-color:rgba(245,158,11,0.4);">⬅️ Back to All Notes</button>
+                        <span id="reader-note-status" style="font-size:0.66rem; color:#94a3b8;"></span>
+                    </div>
+                    <div style="background:rgba(15, 23, 42, 0.92); border:1.5px solid #6d529e; border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+                        <div id="reader-note-title" style="font-family:'Cinzel',serif; font-size:1.02rem; font-weight:800; color:#fde68a; border-bottom:1px solid rgba(167,139,250,0.22); padding-bottom:6px;"></div>
+                        <div id="reader-note-body" style="font-size:0.86rem; color:#f1f5f9; line-height:1.6; white-space:pre-wrap; word-break:break-word;"></div>
+                    </div>
                     <div style="display:flex; justify-content:flex-end; gap:6px;">
-                        <button id="btn-cancel-note-edit" class="btn-act btn-act-pre" onclick="cancelNoteEdit()" style="display:none; padding:4px 10px; font-size:0.72rem;">Cancel Edit</button>
-                        <button id="btn-save-note" class="btn-act btn-act-heal" onclick="savePlayerNote()" style="padding:5px 12px; font-size:0.74rem; font-weight:700; background:linear-gradient(135deg, #6d28d9 0%, #4338ca 100%); color:#fff; border:1px solid #8b5cf6;">💾 Save Note</button>
+                        <button id="reader-btn-edit" class="btn-act btn-act-pre" style="padding:5px 12px; font-size:0.74rem; color:#93c5fd; border-color:rgba(147,197,253,0.4);">✏️ Edit Note</button>
+                        <button id="reader-btn-delete" class="btn-act btn-act-dmg" style="padding:5px 12px; font-size:0.74rem;">🗑️ Remove Note</button>
                     </div>
                 </div>
 
-                <!-- SAVED NOTES LIST -->
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:0.72rem; font-weight:800; color:#c4b5fd; text-transform:uppercase;">Saved Notes (<span id="modal-notes-count">0</span>)</span>
-                    <button class="btn-act btn-act-pre" onclick="resetPlayerNotes()" style="padding:2px 7px; font-size:0.66rem; color:#94a3b8;" title="Restore baseline notes">🔄 Reset to Default</button>
+                <!-- VIEW 3: WRITE / EDIT NOTE FORM -->
+                <div id="note-editor-view" style="display:none; background:rgba(15, 23, 42, 0.92); border:1px solid #4c1d95; border-radius:7px; padding:12px; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span id="note-form-header-lbl" style="font-size:0.76rem; font-weight:800; color:#fde68a; text-transform:uppercase;">➕ Write a New Note</span>
+                        <span id="note-char-counter" style="font-size:0.68rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">0 / 220 chars</span>
+                    </div>
+                    <input type="text" id="note-title-input" maxlength="55" placeholder="Note Title (e.g., Madame Eva's Reading, Old Bonegrinder Clue)..." style="width:100%; padding:7px 10px; font-size:0.82rem; font-weight:700; background:#090d16; border:1px solid #334155; border-radius:5px; color:#f8fafc;">
+                    <textarea id="note-body-input" maxlength="220" rows="4" placeholder="Concise note content (up to 220 characters so exports stay super clean)..." oninput="updateNoteCharCounter()" style="width:100%; padding:7px 10px; font-size:0.8rem; background:#090d16; border:1px solid #334155; border-radius:5px; color:#cbd5e1; resize:vertical; font-family:'Inter',sans-serif;"></textarea>
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                        <button class="btn-act btn-act-pre" onclick="cancelNoteEdit()" style="padding:5px 10px; font-size:0.73rem;">⬅️ Cancel</button>
+                        <button id="btn-save-note" class="btn-act btn-act-heal" onclick="savePlayerNote()" style="padding:5px 14px; font-size:0.75rem; font-weight:700; background:linear-gradient(135deg, #6d28d9 0%, #4338ca 100%); color:#fff; border:1px solid #8b5cf6;">💾 Save Note</button>
+                    </div>
                 </div>
-                <div id="player-notes-full-list" style="display:flex; flex-direction:column; gap:7px; max-height:42vh; overflow-y:auto;"></div>
+
             </div>
             <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
                 <button class="btn-act btn-act-pre" onclick="exportPlayerNotes()" style="color:#c4b5fd; border:1px solid rgba(167,139,250,0.5); padding:4px 10px; font-size:0.74rem; font-weight:700;">📓 Export Notes (New &amp; Removed Only)</button>
@@ -3426,6 +3452,52 @@
         counterEl.style.color = len >= MAX_NOTE_CHARS ? '#f87171' : (len >= 180 ? '#fbbf24' : 'var(--text-muted)');
     }
 
+    function showNotesListView() {
+        document.getElementById('notes-list-view').style.display = 'flex';
+        document.getElementById('note-reader-view').style.display = 'none';
+        document.getElementById('note-editor-view').style.display = 'none';
+        renderPlayerNotes();
+    }
+
+    function openNoteReader(noteId) {
+        const notes = getStoredNotes();
+        const target = notes.find(n => n.id === noteId);
+        if (!target) return;
+
+        const modal = document.getElementById('player-notes-modal');
+        if (modal && !modal.open) modal.showModal();
+
+        const baseMatch = defaultPlayerNotes.find(b => b.id === target.id);
+        const isNewOrEdited = !baseMatch || baseMatch.title !== target.title || baseMatch.text !== target.text;
+
+        document.getElementById('reader-note-title').innerText = `📌 ${target.title}`;
+        document.getElementById('reader-note-body').innerText = target.text;
+        document.getElementById('reader-note-status').innerHTML = isNewOrEdited
+            ? '<span style="color:#4ade80; font-weight:700;">● Unsynced / New Note</span>'
+            : '<span style="color:var(--text-muted);">● Synced Note</span>';
+
+        document.getElementById('reader-btn-edit').onclick = () => startEditPlayerNote(target.id);
+        document.getElementById('reader-btn-delete').onclick = () => deletePlayerNote(target.id);
+
+        document.getElementById('notes-list-view').style.display = 'none';
+        document.getElementById('note-editor-view').style.display = 'none';
+        document.getElementById('note-reader-view').style.display = 'flex';
+    }
+
+    function openNoteEditorForm() {
+        editingNoteId = null;
+        document.getElementById('note-title-input').value = '';
+        document.getElementById('note-body-input').value = '';
+        document.getElementById('note-form-header-lbl').innerText = '➕ Write a New Note';
+        document.getElementById('btn-save-note').innerText = '💾 Save Note';
+        updateNoteCharCounter();
+
+        document.getElementById('notes-list-view').style.display = 'none';
+        document.getElementById('note-reader-view').style.display = 'none';
+        document.getElementById('note-editor-view').style.display = 'flex';
+        document.getElementById('note-title-input').focus();
+    }
+
     function renderPlayerNotes() {
         const notes = getStoredNotes();
         const miniList = document.getElementById('player-notes-mini-list');
@@ -3436,7 +3508,7 @@
         if (countBadge) countBadge.innerText = notes.length;
         if (modalCount) modalCount.innerText = notes.length;
 
-        // Render compact mini list on left column below Gold Purse
+        // Render compact mini list on left column below Gold Purse (click any note to open it directly!)
         if (miniList) {
             if (notes.length === 0) {
                 miniList.innerHTML = `<div style="font-size:0.72rem; color:var(--text-muted); font-style:italic; padding:3px 2px;">No notes saved yet. Click [📖 Open Notes] to write one!</div>`;
@@ -3444,39 +3516,42 @@
                 miniList.innerHTML = notes.map(n => {
                     const isNew = !defaultPlayerNotes.some(b => b.id === n.id && b.title === n.title && b.text === n.text);
                     return `
-                        <div class="inv-row-item" onclick="openPlayerNotesModal()" style="cursor:pointer; padding:4px 7px;" title="Click to open Player Notes">
-                            <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.73rem; color:#f8fafc;">
-                                <strong style="color:#fde68a;">${escapeNoteHtml(n.title)}</strong>
+                        <div class="inv-row-item" onclick="openNoteReader('${n.id}')" style="cursor:pointer; padding:5px 8px;" title="Click to read full note">
+                            <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.73rem; color:#f8fafc; flex:1;">
+                                <strong style="color:#fde68a;">📌 ${escapeNoteHtml(n.title)}</strong>
                                 ${isNew ? '<span style="font-size:0.6rem; color:#4ade80; margin-left:4px; font-weight:700;">[NEW]</span>' : ''}
                                 <span style="color:var(--text-dim);"> — ${escapeNoteHtml(n.text)}</span>
                             </div>
+                            <span style="font-size:0.66rem; color:#c4b5fd; font-weight:700; flex-shrink:0;">Read ↗</span>
                         </div>
                     `;
                 }).join('');
             }
         }
 
-        // Render full interactive list inside the Player Notes Modal
+        // Render compact 1-line clickable preview cards inside the Player Notes Modal
         if (fullList) {
             if (notes.length === 0) {
-                fullList.innerHTML = `<div style="font-size:0.78rem; color:var(--text-muted); text-align:center; padding:14px;">No player notes recorded. Write your first note above!</div>`;
+                fullList.innerHTML = `<div style="font-size:0.78rem; color:var(--text-muted); text-align:center; padding:16px;">No player notes recorded. Click <strong>[➕ Write New Note]</strong> above!</div>`;
             } else {
                 fullList.innerHTML = notes.map(n => {
                     const baseMatch = defaultPlayerNotes.find(b => b.id === n.id);
                     const isNewOrEdited = !baseMatch || baseMatch.title !== n.title || baseMatch.text !== n.text;
                     return `
-                        <div style="background:var(--panel-sub); border:1px solid ${isNewOrEdited ? '#6d529e' : 'var(--card-border)'}; border-radius:6px; padding:8px 10px; display:flex; flex-direction:column; gap:4px;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                        <div onclick="openNoteReader('${n.id}')" style="background:var(--panel-sub); border:1px solid ${isNewOrEdited ? '#6d529e' : 'var(--card-border)'}; border-radius:6px; padding:9px 11px; display:flex; justify-content:space-between; align-items:center; gap:10px; cursor:pointer; transition:border-color 0.15s, background 0.15s;" onmouseover="this.style.borderColor='#a78bfa'; this.style.background='#151f34';" onmouseout="this.style.borderColor='${isNewOrEdited ? '#6d529e' : 'var(--card-border)'}'; this.style.background='var(--panel-sub)';" title="Click to open and read this note">
+                            <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;">
                                 <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                                     <span style="font-size:0.82rem; font-weight:800; color:#fde68a;">📌 ${escapeNoteHtml(n.title)}</span>
-                                    ${isNewOrEdited ? '<span style="font-size:0.62rem; padding:1px 6px; border-radius:999px; background:rgba(74,222,128,0.15); color:#4ade80; border:1px solid rgba(74,222,128,0.4); font-weight:700;">Unsynced / New</span>' : '<span style="font-size:0.62rem; color:var(--text-muted);">Synced</span>'}
+                                    ${isNewOrEdited ? '<span style="font-size:0.6rem; padding:1px 6px; border-radius:999px; background:rgba(74,222,128,0.15); color:#4ade80; border:1px solid rgba(74,222,128,0.4); font-weight:700;">New</span>' : ''}
                                 </div>
-                                <div style="display:flex; gap:4px; flex-shrink:0;">
-                                    <button class="btn-act btn-act-pre" onclick="startEditPlayerNote('${n.id}')" style="padding:2px 7px; font-size:0.68rem; color:#93c5fd;">✏️ Edit</button>
-                                    <button class="btn-act btn-act-dmg" onclick="deletePlayerNote('${n.id}')" style="padding:2px 7px; font-size:0.68rem;">🗑️ Remove</button>
+                                <div style="font-size:0.75rem; color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                    ${escapeNoteHtml(n.text)}
                                 </div>
                             </div>
-                            <div style="font-size:0.76rem; color:#e2e8f0; line-height:1.45;">${escapeNoteHtml(n.text)}</div>
+                            <div style="display:flex; align-items:center; gap:4px; flex-shrink:0;" onclick="event.stopPropagation();">
+                                <button class="btn-act btn-act-pre" onclick="openNoteReader('${n.id}')" style="padding:3px 8px; font-size:0.68rem; color:#fde68a; border-color:rgba(245,158,11,0.35);">📖 Open</button>
+                                <button class="btn-act btn-act-dmg" onclick="deletePlayerNote('${n.id}')" style="padding:3px 7px; font-size:0.68rem;" title="Remove Note">🗑️</button>
+                            </div>
                         </div>
                     `;
                 }).join('');
@@ -3485,8 +3560,7 @@
     }
 
     function openPlayerNotesModal() {
-        renderPlayerNotes();
-        updateNoteCharCounter();
+        showNotesListView();
         const modal = document.getElementById('player-notes-modal');
         if (modal) modal.showModal();
     }
@@ -3506,8 +3580,11 @@
         document.getElementById('note-body-input').value = target.text;
         document.getElementById('note-form-header-lbl').innerText = `✏️ Editing Note: ${target.title}`;
         document.getElementById('btn-save-note').innerText = '💾 Update Note';
-        document.getElementById('btn-cancel-note-edit').style.display = 'inline-flex';
         updateNoteCharCounter();
+
+        document.getElementById('notes-list-view').style.display = 'none';
+        document.getElementById('note-reader-view').style.display = 'none';
+        document.getElementById('note-editor-view').style.display = 'flex';
     }
 
     function cancelNoteEdit() {
@@ -3516,13 +3593,8 @@
         const bodyEl = document.getElementById('note-body-input');
         if (titleEl) titleEl.value = '';
         if (bodyEl) bodyEl.value = '';
-        const lbl = document.getElementById('note-form-header-lbl');
-        if (lbl) lbl.innerText = '➕ Write a New Note';
-        const btnSave = document.getElementById('btn-save-note');
-        if (btnSave) btnSave.innerText = '💾 Save Note';
-        const btnCancel = document.getElementById('btn-cancel-note-edit');
-        if (btnCancel) btnCancel.style.display = 'none';
         updateNoteCharCounter();
+        showNotesListView();
     }
 
     function savePlayerNote() {
@@ -3577,7 +3649,7 @@
         }
 
         if (editingNoteId === noteId) cancelNoteEdit();
-        renderPlayerNotes();
+        showNotesListView();
         logRoll(`🗑️ <strong>Removed Player Note:</strong> "${removedNote.title}" <em>(Only the title will be listed in Export Notes)</em>.`);
     }
 
