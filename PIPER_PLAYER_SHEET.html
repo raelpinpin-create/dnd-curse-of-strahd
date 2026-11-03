@@ -679,6 +679,37 @@
             border-color: var(--accent-purple);
             background: rgba(168, 85, 247, 0.1);
         }
+
+        /* Floating Bottom Roll Result HUD Drawer */
+        .floating-roll-hud {
+            position: fixed;
+            bottom: 14px;
+            left: 50%;
+            transform: translate(-50%, 130%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 950;
+            width: min(720px, 95vw);
+            background: linear-gradient(180deg, rgba(19, 27, 46, 0.98) 0%, rgba(10, 15, 29, 0.98) 100%);
+            backdrop-filter: blur(10px);
+            border: 1.5px solid var(--accent-gold);
+            border-radius: 10px;
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.88), 0 0 20px rgba(245, 158, 11, 0.25);
+            padding: 9px 13px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease, box-shadow 0.2s ease;
+        }
+        .floating-roll-hud.visible {
+            transform: translate(-50%, 0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .floating-roll-hud.pulse-hud {
+            border-color: #fde68a;
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.92), 0 0 26px rgba(245, 158, 11, 0.45);
+        }
     </style>
 </head>
 <body>
@@ -1362,6 +1393,18 @@
             </div>
         </div>
     </dialog>
+
+    <!-- 🎲 FLOATING BOTTOM ROLL RESULT HUD DRAWER -->
+    <div class="floating-roll-hud" id="floating-roll-hud" role="status" aria-live="polite">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:4px;">
+            <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:0.7rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.5px;">🎲 Live Roll &amp; Action Result</span>
+                <span id="floating-roll-time" style="font-size:0.65rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;"></span>
+            </div>
+            <button class="btn-act btn-act-pre" onclick="dismissFloatingHud()" style="padding:1px 7px; font-size:0.68rem; color:#cbd5e1;" title="Dismiss floating roll drawer">✕ Dismiss</button>
+        </div>
+        <div id="floating-roll-body" style="font-size:0.86rem; color:#f8fafc; line-height:1.45; display:flex; align-items:center; flex-wrap:wrap; gap:6px;"></div>
+    </div>
 <script>
     // ==========================================
     // 🎩 PIPER MASTER STATE VARIABLES
@@ -1531,7 +1574,10 @@
                     triggerWildMagicSurge(`Nat 1 on Wild Magic Check [d20 = 1] after ${spellName}!`, false);
                 }, 60);
             } else {
-                resEl.innerHTML += ` <span style="margin-left:6px; padding:2px 7px; border-radius:4px; background:#1e293b; border:1px solid #475569; font-size:0.76rem; color:#cbd5e1;">🎲 Wild Check d20: <strong>${d20}</strong> (Safe) <button class="btn-act btn-act-pre" style="padding:1px 6px; font-size:0.68rem; margin-left:4px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Surge Override')">💥 Surge Anyway</button></span>`;
+                const checkBadge = ` <span style="margin-left:6px; padding:2px 7px; border-radius:4px; background:#1e293b; border:1px solid #475569; font-size:0.76rem; color:#cbd5e1;">🎲 Wild Check d20: <strong>${d20}</strong> (Safe) <button class="btn-act btn-act-pre" style="padding:1px 6px; font-size:0.68rem; margin-left:4px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Surge Override')">💥 Surge Anyway</button></span>`;
+                resEl.innerHTML += checkBadge;
+                const hudBody = document.getElementById('floating-roll-body');
+                if (hudBody) hudBody.innerHTML = resEl.innerHTML;
             }
         }
     }
@@ -2725,7 +2771,7 @@
     }
 
     // ==========================================
-    // 🎲 DICE ROLLER ENGINE (WITH BRUTAL CRITS)
+    // 🎲 DICE ROLLER ENGINE (WITH BRUTAL CRITS & FLOATING BOTTOM HUD)
     // ==========================================
     function logRoll(htmlMsg) {
         const res = document.getElementById('roll-res');
@@ -2733,6 +2779,27 @@
         res.classList.remove('highlight-roll');
         void res.offsetWidth;
         res.classList.add('highlight-roll');
+
+        // Also pop up the Floating Bottom HUD Drawer so players never have to scroll up!
+        const hud = document.getElementById('floating-roll-hud');
+        const hudBody = document.getElementById('floating-roll-body');
+        const hudTime = document.getElementById('floating-roll-time');
+        if (hud && hudBody) {
+            hudBody.innerHTML = htmlMsg;
+            if (hudTime) {
+                hudTime.innerText = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            }
+            hud.classList.add('visible');
+            hud.classList.remove('pulse-hud');
+            void hud.offsetWidth;
+            hud.classList.add('pulse-hud');
+            setTimeout(() => hud.classList.remove('pulse-hud'), 450);
+        }
+    }
+
+    function dismissFloatingHud() {
+        const hud = document.getElementById('floating-roll-hud');
+        if (hud) hud.classList.remove('visible');
     }
 
     function modDiceMod(delta) {
