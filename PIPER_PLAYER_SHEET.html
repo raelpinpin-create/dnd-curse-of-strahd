@@ -475,13 +475,13 @@
         .btn-roll-dmg:hover { background: #b91c1c; }
         .btn-roll-heal { background: #065f46; color: #d1fae5; }
         .btn-roll-heal:hover { background: #047857; }
-        .btn-roll-wild { background: linear-gradient(135deg, #9333ea 0%, #db2777 100%); color: #fff; }
-        .btn-roll-wild:hover { filter: brightness(1.12); }
+        .btn-roll-wild { background: #312e59; color: #e2e8f0; border: 1px solid #4f46e5; }
+        .btn-roll-wild:hover { background: #3e3a6d; border-color: #818cf8; }
 
         /* Wild Magic Banner Box */
         .wild-surge-live-box {
-            background: linear-gradient(135deg, rgba(147, 51, 234, 0.14) 0%, rgba(219, 39, 119, 0.1) 100%);
-            border: 1.5px solid #a855f7;
+            background: #0b111e;
+            border: 1px solid #334155;
             border-radius: 7px;
             padding: 9px 11px;
             font-size: 0.78rem;
@@ -686,21 +686,19 @@
     <div class="sheet-container">
         
         <!-- HEADER BANNER -->
-        <header class="header-banner">
+        <header class="header-banner" style="background: linear-gradient(180deg, #171f32 0%, #0f172a 100%);">
             <div class="header-title">
-                <h1>🎩 PIPER <span style="font-size:0.95rem; color:#e9d5ff; font-weight:600;">("Piper the Incomparable")</span></h1>
-                <div style="font-size:0.84rem; font-weight:700; color:#fde68a; margin-top:2px; letter-spacing:0.4px;">
-                    « Travelling Stage Magician • Prophesied Child of the Pocket Watch »
-                </div>
-                <div style="font-size:0.75rem; color:var(--text-dim); margin-top:1px;" id="char-subtitle-disp">
-                    Level 3 Fierna Tiefling Wild Magic Sorcerer • Entertainer Background • 5'4" (Age 24)
-                </div>
+                <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.filter='brightness(1.18)'" onmouseout="this.style.filter='none'" title="Click to open Piper's Origin Story, Backstory & Passive Abilities (Hellish Resistance, Darkvision, Entertainer)">
+                    🎩 PIPER <span style="font-size:0.95rem; color:#cbd5e1; font-weight:600;">("Piper the Incomparable")</span>
+                    <span style="font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:700; color:#fde68a; background:rgba(245,158,11,0.14); border:1px solid rgba(245,158,11,0.4); padding:2px 8px; border-radius:999px; letter-spacing:0.3px;">📖 Origin &amp; Passives ℹ️</span>
+                </h1>
             </div>
             <div class="pill-badge-group">
                 <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">🏰 Portal</a>
                 <button class="btn-act btn-act-pre" onclick="exportSheetState()" style="color:var(--accent-gold); border:1px solid rgba(245, 158, 11, 0.5); display:flex; align-items:center; gap:4px;" title="Copy live HP, Sorcery Points, Tides of Chaos, Spell Slots, and session inventory delta">📋 Export Data</button>
+                <span class="pill-badge pill-gold" style="font-size:0.76rem; padding:3px 11px; letter-spacing:0.5px;">⭐ LEVEL 3</span>
                 <span class="pill-badge pill-neutral">CHAOTIC NEUTRAL</span>
-                <span class="pill-badge pill-purple">WILD MAGIC SORCERER</span>
+                <span class="pill-badge pill-neutral" style="color:#cbd5e1; border-color:#475569;">WILD MAGIC SORCERER</span>
             </div>
         </header>
 
@@ -716,7 +714,7 @@
                     <button class="dice-btn" onclick="rollCustomDie(6)">d6</button>
                     <button class="dice-btn" onclick="rollCustomDie(4)">d4</button>
                     <button class="dice-btn" onclick="rollCustomDie(100)">d100</button>
-                    <button class="dice-btn" style="border-color:#a855f7; color:#e9d5ff; background:rgba(168,85,247,0.14);" onclick="triggerWildMagicSurge('Manual d100 Surge Roll')">💥 Wild Surge (d100)</button>
+                    <button class="dice-btn" style="border-color:#475569; color:#fde68a; background:#1e293b;" onclick="triggerWildMagicSurge('Manual d100 Surge Roll')">💥 Wild Surge (d100)</button>
                 </div>
 
                 <div class="dice-mod-group">
@@ -732,14 +730,14 @@
 
             <!-- RESULT BANNER -->
             <div class="roll-result-display" id="roll-res">
-                🎩 <strong>"All Part of the Act!"</strong> — Piper initialized (Level 3 Wild Magic Sorcerer • CHA 20 (+5) • Spell Save DC 15 • Spell Attack +7). Cast a spell or rig fate with Tides of Chaos!
+                🎩 <strong>"All Part of the Act!"</strong> — Piper initialized (Level 3 Wild Magic Sorcerer • CHA 20 (+5) • Spell Save DC 15 • Spell Attack +7). Click <strong>🎩 PIPER</strong> above to view her Origin Story &amp; Passive Abilities!
             </div>
         </section>
 
         <!-- MAIN 2-COLUMN LAYOUT -->
         <div class="main-layout">
             
-            <!-- LEFT COLUMN: VITALS, HP, TOGGLES, HELP TOKENS, ABILITIES, SAVES, 18 SKILLS, GOLD, LORE -->
+            <!-- LEFT COLUMN: VITALS, HP, TOGGLES, HELP TOKENS, ABILITIES, SAVES, 18 SKILLS, GOLD -->
             <div>
                 
                 <!-- 4-BOX VITALS -->
@@ -758,7 +756,7 @@
                     </div>
                     <div class="vital-mini-box" title="Charisma +5, Proficiency Bonus +2">
                         <span class="vital-mini-lbl">SPELL DC / HIT</span>
-                        <span class="vital-mini-val" id="dc-hit-disp" style="font-size:0.86rem; color:var(--accent-purple);">DC 15 | +7</span>
+                        <span class="vital-mini-val" id="dc-hit-disp" style="font-size:0.86rem; color:#93c5fd;">DC 15 | +7</span>
                     </div>
                 </div>
 
@@ -806,12 +804,6 @@
                         </div>
                         <span class="toggle-badge off" id="badge-surge-ac">+2 AC</span>
                     </div>
-                </div>
-
-                <!-- PASSIVE TRAITS STRIP -->
-                <div style="background:rgba(239, 68, 68, 0.1); border:1px solid rgba(239, 68, 68, 0.35); border-radius:6px; padding:5px 9px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; font-size:0.73rem;">
-                    <span>🔥 <strong>Hellish Resistance (Fierna):</strong> Resistant to <strong>Fire Damage</strong></span>
-                    <span style="color:#fca5a5; font-weight:700; font-size:0.68rem;">👁️ DARKVISION 60 FT</span>
                 </div>
 
                 <!-- HELP TOKENS TRACKER -->
@@ -951,75 +943,61 @@
                     </div>
                 </div>
 
-                <!-- 🎭 CHARACTER ROLEPLAY & BACKSTORY DOSSIER -->
-                <div class="panel">
-                    <div class="panel-title">
-                        <span>🎭 Stage Act & Backstory Dossier</span>
-                        <button class="btn-act btn-act-pre" onclick="openSpellDetailsModal('backstory_full')" style="font-size:0.66rem; color:var(--accent-gold);">📖 Full Origin</button>
-                    </div>
-                    <div style="font-size:0.73rem; color:var(--text-dim); line-height:1.42; display:flex; flex-direction:column; gap:5px;">
-                        <div>• <strong>"All Part of the Act!":</strong> Refuses to believe she casts real magic. When a card trick erupts into spectral hellfire or lightning, she flashes a sweat-drenched smile and insists it's a stage prop!</div>
-                        <div>• <strong>The Missing Locket:</strong> Carries <em>Barnaby's Brass Pocket Watch</em> with a blurred portrait of her purple-horned tiefling parents seen in her nightmare of the Svalich Woods.</div>
-                        <div>• <strong>Flaws:</strong> <em>Pathological Denial</em> (never admits losing control of a spell), <em>Rejection Panic</em>, & <em>Compulsive Misdirection</em> (nervously palms mugs/cards).</div>
-                        <div>• <strong>Languages:</strong> Common, Infernal, Elvish.</div>
-                    </div>
-                </div>
-
             </div>
 
-            <!-- RIGHT COLUMN: WILD MAGIC ENGINE, SORCERY POINTS/METAMAGIC, WEAPONS/CANTRIPS, SPELLS, INVENTORY -->
+            <!-- RIGHT COLUMN: WILD MAGIC ENGINE, WEAPONS/CANTRIPS, SPELLS, FONT OF MAGIC, INVENTORY -->
             <div>
 
                 <!-- 🎇 WILD MAGIC SURGE & TIDES OF CHAOS ENGINE -->
-                <div class="panel" style="background: linear-gradient(135deg, #1b112c 0%, #131c31 100%); border: 1.5px solid #a855f7;">
-                    <div class="panel-title" style="border-bottom-color: rgba(192, 132, 252, 0.25);">
-                        <span style="color:#e9d5ff; font-size:0.88rem;">🎇 Wild Magic Surge & Tides of Chaos Engine</span>
+                <div class="panel" style="background: var(--panel-bg); border: 1px solid #334155;">
+                    <div class="panel-title">
+                        <span style="color:var(--accent-gold); font-size:0.86rem;">🎇 Wild Magic Surge &amp; Tides of Chaos Engine</span>
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                            <label style="font-size:0.68rem; color:#d8b4fe; display:flex; align-items:center; gap:4px; cursor:pointer; text-transform:none;" title="When checked, casting any 1st+ level Sorcerer spell automatically rolls the d20 Wild Magic check (or auto-triggers d100 Surge if Tides of Chaos was spent!)">
-                                <input type="checkbox" id="auto-surge-check" checked style="accent-color:#a855f7;"> Auto-Check on Spell Cast
+                            <label style="font-size:0.68rem; color:var(--text-dim); display:flex; align-items:center; gap:4px; cursor:pointer; text-transform:none;" title="When checked, casting any 1st+ level Sorcerer spell automatically rolls the d20 Wild Magic check (or auto-triggers d100 Surge if Tides of Chaos was spent!)">
+                                <input type="checkbox" id="auto-surge-check" checked style="accent-color:#64748b;"> Auto-Check on Spell Cast
                             </label>
-                            <button class="btn-act btn-act-pre" onclick="openWildSurgeTableModal()" style="font-size:0.68rem; color:#fde68a; border-color:#a855f7; background:rgba(168,85,247,0.2);">📜 All 50 Surge Effects (d100 Table)</button>
+                            <button class="btn-act btn-act-pre" onclick="openWildSurgeTableModal()" style="font-size:0.68rem; color:#fde68a; border-color:#475569;">📜 All 50 Surge Effects (d100 Table)</button>
                         </div>
                     </div>
 
                     <!-- TIDES OF CHAOS INTERACTIVE BAR -->
-                    <div id="tides-card" style="background:rgba(15, 23, 42, 0.85); border:1px solid #c084fc; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <div id="tides-card" style="background:var(--panel-sub); border:1px solid #334155; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                         <div style="flex:1; min-width:220px;">
                             <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="font-size:0.82rem; font-weight:800; color:#f472b6; cursor:pointer;" onclick="openSpellDetailsModal('tides_of_chaos')">🃏 Tides of Chaos ("Pick-a-Card") ℹ️</span>
-                                <span id="tides-status-badge" style="font-size:0.66rem; font-weight:800; padding:2px 7px; border-radius:999px; background:rgba(34,197,94,0.2); color:#4ade80; border:1px solid #22c55e;">🟢 READY (1/LR)</span>
+                                <span style="font-size:0.82rem; font-weight:800; color:#f8fafc; cursor:pointer;" onclick="openSpellDetailsModal('tides_of_chaos')" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">🃏 Tides of Chaos ("Pick-a-Card") ℹ️</span>
+                                <span id="tides-status-badge" style="font-size:0.66rem; font-weight:800; padding:2px 7px; border-radius:999px; background:rgba(34,197,94,0.16); color:#4ade80; border:1px solid #22c55e;">🟢 READY (1/LR)</span>
                             </div>
                             <div style="font-size:0.71rem; color:var(--text-dim); margin-top:2px;" id="tides-desc-line">
                                 Spend to gain <strong>Advantage</strong> on any Attack, Check, or Save. Once spent, your next 1st+ level spell <strong>automatically triggers a Wild Magic Surge</strong> &amp; recharges Tides of Chaos!
                             </div>
                         </div>
                         <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
-                            <button id="btn-use-tides" class="btn-roll-action" style="background:linear-gradient(135deg, #db2777 0%, #9333ea 100%); padding:5px 10px; font-size:0.74rem;" onclick="useTidesOfChaos()">🃏 Use Tides (+Advantage)</button>
+                            <button id="btn-use-tides" class="btn-roll-action" style="background:#334155; border:1px solid #64748b; padding:5px 10px; font-size:0.74rem;" onclick="useTidesOfChaos()">🃏 Use Tides (+Advantage)</button>
                             <button class="btn-act btn-act-pre" onclick="toggleTidesManual()" style="font-size:0.68rem; padding:4px 7px;" title="Manually toggle Ready / Primed">🔄 Toggle</button>
                         </div>
                     </div>
 
                     <!-- DIRECT WILD MAGIC ROLLER BUTTONS -->
                     <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
-                        <button class="btn-roll-action" style="background:#4f46e5; padding:5px 10px; font-size:0.74rem;" onclick="rollWildMagicD20Check('Manual Spell Check')">🎲 Roll Wild Magic Check (d20)</button>
-                        <button class="btn-roll-action btn-roll-wild" style="padding:5px 12px; font-size:0.75rem; font-weight:700;" onclick="triggerWildMagicSurge('Direct Surge Trigger')">💥 Trigger Wild Magic Surge (d100)</button>
+                        <button class="btn-roll-action" style="background:#1e293b; border:1px solid #475569; padding:5px 10px; font-size:0.74rem;" onclick="rollWildMagicD20Check('Manual Spell Check')">🎲 Roll Wild Magic Check (d20)</button>
+                        <button class="btn-roll-action btn-roll-wild" style="padding:5px 12px; font-size:0.74rem; font-weight:700;" onclick="triggerWildMagicSurge('Direct Surge Trigger')">💥 Trigger Wild Magic Surge (d100)</button>
                         <div style="display:flex; align-items:center; gap:4px; margin-left:auto;">
-                            <span style="font-size:0.68rem; color:#cbd5e1;">Lookup d100:</span>
+                            <span style="font-size:0.68rem; color:#94a3b8;">Lookup d100:</span>
                             <input type="number" id="manual-d100-input" class="hp-input-num" placeholder="1-100" min="1" max="100" style="width:52px; height:25px; font-size:0.74rem;">
-                            <button class="btn-act btn-act-pre" onclick="lookupSpecificSurge()" style="font-size:0.68rem; padding:3px 7px; color:#e9d5ff;">Go</button>
+                            <button class="btn-act btn-act-pre" onclick="lookupSpecificSurge()" style="font-size:0.68rem; padding:3px 7px; color:#cbd5e1;">Go</button>
                         </div>
                     </div>
 
                     <!-- ACTIVE WILD MAGIC SURGE RESULT DISPLAY -->
                     <div class="wild-surge-live-box" id="wild-surge-live-box">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:0.72rem; font-weight:800; color:#f472b6; text-transform:uppercase; letter-spacing:0.4px;" id="surge-box-header">✨ Active Wild Magic Surge Output</span>
-                            <span style="font-size:0.68rem; color:#d8b4fe; font-family:'JetBrains Mono',monospace;" id="surge-box-roll-tag">Awaiting Surge...</span>
+                            <span style="font-size:0.72rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.4px;" id="surge-box-header">✨ Active Wild Magic Surge Output</span>
+                            <span style="font-size:0.68rem; color:#94a3b8; font-family:'JetBrains Mono',monospace;" id="surge-box-roll-tag">Awaiting Surge...</span>
                         </div>
                         <div id="surge-box-effect" style="color:#f8fafc; font-size:0.78rem;">
                             Cast a 1st-level or higher spell or click <strong>[💥 Trigger Wild Magic Surge (d100)]</strong> to automatically roll and announce the effect!
                         </div>
-                        <div id="surge-box-flavor" style="color:#fde68a; font-size:0.72rem; font-style:italic;"></div>
+                        <div id="surge-box-flavor" style="color:#cbd5e1; font-size:0.72rem; font-style:italic;"></div>
                         <div id="surge-box-actions" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:2px;"></div>
                     </div>
                 </div>
@@ -1492,22 +1470,22 @@
 
         if (tidesOfChaosReady) {
             badge.innerHTML = '🟢 READY (1/LR)';
-            badge.style.background = 'rgba(34,197,94,0.2)';
+            badge.style.background = 'rgba(34,197,94,0.16)';
             badge.style.color = '#4ade80';
             badge.style.borderColor = '#22c55e';
             btn.disabled = false;
             btn.style.opacity = '1';
             btn.innerHTML = '🃏 Use Tides (+Advantage)';
-            card.style.borderColor = '#c084fc';
+            card.style.borderColor = '#334155';
             desc.innerHTML = 'Spend to gain <strong>Advantage</strong> on any Attack, Check, or Save. Once spent, your next 1st+ level spell <strong>automatically triggers a Wild Magic Surge</strong> &amp; recharges Tides of Chaos!';
         } else {
             badge.innerHTML = '⚡ SURGE PRIMED (AUTO-SURGE ON NEXT SPELL)';
-            badge.style.background = 'rgba(244,114,182,0.22)';
-            badge.style.color = '#f472b6';
-            badge.style.borderColor = '#ec4899';
+            badge.style.background = 'rgba(245,158,11,0.16)';
+            badge.style.color = '#fbbf24';
+            badge.style.borderColor = '#d97706';
             btn.disabled = false;
             btn.innerHTML = '💥 Surge Primed (Cast Spell or Click)';
-            card.style.borderColor = '#f472b6';
+            card.style.borderColor = '#d97706';
             desc.innerHTML = '⚡ <strong>Cosmic Payback Primed!</strong> The universe caught onto your rigged card trick—your next 1st+ level spell will <strong>automatically roll a d100 Wild Magic Surge</strong> and restore Tides of Chaos!';
         }
     }
@@ -1552,7 +1530,7 @@
                     triggerWildMagicSurge(`Nat 1 on Wild Magic Check [d20 = 1] after ${spellName}!`, false);
                 }, 60);
             } else {
-                resEl.innerHTML += ` <span style="margin-left:6px; padding:2px 7px; border-radius:4px; background:rgba(168,85,247,0.16); border:1px solid rgba(168,85,247,0.4); font-size:0.76rem; color:#e9d5ff;">🎲 Wild Check d20: <strong>${d20}</strong> (Safe) <button class="btn-act" style="background:#9333ea; color:#fff; padding:1px 6px; font-size:0.68rem; margin-left:4px;" onclick="triggerWildMagicSurge('Manual Surge Override')">💥 Surge Anyway</button></span>`;
+                resEl.innerHTML += ` <span style="margin-left:6px; padding:2px 7px; border-radius:4px; background:#1e293b; border:1px solid #475569; font-size:0.76rem; color:#cbd5e1;">🎲 Wild Check d20: <strong>${d20}</strong> (Safe) <button class="btn-act btn-act-pre" style="padding:1px 6px; font-size:0.68rem; margin-left:4px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Surge Override')">💥 Surge Anyway</button></span>`;
             }
         }
     }
@@ -1562,7 +1540,7 @@
         if (d20 === 1) {
             triggerWildMagicSurge(`${reason} rolled a NAT 1 on d20!`);
         } else {
-            logRoll(`🎲 <strong>${reason} (d20):</strong> Rolled <strong>${d20}</strong> (No Surge — triggers on a 1). <button class="btn-act" style="background:#9333ea; color:#fff; padding:2px 8px; font-size:0.7rem; margin-left:6px;" onclick="triggerWildMagicSurge('Manual Override')">💥 Trigger d100 Surge Anyway</button>`);
+            logRoll(`🎲 <strong>${reason} (d20):</strong> Rolled <strong>${d20}</strong> (No Surge — triggers on a 1). <button class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.7rem; margin-left:6px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Override')">💥 Trigger d100 Surge Anyway</button>`);
         }
     }
 
@@ -1605,7 +1583,7 @@
             actDiv.innerHTML = `<button class="btn-roll-action btn-roll-wild" onclick="${entry.btnFn}">${entry.btnLabel}</button>`;
         }
 
-        logRoll(`💥 <strong>WILD MAGIC SURGE (${sourceLabel} • d100 = <span style="color:#f472b6; font-size:1.05rem;">${d100}</span> [${entry.range}] — ${entry.title}):</strong> ${entry.effect}${tidesMsg}<br><span style="color:#fde68a; font-size:0.8rem;">🎩 <em>${entry.flavor}</em></span>`);
+        logRoll(`💥 <strong>WILD MAGIC SURGE (${sourceLabel} • d100 = <span style="color:var(--accent-gold); font-size:1.05rem;">${d100}</span> [${entry.range}] — ${entry.title}):</strong> ${entry.effect}${tidesMsg}<br><span style="color:#cbd5e1; font-size:0.8rem;">🎩 <em>${entry.flavor}</em></span>`);
     }
 
     function lookupSpecificSurge() {
@@ -1685,11 +1663,11 @@
             <div class="surge-table-row" onclick="triggerWildMagicSurge('Selected from d100 Table', false, ${item.min}); closeWildSurgeTableModal();">
                 <div style="flex:1;">
                     <div style="display:flex; align-items:center; gap:8px;">
-                        <span style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f472b6; background:rgba(244,114,182,0.14); border:1px solid #f472b6; padding:1px 6px; border-radius:4px; font-size:0.72rem;">${item.range}</span>
+                        <span style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#fde68a; background:#1e293b; border:1px solid #475569; padding:1px 6px; border-radius:4px; font-size:0.72rem;">${item.range}</span>
                         <strong style="color:#f8fafc; font-size:0.8rem;">${item.title}</strong>
                     </div>
                     <div style="color:#cbd5e1; margin-top:3px;">${item.effect}</div>
-                    <div style="color:#fde68a; font-size:0.7rem; font-style:italic; margin-top:2px;">🎩 ${item.flavor}</div>
+                    <div style="color:#94a3b8; font-size:0.7rem; font-style:italic; margin-top:2px;">🎩 ${item.flavor}</div>
                 </div>
                 <button class="btn-roll-action btn-roll-wild" style="flex-shrink:0;">⚡ Trigger</button>
             </div>
@@ -2154,18 +2132,22 @@
         },
         "backstory_full": {
             id: "backstory_full",
-            name: "🕰️ Piper the Incomparable — Complete Origin & Psychology",
-            school: "Fierna Tiefling • Entertainer • Level 3 Wild Magic Sorcerer",
-            castingTime: "Age 24 • Height 5'4\"",
-            range: "Orphanage of Ravenloft ➔ Svalich Woods",
-            components: "Barnaby's Brass Pocket Watch & Green Stage Cape",
-            duration: "Campaign 2: Curse of Strahd",
+            name: "🎩 Piper (\"Piper the Incomparable\") — Origin & Passive Abilities",
+            school: "Level 3 Fierna Tiefling Wild Magic Sorcerer",
+            castingTime: "Entertainer Background • Chaotic Neutral",
+            range: "5'4\" • Age 24",
+            components: "Common, Infernal, Elvish",
+            duration: "« Travelling Stage Magician • Prophesied Child of the Pocket Watch »",
             wikiUrl: "https://5e.tools/races.html#tiefling%20(fierna)_mtf",
-            attackMod: "By Popular Demand (Free Inn Lodging via Nightly Performances)",
-            damage: "Ideals: Wonder, Innocence, Independence, Connection",
-            fullRules: "<strong>Origin:</strong> Growing up in a cold, overcrowded elvish orphanage, Piper was shunned for her purple-tinted horns and Fierna blood. Her only comfort came from an old retired performer named <strong>Barnaby</strong>, who taught her sleight-of-hand card tricks and false-bottom props. Before he passed, Barnaby gave her a <strong>brass pocket watch</strong> containing a blurred portrait of a tiefling couple and whispered: <em>'Only you can find them, O prophesied one.'</em><br><br>Leaving at 18, she billed herself as <strong>'Piper the Incomparable'</strong>, hoping her parents would see her posters in taverns. Determined to prove she wasn't an infernal weapon of mass destruction, she swore one rule: <strong>never do real magic</strong>.<br><br><strong>The Nightmare & Awakening in Svalich Woods:</strong> Haunted by a terrifyingly real dream of the Svalich Woods where a tiefling couple with purple-tinted horns fought off a shadowy horror, Piper followed the vision toward Barovia. Dropping her parents' watch in the dark fog, she snapped her fingers for her fake thumb-fire trick—and Barovia's dark magic ignited her suppressed bloodline into a blast of spectral hellfire. Now every fake trick triggers wildly dangerous real spells, which she frantically plays off with a sweat-drenched smile as <em>'All part of the act!'</em>",
+            attackMod: "🔥 Hellish Resistance (Fire Resistance) • 👁️ Darkvision (60 ft)",
+            damage: "🎩 By Popular Demand (Free Inn Lodging & Food via Performances)",
+            fullRules: "<div style='margin-bottom:8px; padding:7px 10px; background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.3); border-radius:6px;'><div style='color:#fde68a; font-weight:800; font-size:0.82rem;'>« Travelling Stage Magician • Prophesied Child of the Pocket Watch »</div><div style='color:#94a3b8; font-size:0.74rem; margin-top:2px;'>Level 3 Fierna Tiefling Wild Magic Sorcerer • Entertainer Background • 5'4\" (Age 24)</div></div><strong>🛡️ Passive Abilities &amp; Racial/Background Traits:</strong><br>• 🔥 <strong>Hellish Resistance (Fierna Tiefling):</strong> You have <strong>Resistance to Fire Damage</strong> (you take half damage from all fire sources, including self-centered Wild Magic Fireballs!).<br>• 👁️ <strong>Darkvision (60 ft):</strong> Accustomed to twilight and the dark mists, you see in dim light within 60 feet as if it were bright light, and in darkness as if it were dim light.<br>• 🎩 <strong>By Popular Demand (Entertainer):</strong> You can always find a place to perform in any tavern or inn (such as <em>Blood on the Vine</em> or the <em>Blue Water Inn</em>), receiving free modest or comfortable lodging and food each night.<br>• 🗣️ <strong>Languages:</strong> Common, Infernal, Elvish.<br><br><strong>🕰️ Origin Story &amp; The Missing Locket:</strong><br>Growing up in a cold, overcrowded elvish orphanage, Piper was shunned for her purple-tinted horns and Fierna blood. Her only comfort came from an old retired performer named <strong>Barnaby</strong>, who taught her sleight-of-hand card tricks and false-bottom props. Before he passed, Barnaby gave her a <strong>brass pocket watch</strong> containing a blurred portrait of a tiefling couple and whispered: <em>'Only you can find them, O prophesied one.'</em><br><br>Leaving at 18, she billed herself as <strong>'Piper the Incomparable'</strong>, hoping her parents would see her posters in taverns. Determined to prove she wasn't an infernal weapon of mass destruction, she swore one rule: <strong>never do real magic</strong>.<br><br><strong>🌫️ Awakening in the Svalich Woods &amp; \"All Part of the Act!\":</strong><br>Haunted by a terrifyingly real dream of the Svalich Woods where a tiefling couple with purple-tinted horns fought off a shadowy horror, Piper followed the vision into Barovia. Dropping her parents' watch in the dark fog, she snapped her fingers for her fake thumb-fire trick—and Barovia's dark magic ignited her suppressed bloodline into a blast of spectral hellfire. Now she refuses to admit she casts real magic: whenever a card trick erupts into lightning or fire, she flashes a sweat-drenched smile and insists it's a stage prop!<br><br><strong>🎭 Personality, Ideals, Bonds &amp; Flaws:</strong><br>• <strong>Ideals:</strong> <em>Wonder</em> (laughter in the dark), <em>Innocence</em> (harmless tricks over infernal blood), <em>Independence</em>, &amp; <em>Connection</em>.<br>• <strong>Flaws:</strong> <em>Pathological Denial</em> (never admits losing control of a spell), <em>Rejection Panic</em>, &amp; <em>Compulsive Misdirection</em> (nervously palms mugs/cards).",
             flavor: "\"Ladies, gentlemen, and creatures of the fog—please remain in your seats, that explosion was 100% scripted!\"",
-            modalButtons: []
+            modalButtons: [
+                { label: "🔥 Log Fire Resistance (Half Dmg)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); castUtility('🔥 <strong>Hellish Resistance (Fierna Tiefling Passive):</strong> Piper is <strong>Resistant to Fire Damage</strong> (takes half damage from all fire attacks &amp; Wild Surge Fireballs)!'); } },
+                { label: "👁️ Log Darkvision (60 ft)", class: "btn-roll-action", onClick: () => { closeSpellModal(); castUtility('👁️ <strong>Darkvision (60 ft Passive):</strong> Piper sees in dim light within 60 ft as bright light, and in darkness as dim light!'); } },
+                { label: "🎩 Perform (+7 CHA)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollSkill('By Popular Demand — Stage Performance (CHA) ★', 5, true); } }
+            ]
         }
     };
 
