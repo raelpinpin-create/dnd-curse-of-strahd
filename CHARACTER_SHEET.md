@@ -38,10 +38,34 @@
 
 ---
 
-### 2. Stranger #2 — `[Player 2 Name / Character Name TBD]`
-* **Race & Class:** `Level 3 [Class / Subclass TBD]`
-* **Vitals:** **HP:** `-- / --` | **AC:** `--` | **Init:** `+--` | **Speed:** `30 ft` | **PB:** `+2`
-* **Help Tokens:** `2 / 2`
+### 2. 👑 Jacomir Yulle ("King Jacomir") — Exiled Sovereign of Oakhaven
+* **Species & Class:** **Level 3 Human Battle Master Fighter (5.5e / 2024 Rules)**
+* **Background & Alignment:** **Noble (Former King of Oakhaven / Oakenshire)** • **Lawful Neutral** *(Height: 5'11" • Age: 32)*
+* **Interactive HTML Sheet:** [`JACOMIR_PLAYER_SHEET.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/JACOMIR_PLAYER_SHEET.html)
+* **Vitals:** **HP:** `28 / 28` *(3d10 + CON)* | **AC:** `17` *(Chain Mail 16 + Defense Fighting Style +1)* | **Init:** `+0` | **Speed:** `30 ft` | **PB:** `+2` | **Passive Perception:** `14`
+* **Ability Scores (27-Point Buy + Noble Background +2 STR / +1 CON):** `STR 17 (+3) ★ | DEX 10 (+0) | CON 16 (+3) ★ | INT 10 (+0) | WIS 14 (+2) | CHA 10 (+0)`
+* **Saving Throws:** **STR ★ `+5`**, **CON ★ `+5`**, WIS `+2`, DEX `+0`, INT `+0`, CHA `+0`
+* **Proficient Skills:** **Athletics (STR) ★ `+5`**, **Insight (WIS) ★ `+4`**, **Perception (WIS) ★ `+4`** *(Human: Skillful)*, **Survival (WIS) ★ `+4`** *(Skilled)*, **History (INT) ★ `+2`** *(Noble)*, **Persuasion (CHA) ★ `+2`** *(Noble)*, **Intimidation (CHA) ★ `+2`** *(Skilled)* • **Tool Proficiency:** *Dragonchess Set*
+* **Weapons & 5.5e Weapon Masteries:**
+  - 🗡️ **Ancestral Greatsword:** `+5 to hit`, `2d6 + 3` Slashing *(Savage Attacker: rolls 2d6 twice 1/turn and uses higher total)* • **Graze Mastery:** Deals **3 Slashing damage** (STR mod) even on a missed attack roll!
+  - 🪓 **2x Handaxes (Melee or Thrown 20/60 ft):** `+5 to hit`, `1d6 + 3` Slashing • **Vex Mastery:** Hitting grants **Advantage** on the next attack roll against that target before the end of your next turn!
+* **Battle Master Combat Superiority (`Maneuver Save DC 13`):**
+  - ⚔️ **Superiority Dice:** `4 / 4 (d8s)` *(Recharges on Short or Long Rest)*
+  - 🛡️ **Parry (Reaction):** When damaged by a melee attack, expend 1 Superiority Die to reduce damage by `1d8 + 3` (STR).
+  - ⚔️ **Riposte (Reaction):** When a creature misses you with a melee attack, expend 1 Superiority Die to make an immediate melee weapon attack (`+5 hit`, adds `+1d8` to damage on hit).
+  - 👹 **Menacing Attack (On Hit):** Expend 1 Superiority Die on a weapon hit to add `+1d8` damage and force a **DC 13 WIS Save** or the target is **Frightened** of you until the end of your next turn.
+* **Core Fighter Features & 5.5e Human Origin Feats:**
+  - 💨 **Second Wind (`3 / 3` uses per Long Rest, `+1` on Short Rest):** Bonus Action to heal `1d10 + 3 HP`.
+  - 🧠 **Tactical Mind:** When you fail an ability check, expend 1 use of Second Wind to add `+1d10` to the check *(if it still fails, the use is NOT expended!)*.
+  - ⚡ **Action Surge (`1 / 1` per Short or Long Rest):** Take 1 additional Action on your turn.
+  - 🌟 **Heroic Inspiration (`Human: Resourceful`):** Regained on every Long Rest; reroll any die immediately after rolling it.
+  - 🩸 **Origin Feats:** **Savage Attacker** *(Human Versatile)* & **Skilled** *(Noble Background)*.
+  - 🤝 **Help Tokens:** `2 / 2`
+* **Equipment & Royal Regalia (`25 GP, 0 SP`):**
+  - 🗡️ *Ancestral Greatsword*, 🪓 *2x Handaxes*, ⛓️ *Chain Mail (AC 16)*
+  - 💍 *Signet Ring bearing the Lost Crest of Oakenshire*, 🧥 *Tattered Royal Traveling Cloak with Fur Mantle*, 📜 *Empty Scroll Case*
+  - ♟️ *Dragonchess Gaming Set*, 👔 *Fine Traveler's Garments*, 🎒 *Explorer's Pack*
+* **Origin Lore & Roleplay Traits:** Former King of **Oakhaven (Oakenshire)** whose realm and vanguard were swallowed overnight by the creeping Mists. He carries himself as an anointed sovereign who will bleed for his companions as his royal vanguard, sworn to tear Barovia apart stone by stone to find his lost people.
 
 ---
 

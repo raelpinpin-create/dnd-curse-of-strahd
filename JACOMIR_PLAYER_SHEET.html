@@ -1,0 +1,3079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jacomir Yulle (King Jacomir) — Battle Master Fighter Sheet (Curse of Strahd)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #070b14;
+            --bg-sheet: #0f172a;
+            --panel-bg: #162032;
+            --panel-sub: #0f1625;
+            --card-border: #293548;
+            --card-border-hover: #f59e0b;
+            --accent-gold: #f59e0b;
+            --accent-blue: #38bdf8;
+            --accent-cyan: #22d3ee;
+            --accent-green: #22c55e;
+            --accent-red: #ef4444;
+            --accent-purple: #c084fc;
+            --accent-pink: #f472b6;
+            --text-light: #f8fafc;
+            --text-dim: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-light);
+            line-height: 1.5;
+            padding: 16px 12px 70px 12px;
+            display: flex;
+            justify-content: center;
+            font-size: 0.88rem;
+        }
+
+        .sheet-container {
+            width: 100%;
+            max-width: 1180px;
+            background-color: var(--bg-sheet);
+            border: 1.5px solid #334155;
+            border-radius: 12px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.75);
+            overflow: hidden;
+        }
+
+        /* Top Header Banner */
+        .header-banner {
+            background: linear-gradient(180deg, #27171c 0%, #0f172a 100%);
+            border-bottom: 1px solid var(--card-border);
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-title h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-gold);
+            font-size: 1.55rem;
+            letter-spacing: 0.4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+
+        .pill-badge-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .pill-badge {
+            padding: 3px 10px;
+            border-radius: 9999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .pill-neutral { background: #334155; color: #f1f5f9; border: 1px solid #475569; }
+        .pill-crimson { background: rgba(239, 68, 68, 0.18); color: #fecaca; border: 1px solid #ef4444; }
+        .pill-gold { background: rgba(245, 158, 11, 0.18); color: #fde68a; border: 1px solid #f59e0b; }
+
+        /* TOP PROMINENT DICE ROLLER CONSOLE */
+        .top-dice-console {
+            background: #090e1b;
+            border-bottom: 1px solid var(--card-border);
+            padding: 10px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .dice-controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .dice-buttons-group, .dice-mod-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .dice-btn {
+            background: var(--panel-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-light);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .dice-btn:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold);
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        /* Main 2-Column Grid Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 335px 1fr;
+            gap: 14px;
+            padding: 14px 18px;
+        }
+
+        @media (max-width: 960px) {
+            .main-layout { grid-template-columns: 1fr; }
+        }
+
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .panel-title {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        /* Vitals 4-Box Row */
+        .vitals-4box {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .vital-mini-box {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 6px 3px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .vital-mini-lbl {
+            font-size: 0.64rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .vital-mini-val {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-top: 1px;
+            transition: color 0.3s ease;
+        }
+
+        /* HP Controller */
+        .hp-ctrl-container {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            margin-bottom: 8px;
+        }
+
+        .hp-health-bar-bg {
+            width: 100%;
+            height: 9px;
+            background: #090d16;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            position: relative;
+        }
+
+        .hp-health-bar-fill {
+            height: 100%;
+            width: 100%;
+            background: var(--accent-green);
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .hp-health-bar-temp {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background: rgba(56, 189, 248, 0.65);
+            transition: width 0.3s ease;
+        }
+
+        .hp-input-num {
+            background: #090d16;
+            border: 1px solid var(--card-border);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 3px 5px;
+            border-radius: 4px;
+            width: 50px;
+            text-align: center;
+            outline: none;
+        }
+        .hp-input-num:focus { border-color: var(--accent-gold); }
+
+        .btn-act {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-act:active { transform: scale(0.97); }
+        .btn-act-dmg { background: #991b1b; color: #fee2e2; }
+        .btn-act-dmg:hover { background: #b91c1c; }
+        .btn-act-heal { background: #065f46; color: #d1fae5; }
+        .btn-act-heal:hover { background: #047857; }
+        .btn-act-temp { background: #0284c7; color: #f0f9ff; border: 1px solid #38bdf8; }
+        .btn-act-temp:hover { background: #0369a1; }
+        .btn-act-pre { background: #1e293b; color: var(--text-light); border: 1px solid var(--card-border); }
+        .btn-act-pre:hover { background: #334155; }
+
+        /* Dynamic Buffs / Toggles Bar */
+        .buffs-toggle-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .toggle-btn-card {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 5px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .toggle-btn-card:hover { border-color: var(--accent-gold); }
+        .toggle-btn-card.active-buff {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+        }
+        .toggle-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .toggle-badge.off { background: #334155; color: #94a3b8; }
+        .toggle-badge.on { background: #0284c7; color: #f0f9ff; }
+
+        /* Ability Scores Strip */
+        .ability-strip {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .ability-box {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 5px;
+            text-align: center;
+            padding: 5px 2px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .ability-box:hover { border-color: var(--accent-gold); background: rgba(245, 158, 11, 0.08); }
+        .ability-box.active-key {
+            border: 1.5px solid var(--accent-gold);
+            background: rgba(245, 158, 11, 0.12);
+        }
+
+        .ability-name { font-size: 0.65rem; font-weight: 700; color: var(--text-dim); }
+        .ability-score { font-size: 1rem; font-weight: 700; color: var(--text-light); }
+        .ability-mod { font-size: 0.72rem; font-weight: 600; color: var(--text-dim); }
+        .ability-box.active-key .ability-mod { color: var(--accent-gold); }
+
+        /* Skills & Saves Lists */
+        .stat-row-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .stat-row-item {
+            font-size: 0.76rem;
+            color: var(--text-light);
+            padding: 3px 7px;
+            background: var(--panel-sub);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1px solid transparent;
+        }
+        .stat-row-item:hover {
+            background: #1e293b;
+            border-color: var(--accent-blue);
+        }
+        .stat-row-item.prof-item {
+            color: var(--accent-gold);
+            font-weight: 600;
+            background: rgba(245, 158, 11, 0.07);
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        /* Action & Weapon Cards */
+        .action-grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+
+        @media (max-width: 600px) {
+            .action-grid-2col { grid-template-columns: 1fr; }
+        }
+
+        .action-card {
+            background-color: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 7px 9px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: all 0.15s ease;
+        }
+        .action-card:hover { border-color: var(--accent-gold); }
+
+        .action-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 0.8rem;
+            font-weight: 700;
+            gap: 4px;
+        }
+
+        .action-desc {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            line-height: 1.35;
+        }
+
+        .action-btn-row {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+
+        .btn-roll-action {
+            background: #0284c7;
+            color: #f0f9ff;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-roll-action:hover { background: #0369a1; }
+        .btn-roll-dmg { background: #991b1b; color: #fee2e2; }
+        .btn-roll-dmg:hover { background: #b91c1c; }
+        .btn-roll-heal { background: #065f46; color: #d1fae5; }
+        .btn-roll-heal:hover { background: #047857; }
+        .btn-roll-martial { background: linear-gradient(135deg, #b45309 0%, #78350f 100%); color: #fef3c7; border: 1px solid #f59e0b; }
+        .btn-roll-martial:hover { filter: brightness(1.12); border-color: #fde68a; }
+
+        /* Inventory List */
+        .inv-list-compact {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            max-height: 195px;
+            overflow-y: auto;
+        }
+
+        .inv-row-item {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 4px;
+            padding: 3px 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.74rem;
+            gap: 6px;
+            transition: border-color 0.15s;
+        }
+        .inv-row-item:hover { border-color: #334155; }
+
+        .inv-item-info {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .inv-controls {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .inv-stepper {
+            display: inline-flex;
+            align-items: center;
+            background: #090e1a;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            padding: 1px 3px;
+            gap: 2px;
+        }
+
+        .btn-step-qty {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 0.68rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 1px 4px;
+            border-radius: 2px;
+            transition: all 0.15s;
+            line-height: 1;
+        }
+        .btn-step-qty:hover { background: #1e293b; color: var(--accent-gold); }
+
+        .inv-qty-val {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            min-width: 22px;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .btn-del-item {
+            background: transparent;
+            border: none;
+            color: var(--accent-red);
+            font-weight: 700;
+            cursor: pointer;
+            padding: 1px 5px;
+            font-size: 0.85rem;
+            border-radius: 3px;
+        }
+        .btn-del-item:hover { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+
+        /* Modern <dialog> Modal Styles */
+        dialog.sheet-dialog {
+            margin: auto;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: var(--text-light);
+            width: min(580px, 95vw);
+            max-height: 88vh;
+        }
+        dialog.sheet-dialog.wide-dialog {
+            width: min(780px, 96vw);
+        }
+        dialog.sheet-dialog:modal {
+            overscroll-behavior: contain;
+        }
+        dialog.sheet-dialog::backdrop {
+            background: rgba(4, 7, 14, 0.8);
+            backdrop-filter: blur(5px);
+            overflow: hidden;
+            overscroll-behavior: contain;
+        }
+        .modal-card {
+            background: #0d1424;
+            border: 1.5px solid var(--accent-gold);
+            border-radius: 10px;
+            width: 100%;
+            max-height: 86vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(245, 158, 11, 0.2);
+            overflow: hidden;
+        }
+        .modal-header {
+            background: linear-gradient(180deg, #1d2538 0%, #101828 100%);
+            border-bottom: 1px solid var(--card-border);
+            padding: 10px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-header h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.96rem;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .modal-close-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .modal-close-btn:hover { color: #fff; background: rgba(239, 68, 68, 0.2); }
+        .modal-body {
+            padding: 12px 14px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .tx-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+        .tx-item {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 5px;
+            padding: 6px 9px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.76rem;
+        }
+        .tx-gain { border-left: 3px solid var(--accent-green); }
+        .tx-spend { border-left: 3px solid var(--accent-red); }
+        .tx-reset { border-left: 3px solid var(--accent-gold); }
+        .tx-silver { border-left: 3px solid var(--accent-blue); }
+
+        /* Floating Bottom Roll Result HUD Drawer */
+        .floating-roll-hud {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translate(-50%, 130%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 950;
+            width: min(820px, 96vw);
+            background: linear-gradient(180deg, rgba(19, 27, 46, 0.98) 0%, rgba(10, 15, 29, 0.99) 100%);
+            backdrop-filter: blur(12px);
+            border: 2px solid var(--accent-gold);
+            border-radius: 12px;
+            box-shadow: 0 18px 46px rgba(0, 0, 0, 0.92), 0 0 24px rgba(245, 158, 11, 0.3);
+            padding: 14px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease, box-shadow 0.2s ease;
+        }
+        .floating-roll-hud.visible {
+            transform: translate(-50%, 0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .floating-roll-hud.pulse-hud {
+            border-color: #fde68a;
+            box-shadow: 0 18px 52px rgba(0, 0, 0, 0.95), 0 0 32px rgba(245, 158, 11, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sheet-container">
+        
+        <!-- HEADER BANNER -->
+        <header class="header-banner">
+            <div class="header-title">
+                <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.filter='brightness(1.18)'" onmouseout="this.style.filter='none'" title="Click to open King Jacomir's Origin Story, Feats & Passive Abilities">
+                    👑 JACOMIR YULLE <span style="font-size:0.95rem; color:#cbd5e1; font-weight:600;">("King Jacomir")</span>
+                </h1>
+                <div style="margin-top:5px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <span class="pill-badge pill-gold" style="font-size:0.72rem; padding:2px 10px; letter-spacing:0.6px;">⭐ LEVEL 3</span>
+                    <span class="pill-badge pill-neutral" style="font-size:0.7rem; padding:2px 9px;">LAWFUL NEUTRAL</span>
+                    <span class="pill-badge pill-crimson" style="font-size:0.7rem; padding:2px 9px;">BATTLE MASTER FIGHTER</span>
+                </div>
+            </div>
+            <div class="pill-badge-group">
+                <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">🏰 Portal</a>
+                <button class="btn-act btn-act-pre" onclick="exportPlayerNotes()" style="color:#c4b5fd; border:1px solid rgba(167, 139, 250, 0.5); display:flex; align-items:center; gap:4px;" title="Copy ONLY new, edited, or removed Player Notes from this session">📓 Export Notes</button>
+                <button class="btn-act btn-act-pre" onclick="exportSheetState()" style="color:var(--accent-gold); border:1px solid rgba(245, 158, 11, 0.5); display:flex; align-items:center; gap:4px;" title="Copy live HP, Superiority Dice, Second Wind, Action Surge, Heroic Inspiration, and session inventory delta">📋 Export Data</button>
+            </div>
+        </header>
+
+        <!-- TOP PROMINENT DICE ROLLER CONSOLE -->
+        <section class="top-dice-console">
+            <div class="dice-controls-bar">
+                <div class="dice-buttons-group">
+                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-dim); margin-right:2px;">🎲 Quick Roll:</span>
+                    <button class="dice-btn" onclick="rollCustomDie(20)">d20</button>
+                    <button class="dice-btn" onclick="rollCustomDie(12)">d12</button>
+                    <button class="dice-btn" onclick="rollCustomDie(10)">d10</button>
+                    <button class="dice-btn" onclick="rollCustomDie(8)">d8</button>
+                    <button class="dice-btn" onclick="rollCustomDie(6)">d6</button>
+                    <button class="dice-btn" onclick="rollCustomDie(4)">d4</button>
+                    <button class="dice-btn" onclick="rollCustomDie(100)">d100</button>
+                    <button class="dice-btn" style="border-color:#f59e0b; color:#fde68a; background:#271a0c;" onclick="rollSuperiorityDieRaw()">⚔️ Superiority Die (1d8)</button>
+                </div>
+
+                <div class="dice-mod-group">
+                    <span style="font-size:0.75rem; font-weight:600; color:var(--text-dim);">Mod:</span>
+                    <input type="number" id="dice-mod" class="hp-input-num" value="0" style="width:42px; padding:2px 4px; font-size:0.78rem;">
+                    <button class="btn-act btn-act-pre" onclick="modDiceMod(1)">+1</button>
+                    <button class="btn-act btn-act-pre" onclick="modDiceMod(-1)">-1</button>
+                    <button class="btn-act btn-act-pre" onclick="document.getElementById('dice-mod').value=0">0</button>
+                    <button class="btn-act btn-act-pre" id="btn-adv" onclick="toggleAdvantage('adv')">Adv</button>
+                    <button class="btn-act btn-act-pre" id="btn-dis" onclick="toggleAdvantage('dis')">Dis</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN 2-COLUMN LAYOUT -->
+        <div class="main-layout">
+            
+            <!-- LEFT COLUMN: VITALS, HP, TOGGLES, HELP TOKENS, ABILITIES, SAVES, 18 SKILLS, GOLD, NOTES -->
+            <div>
+                
+                <!-- 4-BOX VITALS -->
+                <div class="vitals-4box">
+                    <div class="vital-mini-box">
+                        <span class="vital-mini-lbl">HIT POINTS</span>
+                        <span class="vital-mini-val" id="hp-disp" style="color:var(--accent-green);">28/28</span>
+                    </div>
+                    <div class="vital-mini-box">
+                        <span class="vital-mini-lbl">ARMOR CLASS</span>
+                        <span class="vital-mini-val" id="ac-disp" style="color:var(--accent-gold);">17</span>
+                    </div>
+                    <div class="vital-mini-box" onclick="rollD20('Initiative Roll (DEX +0)', 0)" style="cursor:pointer;" title="Click to roll Initiative (+0)">
+                        <span class="vital-mini-lbl">INIT 🎲</span>
+                        <span class="vital-mini-val" style="color:var(--accent-blue);">+0</span>
+                    </div>
+                    <div class="vital-mini-box" title="Maneuver Save DC: 8 + PB (+2) + STR (+3) = 13 | Weapon Attack Bonus: +5">
+                        <span class="vital-mini-lbl">MANEUVER DC / HIT</span>
+                        <span class="vital-mini-val" id="dc-hit-disp" style="font-size:0.86rem; color:#fde68a;">DC 13 | +5</span>
+                    </div>
+                </div>
+
+                <!-- SPACIOUS 2-ROW HP & TEMPORARY HP CONTROLLER -->
+                <div class="hp-ctrl-container">
+                    <div class="hp-health-bar-bg">
+                        <div class="hp-health-bar-fill" id="hp-bar" style="width: 100%;"></div>
+                        <div class="hp-health-bar-temp" id="hp-temp-bar" style="width: 0%;"></div>
+                    </div>
+                    
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                        <div style="display:flex; align-items:center; gap:6px; width:100%;">
+                            <input type="number" id="hp-input" class="hp-input-num" placeholder="Enter amount..." min="1" max="999" style="flex:1; height:34px; font-size:0.9rem; text-align:left; padding:4px 10px; font-weight:600; background:#0b1220; border:1.5px solid var(--card-border); border-radius:4px;">
+                            <button class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:6px 12px; height:34px; font-size:0.82rem; font-weight:700;">💥 Take Damage</button>
+                            <button class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:6px 12px; height:34px; font-size:0.82rem; font-weight:700;">💚 Heal HP</button>
+                        </div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; gap:4px; width:100%;">
+                            <div style="display:flex; gap:4px;">
+                                <button class="btn-act btn-act-dmg" style="padding: 4px 8px; font-size: 0.74rem; font-weight:700;" onclick="stepHP(-1)">➖ -1</button>
+                                <button class="btn-act btn-act-heal" style="padding: 4px 8px; font-size: 0.74rem; font-weight:700;" onclick="stepHP(1)">➕ +1</button>
+                            </div>
+                            <div style="display:flex; gap:4px;">
+                                <button class="btn-act btn-act-pre" onclick="clearTempHP()" style="padding:4px 7px; font-size:0.7rem; color:#94a3b8;">🛡️ Clear Temp</button>
+                                <button class="btn-act btn-act-pre" onclick="takeShortRest()" style="padding:4px 7px; font-size:0.7rem; color:var(--accent-blue);" title="Heal 25% Max HP (+7 HP), Refill 4/4 Superiority Dice, Regain Action Surge, +1 Second Wind, & +1 Help Token">☕ Short Rest</button>
+                                <button class="btn-act btn-act-pre" onclick="resetHP()" style="padding:4px 7px; font-size:0.7rem; color:var(--accent-green);" title="Full Long Rest (Restore 28/28 HP, 4/4 Superiority Dice, 3/3 Second Wind, Action Surge, Heroic Inspiration & 2/2 Help)">⛺ Long Rest</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DYNAMIC ABILITY / BUFF TOGGLES -->
+                <div class="buffs-toggle-bar">
+                    <div class="toggle-btn-card active-buff" id="card-armor-toggle" onclick="toggleChainMailBuff()">
+                        <div>
+                            <div style="font-size:0.74rem; font-weight:700;">⛓️ Chain Mail + Defense</div>
+                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-armor-style">16 Armor + 1 Defense Style</div>
+                        </div>
+                        <span class="toggle-badge on" id="badge-armor-style">ON (17)</span>
+                    </div>
+
+                    <div class="toggle-btn-card" id="card-cover-toggle" onclick="toggleCoverACBuff()">
+                        <div>
+                            <div style="font-size:0.74rem; font-weight:700;">🛡️ Tactical Cover / Shield</div>
+                            <div style="font-size:0.65rem; color:var(--text-dim);">Half Cover or Shield (+2 AC)</div>
+                        </div>
+                        <span class="toggle-badge off" id="badge-cover-ac">+2 AC</span>
+                    </div>
+                </div>
+
+                <!-- HELP TOKENS TRACKER -->
+                <div class="panel" style="padding: 7px 10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.76rem; font-weight:700; color:#67e8f9;">🤝 Help Tokens:</span>
+                        <div style="display:flex; align-items:center; gap:5px;">
+                            <span id="help-tokens-disp" style="font-weight:700; color:#67e8f9; font-size:0.88rem;">2 / 2</span>
+                            <button class="btn-act btn-act-temp" onclick="rollHelpToken()" style="padding:2px 7px; font-size:0.7rem;">🎲 Spend (+1d6)</button>
+                            <button class="btn-act btn-act-pre" onclick="modHelpToken(1)" style="padding:2px 5px; font-size:0.68rem; color:#67e8f9;">+1</button>
+                            <button class="btn-act btn-act-pre" onclick="resetHelpTokens()" style="padding:2px 5px; font-size:0.68rem;">Reset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6 ABILITY SCORES STRIP (5.5e Validated: STR 15+2=17, CON 15+1=16, WIS 14, DEX/INT/CHA 10) -->
+                <div class="ability-strip">
+                    <div class="ability-box active-key" onclick="rollD20('Strength Check ★', 3)" title="Key Fighter Stat • Click to roll STR Check (+3)">
+                        <div class="ability-name">STR ★</div>
+                        <div class="ability-score">17</div>
+                        <div class="ability-mod">+3</div>
+                    </div>
+                    <div class="ability-box" onclick="rollD20('Dexterity Check', 0)" title="Click to roll DEX Check (+0)">
+                        <div class="ability-name">DEX</div>
+                        <div class="ability-score">10</div>
+                        <div class="ability-mod">+0</div>
+                    </div>
+                    <div class="ability-box active-key" onclick="rollD20('Constitution Check ★', 3)" title="Core Vitals Stat • Click to roll CON Check (+3)">
+                        <div class="ability-name">CON ★</div>
+                        <div class="ability-score">16</div>
+                        <div class="ability-mod">+3</div>
+                    </div>
+                    <div class="ability-box" onclick="rollD20('Intelligence Check', 0)" title="Click to roll INT Check (+0)">
+                        <div class="ability-name">INT</div>
+                        <div class="ability-score">10</div>
+                        <div class="ability-mod">+0</div>
+                    </div>
+                    <div class="ability-box" onclick="rollD20('Wisdom Check', 2)" title="Click to roll WIS Check (+2)">
+                        <div class="ability-name">WIS</div>
+                        <div class="ability-score">14</div>
+                        <div class="ability-mod">+2</div>
+                    </div>
+                    <div class="ability-box" onclick="rollD20('Charisma Check', 0)" title="Click to roll CHA Check (+0)">
+                        <div class="ability-name">CHA</div>
+                        <div class="ability-score">10</div>
+                        <div class="ability-mod">+0</div>
+                    </div>
+                </div>
+
+                <!-- SAVING THROWS PANEL -->
+                <div class="panel">
+                    <div class="panel-title">
+                        <span>🛡️ Saving Throws</span>
+                        <span style="font-size:0.68rem; color:var(--text-dim);">STR &amp; CON Proficient</span>
+                    </div>
+                    <ul class="stat-row-list">
+                        <li class="stat-row-item prof-item" onclick="rollSave('Strength Saving Throw ★', 3, true)"><span>Strength Save ★</span><span id="save-str-disp">+5 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSave('Constitution Saving Throw ★', 3, true)"><span>Constitution Save ★</span><span id="save-con-disp">+5 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSave('Wisdom Saving Throw', 2, false)"><span>Wisdom Save</span><span>+2 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSave('Dexterity Saving Throw', 0, false)"><span>Dexterity Save</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSave('Intelligence Saving Throw', 0, false)"><span>Intelligence Save</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSave('Charisma Saving Throw', 0, false)"><span>Charisma Save</span><span>+0 🎲</span></li>
+                    </ul>
+                </div>
+
+                <!-- ALL 18 SKILLS MATRIX -->
+                <div class="panel">
+                    <div class="panel-title">
+                        <span>🎯 All 18 Skills (Individual Rolls)</span>
+                        <span id="prof-bonus-disp" style="font-size:0.7rem; color:var(--text-dim);">Prof: +2 • Pass. Perc: 14</span>
+                    </div>
+                    <ul class="stat-row-list">
+                        <li class="stat-row-item" onclick="rollSkill('Acrobatics (DEX)', 0, false)"><span>Acrobatics (DEX)</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 2, false)"><span>Animal Handling (WIS)</span><span>+2 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Arcana (INT)', 0, false)"><span>Arcana (INT)</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Athletics (STR) ★', 3, true)"><span>Athletics (STR) ★</span><span class="prof-skill-val" data-base="3">+5 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 0, false)"><span>Deception (CHA)</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('History (INT) ★', 0, true)"><span>History (INT) ★</span><span class="prof-skill-val" data-base="0">+2 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 2, true)"><span>Insight (WIS) ★</span><span class="prof-skill-val" data-base="2">+4 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Intimidation (CHA) ★ [Skilled]', 0, true)"><span>Intimidation (CHA) ★ <small style="color:#cbd5e1;">(Skilled)</small></span><span class="prof-skill-val" data-base="0">+2 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Investigation (INT)', 0, false)"><span>Investigation (INT)</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 2, false)"><span>Medicine (WIS)</span><span>+2 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Nature (INT)', 0, false)"><span>Nature (INT)</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Perception (WIS) ★', 2, true)"><span>Perception (WIS) ★</span><span class="prof-skill-val" data-base="2">+4 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Performance (CHA)', 0, false)"><span>Performance (CHA)</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Persuasion (CHA) ★', 0, true)"><span>Persuasion (CHA) ★</span><span class="prof-skill-val" data-base="0">+2 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Religion (INT)', 0, false)"><span>Religion (INT)</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Sleight of Hand (DEX)', 0, false)"><span>Sleight of Hand (DEX)</span><span>+0 🎲</span></li>
+                        <li class="stat-row-item" onclick="rollSkill('Stealth (DEX)', 0, false)" title="Disadvantage while wearing Chain Mail"><span>Stealth (DEX) <small style="color:#f87171;">(Disadv)</small></span><span>+0 🎲</span></li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Survival (WIS) ★ [Skilled]', 2, true)"><span>Survival (WIS) ★ <small style="color:#cbd5e1;">(Skilled)</small></span><span class="prof-skill-val" data-base="2">+4 🎲</span></li>
+                    </ul>
+                </div>
+
+                <!-- 💰 SLEEK GOLD & COIN PURSE -->
+                <div class="panel" style="padding: 8px 10px; background: linear-gradient(135deg, #18150a 0%, #0d121c 100%); border: 1px solid rgba(245, 158, 11, 0.35);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 5px;">
+                        <div style="display:flex; align-items:center; gap:5px;">
+                            <span style="font-size:0.95rem;">💰</span>
+                            <span style="color:var(--accent-gold); font-size:0.75rem; font-weight:800;">GOLD PURSE</span>
+                            <span style="font-size:0.62rem; color:var(--text-muted); font-weight:600; background:rgba(255,255,255,0.05); padding:1px 4px; border-radius:3px;">10 SP = 1 GP</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <button class="btn-act btn-act-pre" onclick="openGoldHistoryModal()" style="font-size:0.68rem; padding:2px 6px; color:var(--accent-gold); border:1px solid rgba(245,158,11,0.4);">📜 Ledger</button>
+                            <button class="btn-act btn-act-pre" onclick="resetGoldPurse()" style="font-size:0.68rem; padding:2px 5px; color:#cbd5e1;">🔄 Reset</button>
+                            <div style="display:flex; align-items:baseline; gap:4px; margin-left:3px;">
+                                <span id="gold-disp" style="font-size:1.12rem; font-weight:800; color:#facc15;">25</span>
+                                <span style="font-size:0.7rem; font-weight:700; color:#fbbf24;">GP</span>
+                                <span style="color:var(--text-dim); font-size:0.75rem;">•</span>
+                                <span id="silver-disp" style="font-size:0.95rem; font-weight:700; color:#cbd5e1;">0</span>
+                                <span style="font-size:0.68rem; font-weight:600; color:#94a3b8;">SP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; align-items:center; gap:4px; margin-bottom:5px;">
+                        <input type="number" id="gold-input" class="hp-input-num" placeholder="GP..." min="1" max="99999" style="width:54px; height:26px; font-size:0.78rem; text-align:left; padding:2px 6px; background:#0b1220; border:1px solid rgba(245,158,11,0.3); color:#fef08a;">
+                        <input type="text" id="gold-reason-input" placeholder="Memo / Reason (optional)..." style="flex:1; height:26px; font-size:0.72rem; padding:2px 6px; background:#0b1220; border:1px solid #334155; border-radius:3px; color:#cbd5e1;">
+                        <button class="btn-act btn-act-dmg" onclick="applyGoldSpend()" style="padding:2px 8px; height:26px; font-size:0.72rem; font-weight:700;">- Spend</button>
+                        <button class="btn-act btn-act-heal" onclick="applyGoldAdd()" style="padding:2px 8px; height:26px; font-size:0.72rem; font-weight:700; background:linear-gradient(135deg, #ca8a04 0%, #a16207 100%); color:#fff;">+ Add</button>
+                    </div>
+
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:3px;">
+                        <div style="display:flex; gap:2px; align-items:center;">
+                            <button class="btn-act btn-act-dmg" style="padding:2px 5px; font-size:0.68rem; font-weight:700;" onclick="stepGold(-5)">-5</button>
+                            <button class="btn-act btn-act-dmg" style="padding:2px 5px; font-size:0.68rem; font-weight:700;" onclick="stepGold(-1)">-1</button>
+                            <button class="btn-act btn-act-heal" style="padding:2px 5px; font-size:0.68rem; font-weight:700;" onclick="stepGold(1)">+1</button>
+                            <button class="btn-act btn-act-heal" style="padding:2px 5px; font-size:0.68rem; font-weight:700;" onclick="stepGold(5)">+5</button>
+                            <button class="btn-act btn-act-heal" style="padding:2px 5px; font-size:0.68rem; font-weight:700;" onclick="stepGold(10)">+10</button>
+                        </div>
+                        <div style="display:flex; gap:2px; align-items:center;">
+                            <span style="font-size:0.65rem; color:var(--text-dim); font-weight:600;">SP:</span>
+                            <button class="btn-act btn-act-dmg" style="padding:2px 4px; font-size:0.65rem; font-weight:700;" onclick="stepSilver(-5)">-5</button>
+                            <button class="btn-act btn-act-pre" style="padding:2px 4px; font-size:0.65rem;" onclick="stepSilver(-1)">-1</button>
+                            <button class="btn-act btn-act-pre" style="padding:2px 4px; font-size:0.65rem;" onclick="stepSilver(1)">+1</button>
+                            <button class="btn-act btn-act-heal" style="padding:2px 4px; font-size:0.65rem; font-weight:700;" onclick="stepSilver(5)">+5</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 📓 PLAYER NOTES PANEL -->
+                <div class="panel" style="padding: 8px 10px;">
+                    <div class="panel-title" style="margin-bottom:4px; cursor:pointer;" onclick="openPlayerNotesModal()" title="Click to open Player Notes">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--accent-gold)'" style="transition:color 0.15s;">📓 Player Notes</span>
+                            <span id="player-notes-count-badge" style="font-size:0.64rem; padding:1px 6px; border-radius:999px; background:rgba(167,139,250,0.16); color:#c4b5fd; border:1px solid rgba(167,139,250,0.35);">2</span>
+                        </div>
+                    </div>
+                    <div id="player-notes-mini-list" style="display:flex; flex-direction:column; gap:4px; max-height:110px; overflow-y:auto;"></div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: (1) BATTLE MASTER ENGINE, (2) WEAPONS & MASTERIES, (3) MANEUVERS, (4) FIGHTER CORE, (5) INVENTORY -->
+            <div>
+
+                <!-- 1. 👑 BATTLE MASTER COMBAT SUPERIORITY & SOVEREIGN'S RESOLVE ENGINE -->
+                <div class="panel" style="background: linear-gradient(135deg, #241418 0%, #111827 100%); border: 1.5px solid #991b1b;">
+                    <div class="panel-title" style="border-bottom-color: rgba(248, 113, 113, 0.22);">
+                        <span style="color:#fde68a; font-size:0.86rem;">👑 Battle Master Combat Superiority &amp; Sovereign's Resolve</span>
+                        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                            <span class="pill-badge pill-gold" style="font-size:0.66rem;">Maneuver Save DC 13 (8 + PB + STR)</span>
+                            <button class="btn-act btn-act-pre" onclick="refillSuperiorityDice()" style="font-size:0.68rem; color:#fde68a; border-color:#b45309; background:rgba(180, 83, 9, 0.2);">🔄 Refill 4/4 d8s</button>
+                        </div>
+                    </div>
+
+                    <!-- SUPERIORITY DICE (4d8) TRACKER BAR -->
+                    <div style="background:rgba(15, 23, 42, 0.88); border:1px solid #7f1d1d; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <div>
+                            <div style="font-size:0.68rem; font-weight:700; color:#fca5a5; text-transform:uppercase;">⚔️ Superiority Dice Pool (4d8 • Recharges on Short or Long Rest)</div>
+                            <div id="sup-dice-pips-disp" style="font-size:0.9rem; font-weight:800; color:#fde68a; margin-top:2px; cursor:pointer;" onclick="modSuperiorityDice(-1)" title="Click to spend 1 Superiority Die">🟧 🟧 🟧 🟧 (4/4 d8s)</div>
+                        </div>
+                        <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
+                            <button class="btn-act btn-act-pre" onclick="modSuperiorityDice(-1)" style="padding:3px 8px; font-size:0.72rem;">-1 d8</button>
+                            <button class="btn-act btn-act-pre" onclick="modSuperiorityDice(1)" style="padding:3px 8px; font-size:0.72rem;">+1 d8</button>
+                            <button class="btn-roll-action btn-roll-martial" onclick="rollSuperiorityDieRaw()">🎲 Roll Raw 1d8</button>
+                        </div>
+                    </div>
+
+                    <!-- HEROIC INSPIRATION (RESOURCEFUL) & SAVAGE ATTACKER STATUS BAR -->
+                    <div id="heroic-card" style="background:rgba(15, 23, 42, 0.85); border:1px solid #334155; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                        <div style="flex:1; min-width:220px;">
+                            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                                <span style="font-size:0.8rem; font-weight:800; color:#fde68a; cursor:pointer;" onclick="openSpellDetailsModal('human_resourceful')" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#fde68a'">🌟 Heroic Inspiration (Human: Resourceful) ℹ️</span>
+                                <span id="heroic-status-badge" style="font-size:0.65rem; font-weight:800; padding:2px 7px; border-radius:999px; background:rgba(34,197,94,0.16); color:#4ade80; border:1px solid #22c55e;">🟢 READY (1/LR)</span>
+                            </div>
+                            <div style="font-size:0.71rem; color:var(--text-dim); margin-top:2px;">
+                                Reroll <strong>any die immediately after rolling it</strong> (d20 attack, save, check, or damage die). Regained automatically on every Long Rest!
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
+                            <button id="btn-use-heroic" class="btn-roll-action btn-roll-martial" style="padding:5px 10px; font-size:0.73rem;" onclick="useHeroicInspiration()">🌟 Spend Heroic Reroll</button>
+                            <button class="btn-act btn-act-pre" onclick="toggleHeroicManual()" style="font-size:0.68rem; padding:4px 7px;" title="Manually toggle Heroic Inspiration">🔄 Toggle</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. ⚔️ WEAPONS & 5.5E WEAPON MASTERIES (UNLIMITED AT-WILL) -->
+                <div class="panel">
+                    <div class="panel-title">
+                        <span>⚔️ Weapons &amp; 5.5e Weapon Masteries (Unlimited At-Will)</span>
+                        <span style="font-size:0.7rem; color:var(--accent-blue);">Savage Attacker Auto-Rolls Twice &amp; Picks Highest!</span>
+                    </div>
+
+                    <div class="action-grid-2col">
+                        <!-- Ancestral Greatsword (Graze + Savage Attacker) -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('greatsword_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        🗡️ Ancestral Greatsword <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.67rem; font-weight:700; color:#fbbf24;">Heavy Melee (2H) • 1 Action • Reach 5ft</div>
+                                </div>
+                                <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;">GRAZE</span>
+                            </div>
+                            <div class="action-desc"><strong>+5 to Hit</strong>, <strong>2d6 + 3 Slashing</strong>. <em>Savage Attacker:</em> rolls 2d6 twice &amp; takes higher! <em>Graze:</em> deals <strong>3 Slashing</strong> on a miss!</div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action" onclick="rollWeaponAttack('Ancestral Greatsword (+5 • Graze: 3 Dmg on Miss)', 5)">🗡️ Attack (+5)</button>
+                                <button class="btn-roll-action btn-roll-dmg" onclick="rollSavageGreatswordDamage()">💥 2d6+3 (Savage)</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#fde68a; border-color:#b45309;" onclick="applyGrazeDamage()" title="Weapon Mastery — Graze: On a missed attack roll, deal 3 Slashing damage (STR mod)">⚡ Graze (3 Dmg)</button>
+                            </div>
+                        </div>
+
+                        <!-- Handaxe x2 (Vex + Thrown) -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('handaxe_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        🪓 Handaxe (2x Carried) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.67rem; font-weight:700; color:#38bdf8;">Light Melee / Thrown (20/60ft) • 1 Action</div>
+                                </div>
+                                <span class="pill-badge" style="background:rgba(56,189,248,0.16); color:#7dd3fc; border:1px solid #38bdf8; font-size:0.62rem; padding:1px 6px;">VEX</span>
+                            </div>
+                            <div class="action-desc"><strong>+5 to Hit</strong>, <strong>1d6 + 3 Slashing</strong>. <em>Vex Mastery:</em> hitting grants <strong>Advantage</strong> on your next attack vs target before end of next turn!</div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action" onclick="rollWeaponAttack('Handaxe (Melee / Thrown 20/60ft • Vex)', 5)">🪓 Attack (+5)</button>
+                                <button class="btn-roll-action btn-roll-dmg" onclick="rollSavageHandaxeDamage()">💥 1d6+3 (Savage)</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#38bdf8;" onclick="activateVexAdvantage()" title="Vex Mastery: Activate Advantage on your next attack roll!">🎯 Vex (+Adv)</button>
+                            </div>
+                        </div>
+
+                        <!-- Javelins (Slow Mastery - Optional Ranged) -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('javelin_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        🔱 Thrown Javelin (Ranged Option) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.67rem; font-weight:700; color:#86efac;">Thrown Weapon (30/120ft) • 1 Action</div>
+                                </div>
+                                <span class="pill-badge" style="background:rgba(34,197,94,0.16); color:#86efac; border:1px solid #22c55e; font-size:0.62rem; padding:1px 6px;">SLOW</span>
+                            </div>
+                            <div class="action-desc"><strong>+5 to Hit</strong> (30/120ft), <strong>1d6 + 3 Piercing</strong>. <em>Slow Mastery:</em> reduces target's Speed by <strong>-10 ft</strong> until start of your next turn!</div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action" onclick="rollWeaponAttack('Thrown Javelin (30/120ft • Slow -10ft Speed)', 5)">🔱 Throw (+5)</button>
+                                <button class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Javelin Piercing Damage (Slow -10ft Speed)', 6, 3, 'Piercing', 1)">💥 1d6+3 Pierc</button>
+                            </div>
+                        </div>
+
+                        <!-- Unarmed Strike / Grapple & Shove -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('grapple_shove')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        ✊ Royal Grapple, Shove &amp; Pommel Strike <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.67rem; font-weight:700; color:#cbd5e1;">Unarmed Strike • 1 Action • DC 13 Save</div>
+                                </div>
+                                <span class="pill-badge pill-neutral" style="font-size:0.62rem; padding:1px 6px;">DC 13</span>
+                            </div>
+                            <div class="action-desc"><strong>Pommel Strike:</strong> +5 Hit, <strong>4 Bludgeoning</strong>. <strong>Grapple / Shove (5.5e):</strong> Target makes <strong>DC 13 STR/DEX Save</strong> or is Grappled / Prone / Pushed 5ft!</div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action" style="background:#334155;" onclick="castUtility('✊ <strong>Grapple / Shove (5.5e Unarmed Strike):</strong> Target within 5 ft must succeed on a <strong>DC 13 STR or DEX Saving Throw</strong> or be <strong>Grappled</strong> (Speed 0), knocked <strong>Prone</strong>, or pushed <strong>5 ft</strong>!')">✊ Grapple/Shove (DC 13)</button>
+                                <button class="btn-roll-action btn-roll-dmg" onclick="castUtility('✊ <strong>Gauntlet Pommel Strike (+5 Hit):</strong> Deals <strong>4 Bludgeoning Damage</strong> (1 + 3 STR)!')">💥 4 Bludgeon</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. 🎯 BATTLE MASTER MANEUVERS & SUPERIORITY DICE (4d8 / SHORT REST) -->
+                <div class="panel">
+                    <div class="panel-title">
+                        <span>🎯 Battle Master Maneuvers (4x d8 Superiority Dice • DC 13)</span>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <button class="btn-act btn-act-pre" onclick="refillSuperiorityDice()" style="font-size:0.68rem; color:var(--accent-gold);">☕ Refill 4/4 Dice</button>
+                        </div>
+                    </div>
+
+                    <div class="action-grid-2col" id="maneuvers-grid">
+                        <!-- Rendered dynamically by JS -->
+                    </div>
+                </div>
+
+                <!-- 4. ✨ CORE FIGHTER FEATURES (SECOND WIND, TACTICAL MIND & ACTION SURGE) -->
+                <div class="panel">
+                    <div class="panel-title">
+                        <span>✨ Core Fighter Features (Second Wind, Tactical Mind &amp; Action Surge)</span>
+                        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                            <span id="sw-pips-disp" style="font-size:0.78rem; font-weight:700; color:#86efac; cursor:pointer;" onclick="modSecondWind(-1)" title="Second Wind Uses (3/Long Rest, +1 on Short Rest)">💚 💚 💚 (3/3 SW)</span>
+                            <span style="color:var(--text-muted);">|</span>
+                            <span id="as-pips-disp" style="font-size:0.78rem; font-weight:700; color:#fde68a; cursor:pointer;" onclick="toggleActionSurgeManual()" title="Action Surge (1/Short or Long Rest)">⚡ Action Surge: READY</span>
+                        </div>
+                    </div>
+
+                    <div class="action-grid-2col">
+                        <!-- Second Wind (Bonus Action Heal: 1d10 + 3) -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('second_wind')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        💨 Second Wind (1d10 + 3 Heal) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.66rem; font-weight:700; color:#4ade80;">Bonus Action • 3 Uses/LR (+1 on SR)</div>
+                                </div>
+                                <span class="pill-badge" style="background:rgba(34,197,94,0.16); color:#86efac; border:1px solid #22c55e; font-size:0.62rem; padding:1px 6px;">3/3 USES</span>
+                            </div>
+                            <div class="action-desc">Expend 1 use as a <strong>Bonus Action</strong> to immediately heal <strong>1d10 + 3 HP</strong> (automatically adds to Jacomir's HP!).</div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action btn-roll-heal" onclick="useSecondWindHeal()">💚 Second Wind (Heal 1d10+3)</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="modSecondWind(1)" title="Restore +1 Second Wind use">+1 Use</button>
+                            </div>
+                        </div>
+
+                        <!-- Tactical Mind (5.5e Feature: +1d10 to Failed Check) -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('tactical_mind')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        🧠 Tactical Mind (+1d10 to Failed Check) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.66rem; font-weight:700; color:#38bdf8;">Free on Failed Ability Check • Second Wind</div>
+                                </div>
+                                <span class="pill-badge" style="background:rgba(56,189,248,0.16); color:#7dd3fc; border:1px solid #38bdf8; font-size:0.62rem; padding:1px 6px;">+1d10 CHECK</span>
+                            </div>
+                            <div class="action-desc">When you fail an Ability Check, expend 1 Second Wind use to add <strong>+1d10</strong>! <em>If it still fails, the use is NOT expended!</em></div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action" onclick="useTacticalMind()">🧠 Roll +1d10 (Tactical Mind)</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#86efac;" onclick="refundTacticalMind()" title="If the check still failed, click to refund the Second Wind charge!">↩️ Still Failed (Refund)</button>
+                            </div>
+                        </div>
+
+                        <!-- Action Surge (1 Extra Action / Short Rest) -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('action_surge')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        ⚡ Action Surge (Extra Action!) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.66rem; font-weight:700; color:#fbbf24;">Free on Your Turn • 1/Short or Long Rest</div>
+                                </div>
+                                <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;" id="card-as-badge">1/1 READY</span>
+                            </div>
+                            <div class="action-desc">Push beyond mortal limits on your turn to take <strong>one additional Action</strong> (two full Greatsword cleaves in one turn!).</div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action btn-roll-martial" onclick="useActionSurge()" id="btn-use-as">⚡ Activate Action Surge!</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="toggleActionSurgeManual()">🔄 Toggle</button>
+                            </div>
+                        </div>
+
+                        <!-- Savage Attacker & Defense Style Reference Card -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('savage_attacker')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        🩸 Savage Attacker &amp; 🛡️ Defense Style <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.66rem; font-weight:700; color:#f87171;">Origin Feat (1/Turn) &amp; Fighting Style (+1 AC)</div>
+                                </div>
+                                <span class="pill-badge pill-crimson" style="font-size:0.62rem; padding:1px 6px;">ALWAYS ON</span>
+                            </div>
+                            <div class="action-desc"><strong>Savage Attacker:</strong> Once per turn when you hit with a weapon, roll its damage dice twice &amp; use either total! <strong>Defense:</strong> +1 AC in armor.</div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action btn-roll-dmg" onclick="rollSavageGreatswordDamage()">🗡️ Roll Savage 2d6+3</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="openSpellDetailsModal('savage_attacker')">📖 Feat Rules</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. 🎒 EDITABLE INVENTORY & CONSUMABLES (BOTTOM PANEL) -->
+                <div class="panel">
+                    <div class="panel-title">
+                        <span>🎒 Tracked Inventory, Royal Regalia &amp; Possessions</span>
+                        <span style="font-size:0.68rem; color:var(--text-dim);">Click any item for full details</span>
+                    </div>
+
+                    <div class="inv-list-compact" id="inventory-list"></div>
+
+                    <div style="display:flex; gap:6px; margin-top:5px;">
+                        <input type="text" id="new-item-input" class="hp-input-num" style="flex:1; width:auto; text-align:left; padding:4px 7px;" placeholder="Add new loot or relic (e.g. 2x Potion of Healing)...">
+                        <button class="btn-act" style="background:var(--accent-gold); color:#000;" onclick="addItem()">+ Add</button>
+                        <button class="btn-act btn-act-pre" onclick="resetInventory()" title="Reset to official starting loadout">🔄 Reset</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 💰 GOLD TRANSACTION HISTORY MODAL -->
+    <dialog class="sheet-dialog" id="gold-modal" closedby="any" aria-labelledby="gold-modal-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="gold-modal-title">💰 Royal Coin Purse Ledger &amp; History</h3>
+                <button class="modal-close-btn" onclick="closeGoldHistoryModal()" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="background:rgba(245, 158, 11, 0.08); border:1px solid rgba(245, 158, 11, 0.3); border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim); text-transform:uppercase;">Current Available Balance</div>
+                        <div style="font-size:1.15rem; font-weight:800; color:#facc15;">
+                            <span id="modal-gold-disp">25</span> GP • <span id="modal-silver-disp" style="color:#cbd5e1;">0</span> SP
+                        </div>
+                    </div>
+                    <button class="btn-act btn-act-pre" onclick="resetGoldPurse()" style="color:var(--accent-gold); border:1px solid rgba(245,158,11,0.3); padding:4px 8px; font-size:0.7rem;">🔄 Reset Balance</button>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                    <span style="font-size:0.74rem; font-weight:700; color:var(--accent-gold); text-transform:uppercase;">Recent Transactions:</span>
+                    <button class="btn-act btn-act-pre" onclick="clearGoldHistory()" style="padding:2px 6px; font-size:0.66rem; color:#f87171;">🗑️ Clear Log</button>
+                </div>
+                <div class="tx-list" id="modal-tx-list"></div>
+            </div>
+            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:flex-end;">
+                <button class="btn-act btn-act-pre" onclick="closeGoldHistoryModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- 📦 ITEM DESCRIPTION MODAL -->
+    <dialog class="sheet-dialog" id="item-modal" closedby="any" aria-labelledby="item-modal-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="item-modal-title">📦 Item Details</h3>
+                <button class="modal-close-btn" onclick="closeItemModal()" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="item-modal-body"></div>
+            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
+                <div id="item-modal-actions"></div>
+                <button class="btn-act btn-act-pre" onclick="closeItemModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- ⚔️ ACTION, MANEUVER & ORIGIN DOSSIER MODAL (WITH 5.5E WIKI LINK) -->
+    <dialog class="sheet-dialog" id="spell-modal" closedby="any" aria-labelledby="spell-modal-title">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="spell-modal-title">⚔️ Feature Details</h3>
+                <button class="modal-close-btn" onclick="closeSpellModal()" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" id="spell-modal-body"></div>
+            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                <div id="spell-modal-actions" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;"></div>
+                <button class="btn-act btn-act-pre" onclick="closeSpellModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- 📓 PLAYER NOTES MODAL -->
+    <dialog class="sheet-dialog" id="player-notes-modal" closedby="any" aria-labelledby="player-notes-modal-title">
+        <div class="modal-card" style="border-color:#8b5cf6;">
+            <div class="modal-header" style="background:linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%);">
+                <h3 id="player-notes-modal-title" style="color:#e9d5ff;">📓 Player Notes</h3>
+                <button class="modal-close-btn" onclick="closePlayerNotesModal()" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" style="display:flex; flex-direction:column; gap:10px;">
+                
+                <!-- VIEW 1: ALL NOTES LIST (DEFAULT WHEN OPENED) -->
+                <div id="notes-list-view" style="display:flex; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span style="font-size:0.74rem; font-weight:800; color:#c4b5fd; text-transform:uppercase;">All Saved Notes (<span id="modal-notes-count">0</span>)</span>
+                            <span style="font-size:0.68rem; color:var(--text-dim);">• Click any note to open &amp; read</span>
+                        </div>
+                        <div style="display:flex; gap:5px; align-items:center;">
+                            <button class="btn-act btn-act-heal" onclick="openNoteEditorForm()" style="padding:4px 10px; font-size:0.72rem; font-weight:700; background:linear-gradient(135deg, #6d28d9 0%, #4338ca 100%); color:#fff; border:1px solid #8b5cf6;">➕ Write New Note</button>
+                            <button class="btn-act btn-act-pre" onclick="resetPlayerNotes()" style="padding:3px 7px; font-size:0.66rem; color:#94a3b8;" title="Restore baseline notes">🔄 Reset</button>
+                        </div>
+                    </div>
+                    <div id="player-notes-full-list" style="display:flex; flex-direction:column; gap:6px; max-height:52vh; overflow-y:auto;"></div>
+                </div>
+
+                <!-- VIEW 2: SINGLE NOTE FULL READER VIEW (WHEN A NOTE IS PRESSED) -->
+                <div id="note-reader-view" style="display:none; flex-direction:column; gap:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <button class="btn-act btn-act-pre" onclick="showNotesListView()" style="padding:4px 10px; font-size:0.73rem; color:#fde68a; border-color:rgba(245,158,11,0.4);">⬅️ Back to All Notes</button>
+                        <span id="reader-note-status" style="font-size:0.66rem; color:#94a3b8;"></span>
+                    </div>
+                    <div style="background:rgba(15, 23, 42, 0.92); border:1.5px solid #6d529e; border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+                        <div id="reader-note-title" style="font-family:'Cinzel',serif; font-size:1.02rem; font-weight:800; color:#fde68a; border-bottom:1px solid rgba(167,139,250,0.22); padding-bottom:6px;"></div>
+                        <div id="reader-note-body" style="font-size:0.86rem; color:#f1f5f9; line-height:1.6; white-space:pre-wrap; word-break:break-word;"></div>
+                    </div>
+                    <div style="display:flex; justify-content:flex-end; gap:6px;">
+                        <button id="reader-btn-edit" class="btn-act btn-act-pre" style="padding:5px 12px; font-size:0.74rem; color:#93c5fd; border-color:rgba(147,197,253,0.4);">✏️ Edit Note</button>
+                        <button id="reader-btn-delete" class="btn-act btn-act-dmg" style="padding:5px 12px; font-size:0.74rem;">🗑️ Remove Note</button>
+                    </div>
+                </div>
+
+                <!-- VIEW 3: WRITE / EDIT NOTE FORM -->
+                <div id="note-editor-view" style="display:none; background:rgba(15, 23, 42, 0.92); border:1px solid #4c1d95; border-radius:7px; padding:12px; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span id="note-form-header-lbl" style="font-size:0.76rem; font-weight:800; color:#fde68a; text-transform:uppercase;">➕ Write a New Note</span>
+                        <span id="note-char-counter" style="font-size:0.68rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">0 / 220 chars</span>
+                    </div>
+                    <input type="text" id="note-title-input" maxlength="55" placeholder="Note Title (e.g., Survivors of Oakhaven, Madam Eva's Prophecy)..." style="width:100%; padding:7px 10px; font-size:0.82rem; font-weight:700; background:#090d16; border:1px solid #334155; border-radius:5px; color:#f8fafc;">
+                    <textarea id="note-body-input" maxlength="220" rows="4" placeholder="Concise note content (up to 220 characters so exports stay super clean)..." oninput="updateNoteCharCounter()" style="width:100%; padding:7px 10px; font-size:0.8rem; background:#090d16; border:1px solid #334155; border-radius:5px; color:#cbd5e1; resize:vertical; font-family:'Inter',sans-serif;"></textarea>
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                        <button class="btn-act btn-act-pre" onclick="cancelNoteEdit()" style="padding:5px 10px; font-size:0.73rem;">⬅️ Cancel</button>
+                        <button id="btn-save-note" class="btn-act btn-act-heal" onclick="savePlayerNote()" style="padding:5px 14px; font-size:0.75rem; font-weight:700; background:linear-gradient(135deg, #6d28d9 0%, #4338ca 100%); color:#fff; border:1px solid #8b5cf6;">💾 Save Note</button>
+                    </div>
+                </div>
+
+            </div>
+            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
+                <button class="btn-act btn-act-pre" onclick="exportPlayerNotes()" style="color:#c4b5fd; border:1px solid rgba(167,139,250,0.5); padding:4px 10px; font-size:0.74rem; font-weight:700;">📓 Export Notes (New &amp; Removed Only)</button>
+                <button class="btn-act btn-act-pre" onclick="closePlayerNotesModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- 🎲 FLOATING BOTTOM ROLL RESULT HUD DRAWER -->
+    <div class="floating-roll-hud" id="floating-roll-hud" role="status" aria-live="polite">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:0.78rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.5px;">🎲 Live Roll &amp; Action Result</span>
+                <span id="floating-roll-time" style="font-size:0.72rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;"></span>
+            </div>
+            <button class="btn-act btn-act-pre" onclick="dismissFloatingHud()" style="padding:3px 10px; font-size:0.74rem; color:#cbd5e1;" title="Dismiss floating roll drawer">✕ Dismiss</button>
+        </div>
+        <div id="floating-roll-body" style="font-size:0.98rem; color:#f8fafc; line-height:1.5; display:flex; align-items:center; flex-wrap:wrap; gap:8px;"></div>
+    </div>
+
+<script>
+    // ==========================================
+    // 👑 JACOMIR YULLE MASTER STATE VARIABLES
+    // ==========================================
+    let characterLevel = 3;
+    let curHP = 28;
+    let maxHP = 28;
+    let tempHP = 0;
+    let isChainMailActive = true; // Chain Mail (16) + Defense Fighting Style (+1) = 17 AC
+    let isCoverACActive = false;  // +2 AC (Half Cover or Shield)
+    let helpTokens = 2;
+    const maxHelpTokens = 2;
+    let shortRestsRemaining = 2;
+    const maxShortRests = 2;
+    let rollMode = 'norm';
+
+    // Battle Master Fighter & 5.5e Human Resources
+    let curSupDice = 4;
+    const maxSupDice = 4; // 4d8 per Short or Long Rest
+    let curSecondWind = 3;
+    const maxSecondWind = 3; // 3/Long Rest (+1 regained on Short Rest)
+    let actionSurgeReady = true; // 1/Short or Long Rest
+    let heroicInspirationReady = true; // Human (Resourceful): Regained every Long Rest
+
+    function getProfBonus() {
+        return characterLevel >= 9 ? 4 : (characterLevel >= 5 ? 3 : 2);
+    }
+    function getManeuverSaveDC() {
+        return 8 + getProfBonus() + 3; // 8 + 2 (PB) + 3 (STR) = 13
+    }
+
+    // ==========================================
+    // 👑 BATTLE MASTER SUPERIORITY DICE, SECOND WIND, ACTION SURGE & HEROIC INSPIRATION
+    // ==========================================
+    function updateSuperiorityDiceUI() {
+        const el = document.getElementById('sup-dice-pips-disp');
+        if (!el) return;
+        let pips = '';
+        for (let i = 0; i < maxSupDice; i++) {
+            pips += (i < curSupDice) ? '🟧 ' : '⬛ ';
+        }
+        el.innerHTML = `${pips}<strong>(${curSupDice}/${maxSupDice} d8s)</strong>`;
+    }
+
+    function modSuperiorityDice(delta) {
+        curSupDice = Math.max(0, Math.min(maxSupDice, curSupDice + delta));
+        updateSuperiorityDiceUI();
+        renderManeuvers();
+        logRoll(`⚔️ <strong>Superiority Dice Pool:</strong> ${curSupDice}/${maxSupDice} d8s available.`);
+    }
+
+    function refillSuperiorityDice() {
+        curSupDice = maxSupDice;
+        updateSuperiorityDiceUI();
+        renderManeuvers();
+        logRoll(`⚔️ <strong>Combat Superiority Refilled:</strong> All <strong>${curSupDice}/${maxSupDice} Superiority Dice (d8s)</strong> restored!`);
+    }
+
+    function rollSuperiorityDieRaw() {
+        const d8 = Math.floor(Math.random() * 8) + 1;
+        logRoll(`⚔️ <strong>Superiority Die Roll (1d8):</strong> Rolled <span style="color:var(--accent-gold); font-size:1.05rem; font-weight:800;">${d8}</span>!`);
+    }
+
+    function updateHeroicUI() {
+        const badge = document.getElementById('heroic-status-badge');
+        const btn = document.getElementById('btn-use-heroic');
+        const card = document.getElementById('heroic-card');
+        if (!badge || !btn) return;
+
+        if (heroicInspirationReady) {
+            badge.innerHTML = '🟢 READY (1/LR)';
+            badge.style.background = 'rgba(34,197,94,0.16)';
+            badge.style.color = '#4ade80';
+            badge.style.borderColor = '#22c55e';
+            btn.innerHTML = '🌟 Spend Heroic Reroll';
+            card.style.borderColor = '#334155';
+        } else {
+            badge.innerHTML = '⚪ EXPENDED (REGAINS ON LR)';
+            badge.style.background = 'rgba(100,116,139,0.16)';
+            badge.style.color = '#94a3b8';
+            badge.style.borderColor = '#475569';
+            btn.innerHTML = '🔄 Reset Heroic Inspiration';
+            card.style.borderColor = '#475569';
+        }
+    }
+
+    function useHeroicInspiration() {
+        if (!heroicInspirationReady) {
+            heroicInspirationReady = true;
+            updateHeroicUI();
+            logRoll(`🌟 <strong>Heroic Inspiration (Human — Resourceful):</strong> Restored to <strong>READY</strong>!`);
+            return;
+        }
+        heroicInspirationReady = false;
+        updateHeroicUI();
+        logRoll(`🌟 <strong>Heroic Inspiration Expended (Human — Resourceful):</strong> King Jacomir refuses to yield! <strong>Immediately reroll any die you just rolled</strong> (d20 attack, save, check, or damage die) and use the new roll!`);
+    }
+
+    function toggleHeroicManual() {
+        heroicInspirationReady = !heroicInspirationReady;
+        updateHeroicUI();
+        logRoll(`🌟 <strong>Heroic Inspiration:</strong> Set to <strong>${heroicInspirationReady ? 'READY' : 'EXPENDED'}</strong>.`);
+    }
+
+    function updateFighterResourcesUI() {
+        const swEl = document.getElementById('sw-pips-disp');
+        if (swEl) {
+            let pips = '';
+            for (let i = 0; i < maxSecondWind; i++) {
+                pips += (i < curSecondWind) ? '💚 ' : '⬛ ';
+            }
+            swEl.innerHTML = `${pips}<strong>(${curSecondWind}/${maxSecondWind} SW)</strong>`;
+        }
+        const asEl = document.getElementById('as-pips-disp');
+        const asBadge = document.getElementById('card-as-badge');
+        const asBtn = document.getElementById('btn-use-as');
+        if (asEl) {
+            asEl.innerHTML = actionSurgeReady
+                ? `<span style="color:#4ade80;">⚡ Action Surge: 1/1 READY</span>`
+                : `<span style="color:#94a3b8;">⚡ Action Surge: 0/1 USED</span>`;
+        }
+        if (asBadge) {
+            asBadge.innerText = actionSurgeReady ? '1/1 READY' : '0/1 USED';
+            asBadge.className = actionSurgeReady ? 'pill-badge pill-gold' : 'pill-badge pill-neutral';
+        }
+        if (asBtn) {
+            asBtn.innerText = actionSurgeReady ? '⚡ Activate Action Surge!' : '🔄 Reset Action Surge';
+        }
+    }
+
+    function modSecondWind(delta) {
+        curSecondWind = Math.max(0, Math.min(maxSecondWind, curSecondWind + delta));
+        updateFighterResourcesUI();
+        logRoll(`💨 <strong>Second Wind Pool:</strong> ${curSecondWind}/${maxSecondWind} uses remaining.`);
+    }
+
+    function useSecondWindHeal() {
+        if (curSecondWind <= 0) {
+            logRoll(`⚠️ <strong>0 Second Wind uses remaining!</strong> Regain +1 use on a Short Rest or all 3/3 on a Long Rest.`);
+            return;
+        }
+        curSecondWind--;
+        const d10 = Math.floor(Math.random() * 10) + 1;
+        const healAmt = d10 + characterLevel; // 1d10 + 3
+        curHP = Math.min(maxHP, curHP + healAmt);
+        updateHPUI();
+        updateFighterResourcesUI();
+        logRoll(`💨 <strong>Second Wind (Bonus Action • ${curSecondWind}/${maxSecondWind} left):</strong> Rolled 1d10(${d10}) + ${characterLevel} = <span style="color:#4ade80; font-size:1.05rem; font-weight:800;">+${healAmt} HP</span> restored! (Current HP: <strong>${curHP}/${maxHP}</strong>)`);
+    }
+
+    function useTacticalMind() {
+        if (curSecondWind <= 0) {
+            logRoll(`⚠️ <strong>0 Second Wind uses remaining!</strong> Tactical Mind requires 1 available Second Wind charge.`);
+            return;
+        }
+        curSecondWind--;
+        updateFighterResourcesUI();
+        const d10 = Math.floor(Math.random() * 10) + 1;
+        logRoll(`🧠 <strong>Tactical Mind (5.5e Fighter • ${curSecondWind}/${maxSecondWind} SW left):</strong> Add <strong>1d10 = <span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${d10}</span></strong> to your failed Ability Check! <button class="btn-act btn-act-pre" style="margin-left:6px; color:#86efac;" onclick="refundTacticalMind()">↩️ Check Still Failed (Refund Charge)</button>`);
+    }
+
+    function refundTacticalMind() {
+        curSecondWind = Math.min(maxSecondWind, curSecondWind + 1);
+        updateFighterResourcesUI();
+        logRoll(`↩️ <strong>Tactical Mind Refunded:</strong> Because the ability check still failed, your Second Wind use is <strong>NOT expended</strong> (${curSecondWind}/${maxSecondWind} SW available)!`);
+    }
+
+    function useActionSurge() {
+        if (!actionSurgeReady) {
+            actionSurgeReady = true;
+            updateFighterResourcesUI();
+            logRoll(`⚡ <strong>Action Surge Restored:</strong> Ready (1/1)!`);
+            return;
+        }
+        actionSurgeReady = false;
+        updateFighterResourcesUI();
+        logRoll(`⚡ <strong>ACTION SURGE ACTIVATED (0/1 left • Recharges on Short/Long Rest):</strong> King Jacomir surges forward with sovereign fury—gain <strong>1 FULL ADDITIONAL ACTION</strong> on this turn!`);
+    }
+
+    function toggleActionSurgeManual() {
+        actionSurgeReady = !actionSurgeReady;
+        updateFighterResourcesUI();
+        logRoll(`⚡ <strong>Action Surge:</strong> Manually set to <strong>${actionSurgeReady ? '1/1 READY' : '0/1 USED'}</strong>.`);
+    }
+
+    // ==========================================
+    // ⚔️ WEAPON MASTERIES & SAVAGE ATTACKER ENGINE
+    // ==========================================
+    function rollWeaponAttack(weaponLabel, attackBonus) {
+        rollD20(weaponLabel, attackBonus);
+    }
+
+    function rollSavageGreatswordDamage() {
+        // Savage Attacker: Roll 2d6 twice and take the higher total + 3 STR!
+        const r1a = Math.floor(Math.random() * 6) + 1;
+        const r1b = Math.floor(Math.random() * 6) + 1;
+        const sum1 = r1a + r1b;
+
+        const r2a = Math.floor(Math.random() * 6) + 1;
+        const r2b = Math.floor(Math.random() * 6) + 1;
+        const sum2 = r2a + r2b;
+
+        const chosenSum = Math.max(sum1, sum2);
+        const total = chosenSum + 3;
+        logRoll(`🗡️ <strong>Ancestral Greatsword Damage (Savage Attacker):</strong> Roll 1 [${r1a}+${r1b}=${sum1}] vs Roll 2 [${r2a}+${r2b}=${sum2}] ➔ Kept <strong>${chosenSum}</strong> + 3 STR = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} Slashing Damage</span>!`);
+    }
+
+    function applyGrazeDamage() {
+        logRoll(`⚡ <strong>Weapon Mastery — Graze (Ancestral Greatsword):</strong> Even on a missed attack roll, Jacomir's heavy blade scrapes through the enemy's guard for <strong><span style="color:#fbbf24; font-size:1.05rem;">3 Slashing Damage</span></strong> (STR modifier)!`);
+    }
+
+    function rollSavageHandaxeDamage() {
+        const d1 = Math.floor(Math.random() * 6) + 1;
+        const d2 = Math.floor(Math.random() * 6) + 1;
+        const chosen = Math.max(d1, d2);
+        const total = chosen + 3;
+        logRoll(`🪓 <strong>Handaxe Damage (Savage Attacker • Vex):</strong> Roll 1 [${d1}] vs Roll 2 [${d2}] ➔ Kept <strong>${chosen}</strong> + 3 STR = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} Slashing Damage</span>! <em>(🎯 Vex: You have Advantage on your next attack roll against this target before the end of your next turn!)</em>`);
+    }
+
+    function activateVexAdvantage() {
+        if (rollMode !== 'adv') toggleAdvantage('adv');
+        logRoll(`🎯 <strong>Weapon Mastery — Vex Activated:</strong> Hitting with the Handaxe grants <strong>Advantage (Adv ACTIVE)</strong> on your next attack roll against that target before the end of your next turn!`);
+    }
+
+    // ==========================================
+    // 🎯 BATTLE MASTER MANEUVERS ENGINE (PARRY, RIPOSTE, MENACING ATTACK)
+    // ==========================================
+    const battleMasterManeuvers = [
+        {
+            id: "maneuver_parry",
+            name: "🛡️ Parry",
+            tag: "Reaction (When Hit in Melee) • -1 Superiority Die",
+            tagColor: "#38bdf8",
+            school: "Battle Master Maneuver (Defensive Reaction)",
+            castingTime: "1 Reaction (when another creature damages you with a melee attack)",
+            range: "Self",
+            components: "1 Superiority Die (d8)",
+            duration: "Instantaneous Damage Reduction",
+            wikiUrl: "https://5e.tools/optionalfeatures.html#parry_phb",
+            attackMod: "Reduces Incoming Melee Damage by 1d8 + 3 (STR Mod)",
+            damage: "Prevents 4 to 11 Damage on the Spot!",
+            desc: "Reaction when damaged by a melee attack: expend 1 Superiority Die to reduce the damage taken by 1d8 + 3 (STR)!",
+            fullRules: "When another creature damages you with a melee attack, you can use your <strong>Reaction</strong> and expend one Superiority Die to reduce the damage by the number you roll on your Superiority Die + your Strength modifier (<strong>1d8 + 3</strong>).",
+            flavor: "King Jacomir catches the beast's fangs on the crossguard of his ancestral greatsword and shoves it aside with iron force.",
+            buttons: [
+                { label: "🛡️ Parry (-1 d8 • Reduce 1d8+3)", class: "btn-roll-action", costDie: true, onClick: () => execParryManeuver() }
+            ]
+        },
+        {
+            id: "maneuver_riposte",
+            name: "⚔️ Riposte",
+            tag: "Reaction (When Missed in Melee) • -1 Superiority Die",
+            tagColor: "#fbbf24",
+            school: "Battle Master Maneuver (Counter-Attack Reaction)",
+            castingTime: "1 Reaction (when a creature misses you with a melee attack)",
+            range: "Melee Weapon Reach (5 ft)",
+            components: "1 Superiority Die (d8)",
+            duration: "Instantaneous Counter-Attack",
+            wikiUrl: "https://5e.tools/optionalfeatures.html#riposte_phb",
+            attackMod: "+5 Melee Weapon Attack as a Reaction",
+            damage: "Greatsword (2d6 + 1d8 + 3) or Handaxe (1d6 + 1d8 + 3) Slashing",
+            desc: "Reaction when a melee attack misses you: expend 1 Superiority Die to make an immediate melee attack (+1d8 dmg on hit)!",
+            fullRules: "When a creature misses you with a melee attack, you can use your <strong>Reaction</strong> and expend one Superiority Die to make a melee weapon attack against the creature. If you hit, you add the Superiority Die (<strong>+1d8</strong>) to the attack's damage roll!",
+            flavor: "As the enemy's claw whistles past his chain mail, Jacomir pivots on his heel and drives two feet of Oakenshire steel through their ribs.",
+            buttons: [
+                { label: "⚔️ Riposte Attack (-1 d8 • +5 Hit)", class: "btn-roll-action btn-roll-martial", costDie: true, onClick: () => execRiposteAttack() },
+                { label: "💥 Riposte Greatsword Dmg (2d6+1d8+3)", class: "btn-roll-action btn-roll-dmg", costDie: false, onClick: () => execRiposteDamage() }
+            ]
+        },
+        {
+            id: "maneuver_menacing",
+            name: "👹 Menacing Attack",
+            tag: "On Weapon Hit • -1 Superiority Die • DC 13 WIS Save",
+            tagColor: "#f87171",
+            school: "Battle Master Maneuver (Offensive Control)",
+            castingTime: "Part of hitting a creature with a weapon attack",
+            range: "Weapon Range (Melee or Thrown)",
+            components: "1 Superiority Die (d8)",
+            duration: "Frightened until the end of your next turn",
+            wikiUrl: "https://5e.tools/optionalfeatures.html#menacing%20attack_phb",
+            attackMod: "DC 13 Wisdom Saving Throw (8 + PB + STR)",
+            damage: "+1d8 Weapon Damage + Target is Frightened of You!",
+            desc: "When you hit with a weapon: expend 1 Superiority Die to add +1d8 damage & force a DC 13 WIS save or Frightened!",
+            fullRules: "When you hit a creature with a weapon attack, you can expend one Superiority Die to attempt to frighten the target. You add the Superiority Die (<strong>+1d8</strong>) to the attack's damage roll, and the target must make a <strong>DC 13 Wisdom saving throw</strong>. On a failed save, it is <strong>Frightened</strong> of you until the end of your next turn (Disadvantage on all attack rolls and ability checks while you are in line of sight, and it cannot willingly move closer to you!).",
+            flavor: "Jacomir's eyes lock onto his foe with the terrifying, unyielding authority of a king who has walked through the death of his own realm.",
+            buttons: [
+                { label: "👹 Menacing Strike (-1 d8 • +1d8 Dmg & DC 13 WIS)", class: "btn-roll-action btn-roll-dmg", costDie: true, onClick: () => execMenacingAttack() }
+            ]
+        }
+    ];
+
+    function renderManeuvers() {
+        const container = document.getElementById('maneuvers-grid');
+        if (!container) return;
+        container.innerHTML = '';
+
+        battleMasterManeuvers.forEach((m, mIdx) => {
+            const card = document.createElement('div');
+            card.className = 'action-card';
+
+            let btnsHtml = '';
+            m.buttons.forEach((b, bIdx) => {
+                btnsHtml += `<button class="${b.class}" onclick="execManeuverButton(${mIdx}, ${bIdx})">${b.label}</button>`;
+            });
+
+            card.innerHTML = `
+                <div class="action-header">
+                    <div>
+                        <div onclick="openSpellDetailsModal('${m.id}')" style="cursor:pointer; font-weight:700; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                            ${m.name} <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                        </div>
+                        <div style="font-size:0.67rem; font-weight:700; color:${m.tagColor}; margin-top:1px;">${m.tag}</div>
+                    </div>
+                    <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;">${curSupDice}/4 D8</span>
+                </div>
+                <div class="action-desc">${m.desc}</div>
+                <div class="action-btn-row">${btnsHtml}</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function execManeuverButton(mIdx, bIdx) {
+        const m = battleMasterManeuvers[mIdx];
+        if (!m || !m.buttons[bIdx]) return;
+        const btn = m.buttons[bIdx];
+
+        if (btn.costDie) {
+            if (curSupDice <= 0) {
+                logRoll(`⚠️ <strong>0 Superiority Dice remaining!</strong> Take a Short or Long Rest (or click Refill) to restore your 4d8 pool.`);
+                return;
+            }
+            curSupDice--;
+            updateSuperiorityDiceUI();
+            renderManeuvers();
+        }
+        btn.onClick();
+    }
+
+    function execParryManeuver() {
+        const d8 = Math.floor(Math.random() * 8) + 1;
+        const red = d8 + 3; // 1d8 + STR (+3)
+        logRoll(`🛡️ <strong>Maneuver — Parry (Reaction • ${curSupDice}/4 d8s left):</strong> Rolled 1d8(${d8}) + 3 STR = Reduce incoming melee damage by <strong><span style="color:#38bdf8; font-size:1.08rem;">-${red} Damage</span></strong>! <button class="btn-act btn-act-heal" style="margin-left:6px;" onclick="stepHPMulti(${red}, 'Parry Damage Reduction')">💚 Refund ${red} HP</button>`);
+    }
+
+    function execRiposteAttack() {
+        const d20 = Math.floor(Math.random() * 20) + 1;
+        const atkTotal = d20 + 5;
+        let critNote = d20 === 20 ? " 🔥 <span style='color:#facc15; font-weight:800;'>NAT 20 BRUTAL CRIT!</span>" : (d20 === 1 ? " 💀 <span style='color:#ef4444; font-weight:800;'>NAT 1!</span>" : "");
+        logRoll(`⚔️ <strong>Maneuver — Riposte Counter-Attack (Reaction • ${curSupDice}/4 d8s left):</strong> d20(${d20}) + 5 = <span style="color:var(--accent-gold); font-size:1.08rem; font-weight:800;">${atkTotal} to Hit</span>!${critNote} <button class="btn-roll-action btn-roll-dmg" style="margin-left:6px;" onclick="execRiposteDamage()">💥 Roll Riposte Greatsword Dmg (2d6+1d8+3)</button>`);
+    }
+
+    function execRiposteDamage() {
+        const g1 = Math.floor(Math.random() * 6) + 1;
+        const g2 = Math.floor(Math.random() * 6) + 1;
+        const sup = Math.floor(Math.random() * 8) + 1;
+        const total = g1 + g2 + sup + 3;
+        logRoll(`💥 <strong>Riposte Greatsword Damage:</strong> 2d6[${g1}+${g2}] + Superiority d8[${sup}] + 3 STR = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">${total} Slashing Damage</span>!`);
+    }
+
+    function execMenacingAttack() {
+        const d8 = Math.floor(Math.random() * 8) + 1;
+        logRoll(`👹 <strong>Maneuver — Menacing Attack (${curSupDice}/4 d8s left):</strong> Add <strong><span style="color:#f87171; font-size:1.08rem;">+${d8} Damage</span></strong> (1d8) to your weapon hit, AND the target must succeed on a <strong>DC 13 Wisdom Saving Throw</strong> or be <strong>Frightened of Jacomir</strong> until the end of your next turn!`);
+    }
+
+    // ==========================================
+    // 📖 COMPENDIUM DATABASE (WEAPONS, FEATS, CLASS FEATURES & KING JACOMIR BACKSTORY)
+    // ==========================================
+    const spellActionDatabase = {
+        "greatsword_jacomir": {
+            id: "greatsword_jacomir",
+            name: "🗡️ Ancestral Greatsword of Oakenshire (Graze + Savage Attacker)",
+            school: "Martial Melee Weapon (Heavy, Two-Handed)",
+            castingTime: "1 Action",
+            range: "5 ft Melee Reach",
+            components: "STR +3, PB +2 (+5 to Hit)",
+            duration: "Instantaneous",
+            wikiUrl: "https://5e.tools/items.html#greatsword_xphb",
+            attackMod: "+5 to Hit (STR +3, PB +2)",
+            damage: "2d6 + 3 Slashing (Savage Attacker rolls 2d6 twice!) • Graze: 3 Slashing on Miss",
+            fullRules: "• <strong>Heavy Two-Handed Cleave:</strong> Deals <strong>2d6 + 3 Slashing damage</strong> on a hit.<br>• <strong>Origin Feat — Savage Attacker (1/Turn):</strong> Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either total! The <em>[💥 2d6+3 (Savage)]</em> button automatically rolls two sets of 2d6 and picks the higher total.<br>• <strong>5.5e Weapon Mastery — Graze:</strong> If your attack roll with this Greatsword misses a creature, you can deal damage to that creature equal to the ability modifier you used to make the attack roll (<strong>3 Slashing damage</strong>).",
+            flavor: "Forged in the royal smithies of Oakhaven before the Mists swallowed the realm, its steel never leaves an enemy unscathed—even when they parry.",
+            modalButtons: [
+                { label: "🗡️ Attack (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Ancestral Greatsword (+5)', 5); } },
+                { label: "💥 Roll Savage 2d6+3", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageGreatswordDamage(); } },
+                { label: "⚡ Graze (3 Dmg on Miss)", class: "btn-act btn-act-pre", onClick: () => { closeSpellModal(); applyGrazeDamage(); } }
+            ]
+        },
+        "handaxe_jacomir": {
+            id: "handaxe_jacomir",
+            name: "🪓 Balanced Royal Handaxes (2x • Vex Mastery)",
+            school: "Simple Melee / Thrown Weapon (Light, Thrown 20/60 ft)",
+            castingTime: "1 Action",
+            range: "5 ft Melee or Thrown 20/60 ft",
+            components: "STR +3, PB +2 (+5 to Hit)",
+            duration: "Instantaneous",
+            wikiUrl: "https://5e.tools/items.html#handaxe_xphb",
+            attackMod: "+5 to Hit (STR +3, PB +2)",
+            damage: "1d6 + 3 Slashing • Vex Mastery: Grants Advantage on Next Attack!",
+            fullRules: "• <strong>Melee or Ranged Throw (20/60 ft):</strong> Deals <strong>1d6 + 3 Slashing damage</strong>.<br>• <strong>5.5e Weapon Mastery — Vex:</strong> If you hit a creature with this Handaxe and deal damage to the creature, you have <strong>Advantage on your next attack roll</strong> against that creature before the end of your next turn!",
+            flavor: "Weighted throwing axes strapped to Jacomir's belt for setting up devastating follow-up Greatsword cleaves.",
+            modalButtons: [
+                { label: "🪓 Attack (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Handaxe (+5 • Vex)', 5); } },
+                { label: "💥 Roll Savage 1d6+3", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageHandaxeDamage(); } }
+            ]
+        },
+        "javelin_jacomir": {
+            id: "javelin_jacomir",
+            name: "🔱 Thrown Javelins (Slow Mastery)",
+            school: "Simple Melee / Thrown Weapon (30/120 ft)",
+            castingTime: "1 Action",
+            range: "Thrown 30/120 ft (or 5 ft Melee)",
+            components: "STR +3, PB +2 (+5 to Hit)",
+            duration: "Speed reduced by -10 ft until start of your next turn",
+            wikiUrl: "https://5e.tools/items.html#javelin_xphb",
+            attackMod: "+5 to Hit (STR +3, PB +2)",
+            damage: "1d6 + 3 Piercing • Slow Mastery: -10 ft Target Speed",
+            fullRules: "• <strong>Long-Range Martial Throw (30/120 ft):</strong> Deals <strong>1d6 + 3 Piercing damage</strong>.<br>• <strong>5.5e Weapon Mastery — Slow:</strong> If you hit a creature with this Javelin and deal damage to it, you can reduce its Speed by <strong>10 feet</strong> until the start of your next turn.",
+            flavor: "Ideal for pinning down fleeing wolves or airborne vampire spawn.",
+            modalButtons: [
+                { label: "🔱 Throw Javelin (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Thrown Javelin (+5 • Slow)', 5); } }
+            ]
+        },
+        "grapple_shove": {
+            id: "grapple_shove",
+            name: "✊ 5.5e Unarmed Strike: Grapple, Shove & Gauntlet Bash",
+            school: "Standard Martial Action",
+            castingTime: "1 Action (or Opportunity Attack)",
+            range: "5 ft Reach",
+            components: "Unarmed Strike DC 13 (8 + PB + STR)",
+            duration: "Instantaneous / Until Grapple Ends",
+            wikiUrl: "https://5e.tools/actions.html#unarmed%20strike_xphb",
+            attackMod: "Save DC 13 (STR or DEX Save) or +5 to Hit",
+            damage: "4 Bludgeoning Damage, Grappled (Speed 0), or Shoved (Prone / 5ft Push)",
+            fullRules: "Under the 2024 (5.5e) rules, whenever you make an Unarmed Strike, you can choose one of three options:<br>• <strong>Damage:</strong> Make an attack roll (<strong>+5 to hit</strong>) dealing <strong>4 Bludgeoning damage</strong> (1 + 3 STR).<br>• <strong>Grapple:</strong> The target must succeed on a <strong>DC 13 Strength or Dexterity saving throw</strong> (it chooses which) or have the <strong>Grappled</strong> condition (Speed 0, Disadvantage on attacks against anyone other than you!).<br>• <strong>Shove:</strong> The target must succeed on a <strong>DC 13 Strength or Dexterity saving throw</strong> or you either push it <strong>5 feet away</strong> (e.g., out a carriage window!) or knock it <strong>Prone</strong>!",
+            flavor: "Jacomir grabs a lunging wolf by the throat with an iron gauntlet and hurls it back into the storm.",
+            modalButtons: [
+                { label: "✊ Declare Grapple/Shove (DC 13)", class: "btn-roll-action", onClick: () => { closeSpellModal(); castUtility('✊ <strong>Grapple / Shove (DC 13 STR/DEX Save):</strong> Target is Grappled, knocked Prone, or pushed 5 ft!'); } }
+            ]
+        },
+        "second_wind": {
+            id: "second_wind",
+            name: "💨 Second Wind (5.5e Fighter Core Feature)",
+            school: "Fighter Class Feature (Level 1)",
+            castingTime: "1 Bonus Action",
+            range: "Self",
+            components: "3 Uses per Long Rest (+1 regained on Short Rest)",
+            duration: "Instantaneous",
+            wikiUrl: "https://5e.tools/classes.html#fighter_xphb",
+            attackMod: "Automatic Self-Heal",
+            damage: "Restores 1d10 + 3 Hit Points",
+            fullRules: "You have a limited well of physical and mental stamina that you can draw on. As a <strong>Bonus Action</strong>, you can expend one use of this feature to regain Hit Points equal to <strong>1d10 + your Fighter level (1d10 + 3)</strong>.<br><br>• You have <strong>3 uses</strong> of Second Wind at Level 3, regaining <strong>1 expended use</strong> when you finish a Short Rest and all 3 uses when you finish a Long Rest.",
+            flavor: "Jacomir steadies his breathing,Tightening his grip on his hilt as a sovereign's resolve dulls the pain of his wounds.",
+            modalButtons: [
+                { label: "💚 Use Second Wind (1d10+3)", class: "btn-roll-action btn-roll-heal", onClick: () => { closeSpellModal(); useSecondWindHeal(); } }
+            ]
+        },
+        "tactical_mind": {
+            id: "tactical_mind",
+            name: "🧠 Tactical Mind (5.5e Fighter Level 2 Feature)",
+            school: "Fighter Class Feature (Level 2)",
+            castingTime: "Free Trigger (When you fail an Ability Check)",
+            range: "Self",
+            components: "1 Use of Second Wind (Refunded if check still fails!)",
+            duration: "Instantaneous",
+            wikiUrl: "https://5e.tools/classes.html#fighter_xphb",
+            attackMod: "Adds +1d10 to any Failed Ability Check",
+            damage: "Zero Risk: Does NOT expend Second Wind if the check still fails!",
+            fullRules: "You have a mind for tactics on and off the battlefield. When you fail an ability check, you can expend a use of your <strong>Second Wind</strong> to push yourself toward success. Rather than regaining Hit Points, you roll <strong>1d10</strong> and add the number rolled to the ability check, potentially turning it into a success.<br><br>💡 <strong>No-Waste Clause:</strong> If the check still fails, this use of Second Wind is <strong>not expended</strong>!",
+            flavor: "Trained in royal statecraft, siege warfare, and Dragonchess, Jacomir calculates an angle others missed.",
+            modalButtons: [
+                { label: "🧠 Roll +1d10 (Tactical Mind)", class: "btn-roll-action", onClick: () => { closeSpellModal(); useTacticalMind(); } }
+            ]
+        },
+        "action_surge": {
+            id: "action_surge",
+            name: "⚡ Action Surge (Fighter Signature Burst)",
+            school: "Fighter Class Feature (Level 2)",
+            castingTime: "Free on Your Turn",
+            range: "Self",
+            components: "1 Use per Short or Long Rest",
+            duration: "1 Turn",
+            wikiUrl: "https://5e.tools/classes.html#fighter_xphb",
+            attackMod: "Grants 1 Additional Action on Your Turn",
+            damage: "Double Greatsword Attack Routine in a Single Turn!",
+            fullRules: "You can push yourself beyond your normal limits for a moment. On your turn, you can take <strong>one additional action</strong> (except the Magic action).<br><br>Once you use this feature, you can't do so again until you finish a <strong>Short or Long Rest</strong>.",
+            flavor: "When the frontline wavers, the King of Oakhaven strikes twice before the thunder finishes rolling.",
+            modalButtons: [
+                { label: "⚡ Activate Action Surge!", class: "btn-roll-action btn-roll-martial", onClick: () => { closeSpellModal(); useActionSurge(); } }
+            ]
+        },
+        "savage_attacker": {
+            id: "savage_attacker",
+            name: "🩸 Origin Feat: Savage Attacker & 🛡️ Fighting Style: Defense",
+            school: "Human Versatile Origin Feat & Fighter Fighting Style",
+            castingTime: "Passive (1/Turn on Weapon Hit)",
+            range: "Self",
+            components: "Automatic on Weapon Damage Buttons",
+            duration: "Permanent Passive",
+            wikiUrl: "https://5e.tools/feats.html#savage%20attacker_xphb",
+            attackMod: "Defense Style: +1 AC while wearing Light, Medium, or Heavy Armor (AC 17)",
+            damage: "Savage Attacker: Roll weapon damage dice twice 1/turn and use either total",
+            fullRules: "• <strong>Savage Attacker (Origin Feat):</strong> You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either roll against the target.<br>• <strong>Fighting Style — Defense:</strong> While you are wearing Light, Medium, or Heavy armor, you gain a <strong>+1 bonus to Armor Class</strong> (raising Jacomir's Chain Mail AC from 16 to <strong>17</strong>).",
+            flavor: "Every swing of Jacomir's greatsword carries the crushing weight of a monarch fighting for a stolen kingdom.",
+            modalButtons: []
+        },
+        "human_resourceful": {
+            id: "human_resourceful",
+            name: "🌟 Human Traits (5.5e): Resourceful, Skillful & Versatile",
+            school: "Human Species Traits (2024 PHB)",
+            castingTime: "Passive / Free Reroll",
+            range: "Self",
+            components: "Recharges every Long Rest",
+            duration: "Permanent",
+            wikiUrl: "https://5e.tools/races.html#human_xphb",
+            attackMod: "Heroic Inspiration: Reroll Any Die Immediately After Rolling",
+            damage: "Skillful (Perception Proficiency) + Versatile (Extra Origin Feat)",
+            fullRules: "• <strong>Resourceful:</strong> You gain <strong>Heroic Inspiration</strong> whenever you finish a Long Rest. If you have Heroic Inspiration, you can expend it to reroll <em>any die</em> immediately after rolling it, and you must use the new roll.<br>• <strong>Skillful:</strong> You gain proficiency in one skill of your choice (<strong>Perception +4</strong>).<br>• <strong>Versatile:</strong> You gain an Origin feat of your choice (<strong>Savage Attacker</strong>, in addition to <strong>Skilled</strong> from the Noble background).",
+            flavor: "Human grit and royal discipline refuse to break beneath Barovia's gloom.",
+            modalButtons: [
+                { label: "🌟 Spend Heroic Inspiration", class: "btn-roll-action btn-roll-martial", onClick: () => { closeSpellModal(); useHeroicInspiration(); } }
+            ]
+        },
+        "backstory_full": {
+            id: "backstory_full",
+            name: "👑 Jacomir Yulle (\"King Jacomir\") — Origin & Passive Abilities",
+            school: "Level 3 Human Battle Master Fighter",
+            castingTime: "Noble Background (Former King of Oakhaven / Oakenshire) • Lawful Neutral",
+            range: "5'11\" • Age 32",
+            components: "Common, Draconic, Dwarvish • Dragonchess Set",
+            duration: "« The Wandering Sovereign • Exiled Monarch of the Swallowed Realm »",
+            wikiUrl: "https://5e.tools/classes.html#fighter_xphb"
+        }
+    };
+
+    function openSpellDetailsModal(spellId) {
+        const sp = spellActionDatabase[spellId] || battleMasterManeuvers.find(m => m.id === spellId);
+        if (!sp) return;
+
+        document.getElementById('spell-modal-title').innerHTML = `${sp.name}`;
+        const body = document.getElementById('spell-modal-body');
+
+        const combatStatsHtml = (sp.attackMod || sp.damage) ? `
+            <div style="background:rgba(245,158,11,0.06); border:1px solid rgba(245,158,11,0.25); border-radius:6px; padding:8px 10px; display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:6px; font-size:0.75rem;">
+                ${sp.attackMod ? `<div><span style="color:var(--text-dim); font-size:0.68rem; text-transform:uppercase; font-weight:700;">Attack / Save / Bonus:</span><div style="font-weight:700; color:var(--accent-gold);">${sp.attackMod}</div></div>` : ''}
+                ${sp.damage ? `<div><span style="color:var(--text-dim); font-size:0.68rem; text-transform:uppercase; font-weight:700;">Damage / Effect:</span><div style="font-weight:700; color:#f87171;">${sp.damage}</div></div>` : ''}
+            </div>
+        ` : '';
+
+        const flavorHtml = sp.flavor ? `
+            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:7px 10px; font-size:0.75rem; color:#fde68a; font-style:italic; line-height:1.4;">
+                👑 "${sp.flavor}"
+            </div>
+        ` : '';
+
+        const wikiBtnHtml = sp.wikiUrl ? `
+            <a href="${sp.wikiUrl}" target="_blank" rel="noopener noreferrer" class="btn-act btn-act-pre" style="text-decoration:none; color:#38bdf8; border-color:rgba(56,189,248,0.4); display:inline-flex; align-items:center; gap:4px; align-self:flex-start;">
+                🌐 Open 5.5e / 5e Wiki Reference ↗
+            </a>
+        ` : '';
+
+        if (spellId === 'backstory_full') {
+            body.innerHTML = `
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <!-- Identity Header Box -->
+                    <div style="padding:8px 12px; background:linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(15,23,42,0.9) 100%); border:1px solid rgba(245,158,11,0.35); border-radius:6px;">
+                        <div style="color:#fde68a; font-weight:800; font-size:0.86rem; letter-spacing:0.3px;">« The Wandering Sovereign • Former King of Oakhaven (Oakenshire) »</div>
+                        <div style="color:#cbd5e1; font-size:0.75rem; margin-top:2px;">Level 3 Human Battle Master Fighter • Noble Background • 5'11" (Age 32) • Lawful Neutral</div>
+                    </div>
+
+                    <!-- SEPARATE BOX 1: PASSIVE ABILITIES, ORIGIN FEATS & TRAITS -->
+                    <div style="background:rgba(15,23,42,0.85); border:1px solid #334155; border-left:3px solid #f59e0b; border-radius:6px; padding:10px 12px;">
+                        <div style="font-size:0.74rem; font-weight:800; color:#fde68a; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:7px;">🛡️ Passive Abilities, Origin Feats &amp; Traits</div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:7px; font-size:0.75rem;">
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#f87171;">🩸 Savage Attacker (Origin Feat)</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Once per turn when you hit a target with a weapon, roll the weapon's damage dice twice and use either total.</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#38bdf8;">🛡️ Fighting Style: Defense (+1 AC)</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">While wearing Light, Medium, or Heavy armor, gain a <strong>+1 bonus to AC</strong> (included in AC 17 with Chain Mail).</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#fde68a;">👑 Noble Origin Feat: Skilled &amp; Resourceful</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;"><strong>Resourceful:</strong> Gain <em>Heroic Inspiration</em> every Long Rest.<br><strong>Skilled:</strong> Extra proficiencies in <em>Intimidation</em>, <em>Survival</em>, and <em>Dragonchess Set</em>.</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#c4b5fd;">🗣️ Languages, Tools &amp; Senses</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;"><strong>Passive Perception:</strong> 14 (Perception +4).<br><strong>Languages &amp; Tools:</strong> Common, Draconic, Dwarvish • Dragonchess Gaming Set.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEPARATE BOX 2: ORIGIN STORY & THE FALL OF OAKHAVEN -->
+                    <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.22); border-left:3px solid var(--accent-blue); border-radius:6px; padding:10px 12px; font-size:0.77rem; color:#f8fafc; line-height:1.5;">
+                        <div style="font-size:0.74rem; font-weight:800; color:var(--accent-blue); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:5px;">🕰️ Origin Story &amp; The Swallowing of Oakhaven (Oakenshire)</div>
+                        <div>
+                            Once the anointed sovereign of <strong>Oakhaven (Oakenshire)</strong>, <strong>King Jacomir Yulle</strong> was no decadent palace monarch—he was a battle-hardened commander who stood in the mud of the shield-wall beside his soldiers. When an unnatural, freezing gray fog rolled across the borders of his kingdom, Jacomir rode out at the head of his royal vanguard with his ancestral two-handed greatsword drawn to hold the line.<br><br>
+                            The Mists did not fight with steel. In a single silent night, the creeping fog swallowed his borders, his bannermen, and his people, leaving Jacomir standing alone in the choking dark with only his signet ring, a tattered fur-mantled royal cloak, and an empty scroll case.<br><br>
+                            Following the phantom tracks of his vanished subjects into the fog, Jacomir was wrenched across the planes and jolted awake inside the runaway Phantom Black Stagecoach hurtling down the Old Svalich Road—swearing an unbreakable oath to find his people and bring Barovia's tyrant to heel.
+                        </div>
+                    </div>
+
+                    <!-- SEPARATE BOX 3: PERSONALITY, IDEALS, BONDS & FLAWS -->
+                    <div style="background:rgba(245,158,11,0.06); border:1px solid rgba(245,158,11,0.25); border-left:3px solid var(--accent-gold); border-radius:6px; padding:9px 12px; font-size:0.75rem; color:#e2e8f0; line-height:1.45;">
+                        <div style="font-size:0.72rem; font-weight:800; color:#fde68a; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px;">🎭 Royal Persona, Ideals, Bonds &amp; Flaws</div>
+                        <div>• <strong>Personality:</strong> <em>"I still carry myself as an anointed king; I will bleed for these traveling companions as if they were my royal vanguard."</em></div>
+                        <div>• <strong>Ideal (Duty):</strong> <em>"A crown is not a privilege; it is an unbreakable debt owed to every soul living under my banner."</em></div>
+                        <div>• <strong>Bond:</strong> <em>"Oakhaven (Oakenshire) was dragged into these cursed mists. I will find my people, even if I have to tear Barovia apart stone by stone."</em></div>
+                        <div>• <strong>Flaw:</strong> <em>"I struggle to accept that my titles hold no power here. I refuse to see Strahd as a mythic terror—he is merely a tyrant occupying land where my people are trapped."</em></div>
+                    </div>
+
+                    ${wikiBtnHtml}
+                </div>
+            `;
+        } else {
+            body.innerHTML = `
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                    <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+                        <span class="pill-badge" style="background:rgba(245,158,11,0.15); border:1px solid var(--accent-gold); color:#fde68a; font-size:0.68rem;">${sp.school || 'Battle Master Fighter'}</span>
+                        <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#93c5fd; font-size:0.68rem;">⏱️ ${sp.castingTime || '1 Action'}</span>
+                        <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; font-size:0.68rem;">📏 ${sp.range || 'Self'}</span>
+                        <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; font-size:0.68rem;">🧩 ${sp.components || 'Martial'}</span>
+                        <span class="pill-badge" style="background:#1e293b; border:1px solid #334155; color:#cbd5e1; font-size:0.68rem;">⏳ ${sp.duration || 'Instantaneous'}</span>
+                    </div>
+                    ${combatStatsHtml}
+                    <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.22); border-radius:6px; padding:9px 11px; font-size:0.78rem; color:#f8fafc; line-height:1.5;">
+                        <div style="font-size:0.7rem; font-weight:700; color:var(--accent-blue); text-transform:uppercase; margin-bottom:4px;">📖 Official D&amp;D 5.5e (2024) Rules &amp; Mechanics:</div>
+                        <div>${sp.fullRules || sp.desc}</div>
+                    </div>
+                    ${flavorHtml}
+                    ${wikiBtnHtml}
+                </div>
+            `;
+        }
+
+        const actionsContainer = document.getElementById('spell-modal-actions');
+        actionsContainer.innerHTML = '';
+
+        if (sp.modalButtons) {
+            sp.modalButtons.forEach(btn => {
+                const b = document.createElement('button');
+                b.className = btn.class;
+                b.innerHTML = btn.label;
+                b.onclick = () => btn.onClick();
+                actionsContainer.appendChild(b);
+            });
+        } else if (sp.buttons) {
+            const mIdx = battleMasterManeuvers.findIndex(m => m.id === sp.id);
+            sp.buttons.forEach((btn, bIdx) => {
+                const b = document.createElement('button');
+                b.className = btn.class;
+                b.innerHTML = btn.label;
+                b.onclick = () => { closeSpellModal(); execManeuverButton(mIdx, bIdx); };
+                actionsContainer.appendChild(b);
+            });
+        }
+
+        const modal = document.getElementById('spell-modal');
+        if (modal) modal.showModal();
+    }
+
+    function closeSpellModal() {
+        const modal = document.getElementById('spell-modal');
+        if (modal) modal.close();
+    }
+
+    // ==========================================
+    // ❤️ VITALS, HP, BUFFS & RESTS ENGINE
+    // ==========================================
+    function updateHPUI() {
+        const hpDisp = document.getElementById('hp-disp');
+        const hpBar = document.getElementById('hp-bar');
+        const hpTempBar = document.getElementById('hp-temp-bar');
+
+        const basePct = Math.max(0, Math.min(100, (curHP / maxHP) * 100));
+        hpBar.style.width = `${basePct}%`;
+
+        if (tempHP > 0) {
+            hpDisp.innerText = `${curHP} (+${tempHP}T)/${maxHP}`;
+            hpDisp.style.color = 'var(--accent-blue)';
+            hpTempBar.style.width = `${Math.min(100, (tempHP / maxHP) * 100)}%`;
+        } else {
+            hpDisp.innerText = `${curHP}/${maxHP}`;
+            hpTempBar.style.width = '0%';
+            if (basePct > 50) {
+                hpBar.style.backgroundColor = 'var(--accent-green)';
+                hpDisp.style.color = 'var(--accent-green)';
+            } else if (basePct > 25) {
+                hpBar.style.backgroundColor = 'var(--accent-gold)';
+                hpDisp.style.color = 'var(--accent-gold)';
+            } else {
+                hpBar.style.backgroundColor = 'var(--accent-red)';
+                hpDisp.style.color = 'var(--accent-red)';
+            }
+        }
+    }
+
+    function stepHP(delta) {
+        if (delta > 0) {
+            if (curHP < maxHP) curHP += 1;
+            else tempHP += 1;
+        } else {
+            if (tempHP > 0) tempHP -= 1;
+            else if (curHP > 0) curHP -= 1;
+        }
+        updateHPUI();
+    }
+
+    function stepHPMulti(amount, label) {
+        curHP = Math.min(maxHP, curHP + amount);
+        updateHPUI();
+        logRoll(`💚 <strong>${label}:</strong> Restored +${amount} HP (HP: ${curHP}/${maxHP})!`);
+    }
+
+    function applyDamage() {
+        const input = document.getElementById('hp-input');
+        const dmg = parseInt(input.value) || 1;
+        input.value = '';
+        let rem = dmg;
+        if (tempHP > 0) {
+            if (tempHP >= rem) { tempHP -= rem; rem = 0; }
+            else { rem -= tempHP; tempHP = 0; }
+        }
+        if (rem > 0) curHP = Math.max(0, curHP - rem);
+        updateHPUI();
+        logRoll(`💥 <strong>Damage Taken:</strong> <span style="color:#f87171; font-weight:700;">-${dmg} HP</span> (Current HP: ${curHP}/${maxHP}${tempHP > 0 ? ' +' + tempHP + ' Temp' : ''})`);
+    }
+
+    function applyHeal() {
+        const input = document.getElementById('hp-input');
+        const heal = parseInt(input.value) || 1;
+        input.value = '';
+        const space = maxHP - curHP;
+        if (heal <= space) curHP += heal;
+        else { curHP = maxHP; tempHP += (heal - space); }
+        updateHPUI();
+        logRoll(`💚 <strong>Healed:</strong> <span style="color:#86efac; font-weight:700;">+${heal} HP</span> (Current HP: ${curHP}/${maxHP}${tempHP > 0 ? ' +' + tempHP + ' Temp' : ''})`);
+    }
+
+    function clearTempHP() {
+        tempHP = 0;
+        updateHPUI();
+        logRoll(`🛡️ Temporary HP cleared.`);
+    }
+
+    function takeShortRest() {
+        if (shortRestsRemaining <= 0) {
+            logRoll(`⚠️ <strong>0 Short Rests remaining today!</strong> (Max 2/day — take a Long Rest to reset).`);
+            return;
+        }
+        shortRestsRemaining--;
+        const healAmt = Math.max(1, Math.ceil(maxHP * 0.25)); // +7 HP
+        curHP = Math.min(maxHP, curHP + healAmt);
+        helpTokens = Math.min(maxHelpTokens, helpTokens + 1);
+        curSupDice = maxSupDice; // All 4/4 Superiority Dice recharge on Short Rest!
+        actionSurgeReady = true; // Action Surge recharges on Short Rest!
+        curSecondWind = Math.min(maxSecondWind, curSecondWind + 1); // 5.5e: Regain +1 Second Wind on Short Rest!
+        updateHelpDisplay();
+        updateHPUI();
+        updateSuperiorityDiceUI();
+        updateFighterResourcesUI();
+        renderManeuvers();
+        logRoll(`☕ <strong>Short Rest (${shortRestsRemaining}/2 left):</strong> Healed <strong>+${healAmt} HP</strong> (${curHP}/${maxHP}), restored <strong>4/4 Superiority Dice</strong>, recharged <strong>⚡ Action Surge</strong>, regained <strong>+1 Second Wind</strong> (${curSecondWind}/3), and <strong>+1 Help Token</strong> (${helpTokens}/2)!`);
+    }
+
+    function resetHP() {
+        curHP = maxHP;
+        tempHP = 0;
+        shortRestsRemaining = maxShortRests;
+        helpTokens = maxHelpTokens;
+        curSupDice = maxSupDice;
+        curSecondWind = maxSecondWind;
+        actionSurgeReady = true;
+        heroicInspirationReady = true; // Human Resourceful: Regained on every Long Rest
+        isCoverACActive = false;
+        updateHPUI();
+        updateACDisplay();
+        updateHelpDisplay();
+        updateSuperiorityDiceUI();
+        updateFighterResourcesUI();
+        updateHeroicUI();
+        renderManeuvers();
+        logRoll(`⛺ <strong>Full Long Rest Completed:</strong> HP restored to ${maxHP}/${maxHP}, Superiority Dice 4/4, Second Wind 3/3, ⚡ Action Surge READY, 🌟 Heroic Inspiration READY, and Help Tokens 2/2!`);
+    }
+
+    function updateACDisplay() {
+        const acDisp = document.getElementById('ac-disp');
+        const armorCard = document.getElementById('card-armor-toggle');
+        const armorBadge = document.getElementById('badge-armor-style');
+        const armorSub = document.getElementById('sub-armor-style');
+        const coverCard = document.getElementById('card-cover-toggle');
+        const coverBadge = document.getElementById('badge-cover-ac');
+
+        const base = isChainMailActive ? 17 : 10; // Chain Mail (16) + Defense (+1) = 17, or 10 + DEX (0) = 10
+        const total = base + (isCoverACActive ? 2 : 0);
+        acDisp.innerText = total;
+
+        if (isChainMailActive) {
+            armorCard.classList.add('active-buff');
+            armorBadge.className = 'toggle-badge on';
+            armorBadge.innerText = 'ON (17)';
+            armorSub.innerText = '16 Armor + 1 Defense Style';
+        } else {
+            armorCard.classList.remove('active-buff');
+            armorBadge.className = 'toggle-badge off';
+            armorBadge.innerText = 'OFF (10)';
+            armorSub.innerText = 'Unarmored: 10 + DEX (0)';
+        }
+
+        if (isCoverACActive) {
+            coverCard.classList.add('active-buff');
+            coverBadge.className = 'toggle-badge on';
+            coverBadge.innerText = '+2 ACTIVE';
+        } else {
+            coverCard.classList.remove('active-buff');
+            coverBadge.className = 'toggle-badge off';
+            coverBadge.innerText = '+2 AC';
+        }
+    }
+
+    function toggleChainMailBuff() {
+        isChainMailActive = !isChainMailActive;
+        updateACDisplay();
+        logRoll(`⛓️ <strong>Chain Mail + Defense Style:</strong> Toggled ${isChainMailActive ? 'ON (17 Base AC)' : 'OFF (10 Unarmored AC)'}. Total AC: ${document.getElementById('ac-disp').innerText}`);
+    }
+
+    function toggleCoverACBuff() {
+        isCoverACActive = !isCoverACActive;
+        updateACDisplay();
+        logRoll(`🛡️ <strong>Tactical Cover / Shield (+2 AC):</strong> Toggled ${isCoverACActive ? 'ON (+2 AC)' : 'OFF'}. Total AC: ${document.getElementById('ac-disp').innerText}`);
+    }
+
+    function updateHelpDisplay() {
+        document.getElementById('help-tokens-disp').innerText = `${helpTokens} / ${maxHelpTokens}`;
+    }
+
+    function rollHelpToken() {
+        if (helpTokens <= 0) {
+            logRoll(`⚠️ <strong>0 Help Tokens remaining!</strong> Regain +1 on Short Rest or 2 on Long Rest.`);
+            return;
+        }
+        helpTokens--;
+        updateHelpDisplay();
+        const d6 = Math.floor(Math.random() * 6) + 1;
+        logRoll(`🤝 <strong>King Jacomir spent a Help Token (+1d6 within 30ft):</strong> Rolled <span style="color:#67e8f9; font-weight:700;">+${d6}</span> to ally's check! (${helpTokens}/2 left)`);
+    }
+
+    function modHelpToken(delta) {
+        helpTokens = Math.max(0, Math.min(maxHelpTokens, helpTokens + delta));
+        updateHelpDisplay();
+    }
+
+    function resetHelpTokens() {
+        helpTokens = maxHelpTokens;
+        updateHelpDisplay();
+        logRoll(`🤝 Help Tokens restored to 2/2.`);
+    }
+
+    // ==========================================
+    // 🎲 DICE ROLLER ENGINE (WITH BRUTAL CRITS & FLOATING BOTTOM HUD)
+    // ==========================================
+    let lastHudShowTime = 0;
+
+    function logRoll(htmlMsg) {
+        lastHudShowTime = Date.now();
+        const hud = document.getElementById('floating-roll-hud');
+        const hudBody = document.getElementById('floating-roll-body');
+        const hudTime = document.getElementById('floating-roll-time');
+        if (hud && hudBody) {
+            hudBody.innerHTML = htmlMsg;
+            if (hudTime) {
+                hudTime.innerText = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            }
+            hud.classList.add('visible');
+            hud.classList.remove('pulse-hud');
+            void hud.offsetWidth;
+            hud.classList.add('pulse-hud');
+            setTimeout(() => hud.classList.remove('pulse-hud'), 450);
+        }
+    }
+
+    function dismissFloatingHud() {
+        const hud = document.getElementById('floating-roll-hud');
+        if (hud) hud.classList.remove('visible');
+    }
+
+    document.addEventListener('click', (e) => {
+        const hud = document.getElementById('floating-roll-hud');
+        if (!hud || !hud.classList.contains('visible')) return;
+        if (Date.now() - lastHudShowTime < 120) return;
+        if (!hud.contains(e.target)) {
+            dismissFloatingHud();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') dismissFloatingHud();
+    });
+
+    function modDiceMod(delta) {
+        const input = document.getElementById('dice-mod');
+        input.value = (parseInt(input.value) || 0) + delta;
+    }
+
+    function toggleAdvantage(mode) {
+        if (rollMode === mode) {
+            rollMode = 'norm';
+            document.getElementById('btn-adv').style.background = '#1e293b';
+            document.getElementById('btn-dis').style.background = '#1e293b';
+        } else {
+            rollMode = mode;
+            document.getElementById('btn-adv').style.background = (mode === 'adv') ? 'var(--accent-green)' : '#1e293b';
+            document.getElementById('btn-dis').style.background = (mode === 'dis') ? 'var(--accent-red)' : '#1e293b';
+        }
+    }
+
+    function rollCustomDie(sides) {
+        const mod = parseInt(document.getElementById('dice-mod').value) || 0;
+        const modStr = mod >= 0 ? `+${mod}` : `${mod}`;
+        if (sides === 20 && rollMode !== 'norm') {
+            const r1 = Math.floor(Math.random() * 20) + 1;
+            const r2 = Math.floor(Math.random() * 20) + 1;
+            const chosen = (rollMode === 'adv') ? Math.max(r1, r2) : Math.min(r1, r2);
+            const total = chosen + mod;
+            const modeLabel = rollMode === 'adv' ? 'Advantage' : 'Disadvantage';
+            let msg = `🎲 <strong>d20 (${modeLabel}: [${r1}, ${r2}] ➔ ${chosen}) ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span></strong>`;
+            if (chosen === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT!</span>";
+            if (chosen === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1 FAIL!</span>";
+            logRoll(msg);
+            return;
+        }
+        const roll = Math.floor(Math.random() * sides) + 1;
+        const total = roll + mod;
+        let msg = `🎲 <strong>d${sides} (${roll}) ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span></strong>`;
+        if (sides === 20 && roll === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT!</span>";
+        if (sides === 20 && roll === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1 FAIL!</span>";
+        logRoll(msg);
+    }
+
+    function rollD20(label, mod) {
+        const modInput = parseInt(document.getElementById('dice-mod').value) || 0;
+        const totalMod = mod + modInput;
+        const modStr = totalMod >= 0 ? `+${totalMod}` : `${totalMod}`;
+
+        if (rollMode !== 'norm') {
+            const r1 = Math.floor(Math.random() * 20) + 1;
+            const r2 = Math.floor(Math.random() * 20) + 1;
+            const chosen = (rollMode === 'adv') ? Math.max(r1, r2) : Math.min(r1, r2);
+            const total = chosen + totalMod;
+            const modeLabel = rollMode === 'adv' ? 'Advantage' : 'Disadvantage';
+            let msg = `🎯 <strong>${label}:</strong> [${r1}, ${r2}] ➔ d20(${chosen}) ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span> <small style="color:var(--text-muted);">(${modeLabel})</small>`;
+            if (chosen === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT! (Max Die + Rolled Die + Mod)</span>";
+            if (chosen === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
+            logRoll(msg);
+            return;
+        }
+
+        const d20 = Math.floor(Math.random() * 20) + 1;
+        const total = d20 + totalMod;
+        let msg = `🎯 <strong>${label}:</strong> d20(${d20}) ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span>`;
+        if (d20 === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT! (Max Die + Rolled Die + Mod)</span>";
+        if (d20 === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
+        logRoll(msg);
+    }
+
+    function rollSave(label, baseStatMod, isProf) {
+        const bonus = baseStatMod + (isProf ? getProfBonus() : 0);
+        rollD20(label, bonus);
+    }
+
+    function rollSkill(label, baseStatMod, isProf) {
+        const bonus = baseStatMod + (isProf ? getProfBonus() : 0);
+        rollD20(label, bonus);
+    }
+
+    function rollFormulaDamage(label, sides, bonus, type, diceCount = 1) {
+        let total = 0;
+        let rolls = [];
+        for (let i = 0; i < diceCount; i++) {
+            const r = Math.floor(Math.random() * sides) + 1;
+            rolls.push(r);
+            total += r;
+        }
+        total += bonus;
+        const bonusStr = bonus > 0 ? ` + ${bonus}` : '';
+        logRoll(`💥 <strong>${label}:</strong> [${rolls.join('+')}]${bonusStr} = <span style="font-size:1.05rem; color:#f87171; font-weight:700;">${total}</span> ${type} Damage`);
+    }
+
+    function castUtility(text) {
+        logRoll(text);
+    }
+
+    // ==========================================
+    // 💰 GOLD PURSE & CURRENCY LEDGER (10 SP = 1 GP)
+    // ==========================================
+    const DEFAULT_START_GP = 25;
+    const DEFAULT_START_SP = 0;
+
+    function getStoredGold(key, defaultVal) {
+        const val = localStorage.getItem(key);
+        if (val === null || isNaN(parseInt(val))) {
+            localStorage.setItem(key, defaultVal);
+            return defaultVal;
+        }
+        return parseInt(val);
+    }
+
+    let curGP = getStoredGold('cos_gold_jacomir_v1', DEFAULT_START_GP);
+    let curSilver = getStoredGold('cos_silver_jacomir_v1', DEFAULT_START_SP);
+
+    function getGoldHistory() {
+        const stored = localStorage.getItem('cos_gold_tx_jacomir_v1');
+        if (!stored) {
+            const init = [{
+                type: 'initial',
+                label: 'Noble Sovereign Starting Purse',
+                delta: `${DEFAULT_START_GP} GP, ${DEFAULT_START_SP} SP`,
+                total: `${DEFAULT_START_GP} GP, ${DEFAULT_START_SP} SP`,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            }];
+            localStorage.setItem('cos_gold_tx_jacomir_v1', JSON.stringify(init));
+            return init;
+        }
+        try { return JSON.parse(stored); } catch(e) { return []; }
+    }
+
+    function saveGoldHistory(history) {
+        localStorage.setItem('cos_gold_tx_jacomir_v1', JSON.stringify(history.slice(0, 50)));
+    }
+
+    function logGoldTx(type, label, deltaStr, totalStr) {
+        const history = getGoldHistory();
+        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        history.unshift({ type, label: label || 'Transaction', delta: deltaStr, total: totalStr, time: timeStr });
+        saveGoldHistory(history);
+        renderGoldHistory();
+    }
+
+    function normalizeCoins() {
+        if (curSilver >= 10) {
+            curGP += Math.floor(curSilver / 10);
+            curSilver = curSilver % 10;
+        }
+        while (curSilver < 0 && curGP > 0) {
+            curGP -= 1;
+            curSilver += 10;
+        }
+        if (curGP <= 0 && curSilver < 0) { curGP = 0; curSilver = 0; }
+    }
+
+    function updateGoldUI() {
+        normalizeCoins();
+        document.getElementById('gold-disp').innerText = curGP;
+        document.getElementById('silver-disp').innerText = curSilver;
+        const mg = document.getElementById('modal-gold-disp');
+        const ms = document.getElementById('modal-silver-disp');
+        if (mg) mg.innerText = curGP;
+        if (ms) ms.innerText = curSilver;
+        localStorage.setItem('cos_gold_jacomir_v1', curGP);
+        localStorage.setItem('cos_silver_jacomir_v1', curSilver);
+    }
+
+    function stepGold(delta) {
+        let totalSP = Math.max(0, (curGP * 10) + curSilver + (delta * 10));
+        curGP = Math.floor(totalSP / 10);
+        curSilver = totalSP % 10;
+        updateGoldUI();
+        const deltaStr = `${delta > 0 ? '+' : ''}${delta} GP`;
+        logGoldTx(delta > 0 ? 'gain' : 'spend', delta > 0 ? 'Quick Add' : 'Quick Spend', deltaStr, `${curGP} GP, ${curSilver} SP`);
+        logRoll(`💰 <strong>Gold Purse:</strong> ${deltaStr} ➔ Total: <strong>${curGP} GP, ${curSilver} SP</strong>`);
+    }
+
+    function stepSilver(delta) {
+        curSilver += delta;
+        normalizeCoins();
+        updateGoldUI();
+        const deltaStr = `${delta > 0 ? '+' : ''}${delta} SP`;
+        logGoldTx('silver', 'Silver Adjustment', deltaStr, `${curGP} GP, ${curSilver} SP`);
+        logRoll(`🥈 <strong>Silver Purse:</strong> ${deltaStr} ➔ Total: <strong>${curGP} GP, ${curSilver} SP</strong>`);
+    }
+
+    function applyGoldAdd() {
+        const inp = document.getElementById('gold-input');
+        const memoInp = document.getElementById('gold-reason-input');
+        const amt = parseInt(inp.value) || 0;
+        if (amt <= 0) return;
+        const memo = memoInp ? memoInp.value.trim() : '';
+        curGP += amt;
+        inp.value = '';
+        if (memoInp) memoInp.value = '';
+        updateGoldUI();
+        logGoldTx('gain', memo || 'Earned Gold', `+${amt} GP`, `${curGP} GP, ${curSilver} SP`);
+        logRoll(`💰 <strong>Gained Gold:</strong> +${amt} GP ${memo ? '(' + memo + ')' : ''} ➔ <strong>${curGP} GP, ${curSilver} SP</strong>`);
+    }
+
+    function applyGoldSpend() {
+        const inp = document.getElementById('gold-input');
+        const memoInp = document.getElementById('gold-reason-input');
+        const amt = parseInt(inp.value) || 0;
+        if (amt <= 0) return;
+        const memo = memoInp ? memoInp.value.trim() : '';
+        let totalSP = (curGP * 10) + curSilver;
+        if (amt * 10 > totalSP) {
+            logRoll(`⚠️ Insufficient funds! You have ${curGP} GP, ${curSilver} SP.`);
+            return;
+        }
+        totalSP -= amt * 10;
+        curGP = Math.floor(totalSP / 10);
+        curSilver = totalSP % 10;
+        inp.value = '';
+        if (memoInp) memoInp.value = '';
+        updateGoldUI();
+        logGoldTx('spend', memo || 'Spent Gold', `-${amt} GP`, `${curGP} GP, ${curSilver} SP`);
+        logRoll(`💸 <strong>Spent Gold:</strong> -${amt} GP ${memo ? '(' + memo + ')' : ''} ➔ <strong>${curGP} GP, ${curSilver} SP</strong>`);
+    }
+
+    function resetGoldPurse() {
+        curGP = DEFAULT_START_GP;
+        curSilver = DEFAULT_START_SP;
+        updateGoldUI();
+        logGoldTx('reset', 'Reset to Starting Purse', `${DEFAULT_START_GP} GP, ${DEFAULT_START_SP} SP`, `${curGP} GP, ${curSilver} SP`);
+        logRoll(`💰 Gold Purse reset to ${curGP} GP, ${curSilver} SP.`);
+    }
+
+    function renderGoldHistory() {
+        const list = document.getElementById('modal-tx-list');
+        if (!list) return;
+        const history = getGoldHistory();
+        list.innerHTML = history.map(item => `
+            <div class="tx-item tx-${item.type === 'spend' ? 'spend' : (item.type === 'silver' ? 'silver' : 'gain')}">
+                <div>
+                    <div style="font-weight:700; color:#f8fafc;">${item.label} <span style="font-size:0.65rem; color:var(--text-muted);">• ${item.time}</span></div>
+                    <div style="font-size:0.68rem; color:var(--text-dim);">Balance: ${item.total}</div>
+                </div>
+                <div style="font-weight:800; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">${item.delta}</div>
+            </div>
+        `).join('');
+    }
+
+    function openGoldHistoryModal() {
+        renderGoldHistory();
+        const modal = document.getElementById('gold-modal');
+        if (modal) modal.showModal();
+    }
+
+    function closeGoldHistoryModal() {
+        const modal = document.getElementById('gold-modal');
+        if (modal) modal.close();
+    }
+
+    function clearGoldHistory() {
+        localStorage.removeItem('cos_gold_tx_jacomir_v1');
+        renderGoldHistory();
+    }
+
+    // ==========================================
+    // 🎒 INVENTORY & BAROVIAN LOOT VAULT ENGINE
+    // ==========================================
+    const defaultItems = [
+        "🗡️ Ancestral Greatsword (Graze Mastery)",
+        "🪓 2x Handaxes (Vex Mastery)",
+        "⛓️ Chain Mail Armor (AC 16 + 1 Defense Style)",
+        "💍 Signet Ring Bearing the Lost Crest of Oakenshire",
+        "🧥 Tattered Royal Traveling Cloak with Fur Mantle",
+        "📜 Empty Scroll Case (Royal Decree Container)",
+        "♟️ Dragonchess Gaming Set (Carved Oakhaven Ivory)",
+        "👔 Fine Traveler's Garments",
+        "🎒 Explorer's Pack (Bedroll, Mess Kit, Tinderbox)",
+        "🔥 10x Torches",
+        "🥩 10x Days of Rations",
+        "💧 Waterskin & 50ft Hempen Rope"
+    ];
+
+    const worldLootVault = {
+        "greatsword": {
+            name: "🗡️ Ancestral Greatsword of Oakenshire",
+            category: "MARTIAL MELEE WEAPON • Heavy, Two-Handed",
+            origin: "Royal Armory of Oakhaven (Oakenshire)",
+            desc: "A heavy, battle-worn two-handed greatsword bearing the faint oak-and-crown etching of King Jacomir's vanished homeland.",
+            effect: "• <strong>Attack:</strong> +5 to Hit, <strong>2d6 + 3 Slashing damage</strong> (rolls 2d6 twice via <em>Savage Attacker</em>).<br>• <strong>Weapon Mastery — Graze:</strong> When an attack roll misses, the target still takes <strong>3 Slashing damage</strong> (STR modifier)."
+        },
+        "handaxe": {
+            name: "🪓 Balanced Royal Handaxes",
+            category: "SIMPLE MELEE / THROWN WEAPON • Light, Thrown (20/60 ft)",
+            origin: "Fighter Starting Loadout",
+            desc: "A pair of balanced steel handaxes carried at Jacomir's belt for close-quarters combinations or ranged throws.",
+            effect: "• <strong>Attack (Melee or 20/60 ft):</strong> +5 to Hit, <strong>1d6 + 3 Slashing damage</strong>.<br>• <strong>Weapon Mastery — Vex:</strong> Hitting grants <strong>Advantage</strong> on your next attack roll against that target before the end of your next turn."
+        },
+        "chain mail": {
+            name: "⛓️ Heavy Chain Mail Armor",
+            category: "HEAVY ARMOR • AC 16 (+1 Defense Style = 17 AC)",
+            origin: "King Jacomir's Campaign Panoply",
+            desc: "Interlocking rings of blackened steel worn over a padded royal gambeson.",
+            effect: "• <strong>Armor Class:</strong> Base AC 16 + 1 from <em>Defense Fighting Style</em> = <strong>17 AC</strong>.<br>• Requires STR 13 (met with STR 17); imposes Disadvantage on Stealth checks."
+        },
+        "signet ring": {
+            name: "💍 Signet Ring of the Lost Crest of Oakenshire",
+            category: "ROYAL RELIC • Noble Regalia",
+            origin: "Sovereign Seal of Oakhaven / Oakenshire",
+            desc: "A heavy gold-and-iron signet ring stamped with the ancient crest of Oakenshire—proof of Jacomir's bloodline and sworn duty to his vanished subjects.",
+            effect: "• Marks Jacomir Yulle as the rightful sovereign of Oakhaven.<br>• Can press royal wax seals and resonates with any surviving relics or citizens of Oakenshire trapped inside the Mists."
+        },
+        "cloak": {
+            name: "🧥 Tattered Royal Traveling Cloak with Fur Mantle",
+            category: "ROYAL REGALIA • Weather-Worn Garment",
+            origin: "Night of the Mist-Swallowing",
+            desc: "A heavy wool-and-wolfskin royal mantle, frayed at the hem from riding through the freezing border fog.",
+            effect: "• Keeps off Barovia's incessant mountain rain and marks Jacomir's silhouette with unmistakable regal bearing."
+        },
+        "scroll case": {
+            name: "📜 Empty Royal Scroll Case",
+            category: "PERSONAL KEEPSAKE • Noble Gear",
+            origin: "Oakhaven War Tent",
+            desc: "A brass-capped leather scroll tube that once held the royal decrees and muster rolls of Oakhaven—now hollow, waiting to record the names of the rescued.",
+            effect: "• Watertight case ideal for protecting Barovian maps, Kolyan's letter, or sacred scrolls from the rain."
+        },
+        "dragonchess": {
+            name: "♟️ Carved Dragonchess Gaming Set",
+            category: "TOOL PROFICIENCY • Strategic Gaming Set",
+            origin: "Royal War Room of Oakenshire",
+            desc: "A travel-sized three-tiered Dragonchess set with weighted pieces carved from oak and bone.",
+            effect: "• Jacomir has <strong>Tool Proficiency (+2 PB)</strong> in Dragonchess via his Noble/Skilled background—useful for testing the tactical minds of Barovian nobles, burgomasters, or Count Strahd himself."
+        },
+        "potion of healing": {
+            name: "🧪 Potion of Healing",
+            category: "HEAL • Common Consumable (5 GP)",
+            origin: "Barovian Apothecary / Ismark's Cache",
+            desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong>.<br>• <strong>Action (Ally):</strong> Administer to a downed companion."
+        },
+        "holy water": {
+            name: "💧 Flask of St. Andral's Holy Water",
+            category: "ANTI-UNDEAD • Uncommon Consumable",
+            origin: "Father Donavich / St. Andral's Church",
+            desc: "A crystal vial of water blessed in the name of the Morninglord.",
+            effect: "• <strong>Action (Splash / Throw 20 ft):</strong> Deals <strong>2d6 Radiant Damage</strong> to Undead and Fiends, and <strong>halts Vampire Regeneration</strong> for 1 round!"
+        }
+    };
+
+    function getStoredItems() {
+        const stored = localStorage.getItem('cos_inv_jacomir_v1');
+        if (!stored) {
+            localStorage.setItem('cos_inv_jacomir_v1', JSON.stringify(defaultItems));
+            return [...defaultItems];
+        }
+        try { return JSON.parse(stored); } catch(e) { return [...defaultItems]; }
+    }
+
+    function saveStoredItems(items) {
+        localStorage.setItem('cos_inv_jacomir_v1', JSON.stringify(items));
+    }
+
+    function parseItemInfo(itemStr) {
+        if (!itemStr) return { hasQty: false, qty: 1, emoji: '', name: '', raw: '' };
+        const emojiMatch = itemStr.match(/^([\p{Extended_Pictographic}\u{FE00}-\u{FE0F}\u{200D}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F300}-\u{1FAFF}\s]+)/u);
+        const emoji = emojiMatch ? emojiMatch[1].trim() + ' ' : '';
+        let rest = (emojiMatch ? itemStr.slice(emojiMatch[0].length) : itemStr).trim();
+
+        let qty = 1, hasQty = false, name = rest;
+        const prefixMatch = rest.match(/^(?:(\d+)\s*[xX]|[xX]\s*(\d+))\s+(.+)$/);
+        const suffixMatch = rest.match(/^(.+?)\s+(?:[xX]\s*(\d+)|(\d+)\s*[xX])$/);
+        const parenMatch = rest.match(/^(.+?)\s*\(\s*(?:[xX]\s*(\d+)|(\d+)\s*[xX]?)\s*\)$/);
+
+        if (prefixMatch) { hasQty = true; qty = parseInt(prefixMatch[1] || prefixMatch[2]) || 1; name = prefixMatch[3].trim(); }
+        else if (suffixMatch) { hasQty = true; qty = parseInt(suffixMatch[2] || suffixMatch[3]) || 1; name = suffixMatch[1].trim(); }
+        else if (parenMatch) { hasQty = true; qty = parseInt(parenMatch[2] || parenMatch[3]) || 1; name = parenMatch[1].trim(); }
+
+        return { hasQty, qty, emoji, name, raw: itemStr };
+    }
+
+    function renderInventory() {
+        const list = document.getElementById('inventory-list');
+        if (!list) return;
+        const items = getStoredItems();
+        list.innerHTML = '';
+
+        items.forEach((item, index) => {
+            const parsed = parseItemInfo(item);
+            const div = document.createElement('div');
+            div.className = 'inv-row-item';
+
+            const controlsHtml = parsed.hasQty ? `
+                <div class="inv-stepper">
+                    <button class="btn-step-qty" onclick="stepItemQty(${index}, -1)" title="Use / Consume 1">➖</button>
+                    <span class="inv-qty-val">${parsed.qty}x</span>
+                    <button class="btn-step-qty" onclick="stepItemQty(${index}, 1)" title="Add 1">➕</button>
+                </div>
+                <button class="btn-del-item" onclick="deleteItem(${index})" title="Discard stack">✕</button>
+            ` : `
+                <div class="inv-stepper" style="border:none; background:transparent;">
+                    <button class="btn-step-qty" onclick="stepItemQty(${index}, 1)" title="Stack +1" style="border:1px solid #334155; border-radius:3px; padding:1px 5px;">➕</button>
+                </div>
+                <button class="btn-del-item" onclick="deleteItem(${index})" title="Discard item">✕</button>
+            `;
+
+            div.innerHTML = `
+                <div class="inv-item-info">
+                    <span onclick="openItemDetailsModal(${index})" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                        ${parsed.hasQty ? parsed.emoji + parsed.name : item}
+                    </span>
+                </div>
+                <div class="inv-controls">${controlsHtml}</div>
+            `;
+            list.appendChild(div);
+        });
+    }
+
+    function openItemDetailsModal(index) {
+        const items = getStoredItems();
+        if (!items[index]) return;
+        const parsed = parseItemInfo(items[index]);
+        const cleanLower = parsed.name.toLowerCase();
+
+        let match = null;
+        for (const [k, v] of Object.entries(worldLootVault)) {
+            if (cleanLower.includes(k)) { match = v; break; }
+        }
+
+        document.getElementById('item-modal-title').innerText = match ? match.name : `${parsed.emoji}${parsed.name}`;
+        document.getElementById('item-modal-body').innerHTML = `
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                <span class="pill-badge pill-gold" style="align-self:flex-start;">${match ? match.category : 'ADVENTURING GEAR • Custom Item'}</span>
+                <div style="font-size:0.78rem; color:#cbd5e1;">${match ? match.desc : 'Carried in King Jacomir\'s pack through Barovia.'}</div>
+                <div style="background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.3); border-radius:6px; padding:8px 10px; font-size:0.76rem; color:#f8fafc;">
+                    ${match ? match.effect : '• Interactive inventory item tracked in Session Delta.'}
+                </div>
+            </div>
+        `;
+        const act = document.getElementById('item-modal-actions');
+        act.innerHTML = parsed.hasQty ? `<button class="btn-act btn-act-pre" style="color:var(--accent-gold);" onclick="stepItemQty(${index}, -1); closeItemModal();">🧪 Consume 1 (${parsed.qty} left)</button>` : '';
+        const modal = document.getElementById('item-modal');
+        if (modal) modal.showModal();
+    }
+
+    function closeItemModal() {
+        const modal = document.getElementById('item-modal');
+        if (modal) modal.close();
+    }
+
+    function stepItemQty(index, delta) {
+        const items = getStoredItems();
+        if (!items[index]) return;
+        const parsed = parseItemInfo(items[index]);
+        const newQty = parsed.qty + delta;
+        if (newQty <= 0) {
+            items.splice(index, 1);
+            logRoll(`🗑️ <strong>Consumed last:</strong> ${parsed.name} removed from inventory.`);
+        } else {
+            items[index] = `${parsed.emoji}${newQty}x ${parsed.name}`.trim();
+            logRoll(`🎒 <strong>${delta > 0 ? 'Added' : 'Consumed'} 1x ${parsed.name}:</strong> ${newQty}x remaining.`);
+        }
+        saveStoredItems(items);
+        renderInventory();
+    }
+
+    function addItem() {
+        const inp = document.getElementById('new-item-input');
+        const text = inp.value.trim();
+        if (!text) return;
+        const items = getStoredItems();
+        items.push(text);
+        saveStoredItems(items);
+        inp.value = '';
+        renderInventory();
+        logRoll(`🎒 Added <strong>"${text}"</strong> to inventory.`);
+    }
+
+    function deleteItem(index) {
+        const items = getStoredItems();
+        if (!items[index]) return;
+        const removed = items.splice(index, 1);
+        saveStoredItems(items);
+        renderInventory();
+        logRoll(`🗑️ Removed <strong>"${removed[0]}"</strong> from inventory.`);
+    }
+
+    function resetInventory() {
+        saveStoredItems(defaultItems);
+        renderInventory();
+        logRoll(`🎒 Inventory reset to official starting loadout.`);
+    }
+
+    function getAggregatedInventory(itemStrings) {
+        const map = new Map();
+        itemStrings.forEach(str => {
+            const p = parseItemInfo(str);
+            const key = p.name.toLowerCase().trim();
+            if (!key) return;
+            if (map.has(key)) map.get(key).qty += p.qty;
+            else map.set(key, { displayName: p.name, qty: p.qty });
+        });
+        return map;
+    }
+
+    function getSessionDelta() {
+        const baseMap = getAggregatedInventory(defaultItems);
+        const currMap = getAggregatedInventory(getStoredItems());
+        const added = [], removed = [];
+        currMap.forEach((cur, key) => {
+            const baseQty = baseMap.has(key) ? baseMap.get(key).qty : 0;
+            if (cur.qty > baseQty) added.push((cur.qty - baseQty) > 1 ? `${cur.qty - baseQty}x ${cur.displayName}` : cur.displayName);
+        });
+        baseMap.forEach((base, key) => {
+            const curQty = currMap.has(key) ? currMap.get(key).qty : 0;
+            if (curQty < base.qty) removed.push((base.qty - curQty) > 1 ? `${base.qty - curQty}x ${base.displayName}` : base.displayName);
+        });
+        return { added, removed };
+    }
+
+    // ==========================================
+    // 📓 PLAYER NOTES LEDGER & DELTA EXPORT ENGINE
+    // ==========================================
+    const MAX_NOTE_CHARS = 220;
+    const defaultPlayerNotes = [
+        {
+            id: 'base_oakhaven',
+            title: "The Fall of Oakhaven (Oakenshire)",
+            text: "Unnatural freezing gray fog swallowed my kingdom and royal vanguard overnight. I carry the Signet Ring of Oakenshire and will tear Barovia apart to find my people."
+        },
+        {
+            id: 'base_vanguard',
+            title: "The Sovereign's Oath",
+            text: "A crown is an unbreakable debt owed to every soul under my banner. Until my realm is found, these fellow strangers in the Mists are my vanguard."
+        }
+    ];
+    let editingNoteId = null;
+
+    function getStoredNotes() {
+        const stored = localStorage.getItem('cos_notes_jacomir_v1');
+        if (!stored) {
+            localStorage.setItem('cos_notes_jacomir_v1', JSON.stringify(defaultPlayerNotes));
+            return JSON.parse(JSON.stringify(defaultPlayerNotes));
+        }
+        try { return JSON.parse(stored); } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
+    }
+
+    function saveStoredNotes(notes) {
+        localStorage.setItem('cos_notes_jacomir_v1', JSON.stringify(notes));
+    }
+
+    function getRemovedNoteTitles() {
+        const stored = localStorage.getItem('cos_notes_removed_jacomir_v1');
+        if (!stored) return [];
+        try { return JSON.parse(stored); } catch(e) { return []; }
+    }
+
+    function saveRemovedNoteTitles(titles) {
+        localStorage.setItem('cos_notes_removed_jacomir_v1', JSON.stringify(titles));
+    }
+
+    function escapeNoteHtml(str) {
+        return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function updateNoteCharCounter() {
+        const bodyEl = document.getElementById('note-body-input');
+        const counterEl = document.getElementById('note-char-counter');
+        if (!bodyEl || !counterEl) return;
+        const len = bodyEl.value.length;
+        counterEl.innerText = `${len} / ${MAX_NOTE_CHARS} chars`;
+        counterEl.style.color = len >= MAX_NOTE_CHARS ? '#f87171' : (len >= 180 ? '#fbbf24' : 'var(--text-muted)');
+    }
+
+    function showNotesListView() {
+        document.getElementById('notes-list-view').style.display = 'flex';
+        document.getElementById('note-reader-view').style.display = 'none';
+        document.getElementById('note-editor-view').style.display = 'none';
+        renderPlayerNotes();
+    }
+
+    function openNoteReader(noteId) {
+        const notes = getStoredNotes();
+        const target = notes.find(n => n.id === noteId);
+        if (!target) return;
+
+        const modal = document.getElementById('player-notes-modal');
+        if (modal && !modal.open) modal.showModal();
+
+        const baseMatch = defaultPlayerNotes.find(b => b.id === target.id);
+        const isNewOrEdited = !baseMatch || baseMatch.title !== target.title || baseMatch.text !== target.text;
+
+        document.getElementById('reader-note-title').innerText = target.title;
+        document.getElementById('reader-note-body').innerText = target.text;
+        document.getElementById('reader-note-status').innerHTML = isNewOrEdited
+            ? '<span style="color:#4ade80; font-weight:700;">● Unsynced / New Note</span>'
+            : '<span style="color:var(--text-muted);">● Synced Note</span>';
+
+        document.getElementById('reader-btn-edit').onclick = () => startEditPlayerNote(target.id);
+        document.getElementById('reader-btn-delete').onclick = () => deletePlayerNote(target.id);
+
+        document.getElementById('notes-list-view').style.display = 'none';
+        document.getElementById('note-editor-view').style.display = 'none';
+        document.getElementById('note-reader-view').style.display = 'flex';
+    }
+
+    function openNoteEditorForm() {
+        editingNoteId = null;
+        document.getElementById('note-title-input').value = '';
+        document.getElementById('note-body-input').value = '';
+        document.getElementById('note-form-header-lbl').innerText = '➕ Write a New Note';
+        document.getElementById('btn-save-note').innerText = '💾 Save Note';
+        updateNoteCharCounter();
+
+        document.getElementById('notes-list-view').style.display = 'none';
+        document.getElementById('note-reader-view').style.display = 'none';
+        document.getElementById('note-editor-view').style.display = 'flex';
+        document.getElementById('note-title-input').focus();
+    }
+
+    function renderPlayerNotes() {
+        const notes = getStoredNotes();
+        const miniList = document.getElementById('player-notes-mini-list');
+        const fullList = document.getElementById('player-notes-full-list');
+        const countBadge = document.getElementById('player-notes-count-badge');
+        const modalCount = document.getElementById('modal-notes-count');
+
+        if (countBadge) countBadge.innerText = notes.length;
+        if (modalCount) modalCount.innerText = notes.length;
+
+        if (miniList) {
+            if (notes.length === 0) {
+                miniList.innerHTML = `<div style="font-size:0.72rem; color:var(--text-muted); font-style:italic; padding:3px 2px;">No notes saved yet. Click Player Notes to write one!</div>`;
+            } else {
+                miniList.innerHTML = notes.map(n => {
+                    const isNew = !defaultPlayerNotes.some(b => b.id === n.id && b.title === n.title && b.text === n.text);
+                    return `
+                        <div class="inv-row-item" onclick="openNoteReader('${n.id}')" style="cursor:pointer; padding:5px 8px;" title="Click to read full note">
+                            <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.73rem; color:#f8fafc; flex:1;">
+                                <strong style="color:#fde68a;">${escapeNoteHtml(n.title)}</strong>
+                                ${isNew ? '<span style="font-size:0.6rem; color:#4ade80; margin-left:4px; font-weight:700;">[NEW]</span>' : ''}
+                                <span style="color:var(--text-dim);"> — ${escapeNoteHtml(n.text)}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        if (fullList) {
+            if (notes.length === 0) {
+                fullList.innerHTML = `<div style="font-size:0.78rem; color:var(--text-muted); text-align:center; padding:16px;">No player notes recorded. Click <strong>[➕ Write New Note]</strong> above!</div>`;
+            } else {
+                fullList.innerHTML = notes.map(n => {
+                    const baseMatch = defaultPlayerNotes.find(b => b.id === n.id);
+                    const isNewOrEdited = !baseMatch || baseMatch.title !== n.title || baseMatch.text !== n.text;
+                    return `
+                        <div onclick="openNoteReader('${n.id}')" style="background:var(--panel-sub); border:1px solid ${isNewOrEdited ? '#6d529e' : 'var(--card-border)'}; border-radius:6px; padding:9px 11px; display:flex; justify-content:space-between; align-items:center; gap:10px; cursor:pointer; transition:border-color 0.15s, background 0.15s;" onmouseover="this.style.borderColor='#a78bfa'; this.style.background='#151f34';" onmouseout="this.style.borderColor='${isNewOrEdited ? '#6d529e' : 'var(--card-border)'}'; this.style.background='var(--panel-sub)';" title="Click to open and read this note">
+                            <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:3px;">
+                                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                                    <span style="font-size:0.82rem; font-weight:800; color:#fde68a;">${escapeNoteHtml(n.title)}</span>
+                                    ${isNewOrEdited ? '<span style="font-size:0.6rem; padding:1px 6px; border-radius:999px; background:rgba(74,222,128,0.15); color:#4ade80; border:1px solid rgba(74,222,128,0.4); font-weight:700;">New</span>' : ''}
+                                </div>
+                                <div style="font-size:0.75rem; color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                    ${escapeNoteHtml(n.text)}
+                                </div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:4px; flex-shrink:0;" onclick="event.stopPropagation();">
+                                <button class="btn-act btn-act-dmg" onclick="deletePlayerNote('${n.id}')" style="padding:3px 7px; font-size:0.68rem;" title="Remove Note">🗑️</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+    }
+
+    function openPlayerNotesModal() {
+        showNotesListView();
+        const modal = document.getElementById('player-notes-modal');
+        if (modal) modal.showModal();
+    }
+
+    function closePlayerNotesModal() {
+        cancelNoteEdit();
+        const modal = document.getElementById('player-notes-modal');
+        if (modal) modal.close();
+    }
+
+    function startEditPlayerNote(noteId) {
+        const notes = getStoredNotes();
+        const target = notes.find(n => n.id === noteId);
+        if (!target) return;
+        editingNoteId = noteId;
+        document.getElementById('note-title-input').value = target.title;
+        document.getElementById('note-body-input').value = target.text;
+        document.getElementById('note-form-header-lbl').innerText = `✏️ Editing Note: ${target.title}`;
+        document.getElementById('btn-save-note').innerText = '💾 Update Note';
+        updateNoteCharCounter();
+
+        document.getElementById('notes-list-view').style.display = 'none';
+        document.getElementById('note-reader-view').style.display = 'none';
+        document.getElementById('note-editor-view').style.display = 'flex';
+    }
+
+    function cancelNoteEdit() {
+        editingNoteId = null;
+        const titleEl = document.getElementById('note-title-input');
+        const bodyEl = document.getElementById('note-body-input');
+        if (titleEl) titleEl.value = '';
+        if (bodyEl) bodyEl.value = '';
+        updateNoteCharCounter();
+        showNotesListView();
+    }
+
+    function savePlayerNote() {
+        const titleEl = document.getElementById('note-title-input');
+        const bodyEl = document.getElementById('note-body-input');
+        const rawTitle = (titleEl.value || '').trim().slice(0, 55);
+        const rawText = (bodyEl.value || '').trim().replace(/\s+/g, ' ').slice(0, MAX_NOTE_CHARS);
+
+        if (!rawTitle || !rawText) {
+            logRoll(`⚠️ <strong>Player Notes:</strong> Please enter both a short <strong>Note Title</strong> and <strong>Note Content</strong>!`);
+            return;
+        }
+
+        const notes = getStoredNotes();
+        if (editingNoteId) {
+            const idx = notes.findIndex(n => n.id === editingNoteId);
+            if (idx !== -1) {
+                notes[idx].title = rawTitle;
+                notes[idx].text = rawText;
+                logRoll(`📓 <strong>Updated Note:</strong> "${rawTitle}"`);
+            }
+        } else {
+            notes.unshift({
+                id: 'note_' + Date.now(),
+                title: rawTitle,
+                text: rawText
+            });
+            const removed = getRemovedNoteTitles().filter(t => t.toLowerCase() !== rawTitle.toLowerCase());
+            saveRemovedNoteTitles(removed);
+            logRoll(`📓 <strong>Saved New Player Note:</strong> "${rawTitle}"`);
+        }
+
+        saveStoredNotes(notes);
+        cancelNoteEdit();
+        renderPlayerNotes();
+    }
+
+    function deletePlayerNote(noteId) {
+        const notes = getStoredNotes();
+        const idx = notes.findIndex(n => n.id === noteId);
+        if (idx === -1) return;
+        const removedNote = notes[idx];
+        notes.splice(idx, 1);
+        saveStoredNotes(notes);
+
+        const removedTitles = getRemovedNoteTitles();
+        if (!removedTitles.includes(removedNote.title)) {
+            removedTitles.push(removedNote.title);
+            saveRemovedNoteTitles(removedTitles);
+        }
+
+        if (editingNoteId === noteId) cancelNoteEdit();
+        showNotesListView();
+        logRoll(`🗑️ <strong>Removed Player Note:</strong> "${removedNote.title}" <em>(Only the title will be listed in Export Notes)</em>.`);
+    }
+
+    function resetPlayerNotes() {
+        saveStoredNotes(defaultPlayerNotes);
+        saveRemovedNoteTitles([]);
+        cancelNoteEdit();
+        renderPlayerNotes();
+        logRoll(`📓 <strong>Player Notes Reset</strong> to official baseline notes.`);
+    }
+
+    function exportPlayerNotes() {
+        const notes = getStoredNotes();
+        const addedOrEdited = [];
+
+        notes.forEach(n => {
+            const base = defaultPlayerNotes.find(b => b.id === n.id);
+            const cleanTitle = n.title.replace(/\s+/g, ' ').trim();
+            const cleanText = n.text.replace(/\s+/g, ' ').trim().slice(0, MAX_NOTE_CHARS);
+            if (!base) {
+                addedOrEdited.push(`[${cleanTitle}: ${cleanText}]`);
+            } else if (base.title !== n.title || base.text !== n.text) {
+                addedOrEdited.push(`[${cleanTitle} (Edited): ${cleanText}]`);
+            }
+        });
+
+        const removedSet = new Set(getRemovedNoteTitles());
+        defaultPlayerNotes.forEach(b => {
+            if (!notes.some(n => n.id === b.id)) {
+                removedSet.add(b.title);
+            }
+        });
+        const activeTitlesLower = new Set(notes.map(n => n.title.toLowerCase()));
+        const finalRemovedTitles = [...removedSet].filter(t => !activeTitlesLower.has(t.toLowerCase()));
+
+        let parts = [];
+        if (addedOrEdited.length > 0) {
+            parts.push(`➕ New Notes: ${addedOrEdited.join(' ; ')}`);
+        }
+        if (finalRemovedTitles.length > 0) {
+            parts.push(`➖ Removed Notes (Title Only): ${finalRemovedTitles.map(t => `"${t}"`).join(', ')}`);
+        }
+
+        const exportStr = parts.length > 0
+            ? `👑 JACOMIR YULLE — 📓 Player Notes Export | ${parts.join(' | ')}`
+            : `👑 JACOMIR YULLE — 📓 Player Notes Export | (No new or removed notes this session)`;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(exportStr).then(() => {
+                logRoll(`📓 <strong>Jacomir's Player Notes Exported to Clipboard!</strong><br><small style="color:var(--text-dim);">${escapeNoteHtml(exportStr)}</small>`);
+            }).catch(() => {
+                prompt("Copy Jacomir's Player Notes export string:", exportStr);
+            });
+        } else {
+            prompt("Copy Jacomir's Player Notes export string:", exportStr);
+        }
+    }
+
+    // ==========================================
+    // 📋 1-CLICK SESSION DELTA EXPORT PROTOCOL
+    // ==========================================
+    function exportSheetState() {
+        const delta = getSessionDelta();
+        let deltaParts = [];
+        if (delta.added.length > 0) deltaParts.push(`➕ Added: ${delta.added.join(', ')}`);
+        if (delta.removed.length > 0) deltaParts.push(`➖ Consumed/Removed: ${delta.removed.join(', ')}`);
+        const invSummary = deltaParts.length > 0 ? deltaParts.join(' | ') : '📦 Inventory: (No session changes)';
+
+        const stateStr = `👑 JACOMIR YULLE (Lvl ${characterLevel} Battle Master Fighter) [HP: ${curHP}/${maxHP}${tempHP > 0 ? ' (+' + tempHP + ' Temp)' : ''} | Superiority Dice: ${curSupDice}/${maxSupDice} (d8) | Second Wind: ${curSecondWind}/${maxSecondWind} | Action Surge: ${actionSurgeReady ? '1/1 Ready' : '0/1 Used'} | Heroic Inspiration: ${heroicInspirationReady ? '1/1 Ready' : '0/1 Used'} | Maneuvers: Parry, Riposte, Menacing Attack (DC 13) | Help: ${helpTokens}/2 | AC: ${document.getElementById('ac-disp').innerText} | Wealth: ${curGP} GP, ${curSilver} SP] • ${invSummary}`;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(stateStr).then(() => {
+                logRoll(`📋 <strong>Jacomir's Session State Exported to Clipboard!</strong><br><small style="color:var(--text-dim);">${stateStr}</small>`);
+            }).catch(() => {
+                prompt("Copy Jacomir's session export string:", stateStr);
+            });
+        } else {
+            prompt("Copy Jacomir's session export string:", stateStr);
+        }
+    }
+
+    // Modern Web Guidance Fallback for <dialog closedby="any">
+    if (!('closedBy' in HTMLDialogElement.prototype)) {
+        for (const dialog of document.querySelectorAll('dialog[closedby="any"]')) {
+            dialog.addEventListener('click', (event) => {
+                if (event.target !== dialog) return;
+                const rect = dialog.getBoundingClientRect();
+                const isDialogContent = (
+                    rect.top <= event.clientY &&
+                    event.clientY <= rect.top + rect.height &&
+                    rect.left <= event.clientX &&
+                    event.clientX <= rect.left + rect.width
+                );
+                if (isDialogContent) return;
+                dialog.close();
+            });
+        }
+    }
+
+    document.getElementById('hp-input').addEventListener('keydown', e => { if (e.key === 'Enter') applyDamage(); });
+    document.getElementById('new-item-input').addEventListener('keydown', e => { if (e.key === 'Enter') addItem(); });
+    document.getElementById('gold-input').addEventListener('keydown', e => { if (e.key === 'Enter') applyGoldAdd(); });
+
+    // Initialize Sheet
+    updateHPUI();
+    updateACDisplay();
+    updateHelpDisplay();
+    updateSuperiorityDiceUI();
+    updateFighterResourcesUI();
+    updateHeroicUI();
+    updateGoldUI();
+    renderManeuvers();
+    renderInventory();
+    renderPlayerNotes();
+</script>
+</body>
+</html>
