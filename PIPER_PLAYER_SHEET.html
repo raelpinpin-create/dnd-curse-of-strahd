@@ -730,6 +730,7 @@
             </div>
             <div class="pill-badge-group">
                 <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">🏰 Portal</a>
+                <button class="btn-act btn-act-pre" onclick="exportPlayerNotes()" style="color:#c4b5fd; border:1px solid rgba(167, 139, 250, 0.5); display:flex; align-items:center; gap:4px;" title="Copy ONLY new, edited, or removed Player Notes from this session">📓 Export Notes</button>
                 <button class="btn-act btn-act-pre" onclick="exportSheetState()" style="color:var(--accent-gold); border:1px solid rgba(245, 158, 11, 0.5); display:flex; align-items:center; gap:4px;" title="Copy live HP, Sorcery Points, Tides of Chaos, Spell Slots, and session inventory delta">📋 Export Data</button>
             </div>
         </header>
@@ -968,6 +969,20 @@
                             <button class="btn-act btn-act-heal" style="padding:2px 4px; font-size:0.65rem; font-weight:700;" onclick="stepSilver(5)">+5</button>
                         </div>
                     </div>
+                </div>
+
+                <!-- 📓 PLAYER NOTES PANEL -->
+                <div class="panel" style="padding: 8px 10px;">
+                    <div class="panel-title" style="margin-bottom:4px;">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span>📓 Player Notes</span>
+                            <span id="player-notes-count-badge" style="font-size:0.64rem; padding:1px 6px; border-radius:999px; background:rgba(167,139,250,0.16); color:#c4b5fd; border:1px solid rgba(167,139,250,0.35);">2</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <button class="btn-act btn-act-pre" onclick="openPlayerNotesModal()" style="font-size:0.68rem; padding:2px 7px; color:#fde68a; border:1px solid rgba(245,158,11,0.4);">📖 Open Notes</button>
+                        </div>
+                    </div>
+                    <div id="player-notes-mini-list" style="display:flex; flex-direction:column; gap:4px; max-height:110px; overflow-y:auto;"></div>
                 </div>
 
             </div>
@@ -1385,6 +1400,42 @@
             <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
                 <a href="https://5e.tools/tables.html#wild%20magic%20surge_phb" target="_blank" rel="noopener noreferrer" class="btn-act btn-act-pre" style="text-decoration:none; color:#c084fc;">🌐 View 5e/5.5e Wiki Table ↗</a>
                 <button class="btn-act btn-act-pre" onclick="closeWildSurgeTableModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- 📓 PLAYER NOTES MODAL -->
+    <dialog class="sheet-dialog" id="player-notes-modal" closedby="any" aria-labelledby="player-notes-modal-title">
+        <div class="modal-card" style="border-color:#8b5cf6;">
+            <div class="modal-header" style="background:linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%);">
+                <h3 id="player-notes-modal-title" style="color:#e9d5ff;">📓 Player Notes</h3>
+                <button class="modal-close-btn" onclick="closePlayerNotesModal()" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" style="display:flex; flex-direction:column; gap:10px;">
+                <!-- ADD / EDIT NOTE FORM -->
+                <div style="background:rgba(15, 23, 42, 0.9); border:1px solid #4c1d95; border-radius:7px; padding:10px; display:flex; flex-direction:column; gap:7px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span id="note-form-header-lbl" style="font-size:0.74rem; font-weight:800; color:#fde68a; text-transform:uppercase;">➕ Write a New Note</span>
+                        <span id="note-char-counter" style="font-size:0.68rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">0 / 220 chars</span>
+                    </div>
+                    <input type="text" id="note-title-input" maxlength="55" placeholder="Note Title (e.g., Madame Eva's Reading, Old Bonegrinder Clue)..." style="width:100%; padding:6px 9px; font-size:0.8rem; font-weight:700; background:#090d16; border:1px solid #334155; border-radius:5px; color:#f8fafc;">
+                    <textarea id="note-body-input" maxlength="220" rows="3" placeholder="Concise note content (up to 220 characters so exports stay super clean)..." oninput="updateNoteCharCounter()" style="width:100%; padding:6px 9px; font-size:0.78rem; background:#090d16; border:1px solid #334155; border-radius:5px; color:#cbd5e1; resize:vertical; font-family:'Inter',sans-serif;"></textarea>
+                    <div style="display:flex; justify-content:flex-end; gap:6px;">
+                        <button id="btn-cancel-note-edit" class="btn-act btn-act-pre" onclick="cancelNoteEdit()" style="display:none; padding:4px 10px; font-size:0.72rem;">Cancel Edit</button>
+                        <button id="btn-save-note" class="btn-act btn-act-heal" onclick="savePlayerNote()" style="padding:5px 12px; font-size:0.74rem; font-weight:700; background:linear-gradient(135deg, #6d28d9 0%, #4338ca 100%); color:#fff; border:1px solid #8b5cf6;">💾 Save Note</button>
+                    </div>
+                </div>
+
+                <!-- SAVED NOTES LIST -->
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:0.72rem; font-weight:800; color:#c4b5fd; text-transform:uppercase;">Saved Notes (<span id="modal-notes-count">0</span>)</span>
+                    <button class="btn-act btn-act-pre" onclick="resetPlayerNotes()" style="padding:2px 7px; font-size:0.66rem; color:#94a3b8;" title="Restore baseline notes">🔄 Reset to Default</button>
+                </div>
+                <div id="player-notes-full-list" style="display:flex; flex-direction:column; gap:7px; max-height:42vh; overflow-y:auto;"></div>
+            </div>
+            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
+                <button class="btn-act btn-act-pre" onclick="exportPlayerNotes()" style="color:#c4b5fd; border:1px solid rgba(167,139,250,0.5); padding:4px 10px; font-size:0.74rem; font-weight:700;">📓 Export Notes (New &amp; Removed Only)</button>
+                <button class="btn-act btn-act-pre" onclick="closePlayerNotesModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
             </div>
         </div>
     </dialog>
@@ -3318,6 +3369,276 @@
     }
 
     // ==========================================
+    // 📓 PLAYER NOTES LEDGER & DELTA EXPORT ENGINE
+    // ==========================================
+    const MAX_NOTE_CHARS = 220;
+    const defaultPlayerNotes = [
+        {
+            id: 'base_watch',
+            title: "Barnaby's Pocket Watch",
+            text: "Stopped at 11:47 PM the night Barnaby vanished in Daggerford. Warm to the touch and occasionally ticks backward inside Barovia."
+        },
+        {
+            id: 'base_fog',
+            title: "Awakening in Svalich Woods",
+            text: "Fell asleep after a tavern card act in Daggerford and woke up in the choking silver fog of Barovia with no memory of crossing the border."
+        }
+    ];
+    let editingNoteId = null;
+
+    function getStoredNotes() {
+        const stored = localStorage.getItem('cos_notes_piper_v1');
+        if (!stored) {
+            localStorage.setItem('cos_notes_piper_v1', JSON.stringify(defaultPlayerNotes));
+            return JSON.parse(JSON.stringify(defaultPlayerNotes));
+        }
+        try { return JSON.parse(stored); } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
+    }
+
+    function saveStoredNotes(notes) {
+        localStorage.setItem('cos_notes_piper_v1', JSON.stringify(notes));
+    }
+
+    function getRemovedNoteTitles() {
+        const stored = localStorage.getItem('cos_notes_removed_piper_v1');
+        if (!stored) return [];
+        try { return JSON.parse(stored); } catch(e) { return []; }
+    }
+
+    function saveRemovedNoteTitles(titles) {
+        localStorage.setItem('cos_notes_removed_piper_v1', JSON.stringify(titles));
+    }
+
+    function escapeNoteHtml(str) {
+        return String(str || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+
+    function updateNoteCharCounter() {
+        const bodyEl = document.getElementById('note-body-input');
+        const counterEl = document.getElementById('note-char-counter');
+        if (!bodyEl || !counterEl) return;
+        const len = bodyEl.value.length;
+        counterEl.innerText = `${len} / ${MAX_NOTE_CHARS} chars`;
+        counterEl.style.color = len >= MAX_NOTE_CHARS ? '#f87171' : (len >= 180 ? '#fbbf24' : 'var(--text-muted)');
+    }
+
+    function renderPlayerNotes() {
+        const notes = getStoredNotes();
+        const miniList = document.getElementById('player-notes-mini-list');
+        const fullList = document.getElementById('player-notes-full-list');
+        const countBadge = document.getElementById('player-notes-count-badge');
+        const modalCount = document.getElementById('modal-notes-count');
+
+        if (countBadge) countBadge.innerText = notes.length;
+        if (modalCount) modalCount.innerText = notes.length;
+
+        // Render compact mini list on left column below Gold Purse
+        if (miniList) {
+            if (notes.length === 0) {
+                miniList.innerHTML = `<div style="font-size:0.72rem; color:var(--text-muted); font-style:italic; padding:3px 2px;">No notes saved yet. Click [📖 Open Notes] to write one!</div>`;
+            } else {
+                miniList.innerHTML = notes.map(n => {
+                    const isNew = !defaultPlayerNotes.some(b => b.id === n.id && b.title === n.title && b.text === n.text);
+                    return `
+                        <div class="inv-row-item" onclick="openPlayerNotesModal()" style="cursor:pointer; padding:4px 7px;" title="Click to open Player Notes">
+                            <div style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.73rem; color:#f8fafc;">
+                                <strong style="color:#fde68a;">${escapeNoteHtml(n.title)}</strong>
+                                ${isNew ? '<span style="font-size:0.6rem; color:#4ade80; margin-left:4px; font-weight:700;">[NEW]</span>' : ''}
+                                <span style="color:var(--text-dim);"> — ${escapeNoteHtml(n.text)}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        // Render full interactive list inside the Player Notes Modal
+        if (fullList) {
+            if (notes.length === 0) {
+                fullList.innerHTML = `<div style="font-size:0.78rem; color:var(--text-muted); text-align:center; padding:14px;">No player notes recorded. Write your first note above!</div>`;
+            } else {
+                fullList.innerHTML = notes.map(n => {
+                    const baseMatch = defaultPlayerNotes.find(b => b.id === n.id);
+                    const isNewOrEdited = !baseMatch || baseMatch.title !== n.title || baseMatch.text !== n.text;
+                    return `
+                        <div style="background:var(--panel-sub); border:1px solid ${isNewOrEdited ? '#6d529e' : 'var(--card-border)'}; border-radius:6px; padding:8px 10px; display:flex; flex-direction:column; gap:4px;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                                    <span style="font-size:0.82rem; font-weight:800; color:#fde68a;">📌 ${escapeNoteHtml(n.title)}</span>
+                                    ${isNewOrEdited ? '<span style="font-size:0.62rem; padding:1px 6px; border-radius:999px; background:rgba(74,222,128,0.15); color:#4ade80; border:1px solid rgba(74,222,128,0.4); font-weight:700;">Unsynced / New</span>' : '<span style="font-size:0.62rem; color:var(--text-muted);">Synced</span>'}
+                                </div>
+                                <div style="display:flex; gap:4px; flex-shrink:0;">
+                                    <button class="btn-act btn-act-pre" onclick="startEditPlayerNote('${n.id}')" style="padding:2px 7px; font-size:0.68rem; color:#93c5fd;">✏️ Edit</button>
+                                    <button class="btn-act btn-act-dmg" onclick="deletePlayerNote('${n.id}')" style="padding:2px 7px; font-size:0.68rem;">🗑️ Remove</button>
+                                </div>
+                            </div>
+                            <div style="font-size:0.76rem; color:#e2e8f0; line-height:1.45;">${escapeNoteHtml(n.text)}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+    }
+
+    function openPlayerNotesModal() {
+        renderPlayerNotes();
+        updateNoteCharCounter();
+        const modal = document.getElementById('player-notes-modal');
+        if (modal) modal.showModal();
+    }
+
+    function closePlayerNotesModal() {
+        cancelNoteEdit();
+        const modal = document.getElementById('player-notes-modal');
+        if (modal) modal.close();
+    }
+
+    function startEditPlayerNote(noteId) {
+        const notes = getStoredNotes();
+        const target = notes.find(n => n.id === noteId);
+        if (!target) return;
+        editingNoteId = noteId;
+        document.getElementById('note-title-input').value = target.title;
+        document.getElementById('note-body-input').value = target.text;
+        document.getElementById('note-form-header-lbl').innerText = `✏️ Editing Note: ${target.title}`;
+        document.getElementById('btn-save-note').innerText = '💾 Update Note';
+        document.getElementById('btn-cancel-note-edit').style.display = 'inline-flex';
+        updateNoteCharCounter();
+    }
+
+    function cancelNoteEdit() {
+        editingNoteId = null;
+        const titleEl = document.getElementById('note-title-input');
+        const bodyEl = document.getElementById('note-body-input');
+        if (titleEl) titleEl.value = '';
+        if (bodyEl) bodyEl.value = '';
+        const lbl = document.getElementById('note-form-header-lbl');
+        if (lbl) lbl.innerText = '➕ Write a New Note';
+        const btnSave = document.getElementById('btn-save-note');
+        if (btnSave) btnSave.innerText = '💾 Save Note';
+        const btnCancel = document.getElementById('btn-cancel-note-edit');
+        if (btnCancel) btnCancel.style.display = 'none';
+        updateNoteCharCounter();
+    }
+
+    function savePlayerNote() {
+        const titleEl = document.getElementById('note-title-input');
+        const bodyEl = document.getElementById('note-body-input');
+        const rawTitle = (titleEl.value || '').trim().slice(0, 55);
+        const rawText = (bodyEl.value || '').trim().replace(/\s+/g, ' ').slice(0, MAX_NOTE_CHARS);
+
+        if (!rawTitle || !rawText) {
+            logRoll(`⚠️ <strong>Player Notes:</strong> Please enter both a short <strong>Note Title</strong> and <strong>Note Content</strong>!`);
+            return;
+        }
+
+        const notes = getStoredNotes();
+        if (editingNoteId) {
+            const idx = notes.findIndex(n => n.id === editingNoteId);
+            if (idx !== -1) {
+                notes[idx].title = rawTitle;
+                notes[idx].text = rawText;
+                logRoll(`📓 <strong>Updated Note:</strong> "${rawTitle}"`);
+            }
+        } else {
+            notes.unshift({
+                id: 'note_' + Date.now(),
+                title: rawTitle,
+                text: rawText
+            });
+            // If a note with this title was previously in removed list, clear it from removed list
+            const removed = getRemovedNoteTitles().filter(t => t.toLowerCase() !== rawTitle.toLowerCase());
+            saveRemovedNoteTitles(removed);
+            logRoll(`📓 <strong>Saved New Player Note:</strong> "${rawTitle}"`);
+        }
+
+        saveStoredNotes(notes);
+        cancelNoteEdit();
+        renderPlayerNotes();
+    }
+
+    function deletePlayerNote(noteId) {
+        const notes = getStoredNotes();
+        const idx = notes.findIndex(n => n.id === noteId);
+        if (idx === -1) return;
+        const removedNote = notes[idx];
+        notes.splice(idx, 1);
+        saveStoredNotes(notes);
+
+        // Record the title in removed titles so export only sends the title of the removed note
+        const removedTitles = getRemovedNoteTitles();
+        if (!removedTitles.includes(removedNote.title)) {
+            removedTitles.push(removedNote.title);
+            saveRemovedNoteTitles(removedTitles);
+        }
+
+        if (editingNoteId === noteId) cancelNoteEdit();
+        renderPlayerNotes();
+        logRoll(`🗑️ <strong>Removed Player Note:</strong> "${removedNote.title}" <em>(Only the title will be listed in Export Notes)</em>.`);
+    }
+
+    function resetPlayerNotes() {
+        saveStoredNotes(defaultPlayerNotes);
+        saveRemovedNoteTitles([]);
+        cancelNoteEdit();
+        renderPlayerNotes();
+        logRoll(`📓 <strong>Player Notes Reset</strong> to official baseline notes.`);
+    }
+
+    function exportPlayerNotes() {
+        const notes = getStoredNotes();
+        const addedOrEdited = [];
+
+        notes.forEach(n => {
+            const base = defaultPlayerNotes.find(b => b.id === n.id);
+            const cleanTitle = n.title.replace(/\s+/g, ' ').trim();
+            const cleanText = n.text.replace(/\s+/g, ' ').trim().slice(0, MAX_NOTE_CHARS);
+            if (!base) {
+                addedOrEdited.push(`[${cleanTitle}: ${cleanText}]`);
+            } else if (base.title !== n.title || base.text !== n.text) {
+                addedOrEdited.push(`[${cleanTitle} (Edited): ${cleanText}]`);
+            }
+        });
+
+        // Collect removed note titles (baseline notes deleted + any session deleted note titles not currently present)
+        const removedSet = new Set(getRemovedNoteTitles());
+        defaultPlayerNotes.forEach(b => {
+            if (!notes.some(n => n.id === b.id)) {
+                removedSet.add(b.title);
+            }
+        });
+        // Ensure we don't list a title as removed if a note with that title currently exists
+        const activeTitlesLower = new Set(notes.map(n => n.title.toLowerCase()));
+        const finalRemovedTitles = [...removedSet].filter(t => !activeTitlesLower.has(t.toLowerCase()));
+
+        let parts = [];
+        if (addedOrEdited.length > 0) {
+            parts.push(`➕ New Notes: ${addedOrEdited.join(' ; ')}`);
+        }
+        if (finalRemovedTitles.length > 0) {
+            parts.push(`➖ Removed Notes (Title Only): ${finalRemovedTitles.map(t => `"${t}"`).join(', ')}`);
+        }
+
+        const exportStr = parts.length > 0
+            ? `🎩 PIPER — 📓 Player Notes Export | ${parts.join(' | ')}`
+            : `🎩 PIPER — 📓 Player Notes Export | (No new or removed notes this session)`;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(exportStr).then(() => {
+                logRoll(`📓 <strong>Piper's Player Notes Exported to Clipboard!</strong><br><small style="color:var(--text-dim);">${escapeNoteHtml(exportStr)}</small>`);
+            }).catch(() => {
+                prompt("Copy Piper's Player Notes export string:", exportStr);
+            });
+        } else {
+            prompt("Copy Piper's Player Notes export string:", exportStr);
+        }
+    }
+
+    // ==========================================
     // 📋 1-CLICK SESSION DELTA EXPORT PROTOCOL
     // ==========================================
     function exportSheetState() {
@@ -3371,6 +3692,7 @@
     renderSpellSlots();
     renderSpellbook();
     renderInventory();
+    renderPlayerNotes();
 </script>
 </body>
 </html>
