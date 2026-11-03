@@ -698,19 +698,6 @@
             </div>
             <div class="pill-badge-group">
                 <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">🏰 Portal</a>
-                <div style="display:flex; align-items:center; gap:4px; background:#090e1a; border:1px solid #475569; padding:2px 7px; border-radius:6px;">
-                    <span style="font-size:0.68rem; font-weight:700; color:var(--accent-gold);">⬆️ LVL:</span>
-                    <select id="char-level-select" class="lvl-dropdown" onchange="changeCharacterLevel(this.value)" style="border:none; background:transparent; font-size:0.75rem;">
-                        <option value="3" selected>Lvl 3 (Start)</option>
-                        <option value="4">Lvl 4</option>
-                        <option value="5">Lvl 5</option>
-                        <option value="6">Lvl 6</option>
-                        <option value="7">Lvl 7</option>
-                        <option value="8">Lvl 8</option>
-                        <option value="9">Lvl 9</option>
-                        <option value="10">Lvl 10 (Finale)</option>
-                    </select>
-                </div>
                 <button class="btn-act btn-act-pre" onclick="exportSheetState()" style="color:var(--accent-gold); border:1px solid rgba(245, 158, 11, 0.5); display:flex; align-items:center; gap:4px;" title="Copy live HP, Sorcery Points, Tides of Chaos, Spell Slots, and session inventory delta">📋 Export Data</button>
                 <span class="pill-badge pill-neutral">CHAOTIC NEUTRAL</span>
                 <span class="pill-badge pill-purple">WILD MAGIC SORCERER</span>
@@ -1037,93 +1024,6 @@
                     </div>
                 </div>
 
-                <!-- ✨ FONT OF MAGIC (SORCERY POINTS) & METAMAGIC / BEND FATE -->
-                <div class="panel">
-                    <div class="panel-title">
-                        <span>✨ Font of Magic (Sorcery Points) &amp; Metamagic</span>
-                        <div style="display:flex; align-items:center; gap:6px;">
-                            <span id="sp-pips-disp" style="font-size:0.82rem; font-weight:700; color:#e9d5ff; cursor:pointer;" onclick="modSorceryPoints(-1)" title="Click to spend 1 Sorcery Point">🟣 🟣 🟣 (3/3 SP)</span>
-                            <button class="btn-act btn-act-pre" onclick="modSorceryPoints(-1)" style="padding:1px 6px; font-size:0.68rem;">-1</button>
-                            <button class="btn-act btn-act-pre" onclick="modSorceryPoints(1)" style="padding:1px 6px; font-size:0.68rem;">+1</button>
-                            <button class="btn-act btn-act-pre" onclick="refillSorceryPoints()" style="font-size:0.66rem; color:var(--accent-gold);">🔄 Max</button>
-                        </div>
-                    </div>
-
-                    <div class="action-grid-2col">
-                        <!-- Subtle Spell (1 SP) -->
-                        <div class="action-card">
-                            <div class="action-header">
-                                <div>
-                                    <div onclick="openSpellDetailsModal('subtle_spell')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
-                                        🤫 Subtle Spell <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
-                                    </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#c084fc;">Metamagic • 1 Sorcery Point</div>
-                                </div>
-                                <span class="pill-badge pill-purple" style="font-size:0.62rem; padding:1px 6px;">1 SP</span>
-                            </div>
-                            <div class="action-desc">Cast a spell without any Verbal (V) or Somatic (S) components. Unnoticeable &amp; immune to Silence!</div>
-                            <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#7c3aed;" onclick="useMetamagic('Subtle Spell', 1, '🤫 Cast with NO Verbal or Somatic components — looks like a harmless stage prop!')">🤫 Spend 1 SP (Subtle)</button>
-                            </div>
-                        </div>
-
-                        <!-- Twinned Spell (1-2 SP) -->
-                        <div class="action-card">
-                            <div class="action-header">
-                                <div>
-                                    <div onclick="openSpellDetailsModal('twinned_spell')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
-                                        👯 Twinned Spell <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
-                                    </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#c084fc;">Metamagic • 1 SP (Cantrip/L1) or 2 SP (L2)</div>
-                                </div>
-                                <span class="pill-badge pill-purple" style="font-size:0.62rem; padding:1px 6px;">1–2 SP</span>
-                            </div>
-                            <div class="action-desc">Duplicate a single-target spell (<em>Fire Bolt, Chaos Bolt, Charm Person</em>) onto a 2nd target in range!</div>
-                            <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#7c3aed;" onclick="useMetamagic('Twinned Spell (Cantrip / 1st-Lvl)', 1, '👯 Targets a 2nd creature within range with the same spell!')">👯 Twin C/L1 (1 SP)</button>
-                                <button class="btn-roll-action" style="background:#6d28d9;" onclick="useMetamagic('Twinned Spell (2nd-Lvl)', 2, '👯 Targets a 2nd creature with a 2nd-level single-target spell!')">👯 Twin L2 (2 SP)</button>
-                            </div>
-                        </div>
-
-                        <!-- Bend Fate ("Is That Your Card?!" - 2 SP) -->
-                        <div class="action-card">
-                            <div class="action-header">
-                                <div>
-                                    <div onclick="openSpellDetailsModal('bend_fate')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
-                                        🃏 Bend Fate ("Sleight of Hand") <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
-                                    </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#f472b6;">Reaction / Free • 2 Sorcery Points</div>
-                                </div>
-                                <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;">2 SP</span>
-                            </div>
-                            <div class="action-desc">Throw a flash-bang coin or yell <em>"Is that your card?!"</em> to add or subtract <strong>1d4</strong> from a roll!</div>
-                            <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#db2777;" onclick="useBendFate(1)">🃏 +1d4 Bonus (2 SP)</button>
-                                <button class="btn-roll-action btn-roll-dmg" onclick="useBendFate(-1)">🃏 -1d4 Penalty (2 SP)</button>
-                            </div>
-                        </div>
-
-                        <!-- Flexible Casting Converter -->
-                        <div class="action-card">
-                            <div class="action-header">
-                                <div>
-                                    <div onclick="openSpellDetailsModal('flexible_casting')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
-                                        🔄 Flexible Casting (Slots ⇄ SP) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
-                                    </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#38bdf8;">Bonus Action • Font of Magic</div>
-                                </div>
-                            </div>
-                            <div class="action-desc">Sacrifice a spell slot to gain SP (+Lvl SP), or spend SP to create a spell slot (L1=2 SP, L2=3 SP).</div>
-                            <div class="action-btn-row">
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#38bdf8;" onclick="convertSlotToSP(1)" title="Burn 1st-Lvl Slot for +1 SP">L1➔+1SP</button>
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#38bdf8;" onclick="convertSlotToSP(2)" title="Burn 2nd-Lvl Slot for +2 SP">L2➔+2SP</button>
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#c084fc;" onclick="convertSPToSlot(1, 2)" title="Spend 2 SP to gain +1 1st-Lvl Slot">2SP➔+L1</button>
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#c084fc;" onclick="convertSPToSlot(2, 3)" title="Spend 3 SP to gain +1 2nd-Lvl Slot">3SP➔+L2</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- ⚔️ ACTIONS & AT-WILL ATTACKS (WEAPONS + CANTRIPS) -->
                 <div class="panel">
                     <div class="panel-title">
@@ -1245,7 +1145,6 @@
                     <div class="panel-title">
                         <span>🔮 Known Sorcerer Spells &amp; Fierna Lineage Magic</span>
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <span id="fierna-charm-badge" onclick="toggleFiernaCharmManual()" style="font-size:0.68rem; font-weight:700; color:#f472b6; background:rgba(244,114,182,0.14); border:1px solid #f472b6; padding:2px 7px; border-radius:4px; cursor:pointer;" title="Legacy of Phlegethos: 1 Free 2nd-Level Charm Person per Long Rest (Click to toggle)">💖 Fierna Charm: 1/1 Ready</span>
                             <button class="btn-act btn-act-pre" onclick="refillAllSlots()" style="font-size:0.68rem; color:var(--accent-gold);">⛺ Refill Slots</button>
                         </div>
                     </div>
@@ -1295,6 +1194,93 @@
                     </div>
                 </div>
 
+                <!-- ✨ FONT OF MAGIC (SORCERY POINTS) & METAMAGIC / BEND FATE -->
+                <div class="panel">
+                    <div class="panel-title">
+                        <span>✨ Font of Magic (Sorcery Points) &amp; Metamagic</span>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span id="sp-pips-disp" style="font-size:0.82rem; font-weight:700; color:#e9d5ff; cursor:pointer;" onclick="modSorceryPoints(-1)" title="Click to spend 1 Sorcery Point">🟣 🟣 🟣 (3/3 SP)</span>
+                            <button class="btn-act btn-act-pre" onclick="modSorceryPoints(-1)" style="padding:1px 6px; font-size:0.68rem;">-1</button>
+                            <button class="btn-act btn-act-pre" onclick="modSorceryPoints(1)" style="padding:1px 6px; font-size:0.68rem;">+1</button>
+                            <button class="btn-act btn-act-pre" onclick="refillSorceryPoints()" style="font-size:0.66rem; color:var(--accent-gold);">🔄 Max</button>
+                        </div>
+                    </div>
+
+                    <div class="action-grid-2col">
+                        <!-- Subtle Spell (1 SP) -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('subtle_spell')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        🤫 Subtle Spell <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.66rem; font-weight:700; color:#c084fc;">Metamagic • 1 Sorcery Point</div>
+                                </div>
+                                <span class="pill-badge pill-purple" style="font-size:0.62rem; padding:1px 6px;">1 SP</span>
+                            </div>
+                            <div class="action-desc">Cast a spell without any Verbal (V) or Somatic (S) components. Unnoticeable &amp; immune to Silence!</div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action" style="background:#7c3aed;" onclick="useMetamagic('Subtle Spell', 1, '🤫 Cast with NO Verbal or Somatic components — looks like a harmless stage prop!')">🤫 Spend 1 SP (Subtle)</button>
+                            </div>
+                        </div>
+
+                        <!-- Twinned Spell (1-2 SP) -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('twinned_spell')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        👯 Twinned Spell <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.66rem; font-weight:700; color:#c084fc;">Metamagic • 1 SP (Cantrip/L1) or 2 SP (L2)</div>
+                                </div>
+                                <span class="pill-badge pill-purple" style="font-size:0.62rem; padding:1px 6px;">1–2 SP</span>
+                            </div>
+                            <div class="action-desc">Duplicate a single-target spell (<em>Fire Bolt, Chaos Bolt, Charm Person</em>) onto a 2nd target in range!</div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action" style="background:#7c3aed;" onclick="useMetamagic('Twinned Spell (Cantrip / 1st-Lvl)', 1, '👯 Targets a 2nd creature within range with the same spell!')">👯 Twin C/L1 (1 SP)</button>
+                                <button class="btn-roll-action" style="background:#6d28d9;" onclick="useMetamagic('Twinned Spell (2nd-Lvl)', 2, '👯 Targets a 2nd creature with a 2nd-level single-target spell!')">👯 Twin L2 (2 SP)</button>
+                            </div>
+                        </div>
+
+                        <!-- Bend Fate ("Is That Your Card?!" - 2 SP) -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('bend_fate')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        🃏 Bend Fate ("Sleight of Hand") <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.66rem; font-weight:700; color:#f472b6;">Reaction / Free • 2 Sorcery Points</div>
+                                </div>
+                                <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;">2 SP</span>
+                            </div>
+                            <div class="action-desc">Throw a flash-bang coin or yell <em>"Is that your card?!"</em> to add or subtract <strong>1d4</strong> from a roll!</div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action" style="background:#db2777;" onclick="useBendFate(1)">🃏 +1d4 Bonus (2 SP)</button>
+                                <button class="btn-roll-action btn-roll-dmg" onclick="useBendFate(-1)">🃏 -1d4 Penalty (2 SP)</button>
+                            </div>
+                        </div>
+
+                        <!-- Flexible Casting Converter -->
+                        <div class="action-card">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('flexible_casting')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        🔄 Flexible Casting (Slots ⇄ SP) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.66rem; font-weight:700; color:#38bdf8;">Bonus Action • Font of Magic</div>
+                                </div>
+                            </div>
+                            <div class="action-desc">Sacrifice a spell slot to gain SP (+Lvl SP), or spend SP to create a spell slot (L1=2 SP, L2=3 SP).</div>
+                            <div class="action-btn-row">
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#38bdf8;" onclick="convertSlotToSP(1)" title="Burn 1st-Lvl Slot for +1 SP">L1➔+1SP</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#38bdf8;" onclick="convertSlotToSP(2)" title="Burn 2nd-Lvl Slot for +2 SP">L2➔+2SP</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#c084fc;" onclick="convertSPToSlot(1, 2)" title="Spend 2 SP to gain +1 1st-Lvl Slot">2SP➔+L1</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#c084fc;" onclick="convertSPToSlot(2, 3)" title="Spend 3 SP to gain +1 2nd-Lvl Slot">3SP➔+L2</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 🎒 EDITABLE INVENTORY & CONSUMABLES -->
                 <div class="panel">
                     <div class="panel-title">
@@ -1308,16 +1294,6 @@
                         <input type="text" id="new-item-input" class="hp-input-num" style="flex:1; width:auto; text-align:left; padding:4px 7px;" placeholder="Add new loot or stage prop (e.g. 2x Potion of Healing)...">
                         <button class="btn-act" style="background:var(--accent-gold); color:#000;" onclick="addItem()">+ Add</button>
                         <button class="btn-act btn-act-pre" onclick="resetInventory()" title="Reset to official starting loadout">🔄 Reset</button>
-                    </div>
-                </div>
-
-                <!-- 🎯 PERSONAL QUESTS & BAROVIAN DESTINY -->
-                <div class="panel">
-                    <div class="panel-title">🎯 Personal Quests &amp; Barovian Destiny Hooks</div>
-                    <div style="font-size:0.75rem; color:var(--text-dim); line-height:1.42; display:flex; flex-direction:column; gap:4px;">
-                        <p>• 🕰️ <strong>The Couple in the Brass Pocket Watch:</strong> Find the truth of the purple-horned tiefling couple from Piper's nightmare in the Svalich Woods and why Barnaby called her <em>"O prophesied one."</em></p>
-                        <p>• 🎩 <strong>"Piper the Incomparable":</strong> Perform in Barovia's taverns (<em>Blood on the Vine</em>, <em>Blue Water Inn</em>) using her Entertainer feature while hiding her terrifying Wild Magic surges behind stage patter.</p>
-                        <p>• 🏛️ <strong>Amber Temple / Dark Power Hook:</strong> Will Piper stay harmless as she swore, or accept the Dark Powers' bargain when Barovia pushes her to the brink?</p>
                     </div>
                 </div>
 
@@ -1824,7 +1800,7 @@
 
     function castFiernaFreeCharmPerson() {
         if (!fiernaCharmReady) {
-            logRoll(`⚠️ <strong>Fierna Lineage Charm Person (1/Long Rest)</strong> is already expended! You can still cast Charm Person using a normal Spell Slot.`);
+            logRoll(`⚠️ <strong>Fierna Lineage Charm Person (1/Long Rest)</strong> is already expended! Cast Charm Person with a Spell Slot or <button class="btn-act btn-act-pre" style="margin-left:4px; color:#f472b6;" onclick="toggleFiernaCharmManual()">🔄 Reset 1/1</button>`);
             return;
         }
         fiernaCharmReady = false;
@@ -2542,7 +2518,9 @@
         for (let lvl = 1; lvl <= 3; lvl++) {
             spellSlots[lvl].current = spellSlots[lvl].max;
         }
+        fiernaCharmReady = true;
         renderSpellSlots();
+        renderSpellbook();
     }
 
     function renderSpellbook() {
