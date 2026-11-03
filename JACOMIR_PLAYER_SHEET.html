@@ -754,18 +754,18 @@
                 <div class="buffs-toggle-bar">
                     <div class="toggle-btn-card active-buff" id="card-armor-toggle" onclick="toggleChainMailBuff()">
                         <div>
-                            <div style="font-size:0.74rem; font-weight:700;">⛓️ Chain Mail + Defense</div>
-                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-armor-style">16 Armor + 1 Defense Style</div>
+                            <div style="font-size:0.74rem; font-weight:700;">⛓️ Chain Mail Armor</div>
+                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-armor-style">Equipped AC: 17</div>
                         </div>
                         <span class="toggle-badge on" id="badge-armor-style">ON (17)</span>
                     </div>
 
-                    <div class="toggle-btn-card" id="card-cover-toggle" onclick="toggleCoverACBuff()">
+                    <div class="toggle-btn-card active-buff" id="heroic-card" onclick="useHeroicInspiration()" title="Human (Resourceful): Reroll any die immediately after rolling it (1/Long Rest)">
                         <div>
-                            <div style="font-size:0.74rem; font-weight:700;">🛡️ Tactical Cover / Shield</div>
-                            <div style="font-size:0.65rem; color:var(--text-dim);">Half Cover or Shield (+2 AC)</div>
+                            <div style="font-size:0.74rem; font-weight:700;">🌟 Heroic Inspiration</div>
+                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-heroic-insp">Reroll any die (1/LR)</div>
                         </div>
-                        <span class="toggle-badge off" id="badge-cover-ac">+2 AC</span>
+                        <span class="toggle-badge on" id="heroic-status-badge">READY</span>
                     </div>
                 </div>
 
@@ -919,51 +919,10 @@
 
             </div>
 
-            <!-- RIGHT COLUMN: (1) BATTLE MASTER ENGINE, (2) WEAPONS & MASTERIES, (3) MANEUVERS, (4) FIGHTER CORE, (5) INVENTORY -->
+            <!-- RIGHT COLUMN: (1) WEAPONS & MASTERIES, (2) MANEUVERS & SUPERIORITY DICE, (3) FIGHTER CORE, (4) INVENTORY -->
             <div>
 
-                <!-- 1. 👑 BATTLE MASTER COMBAT SUPERIORITY & SOVEREIGN'S RESOLVE ENGINE -->
-                <div class="panel" style="background: linear-gradient(135deg, #241418 0%, #111827 100%); border: 1.5px solid #991b1b;">
-                    <div class="panel-title" style="border-bottom-color: rgba(248, 113, 113, 0.22);">
-                        <span style="color:#fde68a; font-size:0.86rem;">👑 Battle Master Combat Superiority &amp; Sovereign's Resolve</span>
-                        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                            <span class="pill-badge pill-gold" style="font-size:0.66rem;">Maneuver Save DC 13 (8 + PB + STR)</span>
-                            <button class="btn-act btn-act-pre" onclick="refillSuperiorityDice()" style="font-size:0.68rem; color:#fde68a; border-color:#b45309; background:rgba(180, 83, 9, 0.2);">🔄 Refill 4/4 d8s</button>
-                        </div>
-                    </div>
-
-                    <!-- SUPERIORITY DICE (4d8) TRACKER BAR -->
-                    <div style="background:rgba(15, 23, 42, 0.88); border:1px solid #7f1d1d; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                        <div>
-                            <div style="font-size:0.68rem; font-weight:700; color:#fca5a5; text-transform:uppercase;">⚔️ Superiority Dice Pool (4d8 • Recharges on Short or Long Rest)</div>
-                            <div id="sup-dice-pips-disp" style="font-size:0.9rem; font-weight:800; color:#fde68a; margin-top:2px; cursor:pointer;" onclick="modSuperiorityDice(-1)" title="Click to spend 1 Superiority Die">🟧 🟧 🟧 🟧 (4/4 d8s)</div>
-                        </div>
-                        <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
-                            <button class="btn-act btn-act-pre" onclick="modSuperiorityDice(-1)" style="padding:3px 8px; font-size:0.72rem;">-1 d8</button>
-                            <button class="btn-act btn-act-pre" onclick="modSuperiorityDice(1)" style="padding:3px 8px; font-size:0.72rem;">+1 d8</button>
-                            <button class="btn-roll-action btn-roll-martial" onclick="rollSuperiorityDieRaw()">🎲 Roll Raw 1d8</button>
-                        </div>
-                    </div>
-
-                    <!-- HEROIC INSPIRATION (RESOURCEFUL) & SAVAGE ATTACKER STATUS BAR -->
-                    <div id="heroic-card" style="background:rgba(15, 23, 42, 0.85); border:1px solid #334155; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                        <div style="flex:1; min-width:220px;">
-                            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                                <span style="font-size:0.8rem; font-weight:800; color:#fde68a; cursor:pointer;" onclick="openSpellDetailsModal('human_resourceful')" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#fde68a'">🌟 Heroic Inspiration (Human: Resourceful) ℹ️</span>
-                                <span id="heroic-status-badge" style="font-size:0.65rem; font-weight:800; padding:2px 7px; border-radius:999px; background:rgba(34,197,94,0.16); color:#4ade80; border:1px solid #22c55e;">🟢 READY (1/LR)</span>
-                            </div>
-                            <div style="font-size:0.71rem; color:var(--text-dim); margin-top:2px;">
-                                Reroll <strong>any die immediately after rolling it</strong> (d20 attack, save, check, or damage die). Regained automatically on every Long Rest!
-                            </div>
-                        </div>
-                        <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
-                            <button id="btn-use-heroic" class="btn-roll-action btn-roll-martial" style="padding:5px 10px; font-size:0.73rem;" onclick="useHeroicInspiration()">🌟 Spend Heroic Reroll</button>
-                            <button class="btn-act btn-act-pre" onclick="toggleHeroicManual()" style="font-size:0.68rem; padding:4px 7px;" title="Manually toggle Heroic Inspiration">🔄 Toggle</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. ⚔️ WEAPONS & 5.5E WEAPON MASTERIES (UNLIMITED AT-WILL) -->
+                <!-- 1. ⚔️ WEAPONS & 5.5E WEAPON MASTERIES (UNLIMITED AT-WILL) -->
                 <div class="panel">
                     <div class="panel-title">
                         <span>⚔️ Weapons &amp; 5.5e Weapon Masteries (Unlimited At-Will)</span>
@@ -1047,12 +1006,31 @@
                     </div>
                 </div>
 
-                <!-- 3. 🎯 BATTLE MASTER MANEUVERS & SUPERIORITY DICE (4d8 / SHORT REST) -->
+                <!-- 2. 🎯 BATTLE MASTER MANEUVERS & SUPERIORITY DICE (4d8 / SHORT REST) -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span>🎯 Battle Master Maneuvers (4x d8 Superiority Dice • DC 13)</span>
+                        <span>🎯 Battle Master Maneuvers &amp; Superiority Dice</span>
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <button class="btn-act btn-act-pre" onclick="refillSuperiorityDice()" style="font-size:0.68rem; color:var(--accent-gold);">☕ Refill 4/4 Dice</button>
+                            <button class="btn-act btn-act-pre" onclick="refillSuperiorityDice()" style="font-size:0.68rem; color:var(--accent-gold);">☕ Refill Superiority Dice</button>
+                        </div>
+                    </div>
+
+                    <!-- SUPERIORITY DICE SLOT TRACKER (SPELL-SLOT STYLE) -->
+                    <div style="background:var(--panel-sub); border:1px solid var(--card-border); border-radius:6px; padding:6px 8px; display:flex; flex-direction:column; gap:4px; margin-bottom:5px;">
+                        <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim); text-transform:uppercase; display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+                            <span>⚔️ Superiority Dice Slots (Auto-Deducts on Maneuver Use)</span>
+                            <span style="font-size:0.64rem; color:var(--accent-gold); font-weight:600;">Maneuver Save DC 13 • Recharges on Short or Long Rest</span>
+                        </div>
+                        <div style="background:#090e1a; border:1px solid var(--card-border); border-radius:4px; padding:4px 8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span style="font-size:0.72rem; font-weight:700; color:var(--accent-gold);">Superiority Dice (d8):</span>
+                                <span id="sup-dice-pips-disp" style="font-size:0.8rem; cursor:pointer;" onclick="modSuperiorityDice(-1)" title="Click to spend 1 Superiority Die">🟧 🟧 🟧 🟧 <strong>(4/4 d8s)</strong></span>
+                            </div>
+                            <div style="display:flex; gap:4px; align-items:center;">
+                                <button class="btn-act btn-act-pre" onclick="modSuperiorityDice(-1)" style="padding:1px 6px; font-size:0.68rem;">-</button>
+                                <button class="btn-act btn-act-pre" onclick="modSuperiorityDice(1)" style="padding:1px 6px; font-size:0.68rem;">+</button>
+                                <button class="btn-roll-action btn-roll-martial" style="padding:2px 8px; font-size:0.68rem;" onclick="rollSuperiorityDieRaw()">🎲 Roll 1d8</button>
+                            </div>
                         </div>
                     </div>
 
@@ -1061,7 +1039,7 @@
                     </div>
                 </div>
 
-                <!-- 4. ✨ CORE FIGHTER FEATURES (SECOND WIND, TACTICAL MIND & ACTION SURGE) -->
+                <!-- 3. ✨ CORE FIGHTER FEATURES (SECOND WIND, TACTICAL MIND, ACTION SURGE & SAVAGE ATTACKER) -->
                 <div class="panel">
                     <div class="panel-title">
                         <span>✨ Core Fighter Features (Second Wind, Tactical Mind &amp; Action Surge)</span>
@@ -1127,18 +1105,18 @@
                             </div>
                         </div>
 
-                        <!-- Savage Attacker & Defense Style Reference Card -->
+                        <!-- Savage Attacker Reference Card -->
                         <div class="action-card">
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('savage_attacker')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
-                                        🩸 Savage Attacker &amp; 🛡️ Defense Style <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                        🩸 Savage Attacker <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#f87171;">Origin Feat (1/Turn) &amp; Fighting Style (+1 AC)</div>
+                                    <div style="font-size:0.66rem; font-weight:700; color:#f87171;">Origin Feat • 1/Turn Weapon Damage Reroll</div>
                                 </div>
-                                <span class="pill-badge pill-crimson" style="font-size:0.62rem; padding:1px 6px;">ALWAYS ON</span>
+                                <span class="pill-badge pill-crimson" style="font-size:0.62rem; padding:1px 6px;">1/TURN</span>
                             </div>
-                            <div class="action-desc"><strong>Savage Attacker:</strong> Once per turn when you hit with a weapon, roll its damage dice twice &amp; use either total! <strong>Defense:</strong> +1 AC in armor.</div>
+                            <div class="action-desc">Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either total!</div>
                             <div class="action-btn-row">
                                 <button class="btn-roll-action btn-roll-dmg" onclick="rollSavageGreatswordDamage()">🗡️ Roll Savage 2d6+3</button>
                                 <button class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="openSpellDetailsModal('savage_attacker')">📖 Feat Rules</button>
@@ -1365,24 +1343,20 @@
 
     function updateHeroicUI() {
         const badge = document.getElementById('heroic-status-badge');
-        const btn = document.getElementById('btn-use-heroic');
+        const sub = document.getElementById('sub-heroic-insp');
         const card = document.getElementById('heroic-card');
-        if (!badge || !btn) return;
+        if (!badge || !card) return;
 
         if (heroicInspirationReady) {
-            badge.innerHTML = '🟢 READY (1/LR)';
-            badge.style.background = 'rgba(34,197,94,0.16)';
-            badge.style.color = '#4ade80';
-            badge.style.borderColor = '#22c55e';
-            btn.innerHTML = '🌟 Spend Heroic Reroll';
-            card.style.borderColor = '#334155';
+            card.classList.add('active-buff');
+            badge.className = 'toggle-badge on';
+            badge.innerText = 'READY';
+            if (sub) sub.innerText = 'Reroll any die (1/LR)';
         } else {
-            badge.innerHTML = '⚪ EXPENDED (REGAINS ON LR)';
-            badge.style.background = 'rgba(100,116,139,0.16)';
-            badge.style.color = '#94a3b8';
-            badge.style.borderColor = '#475569';
-            btn.innerHTML = '🔄 Reset Heroic Inspiration';
-            card.style.borderColor = '#475569';
+            card.classList.remove('active-buff');
+            badge.className = 'toggle-badge off';
+            badge.innerText = 'USED';
+            if (sub) sub.innerText = 'Expended (Regains on LR)';
         }
     }
 
@@ -1793,18 +1767,20 @@
         },
         "savage_attacker": {
             id: "savage_attacker",
-            name: "🩸 Origin Feat: Savage Attacker & 🛡️ Fighting Style: Defense",
-            school: "Human Versatile Origin Feat & Fighter Fighting Style",
+            name: "🩸 Origin Feat: Savage Attacker",
+            school: "Human Versatile Origin Feat (2024 PHB)",
             castingTime: "Passive (1/Turn on Weapon Hit)",
             range: "Self",
             components: "Automatic on Weapon Damage Buttons",
             duration: "Permanent Passive",
             wikiUrl: "https://5e.tools/feats.html#savage%20attacker_xphb",
-            attackMod: "Defense Style: +1 AC while wearing Light, Medium, or Heavy Armor (AC 17)",
-            damage: "Savage Attacker: Roll weapon damage dice twice 1/turn and use either total",
-            fullRules: "• <strong>Savage Attacker (Origin Feat):</strong> You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either roll against the target.<br>• <strong>Fighting Style — Defense:</strong> While you are wearing Light, Medium, or Heavy armor, you gain a <strong>+1 bonus to Armor Class</strong> (raising Jacomir's Chain Mail AC from 16 to <strong>17</strong>).",
+            attackMod: "Once Per Turn When You Hit a Target With a Weapon",
+            damage: "Roll the Weapon's Damage Dice Twice and Use Either Total!",
+            fullRules: "You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon, you can <strong>roll the weapon's damage dice twice and use either roll</strong> against the target.<br><br>💡 <strong>Automated on Sheet:</strong> Clicking <em>[💥 2d6+3 (Savage)]</em> on the Greatsword or <em>[💥 1d6+3 (Savage)]</em> on the Handaxe automatically rolls both sets of dice in the console and keeps the higher total!",
             flavor: "Every swing of Jacomir's greatsword carries the crushing weight of a monarch fighting for a stolen kingdom.",
-            modalButtons: []
+            modalButtons: [
+                { label: "🗡️ Roll Savage 2d6+3", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageGreatswordDamage(); } }
+            ]
         },
         "human_resourceful": {
             id: "human_resourceful",
@@ -2091,46 +2067,28 @@
         const armorCard = document.getElementById('card-armor-toggle');
         const armorBadge = document.getElementById('badge-armor-style');
         const armorSub = document.getElementById('sub-armor-style');
-        const coverCard = document.getElementById('card-cover-toggle');
-        const coverBadge = document.getElementById('badge-cover-ac');
 
-        const base = isChainMailActive ? 17 : 10; // Chain Mail (16) + Defense (+1) = 17, or 10 + DEX (0) = 10
-        const total = base + (isCoverACActive ? 2 : 0);
-        acDisp.innerText = total;
+        const total = isChainMailActive ? 17 : 10; // Chain Mail (16) + Defense (+1) = 17, or 10 + DEX (0) = 10
+        if (acDisp) acDisp.innerText = total;
 
+        if (!armorCard || !armorBadge || !armorSub) return;
         if (isChainMailActive) {
             armorCard.classList.add('active-buff');
             armorBadge.className = 'toggle-badge on';
             armorBadge.innerText = 'ON (17)';
-            armorSub.innerText = '16 Armor + 1 Defense Style';
+            armorSub.innerText = 'Equipped AC: 17';
         } else {
             armorCard.classList.remove('active-buff');
             armorBadge.className = 'toggle-badge off';
             armorBadge.innerText = 'OFF (10)';
-            armorSub.innerText = 'Unarmored: 10 + DEX (0)';
-        }
-
-        if (isCoverACActive) {
-            coverCard.classList.add('active-buff');
-            coverBadge.className = 'toggle-badge on';
-            coverBadge.innerText = '+2 ACTIVE';
-        } else {
-            coverCard.classList.remove('active-buff');
-            coverBadge.className = 'toggle-badge off';
-            coverBadge.innerText = '+2 AC';
+            armorSub.innerText = 'Unarmored: 10';
         }
     }
 
     function toggleChainMailBuff() {
         isChainMailActive = !isChainMailActive;
         updateACDisplay();
-        logRoll(`⛓️ <strong>Chain Mail + Defense Style:</strong> Toggled ${isChainMailActive ? 'ON (17 Base AC)' : 'OFF (10 Unarmored AC)'}. Total AC: ${document.getElementById('ac-disp').innerText}`);
-    }
-
-    function toggleCoverACBuff() {
-        isCoverACActive = !isCoverACActive;
-        updateACDisplay();
-        logRoll(`🛡️ <strong>Tactical Cover / Shield (+2 AC):</strong> Toggled ${isCoverACActive ? 'ON (+2 AC)' : 'OFF'}. Total AC: ${document.getElementById('ac-disp').innerText}`);
+        logRoll(`⛓️ <strong>Chain Mail Armor:</strong> Toggled ${isChainMailActive ? 'ON (17 AC)' : 'OFF (10 Unarmored AC)'}.`);
     }
 
     function updateHelpDisplay() {
