@@ -968,24 +968,6 @@
                             </div>
                         </div>
 
-                        <!-- Javelins (Slow Mastery - Optional Ranged) -->
-                        <div class="action-card">
-                            <div class="action-header">
-                                <div>
-                                    <div onclick="openSpellDetailsModal('javelin_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
-                                        🔱 Thrown Javelin (Ranged Option) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
-                                    </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#86efac;">Thrown Weapon (30/120ft) • 1 Action</div>
-                                </div>
-                                <span class="pill-badge" style="background:rgba(34,197,94,0.16); color:#86efac; border:1px solid #22c55e; font-size:0.62rem; padding:1px 6px;">SLOW</span>
-                            </div>
-                            <div class="action-desc"><strong>+5 to Hit</strong> (30/120ft), <strong>1d6 + 3 Piercing</strong>. <em>Slow Mastery:</em> reduces target's Speed by <strong>-10 ft</strong> until start of your next turn!</div>
-                            <div class="action-btn-row">
-                                <button class="btn-roll-action" onclick="rollWeaponAttack('Thrown Javelin (30/120ft • Slow -10ft Speed)', 5)">🔱 Throw (+5)</button>
-                                <button class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Javelin Piercing Damage (Slow -10ft Speed)', 6, 3, 'Piercing', 1)">💥 1d6+3 Pierc</button>
-                            </div>
-                        </div>
-
                         <!-- Unarmed Strike / Grapple & Shove -->
                         <div class="action-card">
                             <div class="action-header">
@@ -1101,7 +1083,6 @@
                             <div class="action-desc">Push beyond mortal limits on your turn to take <strong>one additional Action</strong> (two full Greatsword cleaves in one turn!).</div>
                             <div class="action-btn-row">
                                 <button class="btn-roll-action btn-roll-martial" onclick="useActionSurge()" id="btn-use-as">⚡ Activate Action Surge!</button>
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="toggleActionSurgeManual()">🔄 Toggle</button>
                             </div>
                         </div>
 
@@ -1119,7 +1100,6 @@
                             <div class="action-desc">Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either total!</div>
                             <div class="action-btn-row">
                                 <button class="btn-roll-action btn-roll-dmg" onclick="rollSavageGreatswordDamage()">🗡️ Roll Savage 2d6+3</button>
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="openSpellDetailsModal('savage_attacker')">📖 Feat Rules</button>
                             </div>
                         </div>
                     </div>
@@ -1678,23 +1658,6 @@
             modalButtons: [
                 { label: "🪓 Attack (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Handaxe (+5 • Vex)', 5); } },
                 { label: "💥 Roll Savage 1d6+3", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageHandaxeDamage(); } }
-            ]
-        },
-        "javelin_jacomir": {
-            id: "javelin_jacomir",
-            name: "🔱 Thrown Javelins (Slow Mastery)",
-            school: "Simple Melee / Thrown Weapon (30/120 ft)",
-            castingTime: "1 Action",
-            range: "Thrown 30/120 ft (or 5 ft Melee)",
-            components: "STR +3, PB +2 (+5 to Hit)",
-            duration: "Speed reduced by -10 ft until start of your next turn",
-            wikiUrl: "https://5e.tools/items.html#javelin_xphb",
-            attackMod: "+5 to Hit (STR +3, PB +2)",
-            damage: "1d6 + 3 Piercing • Slow Mastery: -10 ft Target Speed",
-            fullRules: "• <strong>Long-Range Martial Throw (30/120 ft):</strong> Deals <strong>1d6 + 3 Piercing damage</strong>.<br>• <strong>5.5e Weapon Mastery — Slow:</strong> If you hit a creature with this Javelin and deal damage to it, you can reduce its Speed by <strong>10 feet</strong> until the start of your next turn.",
-            flavor: "Ideal for pinning down fleeing wolves or airborne vampire spawn.",
-            modalButtons: [
-                { label: "🔱 Throw Javelin (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Thrown Javelin (+5 • Slow)', 5); } }
             ]
         },
         "grapple_shove": {
