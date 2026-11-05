@@ -130,6 +130,8 @@ Cut off their argument violently:
 ### 🎭 Phase 2: Camera Pan to Piper (Solo Spotlight)
 As soon as the first wolf in the cabin is bloodied or the reins are seized, cut the camera! Look away from Jacomir and Yvaine and point directly at **Piper**:
 
+*(DM Background Context: Ever since her nightmare in the woods violently awakened her Wild Magic, Piper has been privately traveling toward **Tser Pool** to find **Madam Eva**—the ancient Vistani seer rumored to be able to pierce the Mists and find lost souls. She believes Madam Eva can reveal where her parents are! She was on the road to Tser Pool when the wolves wrecked her cart. She keeps this secret from Jacomir and Yvaine for now, but it is why her path naturally aligns with the party).*
+
 > *"Meanwhile, three hundred yards down the mountain road... Piper.*
 > 
 > *Your traveling carnival cart is completely wrecked on its side in the ditch. Colorful silks, playing cards, and broken mirrors are scattered into the mud.*
@@ -251,15 +253,15 @@ Play Strahd completely unfazed by their weapons:
 > 
 > *However... I am not an unkind host. Everything you seek—the path back to your thrones and investigations, the answers to who brought you here, and the clues to your destinies—all of it lies beyond these gates.*
 > 
-> *And little Piper..."*
-> 
-> *His burning crimson eyes shift to the tiefling girl clutching her brass pocket watch, his lips curving into a predatory smile:*
-> 
-> *"Still hiding behind sleight-of-hand and painted card tricks? Still wondering why a single nightmare in the woods suddenly awakened a raging tempest of wild magic inside your blood? You think your power was an accident, little magician?*
-> 
-> *Enter my valley. Seek your clues. Perhaps when you discover what remains of your tiefling parents in my castle crypts... you will finally learn whose hands truly chose you.*
-> 
 > *If you can survive what my realm demands of you... perhaps you will prove yourselves worthy of an audience at Castle Ravenloft, and we may discuss the price of your passage home."*
+> 
+> *Before turning away, his burning crimson eyes slide slowly over to Piper, shrinking in the shadow of the carriage.*
+> 
+> *Strahd pauses. His gaze lingers on her purple horns, then down to the tarnished brass pocket watch clutched in her trembling hands. His lips part into a slow, knowing, unnerving smile—as if he recognizes her, as if he knows the volatile, reality-bending magic sleeping inside her blood.*
+> 
+> *'And welcome to you as well... Piper.'*
+> 
+> *The soft, silky whisper of her name in the storm gives her absolute, paralyzing chills.*
 
 ---
 
@@ -403,7 +405,12 @@ The party enters the cobblestone streets of the Village of Barovia.
 > 
 > *Jacomir: Through the narrow slits in the wooden shutters, you see pale, hollow faces staring down at you. They don't speak. They don't blink. They watch you pass with the cold, dead detachment of corpses looking at the living.*
 > 
-> *High above the village, cutting through the storm clouds on a sheer thousand-foot pillar of rock, looms CASTLE RAVENLOFT—its black spires piercing the heavens like the claws of a titan, watching the valley with ancient, suffocating malevolence."*
+> *High above the village, cutting through the storm clouds on a sheer thousand-foot pillar of rock, looms CASTLE RAVENLOFT—its black spires piercing the heavens like the claws of a titan, watching the valley with ancient, suffocating malevolence.*
+> 
+> *As you step past an overturned, rotting wagon, you catch subtle movement—a sleek silhouette perched motionless atop a broken porch railing. It is a black cat, pitch-dark from ear to tail. But as it turns its head toward you, its eyes catch the faint grey daylight with an unnatural, silver starlight glimmer. It doesn't hiss or dart away; it simply watches your party pass with quiet, uncanny intelligence."*
+
+#### 🐾 DM Secret Note (Caelum Jude — The Feline Stalker):
+*This is **Cael** in Wild Shape! He has been tracking the party since they entered the valley, studying their weapons and assessing if they are the champions the Dark Powers promised. See [`CAEL_MASTER_DOSSIER.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/CAEL_MASTER_DOSSIER.md).*
 
 #### 😭 Mad Mary's Townhouse
 As they pass the central square, a sound breaks the gloom: **the raw, rhythmic, soul-shattering sobbing of a weeping woman** from the second floor of a sagging townhouse.
@@ -453,7 +460,9 @@ The party arrives at the center of the village. The only warm light spills from 
 #### 🎙️ Read-Aloud Narration: Entering the Tavern
 > *"The heavy timber door creaks open. The air inside smells of stale sour wine, damp pipe tobacco, and peat smoke.*
 > 
-> *A low peat fire burns in an open hearth. Sitting at a large round table by the fire are three handsome women in vibrant silk scarves, gold hoop earrings, and embroidered vests, drinking blood-red wine and playing cards—VISTANI.*
+> *A low peat fire burns in an open hearth. Curled on a frayed wool rug just inches from the glowing embers, the black cat from the street corner is curled up, half-shadowed. It isn't begging for scraps; its chin rests on its paws, studying your party with that same calm, starlit gaze.*
+> 
+> *Sitting at a large round table by the fire are three handsome women in vibrant silk scarves, gold hoop earrings, and embroidered vests, drinking blood-red wine and playing cards—VISTANI.*
 > 
 > *Behind the stained wooden bar stands the barkeep: ARIK. He endlessly wipes the same filthy ceramic mug with a gray rag. His skin is waxy, his eyes dull and glassy. He looks up at you with zero curiosity, zero fear, and zero emotion.*
 > 

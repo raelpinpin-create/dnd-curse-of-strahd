@@ -415,6 +415,13 @@
                     🤝 Help Tokens: 2/2 • Short Rest: 25% Max HP (2/day)
                 </div>
             </div>
+            <div class="card clickable" onclick="openNpcModal('cael')">
+                <div class="card-title"><span>🐾 Caelum Jude ("Cael")</span><span class="pill purple">HP 38/38 • AC 14</span></div>
+                <p style="font-size:0.83rem; color:var(--text-muted);"><strong>Lvl 3 Circle of the Stars Druid (Main Companion &amp; Primary Healer).</strong> 19yo teenage boy with messy black hair and starlit eyes. Stalking as a black cat in Session 1. <strong>🛡️ Vow of the Dark Powers:</strong> Stabilizes at 1 HP (cannot die before climax!).</p>
+                <div style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:0.78rem; color:#d8b4fe;">
+                    🏺 Chalice (Dual Heals 1d8+3) • 🏹 Archer (+6, 1d8+3 Rad) • 🐈 Black Cat &amp; 🦅 Raven • 🌟 Guiding Bolt 2/2
+                </div>
+            </div>
             <div class="card clickable" onclick="openNpcModal('ireena')">
                 <div class="card-title"><span>🌹 Ireena Kolyana (Escort Heroine)</span><span class="pill crimson">HP 28/28 • AC 15</span></div>
                 <p style="font-size:0.83rem; color:var(--text-muted);">Twice-bitten reincarnation of Tatyana. Refuses to be a helpless damsel—fights alongside the party with a Silvered Rapier.</p>
@@ -730,6 +737,15 @@ const BIOME_DATA = {
 };
 
 const NPC_DATA = {
+    cael: {
+        name: "🐾 Caelum Jude ('Cael')", tag: "[Starlit Healer / Scion of Dark Powers]", status: "🟢 Met & Active",
+        role: "Main Party Companion & Healer • Session 1: Cat Stalker",
+        offerings: "Primary Healer (Starry Chalice dual-heals 1d8+3, free Guiding Bolts, Goodberries, Purr-Heal, aerial scout). Full Master Dossier in CAEL_MASTER_DOSSIER.md.",
+        voice: "Earnest, warm, self-deprecating Percy Jackson charisma. 'I don't want to die out here alone. Let me walk with you.'",
+        philosophy: "Genuinely kind, empathetic, and protective. He is not an evil cultist; his love for the party is 100% real, making his cosmic destiny devastating.",
+        dilemma: "Marked by the Dark Powers / Vecna Pact to shepherd these foreign champions to kill Strahd—compelled to surrender them to the dark throne in the end.",
+        redlines: "Will never let a party member die if he has the power or breath to heal them."
+    },
     strahd: {
         name: "🧛‍♂️ Count Strahd von Zarovich", tag: "[Darklord of Barovia]", status: "🟢 Met & Active",
         role: "Supreme Ruler • Castle Ravenloft",

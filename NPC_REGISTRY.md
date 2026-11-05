@@ -5,6 +5,24 @@
 
 ---
 
+## 🌟 CORE MAIN PARTY COMPANION & TRAGIC SHEPHERD
+
+### 🐾 Caelum Jude ("Cael") — The Starlit Healer & Scion of the Dark Powers
+* **Status:** `🟢 ACTIVE & WATCHING (Session 1: Stealth Feline Stalker Form)`
+* **Role:** Dedicated Main Party Companion, Primary Healer, & Secret Shepherd of the Dark Powers / Vecna Pact
+* **Full Master Dossier:** [`CAEL_MASTER_DOSSIER.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/CAEL_MASTER_DOSSIER.md)
+* **Archetype & Class:** Level 3–5 Druid (Circle of the Stars) | 19-Year-Old Athletic "Percy Jackson" Vibe (messy black hair, stormy grey-blue starlit eyes)
+* **Stat Snapshot:** AC 14 | HP 38 *(Plot Armor: "Vow of the Dark Powers" stabilizes at 1 HP—cannot die before campaign climax)* | Starry Chalice (Dual-Healing Engine: `1d8+3` bonus heal) | Starry Archer (`1d8+3` Radiant bonus attack) | Free Guiding Bolts | Black Cat & Raven Wild Shapes
+* **Psychological Dossier:**
+  * 🧭 **Core Philosophy:** Genuinely kind, empathetic, self-deprecating, and fiercely protective of the party. He is NOT an evil cultist; his affection is 100% real.
+  * 🎯 **Secret Cosmic Mission:** Marked by the Dark Powers to shepherd foreign champions to slay Count Strahd and prepare the dark throne for the Pact of Vecna. In the end, he will be compelled to execute their will against his own heart.
+  * ⚡ **Immediate Session 1 State:** Stalking the party in the Village of Barovia as a sleek black cat with starlit eyes (and perched as a raven). Listening to their conversations, assessing their courage, and secretly purr-healing downed allies.
+  * 💬 **Canonical Confession Line:** *"My name is Cael. I was dragged through the fog from my home world a few weeks ago—just like you guys. I learned real quick that if you walk around Barovia looking like food, the wolves and the bats will tear you apart. The only way I survived was keeping four paws and staying low. Then I saw you guys enter the village. You didn't cower like the locals; you actually fought back. I followed you because... honestly? I didn't want to die out here alone. Can I... travel with you? I know how to patch up wounds, and Barovia is a lot less terrifying when you're not on your own."*
+  * 🤫 **The Name Secret:** Introduces himself only as **Cael**. Only those he loves as true family ever learn his full name is **Caelum Jude**.
+  * 🎲 **Reveal Triggers (Sessions 2 & 3):** (1) *The Sacrifice:* Breaks cover with a massive radiant heal if a PC shields the cat and drops to 0 HP; (2) *The 2nd Campfire:* Caught in human form snacking on trail rations during night watch; (3) *The Near-Wipe:* Unleashes celestial fury when an imminent TPK threatens the party.
+
+---
+
 ## 👑 SECTION 1: THE DARKLORD & THE COURT OF CASTLE RAVENLOFT
 
 ### 🧛‍♂️ Count Strahd von Zarovich (The Ancient, The Land — CR 15 Apex Darklord)
