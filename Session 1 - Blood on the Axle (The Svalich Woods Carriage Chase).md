@@ -1,241 +1,415 @@
-# 🩸 SESSION 1: BLOOD ON THE AXLE — THE PHANTOM BLACK COACH & THE GATES OF BAROVIA
+# 🩸 SESSION 1: BLOOD ON THE AXLE — THE PHANTOM CARRIAGE & THE MIDNIGHT PROMISE
 
 **Campaign:** Curse of Strahd (Campaign 2 of the Grand Trilogy — Director's Cut)  
-**Session Type:** Live Face-to-Face Campaign Premiere (Tabletop Master Edition)  
-**Target Pacing:** 3.5 – 4.0 Hours | Level 3 PCs (Starting *In Media Res*)  
-**Primary Themes:** Adrenaline Survival, Strangers in the Dark, The Creeping Mists, Gothic Dread, and First Contact with the Devil.
+**Session Type:** Live Face-to-Face Campaign Premiere (In-Person Tabletop Master Edition)  
+**Target Pacing:** 3.5 – 4.0 Hours | Level 3 PCs  
+**Primary Themes:** Shattered Crowns, Adrenaline Survival, The Predator's Invitation, Claustrophobic Dread, and The Ticking Clock of the Third Bite.
 
 ---
 
 ## 🧭 SESSION OVERVIEW & DM PACING MATRIX
 
-| Phase | Runtime | Scene & Objective |
+| Phase | Runtime | Scene & Core Objectives |
 | :--- | :--- | :--- |
-| **ACT I** | `0:00 – 0:50` | **The Cold Open (`Roll Initiative!`) — Blood on the Axle:** Four complete strangers from different lands snap awake inside a runaway Black Stagecoach hurtling down a mountain cliff in a thunderstorm. **Turn 1 Movie-Trailer Action Introductions!** 4-Round high-speed chase against Svalich Dire Wolves & Vampire Thralls until crashing through the Gates of Barovia. |
-| **ACT II** | `0:50 – 1:25` | **The Wreckage, The Devil in the Rain, & Stranger Stand-Off:** A towering silhouette with glowing red eyes (**Count Strahd**) steps out of the mist beyond the locked gates, welcoming them to his realm before vanishing into bats. Weapons drawn in the rain, the PCs finally introduce themselves and discover the corpse of Dalvan Olensky clutching the **Fake Kolyan Letter**. |
-| **ACT III** | `1:25 – 2:30` | **The Weeping Village of Barovia & Blood of the Vine Tavern:** Walking into the suffocating, boarded-up village; hearing Mad Mary's sobs; entering the dreary tavern; meeting **Ismark "the Lesser" Indirovich** and learning of Strahd's three midnight visits to his sister **Ireena**. |
-| **ACT IV** | `2:30 – 3:45` | **The Siege of Indirovich Mansion & The Midnight Pack:** Arriving at the barricaded mansion; meeting **Ireena Kolyana** beside her father's pine coffin; defending or negotiating the midnight breach by **Bride Volenta's Hunting Pack**; setting the dawn march to the Church and Tser Pool! |
+| **PROLOGUE** | `0:00 – 0:25` | **The Dual-POV Cold Open (Solo Spotlights):**<br>• **👑 Jacomir’s Royal Speech (Oakenshire):** Triumphant address ➔ Tinnitus & splitting migraine ➔ **DC 10 Perception Check** ➔ Unblinking, grotesque ear-to-ear smiling subjects ➔ Jacomir blinks.<br>• **💥 Smash-Cut to Carriage:** Jacomir snaps awake in a careening carriage, staring across at Yvaine.<br>• **🔫 Match-Cut to Yvaine (Solmere Ambush):** Trailing the birthday massacre traitor in a rainy village ➔ Ambushed by blades ➔ Swallowed by freezing fog ➔ Yvaine blinks ➔ **Yvaine’s Monologue & 20-Second Royal Standoff**. |
+| **ACT I** | `0:25 – 0:55` | **The Carriage & The High-Speed Chase:**<br>• **Adrenaline Eruption:** Coachman’s severed arm hits glass ➔ Dire wolf breaches left door ➔ **Roll Initiative!**<br>• **The Choice:** Reins vs. Jump! (**DC 11 Athletics/Acrobatics** to reach Driver's Box).<br>• **Camera Pan to Piper (Solo Spotlight):** Overturned carnival cart; surrounded by wolves ➔ **DC 12 Dex Save** ➔ She sees the carriage barreling down the road.<br>• **The Merge:** *"Do you save her?!"* ➔ Carriage drift & Piper dives onto rear rack (**DC 10 Acrobatics**).<br>• **3-Round Cinematic Chase ("1 Success Keeps You Moving" Rule):**<br>&nbsp;&nbsp;• *Round 1 (Rear Flankers):* Team attacks/maneuvers to shake pursuers.<br>&nbsp;&nbsp;• *Round 2 (Three-Point Surround):* Wolves at Left Door, Right Door, and **tearing through the Roof timber**!<br>&nbsp;&nbsp;• *Round 3 (The Dead End at the Gates):* 30-ft iron gates locked shut ahead ➔ Drift-slide crash in the mud **twenty feet in front of the locked gates** ➔ Cornered by the pack! |
+| **ACT II** | `0:55 – 1:35` | **The Gates & The Devil's Invitation:**<br>• Whistle in the rain; wolves bow. Count Strahd steps forward in the downpour.<br>• **In-Depth Dialogue:** Jacomir & Yvaine demand how to get home. Strahd gives his iconic invitation: *"All your answers, your lost people, and your road home lie within my borders."*<br>• The 30-foot iron gates swing open on their own. Strahd bows: *"Enter freely and of your own will."*<br>• **The Choice:** Players *voluntarily* step across the threshold into Barovia.<br>• Search dead messenger (**Dalvan Olensky**): **DC 13 Investigation** for Yvaine ➔ 15 SP, Silvered Dagger, Kolyan Letter. |
+| **ACT III** | `1:35 – 2:35` | **The Weeping Village & Blood of the Vine Tavern:**<br>• Ghost town atmosphere: shuttered homes, claw marks, Mad Mary's attic sobs, lifeless eyes peeking from blinds.<br>• **The Tavern Hub:** Vistani women, soulless barkeep Arik, and meeting **Ismark "the Lesser" Indirovich**.<br>• Dialogue: The forged letter, Burgomaster Kolyan’s death, Strahd’s obsession with **Ireena**, and the terror of the Two Bites. |
+| **ACT IV** | `2:35 – 3:45` | **The Besieged Mansion & The Chills Cliffhanger:**<br>• Entering the barricaded manor; meeting **Ireena Kolyana** beside her father’s pine coffin.<br>• **Midnight Boss Fight (3:00 AM):** A **Starved Vampire Spawn** crashes through the stained-glass skylight, skittering across ceiling rafters (Spider Climb, Regeneration puzzle).<br>• **The Chills Climax & Cliffhanger:**<br>&nbsp;&nbsp;1. Spawn dissolves to powdery ash.<br>&nbsp;&nbsp;2. Reveal of the **2 bite marks** on Ireena's neck (The 3rd Bite Law).<br>&nbsp;&nbsp;3. Dead silence falls.<br>&nbsp;&nbsp;4. **DM SLOWLY KNOCKS THREE TIMES ON THE TABLE: TAP. TAP. TAP.**<br>&nbsp;&nbsp;5. Strahd's voice echoes inside their skulls: *"Tomorrow night, when the moon rises... I return for my third bite. Guard her well."*<br>&nbsp;&nbsp;6. A single fresh black rose on the doorstep.<br>&nbsp;&nbsp;7. **"AND THAT IS WHERE WE END SESSION 1!"** |
 
 ---
 
-## 🔥 ACT I: THE COLD OPEN — BLOOD ON THE AXLE (`IN MEDIA RES`)
-*(Pacing: 0:00 – 0:50 | Target: 50 Minutes | DO NOT DO CHARACTER INTRODUCTIONS BEFORE THIS SCENE!)*
+## 👑 PROLOGUE: THE DUAL-POV COLD OPEN
 
-> **⚡ DM TABLE INSTRUCTION — HOW TO RUN THE TURN 1 INTRODUCTIONS:**  
-> Do **not** ask players to introduce their characters before starting. Tell them to keep their character names and appearances secret until their **very first turn in Initiative Round 1**.  
-> Five minutes ago, each character was in their own homeland/lore when a freak, freezing gray fog swallowed them. Now read the Cold Open aloud and immediately call for **Initiative**!
+*(Pacing: 0:00 – 0:25 | Ambience: Dim room lights, warm hearth tones before thunder)*
 
-### 🎙️ Read-Aloud Narration: The Mist-Merged Runaway Coach
-> *"Five minutes ago, you were somewhere else entirely.*
->
-> *Maybe you were walking down a cobble street in your homeland. Maybe you were stepping into a roadside inn out of the rain, or resting beside a dying campfire. All you remember is a wall of unnatural, freezing gray fog rolling over your boots—so thick it muffled the sound of your own heartbeat—and a sudden, dizzying pull in the pit of your stomach.*
->
-> *And then—CRACK!*
->
-> *A deafening clap of thunder slams you back into your senses!*
->
-> *You are sitting inside the cramped, black-velvet cabin of a heavy horse-drawn stagecoach, violently lurching left and right as it hurtles at breakneck speed down a mud-slicked mountain cliff road in a blinding thunderstorm! The brass oil lantern swinging from the ceiling burns not with warm yellow fire, but with a sickly, corpse-blue flame.*
->
-> *Across the cabin, sitting inches away from you, are three complete strangers. You have never seen their faces in your life. None of you were in this carriage ten seconds ago.*
->
-> *Before a single one of you can ask 'Who the hell are you?!'—a bloodcurdling scream rips from the roof above! Something heavy and wet slams against the front window glass: the severed, rainslicked arm of the coachman, still clutching a snapped leather rein!*
->
-> *With no driver at the helm, the two black draft horses go into a blind, panicked stampede down the narrow mountain gorge! Out in the swirling white mist on both sides of the coach, dozens of glowing yellow eyes match your speed—and with a monstrous snarl, a horse-sized SVALICH DIRE WOLF leaps from the embankment and shatters straight through the left carriage window in a shower of glass and fangs!*
->
-> *EVERYONE—ROLL INITIATIVE!"*
+### 1. Jacomir's Royal Spotlight (Oakenshire)
+Turn to Jacomir’s player:
+> *"Jacomir, we open on you. The Great Hall of Oakenshire is packed wall-to-wall with your subjects. Gilded banners hang from the high stone rafters, your royal vanguard stands at rigid attention with halberds gleaming, and hundreds of men and women are chanting your name. The war is won. The realm is at peace. The court falls silent as all eyes turn up to the dais.*
+> 
+> *Your Majesty... the floor is yours. Deliver your victory speech."*
+
+* **DM Instruction:** Let Jacomir deliver his speech uninterrupted. Let him bask in the majesty and adoration of his kingdom.
 
 ---
 
-### 🎬 Round 1 Mechanic: The "Movie-Trailer" Action Introductions
-When each player's turn comes up in **Round 1**, point to them and prompt:
-> *"None of the strangers in this carriage have ever laid eyes on you before. As lightning flashes through the shattered window and glass sprays across the cabin—what do they see you looking like, what weapon or magic ignites in your hands, and what is your action?"*
+### 2. The Sensory Sever (The Ringing & The Horrific Smiles)
+As soon as his speech winds down or hits its climax, lean in and lower your voice:
+
+> *"The applause is thunderous. Goblets clink, cheers rattle the stained glass... and then, Jacomir, a high-pitched, piercing ring hits your right ear.*
+> 
+> *It's sharp. Like a hot silver needle driven into your temple. You raise a hand to your brow, but the ringing grows louder—and the cheering of your court begins to muffle, sounding distant and hollow, like you've been submerged under thirty feet of cold water.*
+> 
+> *You look down at your boots. Creeping from beneath the arched double doors across the warm polished marble is a low, freezing white mist. It isn't smoke from the hearths—it smells of damp grave-dirt and dead pines."*
+
+* **🎯 DM PROMPT — CALL FOR CHECK:**  
+  **"Jacomir, give me a Perception check."**  
+  *(DC 10 | Jacomir has +3 and Passive 13 — automatic success)*
+
+> *"Through the rising fog, you scan the front rows.*
+> 
+> *Your nobles are still clapping in slow, soundless motion... but in the fourth row, a nobleman in velvet stands completely rigid. Beside him, an armored guard of your vanguard does not blink. And a young girl holding a bouquet of flowers stands frozen.*
+> 
+> *None of them are clapping. None of them are breathing. Their heads are tilted at an unnatural, identical angle, their dead eyes locked directly onto yours.*
+> 
+> *And as the freezing gray fog reaches your chest and curls around your throat... their lips slowly, unnervingly begin to pull back.*
+> 
+> *Wider. Wider than a human mouth should stretch. A grotesque, ear-to-ear, mocking grin.*
+> 
+> *You blink—"*
 
 ---
 
-### 🚨 Dynamic 4-Round Carriage Chase Clock & Battlefield Layout
-* **The Battlefield:**
-  1. **Inside the Cabin (Tight Quarters):** 10x10 ft space. Broken windows on Left and Right doors.
-  2. **The Carriage Roof (Slick Timber):** Climbing out a window onto the roof takes 10 ft of movement (DC 10 Acrobatics/Athletics if taking damage while on the roof, or fall prone catching the brass rail).
-  3. **The Driver's Box (Front):** Empty and covered in blood. Someone must reach the box and grab the trailing reins!
-* **The Ticking Clock (4 Rounds to the Gates of Barovia):**
-  * **Round 1 (The Window Breach):** **1 Svalich Dire Wolf** lunges halfway through the left cabin window (`Jaws snapping inside`), while **2 Feral Vampire Thralls (Clawed Ghouls)** drop from overhanging pine branches onto the carriage roof, tearing at the wood!
-  * **Round 2 (The Hairpin Gorge Curve — Driver Hazard!):** The road curves sharply beside a 200-foot sheer drop into the roaring Ivlis River!
-    * **Counterplay:** A character in the Driver's Box can use an Action (or Bonus Action with Help) to make a **DC 13 Animal Handling, Athletics, or Land Vehicles check** (or cast a control spell) to steer the horses.
-    * **Failure:** The back wheels skid over the cliff edge! Everyone not braced makes a **DC 12 Dexterity Save** or takes `1d6` bludgeoning damage and is thrown Prone against the side door.
-  * **Round 3 (The Axle Snatcher):** A second **Svalich Dire Wolf (The Pack Alpha)** charges alongside the horses, biting at the lead stallion's harness (`AC 12, 30 HP`). If not blasted or driven off, the coach loses speed and tilts violently as its right rear wheel splinters!
-  * **Round 4 (The Iron Gates of Barovia!):** Ahead in the lightning flashes stand two towering, 30-foot stone statues of headless kings flanking a pair of massive rusted iron gates—**The Gates of Barovia**—which are slowly grinding **SHUT** on their own!
-    * **Final Sprint Check:** One final whip of the reins, spell boost, or clearing the wolf off the horse lets the runaway carriage smash through the closing gap at 40 miles per hour—snapping its rear axle and skidding thirty feet through the mud on the inside of the gates as the iron bars **SLAM SHUT** behind them!
+### 3. The Smash-Cut to the Carriage (Jacomir's POV)
+**SLAM YOUR HAND HARD ON THE TABLE:**
+
+> *"—CRACK!*
+> 
+> *The throne room evaporates!*
+> 
+> *Deafening thunder rattles your teeth. Freezing rain lashes violently against rattling timber. You are hurled forward, slamming into cushioned black velvet as a heavy carriage violently fishtails down a mud-slicked mountain cliff in a blinding storm!*
+> 
+> *Sitting directly across from you in the sickly blue lantern light—knee to knee in the narrow cabin—is not a royal courtier.*
+> 
+> *It's a young woman drenched in rain, weapons at her hips, breathing hard like she was just ripped out of a back-alley knife fight. She looks disoriented, lethal... and furiously angry."*
 
 ---
 
-### 🕊️ Alternative & Creative Tactics During the Chase
-* **Unhitching the Horses (DC 12 Sleight of Hand / Attack AC 13 Leather Hitch):** Releases the horses to bolt ahead while the heavy coach skids to a halt inside the gate threshold.
-* **Blasting the Cliff Overhang (Attack AC 11 / Shatter / Thunderwave / Fire Bolt):** Causes rocks and mud to slide down onto the pursuing wolf pack, instantly wiping out one pursuer.
-* **Using the Corpse-Blue Lantern:** Smashing the oil lantern onto a Vampire Thrall or Dire Wolf splashes alchemical coach-oil (`2d4 fire damage` and illuminates them in the fog).
+### 4. The Match-Cut to Yvaine (The Solmere Ambush)
+Turn your eyes immediately to Yvaine's player:
+
+> *"Yvaine... five seconds ago, you were on the hunt.*
+> 
+> *You had tracked a whisper across the province to a wretched, mud-drenched village. You were looking for a safehouse harboring one of the few survivors from the night of your birthday—the night House Solmere was slaughtered in cold blood. This survivor knew the name of the traitor. The architect who opened the palace gates to the killers.*
+> 
+> *You found the house. But the moment you stepped into the narrow alleyway, you realized it was an ambush.*
+> 
+> *Half a dozen figures stepped out from the shadows with drawn steel, cutting off both exits. Your back was to the stone wall. Your hands were on your weapons. Your blood was pumping with cold fury—you were ready to carve your way through every single one of them to get that name.*
+> 
+> *And right as the first blade lunged for your throat—a wall of freezing, blinding white mist swallowed the alley. The shouts of your enemies vanished into dead silence. The ground beneath your boots dropped out.*
+> 
+> *And you blink.*
+> 
+> *The village is gone. The survivor is gone. Your vengeance has been ripped from your hands. You're trapped in a careening wooden box in the pitch black, and sitting inches from you is a strange man in full royal armor and a fur mantle.*
+> 
+> ***Yvaine: How does she look, what is burning in her mind, and what do you say or do to the man sitting across from you?!"***
+
+* **DM Instruction — Player Monologue:** Let Yvaine vent her rage, draw her weapon, or level a pistol at Jacomir’s chest.
+* **Allow 20 to 30 seconds of tense roleplay:** The Exiled King vs. The Fallen Princess. Neither takes orders; both demand answers.
 
 ---
 
-### ⚔️ Combat Encounter Lineup (Stats on Master DM Screen)
-* **Enemies Present:**
-  * 🐺 **2x Svalich Dire Wolves** *(Pack tactics, lunging at windows & horses)*
-  * 🧛 **2x Feral Strahd Thralls / Claws of the Mist** *(Climbing the roof, hissing in starved frenzy)*
-* *(Note for Lead DM: Full stats, HP ranges, and Pointy Hat actions are on [`DM_SCREEN.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/DM_SCREEN.html) Section 3!)*
+## 🔥 ACT I: THE CARRIAGE & THE HIGH-SPEED CHASE
+
+*(Pacing: 0:25 – 0:55 | High Adrenaline Survival & Rescue)*
+
+### 🎙️ The Violent Eruption (`ROLL INITIATIVE!`)
+Cut off their argument violently:
+
+> *"Before either of you can pull a trigger or draw steel—*
+> 
+> *A bloodcurdling scream rips from the carriage roof!*
+> 
+> *SLAP! Something wet and heavy smacks against the glass between you: the severed arm of the coachman, trailing ragged muscle, still gripping a snapped leather rein!*
+> 
+> *With no driver at the helm, the two black draft stallions go into a blind panic, stampeding down a narrow gorge beside a two-hundred-foot cliff! Yellow eyes pace the coach through the black pines, and with a deafening CRUNCH, a horse-sized Svalich Dire Wolf shatters through the left carriage door in a spray of splintered wood and fangs!*
+> 
+> ***JACOMIR, YVAINE—ROLL INITIATIVE!"***
 
 ---
 
-## 🦇 ACT II: THE DEVIL IN THE RAIN & THE STRANGER STAND-OFF
-*(Pacing: 0:50 – 1:25 | Target: 35 Minutes)*
-
-### 🎙️ Read-Aloud Narration: The Slow Clap Beyond the Gates
-> *"The carriage groans as its shattered oak wheel gives out, tipping the cabin onto its side in the freezing mud. Rain pours from the pitch-black sky, washing pink streams of blood down the cobbles.*
->
-> *Fifty feet behind you, the towering iron Gates of Barovia clang shut with the finality of a tomb door. On the other side of the iron bars, the surviving wolves pace and snarl, their yellow eyes fixed on you through the bars.*
->
-> *And then... the wolves suddenly whimper. They drop their bellies flat into the mud and bow their heads.*
->
-> *The swirling white mist parts behind the iron gates.*
->
-> *Standing effortlessly in the pouring rain—though not a single drop of water seems to wet his high-collared cloak of black wolf-fur and crimson silk—is a tall, aristocratic man with pale, sculpted features and jet-black hair swept back from his brow. Two points of burning crimson light smolder in his eyes.*
->
-> *Slowly, deliberately, he claps his gloved hands together. Once. Twice. Three times.*
->
-> *His voice carries through the storm without effort—deep, velvety, and cold as an open grave:*
->
-> *'Magnificent. Truly. Most of the strays the Mists drag to my doorstep die screaming before they ever reach the gate. Welcome to Barovia, my guests. Breathe deep the night air... for these mountains, these woods, and your very lives now belong to me.'*
->
-> *A jagged bolt of lightning splits the sky—and in the blinding flash, his silhouette explodes into a cloud of hundreds of shrieking black bats that spiral upward into the storm clouds, leaving only the howling wind and the four of you alone in the mud."*
+### 🚨 Phase 1: The Cabin Breach & The Driver's Box Choice
+* **Encounter State:** **1x Svalich Dire Wolf** (`AC 14, 37 HP`) is wedged in the left door frame, snapping inside (`+5 hit, 2d6+3 piercing + DC 13 STR save or Prone`).
+* **The Dilemma (Seize Reins vs. Jump!):**
+  * The horses are running blind toward a cliff edge. Someone must get into the driver's box outside to take the reins, OR they have to bail!
+  * **Option A: Seize the Reins:** A character uses an action and makes a **DC 11 Athletics or Acrobatics check** to scramble through the broken front window onto the bloody driver's box and grab the reins.
+  * **Option B: Jump Out:** If a player suggests jumping, remind them: *"The carriage is moving at thirty-five miles an hour, and outside in the dark are twenty pairs of glowing yellow eyes. Humans run at 30 feet; dire wolves sprint at 50!"* (Staying with the carriage is their only survival chance).
 
 ---
 
-### 💬 The Stranger Stand-Off (First Party Roleplay Beat!)
-Now that the wolves are gone and the adrenaline drops by one notch, give the spotlight wholly to the players:
-* **The Prompt:** *"You are bruised, soaked to the bone, standing around a wrecked black stagecoach inside locked iron gates with headless giant statues towering above you. None of you know each other's names, and none of you were in the same country ten minutes ago. What do you say or do?"*
-* **Clues in the Wreckage (Investigation / Perception):**
-  * **The Coach Crest:** Stamped into the black lacquer of the broken carriage door is an ancient silver crest of a raven perched atop a sword—the royal seal of **Castle Ravenloft**. There was never a human driver; the severed arm on the roof belongs to a long-dead corpse puppeteered by the Mists.
-  * **The Dead Messenger by the Roadside (Dalvan Olensky):** Twenty feet down the road, slumped against a pine tree with his throat torn out by wolves, is a dead Barovian villager clutching a mud-stained leather pouch containing **15 Silver Pieces**, a **Silvered Dagger**, and a **Bloodstained Letter**:
+### 🎭 Phase 2: Camera Pan to Piper (Solo Spotlight)
+As soon as the first wolf in the cabin is bloodied or the reins are seized, cut the camera! Look away from Jacomir and Yvaine and point directly at **Piper**:
+
+> *"Meanwhile, three hundred yards down the mountain road... Piper.*
+> 
+> *Your traveling carnival cart is completely wrecked on its side in the ditch. Colorful silks, playing cards, and broken mirrors are scattered into the mud.*
+> 
+> *You are backed up against a sheer rock cliff. Three Svalich Dire Wolves are circling you, their hackles raised, snapping jaws dripping with saliva. The alpha wolf's muscles coil—and it LEAPS straight for your throat!*
+> 
+> ***Piper: Give me a Dexterity Saving Throw!"***
+
+* **🎯 DM MECHANIC — PIPER'S DEX SAVE (DC 12):**
+  * **Success (12+):** Piper ducks, rolls under the broken axle of her cart, or snaps her fingers to blast a shower of sparks into the wolf's eyes! The wolf smashes face-first into the cart timber.
+  * **Failure (<12):** She dodges just in time, but the wolf's claws scrape across her shoulder (`1d6` glancing damage), sending her tumbling into the mud.
+  * **Either Way:** She scrambles up and hears the roar of iron wheels and panicked horses barreling down the road straight toward her!
 
 ---
 
-#### 📜 PROP 1: THE PLEA OF BURGOMASTER KOLYAN INDIROVICH (The Fake Bait Letter)
-*(Hand or read to the party when they search the body)*
+### 🤝 Phase 3: The Merge ("Do You Save Her?!")
+Pan your eyes back to **Jacomir and Yvaine**:
 
-> *"Hail to thee of might and valor:*
->
-> *I, a lowly servant of the township of Barovia, send honor to thee. We plead for thy so desperately needed assistance!*
->
-> *The love of my life, Ireena Kolyana, has been afflicted by an evil so deadly that even the good people of our village cannot protect her. She languishes from her wounds, and I would have her saved from this menace.*
->
-> *There is much wealth in this community. I offer all that might be had to thee and thy fellows if thou shalt but answer my desperate plea.*
->
-> *Come quickly, for her time is at hand! All that I have shall be thine!*
->
-> *Kolyan Indirovich, Burgomaster"*
+> *"Through the rain and lightning, you see an overturned wagon with broken mirrors and cards blowing in the wind.*
+> 
+> *Backed up against the rock is a young tiefling woman with purple horns, holding off three snarling dire wolves with nothing but a cane and sparks. The carriage is hurtling straight toward her at breakneck speed.*
+> 
+> ***Jacomir, Yvaine: Do you swerve past her... or do you try to save her?!"***
 
-*(DM Context: If a player inspects the handwriting with a **DC 14 Investigation or Insight check**, they notice the flowing, archaic calligraphy actually matches the aristocratic style of Count Strahd himself—Strahd forged this letter to lure new playthings deeper into the valley!)*
+* **When they choose to save her:**
+  1. **The Driver:** Makes a **DC 11 Animal Handling / Vehicle check** to drift the carriage close to the embankment.
+  2. **The Rescuer:** Leans out the door or reaches down an arm/weapon to pull her in.
+  3. **Piper:** Makes a **DC 10 Acrobatics check** (or casts *Mage Hand*, *Misty Step*, or an athletic leap) to scramble onto the rear brass luggage rail!
+* **The Table is Merged!** Piper scrambles through the rear window into the cabin, breathless and mud-splattered:
+  > *"PULL ME IN! PULL ME IN! THANK YOU—DON'T STOP DRIVING!"*
+* Piper rolls into Initiative alongside Jacomir and Yvaine!
 
 ---
 
-## 🕯️ ACT III: THE WEEPING VILLAGE OF BAROVIA & THE BLOOD OF THE VINE TAVERN
-*(Pacing: 1:25 – 2:30 | Target: 65 Minutes)*
+### 🏁 Phase 4: The 3-Round Cinematic Chase
+
+Run this using the **"One Success Keeps You Moving" Rule**:
+> **⚡ DM TABLE RULE:** In each round, all three players describe an action (Attack, Spell, or Skill Check). If **at least ONE player succeeds**, the team beats that hazard! If a player fails their individual roll, they suffer a **Personal Complication** (small scrape damage, jammed weapon, or lost prop).
+
+```
+ROUND 1: Rear Pursuit (Shake the pack)
+ROUND 2: The Three-Point Surround (Left, Right & Roof Breach!)
+ROUND 3: The Dead End at the Locked Gates (Drift-slide crash)
+```
+
+#### Round 1: Rear Pursuit
+* **The Hazard:** Two dire wolves chase the rear bumper, snapping at Piper's boots and trying to chew through the rear axle!
+* **Player Prompts:**
+  * *Yvaine:* Fires her pistols at the pursuers (`Attack vs AC 14`).
+  * *Jacomir:* Leans out to slash with his Greatsword or braces the rear door with *Athletics*.
+  * *Piper:* Casts *Fire Bolt* (`+6 hit`) or *Minor Illusion* to create phantom fire.
+* **Result:** At least 1 success scatters the rear wolves!
+
+#### Round 2: The Three-Point Surround (Left, Right & Roof Breach!)
+* **The Hazard:** The pack surges forward on all sides!
+  > *"The storm howls louder, and the pack surrounds the carriage!*
+  > 
+  > *Through the broken left window, a massive dire wolf runs alongside you, snapping at Jacomir's elbow! On the right window, a second wolf matches your speed, ramming the door!*
+  > 
+  > *And then—SLAM!*
+  > 
+  > *The carriage groans as something massive lands directly on the roof above you! Plaster and splinters shower down onto your faces as four-inch black claws punch straight through the ceiling planks, tearing away the wood to get inside!*
+  > 
+  > ***Left window, right window, and roof. You're completely surrounded! What do you do?!"***
+* **Player Action Options:**
+  * **Attacking the Roof Wolf:** Jacomir thrusts his greatsword upward through the ceiling; Yvaine fires point-blank into the rafters; Piper blasts *Chaos Bolt* through the hole (`Attack vs AC 14`).
+  * **Defending the Windows:** Slashing or blasting the flankers off the doors.
+  * **The Driver's Crazy Maneuver (Environmental Solution):** The driver rolls **DC 12 Animal Handling or Athletics** to deliberately sideswipe the carriage against the rocky cliff, scraping the roof wolf off on an overhanging branch!
+* **Result:** 1 success repels the breach! A failure deals `1d6` claw damage to that individual player.
+
+#### Round 3: The Dead End at the Locked Gates!
+* **The Hazard:** Ahead in the lightning stand two 30-foot stone statues flanking the massive rusted **Gates of Barovia**—and they are **LOCKED SHUT**!
+  > *"Ahead through the deluge, the road ends at two colossal headless stone statues flanking a towering pair of rusted iron gates—and they are slammed completely shut! If you hit them at this speed, the carriage will shatter into toothpicks!*
+  > 
+  > ***Driver: Slam the brakes! Pull the reins!"***
+* **The Driving Check:** The driver makes a **DC 12 Animal Handling or Athletics check**.
+* **The Cinematic Crash:** 
+  > *"You haul back on the reins with all your strength! The horses shriek, rearing up as the carriage violently fishtails sideways across the mud!*
+  > 
+  > *CRACK! The rear axle snaps against a boulder with a sound like a cannon shot! The carriage rolls onto its side, skidding twenty feet through the freezing mud before slamming to a halt against a mossy stone milestone—**twenty feet in front of the locked iron gates**!*
+  > 
+  > *You scramble out of the wreckage into the freezing rain, bruised and breathless, your backs against the locked iron bars.*
+  > 
+  > *Out of the dark treeline behind you, the entire pack of dire wolves emerges—twenty pairs of yellow eyes, snarling, cutting off the road. You are completely cornered."*
+
+---
+
+## 🦇 ACT II: THE GATES & THE DEVIL'S INVITATION
+
+*(Pacing: 0:55 – 1:35 | The Predator's Trap & Conscious Choice)*
+
+### 🎙️ Read-Aloud Narration: The Whistle in the Rain
+> *"The wolves stalk toward you, bellies low, teeth bared. You raise your weapons for a final stand.*
+> 
+> *And then... a low, sharp whistle cuts through the thunder.*
+> 
+> *Instantly, every single wolf freezes. Their hackles lower. They drop flat into the mud, whimpering like scolded hounds.*
+> 
+> *The swirling white mist parts on the road.*
+> 
+> *Walking effortlessly through the downpour is a tall, aristocratic nobleman with pale, sculpted features and jet-black hair swept back from his brow, wearing a high-collared cloak of black wolf-fur and crimson silk. Not a single drop of rain wets his garments. Two points of burning crimson light smolder in his eyes.*
+> 
+> *Slowly, calmly, he claps his black-gloved hands together. Once. Twice. Three times.*
+> 
+> *'Exquisite driving,' his voice carries through the storm, velvety and cold. 'Few survive the Svalich wolves with their limbs intact.'"*
+
+---
+
+### 💬 Jacomir & Yvaine Demand Answers
+Jacomir and Yvaine will inevitably level steel and pistols, demanding: *"Who are you?! Where is my kingdom?! How do we get home?!"*
+
+Play Strahd completely unfazed by their weapons:
+
+> *"I am Count Strahd von Zarovich. Lord and sovereign of the land you stand upon.*
+> 
+> *You ask how to return home? Naturally. Every wanderer who arrives on the eastern wind asks the very same question.*
+> 
+> *Look behind you. The Mists that brought you here answer to no compass, no star, and no mortal will. There is no road back through those woods.*
+> 
+> *However... I am not an unkind host. Everything you seek—the path back to your thrones and investigations, the answers to who brought you here, and the clues to your destinies—all of it lies beyond these gates.*
+> 
+> *If you can survive what my realm demands of you... perhaps you will prove yourselves worthy of an audience at Castle Ravenloft, and we may discuss the price of your passage home."*
+
+---
+
+### 🚪 The Gates Swing Open (The Voluntary Choice)
+* Strahd makes a subtle flick of his gloved fingers.
+* With a deafening, rusted shriek, the massive 30-foot iron gates **swing slowly open on their own**, revealing the misty cobblestone road winding deeper into the valley.
+* Strahd offers a polite, mocking bow:
+  > ***"Enter freely and of your own will. The choice, as always, is yours."***
+* A blinding flash of lightning splits the sky—and in that split second, his silhouette dissolves into a swarm of hundreds of shrieking bats that vanish into the storm clouds.
+
+---
+
+### 🎯 The Threshold Moment (DM Table Direction)
+Look at your players:
+> *"The iron gates stand wide open before you in the rain. Behind you, the wolves pace the shadows, cutting off the mountain road. Ahead, the road winds into the dark valley toward the faint smell of chimney smoke.*
+> 
+> **Do you step across the threshold into Barovia?**"
+
+* Piper speaks up:
+  > *"He's the Devil of this valley. But he's not lying about one thing: Castle Ravenloft is the only place with answers. Nobody leaves without his permission. And we won't last an hour out here in the storm."*
+* When the players say **"Yes, we go through,"** they have voluntarily sealed their own fate!
+
+---
+
+### 🔍 Searching the Dead Messenger (Dalvan Olensky)
+Twenty feet past the gates, lying face-down in the weeds, is a fresh human corpse:
+* **The Body:** A Barovian villager, throat torn out by wolves maybe two hours ago.
+* **Loot:** **15 Silver Pieces**, a **Silvered Dagger**, and a sealed letter in a stiff leather pouch.
+* **The Letter (Hand to players):**
+  > *"Hail to thee of might and valor:*
+  > 
+  > *I, a lowly servant of the township of Barovia, plead for thy desperately needed assistance!*
+  > 
+  > *My adopted daughter, Ireena Kolyana, has been afflicted by an evil so deadly that even the good people of our village cannot protect her. She languishes from her wounds, and I would have her saved from this menace.*
+  > 
+  > *Come quickly to my manor in the village, for her time is at hand! All that I have shall be thine!*
+  > 
+  > *Kolyan Indirovich, Burgomaster"*
+* **🎯 Yvaine's Investigation Check (DC 13):** The handwriting is archaic, haughty, and written with aristocratic flourishes—it matches the calligraphy of Count Strahd himself! The Devil forged this letter to ensure his new "guests" would march straight to the Burgomaster's doorstep.
+
+---
+
+## 🏚️ ACT III: THE WEEPING VILLAGE & THE TAVERN
+
+*(Pacing: 1:35 – 2:35 | Gothic Dread & Social Hub)*
 
 ### 🎙️ Read-Aloud Narration: Entering the Village of Barovia
-> *"Following the muddy ruts of the Old Svalich Road, the black pines finally give way to a huddle of steep-roofed timber houses drowning in ground-fog.*
->
-> *This is the Village of Barovia—though it feels less like a living town and more like a graveyard where the dead haven't realized they're buried. Every shutter is nailed tight with planks of splintered wood. Chalk symbols of the Morninglord are smeared desperately across front doors. High above the northern cliffs, partially veiled by boiling storm clouds, looms a sight that makes your blood run cold: a titanic, impossibly tall gothic fortress of black stone perched on athousand-foot spire of rock—CASTLE RAVENLOFT—looking down upon the village like a vulture over a dying lamb.*
->
-> *As you pass a darkened two-story townhouse, a woman's raw, inconsolable sobbing echoes from behind the upstairs shutters, rhythmic and heartbroken in the rain.*
->
-> *Ahead, only a single building in the entire square spills warm orange candlelight onto the wet cobbles: a sagging tavern whose painted sign reads 'Blood on the Vine'—where someone has taken a knife and carved the letter 'n' over the 'f'."*
-
----
-
-### 🕊️ Village Exploration & Social Branches
-1. **Mad Mary's Townhouse (Optional Side Beat):**
-   * If the party knocks or forces the door of the weeping house, they find **Mad Mary** clutching a ragged, eerie cloth doll (with a tag reading *"Is No Fun, Is No Blinsky!"*). Her beloved teenage daughter **Gertruda** broke out of the house a week ago, enchanted by fairy tales of the handsome prince in the castle, and walked straight to Castle Ravenloft.
-2. **Bildrath's Mercantile (Overpriced Survival Gear):**
-   * **Bildrath Cantemir** sells standard adventurer gear at **10x normal price** (or 2x in Silver/Gold if intimidated or negotiated with a **DC 14 Persuasion/Intimidation check**, while his hulking nephew **Parriwimple** watches with crossed arms).
-3. **Blood on the Vine Tavern (Main Hub):**
-   * Inside, three colorful **Vistani women** (Alenka, Mirabel, and Sorvia) sit by the hearth drinking spiced wine, while a soulless Barovian barkeep (**Arik**) endlessly polishes the same dirty glass.
-   * Sitting alone at a corner table with a notched longsword across his knees and two untouched goblets of red wine is **Ismark Indirovich**.
+> *"Following the muddy ruts of the Old Svalich Road, the black pines finally give way to a huddle of steep-roofed timber houses drowning in knee-deep ground-fog.*
+> 
+> *This is the Village of Barovia—though it feels less like a living town and more like a graveyard where the dead haven't realized they're buried. Every window is boarded shut with heavy oak planks. Claw marks gouge doorframes. High above the northern cliffs, partially veiled by boiling thunderheads, looms an impossibly tall gothic citadel of black stone on a thousand-foot spire: CASTLE RAVENLOFT, watching the village like a vulture over a dying lamb.*
+> 
+> *As you pass a darkened two-story townhouse, a woman's raw, inconsolable sobbing echoes from an attic window, rhythmic and heartbroken in the rain.*
+> 
+> *Jacomir: Through the slits in the wooden shutters, you catch glimpses of pale, hollow-eyed commoners staring out at you... with that same unblinking, dead expression you saw in Oakenshire.*
+> 
+> *Ahead, only a single building spills warm orange candlelight onto the wet cobbles: a sagging tavern whose sign reads 'Blood on the Vine'."*
 
 ---
 
 ### 👤 Deep NPC Profile: Ismark "The Lesser" Indirovich
-* **Appearance:** A weary, broad-shouldered young nobleman in his mid-twenties with dark rings under his eyes, a mud-stained scarlet cloak, and a silver wolf-head pommel on his longsword.
-* **Core Philosophy & Tragedy:** **Crushing Filial Duty Under the Shadow of Failure**. The villagers mockingly call him *"Ismark the Lesser"* because he has never lived up to his beloved father, Burgomaster Kolyan. Three days ago, Kolyan’s heart finally gave out after weeks of Strahd's wolves and undead sieging their home every midnight. Ismark is terrified that he isn't strong enough to save his adopted sister **Ireena**, whom Strahd has already bitten **twice**.
-* **Immediate Problem:** His father's corpse has been lying unburied in their mansion for three days because no villager dares walk to the church cemetery, and he desperately needs hardened outsiders to help him bury his father at dawn and escort Ireena to the fortified town of **Vallaki**.
+Inside the tavern, three **Vistani women** drink spiced wine near the hearth, and a soulless barkeep (**Arik**) endlessly polishes a dirty glass. Sitting alone with a notched longsword across his knees is **Ismark Indirovich**.
+
+* **The Meeting:** When he sees three heavily armed, capable outlanders walk in, he stands up and buys them wine:
+  > *"You came through the Gates. You're alive. Which means the Devil hasn't broken you yet."*
+* **The Tragedy:**
+  * He is the son of the late Burgomaster, Kolyan Indirovich.
+  * Three nights ago, his father's heart gave out after weeks of Strahd's wolves and undead sieging their home.
+  * The Count has become obsessed with Ismark’s adopted sister, **Ireena Kolyana**.
+  * Strahd has already visited her **twice** in the night, charming his way inside and drinking her blood.
+  * *"In Barovia, tradition is absolute: on the third bite, she dies and rises as his vampire bride forever."*
+* **The Deal:** Ismark begs Jacomir, Yvaine, and Piper to accompany him to his family mansion, help him bury his father at dawn, and escort Ireena to the walled town of **Vallaki** where she might be safe behind consecrated ground.
 
 ---
 
-### 💬 Spoken Dialogue Trees: Ismark at the Tavern
-* **Branch A: Showing Him the Letter Found on Dalvan's Body:**
-  * *Ismark's Voice:* (His face drains of color as he takes the parchment; his hands tremble slightly)  
-    *"Wait... this seal is my father's ring, yes, but... this is not my father's handwriting. My father died three nights ago, friends. Whoever wrote this letter... used my sister's name to bait you into the valley."*  
-    *(DM Context: Ismark looks up at them with desperate honesty)* *"The Devil himself brought you here. Which means you are the only souls in Barovia he hasn't broken yet. Sit. Drink on my coin. I need blades like yours before midnight strikes."*
-* **Branch B: Asking About Strahd & His Sister Ireena:**
-  * *Ismark's Voice:* *"Count Strahd von Zarovich is no mere lord—he is the ancient curse of this land. A month ago, his eyes fell upon my sister, Ireena. He calls her 'Tatyana'—some ghost from centuries past. Twice already, he has charmed his way across our threshold in the dead of night and drunk from her throat. A third bite will turn her into one of his undead brides forever."*
-* **Branch C: Asking the Vistani Women About Escaping the Mists:**
-  * *Alenka (Vistani):* (Laughs warmly, clinking her gold bracelets)  
-    *"Leave? Oh, little birds, nobody leaves Barovia unless the Count opens the curtains! Have a cup of wine before you freeze. And if you want answers about why the Mists snatched you from your beds... take the river road west tomorrow and ask our ancient grandmother, **Madam Eva**, at **Tser Pool**. Her cards know your names better than you do."*
+## 🕯️ ACT IV: THE BESIEGED MANSION & THE MIDNIGHT PROMISE
+
+*(Pacing: 2:35 – 3:45 | Claustrophobic Horror Climax)*
+
+### 🎙️ Read-Aloud Narration: Ireena Kolyana
+> *"Ismark leads you to a grand two-story manor house standing behind a twisted iron fence. The yard looks like a battlefield: scorched grass, claw marks gouged into the porch, and every lower window boarded shut.*
+> 
+> *Ismark knocks: three short taps, a pause, two long taps. Heavy iron bolts slide back.*
+> 
+> *Standing in the foyer with a drawn silver rapier and a steel breastplate over her mourning dress is IREENA KOLYANA. Her fiery auburn hair is tied back, her eyes fierce and sleepless.*
+> 
+> *Tucked into her high collar is a silk scarf, faintly concealing two bruised puncture marks on her neck.*
+> 
+> *In the parlor behind her sits a simple pine coffin surrounded by guttering white candles: the body of Burgomaster Kolyan Indirovich."*
 
 ---
 
-## ⚔️ ACT IV: THE SIEGE OF INDIROVICH MANSION & THE MIDNIGHT PACK
-*(Pacing: 2:30 – 3:45 | Target: 75 Minutes)*
+### 🚨 The Midnight Boss: The Starved Vampire Spawn
+At 3:00 AM, the grandfather clock chimes. The rain outside suddenly stops. 
+Dust and plaster begin to shower down from the ceiling rafters!
 
-### 🎙️ Read-Aloud Narration: The Barricaded Mansion & Ireena Kolyana
-> *"Ismark leads you south through the dripping fog to a grand, two-story manor house standing behind a rusted iron fence. The exterior looks like a warzone: claw marks gouge the oak doors, scorched black patches mar the porch, and every downstairs window is boarded shut with heavy iron-banded planks.*
->
-> *Ismark raps three short knocks, pauses, then two long knocks. Heavy iron bolts slide back from within.*
->
-> *Standing in the foyer, holding a drawn silver-hilted rapier at chest height and wearing a steel breastplate over her mourning dress, is a striking young woman with fiery auburn hair and fierce, sleepless determination in her eyes: IREENA KOLYANA.*
->
-> *Wrapped around her pale throat is a thick silk scarf, faintly stained with two neat, crimson puncture marks.*
->
-> *In the center of the parlor behind her rests a simple, hammered pine coffin surrounded by guttering white candles—the body of Burgomaster Kolyan Indirovich."*
+> *"You hear something skittering across the roof like an oversized spider. Fast. Heavy.*
+> 
+> *Then—CRASH!*
+> 
+> *The stained-glass skylight in the parlor shatters! A gray, emaciated humanoid lands upside-down on the ceiling rafters, clinging to the oak beams with blood-caked claws.*
+> 
+> *It wears shredded nobleman's velvet. Its jaw unhinges impossibly wide, revealing elongated fangs dripping black saliva. It sniffs the air, locks its crimson eyes onto Ireena, and hisses in a raspy, tortured whisper:*
+> 
+> *'...The master... smells your blood, little bird...'*
+> 
+> *It drops from the ceiling straight toward her!"*
 
----
-
-### 👤 Deep NPC Profile: Ireena Kolyana
-* **Appearance:** Striking young woman with deep auburn hair, pale skin, a silk scarf hiding two vampire bite marks on her neck, wearing a buckled breastplate and carrying a rapier.
-* **Core Philosophy:** **Defiant Dignity Against Predatory Fate**. Ireena refuses to be treated as a helpless damsel or piece of luggage. Despite the supernatural fog in her memories when Strahd's eyes met hers, she will sooner drive a blade through her own heart than willingly become a monster in Castle Ravenloft.
-* **Moral Stand:** She refuses to leave Barovia Village until her beloved father Kolyan is given a proper, consecrated burial at Father Donavich's church at dawn: *"He died defending this door from the Devil's wolves. I will not leave him to rot in the parlor like carrion."*
-
----
-
-### 🚨 The Midnight Escalation: Bride Volenta's Calling Card!
-As the party plans the dawn burial with Ismark and Ireena, the grandfather clock in the hallway chimes **Twelve Midnight**.
-* **The Sensory Tell:**
-  > *"The grandfather clock strikes its twelfth chime. Instantly, every candle in the parlor flickers violently. Outside in the mud, the rhythmic scratching of dozens of dead fingernails begins scraping against the boarded windows—and from the front gate rings a high, playful, bone-chilling giggle:*
-  >
-  > *'Little sister Ireena! Come out, come out! The Count sent me to fetch your father's box so you don't have to carry it!'"*
-* **The Encounter:** **Volenta Popofsky** (Strahd's youngest, most sadistic Bride wearing a porcelain skull-mask) stands atop the iron fence outside, directing an assault squad of **3 Strahd Zombies**, **2 Swarms of Bats**, and **1 Vampire Spawn Stalker** attempting to rip down the front shutters and desecrate Kolyan's coffin!
+#### ⚔️ Boss Stat Block: Starved Vampire Spawn
+* **HP:** `48 HP` | **AC:** `15` | **Speed:** `30 ft, Spider Climb 30 ft`
+* **Spider Climb:** Moves along ceilings and walls without needing hands.
+* **Regeneration (10 HP/turn):** Heals 10 HP at the start of its turn **unless it takes Fire or Radiant damage** (Piper's *Fire Bolt* or Yvaine's phosphor weapons shut this down!).
+* **Claws:** `+5 to hit`, `1d6 + 3` slashing, and target is Grappled (`escape DC 13`).
+* **Bite:** Only against a grappled target (`+5 to hit`, `1d6 + 3` piercing + `2d6` necrotic).
 
 ---
 
-### 🕊️ Tactical Options & Non-Combat / Smart Resolutions
-1. **Reinforcing the Barricades (Pre-Breach Prep — 1 Round):**
-   * Players can use **Athletics, Carpenter's Tools, Mending, or Arcane Lock (DC 12)** to reinforce the North/East shutters before the undead break through, funneling all enemies into a single doorway choke point!
-2. **Respecting Vampire Forbiddance Law (Crucial Lore Mechanic!):**
-   * If a player remembers (or succeeds on a **DC 11 Religion / History check**) that **Vampires and Vampire Spawn CANNOT enter a private residence without an invitation from a living resident**, the **Vampire Spawn Stalker** (and Volenta) physically cannot cross the doorway threshold! They can only claw through windows or try to drag PCs *outside* into the yard!
-3. **Driving Off the Pack (The 3-Round Survival Goal):**
-   * Once the party slaughters the zombies and bloodies the Vampire Spawn Stalker (or strikes Volenta from afar with radiant/spell damage), Volenta lets out a delighted, unhinged laugh:
-     > *"Ooh! New toys with teeth! The Count was right about you four! See you at the graveyard tomorrow, darlings!"*
-   * She flips backward into the mist and vanishes, leaving the manor quiet until dawn.
+### 🕯️ THE CHILLS ENDING & CLIFFHANGER
+
+1. **The Ash on the Floor:**  
+   The party slays the spawn. It shrieks and dissolves into powdery gray ash across the parlor rug.
+2. **The Reveal:**  
+   Ireena collapses beside her father's coffin, shivering. Her collar pulls open, clearly displaying the **two deep, dark puncture scars**.  
+   Ismark whispers in sheer horror: *"Twice he has taken her blood. One more visit... and she belongs to him."*
+3. **The Three Knocks:**  
+   Absolute, dead silence falls over the house.  
+   **DM: SLOWLY KNOCK THREE TIMES ON THE TABLE:**
+   > ***TAP. TAP. TAP.***
+
+4. **Strahd's Voice Inside Their Skulls:**  
+   There are no footsteps outside. The heavy oak front door does not open.  
+   Instead, Strahd's voice echoes directly inside the minds of Jacomir, Yvaine, and Piper:
+
+> *"Good evening, my honored guests.*
+> 
+> *You fought admirably. The spawn was crude, but you handled it with style. Jacomir... Yvaine... Piper... you continue to entertain me.*
+> 
+> *I know you are weary. I know you mourn the Burgomaster. Therefore, I shall grant you a courtesy.*
+> 
+> *I give you until tomorrow at sundown to bury the old man and say your goodbyes.*
+> 
+> *Tomorrow night, when the moon rises over the valley... I will return for my third bite.*
+> 
+> *Guard her well, my friends. I do so love a challenge."*
+
+* A soft, aristocratic chuckle dissipates into the freezing night air.
+* Outside on the doorstep in the fog sits a single **fresh black rose**.
+* Ismark looks up at Jacomir and Yvaine with hollow, desperate eyes:
+  > *"We have until sundown. If she is still here when night falls... she is dead."*
+
+* **DM to Table:**
+  > ***"AND THAT IS WHERE WE END SESSION 1!"***
 
 ---
 
-### 🌅 Session 1 Cliffhanger & Rewards
-* **The Dawn Quiet:** As the first gray, sunless light of morning seeps through the shattered shutters, Ismark clasps the party's forearms in gratitude. He awards them his father's **Emergency Armory Cache**:
-  * 🗡️ **1x Silvered Weapon of Choice** *(Shortsword, Rapier, Dagger, or 10 Silvered Bolts/Arrows)*
-  * 🧪 **2x Potions of Healing** *(Bonus Action: `2d6 + 1` HP)*
-  * 💧 **2x Flasks of Blessed Morninglord Water** *(2d6 Radiant to Undead/Fiends)*
+## 🎁 SESSION 1 REWARDS (Awarded at Dawn)
+* **XP / Milestone:** Progression toward Level 4.
+* **Emergency Armory Cache (from Kolyan's Vault):**
+  * 🗡️ **1x Silvered Weapon of Choice** *(Shortsword, Rapier, Dagger, or 10 Silvered Arrows/Bolts)*
+  * 🧪 **2x Potions of Healing** *(Bonus Action: `2d6 + 1 HP`)*
+  * 💧 **2x Flasks of Blessed Water** *(2d6 Radiant to Undead)*
   * 💰 **40 Silver Pieces & 5 Gold Pieces**
-* **Closing Hook for Session 2:**
-  > *"Together with Ismark and Ireena, you lift the heavy pine coffin of Burgomaster Kolyan onto your shoulders and step out into the freezing morning mist toward the dilapidated Church on the edge of the village.*
-  >
-  > *From the church bell tower ahead, no morning bell rings. Instead, echoing up from beneath the stone floorboards of the chapel... comes a raw, starving voice screaming into the dark:*
-  >
-  > *'FATHER! FATHER, PLEASE! I'M SO HUNGRY!'"*
-  >
-  > **— END OF SESSION 1 —**
