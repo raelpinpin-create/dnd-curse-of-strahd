@@ -2,20 +2,20 @@
 
 **Campaign:** Curse of Strahd (Campaign 2 of the Grand Trilogy — Director's Cut)  
 **Session Type:** Live Face-to-Face Campaign Premiere (In-Person Tabletop Master Edition)  
-**Target Pacing:** 3.5 – 4.0 Hours | Level 3 PCs  
-**Primary Themes:** Shattered Crowns, Adrenaline Survival, The Predator's Invitation, Claustrophobic Dread, and The Ticking Clock of the Third Bite.
+**Target Pacing:** 4.0 – 4.5 Hours | Level 3 PCs  
+**Primary Themes:** Shattered Crowns, Adrenaline Survival, The Predator's Invitation, Moral Decay, Claustrophobic Dread, and The Ticking Clock of the Third Bite.
 
 ---
 
-## 🧭 SESSION OVERVIEW & DM PACING MATRIX
+## 🧭 SESSION OVERVIEW & DM PACING MATRIX (4.0 – 4.5 HOURS)
 
-| Phase | Runtime | Scene & Core Objectives |
+| Phase | Target Runtime | Scene & Core Objectives |
 | :--- | :--- | :--- |
-| **PROLOGUE** | `0:00 – 0:25` | **The Dual-POV Cold Open (Solo Spotlights):**<br>• **👑 Jacomir’s Royal Speech (Oakenshire):** Triumphant address ➔ Tinnitus & splitting migraine ➔ **DC 10 Perception Check** ➔ Unblinking, grotesque ear-to-ear smiling subjects ➔ Jacomir blinks.<br>• **💥 Smash-Cut to Carriage:** Jacomir snaps awake in a careening carriage, staring across at Yvaine.<br>• **🔫 Match-Cut to Yvaine (Solmere Ambush):** Trailing the birthday massacre traitor in a rainy village ➔ Ambushed by blades ➔ Swallowed by freezing fog ➔ Yvaine blinks ➔ **Yvaine’s Monologue & 20-Second Royal Standoff**. |
-| **ACT I** | `0:25 – 0:55` | **The Carriage & The High-Speed Chase:**<br>• **Adrenaline Eruption:** Coachman’s severed arm hits glass ➔ Dire wolf breaches left door ➔ **Roll Initiative!**<br>• **The Choice:** Reins vs. Jump! (**DC 11 Athletics/Acrobatics** to reach Driver's Box).<br>• **Camera Pan to Piper (Solo Spotlight):** Overturned carnival cart; surrounded by wolves ➔ **DC 12 Dex Save** ➔ She sees the carriage barreling down the road.<br>• **The Merge:** *"Do you save her?!"* ➔ Carriage drift & Piper dives onto rear rack (**DC 10 Acrobatics**).<br>• **3-Round Cinematic Chase ("1 Success Keeps You Moving" Rule):**<br>&nbsp;&nbsp;• *Round 1 (Rear Flankers):* Team attacks/maneuvers to shake pursuers.<br>&nbsp;&nbsp;• *Round 2 (Three-Point Surround):* Wolves at Left Door, Right Door, and **tearing through the Roof timber**!<br>&nbsp;&nbsp;• *Round 3 (The Dead End at the Gates):* 30-ft iron gates locked shut ahead ➔ Drift-slide crash in the mud **twenty feet in front of the locked gates** ➔ Cornered by the pack! |
-| **ACT II** | `0:55 – 1:35` | **The Gates & The Devil's Invitation:**<br>• Whistle in the rain; wolves bow. Count Strahd steps forward in the downpour.<br>• **In-Depth Dialogue:** Jacomir & Yvaine demand how to get home. Strahd gives his iconic invitation: *"All your answers, your lost people, and your road home lie within my borders."*<br>• The 30-foot iron gates swing open on their own. Strahd bows: *"Enter freely and of your own will."*<br>• **The Choice:** Players *voluntarily* step across the threshold into Barovia.<br>• Search dead messenger (**Dalvan Olensky**): **DC 13 Investigation** for Yvaine ➔ 15 SP, Silvered Dagger, Kolyan Letter. |
-| **ACT III** | `1:35 – 2:35` | **The Weeping Village & Blood of the Vine Tavern:**<br>• Ghost town atmosphere: shuttered homes, claw marks, Mad Mary's attic sobs, lifeless eyes peeking from blinds.<br>• **The Tavern Hub:** Vistani women, soulless barkeep Arik, and meeting **Ismark "the Lesser" Indirovich**.<br>• Dialogue: The forged letter, Burgomaster Kolyan’s death, Strahd’s obsession with **Ireena**, and the terror of the Two Bites. |
-| **ACT IV** | `2:35 – 3:45` | **The Besieged Mansion & The Chills Cliffhanger:**<br>• Entering the barricaded manor; meeting **Ireena Kolyana** beside her father’s pine coffin.<br>• **Midnight Boss Fight (3:00 AM):** A **Starved Vampire Spawn** crashes through the stained-glass skylight, skittering across ceiling rafters (Spider Climb, Regeneration puzzle).<br>• **The Chills Climax & Cliffhanger:**<br>&nbsp;&nbsp;1. Spawn dissolves to powdery ash.<br>&nbsp;&nbsp;2. Reveal of the **2 bite marks** on Ireena's neck (The 3rd Bite Law).<br>&nbsp;&nbsp;3. Dead silence falls.<br>&nbsp;&nbsp;4. **DM SLOWLY KNOCKS THREE TIMES ON THE TABLE: TAP. TAP. TAP.**<br>&nbsp;&nbsp;5. Strahd's voice echoes inside their skulls: *"Tomorrow night, when the moon rises... I return for my third bite. Guard her well."*<br>&nbsp;&nbsp;6. A single fresh black rose on the doorstep.<br>&nbsp;&nbsp;7. **"AND THAT IS WHERE WE END SESSION 1!"** |
+| **PROLOGUE** | `0:00 – 0:25` *(25m)* | **The Dual-POV Cold Open (Solo Spotlights):**<br>• **👑 Jacomir’s Royal Speech (Oakenshire):** Triumphant address ➔ Ear ringing & splitting migraine ➔ **DC 10 Perception Check** ➔ Unblinking, grotesque ear-to-ear smiling subjects ➔ Jacomir blinks.<br>• **💥 Smash-Cut to Carriage:** Jacomir snaps awake in a careening carriage, staring across at Yvaine.<br>• **🔫 Match-Cut to Yvaine (Solmere Ambush):** Trailing the birthday massacre traitor in a rainy village ➔ Ambushed by blades ➔ Swallowed by freezing fog ➔ Yvaine blinks ➔ **Yvaine’s Monologue & 20-Second Royal Standoff**. |
+| **ACT I** | `0:25 – 0:55` *(30m)* | **The Carriage & The High-Speed Chase:**<br>• **Adrenaline Eruption:** Coachman’s severed arm hits glass ➔ Dire wolf breaches left door ➔ **Roll Initiative!**<br>• **The Choice:** Reins vs. Jump! (**DC 11 Athletics/Acrobatics** to reach Driver's Box).<br>• **Camera Pan to Piper (Solo Spotlight):** Overturned carnival cart; surrounded by wolves ➔ **DC 12 Dex Save** ➔ She sees the carriage barreling down the road.<br>• **The Merge:** *"Do you save her?!"* ➔ Carriage drift & Piper dives onto rear rack (**DC 10 Acrobatics**).<br>• **3-Round Cinematic Chase ("1 Success Keeps You Moving" Rule):**<br>&nbsp;&nbsp;• *Round 1 (Rear Flankers):* Team attacks/maneuvers to shake pursuers.<br>&nbsp;&nbsp;• *Round 2 (Three-Point Surround):* Wolves at Left Door, Right Door, and **tearing through the Roof timber**!<br>&nbsp;&nbsp;• *Round 3 (The Dead End at the Gates):* 30-ft iron gates locked shut ahead ➔ Drift-slide crash in the mud **twenty feet in front of the locked gates** ➔ Cornered by the pack! |
+| **ACT II** | `0:55 – 1:25` *(30m)* | **The Gates & The Devil's Invitation:**<br>• Whistle in the rain; wolves bow. Count Strahd steps forward in the downpour.<br>• **In-Depth Dialogue:** Jacomir & Yvaine demand how to get home. Strahd gives his iconic invitation: *"All your answers, your lost people, and your road home lie within my borders."*<br>• The 30-foot iron gates swing open on their own. Strahd bows: *"Enter freely and of your own will."*<br>• **The Choice:** Players *voluntarily* step across the threshold into Barovia.<br>• Search dead messenger (**Dalvan Olensky**): **DC 13 Investigation** for Yvaine ➔ 15 SP, Silvered Dagger, Kolyan Letter. |
+| **ACT III** | `1:25 – 2:50` *(85m)* | **The Old Svalich Road, The Haunted Township & The Tavern Hub:**<br>• **Scene 1: The River Ivlis Gallows (Psychic Mirror Horror):** The creaking corpse that shifts its face into Jacomir or Yvaine (**DC 12 Wis Save / DC 13 Arcana**).<br>• **Scene 2: Morgantha & The Dream Pastries (Moral Horror):** An old woman selling sweet pies on the village outskirts ➔ **DC 14 Perception/Insight** reveals a mother trading her weeping toddler for meat pies!<br>• **Scene 3: The Ghost Town of Barovia & Mad Mary's Attic:** Shuttered homes, claw marks, Mad Mary weeping for missing Gertruda (**DC 12 Persuasion** to claim the Blinsky doll lead).<br>• **Scene 4: Bildrath’s Mercantile (Gouging & Muscle):** Buying torches/oil at 10x prices; facing Parriwimple.<br>• **Scene 5: Blood on the Vine Tavern:** Soulless barkeep Arik, three Vistani card-readers, and meeting **Ismark "the Lesser" Indirovich** ➔ Full dialogue tree on the Burgomaster's death and the Two Bites on **Ireena**. |
+| **ACT IV** | `2:50 – 4:15` *(85m)* | **The Besieged Mansion & The Chills Cliffhanger:**<br>• Entering the barricaded manor; meeting **Ireena Kolyana** beside her father’s pine coffin.<br>• **Midnight Boss Fight (3:00 AM):** A **Starved Vampire Spawn** crashes through the stained-glass skylight, skittering across ceiling rafters (Spider Climb, Regeneration puzzle).<br>• **The Chills Climax & Cliffhanger:**<br>&nbsp;&nbsp;1. Spawn dissolves to powdery ash.<br>&nbsp;&nbsp;2. Reveal of the **2 bite marks** on Ireena's neck (The 3rd Bite Law).<br>&nbsp;&nbsp;3. Dead silence falls.<br>&nbsp;&nbsp;4. **DM SLOWLY KNOCKS THREE TIMES ON THE TABLE: TAP. TAP. TAP.**<br>&nbsp;&nbsp;5. Strahd's voice echoes inside their skulls: *"Tomorrow night, when the moon rises... I return for my third bite. Guard her well."*<br>&nbsp;&nbsp;6. A single fresh black rose on the doorstep.<br>&nbsp;&nbsp;7. **"AND THAT IS WHERE WE END SESSION 1!"** |
 
 ---
 
@@ -219,7 +219,7 @@ ROUND 3: The Dead End at the Locked Gates (Drift-slide crash)
 
 ## 🦇 ACT II: THE GATES & THE DEVIL'S INVITATION
 
-*(Pacing: 0:55 – 1:35 | The Predator's Trap & Conscious Choice)*
+*(Pacing: 0:55 – 1:25 | The Predator's Trap & Conscious Choice)*
 
 ### 🎙️ Read-Aloud Narration: The Whistle in the Rain
 > *"The wolves stalk toward you, bellies low, teeth bared. You raise your weapons for a final stand.*
@@ -294,95 +294,320 @@ Twenty feet past the gates, lying face-down in the weeds, is a fresh human corps
 
 ---
 
-## 🏚️ ACT III: THE WEEPING VILLAGE & THE TAVERN
+## 🌲 ACT III: THE OLD SVALICH ROAD, THE HAUNTED TOWNSHIP & THE TAVERN HUB
 
-*(Pacing: 1:35 – 2:35 | Gothic Dread & Social Hub)*
+*(Pacing: 1:25 – 2:50 | 85 Minutes | Pure Atmospheric Horror, Moral Tension & Deep Investigation)*
 
-### 🎙️ Read-Aloud Narration: Entering the Village of Barovia
-> *"Following the muddy ruts of the Old Svalich Road, the black pines finally give way to a huddle of steep-roofed timber houses drowning in knee-deep ground-fog.*
-> 
-> *This is the Village of Barovia—though it feels less like a living town and more like a graveyard where the dead haven't realized they're buried. Every window is boarded shut with heavy oak planks. Claw marks gouge doorframes. High above the northern cliffs, partially veiled by boiling thunderheads, looms an impossibly tall gothic citadel of black stone on a thousand-foot spire: CASTLE RAVENLOFT, watching the village like a vulture over a dying lamb.*
-> 
-> *As you pass a darkened two-story townhouse, a woman's raw, inconsolable sobbing echoes from an attic window, rhythmic and heartbroken in the rain.*
-> 
-> *Jacomir: Through the slits in the wooden shutters, you catch glimpses of pale, hollow-eyed commoners staring out at you... with that same unblinking, dead expression you saw in Oakenshire.*
-> 
-> *Ahead, only a single building spills warm orange candlelight onto the wet cobbles: a sagging tavern whose sign reads 'Blood on the Vine'."*
+> **⚡ DM PACING NOTE FOR ACT III:**  
+> Act III is not a quick transition; it is the **worldbuilding foundation** of the entire campaign. This is where the players experience the creeping corruption of Barovia, realize its people are hollow and desperate, face moral rot, and form their alliance with Ismark. Run each scene deliberately to build rising tension before the mansion climax.
+
+```
+[1:25–1:45] Scene 1: The River Ivlis Gallows (Psychic Mirror Horror)
+[1:45–2:05] Scene 2: Morgantha & The Dream Pastries (The Moral Rot)
+[2:05–2:20] Scene 3: The Ghost Township & Mad Mary's Attic Soffering
+[2:20–2:30] Scene 4: Bildrath’s Mercantile (Gouging & Gentle Giant)
+[2:30–2:50] Scene 5: The Blood on the Vine Tavern (Soulless Eyes & Ismark's Pact)
+```
 
 ---
 
-### 👤 Deep NPC Profile: Ismark "The Lesser" Indirovich
-Inside the tavern, three **Vistani women** drink spiced wine near the hearth, and a soulless barkeep (**Arik**) endlessly polishes a dirty glass. Sitting alone with a notched longsword across his knees is **Ismark Indirovich**.
+### 🪢 Scene 1: The River Ivlis Gallows (The Psychic Mirror)
+*(Runtime: 1:25 – 1:45 | 20 Minutes)*
 
-* **The Meeting:** When he sees three heavily armed, capable outlanders walk in, he stands up and buys them wine:
-  > *"You came through the Gates. You're alive. Which means the Devil hasn't broken you yet."*
-* **The Tragedy:**
-  * He is the son of the late Burgomaster, Kolyan Indirovich.
-  * Three nights ago, his father's heart gave out after weeks of Strahd's wolves and undead sieging their home.
-  * The Count has become obsessed with Ismark’s adopted sister, **Ireena Kolyana**.
-  * Strahd has already visited her **twice** in the night, charming his way inside and drinking her blood.
-  * *"In Barovia, tradition is absolute: on the third bite, she dies and rises as his vampire bride forever."*
-* **The Deal:** Ismark begs Jacomir, Yvaine, and Piper to accompany him to his family mansion, help him bury his father at dawn, and escort Ireena to the walled town of **Vallaki** where she might be safe behind consecrated ground.
+As the party follows the Old Svalich Road through the ancient black pines, the road splits at a mossy stone signpost pointing toward the *Village of Barovia* to the east and the *Tser Pool* to the northwest.
+
+#### 🎙️ Read-Aloud Narration: The Gallows at the Fork
+> *"The freezing rain slows to a miserable, bone-chilling drizzle. The black pines loom overhead like rotting cathedral spires, draped in sickly gray moss.*
+> 
+> *Ahead, the road widens at a muddy fork beside a rushing river. Standing on a low grass mound at the center of the crossroads is a rickety wooden gallows, its crossbeam soaked black with rot.*
+> 
+> *Hanging from a frayed hemp rope, turning slowly in the freezing mountain wind with a sickening rhythmic creak... is a human corpse.*
+> 
+> *Its head hangs limp. Black ravens perch on the crossbeam, watching you with intelligent, unblinking eyes."*
+
+#### 🎭 The Horror Illusion (The Personal Mirror)
+When a character approaches within 15 feet to inspect the corpse:
+* Point directly at **Jacomir** (or **Yvaine**):
+  > *"A gust of freezing wind catches the hanging body, spinning it slowly toward you.*
+  > 
+  > *The ragged hood slips back. The rotting, bruised face hanging from that noose... is not a stranger.*
+  > 
+  > ***It is your own face.***
+  > 
+  > *Your eyes stare back at you—milky white, dead, cheeks gaunt and gray. And as you freeze in terror, the jaw of your hanging duplicate slowly unhinges... pulling back into that exact same, grotesque, ear-to-ear grin from your throne room in Oakenshire."*
+
+#### 🎯 DM Mechanics & Skill Checks:
+* **The Target Rolls:** **DC 12 Wisdom Saving Throw**.
+  * **Failure:** Overcome with chilling dread; gains the **Frightened** condition for 1 minute, their heart pounding, taking `1d4` psychic dread damage.
+  * **Success:** Shakes off the planar vision; blinks hard, and the illusion snaps—the corpse on the rope is just a withered, anonymous Barovian criminal who hanged months ago.
+* **Investigation Check (DC 13):** Yvaine discovers the criminal's pockets contain an empty wooden token with a raven symbol and a handful of dead hemlock root (he chose hanging over what lurks in the forest).
+* **Piper’s Barovian Lore:** Piper explains to the outsiders:
+  > *"That's the Mirror of Ivlis. The Mists test your mind at every crossroads. If you give in to the fear, this land eats you from the inside out."*
+
+---
+
+### 🥧 Scene 2: Morgantha & The Dream Pastries (The Moral Rot)
+*(Runtime: 1:45 – 2:05 | 20 Minutes)*
+
+Approaching the outskirts of the village, the dead smell of damp pine suddenly gives way to an intoxicating, mouth-watering aroma: warm butter, cinnamon, spiced apples, and baked pastry crust.
+
+#### 🎙️ Read-Aloud Narration: The Pie Cart in the Fog
+> *"Through the swirling fog on the edge of the village comes the squeak of a wooden cartwheel.*
+> 
+> *Emerging from the mist is a hunched old woman wrapped in a patchwork shawl and a stained apron. She pushes a two-wheeled wooden cart with a chimney venting fragrant, savory steam into the freezing drizzle.*
+> 
+> *Her hair is a wild nest of gray, her face wrinkled like dried leather, but her voice is as sweet as honey:*
+> 
+> *'Pastries! Warm, sweet dream pastries! Warm your bellies, traveler dearies! Just one copper for a taste of heaven!'*
+> 
+> *She stops her cart, beaming at you with a gap-toothed smile, lifting a checkered cloth to reveal golden, flaky pastries that smell so good your stomachs rumble in unison."*
+
+#### 👤 NPC Profile: Morgantha ("Granny")
+* **Appearance:** A frail, grandmotherly peddler with dirt under her nails, smelling of cloves and brown sugar. (Secretly: The Coven Mother of the Night Hags of Old Bonegrinder in human guise!).
+* **Her Offer:** Sells *Dream Pastries* for **1 Silver Piece** (or 5 Copper if haggled).
+  * **The Mechanic:** Eating a pastry puts a character into an 8-hour euphoric, waking dream state of pure joy, granting **`1d6` Temporary Hit Points**. However, it is intensely addictive, and repeated use induces lethargy and nightmare cravings.
+* **Piper’s Warning:** Piper immediately steps between the party and the cart:
+  > *"Do NOT eat those. People in Barovia sell their last family heirlooms for those pies... and then they sell things far worse."*
+
+#### 🚨 The Shocking Horror Reveal (The Child Trade)
+Before the party can decide whether to buy:
+1. Morgantha wheels her cart to a rundown cottage ten paces away. She raps three times with a wooden ladle.
+2. A gaunt, hollow-eyed Barovian man and weeping mother open the door. They have no coin.
+3. **🎯 Perception / Insight Check (DC 13):**
+   * *Success:* Through the half-open door, Yvaine or Jacomir watches the weeping mother hand over a **wriggling burlap sack** containing their 7-year-old son, **Lucian**. The boy’s muffled sobs come from inside the sack.
+   * Morgantha smiles warmly, pats the sack, sets **three warm pastries** on their windowsill, and shoves the wriggling sack into the bottom crate of her cart!
+4. **The Confrontation (Moral Dilemma):**
+   * If the party confronts her: Morgantha tut-tuts sweetly:
+     > *"A fair trade, dearies! The parents get peace and sweet dreams; little Lucian comes with Granny to live in a warm windmill with all the sweets he can eat! You wouldn't deny a starving family their bread, would you, my handsome lords?"*
+   * If attacked: Morgantha’s eyes flare sulfur-yellow. She reveals claws for a split second, sneers, and steps backward into the fog, **vanishing into the Ethereal Plane** with a terrifying cackle: *"I'll see you at the Old Bonegrinder, little birds!"* (Leaving behind the sack with the terrified boy).
+
+---
+
+### 🏚️ Scene 3: The Ghost Township & Mad Mary’s Attic
+*(Runtime: 2:05 – 2:20 | 15 Minutes)*
+
+The party enters the cobblestone streets of the Village of Barovia.
+
+#### 🎙️ Read-Aloud Narration: The City of the Living Dead
+> *"The black pines give way to rows of dark, steep-roofed timber townhouses huddled together against the cold. Knee-deep fog drifts across the muddy cobbles like a sluggish white river.*
+> 
+> *This is the Village of Barovia—though no chimneys smoke, no children play, and no shop lanterns burn. Every window on every house is boarded shut with heavy oak planks, reinforced with iron spikes. Door lintels are smeared with dried chalk holy symbols of the Morninglord.*
+> 
+> *Jacomir: Through the narrow slits in the wooden shutters, you see pale, hollow faces staring down at you. They don't speak. They don't blink. They watch you pass with the cold, dead detachment of corpses looking at the living.*
+> 
+> *High above the village, cutting through the storm clouds on a sheer thousand-foot pillar of rock, looms CASTLE RAVENLOFT—its black spires piercing the heavens like the claws of a titan, watching the valley with ancient, suffocating malevolence."*
+
+#### 😭 Mad Mary's Townhouse
+As they pass the central square, a sound breaks the gloom: **the raw, rhythmic, soul-shattering sobbing of a weeping woman** from the second floor of a sagging townhouse.
+* **Investigating the House:** The front door is unlatched. Inside, the furniture is covered in cobwebs and overturned. Upstairs in a bedroom locked from the inside is **Mad Mary**.
+* **Entering the Room:** Forcing the door (`DC 10 Athletics`) or using a soft voice (`DC 12 Persuasion`) allows them inside.
+* **Mad Mary’s Tale:**
+  * Mary sits on the floor amidst scattered holy books, clutching a misshapen, malformed cloth doll with button eyes (bearing a stamped leather tag: *"Is No Fun, Is No Blinsky!"*).
+  * She rock back and forth, weeping uncontrollably:
+    > *"My Gertruda... my sweet, beautiful girl... she was sixteen! I kept her locked in this room to protect her from the monsters! I taught her the scriptures! But she listened to fairy tales about the handsome prince in the high castle! A week ago, she broke the lock and walked into the fog... she went to Castle Ravenloft! She's in the Devil's arms!"*
+* **Yvaine’s Detective Spotlight:** Yvaine can inspect the broken lock (`DC 11 Investigation`). The lock wasn't broken from the outside—it was broken from the *inside* with a fireplace poker. Gertruda left willingly, completely enchanted.
+* **The Clue:** Mary thrusts the eerie Blinsky doll into Yvaine’s hands:
+  > *"Find my baby! Bring her back to me! Take her doll... tell her mother still loves her!"*
+  *(This gives Yvaine and Jacomir a crucial personal investigation thread for Vallaki and Castle Ravenloft).*
+
+---
+
+### 🪙 Scene 4: Bildrath’s Mercantile (Gouging & Gentle Giant)
+*(Runtime: 2:20 – 2:30 | 10 Minutes)*
+
+Before heading to the tavern, the only business in town with a lantern lit is a small wooden mercantile shop.
+
+#### 🎙️ Read-Aloud Narration: The Only Shop in Town
+> *"A weather-beaten wooden sign hanging over a narrow shop reads 'Bildrath’s Mercantile'. A greasy oil lamp hangs by the iron-barred door.*
+> 
+> *Inside, shelves are half-empty with dusty tins, coils of moldy rope, and tallow candles. Sitting behind a high wooden counter with an abacus and inkwell is a pinched, balding man in spectacles with a sour grimace: BILDRATH CANTEMIR.*
+> 
+> *Standing in the corner behind him is a mountain of a man—easily seven feet tall with massive, barrel-sized shoulders, a sweet, vacant smile, and simple peasant overalls: Bildrath’s nephew, PARRIWIMPLE."*
+
+#### 🛒 Merchant Interaction & Negotiation:
+* **The Problem:** Bildrath sells standard adventuring supplies (torches, flasks of oil, rope, rations, iron spikes) at **10x normal Player's Handbook price**!
+  * 1 Torch = `10 Copper` (normally 1 cp)
+  * 1 Flask of Oil = `1 Gold Piece` (normally 1 sp)
+  * 50ft Hemp Rope = `10 Gold Pieces` (normally 1 gp)
+* **Bildrath’s Attitude:**
+  > *"Take it or leave it, outlanders. There is no other merchant within forty leagues. If you don't like my rates, you can go scavenge among the corpses in the woods."*
+* **Handling the Situation:**
+  * **Royal Negotiation (Jacomir):** A successful **DC 13 Persuasion or Intimidation check** (reminding Bildrath that an armed King and mercenary are standing in his shop) makes Bildrath swallow hard and drop prices to **2x normal price**.
+  * **Parriwimple’s Muscle:** If weapons are drawn, Bildrath snaps his fingers: *"Parriwimple! Protect your uncle!"* Parriwimple (`CR 5 stats: 18 STR, 112 HP`) looks sad and steps forward: *"Uncle says no fighting in the shop, please... I don't want to hurt you."* Piper can defuse him with a kind word or trick (`DC 10 Persuasion`).
+
+---
+
+### 🍷 Scene 5: The Blood on the Vine Tavern (Soulless Eyes & Ismark's Pact)
+*(Runtime: 2:30 – 2:50 | 20 Minutes)*
+
+The party arrives at the center of the village. The only warm light spills from a large, sagging two-story tavern with dirty leaded-glass windows: **Blood on the Vine**.
+
+#### 🎙️ Read-Aloud Narration: Entering the Tavern
+> *"The heavy timber door creaks open. The air inside smells of stale sour wine, damp pipe tobacco, and peat smoke.*
+> 
+> *A low peat fire burns in an open hearth. Sitting at a large round table by the fire are three handsome women in vibrant silk scarves, gold hoop earrings, and embroidered vests, drinking blood-red wine and playing cards—VISTANI.*
+> 
+> *Behind the stained wooden bar stands the barkeep: ARIK. He endlessly wipes the same filthy ceramic mug with a gray rag. His skin is waxy, his eyes dull and glassy. He looks up at you with zero curiosity, zero fear, and zero emotion.*
+> 
+> *Jacomir: His eyes are completely vacant. Just like the nobles in your hall, this man has no spark behind his brow. He is an empty shell.*
+> 
+> *In the far shadow of the corner, sitting alone at a heavy oak table with a notched longsword resting against his chair, sits a broad-shouldered young nobleman with dark rings under his eyes, an untasted goblet of wine, and a mud-stained crimson cloak: ISMARK INDIROVICH."*
+
+#### 👤 The Soulless Lore (Crucial Worldbuilding Beat)
+* If Jacomir asks about Arik's vacant stare, Piper whispers the dark truth:
+  > *"Only one in ten people born in Barovia possesses a true soul. The rest are phantoms of the Mist... hollow shells formed from the dirt of the valley. They cannot laugh truly, they cannot weep truly, and when they die, they simply dissolve into the gray fog."*
+* **The Realization for Jacomir:** Jacomir realizes why his court in Oakenshire looked so horrifyingly hollow—the Mists have been harvesting and mimicking living beings for centuries.
+
+#### 🃏 The Vistani Card-Readers (Alenka, Mirabel, Sorvia)
+* The three Vistani women laugh warmly as the party enters, clinking their goblets:
+  > *"More strays blown through the gates! Sit, drink the purple grape! You'll need the courage before midnight comes, little birds!"*
+* If asked about escaping the valley:
+  > *"Escape? The only one who opens the gates is the Master in the Castle! But if you wish to know your fates, go west to **Tser Pool** tomorrow. Seek our ancient grandmother, **Madam Eva**. Her cards see the past, the present, and the hour of your death."*
+
+---
+
+### 💬 Deep Dialogue: Ismark "The Lesser" Indirovich
+Ismark rises from his corner table, his hand resting on the silver wolf-pommel of his blade:
+> *"You're outlanders. You survived the carriage and the Svalich wolves. That means steel runs in your blood."*
+* He pulls out chairs, buys a bottle of *Purple Grapemash No. 3* for the table, and leans in close.
+
+#### Dialogue Branch 1: The Forged Kolyan Letter
+* Yvaine shows Ismark the letter taken from Dalvan Olensky’s body.
+* Ismark’s hands shake as he examines the wax seal:
+  > *"This is my father's seal... but this is not my father's hand. 
+  > 
+  > My father, Burgomaster Kolyan, died three nights ago, friends. His heart burst from the terror. 
+  > 
+  > Whoever penned this letter used my sister's name to lure you straight to our doorstep. The Devil himself sent you here."*
+
+#### Dialogue Branch 2: The Two Bites & Ireena's Nightmare
+* Jacomir asks what "affliction" the letter mentioned. Ismark’s voice drops to a ragged whisper:
+  > *"Count Strahd has laid claim to my adopted sister, Ireena. 
+  > 
+  > He calls her 'Tatyana'—a name from old ghost stories. For two weeks, his wolves and rotting corpses have clawed at our doors every night at midnight. 
+  > 
+  > Twice already, the Count has breached our home. Twice he has looked into her eyes, charmed her will, and drunk the blood from her throat. 
+  > 
+  > In Barovia, the law of the vampire is absolute: on the **third bite**, the victim's heart turns to ice, and she rises as his undead bride for eternity."*
+
+#### Dialogue Branch 3: The Pact & The Mission
+Ismark looks at Jacomir, Yvaine, and Piper with desperate, pleading eyes:
+> *"My father's body sits in a hammered pine box in our parlor. For three days, no priest or gravedigger has dared enter our home. 
+> 
+> I cannot leave my father to rot like carrion. And I cannot protect Ireena alone when midnight strikes.
+> 
+> Walk with me to the manor. Help me defend my sister through the night, and help me carry my father's coffin to Father Donavich's church for a consecrated burial at dawn. 
+> 
+> After that, I will give you every silver coin in my family's vault, and together we will escort Ireena to the fortified walled town of **Vallaki**, where the Devil cannot reach her. 
+> 
+> Will you stand with House Indirovich?"*
+
+* When Jacomir, Yvaine, and Piper agree, Ismark drains his goblet, belts his longsword, and leads them through the dark streets toward the **Indirovich Mansion** as the clock approaches midnight!
 
 ---
 
 ## 🕯️ ACT IV: THE BESIEGED MANSION & THE MIDNIGHT PROMISE
 
-*(Pacing: 2:35 – 3:45 | Claustrophobic Horror Climax)*
+*(Pacing: 2:50 – 4:15 | 85 Minutes | Claustrophobic Horror Climax & The Chills Cliffhanger)*
 
-### 🎙️ Read-Aloud Narration: Ireena Kolyana
-> *"Ismark leads you to a grand two-story manor house standing behind a twisted iron fence. The yard looks like a battlefield: scorched grass, claw marks gouged into the porch, and every lower window boarded shut.*
+### 🎙️ Read-Aloud Narration: The Indirovich Estate
+> *"Ismark leads you down a dark lane overgrown with weeds to a grand, two-story manor house standing behind a twisted wrought-iron fence. 
 > 
-> *Ismark knocks: three short taps, a pause, two long taps. Heavy iron bolts slide back.*
+> The estate looks like a fortress under siege. The front yard is churned into black mud, littered with scorched patches and dead wolf carcasses. Every ground-floor window is boarded shut with heavy, iron-banded timber planks. Deep claw marks gouge the heavy front doors.
 > 
-> *Standing in the foyer with a drawn silver rapier and a steel breastplate over her mourning dress is IREENA KOLYANA. Her fiery auburn hair is tied back, her eyes fierce and sleepless.*
+> Ismark steps up to the door and knocks: three short raps, a pause, then two heavy raps.
 > 
-> *Tucked into her high collar is a silk scarf, faintly concealing two bruised puncture marks on her neck.*
+> From within, heavy iron bolts slide back with a sharp clang."*
+
+---
+
+### 🌹 Meeting Ireena Kolyana
+> *"The heavy oak door opens a crack, then swings wide.
 > 
-> *In the parlor behind her sits a simple pine coffin surrounded by guttering white candles: the body of Burgomaster Kolyan Indirovich."*
+> Standing in the foyer with a drawn silver-hilted rapier held with practiced discipline is IREENA KOLYANA. 
+> 
+> She is a striking young woman in her early twenties with fiery auburn hair pulled back, pale skin, and fierce, sleepless resolve burning in her hazel eyes. Over her dark mourning dress, she wears a fitted steel breastplate.
+> 
+> Wrapped tightly around her neck is a high silk scarf, faintly concealing two dark, bruised puncture marks.
+> 
+> Behind her in the dim drawing room, resting atop two wooden sawhorses and surrounded by dozens of guttering white wax candles, is a simple, heavy pine coffin covered in wilting black roses: the corpse of Burgomaster Kolyan Indirovich."*
+
+#### 👤 Deep NPC Profile: Ireena Kolyana
+* **Core Trait:** Defiant, proud, and refuse to be treated as a victim. She is skilled with a rapier (`AC 15, 28 HP, +5 hit, 1d8+3 piercing, Parry Reaction +2 AC`).
+* **Her Grief & Dignity:** She refuses to flee Barovia until her father receives a holy burial in consecrated church soil:
+  > *"He died standing between that doorway and the wolves. I will not leave him to rot like a dead hound while I run like a coward."*
+* **The Interaction:**
+  * **Jacomir:** Recognizes royal courage under siege; Ireena respects Jacomir’s solemn martial bearing.
+  * **Yvaine:** Examines the room’s defenses and Ireena’s bite marks. Yvaine recognizes the precision of an apex predator stalking prey.
+  * **Piper:** Ireena recognizes Piper from the village fairs, finding comfort in a familiar local face.
 
 ---
 
 ### 🚨 The Midnight Boss: The Starved Vampire Spawn
-At 3:00 AM, the grandfather clock chimes. The rain outside suddenly stops. 
-Dust and plaster begin to shower down from the ceiling rafters!
+At **3:00 AM**, the grandfather clock in the hallway tolls three heavy, metallic chimes. 
+Outside, the wind abruptly dies. Dead silence falls over the estate.
 
-> *"You hear something skittering across the roof like an oversized spider. Fast. Heavy.*
+> *"The third chime fades. Instantly, the candlelight in the parlor flickers and turns cold blue.
 > 
-> *Then—CRASH!*
+> From above your heads, a heavy scratching sound begins skittering across the roof shingles. Fast. Heavy. Like an eight-foot spider dragging iron nails.
 > 
-> *The stained-glass skylight in the parlor shatters! A gray, emaciated humanoid lands upside-down on the ceiling rafters, clinging to the oak beams with blood-caked claws.*
+> Plaster and white dust shower down into your hair.
 > 
-> *It wears shredded nobleman's velvet. Its jaw unhinges impossibly wide, revealing elongated fangs dripping black saliva. It sniffs the air, locks its crimson eyes onto Ireena, and hisses in a raspy, tortured whisper:*
+> Then—CRASH!
 > 
-> *'...The master... smells your blood, little bird...'*
+> The stained-glass skylight in the center of the ceiling shatters into a thousand sparkling shards! A gaunt, gray-skinned humanoid silhouette lands upside-down on the exposed wooden rafters, clinging to the oak beams with blood-caked, razor-sharp claws!
 > 
-> *It drops from the ceiling straight toward her!"*
+> It wears the shredded velvet of a Barovian magistrate. Its jaw unhinges impossibly wide, revealing rows of needle-sharp fangs dripping thick, oily black saliva. Its crimson eyes lock onto Ireena hiding behind the drawing room sofa.
+> 
+> It sniffs the air, letting out a wet, raspy hiss that rattles your bones:
+> 
+> '...The master... smells your blood, little bird... he hungers...'
+> 
+> It drops from the ceiling rafters straight toward her!"*
 
-#### ⚔️ Boss Stat Block: Starved Vampire Spawn
-* **HP:** `48 HP` | **AC:** `15` | **Speed:** `30 ft, Spider Climb 30 ft`
-* **Spider Climb:** Moves along ceilings and walls without needing hands.
-* **Regeneration (10 HP/turn):** Heals 10 HP at the start of its turn **unless it takes Fire or Radiant damage** (Piper's *Fire Bolt* or Yvaine's phosphor weapons shut this down!).
-* **Claws:** `+5 to hit`, `1d6 + 3` slashing, and target is Grappled (`escape DC 13`).
-* **Bite:** Only against a grappled target (`+5 to hit`, `1d6 + 3` piercing + `2d6` necrotic).
+---
+
+### ⚔️ Boss Stat Block: Starved Vampire Spawn
+* **HP:** `48 HP` | **AC:** `15` | **Init:** `+3` | **Speed:** `30 ft, Spider Climb 30 ft`
+* **Spider Climb:** Moves along ceilings and walls without needing an ability check.
+* **Regeneration (10 HP/turn):** Heals 10 HP at the start of each of its turns **unless it takes Fire or Radiant damage** (Piper’s *Fire Bolt*, Yvaine’s phosphor/fire grenades, or blessed water shut this down!).
+* **Multiattack:** Makes two attacks: one with its Claws and one Bite.
+* **Claws:** `+5 to hit`, reach 5 ft, `1d6 + 3` slashing damage, and target is **Grappled** (`escape DC 13`).
+* **Bite:** Only against a grappled or restrained creature. `+5 to hit`, `1d6 + 3` piercing damage + **`2d6` necrotic damage**. The target's hit point maximum is reduced by an amount equal to the necrotic damage taken!
+
+#### 💡 DM Tactical Advice for the Combat:
+1. **Use the Ceiling:** The Spawn crawls up the parlor walls onto the ceiling to avoid Jacomir’s melee Greatsword, forcing Yvaine to shoot and Piper to blast it down.
+2. **Target Ireena:** The Spawn tries to grapple Ireena. Ismark and Jacomir will naturally leap in to intercept, creating heroic frontline tension!
+3. **The Fire Breakthrough:** As soon as Piper or Yvaine lands fire/radiant damage, describe the spawn’s pale flesh sizzling black, shrieking as its regeneration stops.
 
 ---
 
 ### 🕯️ THE CHILLS ENDING & CLIFFHANGER
 
-1. **The Ash on the Floor:**  
-   The party slays the spawn. It shrieks and dissolves into powdery gray ash across the parlor rug.
-2. **The Reveal:**  
-   Ireena collapses beside her father's coffin, shivering. Her collar pulls open, clearly displaying the **two deep, dark puncture scars**.  
-   Ismark whispers in sheer horror: *"Twice he has taken her blood. One more visit... and she belongs to him."*
-3. **The Three Knocks:**  
-   Absolute, dead silence falls over the house.  
-   **DM: SLOWLY KNOCK THREE TIMES ON THE TABLE:**
-   > ***TAP. TAP. TAP.***
+#### 1. Slaying the Spawn
+* With a final strike from Jacomir’s blade or Yvaine’s shot, the spawn lets out an ear-piercing death scream.
+* Its body doesn't leave a corpse—it rapidly decays, collapsing into a heap of **powdery gray ash and blackened bone fragments** across the parlor rug.
 
-4. **Strahd's Voice Inside Their Skulls:**  
-   There are no footsteps outside. The heavy oak front door does not open.  
-   Instead, Strahd's voice echoes directly inside the minds of Jacomir, Yvaine, and Piper:
+#### 2. The Reveal of the Two Marks
+* Ireena sinks to her knees beside her father's pine coffin, trembling with shock, her rapier clattering to the floorboards.
+* Her high silk scarf tears loose. In the cold candlelight, the skin of her neck is fully exposed:
+* **Two deep, bruised, purplish puncture wounds**—encircled by blackened veins creeping toward her collarbone.
+* Ismark falls to his knees beside her, tears welling in his bloodshot eyes:
+  > *"Twice he has entered this house. Twice he has taken her blood. 
+  > 
+  > In Barovia, the curse of the vampire is absolute: on the **third bite**, the blood stops flowing, the heart freezes... and she rises as his eternal bride."*
+
+#### 3. The Three Knocks (The Physical Table Action)
+Right as Ismark finishes that sentence—
+**Dead silence falls over the entire mansion.**
+The wind stops. The rain turns to complete, unnatural stillness.
+
+* **DM INSTRUCTION — GO COMPLETELY SILENT. STARE AT YOUR PLAYERS. SLOWLY RAP YOUR KNUCKLES THREE TIMES ON THE TABLE:**
+  > ***TAP. TAP. TAP.***
+
+* Ismark freezes in pure terror. Ireena's breath catches in her throat.
+* There are no footsteps on the porch. The heavy oak door does not rattle.
+* And then, vibrating directly inside the skulls of Jacomir, Yvaine, and Piper—sounding like a cultured, aristocratic whisper right behind their ears—comes **Count Strahd’s voice**:
 
 > *"Good evening, my honored guests.*
 > 
@@ -390,18 +615,18 @@ Dust and plaster begin to shower down from the ceiling rafters!
 > 
 > *I know you are weary. I know you mourn the Burgomaster. Therefore, I shall grant you a courtesy.*
 > 
-> *I give you until tomorrow at sundown to bury the old man and say your goodbyes.*
+> *I give you until tomorrow at sundown to bury the old man in church soil and say your goodbyes.*
 > 
 > *Tomorrow night, when the moon rises over the valley... I will return for my third bite.*
 > 
 > *Guard her well, my friends. I do so love a challenge."*
 
-* A soft, aristocratic chuckle dissipates into the freezing night air.
-* Outside on the doorstep in the fog sits a single **fresh black rose**.
-* Ismark looks up at Jacomir and Yvaine with hollow, desperate eyes:
-  > *"We have until sundown. If she is still here when night falls... she is dead."*
+* A soft, aristocratic chuckle echoes through the house and dissipates into the freezing night air.
+* Outside on the stone doorstep, sitting in the puddle of rain, is a single **fresh black rose**.
+* Ismark looks up at Jacomir, Yvaine, and Piper with hollow, horrified eyes:
+  > *"We have until sundown. If she is still in this valley when darkness falls... she is dead."*
 
-* **DM to Table:**
+* **DM TO THE TABLE:**
   > ***"AND THAT IS WHERE WE END SESSION 1!"***
 
 ---
