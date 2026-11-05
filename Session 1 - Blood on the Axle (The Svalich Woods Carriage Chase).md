@@ -238,7 +238,7 @@ ROUND 3: The Dead End at the Locked Gates (Drift-slide crash)
 
 ---
 
-### 💬 Jacomir & Yvaine Demand Answers
+### 💬 Jacomir, Yvaine & Piper Face the Devil
 Jacomir and Yvaine will inevitably level steel and pistols, demanding: *"Who are you?! Where is my kingdom?! How do we get home?!"*
 
 Play Strahd completely unfazed by their weapons:
@@ -250,6 +250,14 @@ Play Strahd completely unfazed by their weapons:
 > *Look behind you. The Mists that brought you here answer to no compass, no star, and no mortal will. There is no road back through those woods.*
 > 
 > *However... I am not an unkind host. Everything you seek—the path back to your thrones and investigations, the answers to who brought you here, and the clues to your destinies—all of it lies beyond these gates.*
+> 
+> *And little Piper..."*
+> 
+> *His burning crimson eyes shift to the tiefling girl clutching her brass pocket watch, his lips curving into a predatory smile:*
+> 
+> *"Still hiding behind sleight-of-hand and painted card tricks? Still wondering why a single nightmare in the woods suddenly awakened a raging tempest of wild magic inside your blood? You think your power was an accident, little magician?*
+> 
+> *Enter my valley. Seek your clues. Perhaps when you discover what remains of your tiefling parents in my castle crypts... you will finally learn whose hands truly chose you.*
 > 
 > *If you can survive what my realm demands of you... perhaps you will prove yourselves worthy of an audience at Castle Ravenloft, and we may discuss the price of your passage home."*
 
