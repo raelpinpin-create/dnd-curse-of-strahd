@@ -73,7 +73,15 @@ To guarantee maximum narrative momentum and take the party only to the coolest l
 ---
 
 ## ⚙️ Mode 2: Lead DM Co-Pilot & 3-Tier Architecture
-1. **Tier 1 — Google Docs (Tabletop Master Session Scripts):** Rich face-to-face session documents in the **Mal'Goroth / Session 10 Standard** (pacing table, verbatim read-aloud boxes, non-combat DC alternatives, deep NPC dossiers, spoken dialogue branches, and zero stat-block clutter in the docs).
+1. **Tier 1 — Google Docs (The "Session 1 Master Tabletop Standard" — 4.0 to 4.5 Hours):** Rich, granular face-to-face session scripts following the gold standard of [`Session 1 - Blood on the Axle`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/Session%201%20-%20Blood%20on%20the%20Axle%20(The%20Svalich%20Woods%20Carriage%20Chase).md):
+   * **Pacing Matrix:** Detailed 4-to-5 act breakdown with target minute runtimes tuned for 4.0 to 4.5 hours of live tabletop play.
+   * **Solo Player Spotlights:** Verbatim prompts giving each character their own uninterrupted monologue and narrative spotlight based on their personal backstory.
+   * **Cinematic Action Engines:** High-adrenaline rules (like the *"One Success Keeps You Moving"* chase engine) with individual complications instead of game-stalling failures.
+   * **Verbatim Sensory Read-Alouds:** Atmospheric boxed prose with vivid acoustics, smells, lighting, and environmental horror.
+   * **Explicit Skill Checks & DCs:** Every check includes the exact DC, relevant ability/skills, and clear branching consequences.
+   * **Deep Multi-Scene Exploration:** Mid-session acts are never rushed—they feature layered exploration (e.g., gallows mirror horror, moral dilemmas with NPCs like Morgantha, side investigation with Mad Mary, shop negotiations).
+   * **Tactical Boss Cards & Advice:** Boss encounters include complete stat blocks, Spider Climb/Regeneration puzzles, and step-by-step DM combat tactics.
+   * **Physical Table Cues & Chills Endings:** Verbatim instructions for in-person table actions (knocking on tables, dimming lights, physical props) ending on an unforgettable cliffhanger with a strict in-world ticking clock.
 2. **Tier 2 — Master DM Screen ([`DM_SCREEN.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/DM_SCREEN.html) & [`DM_SCREEN.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/DM_SCREEN.md)):** 2-second glanceable monster stat blocks, Pointy Hat Battlefield Actions, NPC tracker, Tarokka artifacts, and World Loot Vault.
 3. **Tier 3 — AI Librarian & Co-Pilot:** Silent auto-sync across all 5 files upon 1-line table updates or `[📋 Export Data]` strings.
 
