@@ -17,12 +17,13 @@
 * **Spellcasting (Charisma):** **Spell Save DC:** `14` | **Spell Attack Bonus:** `+6`
 * **Ability Scores (5.5e Statgen):** `STR 11 (+0) | DEX 15 (+2) | CON 13 (+1) | INT 12 (+1) | WIS 11 (+0) | CHA 18 (+4) ★`
 * **Saving Throws:** **CON ★ `+3`**, **CHA ★ `+6`**, DEX `+2`, INT `+1`, WIS `+0`, STR `+0`
-* **Proficient Skills:** **Performance (CHA) ★ `+6`**, **Acrobatics (DEX) ★ `+4`**, **Arcana (INT) ★ `+3`**, **Insight (WIS) ★ `+2`** *(Plus Deception/Intimidation/Persuasion `+4`)*
+* **Proficient Skills:** **Performance (CHA) ★ `+6`**, **Acrobatics (DEX) ★ `+4`**, **Arcana (INT) ★ `+3`**, **Nature (INT) ★ `+3`**, **Insight (WIS) ★ `+2`**, **Survival (WIS) ★ `+2`** *(Plus Deception/Intimidation/Persuasion `+4`)*
 * **Class & Lineage Resources:**
   - ✨ **Sorcery Points (`Font of Magic`):** `3 / 3` *(Long Rest)* — **Metamagic:** *Subtle Spell (1 SP)*, *Twinned Spell (1–2 SP)*, *Bend Fate ("Is That Your Card?!" — 2 SP for ±1d4 to a roll)*
   - 🃏 **Tides of Chaos ("Pick-a-Card, Any Card!"):** `1 / 1 Ready` *(Gain Advantage on 1 Attack/Check/Save; once spent, her next 1st+ level spell automatically triggers a d100 Wild Magic Surge and recharges Tides of Chaos!)*
   - 💖 **Legacy of Phlegethos (Fierna Lineage):** Knows *Friends* cantrip + **1/Long Rest Free 2nd-Level *Charm Person*** (targets up to 2 humanoids)
   - 🔥 **Hellish Resistance & Darkvision:** **Resistance to Fire Damage** • **Darkvision 60 ft**
+  - 🌲 **Barovian Lore & Wilderness Acumen (Native Boon):** Proficient in **Nature (+3 ★)** and **Survival (+2 ★)**. As the sole Barovian native in the party, Piper automatically identifies safe vs. dream-inducing/lethal berries & mushrooms, distinguishes normal wolf prints from dire wolf/werewolf tracks, and locates clean well-water untainted by cemetery runoff.
   - 🤝 **Help Tokens:** `2 / 2`
 * **Spell Slots & Known Spells:**
   - **1st-Level Slots (`4 / 4`):** *Chaos Bolt* (`+6 hit`, `2d8+1d6` elemental + Chaos Leap on matching d8s), *Mage Armor* (`15 AC`), *Charm Person* (`DC 14 WIS`)
@@ -60,6 +61,7 @@
   - ⚡ **Action Surge (`1 / 1` per Short or Long Rest):** Take 1 additional Action on your turn.
   - 🌟 **Heroic Inspiration (`Human: Resourceful`):** Regained on every Long Rest; reroll any die immediately after rolling it.
   - 🩸 **Origin Feats:** **Savage Attacker** *(Human Versatile)* & **Skilled** *(Noble Background)*.
+  - 🌲 **Barovian Lore & Wilderness Acumen (Native Boon):** Proficient in **Nature (+3 ★)** and **Survival (+2 ★)**. As the sole Barovian native in the party, Piper automatically identifies safe vs. dream-inducing/lethal berries & mushrooms, distinguishes normal wolf prints from dire wolf/werewolf tracks, and locates clean well-water untainted by cemetery runoff.
   - 🤝 **Help Tokens:** `2 / 2`
 * **Equipment & Royal Regalia (`25 GP, 0 SP`):**
   - 🗡️ *Ancestral Greatsword*, 🪓 *2x Handaxes*, ⛓️ *Chain Mail (AC 16)*
@@ -87,6 +89,7 @@
   - 🌟 **Heroic Inspiration (Human Resourceful):** Free reroll ready every Long Rest.
   - ⚡ **Alert Origin Feat:** `+2` PB to Initiative (`+6` total); can swap Initiative count with a willing ally at start of combat. Cannot be surprised.
   - 🔫 **Gunner Feat (Level 1 / Background):** Firearms proficiency, ignores Loading property, no disadvantage on ranged attacks within 5 ft (point-blank execution).
+  - 🌲 **Barovian Lore & Wilderness Acumen (Native Boon):** Proficient in **Nature (+3 ★)** and **Survival (+2 ★)**. As the sole Barovian native in the party, Piper automatically identifies safe vs. dream-inducing/lethal berries & mushrooms, distinguishes normal wolf prints from dire wolf/werewolf tracks, and locates clean well-water untainted by cemetery runoff.
   - 🤝 **Help Tokens:** `2 / 2`
 * **Spell Arsenal (Re-flavored Occult Rigs — Spell DC 12 | Spell Attack +4 | 3x 1st-Level Slots):**
   - 💣 **Phosphor Grenade:** *(Hail of Thorns)* Bonus Action immediately after hit with ranged attack; target and 5-ft cube take **`1d10` Piercing & Fire damage** on failed DC 12 DEX save (half on success, no concentration).

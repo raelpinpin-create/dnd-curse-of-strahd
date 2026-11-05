@@ -996,12 +996,12 @@
                             </div>
                             <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
                         </li>
-                        <li class="stat-row-item" onclick="rollSkill('Nature (INT)', 1, false)">
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Nature (INT) ★ [Barovian Lore]', 1, true)">
                             <div class="check-left-wrap">
                                 <button type="button" class="btn-info-tiny" onclick="openSkillModal('Nature', event)" title="View Nature rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Nature (INT)</span>
+                                <span style="font-weight:700; color:#fde68a;">Nature (INT) ★ <small style="color:#6ee7b7;">(Native)</small></span>
                             </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+1 🎲</span>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+3 🎲</span>
                         </li>
                         <li class="stat-row-item" onclick="rollSkill('Perception (WIS)', 0, false)">
                             <div class="check-left-wrap">
@@ -1045,12 +1045,12 @@
                             </div>
                             <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+2 🎲</span>
                         </li>
-                        <li class="stat-row-item" onclick="rollSkill('Survival (WIS)', 0, false)">
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Survival (WIS) ★ [Barovian Lore]', 0, true)">
                             <div class="check-left-wrap">
                                 <button type="button" class="btn-info-tiny" onclick="openSkillModal('Survival', event)" title="View Survival rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Survival (WIS)</span>
+                                <span style="font-weight:700; color:#fde68a;">Survival (WIS) ★ <small style="color:#6ee7b7;">(Native)</small></span>
                             </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+2 🎲</span>
                         </li>
                     </ul>
                 </div>
@@ -2693,16 +2693,16 @@
             rules: "Standard check to stabilize dying creatures without a Healer's Kit (DC 10)."
         },
         "Nature": {
-            name: "Nature (INT +1)",
-            attr: "Intelligence (+1 INT)",
-            desc: "Measures knowledge of terrain, flora, fauna, weather patterns, and natural environmental hazards.",
+            name: "Nature (INT +3 ★ [Barovian Lore])",
+            attr: "Intelligence • Proficient (+1 INT + 2 PB • Barovian Native)",
+            desc: "Measures knowledge of terrain, flora, fauna, weather patterns, and natural environmental hazards. As the sole Barovian native in the party, Piper possesses deep instinctual knowledge of Barovian ecology.",
             examples: [
+                "<strong>🍄 Woodland Mushrooms & Berries:</strong> Automatically knows which wild berries and mushrooms are safe vs. dream-inducing (Dream Pastry taint) or lethal.",
+                "<strong>🐺 Wolf vs. Werewolf Tracks:</strong> Automatically discerns the difference between normal timber wolves, giant dire wolves, and bipedal werewolf tracks.",
                 "Identify medicinal or poisonous herbs, roots, and fungi in the Svalich Woods.",
-                "Recognize the behavioral patterns and weaknesses of natural beasts.",
-                "Predict imminent weather shifts such as supernatural fog, hailstorms, or blizzards.",
-                "Differentiate between natural sinkholes and unnatural subterranean collapses."
+                "Predict imminent weather shifts such as supernatural creeping mists, hailstorms, or unnatural blizzards."
             ],
-            rules: "Called when recalling lore regarding non-magical animals, plants, climates, and geology."
+            rules: "Native Barovian Acumen: Piper automatically knows safe woodland foraging and wolf track differentiation."
         },
         "Perception": {
             name: "Perception (WIS +0)",
@@ -2777,16 +2777,16 @@
             rules: "Contested against enemy Passive Perception (or active Perception checks) to remain hidden."
         },
         "Survival": {
-            name: "Survival (WIS +0)",
-            attr: "Wisdom (+0 WIS)",
-            desc: "Measures your ability to follow tracks, hunt wild game, navigate unforgiving terrain, and avoid natural environmental hazards.",
+            name: "Survival (WIS +2 ★ [Barovian Lore])",
+            attr: "Wisdom • Proficient (+0 WIS + 2 PB • Barovian Native)",
+            desc: "Measures ability to follow tracks, hunt wild game, navigate unforgiving terrain, and avoid natural environmental hazards under the dreary Barovian sky.",
             examples: [
-                "Follow wagon ruts or tracks through mud, snow, and rain.",
-                "Forage for sustenance, build weatherproof lean-tos, and find fresh water springs.",
-                "Navigate through treacherous swamps, mountain passes, and dense forests without getting lost.",
-                "Predict environmental hazards like quicksand, flash floods, or unstable snowdrifts."
+                "<strong>💧 Clean Well-Water:</strong> Automatically knows how to find clean natural well-water and mountain springs untainted by cemetery runoff or village pestilence.",
+                "<strong>🌲 Svalich Wilderness Navigation:</strong> Navigate through treacherous fog banks, choking briars, and mountain passes without losing orientation.",
+                "Forage for wholesome sustenance and build windproof, concealed shelters in the dense forest.",
+                "Predict natural and supernatural hazards like quicksand bogs, cliff collapses, or shifting mists."
             ],
-            rules: "Used to track quarry, hunt for food, guide the party through wilderness, and endure harsh weather."
+            rules: "Native Barovian Acumen: Piper can always find untainted clean water and safely navigate the Svalich Woods."
         }
     };
 
@@ -3231,6 +3231,18 @@
                             <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
                                 <div style="font-weight:700; color:#c4b5fd;">🗣️ Languages &amp; Tool Proficiencies</div>
                                 <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;"><strong>Languages:</strong> Common, Infernal, Elvish.<br><strong>Tools:</strong> Disguise Kit, Playing Cards / Musical Instrument.</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-left:3px solid #10b981; border-radius:5px; padding:7px 9px; grid-column: span 2; margin-top:2px;">
+                                <div style="font-weight:700; color:#6ee7b7; font-size:0.75rem;">🌲 Barovian Lore &amp; Wilderness Acumen (Native Boon)</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:3px; line-height:1.45;">
+                                    As the sole native Barovian in the party, Piper is proficient in <strong>Nature (+3 ★)</strong> and <strong>Survival (+2 ★)</strong>.<br>
+                                    <strong>Folk Knowledge:</strong> She automatically knows:
+                                    <ul style="padding-left:16px; margin-top:2px; margin-bottom:0px; display:flex; flex-direction:column; gap:2px;">
+                                        <li>Which woodland mushrooms and berries are safe vs. dream-inducing or lethal.</li>
+                                        <li>The difference between normal wolf tracks and dire wolf or werewolf tracks.</li>
+                                        <li>How to find clean well-water untainted by cemetery runoff.</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
