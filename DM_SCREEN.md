@@ -11,7 +11,7 @@
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **PC 1** | 🎩 **Piper ("The Incomparable")** | Level 3 Wild Magic Sorcerer (Fierna Tiefling • Native) | `16/16` | `12 (15)` | `+2` | ✨ `3/3 SP` • 🃏 `Tides of Chaos` • 🔥 Fire Resist • `DC 14 / +6` |
 | **PC 2** | 👑 **Jacomir Yulle ("King of Oakenshire")** | Level 3 Battle Master Fighter (Human • Noble) | `28/28` | `17` | `+0` | ⚔️ `4/4 d8` *(Parry/Riposte/Menacing DC 13)* • 💨 `3/3 SW` • ⚡ `Action Surge` |
-| **PC 3** | 🔫 **Eclipsa "Yvaine" the First** | Level 3 Monster Slayer Ranger (Human • Gunslinger) | `28/28` | `15` | `+5` | 🎯 *Lament* `+7 (1d12+3)` • 🔍 *Hunter's Sense 2/2* • 🏹 *Slayer's Prey* • ⚡ *Alert* |
+| **PC 3** | 🔫 **Eclipsa "Yvaine" the First** | Level 3 Monster Slayer Ranger (Human • Gunner) | `28/28` | `16` | `+6` | 🎯 *Lament* `+8 (1d12+4)` • 💥 *Mercy & Less* `+8 (1d6+4 & 1d6)` • 🔍 *Hunter's Sense 2/2* • 🏹 *Slayer's Prey (+1d6)* • ⚡ *Alert (+6 Init)* |
 | **PC 4** | 🏹 **Stranger #4** *(TBD)* | Level 3 *[TBD]* | `--/--` | `--` | `+--` | 🤝 Help Tokens: `2 / 2` |
 | **Escort** | 🌹 **Ireena Kolyana** | Noble Swordswoman | `28/28` | `15` | `+2` | Silvered Rapier `+5 (1d8+2)` • Parry `+2 AC` |
 | **Ally** | 🗡️ **Ismark Indirovich** | Veteran Swordsman *(Act I)* | `58/58` | `17` | `+1` | Multiattack: 2x Longsword `+5 (1d10+3)` |

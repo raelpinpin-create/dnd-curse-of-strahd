@@ -1,0 +1,3077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eclipsa "Yvaine" Shadowglen — Monster Slayer Ranger Sheet (Curse of Strahd)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #070b14;
+            --bg-sheet: #0d1424;
+            --panel-bg: #151d30;
+            --panel-sub: #0b111e;
+            --card-border: #28354d;
+            --card-border-hover: #f59e0b;
+            --accent-gold: #f59e0b;
+            --accent-amber: #d97706;
+            --accent-blue: #38bdf8;
+            --accent-cyan: #22d3ee;
+            --accent-green: #22c55e;
+            --accent-red: #ef4444;
+            --accent-crimson: #dc2626;
+            --accent-purple: #c084fc;
+            --accent-silver: #cbd5e1;
+            --text-light: #f8fafc;
+            --text-dim: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-light);
+            line-height: 1.5;
+            padding: 16px 12px 70px 12px;
+            display: flex;
+            justify-content: center;
+            font-size: 0.88rem;
+        }
+
+        .sheet-container {
+            width: 100%;
+            max-width: 1180px;
+            background-color: var(--bg-sheet);
+            border: 1.5px solid #334155;
+            border-radius: 12px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.75);
+            overflow: hidden;
+        }
+
+        /* Top Header Banner */
+        .header-banner {
+            background: linear-gradient(180deg, #2b1419 0%, #0d1424 100%);
+            border-bottom: 1px solid var(--card-border);
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .header-title h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-gold);
+            font-size: 1.52rem;
+            letter-spacing: 0.4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+
+        .pill-badge-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .pill-badge {
+            padding: 3px 10px;
+            border-radius: 9999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .pill-neutral { background: #334155; color: #f1f5f9; border: 1px solid #475569; }
+        .pill-crimson { background: rgba(239, 68, 68, 0.18); color: #fecaca; border: 1px solid #ef4444; }
+        .pill-gold { background: rgba(245, 158, 11, 0.18); color: #fde68a; border: 1px solid #f59e0b; }
+        .pill-blue { background: rgba(56, 189, 248, 0.18); color: #bae6fd; border: 1px solid #38bdf8; }
+        .pill-green { background: rgba(34, 197, 94, 0.18); color: #bbf7d0; border: 1px solid #22c55e; }
+
+        /* TOP PROMINENT DICE ROLLER CONSOLE */
+        .top-dice-console {
+            background: #080c16;
+            border-bottom: 1px solid var(--card-border);
+            padding: 10px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .dice-controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .dice-buttons-group, .dice-mod-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .dice-btn {
+            background: #182236;
+            border: 1px solid #334155;
+            color: #f1f5f9;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.78rem;
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .dice-btn:hover {
+            border-color: var(--accent-gold);
+            background: #22304d;
+            color: var(--accent-gold);
+        }
+
+        .mode-toggle-group {
+            display: flex;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .mode-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 9px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .mode-btn.active {
+            background: var(--accent-gold);
+            color: #000;
+        }
+
+        /* 2-Column Main Layout */
+        .sheet-body-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 14px;
+            padding: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .sheet-body-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .column-pane {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .panel-box {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 6px;
+        }
+
+        .panel-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        /* Vitals 4-Box Row */
+        .vitals-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .vital-card {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            text-align: center;
+            padding: 7px 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+        .vital-card:hover { border-color: var(--accent-gold); }
+
+        .vital-label {
+            font-size: 0.64rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--text-dim);
+            letter-spacing: 0.4px;
+        }
+        .vital-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.12rem;
+            font-weight: 800;
+            color: var(--text-light);
+            margin-top: 1px;
+        }
+        .hp-green { color: #4ade80; }
+        .hp-amber { color: #fde68a; }
+        .hp-crimson { color: #f87171; }
+        .hp-blue { color: #67e8f9; }
+
+        /* Spacious 2-Row HP Controller */
+        .hp-controller-box {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 7px;
+            padding: 9px;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .hp-input-row {
+            display: flex;
+            gap: 6px;
+        }
+
+        .hp-input-num {
+            flex: 1;
+            background: #060912;
+            border: 1px solid #334155;
+            border-radius: 5px;
+            color: #f8fafc;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 0.88rem;
+            padding: 6px 10px;
+            outline: none;
+        }
+        .hp-input-num:focus { border-color: var(--accent-gold); }
+
+        .btn-act {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-act:active { transform: scale(0.97); }
+        .btn-act-dmg { background: #991b1b; color: #fee2e2; }
+        .btn-act-dmg:hover { background: #b91c1c; }
+        .btn-act-heal { background: #065f46; color: #d1fae5; }
+        .btn-act-heal:hover { background: #047857; }
+        .btn-act-temp { background: #0284c7; color: #f0f9ff; border: 1px solid #38bdf8; }
+        .btn-act-temp:hover { background: #0369a1; }
+        .btn-act-pre { background: #1e293b; color: var(--text-light); border: 1px solid var(--card-border); }
+        .btn-act-pre:hover { background: #334155; }
+
+        /* Dynamic Buffs / Toggles Bar */
+        .buffs-toggle-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .toggle-btn-card {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 5px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .toggle-btn-card:hover { border-color: var(--accent-gold); }
+        .toggle-btn-card.active-buff {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+        }
+        .toggle-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .toggle-badge.off { background: #334155; color: #94a3b8; }
+        .toggle-badge.on { background: #0284c7; color: #f0f9ff; }
+
+        /* Ability Scores Strip */
+        .ability-strip {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .ability-box {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 5px;
+            text-align: center;
+            padding: 5px 2px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .ability-box:hover { border-color: var(--accent-gold); background: rgba(245, 158, 11, 0.08); }
+        .ability-box.active-key {
+            border: 1.5px solid var(--accent-gold);
+            background: rgba(245, 158, 11, 0.12);
+        }
+
+        .ability-name { font-size: 0.65rem; font-weight: 700; color: var(--text-dim); }
+        .ability-score { font-size: 1rem; font-weight: 700; color: var(--text-light); }
+        .ability-mod { font-size: 0.72rem; font-weight: 600; color: var(--text-dim); }
+        .ability-box.active-key .ability-mod { color: var(--accent-gold); }
+
+        /* Skills & Saves Lists */
+        .stat-row-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .stat-row-item {
+            font-size: 0.76rem;
+            color: var(--text-light);
+            padding: 3px 7px;
+            background: var(--panel-sub);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1px solid transparent;
+        }
+        .stat-row-item:hover {
+            background: #1e293b;
+            border-color: var(--accent-blue);
+        }
+        .stat-row-item.prof-item {
+            color: var(--accent-gold);
+            font-weight: 600;
+            background: rgba(245, 158, 11, 0.07);
+            border-left: 3px solid var(--accent-gold);
+        }
+        .stat-row-item.exp-item {
+            color: #38bdf8;
+            font-weight: 700;
+            background: rgba(56, 189, 248, 0.09);
+            border-left: 3px solid #38bdf8;
+        }
+
+        /* Stance Selector Bar */
+        .stance-selector-bar {
+            background: #090e1a;
+            border: 1.5px solid #334155;
+            border-radius: 8px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .stance-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+        }
+
+        .stance-btn {
+            background: #131c2e;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 8px 6px;
+            color: #cbd5e1;
+            font-size: 0.76rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            transition: all 0.2s ease;
+        }
+        .stance-btn:hover { border-color: var(--accent-gold); color: #fff; }
+        .stance-btn.active-stance {
+            border: 1.5px solid var(--accent-gold);
+            background: rgba(245, 158, 11, 0.14);
+            color: #fde68a;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+        }
+
+        /* Action & Weapon Cards */
+        .weapon-card {
+            background-color: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 7px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: all 0.15s ease;
+        }
+        .weapon-card:hover { border-color: var(--accent-gold); }
+        .weapon-card.highlight-equipped {
+            border-color: rgba(245, 158, 11, 0.5);
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.04) 0%, #0b111e 100%);
+        }
+
+        .ammo-display-strip {
+            background: #060912;
+            border: 1px solid #2a374f;
+            border-radius: 5px;
+            padding: 6px 9px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .ammo-pips-container {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+        }
+
+        .reload-btn-prominent {
+            background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+            color: #fff;
+            border: 1px solid #f59e0b;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 0.76rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .reload-btn-prominent:hover {
+            filter: brightness(1.15);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+        }
+        .reload-btn-prominent.empty-pulse {
+            animation: pulseReload 1.4s infinite ease-in-out;
+            background: linear-gradient(135deg, #b91c1c 0%, #ef4444 100%);
+            border-color: #f87171;
+        }
+
+        @keyframes pulseReload {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.02); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Spell Slots Tracker Strip */
+        .slot-tracker-strip {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 7px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        /* Spell Cards 2-Col */
+        .spells-grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+
+        @media (max-width: 600px) {
+            .spells-grid-2col { grid-template-columns: 1fr; }
+        }
+
+        .spell-action-card {
+            background-color: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            transition: all 0.15s ease;
+        }
+        .spell-action-card:hover { border-color: var(--accent-gold); }
+
+        /* Currency / Gold Box */
+        .currency-box {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 7px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .coin-counter-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #070a12;
+            padding: 6px 4px;
+            border-radius: 5px;
+            border: 1px solid #1e293b;
+        }
+
+        .coin-val-lbl {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Compact Notes Card & Mini List */
+        .notes-preview-card {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 7px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .note-preview-row {
+            background: #090e1a;
+            border: 1px solid #1e293b;
+            border-radius: 5px;
+            padding: 5px 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.15s ease;
+        }
+        .note-preview-row:hover {
+            border-color: var(--accent-gold);
+            background: #141f33;
+        }
+
+        /* Inventory Cards */
+        .inventory-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .inventory-item-row {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 5px;
+            padding: 5px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.77rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .inventory-item-row:hover {
+            background: #1e293b;
+            border-color: var(--accent-gold);
+        }
+
+        /* 🎲 FLOATING BOTTOM ROLL RESULT HUD DRAWER */
+        .floating-roll-hud {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%) translateY(150%);
+            width: min(740px, 95vw);
+            background: rgba(13, 20, 36, 0.96);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1.5px solid var(--accent-gold);
+            border-radius: 10px;
+            padding: 12px 16px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(245, 158, 11, 0.25);
+            z-index: 950;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .floating-roll-hud.active-hud {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Dialog Modals */
+        dialog {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: auto;
+            max-width: 720px;
+            width: 92vw;
+        }
+        dialog::backdrop {
+            background: rgba(3, 7, 18, 0.82);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-card {
+            background: var(--panel-bg);
+            border: 1.5px solid var(--accent-gold);
+            border-radius: 10px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85);
+            color: var(--text-light);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 85vh;
+        }
+
+        .modal-header {
+            background: linear-gradient(180deg, #2b1419 0%, #151d30 100%);
+            border-bottom: 1px solid var(--card-border);
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 14px 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 0.82rem;
+            line-height: 1.55;
+        }
+
+        .tx-item {
+            padding: 6px 10px;
+            border-radius: 5px;
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.74rem;
+        }
+        .tx-spend { border-left: 3px solid #ef4444; }
+        .tx-gain { border-left: 3px solid #22c55e; }
+        .tx-silver { border-left: 3px solid #38bdf8; }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body>
+    <div class="sheet-container">
+        <!-- TOP HEADER BANNER -->
+        <header class="header-banner">
+            <div class="header-title">
+                <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.filter='brightness(1.18)'" onmouseout="this.style.filter='none'" title="Click to open Yvaine's Origin Story, Backstory &amp; Passive Abilities">
+                    🔫 ECLIPSA ROSALINA "YVAINE" <span style="font-size:0.95rem; color:#cbd5e1; font-weight:600;">(The First • Fallen Princess of Solmere)</span>
+                </h1>
+                <div style="margin-top:5px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <span class="pill-badge pill-gold" style="font-size:0.72rem; padding:2px 10px; letter-spacing:0.6px;">⭐ LEVEL 3</span>
+                    <span class="pill-badge pill-neutral" style="font-size:0.7rem; padding:2px 9px;">CHAOTIC NEUTRAL</span>
+                    <span class="pill-badge pill-crimson" style="font-size:0.7rem; padding:2px 9px;">MONSTER SLAYER RANGER</span>
+                    <span class="pill-badge pill-blue" style="font-size:0.7rem; padding:2px 9px;">HUMAN (GUNNER &amp; ALERT)</span>
+                </div>
+            </div>
+            <div class="pill-badge-group">
+                <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">🏰 Portal</a>
+                <button class="btn-act btn-act-pre" onclick="exportPlayerNotes()" style="color:#c4b5fd; border:1px solid rgba(167, 139, 250, 0.5); display:flex; align-items:center; gap:4px;" title="Copy ONLY new, edited, or removed Player Notes from this session">📓 Export Notes</button>
+                <button class="btn-act btn-act-pre" onclick="exportSheetState()" style="color:var(--accent-gold); border:1px solid rgba(245, 158, 11, 0.5); display:flex; align-items:center; gap:4px;" title="Copy live HP, Ammo Counts, Spell Slots, Resources, and session inventory delta">📋 Export Data</button>
+            </div>
+        </header>
+
+        <!-- TOP PROMINENT DICE ROLLER CONSOLE -->
+        <section class="top-dice-console">
+            <div class="dice-controls-bar">
+                <div class="dice-buttons-group">
+                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-dim); margin-right:2px;">🎲 Quick Roll:</span>
+                    <button class="dice-btn" onclick="rollCustomDie(20)">d20</button>
+                    <button class="dice-btn" onclick="rollCustomDie(12)">d12</button>
+                    <button class="dice-btn" onclick="rollCustomDie(10)">d10</button>
+                    <button class="dice-btn" onclick="rollCustomDie(8)">d8</button>
+                    <button class="dice-btn" onclick="rollCustomDie(6)">d6</button>
+                    <button class="dice-btn" onclick="rollCustomDie(4)">d4</button>
+                    <button class="dice-btn" onclick="rollCustomDie(100)">d100</button>
+                </div>
+                <div class="dice-mod-group">
+                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-dim);">Roll Mode:</span>
+                    <div class="mode-toggle-group">
+                        <button id="mode-btn-dis" class="mode-btn" onclick="setRollMode('dis')">Dis</button>
+                        <button id="mode-btn-norm" class="mode-btn active" onclick="setRollMode('norm')">Norm</button>
+                        <button id="mode-btn-adv" class="mode-btn" onclick="setRollMode('adv')">Adv</button>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:3px; margin-left:6px;">
+                        <span style="font-size:0.74rem; color:var(--text-dim);">Mod:</span>
+                        <input type="number" id="manual-dice-mod" value="0" style="width:40px; background:#070a12; border:1px solid #334155; border-radius:4px; color:#f8fafc; font-family:'JetBrains Mono',monospace; font-size:0.78rem; text-align:center; padding:2px;">
+                        <button class="btn-act btn-act-pre" onclick="stepManualMod(1)" style="padding:2px 6px;">+1</button>
+                        <button class="btn-act btn-act-pre" onclick="stepManualMod(-1)" style="padding:2px 6px;">-1</button>
+                        <button class="btn-act btn-act-pre" onclick="resetManualMod()" style="padding:2px 6px;">0</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAIN 2-COLUMN GRID -->
+        <main class="sheet-body-grid">
+
+            <!-- ============================================== -->
+            <!-- LEFT COLUMN: VITALS, CONTROLLERS, STATS, PURSE -->
+            <!-- ============================================== -->
+            <div class="column-pane">
+
+                <!-- 1. VITALS 4-BOX ROW -->
+                <div class="vitals-grid">
+                    <div class="vital-card">
+                        <span class="vital-label">Hit Points</span>
+                        <span id="vital-hp-disp" class="vital-value hp-green">28 / 28</span>
+                    </div>
+                    <div class="vital-card">
+                        <span class="vital-label">Armor Class</span>
+                        <span id="vital-ac-disp" class="vital-value" style="color:#fde68a;">16</span>
+                    </div>
+                    <div class="vital-card" onclick="rollInitiative()" style="cursor:pointer;" title="Click to Roll Initiative (+6 Alert Feat)">
+                        <span class="vital-label">Init (Alert)</span>
+                        <span class="vital-value" style="color:#38bdf8;">+6 ⚡</span>
+                    </div>
+                    <div class="vital-card" onclick="rollFirearmsCheck()" style="cursor:pointer;" title="Spell DC: 12 | Firearms Attack: +8">
+                        <span class="vital-label">DC / Hit</span>
+                        <span class="vital-value" style="font-size:0.95rem; color:#fca5a5;">12 | +8</span>
+                    </div>
+                </div>
+
+                <!-- 2. SPACIOUS 2-ROW HP & UTILITY CONTROLLER -->
+                <div class="hp-controller-box">
+                    <div class="hp-input-row">
+                        <input type="number" id="hp-amount-input" class="hp-input-num" placeholder="Enter HP amount..." min="1">
+                        <button class="btn-act btn-act-dmg" onclick="takeDamage()">💔 Take Dmg</button>
+                        <button class="btn-act btn-act-heal" onclick="healHP()">💚 Heal HP</button>
+                        <button class="btn-act btn-act-temp" onclick="addTempHP()">🛡️ Temp</button>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:4px;">
+                        <div style="display:flex; gap:4px;">
+                            <button class="btn-act btn-act-pre" onclick="stepHPAmount(-1)">-1</button>
+                            <button class="btn-act btn-act-pre" onclick="stepHPAmount(1)">+1</button>
+                            <button class="btn-act btn-act-pre" onclick="clearTempHP()" style="color:#67e8f9;">Clear Temp</button>
+                        </div>
+                        <div style="display:flex; gap:4px;">
+                            <button class="btn-act btn-act-pre" onclick="takeShortRest()" style="color:#fde68a;" title="Regain HP + 1 Help Token + Repack All Ammo &amp; Reload Reserves!">☕ Short Rest</button>
+                            <button class="btn-act btn-act-pre" onclick="takeLongRest()" style="color:#a78bfa;" title="Full HP + Spell Slots + Ammo + Heroic Inspiration">🌙 Long Rest</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. DYNAMIC ACTIVE BUFFS & TOGGLES -->
+                <div class="buffs-toggle-bar">
+                    <div id="card-armor-toggle" class="toggle-btn-card active-buff" onclick="toggleArmorManual()">
+                        <div>
+                            <div style="font-size:0.75rem; font-weight:700; color:#f8fafc;">🧥 Studded Leather Coat</div>
+                            <div style="font-size:0.66rem; color:var(--text-dim);">AC 12 + 4 DEX = 16</div>
+                        </div>
+                        <span id="badge-armor-toggle" class="toggle-badge on">ON (16)</span>
+                    </div>
+
+                    <div id="card-speed-toggle" class="toggle-btn-card" onclick="toggleLongstriderSpeed()">
+                        <div>
+                            <div style="font-size:0.75rem; font-weight:700; color:#f8fafc;">🏃 Pneumatic Stride</div>
+                            <div id="sub-speed-disp" style="font-size:0.66rem; color:var(--text-dim);">Speed: 30 ft</div>
+                        </div>
+                        <span id="badge-speed-toggle" class="toggle-badge off">OFF (30)</span>
+                    </div>
+
+                    <div id="card-heroic-toggle" class="toggle-btn-card active-buff" onclick="useHeroicInspiration()">
+                        <div>
+                            <div style="font-size:0.75rem; font-weight:700; color:#f8fafc;">🌟 Heroic Inspiration</div>
+                            <div id="sub-heroic-disp" style="font-size:0.66rem; color:var(--text-dim);">Human Resourceful (1/LR)</div>
+                        </div>
+                        <span id="badge-heroic-toggle" class="toggle-badge on">READY</span>
+                    </div>
+
+                    <div id="card-slayer-toggle" class="toggle-btn-card" onclick="toggleSlayersPreyManual()">
+                        <div>
+                            <div style="font-size:0.75rem; font-weight:700; color:#f8fafc;">🎯 Slayer's Prey (+1d6)</div>
+                            <div id="sub-slayer-disp" style="font-size:0.66rem; color:var(--text-dim);">Quarry: Unmarked</div>
+                        </div>
+                        <span id="badge-slayer-toggle" class="toggle-badge off">OFF</span>
+                    </div>
+                </div>
+
+                <!-- 4. HELP TOKENS TRACKER -->
+                <div class="panel-box" style="padding:8px 10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <span style="font-size:0.8rem; font-weight:700; color:#67e8f9;">🤝 Party Help Tokens:</span>
+                            <span id="help-tokens-disp" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f8fafc;">2 / 2</span>
+                        </div>
+                        <div style="display:flex; gap:4px;">
+                            <button class="btn-act btn-act-pre" onclick="spendHelpToken()" style="color:#67e8f9; font-weight:700;">🎲 Spend (+1d6)</button>
+                            <button class="btn-act btn-act-pre" onclick="refillHelpTokens()" style="color:#94a3b8;">🔄 Refill</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. ABILITY SCORES STRIP (Validated 5.5e Statgen) -->
+                <div class="ability-strip">
+                    <div class="ability-box" onclick="rollAbilityCheck('STR', -1)">
+                        <div class="ability-name">STR</div>
+                        <div class="ability-score">8</div>
+                        <div class="ability-mod">-1</div>
+                    </div>
+                    <div class="ability-box active-key" onclick="rollAbilityCheck('DEX', 4)" title="Key Ability Score (+4 Mod)">
+                        <div class="ability-name" style="color:var(--accent-gold);">DEX ★</div>
+                        <div class="ability-score" style="color:#fde68a;">18</div>
+                        <div class="ability-mod">+4</div>
+                    </div>
+                    <div class="ability-box" onclick="rollAbilityCheck('CON', 2)">
+                        <div class="ability-name">CON</div>
+                        <div class="ability-score">14</div>
+                        <div class="ability-mod">+2</div>
+                    </div>
+                    <div class="ability-box" onclick="rollAbilityCheck('INT', 0)">
+                        <div class="ability-name">INT</div>
+                        <div class="ability-score">10</div>
+                        <div class="ability-mod">+0</div>
+                    </div>
+                    <div class="ability-box" onclick="rollAbilityCheck('WIS', 2)">
+                        <div class="ability-name">WIS</div>
+                        <div class="ability-score">14</div>
+                        <div class="ability-mod">+2</div>
+                    </div>
+                    <div class="ability-box" onclick="rollAbilityCheck('CHA', 0)">
+                        <div class="ability-name">CHA</div>
+                        <div class="ability-score">10</div>
+                        <div class="ability-mod">+0</div>
+                    </div>
+                </div>
+
+                <!-- 6. SAVING THROWS & ALL 18 SKILLS -->
+                <div class="panel-box" style="padding:10px;">
+                    <div class="panel-header">
+                        <span class="panel-title">🛡️ Saving Throws</span>
+                        <span style="font-size:0.68rem; color:var(--text-dim);">PB +2</span>
+                    </div>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:4px; margin-bottom:8px;">
+                        <div class="stat-row-item prof-item" onclick="rollSave('STR', 1)">
+                            <span>STR Save ★</span>
+                            <span style="font-family:'JetBrains Mono',monospace;">+1</span>
+                        </div>
+                        <div class="stat-row-item prof-item" onclick="rollSave('DEX', 6)">
+                            <span>DEX Save ★</span>
+                            <span style="font-family:'JetBrains Mono',monospace;">+6</span>
+                        </div>
+                        <div class="stat-row-item" onclick="rollSave('CON', 2)">
+                            <span>CON Save</span>
+                            <span style="font-family:'JetBrains Mono',monospace;">+2</span>
+                        </div>
+                        <div class="stat-row-item" onclick="rollSave('INT', 0)">
+                            <span>INT Save</span>
+                            <span style="font-family:'JetBrains Mono',monospace;">+0</span>
+                        </div>
+                        <div class="stat-row-item" onclick="rollSave('WIS', 2)">
+                            <span>WIS Save</span>
+                            <span style="font-family:'JetBrains Mono',monospace;">+2</span>
+                        </div>
+                        <div class="stat-row-item" onclick="rollSave('CHA', 0)">
+                            <span>CHA Save</span>
+                            <span style="font-family:'JetBrains Mono',monospace;">+0</span>
+                        </div>
+                    </div>
+
+                    <div class="panel-header">
+                        <span class="panel-title">🎯 Skills &amp; Proficiencies</span>
+                        <span style="font-size:0.68rem; color:#38bdf8;">Perception Expertise</span>
+                    </div>
+                    <ul class="stat-row-list" style="margin-top:4px;">
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Acrobatics (Dex)', 6)">
+                            <span>Acrobatics (Dex) ★</span><span style="font-family:'JetBrains Mono',monospace;">+6</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (Wis)', 2)">
+                            <span>Animal Handling (Wis)</span><span style="font-family:'JetBrains Mono',monospace;">+2</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Arcana (Int)', 2)">
+                            <span>Arcana (Int) ★</span><span style="font-family:'JetBrains Mono',monospace;">+2</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Athletics (Str)', -1)">
+                            <span>Athletics (Str)</span><span style="font-family:'JetBrains Mono',monospace;">-1</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Deception (Cha)', 0)">
+                            <span>Deception (Cha)</span><span style="font-family:'JetBrains Mono',monospace;">+0</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('History (Int)', 0)">
+                            <span>History (Int)</span><span style="font-family:'JetBrains Mono',monospace;">+0</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (Wis)', 4)">
+                            <span>Insight (Wis) ★</span><span style="font-family:'JetBrains Mono',monospace;">+4</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Intimidation (Cha)', 0)">
+                            <span>Intimidation (Cha)</span><span style="font-family:'JetBrains Mono',monospace;">+0</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Investigation (Int)', 2)">
+                            <span>Investigation (Int) ★</span><span style="font-family:'JetBrains Mono',monospace;">+2</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Medicine (Wis)', 2)">
+                            <span>Medicine (Wis)</span><span style="font-family:'JetBrains Mono',monospace;">+2</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Nature (Int)', 0)">
+                            <span>Nature (Int)</span><span style="font-family:'JetBrains Mono',monospace;">+0</span>
+                        </li>
+                        <li class="stat-row-item exp-item" onclick="rollSkill('Perception (Wis) [Expertise]', 6)">
+                            <span>Perception (Wis) 👁️ (Exp)</span><span style="font-family:'JetBrains Mono',monospace;">+6 (PP 16)</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Performance (Cha)', 0)">
+                            <span>Performance (Cha)</span><span style="font-family:'JetBrains Mono',monospace;">+0</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Persuasion (Cha)', 0)">
+                            <span>Persuasion (Cha)</span><span style="font-family:'JetBrains Mono',monospace;">+0</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Religion (Int)', 0)">
+                            <span>Religion (Int)</span><span style="font-family:'JetBrains Mono',monospace;">+0</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Sleight of Hand (Dex)', 6)">
+                            <span>Sleight of Hand (Dex) ★</span><span style="font-family:'JetBrains Mono',monospace;">+6</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Stealth (Dex)', 6)">
+                            <span>Stealth (Dex) ★</span><span style="font-family:'JetBrains Mono',monospace;">+6</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Survival (Wis)', 4)">
+                            <span>Survival (Wis) ★</span><span style="font-family:'JetBrains Mono',monospace;">+4</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 7. GOLD PURSE & CURRENCY LEDGER (10 SP = 1 GP) -->
+                <div class="currency-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.78rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.4px;">🪙 Gold Purse</span>
+                        <div style="display:flex; gap:4px;">
+                            <button class="btn-act btn-act-pre" onclick="openGoldHistoryModal()" style="font-size:0.68rem;">📜 Ledger</button>
+                            <button class="btn-act btn-act-pre" onclick="resetGoldPurse()" style="font-size:0.68rem; color:#94a3b8;">🔄 Reset</button>
+                        </div>
+                    </div>
+                    <div class="coin-counter-row">
+                        <div class="coin-val-lbl" style="color:var(--accent-gold);">
+                            <span>🪙</span> <span id="gold-disp">15</span> <span style="font-size:0.7rem; color:var(--text-dim);">GP</span>
+                        </div>
+                        <div style="height:18px; width:1px; background:#334155;"></div>
+                        <div class="coin-val-lbl" style="color:#38bdf8;">
+                            <span>🥈</span> <span id="silver-disp">0</span> <span style="font-size:0.7rem; color:var(--text-dim);">SP</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; gap:3px;">
+                        <button class="btn-act btn-act-pre" onclick="stepGold(-5)">-5 GP</button>
+                        <button class="btn-act btn-act-pre" onclick="stepGold(-1)">-1 GP</button>
+                        <button class="btn-act btn-act-pre" onclick="stepGold(1)">+1 GP</button>
+                        <button class="btn-act btn-act-pre" onclick="stepGold(5)">+5 GP</button>
+                        <button class="btn-act btn-act-pre" onclick="stepSilver(1)" style="color:#38bdf8;">+1 SP</button>
+                    </div>
+                    <div style="display:flex; gap:4px;">
+                        <input type="number" id="gold-input" placeholder="Custom GP..." style="flex:1; background:#070a12; border:1px solid #334155; border-radius:4px; color:#fff; font-size:0.75rem; padding:4px 6px;">
+                        <input type="text" id="gold-reason-input" placeholder="Reason..." style="flex:1.4; background:#070a12; border:1px solid #334155; border-radius:4px; color:#fff; font-size:0.75rem; padding:4px 6px;">
+                        <button class="btn-act btn-act-dmg" onclick="applyGoldSpend()" style="padding:4px 7px;">Spend</button>
+                        <button class="btn-act btn-act-heal" onclick="applyGoldAdd()" style="padding:4px 7px;">Earn</button>
+                    </div>
+                </div>
+
+                <!-- 8. PRESSABLE PLAYER NOTES LEDGER (No Pin Emojis, 220 Char Limit) -->
+                <div class="notes-preview-card">
+                    <div style="display:flex; justify-content:space-between; align-items:center; cursor:pointer;" onclick="openPlayerNotesModal()" title="Click to open full Player Notes ledger">
+                        <span style="font-family:'Cinzel',serif; font-size:0.82rem; font-weight:800; color:#c4b5fd; text-transform:uppercase; letter-spacing:0.4px;">📓 Player Notes (<span id="sheet-notes-count">3</span>)</span>
+                        <span style="font-size:0.68rem; color:#a78bfa; font-weight:700;">➕ Open / Manage ↗</span>
+                    </div>
+                    <div id="sheet-notes-preview-list" style="display:flex; flex-direction:column; gap:4px;">
+                        <!-- Compact 1-line previews rendered here -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ============================================== -->
+            <!-- RIGHT COLUMN: WEAPONS, SLAYER, RIGS, INVENTORY -->
+            <!-- ============================================== -->
+            <div class="column-pane">
+
+                <!-- 1. WEAPONS, FIREARMS ARSENAL & RELOAD ENGINE (TOP PANEL) -->
+                <div class="panel-box">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span>⚔️ Weapons &amp; Firearms Arsenal</span>
+                            <span class="pill-badge pill-crimson" style="font-size:0.65rem;">Gunner Mastery</span>
+                        </div>
+                        <span style="font-size:0.7rem; color:var(--text-dim);">Point-Blank Clearance (5 ft) • No Loading</span>
+                    </div>
+
+                    <!-- WEAPON QUICK-DRAW STANCE SELECTOR -->
+                    <div class="stance-selector-bar">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span style="font-size:0.7rem; font-weight:700; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.5px;">🎯 Active Armament Stance:</span>
+                            <span id="stance-context-tag" style="font-size:0.68rem; color:var(--accent-gold); font-weight:600;">Lament (Two-Handed Rifle)</span>
+                        </div>
+                        <div class="stance-buttons-grid">
+                            <button id="stance-btn-lament" class="stance-btn active-stance" onclick="switchWeaponStance('lament')">
+                                <span style="font-size:0.95rem;">🎯</span>
+                                <span>"Lament" (Rifle)</span>
+                            </button>
+                            <button id="stance-btn-revolvers" class="stance-btn" onclick="switchWeaponStance('revolvers')">
+                                <span style="font-size:0.95rem;">💥</span>
+                                <span>Mercy &amp; Less</span>
+                            </button>
+                            <button id="stance-btn-knife" class="stance-btn" onclick="switchWeaponStance('knife')">
+                                <span style="font-size:0.95rem;">🗡️</span>
+                                <span>Trench Knife</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- WEAPON CARD 1: "LAMENT" (HEAVY LONG RIFLE / MUSKET) -->
+                    <div id="card-weapon-lament" class="weapon-card highlight-equipped">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div>
+                                <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:800; color:#fde68a; display:flex; align-items:center; gap:6px;">
+                                    <span>🎯 "Lament" (Royal Heavy Long Rifle)</span>
+                                    <span class="pill-badge pill-gold" style="font-size:0.64rem;">Solmere Crest</span>
+                                </div>
+                                <div style="font-size:0.7rem; color:var(--text-dim); margin-top:2px;">
+                                    Two-Handed • Range 80/240 ft (5 ft point-blank w/ Gunner) • +8 to hit (Archery + Dex) • <strong>1d12 + 4 Piercing</strong>
+                                </div>
+                            </div>
+                            <span id="lament-status-badge" class="pill-badge pill-green" style="font-size:0.66rem;">LOADED (12/12)</span>
+                        </div>
+
+                        <!-- AMMO STRIP FOR LAMENT -->
+                        <div class="ammo-display-strip">
+                            <div style="display:flex; flex-direction:column; gap:2px;">
+                                <div style="font-size:0.68rem; color:var(--text-dim); font-weight:700;">CHAMBER CAPACITY (12 ROUNDS):</div>
+                                <div id="lament-pips-disp" class="ammo-pips-container">🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 🟡 (12/12)</div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span id="lament-reserves-disp" style="font-size:0.7rem; color:#cbd5e1; font-family:'JetBrains Mono',monospace;">📦 Reserves: <strong>4/4</strong> Clips</span>
+                                <button id="btn-reload-lament" class="reload-btn-prominent" onclick="reloadLament()">
+                                    <span>🔄 Reload Lament</span>
+                                    <span style="font-size:0.65rem; opacity:0.85;">(Bonus Action)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- ACTION BUTTONS FOR LAMENT -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                            <div style="display:flex; gap:6px;">
+                                <button class="btn-act btn-act-heal" onclick="fireLamentShot()" style="padding:6px 14px; font-size:0.78rem; font-weight:700; background:linear-gradient(135deg, #15803d 0%, #166534 100%);">
+                                    🎯 Fire Lament (Action) • +8 Hit | 1d12+4
+                                </button>
+                                <button class="btn-act btn-act-pre" onclick="rollSlayerLamentBurst()" style="color:#fde68a;" title="Calculate Lament + Slayer's Prey (+1d6)">
+                                    💥 Quarry Burst (1d12+1d6+4)
+                                </button>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:3px;">
+                                <span style="font-size:0.68rem; color:var(--text-muted);">Adj:</span>
+                                <button class="btn-act btn-act-pre" onclick="modLamentChamber(-1)" style="padding:2px 6px;">-1</button>
+                                <button class="btn-act btn-act-pre" onclick="modLamentChamber(1)" style="padding:2px 6px;">+1</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WEAPON CARD 2: TWIN REVOLVERS ("MERCY & LESS") -->
+                    <div id="card-weapon-revolvers" class="weapon-card">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <div>
+                                <div style="font-family:'Cinzel',serif; font-size:0.95rem; font-weight:800; color:#cbd5e1; display:flex; align-items:center; gap:6px;">
+                                    <span>💥 Twin Revolvers ("Mercy &amp; Less")</span>
+                                    <span class="pill-badge pill-crimson" style="font-size:0.64rem;">Dual-Wield Sidearms</span>
+                                </div>
+                                <div style="font-size:0.7rem; color:var(--text-dim); margin-top:2px;">
+                                    Main-Hand (Mercy): <strong>+8 to hit | 1d6 + 4 Piercing</strong> • Off-Hand (Less): <strong>+8 to hit | 1d6 Piercing</strong> • Range 5/90 ft
+                                </div>
+                            </div>
+                            <span id="revolvers-status-badge" class="pill-badge pill-green" style="font-size:0.66rem;">READY (6 &amp; 6)</span>
+                        </div>
+
+                        <!-- AMMO STRIP FOR TWIN REVOLVERS -->
+                        <div class="ammo-display-strip">
+                            <div style="display:flex; flex-direction:column; gap:4px;">
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <span style="font-size:0.68rem; color:#f87171; font-weight:700;">MERCY (Main):</span>
+                                    <span id="mercy-pips-disp" class="ammo-pips-container">🔴 🔴 🔴 🔴 🔴 🔴 (6/6)</span>
+                                </div>
+                                <div style="display:flex; align-items:center; gap:8px;">
+                                    <span style="font-size:0.68rem; color:#38bdf8; font-weight:700;">LESS (Off):</span>
+                                    <span id="less-pips-disp" class="ammo-pips-container">🔵 🔵 🔵 🔵 🔵 🔵 (6/6)</span>
+                                </div>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span id="revolvers-reserves-disp" style="font-size:0.7rem; color:#cbd5e1; font-family:'JetBrains Mono',monospace;">📦 Speedloaders: <strong>4/4</strong></span>
+                                <button id="btn-reload-revolvers" class="reload-btn-prominent" onclick="reloadBothRevolvers()">
+                                    <span>🔄 Speedload Both</span>
+                                    <span style="font-size:0.65rem; opacity:0.85;">(Bonus Action)</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- ACTION BUTTONS FOR REVOLVERS -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                            <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                                <button class="btn-act btn-act-heal" onclick="fireMercyShot()" style="padding:5px 11px; font-size:0.76rem; font-weight:700; background:linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);">
+                                    🔴 Shoot Mercy (Action) • +8 Hit | 1d6+4
+                                </button>
+                                <button class="btn-act btn-act-pre" onclick="fireLessShot()" style="padding:5px 11px; font-size:0.76rem; font-weight:700; color:#38bdf8; border-color:rgba(56,189,248,0.4);">
+                                    🔵 Shoot Less (Bonus Action) • +8 Hit | 1d6
+                                </button>
+                                <button class="btn-act btn-act-pre" onclick="fireDualVolley()" style="padding:5px 10px; font-size:0.74rem; font-weight:700; color:#fde68a;" title="Fire both revolvers in sequence (Action + Bonus Action)">
+                                    ⚡ Rapid Dual Volley
+                                </button>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:3px;">
+                                <span style="font-size:0.68rem; color:var(--text-muted);">Adj:</span>
+                                <button class="btn-act btn-act-pre" onclick="modMercyChamber(-1)" style="padding:2px 5px;" title="-1 Mercy">-M</button>
+                                <button class="btn-act btn-act-pre" onclick="modLessChamber(-1)" style="padding:2px 5px;" title="-1 Less">-L</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WEAPON CARD 3: SOLMERE ROYAL TRENCH KNIFE -->
+                    <div id="card-weapon-knife" class="weapon-card">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <div style="font-family:'Cinzel',serif; font-size:0.88rem; font-weight:800; color:#f1f5f9; display:flex; align-items:center; gap:6px;">
+                                    <span>🗡️ Solmere Royal Trench Knife / Stiletto</span>
+                                    <span class="pill-badge pill-neutral" style="font-size:0.64rem;">Melee Backup</span>
+                                </div>
+                                <div style="font-size:0.7rem; color:var(--text-dim); margin-top:2px;">
+                                    Finesse • Light • <strong>+6 to hit (Dex + PB) | 1d4 + 4 Piercing</strong> • Concealed in boot
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:5px;">
+                                <button class="btn-act btn-act-pre" onclick="rollKnifeStrike(false)" style="padding:5px 10px; font-weight:700; color:#f8fafc;">
+                                    🗡️ Strike (Action)
+                                </button>
+                                <button class="btn-act btn-act-pre" onclick="rollKnifeStrike(true)" style="padding:5px 8px; font-size:0.72rem; color:#cbd5e1;" title="Off-hand slash (Bonus Action, no Dex mod to dmg)">
+                                    🗡️ Off-Hand Stab (BA)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 2. MONSTER SLAYER & OCCULT FEATURES (SECOND PANEL) -->
+                <div class="panel-box">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span>🔍 Monster Slayer &amp; Occult Features</span>
+                            <span class="pill-badge pill-gold" style="font-size:0.65rem;">Level 3</span>
+                        </div>
+                        <span style="font-size:0.7rem; color:var(--text-dim);">Anatomy Knowledge &amp; Quarry Targeting</span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:7px;">
+                        <!-- Hunter's Sense -->
+                        <div class="spell-action-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span style="font-weight:700; color:#fde68a;">🔍 Hunter's Sense</span>
+                                <span id="hunters-sense-pips" style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; font-weight:800; color:#38bdf8;">2 / 2 uses</span>
+                            </div>
+                            <div style="font-size:0.7rem; color:var(--text-dim);">
+                                Bonus Action (60 ft). Visually clock an abomination's anatomy to learn its <strong>damage immunities, resistances, and vulnerabilities</strong>!
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                                <button class="btn-act btn-act-pre" onclick="useHuntersSense()" style="color:#fde68a; font-weight:700; padding:4px 10px;">
+                                    👁️ Inspect Creature (BA)
+                                </button>
+                                <button class="btn-act btn-act-pre" onclick="refillHuntersSense()" style="font-size:0.66rem; color:#94a3b8;">🔄 Reset</button>
+                            </div>
+                        </div>
+
+                        <!-- Slayer's Prey -->
+                        <div class="spell-action-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span style="font-weight:700; color:#f87171;">🎯 Slayer's Prey</span>
+                                <span id="slayers-prey-tag" class="pill-badge pill-neutral" style="font-size:0.64rem;">UNMARKED</span>
+                            </div>
+                            <div style="font-size:0.7rem; color:var(--text-dim);">
+                                Bonus Action (60 ft). First weapon hit each turn against your quarry deals an extra <strong>+1d6 weapon damage</strong>!
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                                <button id="btn-quarry-action" class="btn-act btn-act-pre" onclick="toggleSlayersPreyManual()" style="color:#f87171; font-weight:700; padding:4px 10px;">
+                                    🎯 Designate Quarry (BA)
+                                </button>
+                                <button class="btn-act btn-act-pre" onclick="rollSlayerDieOnly()" style="font-size:0.68rem; color:#fde68a;" title="Roll 1d6 damage die directly">🎲 Roll +1d6</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. OCCULT RIGS & SPELL ARSENAL (THIRD PANEL) -->
+                <div class="panel-box">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span>🔮 Occult Rigs &amp; Spell Arsenal</span>
+                            <span class="pill-badge pill-crimson" style="font-size:0.65rem;">Occult Munitions</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:0.74rem; font-weight:700; color:var(--text-dim);">Spell DC 12 • +4 Mod</span>
+                            <button class="btn-act btn-act-pre" onclick="refillSpellSlots()" style="color:#a78bfa; font-size:0.68rem;">🔄 Refill Slots</button>
+                        </div>
+                    </div>
+
+                    <!-- SPELL SLOTS & FAVORED ENEMY BAR -->
+                    <div class="slot-tracker-strip">
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <span style="font-size:0.74rem; font-weight:800; color:#c4b5fd; text-transform:uppercase;">1st-Level Spell Slots:</span>
+                            <span id="slots-pips-disp" style="font-family:'JetBrains Mono',monospace; font-size:0.85rem; font-weight:800; color:#a855f7;">🟣 🟣 🟣 (3/3)</span>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <button class="btn-act btn-act-pre" onclick="modSpellSlots(-1)">-1</button>
+                            <button class="btn-act btn-act-pre" onclick="modSpellSlots(1)">+1</button>
+                            <span style="color:#475569; margin:0 4px;">|</span>
+                            <span style="font-size:0.72rem; color:#fde68a; font-weight:700;">Favored Enemy:</span>
+                            <span id="favored-enemy-pips" style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; font-weight:800; color:#f87171;">2/2 Free</span>
+                        </div>
+                    </div>
+
+                    <!-- REFLAVORED SPELL CARDS -->
+                    <div class="spells-grid-2col">
+
+                        <!-- SPELL 1: SOVEREIGN'S SPITE PHOSPHOR GRENADE (HAIL OF THORNS) -->
+                        <div class="spell-action-card" style="border-left:3px solid #f97316;">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                                <div>
+                                    <div style="font-weight:800; color:#fb923c; font-size:0.86rem; display:flex; align-items:center; gap:4px;">
+                                        <span>💣 "Sovereign's Spite" Phosphor Grenade</span>
+                                    </div>
+                                    <div style="font-size:0.67rem; color:var(--text-dim);">Hail of Thorns Reflavor • Bonus Action on Ranged Hit • DC 12 DEX</div>
+                                </div>
+                                <span class="pill-badge pill-neutral" style="font-size:0.64rem;">1st Slot</span>
+                            </div>
+                            <div style="font-size:0.71rem; color:#cbd5e1; line-height:1.4;">
+                                Immediately after hitting a target with a ranged attack, you fling an occult shrapnel canister! The target and each creature within a <strong>5-foot cube</strong> take <strong>1d10 Piercing &amp; Fire damage</strong> (DC 12 DEX save for half).
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                                <button class="btn-act btn-act-dmg" onclick="castPhosphorGrenade()" style="background:linear-gradient(135deg, #c2410c 0%, #ea580c 100%); font-weight:700; padding:4px 10px;">
+                                    💥 Cast &amp; Detonate Canister (1d10)
+                                </button>
+                                <button class="btn-act btn-act-pre" onclick="openSpellDetailsModal('spell_grenade')" style="font-size:0.66rem;">ℹ️ Rules</button>
+                            </div>
+                        </div>
+
+                        <!-- SPELL 2: RUNIC TRACER ROUND (HUNTER'S MARK) -->
+                        <div class="spell-action-card" style="border-left:3px solid #ef4444;">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                                <div>
+                                    <div style="font-weight:800; color:#f87171; font-size:0.86rem; display:flex; align-items:center; gap:4px;">
+                                        <span>🔴 Runic Tracer Round (Beacon)</span>
+                                    </div>
+                                    <div style="font-size:0.67rem; color:var(--text-dim);">Hunter's Mark • Bonus Action • Conc 1 hr • 90 ft</div>
+                                </div>
+                                <span id="badge-tracer-status" class="pill-badge pill-neutral" style="font-size:0.64rem;">INACTIVE</span>
+                            </div>
+                            <div style="font-size:0.71rem; color:#cbd5e1; line-height:1.4;">
+                                Chamber a crimson runic tracer. The marked quarry takes an extra <strong>+1d6 Piercing/Force damage</strong> on <em>every weapon hit</em>! Advantage on Perception &amp; Survival checks to track.
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                                <button class="btn-act btn-act-pre" onclick="castTracerRoundFree()" style="color:#f87171; font-weight:700; padding:4px 9px;">
+                                    🔴 Shoot Tracer (Free 2x)
+                                </button>
+                                <button class="btn-act btn-act-pre" onclick="toggleTracerBuffManual()" style="color:#fde68a; font-size:0.68rem;">🔄 Toggle (+1d6)</button>
+                                <button class="btn-act btn-act-pre" onclick="openSpellDetailsModal('spell_tracer')" style="font-size:0.66rem;">ℹ️</button>
+                            </div>
+                        </div>
+
+                        <!-- SPELL 3: PNEUMATIC QUICKSTEP OVERDRIVE (LONGSTRIDER) -->
+                        <div class="spell-action-card" style="border-left:3px solid #38bdf8;">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                                <div>
+                                    <div style="font-weight:800; color:#38bdf8; font-size:0.86rem;">⚡ Pneumatic Quickstep Overdrive</div>
+                                    <div style="font-size:0.67rem; color:var(--text-dim);">Longstrider Reflavor • 1 Action • Touch • 1 Hour (No Conc)</div>
+                                </div>
+                                <span class="pill-badge pill-neutral" style="font-size:0.64rem;">1st Slot</span>
+                            </div>
+                            <div style="font-size:0.71rem; color:#cbd5e1; line-height:1.4;">
+                                Slam an adrenaline stim into your thigh and engage gaiter pneumatic release valves. Walking speed increases by <strong>+10 feet (to 40 ft)</strong> for 1 full hour!
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                                <button class="btn-act btn-act-pre" onclick="castLongstriderStim()" style="color:#38bdf8; font-weight:700; padding:4px 10px;">
+                                    ⚡ Inject Stim (-1 Slot)
+                                </button>
+                                <button class="btn-act btn-act-pre" onclick="openSpellDetailsModal('spell_longstrider')" style="font-size:0.66rem;">ℹ️ Rules</button>
+                            </div>
+                        </div>
+
+                        <!-- SPELL 4: CONSECRATED SILVER-ASH AEGIS (PROTECTION FROM EVIL/GOOD) -->
+                        <div class="spell-action-card" style="border-left:3px solid #c084fc;">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                                <div>
+                                    <div style="font-weight:800; color:#c084fc; font-size:0.86rem;">🛡️ Consecrated Silver-Ash Aegis</div>
+                                    <div style="font-size:0.67rem; color:var(--text-dim);">Subclass Magic • 1 Action • Touch • Conc 10 mins</div>
+                                </div>
+                                <span class="pill-badge pill-gold" style="font-size:0.64rem;">Free Prep</span>
+                            </div>
+                            <div style="font-size:0.71rem; color:#cbd5e1; line-height:1.4;">
+                                Smear consecrated silver ash and salt along armor. Aberrations, celestials, elementals, fey, fiends, &amp; undead have <strong>disadvantage on attack rolls</strong>; target immune to charm, fright, possession!
+                            </div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+                                <button class="btn-act btn-act-pre" onclick="castSilverAshAegis()" style="color:#c084fc; font-weight:700; padding:4px 10px;">
+                                    🛡️ Smear Ash Ward (-1 Slot)
+                                </button>
+                                <button class="btn-act btn-act-pre" onclick="openSpellDetailsModal('spell_aegis')" style="font-size:0.66rem;">ℹ️ Rules</button>
+                            </div>
+                        </div>
+
+                        <!-- SPELL 5: PHOSPHOR-ASH SMOKESCREEN (FOG CLOUD) -->
+                        <div class="spell-action-card" style="border-left:3px solid #94a3b8; grid-column: span 2;">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <div>
+                                    <span style="font-weight:800; color:#e2e8f0; font-size:0.86rem;">🌫️ Phosphor-Ash Smokescreen (Fog Cloud)</span>
+                                    <span style="font-size:0.67rem; color:var(--text-dim); margin-left:6px;">1 Action • 120 ft Range • Conc 1 hour • 20-ft Sphere Heavy Obscuration</span>
+                                </div>
+                                <button class="btn-act btn-act-pre" onclick="castSmokescreen()" style="color:#e2e8f0; font-weight:700; padding:3px 10px;">
+                                    🌫️ Pop Canister (-1 Slot)
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 4. CORE RANGER & FEATS ENGINE (FOURTH PANEL) -->
+                <div class="panel-box">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span>✨ Core Ranger &amp; Tactical Feats</span>
+                            <span class="pill-badge pill-blue" style="font-size:0.65rem;">5.5e Human</span>
+                        </div>
+                        <span style="font-size:0.7rem; color:var(--text-dim);">Combat Mastery &amp; Initiative Swapping</span>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:7px;">
+                        <div class="spell-action-card">
+                            <div style="font-weight:700; color:#fde68a;">🔫 Gunner Feat (5.5e)</div>
+                            <div style="font-size:0.7rem; color:var(--text-dim);">
+                                • Ignore firearms Loading property.<br>
+                                • Ranged attacks within 5 ft of enemies suffer <strong>NO disadvantage</strong> (point-blank execution).<br>
+                                • +1 DEX (factored into 18 DEX).
+                            </div>
+                        </div>
+                        <div class="spell-action-card">
+                            <div style="font-weight:700; color:#38bdf8;">⚡ Alert Origin Feat</div>
+                            <div style="font-size:0.7rem; color:var(--text-dim);">
+                                • Add PB (+2) to Initiative (<strong>+6 total</strong>).<br>
+                                • Immediately after rolling initiative, you can <strong>swap your initiative count with a willing ally</strong>!
+                            </div>
+                            <button class="btn-act btn-act-pre" onclick="logRoll('⚡ <strong>Alert Feat (Initiative Swap):</strong> Yvaine offers to swap her <strong>+6 Initiative</strong> count with a willing ally (e.g. King Jacomir or Piper)!')" style="margin-top:3px; padding:3px 8px; font-size:0.68rem; color:#38bdf8;">
+                                🔄 Offer Initiative Swap
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. TRACKED INVENTORY & OCCULT RELICS (BOTTOM PANEL) -->
+                <div class="panel-box">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <span>🎒 Tracked Inventory &amp; Keepsakes</span>
+                            <span id="inventory-count-tag" class="pill-badge pill-neutral" style="font-size:0.65rem;">12 Items</span>
+                        </div>
+                        <div style="display:flex; gap:4px;">
+                            <button class="btn-act btn-act-heal" onclick="promptAddItem()" style="padding:3px 8px; font-size:0.7rem;">➕ Add Item</button>
+                            <button class="btn-act btn-act-pre" onclick="resetInventory()" style="padding:3px 7px; font-size:0.68rem; color:#94a3b8;">🔄 Reset</button>
+                        </div>
+                    </div>
+                    <div id="inventory-items-container" class="inventory-list">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ============================================== -->
+    <!-- MODALS & FLOATING DRAWERS                      -->
+    <!-- ============================================== -->
+
+    <!-- 1. GENERAL SPELL, BACKSTORY & LOOT MODAL -->
+    <dialog id="spell-details-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span id="modal-spell-title" style="font-family:'Cinzel',serif; font-size:1.02rem; font-weight:800; color:var(--accent-gold);">Feature Details</span>
+                <button class="btn-act btn-act-pre" onclick="closeSpellDetailsModal()" style="padding:3px 9px;">✕</button>
+            </div>
+            <div id="modal-spell-body" class="modal-body"></div>
+            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
+                <span id="modal-spell-tag" style="font-size:0.7rem; color:var(--text-dim);">Curse of Strahd Reference</span>
+                <button class="btn-act btn-act-pre" onclick="closeSpellDetailsModal()" style="padding:4px 12px;">Close</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- 2. PLAYER NOTES MODAL -->
+    <dialog id="player-notes-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-family:'Cinzel',serif; font-size:1.02rem; font-weight:800; color:#c4b5fd;">📓 Yvaine's Investigation Ledger</span>
+                </div>
+                <button class="btn-act btn-act-pre" onclick="closePlayerNotesModal()" style="padding:3px 9px;">✕</button>
+            </div>
+            <div class="modal-body">
+
+                <!-- VIEW 1: ALL SAVED NOTES -->
+                <div id="notes-list-view" style="display:flex; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:6px;">
+                        <span style="font-size:0.74rem; font-weight:800; color:#c4b5fd; text-transform:uppercase;">All Saved Notes (<span id="modal-notes-count">0</span>)</span>
+                        <button class="btn-act btn-act-heal" onclick="openNoteEditorForm()" style="padding:4px 10px; font-size:0.72rem; font-weight:700; background:linear-gradient(135deg, #6d28d9 0%, #4338ca 100%); color:#fff; border:1px solid #8b5cf6;">➕ Write New Note</button>
+                    </div>
+                    <div id="player-notes-full-list" style="display:flex; flex-direction:column; gap:6px; max-height:50vh; overflow-y:auto;"></div>
+                </div>
+
+                <!-- VIEW 2: NOTE READER VIEW -->
+                <div id="note-reader-view" style="display:none; flex-direction:column; gap:10px;">
+                    <button class="btn-act btn-act-pre" onclick="showNotesListView()" style="padding:4px 10px; font-size:0.73rem; color:#fde68a; border-color:rgba(245,158,11,0.4); align-self:flex-start;">⬅️ Back to All Notes</button>
+                    <div style="background:rgba(15, 23, 42, 0.92); border:1.5px solid #6d529e; border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
+                        <div id="reader-note-title" style="font-family:'Cinzel',serif; font-size:1.02rem; font-weight:800; color:#fde68a; border-bottom:1px solid rgba(167,139,250,0.22); padding-bottom:6px;"></div>
+                        <div id="reader-note-body" style="font-size:0.86rem; color:#f1f5f9; line-height:1.6; white-space:pre-wrap; word-break:break-word;"></div>
+                    </div>
+                    <div style="display:flex; justify-content:flex-end; gap:6px;">
+                        <button id="reader-btn-edit" class="btn-act btn-act-pre" style="padding:5px 12px; font-size:0.74rem; color:#93c5fd;">✏️ Edit Note</button>
+                        <button id="reader-btn-delete" class="btn-act btn-act-dmg" style="padding:5px 12px; font-size:0.74rem;">🗑️ Remove Note</button>
+                    </div>
+                </div>
+
+                <!-- VIEW 3: WRITE / EDIT NOTE FORM -->
+                <div id="note-editor-view" style="display:none; background:rgba(15, 23, 42, 0.92); border:1px solid #4c1d95; border-radius:7px; padding:12px; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span id="note-form-header-lbl" style="font-size:0.76rem; font-weight:800; color:#fde68a; text-transform:uppercase;">➕ Write a New Note</span>
+                        <span id="note-char-counter" style="font-size:0.68rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">0 / 220 chars</span>
+                    </div>
+                    <input type="text" id="note-title-input" maxlength="55" placeholder="Note Title (e.g., Palace Traitor Lead, Sisters in Barovia)..." style="width:100%; padding:7px 10px; font-size:0.82rem; font-weight:700; background:#090d16; border:1px solid #334155; border-radius:5px; color:#f8fafc;">
+                    <textarea id="note-body-input" maxlength="220" rows="4" placeholder="Concise note content (up to 220 characters so exports stay super clean)..." oninput="updateNoteCharCounter()" style="width:100%; padding:7px 10px; font-size:0.8rem; background:#090d16; border:1px solid #334155; border-radius:5px; color:#cbd5e1; resize:vertical; font-family:'Inter',sans-serif;"></textarea>
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                        <button class="btn-act btn-act-pre" onclick="cancelNoteEdit()" style="padding:5px 10px; font-size:0.73rem;">⬅️ Cancel</button>
+                        <button id="btn-save-note" class="btn-act btn-act-heal" onclick="savePlayerNote()" style="padding:5px 14px; font-size:0.75rem; font-weight:700; background:linear-gradient(135deg, #6d28d9 0%, #4338ca 100%); color:#fff; border:1px solid #8b5cf6;">💾 Save Note</button>
+                    </div>
+                </div>
+
+            </div>
+            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
+                <button class="btn-act btn-act-pre" onclick="exportPlayerNotes()" style="color:#c4b5fd; border:1px solid rgba(167,139,250,0.5); padding:4px 10px; font-size:0.74rem; font-weight:700;">📓 Export Notes</button>
+                <button class="btn-act btn-act-pre" onclick="closePlayerNotesModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- 3. GOLD LEDGER MODAL -->
+    <dialog id="gold-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <span style="font-family:'Cinzel',serif; font-size:1.02rem; font-weight:800; color:var(--accent-gold);">🪙 Currency Audit Trail (10 SP = 1 GP)</span>
+                <button class="btn-act btn-act-pre" onclick="closeGoldHistoryModal()" style="padding:3px 9px;">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:var(--panel-sub); border-radius:6px; border:1px solid #1e293b;">
+                    <span style="color:var(--text-dim);">Current Purse Balance:</span>
+                    <span style="font-weight:800; font-family:'JetBrains Mono',monospace; color:var(--accent-gold); font-size:1.05rem;">
+                        <span id="modal-gold-disp">15</span> GP, <span id="modal-silver-disp">0</span> SP
+                    </span>
+                </div>
+                <div id="modal-tx-list" style="display:flex; flex-direction:column; gap:4px; max-height:48vh; overflow-y:auto;"></div>
+            </div>
+            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
+                <button class="btn-act btn-act-pre" onclick="clearGoldHistory()" style="color:#f87171; font-size:0.72rem;">🗑️ Clear Log</button>
+                <button class="btn-act btn-act-pre" onclick="closeGoldHistoryModal()" style="padding:4px 12px;">Close</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- 🎲 4. FLOATING BOTTOM ROLL RESULT HUD DRAWER -->
+    <div class="floating-roll-hud" id="floating-roll-hud" role="status" aria-live="polite">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:0.78rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.5px;">🎲 Live Roll &amp; Action Result</span>
+                <span id="floating-roll-time" style="font-size:0.72rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;"></span>
+            </div>
+            <button class="btn-act btn-act-pre" onclick="dismissFloatingHud()" style="padding:3px 10px; font-size:0.74rem; color:#cbd5e1;" title="Dismiss floating roll drawer">✕ Dismiss</button>
+        </div>
+        <div id="floating-roll-body" style="font-size:0.95rem; color:#f8fafc; line-height:1.5; display:flex; align-items:center; flex-wrap:wrap; gap:8px;"></div>
+    </div>
+
+<script>
+    // ==========================================
+    // 🔫 ECLIPSA "YVAINE" MASTER STATE VARIABLES
+    // ==========================================
+    let characterLevel = 3;
+    let curHP = 28;
+    let maxHP = 28;
+    let tempHP = 0;
+    let isArmorActive = true; // Studded Leather: 12 + 4 DEX = 16 AC
+    let isLongstriderActive = false; // +10 ft Speed (40 ft total)
+    let helpTokens = 2;
+    const maxHelpTokens = 2;
+    let rollMode = 'norm'; // 'dis', 'norm', 'adv'
+
+    // Monster Slayer & Human Feats
+    let heroicInspirationReady = true; // Human (Resourceful): 1/LR
+    let huntersSenseUses = 2; // Wis mod (2/LR)
+    const maxHuntersSenseUses = 2;
+    let slayersPreyActive = false; // +1d6 extra damage on quarry
+
+    // Ranger Spells & Favored Enemy
+    let curSpellSlots = 3;
+    const maxSpellSlots = 3;
+    let favoredEnemyCasts = 2; // 2 free casts of Hunter's Mark (Tracer) per LR
+    const maxFavoredEnemyCasts = 2;
+    let isTracerActive = false; // +1d6 extra damage on marked target
+
+    // Stance & Weapon Armament
+    let activeStance = 'lament'; // 'lament', 'revolvers', 'knife'
+
+    // ==========================================
+    // 💥 AMMO & RELOAD ENGINE
+    // ==========================================
+    // 1. "Lament" (Heavy Long Rifle / Musket): 12 rounds chamber
+    let lamentChamber = 12;
+    const maxLamentChamber = 12;
+    let lamentReloadReserves = 4; // 4 clips per short rest (12 slugs each)
+    const maxLamentReloadReserves = 4;
+
+    // 2. Twin Revolvers ("Mercy & Less"): 6 rounds each cylinder
+    let mercyChamber = 6;
+    const maxMercyChamber = 6;
+    let lessChamber = 6;
+    const maxLessChamber = 6;
+    let revolverReloadReserves = 4; // 4 speedloader packs per short rest (reloads BOTH cylinders!)
+    const maxRevolverReloadReserves = 4;
+
+    function getProfBonus() {
+        return characterLevel >= 9 ? 4 : (characterLevel >= 5 ? 3 : 2);
+    }
+    function getSpellSaveDC() {
+        return 8 + getProfBonus() + 2; // 8 + 2 (PB) + 2 (WIS) = 12
+    }
+    function getRangedAttackBonus() {
+        return 4 + getProfBonus() + 2; // 4 (DEX) + 2 (PB) + 2 (Archery Fighting Style) = +8
+    }
+
+    // ==========================================
+    // 🎲 FLOATING HUD & ROLL LOGGING
+    // ==========================================
+    function logRoll(htmlContent) {
+        const hud = document.getElementById('floating-roll-hud');
+        const body = document.getElementById('floating-roll-body');
+        const timeEl = document.getElementById('floating-roll-time');
+        if (!hud || !body) return;
+
+        body.innerHTML = htmlContent;
+        if (timeEl) {
+            timeEl.innerText = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+        hud.classList.add('active-hud');
+    }
+
+    function dismissFloatingHud() {
+        const hud = document.getElementById('floating-roll-hud');
+        if (hud) hud.classList.remove('active-hud');
+    }
+
+    // Dismiss floating HUD when clicking outside
+    document.addEventListener('click', (e) => {
+        const hud = document.getElementById('floating-roll-hud');
+        if (!hud || !hud.classList.contains('active-hud')) return;
+        if (!hud.contains(e.target) && !e.target.closest('button') && !e.target.closest('input') && !e.target.closest('.ability-box') && !e.target.closest('.stat-row-item') && !e.target.closest('.toggle-btn-card')) {
+            dismissFloatingHud();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            dismissFloatingHud();
+            closeSpellDetailsModal();
+            closePlayerNotesModal();
+            closeGoldHistoryModal();
+        }
+    });
+
+    // ==========================================
+    // 🎲 DICE CONSOLE ROLLER
+    // ==========================================
+    function setRollMode(mode) {
+        rollMode = mode;
+        document.getElementById('mode-btn-dis').className = 'mode-btn' + (mode === 'dis' ? ' active' : '');
+        document.getElementById('mode-btn-norm').className = 'mode-btn' + (mode === 'norm' ? ' active' : '');
+        document.getElementById('mode-btn-adv').className = 'mode-btn' + (mode === 'adv' ? ' active' : '');
+    }
+
+    function stepManualMod(delta) {
+        const inp = document.getElementById('manual-dice-mod');
+        if (inp) inp.value = (parseInt(inp.value) || 0) + delta;
+    }
+    function resetManualMod() {
+        const inp = document.getElementById('manual-dice-mod');
+        if (inp) inp.value = 0;
+    }
+
+    function rollD20(label, bonus = 0) {
+        const manualMod = parseInt(document.getElementById('manual-dice-mod')?.value) || 0;
+        const totalBonus = bonus + manualMod;
+        const d1 = Math.floor(Math.random() * 20) + 1;
+        const d2 = Math.floor(Math.random() * 20) + 1;
+
+        let roll = d1;
+        let modeNote = '';
+
+        if (rollMode === 'adv') {
+            roll = Math.max(d1, d2);
+            modeNote = ` (Advantage [${d1}, ${d2}])`;
+        } else if (rollMode === 'dis') {
+            roll = Math.min(d1, d2);
+            modeNote = ` (Disadvantage [${d1}, ${d2}])`;
+        }
+
+        const total = roll + totalBonus;
+        const isCrit = (roll === 20);
+        const isFumble = (roll === 1);
+
+        let critBadge = '';
+        if (isCrit) critBadge = ` <span class="pill-badge pill-gold" style="font-size:0.75rem; background:#f59e0b; color:#000;">⭐ NAT 20 CRITICAL!</span>`;
+        if (isFumble) critBadge = ` <span class="pill-badge pill-crimson" style="font-size:0.75rem;">💀 NAT 1 MISFIRE!</span>`;
+
+        const bonusStr = totalBonus !== 0 ? ` + ${totalBonus}` : '';
+        logRoll(`🎯 <strong>${label}:</strong> [d20: <strong>${roll}</strong>]${bonusStr}${modeNote} = <span style="font-size:1.15rem; color:${isCrit ? '#fde68a' : (isFumble ? '#f87171' : 'var(--accent-gold)')}; font-weight:800;">${total}</span>${critBadge}`);
+    }
+
+    function rollCustomDie(sides) {
+        const manualMod = parseInt(document.getElementById('manual-dice-mod')?.value) || 0;
+        const r = Math.floor(Math.random() * sides) + 1;
+        const total = r + manualMod;
+        const modStr = manualMod !== 0 ? ` + ${manualMod}` : '';
+        logRoll(`🎲 <strong>Quick d${sides} Roll:</strong> [${r}]${modStr} = <span style="font-size:1.1rem; color:var(--accent-gold); font-weight:800;">${total}</span>`);
+    }
+
+    // ==========================================
+    // ⚔️ WEAPON STANCE & HOLSTER SWAPPING
+    // ==========================================
+    function switchWeaponStance(stance) {
+        activeStance = stance;
+        document.getElementById('stance-btn-lament').className = 'stance-btn' + (stance === 'lament' ? ' active-stance' : '');
+        document.getElementById('stance-btn-revolvers').className = 'stance-btn' + (stance === 'revolvers' ? ' active-stance' : '');
+        document.getElementById('stance-btn-knife').className = 'stance-btn' + (stance === 'knife' ? ' active-stance' : '');
+
+        const cardLament = document.getElementById('card-weapon-lament');
+        const cardRevolvers = document.getElementById('card-weapon-revolvers');
+        const cardKnife = document.getElementById('card-weapon-knife');
+        const tag = document.getElementById('stance-context-tag');
+
+        cardLament.classList.remove('highlight-equipped');
+        cardRevolvers.classList.remove('highlight-equipped');
+        cardKnife.classList.remove('highlight-equipped');
+
+        if (stance === 'lament') {
+            cardLament.classList.add('highlight-equipped');
+            tag.innerText = 'Lament (Two-Handed Heavy Rifle • 80/240 ft)';
+            logRoll(`🎯 <strong>Armament Swapped:</strong> Yvaine unslings <strong>"Lament"</strong> from her back. Two-handed firing grip locked! (+8 to hit, 1d12+4 Piercing).`);
+        } else if (stance === 'revolvers') {
+            cardRevolvers.classList.add('highlight-equipped');
+            tag.innerText = 'Mercy & Less (Dual Revolvers • Point-Blank Clearance)';
+            logRoll(`💥 <strong>Armament Swapped:</strong> Yvaine quick-draws <strong>Mercy &amp; Less</strong> from her hip holsters! Dual-revolver stance ready! (+8 to hit, 1d6+4 &amp; 1d6).`);
+        } else if (stance === 'knife') {
+            cardKnife.classList.add('highlight-equipped');
+            tag.innerText = 'Solmere Trench Knife (Concealed Boot Blade)';
+            logRoll(`🗡️ <strong>Armament Swapped:</strong> Yvaine slides the <strong>Solmere Royal Trench Knife</strong> from her boot sheath. Silent melee backup engaged! (+6 to hit, 1d4+4 Piercing).`);
+        }
+    }
+
+    // ==========================================
+    // 💥 FIREARMS AMMO, SHOOTING & RELOADING ENGINE
+    // ==========================================
+    function updateLamentAmmoUI() {
+        const pipsEl = document.getElementById('lament-pips-disp');
+        const badge = document.getElementById('lament-status-badge');
+        const resEl = document.getElementById('lament-reserves-disp');
+        const btn = document.getElementById('btn-reload-lament');
+
+        if (pipsEl) {
+            let pips = '';
+            for (let i = 0; i < maxLamentChamber; i++) {
+                pips += (i < lamentChamber) ? '🟡 ' : '⬛ ';
+            }
+            pipsEl.innerHTML = `${pips}<strong>(${lamentChamber}/${maxLamentChamber})</strong>`;
+        }
+        if (resEl) {
+            resEl.innerHTML = `📦 Reserves: <strong>${lamentReloadReserves}/${maxLamentReloadReserves}</strong> Clips`;
+        }
+        if (badge) {
+            if (lamentChamber === 0) {
+                badge.className = 'pill-badge pill-crimson';
+                badge.innerText = 'EMPTY (0/12)';
+            } else if (lamentChamber <= 3) {
+                badge.className = 'pill-badge pill-gold';
+                badge.innerText = `LOW (${lamentChamber}/12)`;
+            } else {
+                badge.className = 'pill-badge pill-green';
+                badge.innerText = `LOADED (${lamentChamber}/12)`;
+            }
+        }
+        if (btn) {
+            if (lamentChamber === 0) {
+                btn.classList.add('empty-pulse');
+                btn.innerHTML = `<span>⚠️ RELOAD NOW!</span> <span style="font-size:0.65rem;">(Bonus Action)</span>`;
+            } else {
+                btn.classList.remove('empty-pulse');
+                btn.innerHTML = `<span>🔄 Reload Lament</span> <span style="font-size:0.65rem;">(Bonus Action)</span>`;
+            }
+        }
+    }
+
+    function modLamentChamber(delta) {
+        lamentChamber = Math.max(0, Math.min(maxLamentChamber, lamentChamber + delta));
+        updateLamentAmmoUI();
+    }
+
+    function fireLamentShot() {
+        if (lamentChamber <= 0) {
+            logRoll(`⚠️ <strong style="color:#f87171;">CLICK! "Lament" is OUT OF AMMO (0/12)!</strong><br>Expending your <strong>Bonus Action</strong> to reload will chamber a fresh 12-round clip! <button class="btn-act btn-act-heal" onclick="reloadLament()" style="margin-left:6px; background:#f59e0b; color:#000; font-weight:700;">🔄 Reload Now (Bonus Action)</button>`);
+            updateLamentAmmoUI();
+            return;
+        }
+
+        lamentChamber--;
+        updateLamentAmmoUI();
+
+        // Roll Attack
+        const atkBonus = getRangedAttackBonus(); // +8
+        const d1 = Math.floor(Math.random() * 20) + 1;
+        const d2 = Math.floor(Math.random() * 20) + 1;
+        let roll = d1;
+        if (rollMode === 'adv') roll = Math.max(d1, d2);
+        if (rollMode === 'dis') roll = Math.min(d1, d2);
+
+        const atkTotal = roll + atkBonus;
+        const isCrit = (roll === 20);
+
+        // Roll Damage: 1d12 + 4 DEX
+        const d12 = Math.floor(Math.random() * 12) + 1;
+        let dmgTotal = d12 + 4;
+        let breakdown = `[1d12: ${d12}] + 4`;
+
+        if (isCrit) {
+            const critDie = Math.floor(Math.random() * 12) + 1;
+            dmgTotal += 12 + critDie; // Brutal Crit: Max die (12) + extra roll
+            breakdown += ` + Crit(12 + ${critDie})`;
+        }
+
+        let extraNotes = '';
+        if (slayersPreyActive) {
+            const spD6 = Math.floor(Math.random() * 6) + 1;
+            dmgTotal += spD6;
+            extraNotes += ` + <span style="color:#f87171; font-weight:700;">Slayer's Prey (+${spD6} Piercing)</span>`;
+        }
+        if (isTracerActive) {
+            const trD6 = Math.floor(Math.random() * 6) + 1;
+            dmgTotal += trD6;
+            extraNotes += ` + <span style="color:#ef4444; font-weight:700;">Runic Tracer (+${trD6} Force)</span>`;
+        }
+
+        logRoll(`🎯 <strong>"Lament" Heavy Rifle Shot:</strong> Attack: [d20: ${roll}] + ${atkBonus} = <span style="color:var(--accent-gold); font-size:1.12rem; font-weight:800;">${atkTotal} to hit</span>${isCrit ? ' ⭐ NAT 20 CRIT!' : ''}! ➔ Damage: ${breakdown}${extraNotes} = <span style="color:#f87171; font-size:1.15rem; font-weight:800;">${dmgTotal} Piercing</span>! <span style="font-size:0.75rem; color:var(--text-dim); margin-left:4px;">(Chamber: <strong>${lamentChamber}/${maxLamentChamber}</strong> slugs left)</span>`);
+    }
+
+    function rollSlayerLamentBurst() {
+        const atkBonus = getRangedAttackBonus();
+        const rAtk = Math.floor(Math.random() * 20) + 1 + atkBonus;
+        const d12 = Math.floor(Math.random() * 12) + 1;
+        const d6 = Math.floor(Math.random() * 6) + 1;
+        const total = d12 + d6 + 4;
+        logRoll(`💥 <strong>Lament + Slayer's Prey Burst:</strong> Attack: <span style="color:var(--accent-gold); font-weight:800;">${rAtk} to hit</span> ➔ Damage: [1d12:${d12}] + [Quarry 1d6:${d6}] + 4 DEX = <span style="color:#f87171; font-size:1.15rem; font-weight:800;">${total} Piercing Damage</span>!`);
+    }
+
+    function reloadLament() {
+        if (lamentChamber === maxLamentChamber) {
+            logRoll(`🎯 <strong>Lament</strong> is already fully loaded with <strong>12/12</strong> heavy slugs!`);
+            return;
+        }
+        if (lamentReloadReserves <= 0) {
+            logRoll(`⚠️ <strong style="color:#f87171;">Out of Lament Reload Clips (0/4 reserves left)!</strong><br>You have exhausted your pre-loaded clips. Take a <strong>Short Rest</strong> to repack powder, crimp cartridges, and restock clips.`);
+            return;
+        }
+
+        lamentReloadReserves--;
+        lamentChamber = maxLamentChamber;
+        updateLamentAmmoUI();
+        logRoll(`🔄 <strong>Lament Reloaded (Bonus Action):</strong> Yvaine ejects the spent casing rack and snaps a fresh 12-round magazine into the engraved breach. <strong>Chamber Full (12/12)</strong>! <em>(${lamentReloadReserves}/${maxLamentReloadReserves} reserve clips remaining).</em>`);
+    }
+
+    // ------------------------------------------
+    // Twin Revolvers ("Mercy & Less") Engine
+    // ------------------------------------------
+    function updateRevolversAmmoUI() {
+        const mPips = document.getElementById('mercy-pips-disp');
+        const lPips = document.getElementById('less-pips-disp');
+        const resEl = document.getElementById('revolvers-reserves-disp');
+        const badge = document.getElementById('revolvers-status-badge');
+        const btn = document.getElementById('btn-reload-revolvers');
+
+        if (mPips) {
+            let pips = '';
+            for (let i = 0; i < maxMercyChamber; i++) {
+                pips += (i < mercyChamber) ? '🔴 ' : '⬛ ';
+            }
+            mPips.innerHTML = `${pips}<strong>(${mercyChamber}/${maxMercyChamber})</strong>`;
+        }
+        if (lPips) {
+            let pips = '';
+            for (let i = 0; i < maxLessChamber; i++) {
+                pips += (i < lessChamber) ? '🔵 ' : '⬛ ';
+            }
+            lPips.innerHTML = `${pips}<strong>(${lessChamber}/${maxLessChamber})</strong>`;
+        }
+        if (resEl) {
+            resEl.innerHTML = `📦 Speedloaders: <strong>${revolverReloadReserves}/${maxRevolverReloadReserves}</strong>`;
+        }
+        if (badge) {
+            if (mercyChamber === 0 && lessChamber === 0) {
+                badge.className = 'pill-badge pill-crimson';
+                badge.innerText = 'BOTH EMPTY (0 & 0)';
+            } else if (mercyChamber === 0 || lessChamber === 0) {
+                badge.className = 'pill-badge pill-gold';
+                badge.innerText = `RELOAD NEEDED (${mercyChamber} & ${lessChamber})`;
+            } else {
+                badge.className = 'pill-badge pill-green';
+                badge.innerText = `READY (${mercyChamber} & ${lessChamber})`;
+            }
+        }
+        if (btn) {
+            if (mercyChamber === 0 || lessChamber === 0) {
+                btn.classList.add('empty-pulse');
+                btn.innerHTML = `<span>⚠️ SPEEDLOAD BOTH!</span> <span style="font-size:0.65rem;">(Bonus Action)</span>`;
+            } else {
+                btn.classList.remove('empty-pulse');
+                btn.innerHTML = `<span>🔄 Speedload Both</span> <span style="font-size:0.65rem;">(Bonus Action)</span>`;
+            }
+        }
+    }
+
+    function modMercyChamber(delta) {
+        mercyChamber = Math.max(0, Math.min(maxMercyChamber, mercyChamber + delta));
+        updateRevolversAmmoUI();
+    }
+    function modLessChamber(delta) {
+        lessChamber = Math.max(0, Math.min(maxLessChamber, lessChamber + delta));
+        updateRevolversAmmoUI();
+    }
+
+    function fireMercyShot() {
+        if (mercyChamber <= 0) {
+            logRoll(`⚠️ <strong style="color:#f87171;">CLICK! "Mercy" (Main-Hand) is EMPTY (0/6)!</strong> Use a Bonus Action with speedloaders to reload both revolvers! <button class="btn-act btn-act-heal" onclick="reloadBothRevolvers()" style="margin-left:6px; background:#f59e0b; color:#000; font-weight:700;">🔄 Speedload Both (Bonus Action)</button>`);
+            updateRevolversAmmoUI();
+            return;
+        }
+
+        mercyChamber--;
+        updateRevolversAmmoUI();
+
+        const atkBonus = getRangedAttackBonus(); // +8
+        const rAtk = Math.floor(Math.random() * 20) + 1 + atkBonus;
+        const d6 = Math.floor(Math.random() * 6) + 1;
+        let dmgTotal = d6 + 4; // 1d6 + 4 DEX
+        let notes = `[1d6:${d6}] + 4`;
+
+        if (slayersPreyActive) {
+            const spD6 = Math.floor(Math.random() * 6) + 1;
+            dmgTotal += spD6;
+            notes += ` + <span style="color:#f87171;">Slayer's Prey (+${spD6})</span>`;
+        }
+        if (isTracerActive) {
+            const trD6 = Math.floor(Math.random() * 6) + 1;
+            dmgTotal += trD6;
+            notes += ` + <span style="color:#ef4444;">Tracer (+${trD6})</span>`;
+        }
+
+        logRoll(`🔴 <strong>"Mercy" Main-Hand Shot (Action):</strong> Attack: <span style="color:var(--accent-gold); font-size:1.1rem; font-weight:800;">${rAtk} to hit</span> ➔ Damage: ${notes} = <span style="color:#f87171; font-size:1.15rem; font-weight:800;">${dmgTotal} Piercing</span>! <span style="font-size:0.75rem; color:var(--text-dim);">(Mercy: <strong>${mercyChamber}/${maxMercyChamber}</strong> bullets left)</span>`);
+    }
+
+    function fireLessShot() {
+        if (lessChamber <= 0) {
+            logRoll(`⚠️ <strong style="color:#38bdf8;">CLICK! "Less" (Off-Hand) is EMPTY (0/6)!</strong> Use a Bonus Action to reload both revolvers!`);
+            updateRevolversAmmoUI();
+            return;
+        }
+
+        lessChamber--;
+        updateRevolversAmmoUI();
+
+        const atkBonus = getRangedAttackBonus(); // +8
+        const rAtk = Math.floor(Math.random() * 20) + 1 + atkBonus;
+        const d6 = Math.floor(Math.random() * 6) + 1;
+        let dmgTotal = d6; // Off-hand attack does not add ability mod to damage unless feat/style
+        let notes = `[1d6:${d6}]`;
+
+        if (isTracerActive) {
+            const trD6 = Math.floor(Math.random() * 6) + 1;
+            dmgTotal += trD6;
+            notes += ` + <span style="color:#ef4444;">Tracer (+${trD6})</span>`;
+        }
+
+        logRoll(`🔵 <strong>"Less" Off-Hand Shot (Bonus Action):</strong> Attack: <span style="color:var(--accent-gold); font-size:1.1rem; font-weight:800;">${rAtk} to hit</span> ➔ Damage: ${notes} = <span style="color:#38bdf8; font-size:1.15rem; font-weight:800;">${dmgTotal} Piercing</span>! <span style="font-size:0.75rem; color:var(--text-dim);">(Less: <strong>${lessChamber}/${maxLessChamber}</strong> bullets left)</span>`);
+    }
+
+    function fireDualVolley() {
+        if (mercyChamber <= 0 && lessChamber <= 0) {
+            logRoll(`⚠️ <strong style="color:#f87171;">BOTH REVOLVERS ARE OUT OF AMMO (0/6 &amp; 0/6)!</strong> Use a Bonus Action with moon clips to reload!`);
+            return;
+        }
+        logRoll(`⚡ <strong>RAPID DUAL VOLLEY (Mercy &amp; Less):</strong> Yvaine levels both sidearms in a cross-draw execution!`);
+        if (mercyChamber > 0) fireMercyShot();
+        if (lessChamber > 0) fireLessShot();
+    }
+
+    function reloadBothRevolvers() {
+        if (mercyChamber === maxMercyChamber && lessChamber === maxLessChamber) {
+            logRoll(`💥 <strong>Both revolvers are already full!</strong> (Mercy: 6/6, Less: 6/6).`);
+            return;
+        }
+        if (revolverReloadReserves <= 0) {
+            logRoll(`⚠️ <strong style="color:#f87171;">Out of Revolver Speedloader Packs (0/4 reserves left)!</strong> Take a <strong>Short Rest</strong> to pack fresh moon-clips with brass and powder.`);
+            return;
+        }
+
+        revolverReloadReserves--;
+        mercyChamber = maxMercyChamber;
+        lessChamber = maxLessChamber;
+        updateRevolversAmmoUI();
+        logRoll(`🔄 <strong>Twin Moon-Clips Engaged (Bonus Action):</strong> Yvaine snaps open both revolver cylinders, drops the spent smoking casings, and rams two 6-round speedloaders home simultaneously! <strong>Both Cylinders Full (6/6 &amp; 6/6)</strong>! <em>(${revolverReloadReserves}/${maxRevolverReloadReserves} speedloader packs remaining).</em>`);
+    }
+
+    // ------------------------------------------
+    // Melee Trench Knife
+    // ------------------------------------------
+    function rollKnifeStrike(isOffhand = false) {
+        const atkBonus = 4 + getProfBonus(); // +6 (DEX + PB)
+        const rAtk = Math.floor(Math.random() * 20) + 1 + atkBonus;
+        const d4 = Math.floor(Math.random() * 4) + 1;
+        const dmg = isOffhand ? d4 : (d4 + 4);
+        const actionType = isOffhand ? "Off-Hand Blade Slash (Bonus Action)" : "Main Blade Strike (Action)";
+        logRoll(`🗡️ <strong>Solmere Royal Trench Knife — ${actionType}:</strong> Attack: <span style="color:var(--accent-gold); font-size:1.1rem; font-weight:800;">${rAtk} to hit</span> ➔ Damage: [1d4:${d4}]${isOffhand ? '' : ' + 4 DEX'} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${dmg} Piercing Damage</span>! (Unlimited Melee Strikes).`);
+    }
+
+    // ==========================================
+    // 🔍 MONSTER SLAYER & CORE SPELL MECHANICS
+    // ==========================================
+    function useHuntersSense() {
+        if (huntersSenseUses <= 0) {
+            logRoll(`⚠️ <strong>0 Hunter's Sense uses left!</strong> (Regains on a Long Rest).`);
+            return;
+        }
+        huntersSenseUses--;
+        document.getElementById('hunters-sense-pips').innerText = `${huntersSenseUses} / ${maxHuntersSenseUses} uses`;
+        logRoll(`🔍 <strong>Hunter's Sense (Bonus Action • ${huntersSenseUses}/${maxHuntersSenseUses} uses left):</strong> Yvaine inspects a creature within 60 ft against her Solmere field dossiers. The DM immediately reveals its <strong>Damage Immunities, Resistances, and Vulnerabilities</strong>!`);
+    }
+
+    function refillHuntersSense() {
+        huntersSenseUses = maxHuntersSenseUses;
+        document.getElementById('hunters-sense-pips').innerText = `${huntersSenseUses} / ${maxHuntersSenseUses} uses`;
+        logRoll(`🔍 <strong>Hunter's Sense Refilled:</strong> Restored to 2/2 uses.`);
+    }
+
+    function toggleSlayersPreyManual() {
+        slayersPreyActive = !slayersPreyActive;
+        const card = document.getElementById('card-slayer-toggle');
+        const badge = document.getElementById('badge-slayer-toggle');
+        const sub = document.getElementById('sub-slayer-disp');
+        const tag = document.getElementById('slayers-prey-tag');
+        const btn = document.getElementById('btn-quarry-action');
+
+        if (slayersPreyActive) {
+            if (card) card.classList.add('active-buff');
+            if (badge) { badge.className = 'toggle-badge on'; badge.innerText = 'LOCKED (+1d6)'; }
+            if (sub) sub.innerText = 'Quarry: Active (+1d6)';
+            if (tag) { tag.className = 'pill-badge pill-crimson'; tag.innerText = 'QUARRY LOCKED'; }
+            if (btn) btn.innerText = '🎯 Clear Quarry';
+            logRoll(`🎯 <strong>Slayer's Prey Active (Bonus Action):</strong> Quarry locked in iron sights! First hit each turn deals an extra <strong>+1d6 weapon damage</strong>!`);
+        } else {
+            if (card) card.classList.remove('active-buff');
+            if (badge) { badge.className = 'toggle-badge off'; badge.innerText = 'OFF'; }
+            if (sub) sub.innerText = 'Quarry: Unmarked';
+            if (tag) { tag.className = 'pill-badge pill-neutral'; tag.innerText = 'UNMARKED'; }
+            if (btn) btn.innerText = '🎯 Designate Quarry';
+            logRoll(`🎯 <strong>Slayer's Prey Disengaged:</strong> Quarry marker cleared.`);
+        }
+    }
+
+    function rollSlayerDieOnly() {
+        const d6 = Math.floor(Math.random() * 6) + 1;
+        logRoll(`🎯 <strong>Slayer's Prey Bonus Die (1d6):</strong> <span style="color:#f87171; font-size:1.15rem; font-weight:800;">+${d6} Extra Weapon Damage</span>!`);
+    }
+
+    // ------------------------------------------
+    // Spell Slots & Reflavored Occult Rigs
+    // ------------------------------------------
+    function updateSpellSlotsUI() {
+        const pipsEl = document.getElementById('slots-pips-disp');
+        if (!pipsEl) return;
+        let pips = '';
+        for (let i = 0; i < maxSpellSlots; i++) {
+            pips += (i < curSpellSlots) ? '🟣 ' : '⬛ ';
+        }
+        pipsEl.innerHTML = `${pips}<strong>(${curSpellSlots}/${maxSpellSlots})</strong>`;
+    }
+
+    function modSpellSlots(delta) {
+        curSpellSlots = Math.max(0, Math.min(maxSpellSlots, curSpellSlots + delta));
+        updateSpellSlotsUI();
+        logRoll(`🔮 <strong>1st-Level Spell Slots:</strong> ${curSpellSlots}/${maxSpellSlots} remaining.`);
+    }
+
+    function refillSpellSlots() {
+        curSpellSlots = maxSpellSlots;
+        favoredEnemyCasts = maxFavoredEnemyCasts;
+        updateSpellSlotsUI();
+        document.getElementById('favored-enemy-pips').innerText = `${favoredEnemyCasts}/${maxFavoredEnemyCasts} Free`;
+        logRoll(`🔮 <strong>All Spell Slots &amp; Favored Enemy Casts Restored:</strong> 3/3 Spell Slots &amp; 2/2 Tracer free casts ready!`);
+    }
+
+    function castPhosphorGrenade() {
+        if (curSpellSlots <= 0) {
+            logRoll(`⚠️ <strong>0 Spell Slots remaining!</strong> Cannot cast "Sovereign's Spite" Phosphor Grenade.`);
+            return;
+        }
+        curSpellSlots--;
+        updateSpellSlotsUI();
+
+        const d10 = Math.floor(Math.random() * 10) + 1;
+        logRoll(`💣 <strong>"Sovereign's Spite" Phosphor Grenade Detonation (1st Slot • ${curSpellSlots}/${maxSpellSlots} left):</strong><br>Immediately following your ranged weapon hit, Yvaine flings a pressurized silver-phosphor canister! The target and every creature within a <strong>5-foot cube</strong> take <span style="font-size:1.18rem; color:#ea580c; font-weight:800;">${d10} Piercing &amp; Fire Damage</span> on a failed <strong>DC 12 Dexterity Saving Throw</strong> (half damage on success)! Razor-sharp silver flechettes spray across the impact zone!`);
+    }
+
+    function castTracerRoundFree() {
+        if (favoredEnemyCasts > 0) {
+            favoredEnemyCasts--;
+            document.getElementById('favored-enemy-pips').innerText = `${favoredEnemyCasts}/${maxFavoredEnemyCasts} Free`;
+            isTracerActive = true;
+            updateTracerUI();
+            logRoll(`🔴 <strong>Runic Tracer Round (Favored Enemy Free Cast • ${favoredEnemyCasts}/${maxFavoredEnemyCasts} left):</strong> Yvaine chambers a glowing crimson round and embeds it in her quarry! Target takes an extra <strong>+1d6 Piercing/Force damage</strong> on EVERY weapon hit! Advantage on Perception &amp; Survival checks to track!`);
+        } else if (curSpellSlots > 0) {
+            curSpellSlots--;
+            updateSpellSlotsUI();
+            isTracerActive = true;
+            updateTracerUI();
+            logRoll(`🔴 <strong>Runic Tracer Round (Expended 1st Spell Slot • ${curSpellSlots}/${maxSpellSlots} left):</strong> Target marked! +1d6 extra damage on all weapon hits!`);
+        } else {
+            logRoll(`⚠️ <strong>No Favored Enemy free casts or spell slots remaining!</strong>`);
+        }
+    }
+
+    function updateTracerUI() {
+        const badge = document.getElementById('badge-tracer-status');
+        if (badge) {
+            badge.className = isTracerActive ? 'pill-badge pill-crimson' : 'pill-badge pill-neutral';
+            badge.innerText = isTracerActive ? 'BEACON ACTIVE (+1d6)' : 'INACTIVE';
+        }
+    }
+
+    function toggleTracerBuffManual() {
+        isTracerActive = !isTracerActive;
+        updateTracerUI();
+        logRoll(`🔴 <strong>Runic Tracer Beacon:</strong> Set to <strong>${isTracerActive ? 'ACTIVE (+1d6 on weapon hits)' : 'INACTIVE'}</strong>.`);
+    }
+
+    function castLongstriderStim() {
+        if (curSpellSlots <= 0) {
+            logRoll(`⚠️ <strong>0 Spell Slots remaining!</strong> Cannot cast Pneumatic Quickstep.`);
+            return;
+        }
+        curSpellSlots--;
+        updateSpellSlotsUI();
+        isLongstriderActive = true;
+        updateSpeedUI();
+        logRoll(`⚡ <strong>Pneumatic Quickstep Overdrive Engaged (1st Slot • ${curSpellSlots}/${maxSpellSlots} left):</strong> Yvaine jams an alchemical adrenaline stim into her thigh! Gaiter pneumatic release valves hiss—walking speed increased by <strong>+10 ft (40 ft total)</strong> for 1 hour with NO concentration required!`);
+    }
+
+    function toggleLongstriderSpeed() {
+        isLongstriderActive = !isLongstriderActive;
+        updateSpeedUI();
+        logRoll(`🏃 <strong>Movement Speed:</strong> Toggled to <strong>${isLongstriderActive ? '40 ft (Overdrive Active)' : '30 ft (Base Speed)'}</strong>.`);
+    }
+
+    function updateSpeedUI() {
+        const card = document.getElementById('card-speed-toggle');
+        const badge = document.getElementById('badge-speed-toggle');
+        const sub = document.getElementById('sub-speed-disp');
+        if (!card || !badge || !sub) return;
+
+        if (isLongstriderActive) {
+            card.classList.add('active-buff');
+            badge.className = 'toggle-badge on';
+            badge.innerText = 'ON (40)';
+            sub.innerText = 'Speed: 40 ft (Stim Active)';
+        } else {
+            card.classList.remove('active-buff');
+            badge.className = 'toggle-badge off';
+            badge.innerText = 'OFF (30)';
+            sub.innerText = 'Speed: 30 ft';
+        }
+    }
+
+    function castSilverAshAegis() {
+        if (curSpellSlots <= 0) {
+            logRoll(`⚠️ <strong>0 Spell Slots remaining!</strong> Cannot cast Silver-Ash Aegis.`);
+            return;
+        }
+        curSpellSlots--;
+        updateSpellSlotsUI();
+        logRoll(`🛡️ <strong>Consecrated Silver-Ash Aegis Warded (1st Slot • ${curSpellSlots}/${maxSpellSlots} left):</strong> Yvaine smears holy ash and silver shavings along her lapels or an ally's armor! Aberrations, celestials, elementals, fey, fiends, &amp; undead have <strong>disadvantage on attack rolls</strong> against the warded target; target cannot be charmed, frightened, or possessed (Conc, 10 mins).`);
+    }
+
+    function castSmokescreen() {
+        if (curSpellSlots <= 0) {
+            logRoll(`⚠️ <strong>0 Spell Slots remaining!</strong> Cannot deploy smokescreen.`);
+            return;
+        }
+        curSpellSlots--;
+        updateSpellSlotsUI();
+        logRoll(`🌫️ <strong>Phosphor-Ash Smokescreen Deployed (1st Slot • ${curSpellSlots}/${maxSpellSlots} left):</strong> Yvaine cracks a pressurized canister from her chest bandolier! A <strong>20-foot-radius sphere</strong> is heavily obscured by thick, blinding occult smoke for up to 1 hour, cutting off enemy line of sight!`);
+    }
+
+    // ==========================================
+    // 🌟 HUMAN HEROIC INSPIRATION & HELP TOKENS
+    // ==========================================
+    function updateHeroicUI() {
+        const card = document.getElementById('card-heroic-toggle');
+        const badge = document.getElementById('badge-heroic-toggle');
+        const sub = document.getElementById('sub-heroic-disp');
+        if (!card || !badge || !sub) return;
+
+        if (heroicInspirationReady) {
+            card.classList.add('active-buff');
+            badge.className = 'toggle-badge on';
+            badge.innerText = 'READY';
+            sub.innerText = 'Human Resourceful (1/LR)';
+        } else {
+            card.classList.remove('active-buff');
+            badge.className = 'toggle-badge off';
+            badge.innerText = 'USED';
+            sub.innerText = 'Expended (Regains on LR)';
+        }
+    }
+
+    function useHeroicInspiration() {
+        if (!heroicInspirationReady) {
+            heroicInspirationReady = true;
+            updateHeroicUI();
+            logRoll(`🌟 <strong>Heroic Inspiration:</strong> Restored to <strong>READY</strong>.`);
+            return;
+        }
+        heroicInspirationReady = false;
+        updateHeroicUI();
+        logRoll(`🌟 <strong>Heroic Inspiration Expended (Human — Resourceful):</strong> The fallen royal refuses to fail! <strong>Immediately reroll any d20 you just rolled</strong> (attack, saving throw, or ability check) and take the new result!`);
+    }
+
+    function spendHelpToken() {
+        if (helpTokens <= 0) {
+            logRoll(`⚠️ <strong>0 Help Tokens remaining!</strong> Regain +1 on Short Rest or all 2/2 on Long Rest.`);
+            return;
+        }
+        helpTokens--;
+        document.getElementById('help-tokens-disp').innerText = `${helpTokens} / ${maxHelpTokens}`;
+        const d6 = Math.floor(Math.random() * 6) + 1;
+        logRoll(`🤝 <strong>Party Help Token Spent (${helpTokens}/${maxHelpTokens} left):</strong> Yvaine calls out tactical covering fire—grant <strong>+1d6 = <span style="color:#67e8f9; font-weight:800; font-size:1.1rem;">+${d6}</span></strong> to an ally's check or attack roll within 30 ft!`);
+    }
+
+    function refillHelpTokens() {
+        helpTokens = maxHelpTokens;
+        document.getElementById('help-tokens-disp').innerText = `${helpTokens} / ${maxHelpTokens}`;
+        logRoll(`🤝 <strong>Help Tokens Refilled:</strong> Restored to 2/2 tokens.`);
+    }
+
+    // ==========================================
+    // 🛡️ ARMOR & VITALS HELPERS
+    // ==========================================
+    function toggleArmorManual() {
+        isArmorActive = !isArmorActive;
+        const acDisp = document.getElementById('vital-ac-disp');
+        const card = document.getElementById('card-armor-toggle');
+        const badge = document.getElementById('badge-armor-toggle');
+
+        if (isArmorActive) {
+            if (acDisp) acDisp.innerText = '16';
+            if (card) card.classList.add('active-buff');
+            if (badge) { badge.className = 'toggle-badge on'; badge.innerText = 'ON (16)'; }
+            logRoll(`🧥 <strong>Studded Leather Coat Equipped:</strong> AC is <strong>16</strong> (12 + 4 DEX).`);
+        } else {
+            if (acDisp) acDisp.innerText = '14';
+            if (card) card.classList.remove('active-buff');
+            if (badge) { badge.className = 'toggle-badge off'; badge.innerText = 'OFF (14)'; }
+            logRoll(`🧥 <strong>Studded Leather Coat Removed:</strong> Unarmored AC is <strong>14</strong> (10 + 4 DEX).`);
+        }
+    }
+
+    function updateHPUI() {
+        const hpDisp = document.getElementById('vital-hp-disp');
+        if (!hpDisp) return;
+        const total = curHP + tempHP;
+        const pct = (curHP / maxHP) * 100;
+
+        let colorClass = 'hp-green';
+        if (tempHP > 0) colorClass = 'hp-blue';
+        else if (pct <= 25) colorClass = 'hp-crimson';
+        else if (pct <= 50) colorClass = 'hp-amber';
+
+        hpDisp.className = `vital-value ${colorClass}`;
+        hpDisp.innerText = tempHP > 0 ? `${curHP} (+${tempHP}) / ${maxHP}` : `${curHP} / ${maxHP}`;
+    }
+
+    function stepHPAmount(delta) {
+        const inp = document.getElementById('hp-amount-input');
+        if (inp) inp.value = Math.max(1, (parseInt(inp.value) || 0) + delta);
+    }
+
+    function takeDamage() {
+        const inp = document.getElementById('hp-amount-input');
+        const amt = parseInt(inp.value) || 0;
+        if (amt <= 0) return;
+
+        let rem = amt;
+        if (tempHP > 0) {
+            if (rem <= tempHP) {
+                tempHP -= rem;
+                rem = 0;
+            } else {
+                rem -= tempHP;
+                tempHP = 0;
+            }
+        }
+        curHP = Math.max(0, curHP - rem);
+        inp.value = '';
+        updateHPUI();
+        logRoll(`💔 <strong>Damage Taken:</strong> -${amt} HP ➔ Current HP: <strong style="color:#f87171;">${curHP}/${maxHP}</strong> (Temp: ${tempHP})`);
+    }
+
+    function healHP() {
+        const inp = document.getElementById('hp-amount-input');
+        const amt = parseInt(inp.value) || 0;
+        if (amt <= 0) return;
+
+        curHP = Math.min(maxHP, curHP + amt);
+        inp.value = '';
+        updateHPUI();
+        logRoll(`💚 <strong>Healed HP:</strong> +${amt} HP ➔ Current HP: <strong style="color:#4ade80;">${curHP}/${maxHP}</strong>`);
+    }
+
+    function addTempHP() {
+        const inp = document.getElementById('hp-amount-input');
+        const amt = parseInt(inp.value) || 0;
+        if (amt <= 0) return;
+
+        tempHP = Math.max(tempHP, amt);
+        inp.value = '';
+        updateHPUI();
+        logRoll(`🛡️ <strong>Temporary HP:</strong> Gained <strong>+${tempHP} Temp HP</strong> (Current HP: ${curHP}/${maxHP})`);
+    }
+
+    function clearTempHP() {
+        tempHP = 0;
+        updateHPUI();
+        logRoll(`🛡️ <strong>Temporary HP:</strong> Cleared.`);
+    }
+
+    function takeShortRest() {
+        // Heals 25% max HP (7 HP)
+        const healAmt = Math.round(maxHP * 0.25);
+        curHP = Math.min(maxHP, curHP + healAmt);
+        helpTokens = Math.min(maxHelpTokens, helpTokens + 1);
+
+        // Repack all firearms ammo & refill reload reserves!
+        lamentReloadReserves = maxLamentReloadReserves;
+        lamentChamber = maxLamentChamber;
+        revolverReloadReserves = maxRevolverReloadReserves;
+        mercyChamber = maxMercyChamber;
+        lessChamber = maxLessChamber;
+
+        updateHPUI();
+        updateLamentAmmoUI();
+        updateRevolversAmmoUI();
+        document.getElementById('help-tokens-disp').innerText = `${helpTokens} / ${maxHelpTokens}`;
+
+        logRoll(`☕ <strong>Short Rest Completed:</strong> Restored +${healAmt} HP (Current: <strong>${curHP}/${maxHP}</strong>) and +1 Help Token.<br>🔫 <strong>Gunsmith Bench Restock:</strong> Yvaine spent the rest repacking gunpowder and brass! <strong>All 4/4 Lament clips and 4/4 Twin Speedloaders replenished, and all firearms topped off to full capacity!</strong>`);
+    }
+
+    function takeLongRest() {
+        curHP = maxHP;
+        tempHP = 0;
+        curSpellSlots = maxSpellSlots;
+        favoredEnemyCasts = maxFavoredEnemyCasts;
+        huntersSenseUses = maxHuntersSenseUses;
+        heroicInspirationReady = true;
+        helpTokens = maxHelpTokens;
+        slayersPreyActive = false;
+        isTracerActive = false;
+        isLongstriderActive = false;
+
+        // Fully top off all firearms and reload reserves
+        lamentReloadReserves = maxLamentReloadReserves;
+        lamentChamber = maxLamentChamber;
+        revolverReloadReserves = maxRevolverReloadReserves;
+        mercyChamber = maxMercyChamber;
+        lessChamber = maxLessChamber;
+
+        updateHPUI();
+        updateSpellSlotsUI();
+        updateLamentAmmoUI();
+        updateRevolversAmmoUI();
+        updateHeroicUI();
+        updateSpeedUI();
+        updateTracerUI();
+        toggleSlayersPreyManual();
+        if (slayersPreyActive) toggleSlayersPreyManual(); // ensure OFF
+        document.getElementById('help-tokens-disp').innerText = `${helpTokens} / ${maxHelpTokens}`;
+        document.getElementById('hunters-sense-pips').innerText = `${huntersSenseUses} / ${maxHuntersSenseUses} uses`;
+        document.getElementById('favored-enemy-pips').innerText = `${favoredEnemyCasts}/${maxFavoredEnemyCasts} Free`;
+
+        logRoll(`🌙 <strong>Long Rest Completed:</strong> HP fully restored (<strong>${maxHP}/${maxHP}</strong>), all 3 Spell Slots &amp; 2 Favored Enemy casts ready, Hunter's Sense restocked, Heroic Inspiration READY, and all 4/4 ammo reserves &amp; magazines packed!`);
+    }
+
+    // ==========================================
+    // 🎯 SKILL, SAVE & STAT ROLLERS
+    // ==========================================
+    function rollInitiative() {
+        rollD20('Initiative Roll (Alert Feat)', 6);
+    }
+    function rollFirearmsCheck() {
+        rollD20('Firearms Precision Check', 8);
+    }
+    function rollAbilityCheck(name, mod) {
+        rollD20(`${name} Ability Check`, mod);
+    }
+    function rollSave(name, mod) {
+        rollD20(`${name} Saving Throw`, mod);
+    }
+    function rollSkill(name, mod) {
+        rollD20(`${name} Check`, mod);
+    }
+
+    // ==========================================
+    // 🪙 GOLD PURSE & CURRENCY LEDGER (10 SP = 1 GP)
+    // ==========================================
+    const DEFAULT_START_GP = 15;
+    const DEFAULT_START_SP = 0;
+
+    function getStoredGold(key, defaultVal) {
+        const val = localStorage.getItem(key);
+        if (val === null || isNaN(parseInt(val))) {
+            localStorage.setItem(key, defaultVal);
+            return defaultVal;
+        }
+        return parseInt(val);
+    }
+
+    let curGP = getStoredGold('cos_gold_yvaine_v1', DEFAULT_START_GP);
+    let curSilver = getStoredGold('cos_silver_yvaine_v1', DEFAULT_START_SP);
+
+    function getGoldHistory() {
+        const stored = localStorage.getItem('cos_gold_tx_yvaine_v1');
+        if (!stored) {
+            const init = [{
+                type: 'initial',
+                label: 'Fallen Royal Traveling Purse',
+                delta: `${DEFAULT_START_GP} GP, ${DEFAULT_START_SP} SP`,
+                total: `${DEFAULT_START_GP} GP, ${DEFAULT_START_SP} SP`,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            }];
+            localStorage.setItem('cos_gold_tx_yvaine_v1', JSON.stringify(init));
+            return init;
+        }
+        try { return JSON.parse(stored); } catch(e) { return []; }
+    }
+
+    function saveGoldHistory(history) {
+        localStorage.setItem('cos_gold_tx_yvaine_v1', JSON.stringify(history.slice(0, 50)));
+    }
+
+    function logGoldTx(type, label, deltaStr, totalStr) {
+        const history = getGoldHistory();
+        const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        history.unshift({ type, label: label || 'Transaction', delta: deltaStr, total: totalStr, time: timeStr });
+        saveGoldHistory(history);
+        renderGoldHistory();
+    }
+
+    function normalizeCoins() {
+        if (curSilver >= 10) {
+            curGP += Math.floor(curSilver / 10);
+            curSilver = curSilver % 10;
+        }
+        while (curSilver < 0 && curGP > 0) {
+            curGP -= 1;
+            curSilver += 10;
+        }
+        if (curGP <= 0 && curSilver < 0) { curGP = 0; curSilver = 0; }
+    }
+
+    function updateGoldUI() {
+        normalizeCoins();
+        document.getElementById('gold-disp').innerText = curGP;
+        document.getElementById('silver-disp').innerText = curSilver;
+        const mg = document.getElementById('modal-gold-disp');
+        const ms = document.getElementById('modal-silver-disp');
+        if (mg) mg.innerText = curGP;
+        if (ms) ms.innerText = curSilver;
+        localStorage.setItem('cos_gold_yvaine_v1', curGP);
+        localStorage.setItem('cos_silver_yvaine_v1', curSilver);
+    }
+
+    function stepGold(delta) {
+        let totalSP = Math.max(0, (curGP * 10) + curSilver + (delta * 10));
+        curGP = Math.floor(totalSP / 10);
+        curSilver = totalSP % 10;
+        updateGoldUI();
+        const deltaStr = `${delta > 0 ? '+' : ''}${delta} GP`;
+        logGoldTx(delta > 0 ? 'gain' : 'spend', delta > 0 ? 'Quick Add' : 'Quick Spend', deltaStr, `${curGP} GP, ${curSilver} SP`);
+        logRoll(`🪙 <strong>Purse:</strong> ${deltaStr} ➔ Total: <strong>${curGP} GP, ${curSilver} SP</strong>`);
+    }
+
+    function stepSilver(delta) {
+        curSilver += delta;
+        normalizeCoins();
+        updateGoldUI();
+        const deltaStr = `${delta > 0 ? '+' : ''}${delta} SP`;
+        logGoldTx('silver', 'Silver Adjustment', deltaStr, `${curGP} GP, ${curSilver} SP`);
+        logRoll(`🥈 <strong>Purse:</strong> ${deltaStr} ➔ Total: <strong>${curGP} GP, ${curSilver} SP</strong>`);
+    }
+
+    function applyGoldAdd() {
+        const inp = document.getElementById('gold-input');
+        const memoInp = document.getElementById('gold-reason-input');
+        const amt = parseInt(inp.value) || 0;
+        if (amt <= 0) return;
+        const memo = memoInp ? memoInp.value.trim() : '';
+        curGP += amt;
+        inp.value = '';
+        if (memoInp) memoInp.value = '';
+        updateGoldUI();
+        logGoldTx('gain', memo || 'Earned Gold', `+${amt} GP`, `${curGP} GP, ${curSilver} SP`);
+        logRoll(`🪙 <strong>Gained Gold:</strong> +${amt} GP ${memo ? '(' + memo + ')' : ''} ➔ <strong>${curGP} GP, ${curSilver} SP</strong>`);
+    }
+
+    function applyGoldSpend() {
+        const inp = document.getElementById('gold-input');
+        const memoInp = document.getElementById('gold-reason-input');
+        const amt = parseInt(inp.value) || 0;
+        if (amt <= 0) return;
+        const memo = memoInp ? memoInp.value.trim() : '';
+        let totalSP = (curGP * 10) + curSilver;
+        if (amt * 10 > totalSP) {
+            logRoll(`⚠️ Insufficient funds! You have ${curGP} GP, ${curSilver} SP.`);
+            return;
+        }
+        totalSP -= amt * 10;
+        curGP = Math.floor(totalSP / 10);
+        curSilver = totalSP % 10;
+        inp.value = '';
+        if (memoInp) memoInp.value = '';
+        updateGoldUI();
+        logGoldTx('spend', memo || 'Spent Gold', `-${amt} GP`, `${curGP} GP, ${curSilver} SP`);
+        logRoll(`💸 <strong>Spent Gold:</strong> -${amt} GP ${memo ? '(' + memo + ')' : ''} ➔ <strong>${curGP} GP, ${curSilver} SP</strong>`);
+    }
+
+    function resetGoldPurse() {
+        curGP = DEFAULT_START_GP;
+        curSilver = DEFAULT_START_SP;
+        updateGoldUI();
+        logGoldTx('reset', 'Reset to Baseline', `${DEFAULT_START_GP} GP, ${DEFAULT_START_SP} SP`, `${curGP} GP, ${curSilver} SP`);
+        logRoll(`🪙 Gold Purse reset to ${curGP} GP, ${curSilver} SP.`);
+    }
+
+    function renderGoldHistory() {
+        const list = document.getElementById('modal-tx-list');
+        if (!list) return;
+        const history = getGoldHistory();
+        list.innerHTML = history.map(item => `
+            <div class="tx-item tx-${item.type === 'spend' ? 'spend' : (item.type === 'silver' ? 'silver' : 'gain')}">
+                <div>
+                    <div style="font-weight:700; color:#f8fafc;">${item.label} <span style="font-size:0.65rem; color:var(--text-muted);">• ${item.time}</span></div>
+                    <div style="font-size:0.68rem; color:var(--text-dim);">Balance: ${item.total}</div>
+                </div>
+                <div style="font-weight:800; font-family:'JetBrains Mono',monospace; color:var(--accent-gold);">${item.delta}</div>
+            </div>
+        `).join('');
+    }
+
+    function openGoldHistoryModal() {
+        renderGoldHistory();
+        const modal = document.getElementById('gold-modal');
+        if (modal) modal.showModal();
+    }
+    function closeGoldHistoryModal() {
+        const modal = document.getElementById('gold-modal');
+        if (modal) modal.close();
+    }
+    function clearGoldHistory() {
+        localStorage.removeItem('cos_gold_tx_yvaine_v1');
+        renderGoldHistory();
+    }
+
+    // ==========================================
+    // 🎒 TRACKED INVENTORY & ITEM DOSSIERS
+    // ==========================================
+    const defaultItems = [
+        "🎯 \"Lament\" (Royal Heavy Long Rifle)",
+        "💥 Twin Revolvers (\"Mercy & Less\")",
+        "🗡️ Solmere Royal Trench Knife",
+        "🧥 Studded Leather Coat (AC 12 + 4 DEX = 16)",
+        "🎖️ Cross-Body Tactical Gunslinger Bandolier (40 Slugs, 60 Revolver Rounds, 4 Moon Clips)",
+        "🔧 Tinker's Gun-Cleaning & Cartridge Reloading Kit",
+        "💎 Chipped Bloodstone Gem Pendant (Keepsake of Solmere)",
+        "🕰️ Engraved Silver Pocket Watch (Father's Hunting Memento)",
+        "📖 Monster-Hunting Journal (Sketches of Undead & Fiend Anatomies)",
+        "🧪 Vial of Consecrated Holy Water",
+        "🏮 Hooded Lantern with Black Lens Shutter",
+        "🎒 Dungeoneer's Pack & Crowbar"
+    ];
+
+    const itemDossiers = {
+        "lament": {
+            name: "🎯 \"Lament\" (Royal Heavy Long Rifle)",
+            tag: "Father's Engraved Firearm • Two-Handed",
+            desc: "The royal stag-hunting rifle of Solmere, engraved with the golden sunburst crest. Taken by Yvaine from her father's dead hands on the Night of the Fall. Tuned to absolute zero by an undercity gunsmith.",
+            stats: "Range 80/240 ft • +8 to hit • 1d12 + 4 Piercing • Gunner Mastery (No Loading penalty, point-blank clearance)."
+        },
+        "revolvers": {
+            name: "💥 Twin Revolvers (\"Mercy & Less\")",
+            tag: "Dual Black-Market Sidearms",
+            desc: "Scarred, mismatched black-market revolvers bought from a port fence. Mercy sits on the right hip; Less sits on the left cross-draw. Fast, reliable, and lethal in tight corridors.",
+            stats: "Range 5/90 ft • 6 rounds per cylinder • Main-hand: +8 hit, 1d6+4 Piercing • Off-hand: +8 hit, 1d6 Piercing • Bonus Action Moon-Clip Reload."
+        },
+        "knife": {
+            name: "🗡️ Solmere Royal Trench Knife",
+            tag: "Concealed Boot Stiletto",
+            desc: "A narrow, reinforced stiletto blade once worn by palace honor guards. Hidden inside Yvaine's right riding boot for point-blank assassination or silent takedowns.",
+            stats: "Melee • Finesse • Light • +6 to hit • 1d4 + 4 Piercing Damage."
+        },
+        "bloodstone": {
+            name: "💎 Chipped Bloodstone Gem Pendant",
+            tag: "Royal Solmere Relic • Keepsake",
+            desc: "A deep green jasper flecked with bright red drops, chipped on the night the royal palace fell. Yvaine grips it whenever she thinks of her missing sisters Vesper and Liora.",
+            stats: "Keepsake. Connects to her lost kingdom and detective oath."
+        },
+        "journal": {
+            name: "📖 Monster-Hunting Journal",
+            tag: "Occult Dossier",
+            desc: "Vellum notebook crammed with anatomical sketches, weakness notes, and silver/salt powder ratios compiled across 7 years of tracking monstrosities in the undercity.",
+            stats: "Powers Hunter's Sense (Wis mod per day) to identify creature immunities, resistances, and vulnerabilities."
+        }
+    };
+
+    function getStoredInventory() {
+        const stored = localStorage.getItem('cos_inv_yvaine_v1');
+        if (!stored) {
+            localStorage.setItem('cos_inv_yvaine_v1', JSON.stringify(defaultItems));
+            return [...defaultItems];
+        }
+        try { return JSON.parse(stored); } catch(e) { return [...defaultItems]; }
+    }
+
+    function saveInventory(items) {
+        localStorage.setItem('cos_inv_yvaine_v1', JSON.stringify(items));
+    }
+
+    function renderInventory() {
+        const container = document.getElementById('inventory-items-container');
+        const countTag = document.getElementById('inventory-count-tag');
+        if (!container) return;
+
+        const items = getStoredInventory();
+        if (countTag) countTag.innerText = `${items.length} Items`;
+
+        container.innerHTML = items.map((item, idx) => `
+            <div class="inventory-item-row" onclick="inspectInventoryItem('${item.replace(/'/g, "\\'")}')">
+                <span style="font-weight:600; color:#f1f5f9;">${item}</span>
+                <button class="btn-act btn-act-pre" onclick="event.stopPropagation(); removeInventoryItem(${idx})" style="padding:2px 6px; font-size:0.68rem; color:#f87171;" title="Remove / Consume">✕</button>
+            </div>
+        `).join('');
+    }
+
+    function inspectInventoryItem(name) {
+        let key = 'generic';
+        if (name.includes('Lament')) key = 'lament';
+        else if (name.includes('Mercy')) key = 'revolvers';
+        else if (name.includes('Knife')) key = 'knife';
+        else if (name.includes('Bloodstone')) key = 'bloodstone';
+        else if (name.includes('Journal')) key = 'journal';
+
+        if (itemDossiers[key]) {
+            const it = itemDossiers[key];
+            openModalCustom(it.name, `
+                <div style="padding:8px; background:#070a12; border-radius:6px; border:1px solid #1e293b; margin-bottom:8px;">
+                    <span class="pill-badge pill-gold" style="font-size:0.7rem;">${it.tag}</span>
+                    <div style="font-size:0.84rem; color:#f8fafc; margin-top:6px; line-height:1.5;">${it.desc}</div>
+                </div>
+                <div style="font-size:0.8rem; color:#cbd5e1; background:rgba(245,158,11,0.06); border-left:3px solid var(--accent-gold); padding:8px 10px;">
+                    <strong>Tactical Mechanics:</strong><br>${it.stats}
+                </div>
+            `, 'Item Dossier');
+        } else {
+            openModalCustom(name, `
+                <div style="font-size:0.84rem; color:#f8fafc; line-height:1.5;">Standard equipment item carried in Yvaine's tactical pack.</div>
+            `, 'Equipment');
+        }
+    }
+
+    function promptAddItem() {
+        const item = prompt("Enter new item name (e.g. 'Silver Holy Water Grenade', '50ft Silk Rope'):");
+        if (!item || !item.trim()) return;
+        const items = getStoredInventory();
+        items.push(item.trim());
+        saveInventory(items);
+        renderInventory();
+        logRoll(`🎒 <strong>Added Item:</strong> Gained <em>${item.trim()}</em>.`);
+    }
+
+    function removeInventoryItem(idx) {
+        const items = getStoredInventory();
+        if (idx < 0 || idx >= items.length) return;
+        const removed = items.splice(idx, 1)[0];
+        saveInventory(items);
+        renderInventory();
+        logRoll(`🎒 <strong>Consumed/Removed Item:</strong> ${removed}.`);
+    }
+
+    function resetInventory() {
+        if (!confirm("Reset inventory to baseline starting equipment?")) return;
+        saveInventory([...defaultItems]);
+        renderInventory();
+        logRoll(`🎒 Inventory reset to baseline.`);
+    }
+
+    // ==========================================
+    // 📓 PLAYER NOTES LEDGER (220 Chars Limit)
+    // ==========================================
+    const defaultNotes = [
+        {
+            title: "The Palace Traitor",
+            body: "The gates of Solmere were opened from the inside on my 13th birthday. The traitor sat at my father's feast table. In Barovia, I will follow every whisper until I know their name."
+        },
+        {
+            title: "Vesper & Liora",
+            body: "My younger sisters disappeared without blood or bodies. They survived. They are the only people in this world I place ahead of my own life."
+        },
+        {
+            title: "Black Stagecoach Cold Open",
+            body: "Followed a gunpowder lead into the mist. Found myself in a runaway black coach hurtling through Svalich Woods alongside an arrogant king and a horn-headed stage magician."
+        }
+    ];
+
+    function getStoredNotes() {
+        const stored = localStorage.getItem('cos_notes_yvaine_v1');
+        if (!stored) {
+            localStorage.setItem('cos_notes_yvaine_v1', JSON.stringify(defaultNotes));
+            return [...defaultNotes];
+        }
+        try { return JSON.parse(stored); } catch(e) { return [...defaultNotes]; }
+    }
+
+    function saveNotes(notes) {
+        localStorage.setItem('cos_notes_yvaine_v1', JSON.stringify(notes));
+    }
+
+    let activeReadingNoteIndex = -1;
+    let editingNoteIndex = -1;
+
+    function renderPlayerNotesUI() {
+        const notes = getStoredNotes();
+        const sheetList = document.getElementById('sheet-notes-preview-list');
+        const modalList = document.getElementById('player-notes-full-list');
+        const sCount = document.getElementById('sheet-notes-count');
+        const mCount = document.getElementById('modal-notes-count');
+
+        if (sCount) sCount.innerText = notes.length;
+        if (mCount) mCount.innerText = notes.length;
+
+        // Render sheet preview
+        if (sheetList) {
+            sheetList.innerHTML = notes.slice(0, 3).map((n, idx) => `
+                <div class="note-preview-row" onclick="readNoteDirectly(${idx})">
+                    <span style="font-weight:700; color:#fde68a; font-size:0.75rem;">${n.title}</span>
+                    <span style="font-size:0.68rem; color:var(--text-dim); text-overflow:ellipsis; overflow:hidden; white-space:nowrap; max-width:180px;">${n.body}</span>
+                </div>
+            `).join('');
+        }
+
+        // Render modal full list
+        if (modalList) {
+            modalList.innerHTML = notes.map((n, idx) => `
+                <div class="note-preview-row" onclick="readNoteDirectly(${idx})" style="padding:8px 10px;">
+                    <div style="display:flex; flex-direction:column; gap:2px; flex:1;">
+                        <span style="font-weight:700; color:#fde68a; font-size:0.8rem;">${n.title}</span>
+                        <span style="font-size:0.72rem; color:var(--text-dim); line-height:1.35;">${n.body}</span>
+                    </div>
+                    <span style="font-size:0.7rem; color:#a78bfa; margin-left:8px;">Read ➔</span>
+                </div>
+            `).join('');
+        }
+    }
+
+    function openPlayerNotesModal() {
+        showNotesListView();
+        renderPlayerNotesUI();
+        const modal = document.getElementById('player-notes-modal');
+        if (modal) modal.showModal();
+    }
+    function closePlayerNotesModal() {
+        const modal = document.getElementById('player-notes-modal');
+        if (modal) modal.close();
+    }
+
+    function showNotesListView() {
+        document.getElementById('notes-list-view').style.display = 'flex';
+        document.getElementById('note-reader-view').style.display = 'none';
+        document.getElementById('note-editor-view').style.display = 'none';
+    }
+
+    function readNoteDirectly(idx) {
+        const notes = getStoredNotes();
+        if (idx < 0 || idx >= notes.length) return;
+        activeReadingNoteIndex = idx;
+        const n = notes[idx];
+
+        document.getElementById('reader-note-title').innerText = n.title;
+        document.getElementById('reader-note-body').innerText = n.body;
+
+        document.getElementById('reader-btn-edit').onclick = () => openNoteEditorForm(idx);
+        document.getElementById('reader-btn-delete').onclick = () => deleteNoteDirectly(idx);
+
+        document.getElementById('notes-list-view').style.display = 'none';
+        document.getElementById('note-reader-view').style.display = 'flex';
+        document.getElementById('note-editor-view').style.display = 'none';
+
+        const modal = document.getElementById('player-notes-modal');
+        if (modal && !modal.open) modal.showModal();
+    }
+
+    function openNoteEditorForm(idx = -1) {
+        editingNoteIndex = idx;
+        const notes = getStoredNotes();
+        const titleInp = document.getElementById('note-title-input');
+        const bodyInp = document.getElementById('note-body-input');
+        const headerLbl = document.getElementById('note-form-header-lbl');
+
+        if (idx >= 0 && idx < notes.length) {
+            headerLbl.innerText = "✏️ Edit Investigation Note";
+            titleInp.value = notes[idx].title;
+            bodyInp.value = notes[idx].body;
+        } else {
+            headerLbl.innerText = "➕ Write New Note";
+            titleInp.value = "";
+            bodyInp.value = "";
+        }
+
+        updateNoteCharCounter();
+        document.getElementById('notes-list-view').style.display = 'none';
+        document.getElementById('note-reader-view').style.display = 'none';
+        document.getElementById('note-editor-view').style.display = 'flex';
+    }
+
+    function cancelNoteEdit() {
+        if (activeReadingNoteIndex >= 0) showNotesListView();
+        else showNotesListView();
+    }
+
+    function updateNoteCharCounter() {
+        const bodyInp = document.getElementById('note-body-input');
+        const cnt = document.getElementById('note-char-counter');
+        if (bodyInp && cnt) {
+            cnt.innerText = `${bodyInp.value.length} / 220 chars`;
+        }
+    }
+
+    function savePlayerNote() {
+        const titleInp = document.getElementById('note-title-input');
+        const bodyInp = document.getElementById('note-body-input');
+        const title = titleInp.value.trim();
+        const body = bodyInp.value.trim();
+
+        if (!title || !body) {
+            alert("Please enter both a title and body for the note.");
+            return;
+        }
+
+        const notes = getStoredNotes();
+        if (editingNoteIndex >= 0 && editingNoteIndex < notes.length) {
+            notes[editingNoteIndex] = { title, body };
+            logRoll(`📓 <strong>Note Edited:</strong> "${title}".`);
+        } else {
+            notes.unshift({ title, body });
+            logRoll(`📓 <strong>New Note Saved:</strong> "${title}".`);
+        }
+
+        saveNotes(notes);
+        renderPlayerNotesUI();
+        showNotesListView();
+    }
+
+    function deleteNoteDirectly(idx) {
+        const notes = getStoredNotes();
+        if (idx < 0 || idx >= notes.length) return;
+        const removed = notes.splice(idx, 1)[0];
+        saveNotes(notes);
+        renderPlayerNotesUI();
+        showNotesListView();
+        logRoll(`🗑️ <strong>Note Removed:</strong> "${removed.title}".`);
+    }
+
+    // ==========================================
+    // 📋 DUAL EXPORT PROTOCOL (Data & Notes)
+    // ==========================================
+    function exportSheetState() {
+        const dataStr = `⚔️ Yvaine Data Export | HP: ${curHP}/${maxHP} (Temp: ${tempHP}) | AC: ${isArmorActive ? 16 : 14} | Init: +6 | Speed: ${isLongstriderActive ? '40ft' : '30ft'} | Help: ${helpTokens}/${maxHelpTokens} | Stance: ${activeStance.toUpperCase()} | Lament: ${lamentChamber}/${maxLamentChamber} (Clips: ${lamentReloadReserves}/${maxLamentReloadReserves}) | Revolvers: Mercy ${mercyChamber}/6, Less ${lessChamber}/6 (Speedloaders: ${revolverReloadReserves}/${maxRevolverReloadReserves}) | Spell Slots: ${curSpellSlots}/${maxSpellSlots} (1st) | Favored Enemy: ${favoredEnemyCasts}/${maxFavoredEnemyCasts} Free | Hunter's Sense: ${huntersSenseUses}/${maxHuntersSenseUses} | Heroic Inspiration: ${heroicInspirationReady ? 'READY' : 'USED'} | Wealth: ${curGP} GP, ${curSilver} SP | Active Buffs: Armor (${isArmorActive}), Stride (${isLongstriderActive}), Slayer (${slayersPreyActive}), Tracer (${isTracerActive}) | 📦 Inventory: (Session Synced)`;
+
+        navigator.clipboard.writeText(dataStr).then(() => {
+            logRoll(`📋 <strong>Export Data Copied to Clipboard!</strong><br><span style="font-size:0.75rem; color:#cbd5e1; font-family:'JetBrains Mono',monospace;">${dataStr}</span>`);
+        }).catch(err => {
+            prompt("Copy sheet export string:", dataStr);
+        });
+    }
+
+    function exportPlayerNotes() {
+        const notes = getStoredNotes();
+        let exportStr = `📓 Yvaine Notes Export (${notes.length} Total):\n` + notes.map(n => `➕ [${n.title}]: ${n.body}`).join('\n');
+
+        navigator.clipboard.writeText(exportStr).then(() => {
+            logRoll(`📓 <strong>Player Notes Copied to Clipboard!</strong> Paste into Discord or DM notes.`);
+        }).catch(err => {
+            prompt("Copy notes export string:", exportStr);
+        });
+    }
+
+    // ==========================================
+    // 📖 MODAL & BACKSTORY HANDLER
+    // ==========================================
+    const staticModals = {
+        "backstory_full": {
+            title: "Eclipsa Rosaline \"Yvaine\" the First",
+            body: `
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <!-- IDENTITY HEADER -->
+                    <div style="padding:8px 12px; background:linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(15,23,42,0.9) 100%); border:1px solid rgba(239,68,68,0.35); border-radius:6px;">
+                        <div style="color:#fde68a; font-weight:800; font-size:0.88rem; letter-spacing:0.3px;">« Eldest Princess of Solmere • Apex Monster Slayer &amp; Detective »</div>
+                        <div style="color:#cbd5e1; font-size:0.75rem; margin-top:2px;">Level 3 Human Monster Slayer Ranger • Fallen Royal Background • 5'6" (Age 20) • Chaotic Neutral</div>
+                    </div>
+
+                    <!-- BOX 1: PASSIVE ABILITIES, RESISTANCES & FEATS -->
+                    <div style="background:rgba(15,23,42,0.85); border:1px solid #334155; border-left:3px solid #ef4444; border-radius:6px; padding:10px 12px;">
+                        <div style="font-size:0.74rem; font-weight:800; color:#fca5a5; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:7px;">🛡️ Passive Abilities, Gunner Feat &amp; Senses</div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:7px; font-size:0.75rem;">
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#fde68a;">🔫 Gunner Feat (Level 1 / Background)</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Proficient with all firearms. Ignore the <strong>Loading</strong> property of firearms. Being within 5 ft of a hostile creature imposes <strong>NO disadvantage</strong> on ranged attack rolls (point-blank execution).</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#38bdf8;">⚡ Alert Origin Feat</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Add PB (+2) to Initiative (<strong>+6 total</strong>). Can swap initiative count with a willing ally at combat start. Cannot be surprised while conscious.</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#4ade80;">👁️ Deft Explorer (Canny 5.5e)</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Expertise in <strong>Perception (+6 bonus, Passive Perception 16)</strong>. Learned two exotic languages: <strong>Abyssal</strong> and <strong>Infernal</strong>.</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
+                                <div style="font-weight:700; color:#c4b5fd;">🏹 Fighting Style — Archery</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Gain a permanent <strong>+2 bonus to attack rolls</strong> made with ranged weapons (already factored into +8 firearms attack rolls).</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BOX 2: ORIGIN STORY & THE NIGHT OF THE FALL -->
+                    <div style="background:rgba(56,189,248,0.05); border:1px solid rgba(56,189,248,0.22); border-left:3px solid var(--accent-blue); border-radius:6px; padding:10px 12px; font-size:0.77rem; color:#f8fafc; line-height:1.5;">
+                        <div style="font-size:0.74rem; font-weight:800; color:var(--accent-blue); text-transform:uppercase; letter-spacing:0.4px; margin-bottom:5px;">👑 Origin Story: The Fall of Solmere &amp; The Undercity</div>
+                        <div>
+                            Eclipsa was born the eldest child of the royal house of <strong>Solmere</strong>, a kingdom of white stone and full granaries. On her twelfth birthday, her father took her to the royal grounds and let her fire his long-barreled hunting rifle <em>"Lament"</em>. She hit the target on her second shot.<br><br>
+                            <strong>The Night of the Fall:</strong> On the night of her thirteenth birthday, the gates were opened from the inside. Guards were dismissed on false orders; warning bells never rang. Eclipsa hid in servant passages and emerged at dawn to find her parents dead. She buried them with a servant's spade, took her father's rifle, and found that her younger sisters—<strong>Vesper and Liora</strong>—had vanished without bodies or blood. She realized instantly: <em>such betrayal could only be committed by someone who knew the palace by heart.</em><br><br>
+                            <strong>The Undercity &amp; The Mists:</strong> Taking the name <strong>Yvaine</strong>, she spent 7 years in port black markets learning to track rumors, crimp gunpowder, and master monster anatomies. Chasing a lead on a survivor who knew the traitor to an isolated road, the mists of Barovia rolled in. Furious that something had pulled the trail from her grasp, she enters Barovia in full <strong>detective mode</strong>, seeking the royal traitor and proof her sisters live.
+                        </div>
+                    </div>
+
+                    <!-- BOX 3: PERSONA, IDEALS, BONDS & FLAWS -->
+                    <div style="background:rgba(239,68,68,0.06); border:1px solid rgba(239,68,68,0.25); border-left:3px solid #ef4444; border-radius:6px; padding:9px 12px; font-size:0.75rem; color:#e2e8f0; line-height:1.45;">
+                        <div style="font-size:0.72rem; font-weight:800; color:#fca5a5; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:4px;">🎭 Personality, Ideals, Bonds &amp; Flaws</div>
+                        <div>• <strong>Personality:</strong> Goals first. She sorts people into useful or irrelevant, and is polite only as long as it pays. Speaks like someone who never doubted the room should rearrange itself around her.</div>
+                        <div>• <strong>Ideals:</strong> <em>Self-Reliance</em> (nobody saved Solmere, nobody will save her; trusts her guns and instincts), <em>Survival</em> (rules didn't save the palace; breaks them when needed), &amp; <em>Legacy</em> (Solmere will not be forgotten).</div>
+                        <div>• <strong>Bonds:</strong> <em>The Missing Sisters</em> (Vesper and Liora—the only people she places ahead of her own survival).</div>
+                        <div>• <strong>Flaws:</strong> <em>Pride &amp; Entitlement</em> (gives orders, refuses help, treats allies like staff), <em>Transactional</em> (keeps mental ledger), <em>Cannot Be Corrected</em> (would rather lose than admit someone else was right).</div>
+                    </div>
+                </div>
+            `,
+            tag: "Solmere Royalty Dossier"
+        },
+        "spell_grenade": {
+            title: "💣 \"Sovereign's Spite\" Phosphor Grenade",
+            body: `
+                <div style="font-size:0.84rem; color:#f8fafc; line-height:1.55;">
+                    <strong>5.5e Hail of Thorns Adapter:</strong><br>
+                    • <strong>Casting Time:</strong> 1 Bonus Action (cast immediately after hitting a creature with a ranged weapon attack).<br>
+                    • <strong>Duration:</strong> Instantaneous (No Concentration!).<br>
+                    • <strong>Range:</strong> Self (target hit).<br>
+                    • <strong>Damage:</strong> The struck creature and each creature within a <strong>5-foot cube</strong> centered on it must make a <strong>DC 12 Dexterity Saving Throw</strong>, taking <strong>1d10 Piercing &amp; Fire damage</strong> on a failed save, or half as much damage on a successful one.<br><br>
+                    <em>Occult Flavor:</em> Right as the heavy slug shatters bone, Yvaine pulls an occult cotter pin with her teeth and flings a ribbed silver canister straight into the entry wound, detonating in a blinding spray of razor flechettes.
+                </div>
+            `,
+            tag: "1st Level Conjuration (Reflavored)"
+        },
+        "spell_tracer": {
+            title: "🔴 Runic Tracer Round (Beacon)",
+            body: `
+                <div style="font-size:0.84rem; color:#f8fafc; line-height:1.55;">
+                    <strong>Favored Enemy &amp; Hunter's Mark Adapter:</strong><br>
+                    • <strong>Free Casts:</strong> 2 per Long Rest without expending a spell slot (or cast using 1st-level slots).<br>
+                    • <strong>Casting Time:</strong> 1 Bonus Action.<br>
+                    • <strong>Duration:</strong> Concentration, up to 1 hour.<br>
+                    • <strong>Range:</strong> 90 feet.<br>
+                    • <strong>Effect:</strong> You chamber a luminous, runic cartridge. You deal an extra <strong>1d6 damage</strong> to the target whenever you hit it with a weapon attack. You have <strong>Advantage on Wisdom (Perception) and Wisdom (Survival) checks</strong> made to track it.
+                </div>
+            `,
+            tag: "1st Level Divination (Reflavored)"
+        },
+        "spell_longstrider": {
+            title: "⚡ Pneumatic Quickstep Overdrive",
+            body: `
+                <div style="font-size:0.84rem; color:#f8fafc; line-height:1.55;">
+                    <strong>Longstrider Adapter:</strong><br>
+                    • <strong>Casting Time:</strong> 1 Action.<br>
+                    • <strong>Duration:</strong> 1 hour (NO Concentration!).<br>
+                    • <strong>Range:</strong> Touch.<br>
+                    • <strong>Effect:</strong> The target's speed increases by <strong>10 feet (30 ft ➔ 40 ft)</strong> until the spell ends.<br><br>
+                    <em>Occult Flavor:</em> Concentrated adrenaline stim combined with custom gaiter release valves, flooding reflexes with surge energy to slip through enemy lines at blinding speeds.
+                </div>
+            `,
+            tag: "1st Level Transmutation (Reflavored)"
+        },
+        "spell_aegis": {
+            title: "🛡️ Consecrated Silver-Ash Aegis",
+            body: `
+                <div style="font-size:0.84rem; color:#f8fafc; line-height:1.55;">
+                    <strong>Protection from Evil and Good (Monster Slayer Magic):</strong><br>
+                    • <strong>Casting Time:</strong> 1 Action.<br>
+                    • <strong>Duration:</strong> Concentration, up to 10 minutes.<br>
+                    • <strong>Range:</strong> Touch.<br>
+                    • <strong>Effect:</strong> Aberrations, celestials, elementals, fey, fiends, and undead have <strong>disadvantage on attack rolls</strong> against the warded target. The target also can't be charmed, frightened, or possessed by them.
+                </div>
+            `,
+            tag: "1st Level Abjuration (Subclass Free Prepared)"
+        }
+    };
+
+    function openSpellDetailsModal(key) {
+        const modal = document.getElementById('spell-details-modal');
+        const titleEl = document.getElementById('modal-spell-title');
+        const bodyEl = document.getElementById('modal-spell-body');
+        const tagEl = document.getElementById('modal-spell-tag');
+        if (!modal || !staticModals[key]) return;
+
+        const data = staticModals[key];
+        titleEl.innerText = data.title;
+        bodyEl.innerHTML = data.body;
+        if (tagEl) tagEl.innerText = data.tag;
+        modal.showModal();
+    }
+
+    function openModalCustom(title, bodyHtml, tag) {
+        const modal = document.getElementById('spell-details-modal');
+        const titleEl = document.getElementById('modal-spell-title');
+        const bodyEl = document.getElementById('modal-spell-body');
+        const tagEl = document.getElementById('modal-spell-tag');
+        if (!modal) return;
+
+        titleEl.innerText = title;
+        bodyEl.innerHTML = bodyHtml;
+        if (tagEl) tagEl.innerText = tag || "Details";
+        modal.showModal();
+    }
+
+    function closeSpellDetailsModal() {
+        const modal = document.getElementById('spell-details-modal');
+        if (modal) modal.close();
+    }
+
+    // Modal backdrop click-outside dismissal
+    document.querySelectorAll('dialog').forEach(diag => {
+        diag.addEventListener('click', (e) => {
+            const rect = diag.getBoundingClientRect();
+            const isInDialog = (rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+                                rect.left <= e.clientX && e.clientX <= rect.left + rect.width);
+            if (!isInDialog) diag.close();
+        });
+    });
+
+    // ==========================================
+    // INITIALIZATION ON LOAD
+    // ==========================================
+    window.addEventListener('DOMContentLoaded', () => {
+        updateHPUI();
+        updateLamentAmmoUI();
+        updateRevolversAmmoUI();
+        updateSpellSlotsUI();
+        updateGoldUI();
+        renderInventory();
+        renderPlayerNotesUI();
+        updateHeroicUI();
+        updateSpeedUI();
+    });
+</script>
+</body>
+</html>

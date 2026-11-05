@@ -72,7 +72,7 @@
 ### 3. 🔫 Eclipsa Rosaline Yvaine the First ("Yvaine" / "The First") — Fallen Princess & Monster Slayer
 * **Species & Class:** **Level 3 Human (Variant / 5.5e) Monster Slayer Ranger**
 * **Background & Alignment:** **Fallen Royal (Solmere)** • **Chaotic Neutral** *(Height: 5'6" • Age: 20)*
-* **Vitals:** **HP:** `28 / 28` *(3d10 + CON)* | **AC:** `15` *(Studded Leather 12 + DEX 3)* | **Init:** `+5` *(Alert Feat)* | **Speed:** `30 ft` | **PB:** `+2` | **Passive Perception:** `16` *(Expertise)*
+* **Vitals:** **HP:** `28 / 28` *(3d10 + CON)* | **AC:** `16` *(Studded Leather 12 + DEX 4)* | **Init:** `+6` *(Alert Feat: +4 DEX + 2 PB)* | **Speed:** `30 ft` *(40 ft with Pneumatic Quickstep)* | **PB:** `+2` | **Passive Perception:** `16` *(Expertise)*
 * **Ability Scores:** `STR 8 (-1) | DEX 18 (+4) ★ | CON 14 (+2) | INT 10 (+0) | WIS 14 (+2) | CHA 10 (+0)`
 * **Saving Throws:** **STR ★ `+1`**, **DEX ★ `+6`**, CON `+2`, INT `+0`, WIS `+2`, CHA `+0`
 * **Proficient Skills:** **Perception (WIS) ★ (Expertise) `+6`**, **Stealth (DEX) ★ `+6`**, **Acrobatics (DEX) ★ `+6`**, **Sleight of Hand (DEX) ★ `+6`**, **Survival (WIS) ★ `+4`**, **Insight (WIS) ★ `+4`**, **Arcana (INT) ★ `+2`**, **Investigation (INT) ★ `+2`** • **Languages:** Common, Abyssal, Infernal
@@ -80,24 +80,26 @@
   - 🔍 **Hunter’s Sense (`2 / 2` per Long Rest):** Bonus Action to inspect a creature within 60 ft; immediately learn damage immunities, resistances, and vulnerabilities. *(Occult Flavor: Field Dossier & anatomy analysis).*
   - 🎯 **Slayer’s Prey (At-Will Quarry):** Bonus Action to designate a creature within 60 ft; first weapon hit each turn deals an extra **`+1d6` weapon damage**.
   - 🛡️ **Monster Slayer Magic:** Automatically knows *Protection from Evil and Good* (free prepared).
-* **Core Ranger Features (5.5e / Tasha's):**
-  - 🏹 **Fighting Style — Archery:** `+2` bonus to attack rolls with ranged weapons (included in stats).
-  - 👁️ **Deft Explorer (Canny):** Expertise in Perception (`+6`), learned Abyssal & Infernal.
-  - 🐺 **Favored Enemy (5.5e):** *Hunter's Mark* always prepared, free to cast `2 / 2` times per Long Rest without spending spell slots.
+* **Core Ranger Features & Tactical Feats (5.5e / Tasha's):**
+  - 🏹 **Fighting Style — Archery:** `+2` bonus to attack rolls with ranged weapons (factored into `+8` to hit).
+  - 👁️ **Deft Explorer (Canny):** Expertise in Perception (`+6`, PP 16), learned Abyssal & Infernal.
+  - 🐺 **Favored Enemy (5.5e):** *Hunter's Mark / Runic Tracer Round* always prepared, free to cast `2 / 2` times per Long Rest without spending spell slots.
   - 🌟 **Heroic Inspiration (Human Resourceful):** Free reroll ready every Long Rest.
-  - ⚡ **Alert Feat (Origin Feat):** `+2` PB to Initiative (`+5` total); can swap Initiative count with a willing ally at start of combat.
+  - ⚡ **Alert Origin Feat:** `+2` PB to Initiative (`+6` total); can swap Initiative count with a willing ally at start of combat. Cannot be surprised.
   - 🔫 **Gunner Feat (Level 1 / Background):** Firearms proficiency, ignores Loading property, no disadvantage on ranged attacks within 5 ft (point-blank execution).
   - 🤝 **Help Tokens:** `2 / 2`
 * **Spell Arsenal (Re-flavored Occult Rigs — Spell DC 12 | Spell Attack +4 | 3x 1st-Level Slots):**
-  - *Protection from Evil and Good* (Abjuration • Consecrated Salt & Silver Ash)
-  - *Grenade Shot* (Hail of Thorns adapter • Bonus Action on hit, `1d10` piercing in 5ft cube, DEX save)
-  - *Longstrider* (Adrenaline Stim / Pneumatic Boot-Rigging • +10 ft speed for 1 hour)
-  - *Fog Cloud / Smoke Screen* (Phosphor-Ash Smokescreen • 20ft sphere obscuration)
-  - *Hunter's Mark* (Favored Enemy 2x free • Tracer Round • `+1d6` damage, Adv on Perception/Survival)
-* **Weapons & Firearms Arsenal:**
-  - 🎯 **"Lament" (Heavy Long Rifle / Musket):** `+7 to hit`, `1d12 + 3` Piercing | Range 80/240 ft (5 ft point-blank w/ Gunner) | Two-Handed. *(Burst w/ Slayer's Prey: `1d12 + 1d6 + 3`, avg 13 dmg)*.
-  - 💥 **Twin Revolvers ("Mercy & Less"):** Main-Hand `+7 to hit`, `1d6 + 3` Piercing (Action) | Off-Hand `+7 to hit`, `1d6` Piercing (Bonus Action) | Range 5/90 ft | 6-round cylinders w/ speedloaders.
-* **Equipment & Relics:** Studded leather coat cut from her charred ballgown, tactical bandolier (40 rifle slugs, 60 revolver rounds, 4 moon-clip speedloaders), chipped bloodstone gem pendant, silver pocket watch, monster-hunting journal with anatomical sketches, holy water, dungeoneer's pack, 15 GP.
+  - 💣 **"Sovereign's Spite" Phosphor Grenade:** *(Hail of Thorns adapter)* Bonus Action immediately after hit with ranged attack; target and 5-ft cube take **`1d10` Piercing & Fire damage** on failed DC 12 DEX save (half on success, no concentration).
+  - 🔴 **Runic Tracer Round (Targeting Beacon):** *(Hunter's Mark adapter)* Bonus Action, 90 ft, Conc 1 hr. Favored Enemy 2x free/LR or 1st-level slot. Target takes an extra **`+1d6` Piercing/Force damage** on EVERY weapon hit; Advantage on Perception & Survival to track.
+  - ⚡ **Pneumatic Quickstep Overdrive:** *(Longstrider adapter)* 1 Action, Touch, 1 hr (no conc). Speed increases by **`+10 ft` (40 ft total)**.
+  - 🛡️ **Consecrated Silver-Ash Aegis:** *(Protection from Evil and Good)* Subclass Magic. 1 Action, Touch, Conc 10 mins. Disadvantage on monster attacks, immunity to charm/fright/possession.
+  - 🌫️ **Phosphor-Ash Smokescreen:** *(Fog Cloud adapter)* 1 Action, 120 ft, Conc 1 hr. 20-ft-radius sphere of heavy obscuration.
+* **Weapons, Firearms Arsenal & Reload Engine:**
+  - 🎯 **"Lament" (Heavy Long Rifle / Musket):** `+8 to hit`, `1d12 + 4` Piercing | Range 80/240 ft (5 ft point-blank w/ Gunner) | Two-Handed. Capacity: **12-round chamber**. Reloading: **1 Bonus Action**. Reload Reserves: **4 clips per Short Rest** (12 slugs each). *(Quarry Burst w/ Slayer's Prey: `1d12 + 1d6 + 4`)*.
+  - 💥 **Twin Revolvers ("Mercy & Less"):** Main-Hand `+8 to hit`, `1d6 + 4` Piercing (Action) | Off-Hand `+8 to hit`, `1d6` Piercing (Bonus Action) | Range 5/90 ft. Capacity: **6 bullets each (12 total)**. Reloading: **1 Bonus Action reloads BOTH revolvers** simultaneously via moon-clip speedloaders. Reload Reserves: **4 speedloader packs per Short Rest**.
+  - 🗡️ **Solmere Royal Trench Knife / Stiletto:** Backup Melee. Finesse, Light. `+6 to hit` (DEX + PB), `1d4 + 4` Piercing. Concealed boot blade, unlimited melee strikes.
+  - ☕ **Short Rest Restock:** Yvaine repacks gunpowder, lead, and brass, fully restoring all 4/4 Lament clips and 4/4 Twin Speedloaders, and topping off all firearms to maximum capacity!
+* **Equipment & Relics:** Studded leather coat cut from charred ballgown (AC 16), cross-body tactical bandolier (40 heavy rifle slugs, 60 revolver rounds, 4 moon-clip speedloaders), tinker's gun-cleaning & reloading kit, chipped bloodstone gem pendant, silver pocket watch, monster-hunting journal with anatomical sketches, holy water vial, hooded lantern with black shutter, dungeoneer's pack, crowbar, 15 GP.
 * **Origin Lore & Detective Arc:** Eldest princess of the white-stone kingdom of **Solmere**. On her 13th birthday, the palace gates were opened from the inside, guards were dismissed on false orders, and her parents were slaughtered. **Yvaine never saw the traitor's face**—only that someone who knew the palace by heart had betrayed them. She buried her parents with a servant's spade, took her father's engraved rifle *"Lament"*, and spent 7 years in the undercity turning into an apex Monster Slayer hunting her missing younger sisters, **Vesper and Liora**. In Barovia, she is in full **detective mode**, tracking the phantom traitor and finding proof that Vesper and Liora are safe back home. *(Secret Destiny: On her 13th birthday, the Dark Powers orchestrated the fall of Solmere to forge an apex killer; when Strahd dies, the Scion Companion channels the Root Anchor into Yvaine, turning her lethal Hunter's Sense into Vecna's targeting crosshairs across the multiverse).*
 
 ---
