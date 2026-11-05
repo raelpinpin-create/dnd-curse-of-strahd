@@ -9,9 +9,9 @@
 
 | Slot | Hero / Companion | Class & Level | HP | AC | Init | Key Passive / Resource |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **PC 1** | 🎩 **Piper ("The Incomparable")** | Level 3 Wild Magic Sorcerer (Fierna Tiefling) | `16/16` | `12 (15)` | `+2` | ✨ `3/3 SP` • 🃏 `Tides of Chaos` • 🔥 Fire Resist • `DC 14 / +6` |
+| **PC 1** | 🎩 **Piper ("The Incomparable")** | Level 3 Wild Magic Sorcerer (Fierna Tiefling • Native) | `16/16` | `12 (15)` | `+2` | ✨ `3/3 SP` • 🃏 `Tides of Chaos` • 🔥 Fire Resist • `DC 14 / +6` |
 | **PC 2** | 👑 **Jacomir Yulle ("King of Oakenshire")** | Level 3 Battle Master Fighter (Human • Noble) | `28/28` | `17` | `+0` | ⚔️ `4/4 d8` *(Parry/Riposte/Menacing DC 13)* • 💨 `3/3 SW` • ⚡ `Action Surge` |
-| **PC 3** | 🛡️ **Stranger #3** *(TBD)* | Level 3 *[TBD]* | `--/--` | `--` | `+--` | 🤝 Help Tokens: `2 / 2` |
+| **PC 3** | 🔫 **Eclipsa "Yvaine" the First** | Level 3 Monster Slayer Ranger (Human • Gunslinger) | `28/28` | `15` | `+5` | 🎯 *Lament* `+7 (1d12+3)` • 🔍 *Hunter's Sense 2/2* • 🏹 *Slayer's Prey* • ⚡ *Alert* |
 | **PC 4** | 🏹 **Stranger #4** *(TBD)* | Level 3 *[TBD]* | `--/--` | `--` | `+--` | 🤝 Help Tokens: `2 / 2` |
 | **Escort** | 🌹 **Ireena Kolyana** | Noble Swordswoman | `28/28` | `15` | `+2` | Silvered Rapier `+5 (1d8+2)` • Parry `+2 AC` |
 | **Ally** | 🗡️ **Ismark Indirovich** | Veteran Swordsman *(Act I)* | `58/58` | `17` | `+1` | Multiattack: 2x Longsword `+5 (1d10+3)` |
@@ -62,10 +62,16 @@ flowchart TD
 
 ---
 
-### 🌑 1.2 The Trilogy Crossover Arc: How the PCs Become Campaign 3's Final Rivals
-* **Act I–III (The Erosion of Mercy):** Throughout Barovia, every victory requires moral compromise (Doru's starvation, Vallaki's lesser of two evils, the Abbot's madness, the Dark Powers whispering in dreams whenever a PC hits 0 HP).
-* **Act IV (Sessions 15–16 — The Amber Temple Bargains):** Inside the frozen vaults of Mount Ghakis, the party discovers the **Amber Sarcophagi** housing ancient vestiges—including **Vampyr**, **Tenebrous**, and a fractured **Obsidian Sarcophagus of Vecna/Ikor**. To gain the overwhelming power needed to survive Castle Ravenloft (or revive fallen comrades), the PCs are offered **Supreme Dark Gifts** (+2 to stats beyond 20, legendary necrotic/vampiric powers, extra spell slots).
-* **Session 20 Finale (The Throne of the Mists):** When the party finally destroys Count Strahd in Castle Ravenloft, the Dark Powers and Vecna's Obsidian Monoliths do not merely free them—**they crown the victorious party as the Dread Vanguard of the Mists**, pulling them across the planes to intercept **Eflein** and **Sylvar Link** in Campaign 3!
+### 🌑 1.2 The Cosmic Knot: Primordial Ravenloft & The Living Conduits
+*(See [`THE_COSMIC_KNOT_MASTER_LORE.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/THE_COSMIC_KNOT_MASTER_LORE.md) for full cosmic mechanics)*
+
+* **Primordial Architecture (Decoupled from Shadowfell):** Ravenloft is an autonomous multiversal kinetic siphon built by the primordial **Dark Powers** long before recorded history, fueled by eternal cycles of **false hope and absolute despair**.
+* **The Root Anchor Protocol:** When Strahd is slain, the cornerstone holding Barovia rigid snaps. The party does not absorb the entire infinite ocean of Mists—they swallow the **metaphysical root anchor (the master key and pulled grenade pin)**.
+* **The Bait & The Grim Smile:** The Dark Powers chose this specific party because their natural traits made them apex vessels. Their backstories were deliberately targeted to forge their drive, marked by a recurring horror motif: **ringing ears, distant carriage gallops, and someone in the room staring dead at them with a grim look... before slowly, unnervingly smiling**:
+  - 👑 **Jacomir Yulle:** Lost Oakenshire during his royal speech to this exact phenomenon. In Barovia, he fights to lift the Mists and restore his kingdom, only to be turned into Vecna's vanguard general.
+  - 🎩 **Piper:** Suppressed her real Wild Magic for years out of fear. Her mentor "Barnaby" was a Dark Powers handler. In Barovia, she fights to free her tiefling parents' trapped souls and save her native homeland—only to be shattered when the Companion speaks in Barnaby's voice and forces the Barovian Root Anchor into her chest.
+  - 🔫 **Eclipsa "Yvaine" the First:** Solmere's gates were opened by an unseen insider on her 13th birthday. **Yvaine never saw the traitor's face**—only that someone knew the palace by heart. In Barovia, she operates in **detective mode**, unearthing clues of the traitor and discovering that her sisters **Vesper and Liora** are alive and safe back home. Killing Strahd promises to open the path home to them—only for the Root Anchor to lock the Mists' targeting crosshairs inside her soul, cutting her off forever.
+* **Session 20 Finale (The Scion Companion Betrayal):** When Strahd turns to mist and is staked in his crypt, the trusted party **Companion reveals themselves as a Scion of the Dark Powers**. Smiling that same grim smile, the Scion acts as the conduit, channeling the collapsing Barovian Root Anchor directly into the party's souls—crowning them as Vecna's Living Conduits for Campaign 3!
 
 ---
 

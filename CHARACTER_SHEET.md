@@ -34,7 +34,7 @@
   - 🪄 *Quarterstaff* (Magician's Cane & Arcane Focus • `+2 hit`, `1d6/1d8` bludgeoning)
   - 🗡️ *2x Daggers* (`+4 hit`, `1d4+2` piercing, thrown 20/60 ft)
   - 👝 *Component Pouch* & 🎒 *Explorer's Pack* (`10x Torches`, `10x Rations`, `Waterskin`, `50ft Rope`)
-* **Origin Lore & Svalich Nightmare Hook:** Raised in a cold elvish orphanage and shunned for her purple horns, Piper was mentored by an old magician named **Barnaby**, who gifted her a brass pocket watch holding a blurred portrait of a tiefling couple (*"Only you can find them, O prophesied one"*). Refusing to ever use real magic so no one would call her an infernal monster, she toured as *"Piper the Incomparable"* using fake stage props. Lured to the foggy Svalich Woods by a nightmare of her parents fighting a shadowy horror, she dropped her watch in the dark, snapped her fingers for her fake thumb-fire trick—and Barovia's dark magic ignited her suppressed Wild Magic into a blast of spectral hellfire. Now every "stage trick" she performs unleashes real, explosive magic that she frantically insists is *"All part of the act!"*
+* **Origin Lore & Svalich Nightmare Hook (Native Barovian):** Growing up in a cold orphanage and shunned for her purple-tinted horns and Fierna blood, Piper's only comfort was **Barnaby**, an old retired magician who gave her sleight-of-hand props and a brass pocket watch with a blurred portrait of a tiefling couple (*"Only you can find them, O prophesied one"*). Terrified of being seen as a weapon of mass destruction, Piper refused to use real magic, touring as *"Piper the Incomparable"* with fake props. Lured into the Svalich Woods by a dream of her parents fending off chaos, she dropped her watch; panicking, she snapped her fingers for a fake fire trick—and her suppressed Fierna Wild Magic violently erupted! As the only **native of Barovia** in the party, she desperately wants magic to bring joy and smiles to this gloomy realm, and seeks to free her parents' souls by slaying Strahd. *(Secret Destiny: Barnaby was a handler sent by the Dark Powers; when Strahd dies, the Scion Companion channels the Barovian Root Anchor into Piper's soul, using her Wild Magic as Vecna's living battery).*
 
 ---
 
@@ -65,14 +65,40 @@
   - 🗡️ *Ancestral Greatsword*, 🪓 *2x Handaxes*, ⛓️ *Chain Mail (AC 16)*
   - 💍 *Signet Ring bearing the Lost Crest of Oakenshire*, 🧥 *Tattered Royal Traveling Cloak with Fur Mantle*, 📜 *Empty Scroll Case*
   - ♟️ *Dragonchess Gaming Set*, 👔 *Fine Traveler's Garments*, 🎒 *Explorer's Pack*
-* **Origin Lore & Roleplay Traits:** Former King of **Oakenshire** whose realm and vanguard were swallowed overnight by the creeping Mists. He carries himself as an anointed sovereign who will bleed for his companions as his royal vanguard, sworn to tear Barovia apart stone by stone to find his lost people.
+* **Origin Lore & Roleplay Traits:** Former King of **Oakenshire** whose realm and vanguard were swallowed overnight by the creeping Mists. At the peak of his victory—delivering a speech to his prosperous people in his throneroom—his ears began to ring, distant carriage hooves echoed, cold fog rolled across the marble floor, and figures in the crowd stared at him with an unblinking, **grim look... before slowly, unnervingly smiling**. Jacomir carries himself as an anointed sovereign who will bleed for his companions as his royal vanguard, sworn to tear Barovia apart stone by stone to free Oakenshire. *(Secret Destiny: Jacomir's sacred oath to bring his people home is the bait; when Strahd falls, the Scion Companion channels the Root Anchor into Jacomir, binding him as the vanguard general for Vecna's multiversal horde).*
 
 ---
 
-### 3. Stranger #3 — `[Player 3 Name / Character Name TBD]`
-* **Race & Class:** `Level 3 [Class / Subclass TBD]`
-* **Vitals:** **HP:** `-- / --` | **AC:** `--` | **Init:** `+--` | **Speed:** `30 ft` | **PB:** `+2`
-* **Help Tokens:** `2 / 2`
+### 3. 🔫 Eclipsa Rosaline Yvaine the First ("Yvaine" / "The First") — Fallen Princess & Monster Slayer
+* **Species & Class:** **Level 3 Human (Variant / 5.5e) Monster Slayer Ranger**
+* **Background & Alignment:** **Fallen Royal (Solmere)** • **Chaotic Neutral** *(Height: 5'6" • Age: 20)*
+* **Vitals:** **HP:** `28 / 28` *(3d10 + CON)* | **AC:** `15` *(Studded Leather 12 + DEX 3)* | **Init:** `+5` *(Alert Feat)* | **Speed:** `30 ft` | **PB:** `+2` | **Passive Perception:** `16` *(Expertise)*
+* **Ability Scores:** `STR 8 (-1) | DEX 18 (+4) ★ | CON 14 (+2) | INT 10 (+0) | WIS 14 (+2) | CHA 10 (+0)`
+* **Saving Throws:** **STR ★ `+1`**, **DEX ★ `+6`**, CON `+2`, INT `+0`, WIS `+2`, CHA `+0`
+* **Proficient Skills:** **Perception (WIS) ★ (Expertise) `+6`**, **Stealth (DEX) ★ `+6`**, **Acrobatics (DEX) ★ `+6`**, **Sleight of Hand (DEX) ★ `+6`**, **Survival (WIS) ★ `+4`**, **Insight (WIS) ★ `+4`**, **Arcana (INT) ★ `+2`**, **Investigation (INT) ★ `+2`** • **Languages:** Common, Abyssal, Infernal
+* **Monster Slayer Subclass Features (Level 3):**
+  - 🔍 **Hunter’s Sense (`2 / 2` per Long Rest):** Bonus Action to inspect a creature within 60 ft; immediately learn damage immunities, resistances, and vulnerabilities. *(Occult Flavor: Field Dossier & anatomy analysis).*
+  - 🎯 **Slayer’s Prey (At-Will Quarry):** Bonus Action to designate a creature within 60 ft; first weapon hit each turn deals an extra **`+1d6` weapon damage**.
+  - 🛡️ **Monster Slayer Magic:** Automatically knows *Protection from Evil and Good* (free prepared).
+* **Core Ranger Features (5.5e / Tasha's):**
+  - 🏹 **Fighting Style — Archery:** `+2` bonus to attack rolls with ranged weapons (included in stats).
+  - 👁️ **Deft Explorer (Canny):** Expertise in Perception (`+6`), learned Abyssal & Infernal.
+  - 🐺 **Favored Enemy (5.5e):** *Hunter's Mark* always prepared, free to cast `2 / 2` times per Long Rest without spending spell slots.
+  - 🌟 **Heroic Inspiration (Human Resourceful):** Free reroll ready every Long Rest.
+  - ⚡ **Alert Feat (Origin Feat):** `+2` PB to Initiative (`+5` total); can swap Initiative count with a willing ally at start of combat.
+  - 🔫 **Gunner Feat (Level 1 / Background):** Firearms proficiency, ignores Loading property, no disadvantage on ranged attacks within 5 ft (point-blank execution).
+  - 🤝 **Help Tokens:** `2 / 2`
+* **Spell Arsenal (Re-flavored Occult Rigs — Spell DC 12 | Spell Attack +4 | 3x 1st-Level Slots):**
+  - *Protection from Evil and Good* (Abjuration • Consecrated Salt & Silver Ash)
+  - *Grenade Shot* (Hail of Thorns adapter • Bonus Action on hit, `1d10` piercing in 5ft cube, DEX save)
+  - *Longstrider* (Adrenaline Stim / Pneumatic Boot-Rigging • +10 ft speed for 1 hour)
+  - *Fog Cloud / Smoke Screen* (Phosphor-Ash Smokescreen • 20ft sphere obscuration)
+  - *Hunter's Mark* (Favored Enemy 2x free • Tracer Round • `+1d6` damage, Adv on Perception/Survival)
+* **Weapons & Firearms Arsenal:**
+  - 🎯 **"Lament" (Heavy Long Rifle / Musket):** `+7 to hit`, `1d12 + 3` Piercing | Range 80/240 ft (5 ft point-blank w/ Gunner) | Two-Handed. *(Burst w/ Slayer's Prey: `1d12 + 1d6 + 3`, avg 13 dmg)*.
+  - 💥 **Twin Revolvers ("Mercy & Less"):** Main-Hand `+7 to hit`, `1d6 + 3` Piercing (Action) | Off-Hand `+7 to hit`, `1d6` Piercing (Bonus Action) | Range 5/90 ft | 6-round cylinders w/ speedloaders.
+* **Equipment & Relics:** Studded leather coat cut from her charred ballgown, tactical bandolier (40 rifle slugs, 60 revolver rounds, 4 moon-clip speedloaders), chipped bloodstone gem pendant, silver pocket watch, monster-hunting journal with anatomical sketches, holy water, dungeoneer's pack, 15 GP.
+* **Origin Lore & Detective Arc:** Eldest princess of the white-stone kingdom of **Solmere**. On her 13th birthday, the palace gates were opened from the inside, guards were dismissed on false orders, and her parents were slaughtered. **Yvaine never saw the traitor's face**—only that someone who knew the palace by heart had betrayed them. She buried her parents with a servant's spade, took her father's engraved rifle *"Lament"*, and spent 7 years in the undercity turning into an apex Monster Slayer hunting her missing younger sisters, **Vesper and Liora**. In Barovia, she is in full **detective mode**, tracking the phantom traitor and finding proof that Vesper and Liora are safe back home. *(Secret Destiny: On her 13th birthday, the Dark Powers orchestrated the fall of Solmere to forge an apex killer; when Strahd dies, the Scion Companion channels the Root Anchor into Yvaine, turning her lethal Hunter's Sense into Vecna's targeting crosshairs across the multiverse).*
 
 ---
 
