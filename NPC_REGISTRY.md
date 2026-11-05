@@ -45,7 +45,7 @@
 1. **🎭 Volenta Popofsky (The Porcelain Sadist — Act I Antagonist):**
    * *Role:* Youngest Bride; feral assassin and psychological terrorizer in the Village of Barovia.
    * *Appearance:* Wears a cracked white porcelain skull-mask over her face and jagged bone-fetishes woven into her lace dress.
-   * *Philosophy & Motive:* Desperately wants Strahd's attention and fears being replaced by Ireena; leads the midnight attacks on Indirovich Mansion in Session 1.
+   * *Philosophy & Motive:* Desperately wants Strahd's attention and fears being replaced by Ireena; stalks Ireena and the party from the shadows, eager to see if the new strangers survive the Count's tests.
    * *Voice Cue:* High, playful, unhinged giggling that snaps into vicious snarls. *"If I peel Ireena's pretty face off, do you think the Count will look at me again?"*
 2. **🌹 Anastrasya Karelova (The Vallakian Aristocrat — Act II Antagonist):**
    * *Role:* Noble-born vampire socialite orchestrating the **Feast of St. Andral** in Vallaki.

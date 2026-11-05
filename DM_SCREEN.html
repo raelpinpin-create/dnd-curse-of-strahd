@@ -441,7 +441,7 @@
         <div class="grid-2">
             <div class="card clickable" onclick="openQuestModal('act1')">
                 <div class="card-title"><span>🐎 ACT I: Into the Mists (Sessions 1–4)</span><span class="pill crimson">Levels 3 ➔ 4</span></div>
-                <p style="font-size:0.84rem; color:var(--text-muted);"><strong>Session 1:</strong> Runaway Black Coach Chase (<em>Roll Initiative!</em>), Gates of Barovia Crash, Strahd in the Rain, Ismark & Ireena Manor Siege.<br><strong>Session 2:</strong> Dawn Funeral (Doru) & <strong>Madam Eva's Tarokka Reading</strong> at Tser Pool.<br><strong>Session 3–4:</strong> Old Bonegrinder Hags & Arrival in Vallaki.</p>
+                <p style="font-size:0.84rem; color:var(--text-muted);"><strong>Session 1:</strong> Svalich Carriage Chase (<em>Roll Initiative!</em>), Gates of Barovia, Strahd's Invitation, 5 Village Scenes, 3:00 AM Starved Vampire Spawn Skylight Breach & The Three-Knock Cliffhanger.<br><strong>Session 2:</strong> Dawn Funeral (Doru) & <strong>Madam Eva's Tarokka Reading</strong> at Tser Pool.<br><strong>Session 3–4:</strong> Old Bonegrinder Hags & Arrival in Vallaki.</p>
             </div>
             <div class="card clickable" onclick="openQuestModal('act2')">
                 <div class="card-title"><span>🔥 ACT II: The Powderkeg of Vallaki (Sessions 5–9)</span><span class="pill gold">Levels 4 ➔ 6</span></div>
@@ -609,9 +609,10 @@ const QUEST_DATA = {
         body: `
             <div class="nbox nbox-blue"><strong>🎬 Session 1 — Blood on the Axle (Cold Open):</strong><br>
             • Four Level 3 strangers wake inside the runaway Phantom Black Coach hurtling down the Old Svalich Road in a thunderstorm.<br>
-            • <strong>Turn 1 Action Reveals:</strong> Players describe their character's appearance and powers on their first turn of Initiative against <strong>2 Svalich Dire Wolves</strong> and <strong>2 Feral Strahd Thralls</strong>.<br>
-            • Crash through the self-locking <strong>Gates of Barovia</strong>; <strong>Count Strahd</strong> slow-claps in the rain before vanishing into bats.<br>
-            • Find Dalvan Olensky's body with the forged Kolyan letter; meet <strong>Ismark</strong> at <em>Blood on the Vine Tavern</em>; defend <strong>Ireena Kolyana</strong> at Indirovich Mansion against <strong>Bride Volenta's</strong> midnight pack.</div>
+            • <strong>High-Speed Carriage Chase:</strong> 3-round chase engine against flanking <strong>Svalich Dire Wolves</strong> and an <strong>Alpha Wolf</strong> tearing through the carriage roof planks!<br>
+            • <strong>Gates of Barovia & Strahd's Invitation:</strong> Drift-slide crash 20 ft in front of the locked iron gates. Count Strahd steps out in the downpour outside the gates, invites them in, shares a chilling, knowing smile with Piper, and opens the gates.<br>
+            • <strong>Village of Barovia:</strong> Search Dalvan Olensky's body for the letter; explore the 5 village scenes; meet <strong>Ismark</strong> and <strong>Ireena</strong>.<br>
+            • <strong>3:00 AM Midnight Boss & Three-Knock Cliffhanger:</strong> Defend the parlor against a <strong>Starved Vampire Spawn</strong> crashing through the skylight; uncover Ireena's two bite marks; end on the chilling 3-knock table cliffhanger (<em>"Tomorrow night, when the moon rises... I return for my third bite."</em>).</div>
             <div class="nbox nbox-pink"><strong>⛪ Session 2 — Funeral at Dawn & Tser Pool Tarokka Reading:</strong><br>
             • Carry Burgomaster Kolyan's coffin to the Church at dawn; resolve Father Donavich's starving vampire son <strong>Doru</strong> in the cellar.<br>
             • Travel the river road to <strong>Tser Pool Vistani Camp</strong>; receive <strong>Madam Eva's 5-Card Tarokka Prophecy</strong>.</div>
@@ -758,12 +759,12 @@ const NPC_DATA = {
     },
     volenta: {
         name: "🎭 Bride Volenta Popofsky", tag: "[Porcelain Skull-Mask]", status: "⚪ Not Met",
-        role: "Youngest Bride (Act I Boss) • Barovia Village",
-        offerings: "Commands the Session 1 Midnight Siege on Indirovich Manor. Drops Porcelain Fang Charm & +1 Bone Dagger.",
+        role: "Youngest Bride of Castle Ravenloft • Act I–II Antagonist",
+        offerings: "Stalks Ireena and tests the newcomers; drops Porcelain Fang Charm & +1 Bone Dagger.",
         voice: "High, playful, unhinged giggling. 'Little sister Ireena! Come out, come out!'",
         philosophy: "Sadistic Cruelty & Jealous Devotion. Fears Strahd will discard her once he claims Ireena.",
-        dilemma: "Ordered by Strahd to terrorize Indirovich Manor without harming a hair on Ireena's head.",
-        redlines: "Cannot cross Indirovich Manor's threshold uninvited (Forbiddance)."
+        dilemma: "Wants to prove she is deadlier and more entertaining than Ireena without violating Strahd's orders.",
+        redlines: "Cannot cross private homes uninvited (Forbiddance); retreats into mist if reduced below 25 HP."
     },
     donavich: {
         name: "⛪ Father Donavich & Doru", tag: "[Broken Priest & Vampire Son]", status: "⚪ Not Met",
@@ -859,43 +860,43 @@ const NPC_DATA = {
 
 const MONSTER_DATA = {
     dire_wolf: {
-        icon: "🐺", name: "Svalich Dire Wolf", rank: "Session 1 Carriage Chase Predator",
+        icon: "🐺", name: "Svalich Dire Wolf", rank: "Session 1 Carriage Chase Flanker",
         cr: "CR 1 (200 XP)", init: "+2", lineage: "Large Beast • Servants of Count Strahd",
         hp: 35, maxHp: 35, ac: 14, speed: "50 ft.",
         stats: "STR 17 (+3) | DEX 15 (+2) | CON 15 (+2) | INT 3 (-4) | WIS 12 (+1) | CHA 7 (-2)",
         senses: "Perception +3, Stealth +4 • Passive Perception 13 • Pack Tactics (Adv when ally within 5ft)",
         attacks: [
-            { name: "Crushing Fangs (Bite)", hit: 5, dmg: "2d6+3", type: "Piercing", note: "Target must pass DC 13 STR Save or be knocked Prone (or dragged halfway out the carriage window!)." }
+            { name: "Crushing Fangs (Bite)", hit: 5, dmg: "2d6+3", type: "Piercing", note: "Target must pass DC 13 STR Save or be knocked Prone." }
         ],
         pointyHat: [],
         visual: "A horse-sized, gaunt black wolf with scarred flanks, foaming jaws, and glowing yellow-red eyes that obey Count Strahd's silent mental whistle.",
         philosophy: "Pack Predation & Absolute Obedience to the Land. They hunt not for meat, but to herd travelers through the Gates of Barovia at Strahd's command.",
         dilemma: "Ordered to chase the runaway Black Stagecoach into Barovia and test the four strangers without killing them if they reach the iron gates.",
         weaknesses: "Recoils from open fire (alchemical lantern oil) and radiant magic; bows immediately if Count Strahd appears.",
-        tactics: "Uses Pack Tactics to lunge through broken carriage windows and bite at the lead draft horse's harness.",
+        tactics: "Flanks the coach from the left and right wheels, biting at whoever leans out or attempts to take the reins.",
         loot: ["Thick Svalich Wolf Pelt (15 SP)", "Iron Collar stamped with Ravenloft Crest", "Fresh Wolf Fang Trophy"]
     },
-    strahd_thrall: {
-        icon: "🧛", name: "Feral Strahd Thrall (Mist Claw)", rank: "Session 1 Carriage Roof Stalker",
-        cr: "CR 1 (200 XP)", init: "+2", lineage: "Medium Undead • Starved Former Adventurer",
-        hp: 28, maxHp: 28, ac: 12, speed: "30 ft., Climb 30 ft.",
-        stats: "STR 13 (+1) | DEX 15 (+2) | CON 10 (+0) | INT 7 (-2) | WIS 10 (+0) | CHA 6 (-2)",
-        senses: "Darkvision 60 ft. • Immune: Poison, Charmed, Exhaustion • Spider Climb",
+    alpha_wolf: {
+        icon: "🐺", name: "Svalich Alpha Dire Wolf", rank: "Session 1 Carriage Roof Breacher",
+        cr: "CR 2 (450 XP)", init: "+2", lineage: "Large Beast • Apex Pack Leader of Svalich Woods",
+        hp: 42, maxHp: 42, ac: 14, speed: "50 ft.",
+        stats: "STR 18 (+4) | DEX 15 (+2) | CON 16 (+3) | INT 4 (-3) | WIS 12 (+1) | CHA 8 (-1)",
+        senses: "Perception +3, Stealth +4 • Passive Perception 13 • Pack Tactics (Adv with ally within 5ft)",
         attacks: [
-            { name: "Ravenous Claws", hit: 4, dmg: "2d4+2", type: "Slashing", note: "DC 10 CON Save or Paralyzed until end of next turn (Elves & Undead immune)." },
-            { name: "Starving Bite", hit: 4, dmg: "1d6+2", type: "Piercing + 1d4 Necrotic", note: "Heals Thrall for necrotic damage dealt." }
+            { name: "Savage Crushing Bite", hit: 6, dmg: "2d6+4", type: "Piercing", note: "Target must pass DC 13 STR Save or be knocked Prone." },
+            { name: "4-Inch Roof Claws", hit: 6, dmg: "2d4+4", type: "Slashing", note: "Tears through timber roof; DC 12 DEX save or take 1d6 slash from falling splinters." }
         ],
         pointyHat: [],
-        visual: "A gaunt, corpse-pale former adventurer in rusted armor whose fingernails have split into black talons, clinging upside-down to the stagecoach roof.",
-        philosophy: "Maddened Starvation. Driven insane by months buried in the Svalich mud.",
-        dilemma: "Desperate for warm blood before the carriage reaches the Gates of Barovia.",
-        weaknesses: "Low AC (12); can be shoved off the moving carriage roof (contested Athletics/Acrobatics or Thunderwave) for instant road-crash elimination!",
-        tactics: "Drops from pine trees onto the carriage roof and claws through the timber ceiling.",
-        loot: ["Tarnished Adventurer's Signet Ring (1 GP)", "2x Silvered Crossbow Bolts", "Rusted Coin Pouch (8 SP)"]
+        visual: "A massive, scarred alpha wolf the size of a warhorse with glowing red eyes, leaping directly onto the speeding coach roof to tear through the timber ceiling.",
+        philosophy: "Apex Svalich Pack Dominance. Drives the hunt with feral brutality under Strahd's ancient command.",
+        dilemma: "Testing the newcomers' reflexes and combat resolve at breakneck speed before the gates.",
+        weaknesses: "Can be shoved or blasted off the moving carriage roof (contested Athletics/Acrobatics or Thunderwave/Burning Hands) for instant road-crash elimination!",
+        tactics: "Rips ceiling planks open with its talons to expose the passengers, snapping downward at the driver or casters.",
+        loot: ["Thick Svalich Alpha Pelt (25 SP)", "Severed Alpha Fang Trophy", "Rusted Iron Ring of Ravenloft"]
     },
     strahd_zombie: {
-        icon: "🧟", name: "Strahd Zombie", rank: "Session 1 Manor Siege Undead",
-        cr: "CR 1 (200 XP)", init: "-2", lineage: "Medium Undead • Castle Ravenloft Guard Corpse",
+        icon: "🧟", name: "Strahd Zombie", rank: "Barovian Undead • Cemetery Hazard (Session 2+)",
+        cr: "CR 1 (200 XP)", init: "-2", lineage: "Medium Undead • Lingering Barovian Corpse",
         hp: 30, maxHp: 30, ac: 8, speed: "20 ft.",
         stats: "STR 13 (+1) | DEX 6 (-2) | CON 16 (+3) | INT 3 (-4) | WIS 6 (-2) | CHA 5 (-3)",
         senses: "Darkvision 60 ft. • Immune: Poison • Trait: Loathsome Limbs (Severed limbs keep attacking!)",
@@ -903,17 +904,17 @@ const MONSTER_DATA = {
             { name: "Multiattack (Bite + 2 Claws)", hit: 3, dmg: "1d6+1", type: "Slashing / Piercing", note: "Whenever it takes 5+ bludgeoning/slashing damage in one hit, a limb or head severs and keeps crawling!" }
         ],
         pointyHat: [],
-        visual: "A rotting Barovian soldier in tattered Zarovich livery whose gray flesh splits apart on impact—yet the severed arms keep clawing across the floorboards.",
+        visual: "A rotting Barovian soldier in tattered Zarovich livery whose gray flesh splits apart on impact—yet the severed arms keep crawling across the mud.",
         philosophy: "Mindless Necrotic Attrition.",
-        dilemma: "Driven by Bride Volenta's giggling whistle to tear down the shutters of Indirovich Mansion.",
+        dilemma: "Lurks beneath the damp soil of the churchyard and the Svalich fog, clawing up toward the living.",
         weaknesses: "AC 8; Radiant damage instantly vaporizes severed limbs and prevents Loathsome Limbs splitting.",
-        tactics: "Batters boarded windows (AC 12, 20 HP) to open breach gaps for the pack.",
+        tactics: "Lumbers forward in small mobs, grappling targets so severed crawling hands can scratch and bite.",
         loot: ["Rotted Zarovich Guard Badge", "4 Silver Pieces", "Tattered Linen Bandages"]
     },
     vampire_spawn: {
-        icon: "🩸", name: "Vampire Spawn Stalker / Doru", rank: "Session 1–2 Elite Undead",
+        icon: "🩸", name: "Starved Vampire Spawn", rank: "Session 1 Midnight Climax Boss (Indirovich Manor)",
         cr: "CR 3–5 (1,100 XP)", init: "+3", lineage: "Medium Undead • Ravenous Blood-Thrall",
-        hp: 60, maxHp: 60, ac: 15, speed: "30 ft., Climb 30 ft.",
+        hp: 48, maxHp: 48, ac: 15, speed: "30 ft., Climb 30 ft. (Spider Climb)",
         stats: "STR 16 (+3) | DEX 16 (+3) | CON 16 (+3) | INT 11 (+0) | WIS 10 (+0) | CHA 12 (+1)",
         senses: "Darkvision 60 ft. • Saves: Dex +6, Wis +3 • Resist: Necrotic, Non-Silvered B/P/S • Regen 10 HP/turn",
         attacks: [
@@ -921,15 +922,15 @@ const MONSTER_DATA = {
             { name: "Exsanguinating Bite", hit: 6, dmg: "1d6+3", type: "Piercing + 2d6 Necrotic", note: "Target must be Grappled/Incapacitated. Reduces Max HP by necrotic dealt and heals Spawn." }
         ],
         pointyHat: [],
-        visual: "Feral, hollow-cheeked undead with distended fangs and spider-like agility, crawling effortlessly along church rafters and manor walls.",
-        philosophy: "Tragic Hunger vs Predatory Instinct.",
-        dilemma: "Bound by Vampire Forbiddance (cannot enter Indirovich Manor uninvited) or starving in Father Donavich's church cellar (Doru).",
-        weaknesses: "Forbiddance (cannot enter private homes uninvited); Regeneration (10 HP/turn) shuts off for 1 round when hit by Radiant damage or Holy Water.",
-        tactics: "Grapples a PC near a broken window and attempts to drag them outside into the rain.",
+        visual: "A starved, feral undead with needle-sharp fangs and predatory crimson eyes, crashing through the parlor skylight at 3:00 AM and scuttling effortlessly across ceiling rafters.",
+        philosophy: "Ravenous Blood-Hunger. Dispatched by Strahd as a midnight test of the strangers' mettle and Ireena's defenders.",
+        dilemma: "Driven mad by months of starvation, seeking warm blood before dissolving into ash.",
+        weaknesses: "Regeneration (10 HP/turn) is completely halted for 1 round when hit by Fire damage, Radiant damage, or Holy Water! Vulnerable to running water.",
+        tactics: "Scuttles across ceiling rafters using Spider Climb to evade Jacomir's Greatsword, lunging down at Ireena or Piper before being pinned and ignited.",
         loot: ["Silvered Locket of Barovia (2 GP)", "Vial of Coagulated Vampire Vitae", "12 Silver Pieces"]
     },
     volenta: {
-        icon: "🎭", name: "Bride Volenta Popofsky", rank: "🏆 ACT I BOSS • Porcelain Bride of Strahd",
+        icon: "🎭", name: "Bride Volenta Popofsky", rank: "🏆 ACT I–II ANTAGONIST • Porcelain Bride of Strahd",
         cr: "CR 5 (1,800 XP)", init: "+4", lineage: "Medium Undead (Shapechanger) • Youngest Bride of Ravenloft",
         hp: 85, maxHp: 85, ac: 16, speed: "35 ft., Climb 35 ft.",
         stats: "STR 16 (+3) | DEX 18 (+4) | CON 16 (+3) | INT 13 (+1) | WIS 12 (+1) | CHA 16 (+3)",
@@ -947,16 +948,16 @@ const MONSTER_DATA = {
             },
             {
                 name: "2. SHATTERING SKULL-MASK SHRIEK",
-                tell: "📢 Tell (End of Turn): Volenta spider-climbs to the porch roof and cracks open the jaw of her porcelain skull-mask, inhaling a swirling vortex of graveyard fog.",
-                counter: "🛡️ Counterplay: Duck behind Total Cover inside the manor walls, cast Silence/Calm Emotions, or hit her with a Readied ranged attack (DC 13 CON save).",
+                tell: "📢 Tell (End of Turn): Volenta spider-climbs to high ground and cracks open the jaw of her porcelain skull-mask, inhaling a swirling vortex of graveyard fog.",
+                counter: "🛡️ Counterplay: Duck behind Total Cover, cast Silence/Calm Emotions, or hit her with a Readied ranged attack (DC 13 CON save).",
                 resolve: "💥 Resolve (Start of Next Turn): 30-ft cone psychic scream: DC 13 WIS Save or take 3d8 Psychic damage and be Frightened until the end of your next turn."
             }
         ],
         visual: "A lithe vampire bride in a tattered crimson lace gown woven with finger-bones, wearing a cracked white porcelain skull-mask over her smiling face.",
         philosophy: "Sadistic Theatricality & Jealous Hunger for Strahd's Approval.",
         dilemma: "Wants to prove to Strahd that she is more entertaining than Ireena by breaking the new strangers.",
-        weaknesses: "Forbiddance (cannot enter Indirovich Manor unless invited!); retreats into mist if reduced to 25 HP in Session 1 to recur at the Feast/Castle.",
-        tactics: "Uses Spider Climb from the iron fence and porch roof, commanding zombies to breach shutters while pulling PCs outside.",
+        weaknesses: "Forbiddance (cannot enter private homes unless invited!); retreats into mist if reduced below 25 HP to recur at the Feast of St. Andral or Castle Ravenloft.",
+        tactics: "Hunts from the mists and churchyard shadows, testing the party's endurance before slipping away in mist form to report to Castle Ravenloft.",
         loot: ["Bone-Spiked Dagger +1 (Returns on throw)", "Cracked Porcelain Fang Charm (Grants 1/day False Life 1d4+4)", "25 Silver Pieces & Ruby Hairpin (5 GP)"]
     },
     morgantha: {
