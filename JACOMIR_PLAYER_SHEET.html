@@ -774,7 +774,7 @@
                 <div class="vitals-4box">
                     <div class="vital-mini-box">
                         <span class="vital-mini-lbl">HIT POINTS</span>
-                        <span class="vital-mini-val" id="hp-disp" style="color:var(--accent-green);">28/28</span>
+                        <span class="vital-mini-val" id="hp-disp" style="color:var(--accent-green);">31/31</span>
                     </div>
                     <div class="vital-mini-box">
                         <span class="vital-mini-lbl">ARMOR CLASS</span>
@@ -794,7 +794,7 @@
                 <div class="hp-ctrl-container">
                     <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.7rem; font-weight:700; margin-bottom:2px;">
                         <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.3px;">HIT POINTS STATUS</span>
-                        <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">28 / 28 (+0 Temp)</span>
+                        <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">31 / 31 (+0 Temp)</span>
                     </div>
                     <div class="hp-health-bar-bg">
                         <div class="hp-health-bar-fill" id="hp-bar" style="width: 100%;"></div>
@@ -804,7 +804,7 @@
                     <div style="display:flex; flex-direction:column; gap:5px; margin-top:2px;">
                         <div style="display:flex; align-items:center; gap:4px; width:100%;">
                             <button class="btn-act btn-act-dmg" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
-                            <input type="number" id="hp-input" class="hp-input-num" value="28" min="1" max="999" style="width:46px; height:26px; font-size:0.9rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage or healing amount">
+                            <input type="number" id="hp-input" class="hp-input-num" value="31" min="1" max="999" style="width:46px; height:26px; font-size:0.9rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage or healing amount">
                             <button class="btn-act btn-act-heal" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(1)">+1</button>
                             <button class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">⚔️ Dmg</button>
                             <button class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">💚 Heal</button>
@@ -814,10 +814,10 @@
                         </div>
                         <div style="display:flex; align-items:center; justify-content:space-between; margin-top:1px;">
                             <div style="display:flex; gap:4px;">
-                                <button class="btn-act btn-act-pre" onclick="shortRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-blue);" title="Heal 25% Max HP (+7 HP), Refill 4/4 Superiority Dice, Regain Action Surge, +1 Second Wind, &amp; +1 Help Token">☕ Short Rest</button>
-                                <button class="btn-act btn-act-pre" onclick="longRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-green);" title="Full Long Rest (Restore 28/28 HP, 4/4 Superiority Dice, 3/3 Second Wind, Action Surge, Heroic Inspiration &amp; 2/2 Help)">⛺ Long Rest</button>
+                                <button class="btn-act btn-act-pre" onclick="shortRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-blue);" title="Heal 25% Max HP (+8 HP), Refill 4/4 Superiority Dice, Regain Action Surge, +1 Second Wind, &amp; +1 Help Token">☕ Short Rest</button>
+                                <button class="btn-act btn-act-pre" onclick="longRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-green);" title="Full Long Rest (Restore 31/31 HP, 4/4 Superiority Dice, 3/3 Second Wind, Action Surge, Heroic Inspiration &amp; 2/2 Help)">⛺ Long Rest</button>
                             </div>
-                            <span style="font-size:0.72rem; color:var(--text-dim); font-family:'JetBrains Mono',monospace;">Max HP: 28</span>
+                            <span style="font-size:0.72rem; color:var(--text-dim); font-family:'JetBrains Mono',monospace;">Max HP: 31</span>
                         </div>
                     </div>
                 </div>
@@ -1427,8 +1427,8 @@
     // 👑 JACOMIR YULLE MASTER STATE VARIABLES
     // ==========================================
     let characterLevel = 3;
-    let curHP = 28;
-    let maxHP = 28;
+    let curHP = 31;
+    let maxHP = 31;
     let tempHP = 0;
     let isChainMailActive = true; // Chain Mail (16) + Defense Fighting Style (+1) = 17 AC
     let isCoverACActive = false;  // +2 AC (Half Cover or Shield)
@@ -2462,7 +2462,7 @@
             return;
         }
         shortRestsRemaining--;
-        const healAmt = Math.max(1, Math.ceil(maxHP * 0.25)); // +7 HP
+        const healAmt = Math.max(1, Math.ceil(maxHP * 0.25)); // +8 HP
         curHP = Math.min(maxHP, curHP + healAmt);
         helpTokens = Math.min(maxHelpTokens, helpTokens + 1);
         curSupDice = maxSupDice; // All 4/4 Superiority Dice recharge on Short Rest!

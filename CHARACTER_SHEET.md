@@ -13,7 +13,7 @@
 * **Race & Class:** **Level 3 Fierna Tiefling Wild Magic Sorcerer**
 * **Background & Alignment:** **Entertainer** • **Chaotic Neutral** *(Height: 5'4" • Age: 24)*
 * **Interactive HTML Sheet:** [`PIPER_PLAYER_SHEET.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/PIPER_PLAYER_SHEET.html)
-* **Vitals:** **HP:** `16 / 16` *(3d6 + CON)* | **AC:** `12` *(15 with Mage Armor)* | **Init:** `+2` | **Speed:** `30 ft` | **PB:** `+2`
+* **Vitals:** **HP:** `17 / 17` *(3d6 + CON — Fixed Average)* | **AC:** `12` *(15 with Mage Armor)* | **Init:** `+2` | **Speed:** `30 ft` | **PB:** `+2`
 * **Spellcasting (Charisma):** **Spell Save DC:** `14` | **Spell Attack Bonus:** `+6`
 * **Ability Scores (5.5e Statgen):** `STR 11 (+0) | DEX 15 (+2) | CON 13 (+1) | INT 12 (+1) | WIS 11 (+0) | CHA 18 (+4) ★`
 * **Saving Throws:** **CON ★ `+3`**, **CHA ★ `+6`**, DEX `+2`, INT `+1`, WIS `+0`, STR `+0`
@@ -42,7 +42,7 @@
 * **Species & Class:** **Level 3 Human Battle Master Fighter (5.5e / 2024 Rules)**
 * **Background & Alignment:** **Noble (Former King of Oakenshire)** • **Lawful Neutral** *(Height: 5'11" • Age: 32)*
 * **Interactive HTML Sheet:** [`JACOMIR_PLAYER_SHEET.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/JACOMIR_PLAYER_SHEET.html)
-* **Vitals:** **HP:** `28 / 28` *(3d10 + CON)* | **AC:** `17` *(Chain Mail 16 + Defense Fighting Style +1)* | **Init:** `+0` | **Speed:** `30 ft` | **PB:** `+2` | **Passive Perception:** `13`
+* **Vitals:** **HP:** `31 / 31` *(3d10 + CON — Fixed Average)* | **AC:** `17` *(Chain Mail 16 + Defense Fighting Style +1)* | **Init:** `+0` | **Speed:** `30 ft` | **PB:** `+2` | **Passive Perception:** `13`
 * **Ability Scores (Noble Background +2 STR / +1 CON):** `STR 17 (+3) ★ | DEX 10 (+0) | CON 16 (+3) ★ | INT 10 (+0) | WIS 12 (+1) | CHA 12 (+1)`
 * **Saving Throws:** **STR ★ `+5`**, **CON ★ `+5`**, WIS `+1`, CHA `+1`, DEX `+0`, INT `+0`
 * **Proficient Skills:** **Athletics (STR) ★ `+5`**, **Insight (WIS) ★ `+3`**, **Perception (WIS) ★ `+3`** *(Human: Skillful)*, **Survival (WIS) ★ `+3`** *(Skilled)*, **Persuasion (CHA) ★ `+3`** *(Noble)*, **Intimidation (CHA) ★ `+3`** *(Skilled)*, **History (INT) ★ `+2`** *(Noble)* • **Tool Proficiency:** *Dragonchess Set*

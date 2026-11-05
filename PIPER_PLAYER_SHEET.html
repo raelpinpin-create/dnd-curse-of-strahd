@@ -839,7 +839,7 @@
                 <div class="vitals-4box">
                     <div class="vital-mini-box">
                         <span class="vital-mini-lbl">HIT POINTS</span>
-                        <span class="vital-mini-val" id="hp-disp" style="color:var(--accent-green);">16/16</span>
+                        <span class="vital-mini-val" id="hp-disp" style="color:var(--accent-green);">17/17</span>
                     </div>
                     <div class="vital-mini-box">
                         <span class="vital-mini-lbl">ARMOR CLASS</span>
@@ -859,7 +859,7 @@
                 <div class="hp-ctrl-container">
                     <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.7rem; font-weight:700; margin-bottom:2px;">
                         <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.3px;">HIT POINTS STATUS</span>
-                        <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">16 / 16 (+0 Temp)</span>
+                        <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">17 / 17 (+0 Temp)</span>
                     </div>
                     <div class="hp-health-bar-bg">
                         <div class="hp-health-bar-fill" id="hp-bar" style="width: 100%;"></div>
@@ -869,7 +869,7 @@
                     <div style="display:flex; flex-direction:column; gap:5px; margin-top:2px;">
                         <div style="display:flex; align-items:center; gap:4px; width:100%;">
                             <button class="btn-act btn-act-dmg" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
-                            <input type="number" id="hp-input" class="hp-input-num" value="16" min="1" max="999" style="width:46px; height:26px; font-size:0.9rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage or healing amount">
+                            <input type="number" id="hp-input" class="hp-input-num" value="17" min="1" max="999" style="width:46px; height:26px; font-size:0.9rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage or healing amount">
                             <button class="btn-act btn-act-heal" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(1)">+1</button>
                             <button class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">⚔️ Dmg</button>
                             <button class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">💚 Heal</button>
@@ -879,10 +879,10 @@
                         </div>
                         <div style="display:flex; align-items:center; justify-content:space-between; margin-top:1px;">
                             <div style="display:flex; gap:4px;">
-                                <button class="btn-act btn-act-pre" onclick="shortRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-blue);" title="Heal 25% Max HP (+4 HP), Sorcery Points restoration, &amp; +1 Help Token">☕ Short Rest</button>
-                                <button class="btn-act btn-act-pre" onclick="longRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-green);" title="Full Long Rest (Restore 16/16 HP, 3 Sorcery Points, Spell Slots, Tides of Chaos &amp; 2/2 Help)">⛺ Long Rest</button>
+                                <button class="btn-act btn-act-pre" onclick="shortRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-blue);" title="Heal 25% Max HP (+5 HP), Sorcery Points restoration, &amp; +1 Help Token">☕ Short Rest</button>
+                                <button class="btn-act btn-act-pre" onclick="longRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-green);" title="Full Long Rest (Restore 17/17 HP, 3 Sorcery Points, Spell Slots, Tides of Chaos &amp; 2/2 Help)">⛺ Long Rest</button>
                             </div>
-                            <span style="font-size:0.72rem; color:var(--text-dim); font-family:'JetBrains Mono',monospace;">Max HP: 16</span>
+                            <span style="font-size:0.72rem; color:var(--text-dim); font-family:'JetBrains Mono',monospace;">Max HP: 17</span>
                         </div>
                     </div>
                 </div>
@@ -1643,8 +1643,8 @@
     // 🎩 PIPER MASTER STATE VARIABLES
     // ==========================================
     let characterLevel = 3;
-    let curHP = 16;
-    let maxHP = 16;
+    let curHP = 17;
+    let maxHP = 17;
     let tempHP = 0;
     let baseAC = 12;
     let isMageArmorActive = false;
