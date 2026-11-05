@@ -22,7 +22,6 @@
             --accent-green: #22c55e;
             --accent-red: #ef4444;
             --accent-purple: #c084fc;
-            --accent-pink: #f472b6;
             --text-light: #f8fafc;
             --text-dim: #94a3b8;
             --text-muted: #64748b;
@@ -225,7 +224,7 @@
             padding: 8px 10px;
             display: flex;
             flex-direction: column;
-            gap: 7px;
+            gap: 6px;
             margin-bottom: 8px;
         }
 
@@ -324,7 +323,7 @@
         .toggle-badge.off { background: #334155; color: #94a3b8; }
         .toggle-badge.on { background: #0284c7; color: #f0f9ff; }
 
-        /* Ability Checks & Saves Lists */
+        /* Skills & Saves Lists */
         .stat-row-list {
             list-style: none;
             display: flex;
@@ -333,9 +332,9 @@
         }
 
         .stat-row-item {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-light);
-            padding: 5px 9px;
+            padding: 4px 8px;
             background: var(--panel-sub);
             border-radius: 5px;
             display: flex;
@@ -363,21 +362,22 @@
         .check-left-wrap {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
-        .btn-info-circle {
+        .btn-info-tiny {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 4px;
-            padding: 1px 5px;
-            font-size: 0.72rem;
+            border-radius: 3px;
+            padding: 0px 4px;
+            font-size: 0.65rem;
             cursor: pointer;
             color: #cbd5e1;
             transition: all 0.15s ease;
             line-height: 1.2;
+            margin-right: 3px;
         }
-        .btn-info-circle:hover {
+        .btn-info-tiny:hover {
             background: var(--accent-gold);
             color: #000;
             border-color: var(--accent-gold);
@@ -808,7 +808,7 @@
         <div class="main-layout">
 
             <!-- ============================================== -->
-            <!-- LEFT COLUMN: VITALS, CONTROLLERS, STATS, PURSE -->
+            <!-- LEFT COLUMN: VITALS, CONTROLLER, BUFFS, SKILLS -->
             <!-- ============================================== -->
             <div>
 
@@ -832,10 +832,10 @@
                     </div>
                 </div>
 
-                <!-- 2. SPACIOUS 2-ROW HP & TEMPORARY HP CONTROLLER -->
+                <!-- 2. SPACIOUS HP & TEMPORARY HP CONTROLLER (EXACT REPLICA OF USER IMAGE) -->
                 <div class="hp-ctrl-container">
                     <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; font-weight:700;">
-                        <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.3px;">Hit Points Status</span>
+                        <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.3px;">HIT POINTS STATUS</span>
                         <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">28 / 28 (+0 Temp)</span>
                     </div>
                     <div class="hp-health-bar-bg">
@@ -843,121 +843,214 @@
                         <div class="hp-health-bar-temp" id="hp-temp-bar" style="width: 0%;"></div>
                     </div>
                     
-                    <div style="display:flex; flex-direction:column; gap:6px;">
-                        <div style="display:flex; align-items:center; gap:6px; width:100%;">
-                            <input type="number" id="hp-input" class="hp-input-num" placeholder="Enter amount..." min="1" max="999" style="flex:1; height:38px; font-size:1rem; text-align:left; padding:4px 12px; font-weight:700; background:#0b1220; border:1.5px solid var(--card-border); border-radius:6px;">
-                            <button class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:6px 14px; height:38px; font-size:0.84rem; font-weight:700; border-radius:6px;">💥 Take Damage</button>
-                            <button class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:6px 14px; height:38px; font-size:0.84rem; font-weight:700; border-radius:6px;">💚 Heal HP</button>
+                    <div style="display:flex; flex-direction:column; gap:5px; margin-top:2px;">
+                        <div style="display:flex; align-items:center; gap:4px; width:100%;">
+                            <button class="btn-act btn-act-dmg" style="padding: 4px 6px; font-size: 0.74rem; font-weight:700;" onclick="stepHP(-5)">-5</button>
+                            <button class="btn-act btn-act-dmg" style="padding: 4px 6px; font-size: 0.74rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
+                            <input type="number" id="hp-input" class="hp-input-num" value="28" min="1" max="999" style="flex:1; height:30px; font-size:0.9rem; text-align:center; padding:2px 4px; font-weight:800; background:#090e1a; border:1px solid #334155; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;">
+                            <button class="btn-act btn-act-heal" style="padding: 4px 6px; font-size: 0.74rem; font-weight:700;" onclick="stepHP(1)">+1</button>
+                            <button class="btn-act btn-act-heal" style="padding: 4px 6px; font-size: 0.74rem; font-weight:700;" onclick="stepHP(5)">+5</button>
+                            <button class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 8px; font-size:0.74rem; font-weight:700;">⚔️ Dmg</button>
+                            <button class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 8px; font-size:0.74rem; font-weight:700;">💚 Heal</button>
                         </div>
-                        <div style="display:flex; align-items:center; justify-content:space-between; gap:4px; width:100%;">
-                            <div style="display:flex; gap:4px;">
-                                <button class="btn-act btn-act-dmg" style="padding: 4px 10px; font-size: 0.76rem; font-weight:700;" onclick="stepHP(-1)">➖ -1</button>
-                                <button class="btn-act btn-act-heal" style="padding: 4px 10px; font-size: 0.76rem; font-weight:700;" onclick="stepHP(1)">➕ +1</button>
+                        <div style="display:flex; align-items:center; justify-content:flex-start;">
+                            <button class="btn-act btn-act-pre" onclick="clearTempHP()" style="padding:3px 8px; font-size:0.7rem; color:#94a3b8; border:1px solid #334155;">Clear Temp</button>
+                        </div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:1px;">
+                            <div style="display:flex; gap:6px;">
+                                <button class="btn-act btn-act-pre" onclick="takeShortRest()" style="padding:4px 8px; font-size:0.72rem; color:var(--accent-blue); border:1px solid #334155;" title="Heal 25% Max HP (+7 HP), Refill Chambers to 100%, +1 Help Token">☕ Short Rest</button>
+                                <button class="btn-act btn-act-pre" onclick="resetHP()" style="padding:4px 8px; font-size:0.72rem; color:var(--accent-green); border:1px solid #334155;" title="Full Long Rest (Restore HP, Spell Slots, Favored Enemy, Hunter's Sense, Heroic Inspiration & All Ammo Reserves)">⛺ Long Rest</button>
                             </div>
-                            <div style="display:flex; gap:4px;">
-                                <button class="btn-act btn-act-pre" onclick="clearTempHP()" style="padding:4px 7px; font-size:0.7rem; color:#94a3b8;">🛡️ Clear Temp</button>
-                                <button class="btn-act btn-act-pre" onclick="takeShortRest()" style="padding:4px 7px; font-size:0.7rem; color:var(--accent-blue);" title="Heal 25% Max HP (+7 HP), Refill Chambers to 100%, +1 Help Token (Reserves do NOT refill)">☕ Short Rest</button>
-                                <button class="btn-act btn-act-pre" onclick="resetHP()" style="padding:4px 7px; font-size:0.7rem; color:var(--accent-green);" title="Full Long Rest (Restore HP, Spell Slots, Favored Enemy, Hunter's Sense, Heroic Inspiration & All Ammo Reserves)">⛺ Long Rest</button>
-                            </div>
+                            <span style="font-size:0.72rem; color:var(--text-dim); font-weight:600;">Max HP: 28</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. DYNAMIC ACTIVE BUFFS & TOGGLES -->
+                <!-- 3. DYNAMIC ACTIVE BUFFS (EXACT IMAGE REPLICA) -->
                 <div class="buffs-toggle-bar">
                     <div class="toggle-btn-card active-buff" id="card-armor-toggle" onclick="toggleArmorBuff()">
                         <div>
-                            <div style="font-size:0.74rem; font-weight:700;">🧥 Studded Leather Coat</div>
-                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-armor-style">Equipped AC: 16</div>
+                            <div style="font-size:0.74rem; font-weight:700;">🧥 Studded Leather</div>
+                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-armor-style">AC: 16 (Equipped)</div>
                         </div>
                         <span class="toggle-badge on" id="badge-armor-style">ON (16)</span>
                     </div>
 
-                    <div class="toggle-btn-card active-buff" id="heroic-card" onclick="useHeroicInspiration()" title="Human (Resourceful): Reroll any die (1/Long Rest)">
+                    <div class="toggle-btn-card active-buff" id="heroic-card" onclick="useHeroicInspiration()" title="Human (Resourceful): Reroll Any Die (1/Long Rest)">
                         <div>
-                            <div style="font-size:0.74rem; font-weight:700;">🌟 Heroic Inspiration</div>
-                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-heroic-insp">Reroll any die (1/LR)</div>
+                            <div style="font-size:0.74rem; font-weight:700;">🌟 Inspiration</div>
+                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-heroic-insp">Reroll Any Die</div>
                         </div>
                         <span class="toggle-badge on" id="heroic-status-badge">READY</span>
                     </div>
 
-                    <div class="toggle-btn-card" id="card-speed-toggle" onclick="toggleLongstriderBuff()" style="grid-column: span 2;">
+                    <div class="toggle-btn-card" id="card-speed-toggle" onclick="toggleLongstriderBuff()">
                         <div>
-                            <div style="font-size:0.74rem; font-weight:700;">⚡ Longstrider Stride Stim (+10 ft Speed)</div>
-                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-speed-disp">Speed: 30 ft • 1 Action • 1 Hour duration</div>
+                            <div style="font-size:0.74rem; font-weight:700;">⚡ Longstrider</div>
+                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-speed-disp">Speed: 30 ft</div>
                         </div>
-                        <span class="toggle-badge off" id="badge-speed-toggle">OFF (30 ft)</span>
+                        <span class="toggle-badge off" id="badge-speed-toggle">OFF (30)</span>
+                    </div>
+
+                    <div class="toggle-btn-card" id="card-tracer-buff" onclick="toggleTracerBuffManual()">
+                        <div>
+                            <div style="font-size:0.74rem; font-weight:700;">🎯 Hunter's Mark</div>
+                            <div style="font-size:0.62rem; color:var(--text-dim); line-height:1.2;" id="sub-tracer-disp">No Enemy Marked • Shift to new enemy as BA when target dies</div>
+                        </div>
+                        <span class="toggle-badge off" id="badge-tracer-buff">OFF</span>
                     </div>
                 </div>
 
-                <!-- 4. HELP TOKENS TRACKER -->
+                <!-- 4. HELP TOKENS TRACKER (EXACT IMAGE REPLICA) -->
                 <div class="panel" style="padding: 7px 10px;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.76rem; font-weight:700; color:#67e8f9;">🤝 Help Tokens:</span>
-                        <div style="display:flex; align-items:center; gap:5px;">
-                            <span id="help-tokens-disp" style="font-weight:700; color:#67e8f9; font-size:0.88rem;">2 / 2</span>
-                            <button class="btn-act btn-act-temp" onclick="rollHelpToken()" style="padding:2px 7px; font-size:0.7rem;">🎲 Spend (+1d6)</button>
-                            <button class="btn-act btn-act-pre" onclick="modHelpToken(1)" style="padding:2px 5px; font-size:0.68rem; color:#67e8f9;">+1</button>
-                            <button class="btn-act btn-act-pre" onclick="resetHelpTokens()" style="padding:2px 5px; font-size:0.68rem;">Reset</button>
+                        <span style="font-size:0.76rem; font-weight:700; color:#67e8f9;">🤝 Help Tokens: <span id="help-tokens-disp" style="color:#67e8f9; font-size:0.88rem; font-weight:800; font-family:'JetBrains Mono',monospace;">2 / 2</span></span>
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <button class="btn-act btn-act-temp" onclick="rollHelpToken()" style="padding:2px 7px; font-size:0.7rem;">🎲 Grant +1d6</button>
+                            <button class="btn-act btn-act-pre" onclick="modHelpToken(-1)" style="padding:2px 6px; font-size:0.68rem; color:#cbd5e1;">-</button>
+                            <button class="btn-act btn-act-pre" onclick="modHelpToken(1)" style="padding:2px 6px; font-size:0.68rem; color:#67e8f9;">+</button>
+                            <button class="btn-act btn-act-pre" onclick="resetHelpTokens()" style="padding:2px 6px; font-size:0.68rem;">Reset</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 5. ABILITY CHECKS PANEL (FIRST ON TOP OF SAVING THROWS) -->
+                <!-- 5. 🎯 SKILLS (18) PANEL ON TOP (ABOVE SAVING THROWS) -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span>🎲 Ability Checks</span>
-                        <span style="font-size:0.68rem; color:var(--text-dim);">Roll d20 + Mod • ℹ️ for 5.5e Rules &amp; Examples</span>
+                        <span>🎯 Skills (18)</span>
+                        <span id="prof-bonus-disp" style="font-size:0.7rem; color:var(--text-dim);">PP: 16 (Expertise) • ℹ️ for Rules &amp; Triggers</span>
                     </div>
-                    <ul class="stat-row-list">
-                        <li class="stat-row-item" onclick="rollAbilityCheck('Strength Check', -1)">
+                    <ul class="stat-row-list" style="max-height: 250px; overflow-y: auto;">
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Acrobatics (DEX) ★', 6, true)">
                             <div class="check-left-wrap">
-                                <button type="button" class="btn-info-circle" onclick="openAbilityCheckModal('STR', event)" title="View Strength check rules, mechanics &amp; examples">ℹ️</button>
-                                <span style="font-weight:700;">Strength Check</span>
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Acrobatics', event)" title="View Acrobatics rules &amp; examples">ℹ️</button>
+                                <span>Acrobatics (DEX) ★</span>
                             </div>
-                            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:0.88rem; color:var(--text-dim);">-1 🎲</span>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+6 🎲</span>
                         </li>
-                        <li class="stat-row-item prof-item" onclick="rollAbilityCheck('Dexterity Check ★', 4)">
+                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 2, false)">
                             <div class="check-left-wrap">
-                                <button type="button" class="btn-info-circle" onclick="openAbilityCheckModal('DEX', event)" title="View Dexterity check rules, mechanics &amp; examples">ℹ️</button>
-                                <span style="font-weight:800; color:var(--accent-gold);">Dexterity Check ★</span>
-                                <span class="pill-badge pill-gold" style="font-size:0.6rem; padding:1px 5px;">KEY STAT</span>
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Animal Handling', event)" title="View Animal Handling rules &amp; examples">ℹ️</button>
+                                <span>Animal Handling (WIS)</span>
                             </div>
-                            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:0.94rem; color:#fde68a;">+4 🎲</span>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+2 🎲</span>
                         </li>
-                        <li class="stat-row-item prof-item" onclick="rollAbilityCheck('Constitution Check ★', 2)">
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Arcana (INT) ★', 2, true)">
                             <div class="check-left-wrap">
-                                <button type="button" class="btn-info-circle" onclick="openAbilityCheckModal('CON', event)" title="View Constitution check rules, mechanics &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#cbd5e1;">Constitution Check ★</span>
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Arcana', event)" title="View Arcana rules &amp; examples">ℹ️</button>
+                                <span>Arcana (INT) ★</span>
                             </div>
-                            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:0.88rem; color:#fde68a;">+2 🎲</span>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+2 🎲</span>
                         </li>
-                        <li class="stat-row-item" onclick="rollAbilityCheck('Intelligence Check', 0)">
+                        <li class="stat-row-item" onclick="rollSkill('Athletics (STR)', -1, false)">
                             <div class="check-left-wrap">
-                                <button type="button" class="btn-info-circle" onclick="openAbilityCheckModal('INT', event)" title="View Intelligence check rules, mechanics &amp; examples">ℹ️</button>
-                                <span style="font-weight:700;">Intelligence Check</span>
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Athletics', event)" title="View Athletics rules &amp; examples">ℹ️</button>
+                                <span>Athletics (STR)</span>
                             </div>
-                            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:0.88rem; color:var(--text-dim);">+0 🎲</span>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">-1 🎲</span>
                         </li>
-                        <li class="stat-row-item prof-item" onclick="rollAbilityCheck('Wisdom Check ★', 2)">
+                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 0, false)">
                             <div class="check-left-wrap">
-                                <button type="button" class="btn-info-circle" onclick="openAbilityCheckModal('WIS', event)" title="View Wisdom check rules, mechanics &amp; examples">ℹ️</button>
-                                <span style="font-weight:800; color:#38bdf8;">Wisdom Check ★</span>
-                                <span class="pill-badge pill-blue" style="font-size:0.6rem; padding:1px 5px;">SPELLS</span>
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Deception', event)" title="View Deception rules &amp; examples">ℹ️</button>
+                                <span>Deception (CHA)</span>
                             </div>
-                            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:0.88rem; color:#7dd3fc;">+2 🎲</span>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+0 🎲</span>
                         </li>
-                        <li class="stat-row-item" onclick="rollAbilityCheck('Charisma Check', 0)">
+                        <li class="stat-row-item" onclick="rollSkill('History (INT)', 0, false)">
                             <div class="check-left-wrap">
-                                <button type="button" class="btn-info-circle" onclick="openAbilityCheckModal('CHA', event)" title="View Charisma check rules, mechanics &amp; examples">ℹ️</button>
-                                <span style="font-weight:700;">Charisma Check</span>
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('History', event)" title="View History rules &amp; examples">ℹ️</button>
+                                <span>History (INT)</span>
                             </div>
-                            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:0.88rem; color:var(--text-dim);">+0 🎲</span>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+0 🎲</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 4, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Insight', event)" title="View Insight rules &amp; examples">ℹ️</button>
+                                <span>Insight (WIS) ★</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+4 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Intimidation (CHA)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Intimidation', event)" title="View Intimidation rules &amp; examples">ℹ️</button>
+                                <span>Intimidation (CHA)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+0 🎲</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Investigation (INT) ★', 2, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Investigation', event)" title="View Investigation rules &amp; examples">ℹ️</button>
+                                <span>Investigation (INT) ★</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+2 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 2, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Medicine', event)" title="View Medicine rules &amp; examples">ℹ️</button>
+                                <span>Medicine (WIS)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+2 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Nature (INT)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Nature', event)" title="View Nature rules &amp; examples">ℹ️</button>
+                                <span>Nature (INT)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+0 🎲</span>
+                        </li>
+                        <li class="stat-row-item exp-item" onclick="rollSkill('Perception (WIS) ★ (Expertise)', 6, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Perception', event)" title="View Perception rules &amp; examples">ℹ️</button>
+                                <span>Perception (WIS) ★ <small style='color:#7dd3fc;'>(Expertise)</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+6 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Performance (CHA)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Performance', event)" title="View Performance rules &amp; examples">ℹ️</button>
+                                <span>Performance (CHA)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+0 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Persuasion (CHA)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Persuasion', event)" title="View Persuasion rules &amp; examples">ℹ️</button>
+                                <span>Persuasion (CHA)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+0 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Religion (INT)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Religion', event)" title="View Religion rules &amp; examples">ℹ️</button>
+                                <span>Religion (INT)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+0 🎲</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Sleight of Hand (DEX) ★', 6, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Sleight of Hand', event)" title="View Sleight of Hand rules &amp; examples">ℹ️</button>
+                                <span>Sleight of Hand (DEX) ★</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+6 🎲</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Stealth (DEX) ★', 6, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Stealth', event)" title="View Stealth rules &amp; examples">ℹ️</button>
+                                <span>Stealth (DEX) ★</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+6 🎲</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Survival (WIS) ★', 4, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Survival', event)" title="View Survival rules &amp; examples">ℹ️</button>
+                                <span>Survival (WIS) ★</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+4 🎲</span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- 6. SAVING THROWS PANEL (PLACED BELOW ABILITY CHECKS) -->
+                <!-- 6. 🛡️ SAVING THROWS PANEL (BELOW SKILLS) -->
                 <div class="panel">
                     <div class="panel-title">
                         <span>🛡️ Saving Throws</span>
@@ -973,35 +1066,7 @@
                     </ul>
                 </div>
 
-                <!-- 7. ALL 18 SKILLS MATRIX -->
-                <div class="panel">
-                    <div class="panel-title">
-                        <span>🎯 All 18 Skills (Individual Rolls)</span>
-                        <span id="prof-bonus-disp" style="font-size:0.7rem; color:var(--text-dim);">Prof: +2 • Pass. Perc: 16 (Exp)</span>
-                    </div>
-                    <ul class="stat-row-list" style="max-height: 220px; overflow-y: auto;">
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Acrobatics (DEX) ★', 6, true)"><span>Acrobatics (DEX) ★</span><span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+6 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 2, false)"><span>Animal Handling (WIS)</span><span style="font-family:'JetBrains Mono',monospace;">+2 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Arcana (INT) ★', 2, true)"><span>Arcana (INT) ★</span><span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+2 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Athletics (STR)', -1, false)"><span>Athletics (STR)</span><span style="font-family:'JetBrains Mono',monospace;">-1 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 0, false)"><span>Deception (CHA)</span><span style="font-family:'JetBrains Mono',monospace;">+0 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('History (INT)', 0, false)"><span>History (INT)</span><span style="font-family:'JetBrains Mono',monospace;">+0 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 4, true)"><span>Insight (WIS) ★</span><span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+4 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Intimidation (CHA)', 0, false)"><span>Intimidation (CHA)</span><span style="font-family:'JetBrains Mono',monospace;">+0 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Investigation (INT) ★', 2, true)"><span>Investigation (INT) ★</span><span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+2 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 2, false)"><span>Medicine (WIS)</span><span style="font-family:'JetBrains Mono',monospace;">+2 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Nature (INT)', 0, false)"><span>Nature (INT)</span><span style="font-family:'JetBrains Mono',monospace;">+0 🎲</span></li>
-                        <li class="stat-row-item exp-item" onclick="rollSkill('Perception (WIS) ★ [Expertise]', 6, true)"><span>Perception (WIS) ★ <small style="color:#7dd3fc;">(Expertise)</small></span><span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800;">+6 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Performance (CHA)', 0, false)"><span>Performance (CHA)</span><span style="font-family:'JetBrains Mono',monospace;">+0 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Persuasion (CHA)', 0, false)"><span>Persuasion (CHA)</span><span style="font-family:'JetBrains Mono',monospace;">+0 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Religion (INT)', 0, false)"><span>Religion (INT)</span><span style="font-family:'JetBrains Mono',monospace;">+0 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Sleight of Hand (DEX) ★', 6, true)"><span>Sleight of Hand (DEX) ★</span><span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+6 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Stealth (DEX) ★', 6, true)"><span>Stealth (DEX) ★</span><span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+6 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Survival (WIS) ★', 4, true)"><span>Survival (WIS) ★</span><span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:700;">+4 🎲</span></li>
-                    </ul>
-                </div>
-
-                <!-- 8. 💰 SLEEK GOLD & COIN PURSE (10 SP = 1 GP) -->
+                <!-- 7. 💰 SLEEK GOLD & COIN PURSE (10 SP = 1 GP) -->
                 <div class="panel" style="padding: 8px 10px; background: linear-gradient(135deg, #18150a 0%, #0d121c 100%); border: 1px solid rgba(245, 158, 11, 0.35);">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 5px;">
                         <div style="display:flex; align-items:center; gap:5px;">
@@ -1047,7 +1112,7 @@
                     </div>
                 </div>
 
-                <!-- 9. 📓 PLAYER NOTES PANEL -->
+                <!-- 8. 📓 PLAYER NOTES PANEL -->
                 <div class="panel" style="padding: 8px 10px;">
                     <div class="panel-title" style="margin-bottom:4px; cursor:pointer;" onclick="openPlayerNotesModal()" title="Click to open Player Notes">
                         <div style="display:flex; align-items:center; gap:6px;">
@@ -1457,7 +1522,7 @@
     <!-- MODALS & FLOATING DRAWERS                      -->
     <!-- ============================================== -->
 
-    <!-- 1. GENERAL SPELL & ACTION DETAILS MODAL -->
+    <!-- 1. GENERAL SPELL, ACTION & SKILL DETAILS MODAL -->
     <dialog class="sheet-dialog wide-dialog" id="spell-modal" closedby="any" aria-labelledby="spell-modal-title">
         <div class="modal-card">
             <div class="modal-header">
@@ -2124,9 +2189,26 @@
 
     function updateTracerUI() {
         const tag = document.getElementById('card-tracer-tag');
+        const buffCard = document.getElementById('card-tracer-buff');
+        const buffBadge = document.getElementById('badge-tracer-buff');
+        const buffSub = document.getElementById('sub-tracer-disp');
+
         if (tag) {
             tag.className = isTracerActive ? 'pill-badge pill-crimson' : 'pill-badge pill-neutral';
             tag.innerText = isTracerActive ? 'ACTIVE (+1d6 ALL HITS)' : 'INACTIVE';
+        }
+        if (buffCard && buffBadge && buffSub) {
+            if (isTracerActive) {
+                buffCard.classList.add('active-buff');
+                buffBadge.className = 'toggle-badge on';
+                buffBadge.innerText = 'ON (+1d6)';
+                buffSub.innerText = 'Quarry Marked! +1d6 on all hits • Conc 1 hr';
+            } else {
+                buffCard.classList.remove('active-buff');
+                buffBadge.className = 'toggle-badge off';
+                buffBadge.innerText = 'OFF';
+                buffSub.innerText = 'No Enemy Marked • Shift to new enemy as BA when target dies';
+            }
         }
     }
 
@@ -2163,13 +2245,13 @@
             if (isLongstriderActive) {
                 card.classList.add('active-buff');
                 badge.className = 'toggle-badge on';
-                badge.innerText = 'ON (40 ft)';
-                sub.innerText = 'Speed: 40 ft (+10 ft Stim active)';
+                badge.innerText = 'ON (40)';
+                sub.innerText = 'Speed: 40 ft (+10 ft)';
             } else {
                 card.classList.remove('active-buff');
                 badge.className = 'toggle-badge off';
-                badge.innerText = 'OFF (30 ft)';
-                sub.innerText = 'Speed: 30 ft • 1 Action • 1 Hour duration';
+                badge.innerText = 'OFF (30)';
+                sub.innerText = 'Speed: 30 ft';
             }
         }
     }
@@ -2206,12 +2288,12 @@
                 card.classList.add('active-buff');
                 badge.className = 'toggle-badge on';
                 badge.innerText = 'READY';
-                sub.innerText = 'Human (Resourceful): Reroll any die (1/LR)';
+                sub.innerText = 'Reroll Any Die';
             } else {
                 card.classList.remove('active-buff');
                 badge.className = 'toggle-badge off';
                 badge.innerText = 'USED';
-                sub.innerText = 'Used for this rest (Recharges on Long Rest)';
+                sub.innerText = 'Used (Recharges on Long Rest)';
             }
         }
     }
@@ -2264,14 +2346,14 @@
             card.classList.add('active-buff');
             badge.className = 'toggle-badge on';
             badge.innerText = 'ON (16)';
-            sub.innerText = 'Equipped AC: 16 (Studded Leather + DEX)';
+            sub.innerText = 'AC: 16 (Equipped)';
             acDisp.innerText = '16';
             logRoll(`🧥 <strong>Studded Leather Coat Equipped:</strong> AC is now <strong>16</strong> (12 + 4 DEX).`);
         } else {
             card.classList.remove('active-buff');
             badge.className = 'toggle-badge off';
             badge.innerText = 'OFF (14)';
-            sub.innerText = 'Unarmored AC: 14 (10 + DEX 4)';
+            sub.innerText = 'AC: 14 (Unarmored)';
             acDisp.innerText = '14';
             logRoll(`🧥 <strong>Studded Leather Coat Removed:</strong> AC is now <strong>14</strong> (10 + 4 DEX).`);
         }
@@ -2282,6 +2364,7 @@
         const hpBar = document.getElementById('hp-bar');
         const tempBar = document.getElementById('hp-temp-bar');
         const statusHeader = document.getElementById('hp-status-header');
+        const hpInput = document.getElementById('hp-input');
 
         const pct = Math.max(0, Math.min(100, (curHP / maxHP) * 100));
         hpBar.style.width = `${pct}%`;
@@ -2289,6 +2372,10 @@
         if (pct > 50) hpBar.style.backgroundColor = 'var(--accent-green)';
         else if (pct > 25) hpBar.style.backgroundColor = 'var(--accent-gold)';
         else hpBar.style.backgroundColor = 'var(--accent-red)';
+
+        if (hpInput && (document.activeElement !== hpInput)) {
+            hpInput.value = curHP;
+        }
 
         if (tempHP > 0) {
             const tempPct = Math.min(100, (tempHP / maxHP) * 100);
@@ -2326,7 +2413,6 @@
             }
         }
         curHP = Math.max(0, curHP - rem);
-        input.value = '';
         updateHPUI();
         logRoll(`💥 <strong>Damage Taken:</strong> -${val} HP. Current: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ` (+${tempHP} Temp)` : ''}.`);
     }
@@ -2345,7 +2431,6 @@
             curHP += val;
             logRoll(`💚 <strong>Healing Applied:</strong> +${val} HP. Current: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ` (+${tempHP} Temp)` : ''}.`);
         }
-        input.value = '';
         updateHPUI();
     }
 
@@ -2355,8 +2440,10 @@
                 const overflow = (curHP + delta) - maxHP;
                 curHP = maxHP;
                 tempHP += overflow;
+                logRoll(`💚 <strong>HP Increased:</strong> +${delta} HP. Overflow added to Temp HP: <strong>${curHP}/${maxHP} (+${tempHP} Temp)</strong>.`);
             } else {
                 curHP += delta;
+                logRoll(`💚 <strong>HP Increased:</strong> +${delta} HP. Current: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ` (+${tempHP} Temp)` : ''}.`);
             }
         } else {
             let rem = Math.abs(delta);
@@ -2370,6 +2457,7 @@
                 }
             }
             curHP = Math.max(0, curHP - rem);
+            logRoll(`💥 <strong>HP Reduced:</strong> ${delta} HP. Current: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ` (+${tempHP} Temp)` : ''}.`);
         }
         updateHPUI();
     }
@@ -2382,7 +2470,13 @@
 
     function takeShortRest() {
         const healAmt = Math.round(maxHP * 0.25);
-        curHP = Math.min(maxHP, curHP + healAmt);
+        if (curHP + healAmt > maxHP) {
+            const overflow = (curHP + healAmt) - maxHP;
+            curHP = maxHP;
+            tempHP += overflow;
+        } else {
+            curHP += healAmt;
+        }
         helpTokens = Math.min(maxHelpTokens, helpTokens + 1);
 
         lamentChamber = maxLamentChamber;
@@ -2394,7 +2488,7 @@
         updateRevolversAmmoUI();
         document.getElementById('help-tokens-disp').innerText = `${helpTokens} / ${maxHelpTokens}`;
 
-        logRoll(`☕ <strong>Short Rest Completed:</strong> Restored +${healAmt} HP (Current: <strong>${curHP}/${maxHP}</strong>) and +1 Help Token.<br>🔫 <strong>Chamber Top-Off:</strong> Yvaine hand-fed loose powder and slugs—<strong>Lament topped off to 10/10, Mercy &amp; Less topped off to 6/6 &amp; 6/6</strong>! <em>(Emergency reserves do NOT regenerate on a Short Rest: ${lamentReloadReserves}/2 clips and ${revolverReloadReserves}/2 speedloader packs remain).</em>`);
+        logRoll(`☕ <strong>Short Rest Completed:</strong> Restored +${healAmt} HP (Current: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ` [+${tempHP} Temp]` : ''}) and +1 Help Token.<br>🔫 <strong>Chamber Top-Off:</strong> Yvaine hand-fed loose powder and slugs—<strong>Lament topped off to 10/10, Mercy &amp; Less topped off to 6/6 &amp; 6/6</strong>! <em>(Emergency reserves do NOT regenerate on a Short Rest: ${lamentReloadReserves}/2 clips and ${revolverReloadReserves}/2 speedloader packs remain).</em>`);
     }
 
     function resetHP() {
@@ -2432,14 +2526,10 @@
     }
 
     // ==========================================
-    // 🎲 INITIATIVE, ABILITY CHECKS, SAVES & SKILLS
+    // 🎲 INITIATIVE, SAVES & SKILLS
     // ==========================================
     function rollInitiative() {
         rollD20('Initiative Roll (DEX +4 + Alert Feat +2)', 6);
-    }
-
-    function rollAbilityCheck(name, mod) {
-        rollD20(name, mod);
     }
 
     function rollSave(name, mod, prof) {
@@ -2451,92 +2541,230 @@
     }
 
     // ==========================================
-    // 📖 5.5e ABILITY CHECK COMPENDIUM LOOKUP
+    // 📖 ALL 18 SKILLS COMPENDIUM LOOKUP
     // ==========================================
-    const ABILITY_CHECK_INFO = {
-        "STR": {
-            name: "Strength Check (STR -1 | Score: 8)",
-            tag: "Physical Force, Athletic Conditioning & Leverage",
-            desc: "A Strength check measures bodily power, athletic conditioning, and raw physical exertion without finesse.",
+    const SKILL_INFO = {
+        "Acrobatics": {
+            name: "Acrobatics (DEX +6 ★)",
+            attr: "Dexterity • Proficient (+4 DEX + 2 PB)",
+            desc: "Covers your ability to stay on your feet in tricky situations, such as running across thin ice, balancing on a narrow beam, or keeping your footing on the roof of a swaying carriage.",
             examples: [
-                "Force open a stuck, rusted, or barred heavy oak door or crypt grate.",
-                "Break free from heavy chains, manacles, or sticky spider webbing.",
-                "Push, drag, or lift immense rubble, fallen timber, or a collapsed carriage axle.",
-                "Hang on to a speeding wagon or slippery ledge while being buffeted by gales.",
-                "<strong>Tip:</strong> Prying open objects with your <em>Steel Crowbar</em> grants <strong>Advantage</strong>!"
+                "Maintain balance while sprinting across slick cobblestones or icy Barovian rooflines.",
+                "Tumble, dive, or roll to reduce falling damage or avoid obstacles.",
+                "Perform acrobatic maneuvers like flips, vaulting over barricades, or swinging from chandeliers.",
+                "Contest or escape a grapple using agility and flexibility instead of raw muscle."
             ],
-            rules: "The DM calls for a Strength check when you attempt an act of physical force not covered by a specialized skill (like Athletics)."
+            rules: "Use Acrobatics when attempting agile feats of balance, dive-rolls, and escaping enemy grapples."
         },
-        "DEX": {
-            name: "Dexterity Check ★ (DEX +4 | Score: 18)",
-            tag: "Agility, Reflexes, Balance & Rapid Fine Motor Control",
-            desc: "A Dexterity check measures agility, hand-eye coordination, balance, and lightning-fast reflexes. As Yvaine's primary attribute (+4), this powers her firearms accuracy and rapid weapon handling.",
+        "Animal Handling": {
+            name: "Animal Handling (WIS +2)",
+            attr: "Wisdom (+2 WIS)",
+            desc: "Measures your ability to understand animal intentions, calm domesticated or wild beasts, and control mounts in dangerous terrain.",
             examples: [
-                "Fast-draw or twirl a firearm before an enemy can react.",
-                "Keep your footing on slick ice, wet cobblestones, or rocking wagon roofs.",
-                "Squeeze through an impossibly narrow drainage sluice, crawlspace, or prison bars.",
-                "Catch a falling vial of holy water or delicate pocket watch mid-air.",
-                "Conceal a boot stiletto or ammo cartridge during a physical pat-down."
+                "Calm down a terrified draft horse spooked by Barovian wolves or lightning.",
+                "Keep a mount from bolting when an undead monstrosity bursts from the treeline.",
+                "Sense the intentions or mood of a raven, hunting hound, or wild beast.",
+                "Coax a stubborn or mistreated pack mule through a treacherous mountain pass."
             ],
-            rules: "Whenever quickness, balance, or delicate manual dexterity is required, roll 1d20 + 4. Used for raw initiative contests and improvisational gunplay."
+            rules: "Called when you try to guide, soothe, or deduce the instincts of non-humanoid creatures."
         },
-        "CON": {
-            name: "Constitution Check ★ (CON +2 | Score: 14)",
-            tag: "Endurance, Stamina, Pain Tolerance & Vitality",
-            desc: "Constitution checks measure physiological resilience, health, lung capacity, and the sheer grit to push through extreme exhaustion or agony.",
+        "Arcana": {
+            name: "Arcana (INT +2 ★)",
+            attr: "Intelligence • Proficient (+0 INT + 2 PB)",
+            desc: "Measures your lore knowledge regarding spells, magic items, eldritch symbols, planar anomalies, and magical traditions.",
             examples: [
-                "Hold breath underwater while navigating flooded catacombs or river sluices.",
-                "March through Barovia's biting rain and freezing Svalich mist without rest.",
-                "Go days without food or clean water while tracking quarry through swamps.",
-                "Stay awake through a double night watch or resist falling asleep from fatigue.",
-                "Quaff foul wine, tainted water, or bitter medicinal tinctures without retching."
+                "Identify an occult rune, teleportation circle, or warding circle carved into stone.",
+                "Recognize the school of magic behind an active spell, curse, or supernatural aura.",
+                "Recall planar traits regarding the Shadowfell, the Dark Powers, or planar mists.",
+                "Understand the activation command or history of a found magic weapon or talisman."
             ],
-            rules: "Constitution checks are almost always passive endurance tests called by the DM when environment or physical strain threatens to exhaust the body."
+            rules: "Called when analyzing spells, magical artifacts, eldritch symbols, or planar phenomena."
         },
-        "INT": {
-            name: "Intelligence Check (INT +0 | Score: 10)",
-            tag: "Reasoning, Memory, Forensic Logic & Monster Lore",
-            desc: "An Intelligence check tests mental acuity, analytical reasoning, forensic deduction, and the ability to recall lore, foreign languages, and technical schematics.",
+        "Athletics": {
+            name: "Athletics (STR -1)",
+            attr: "Strength (-1 STR)",
+            desc: "Measures physical power, conditioning, and brute body strength applied to difficult athletic activities.",
             examples: [
-                "Piece together forensic clues at a gruesome murder or crime scene.",
-                "Decipher an encrypted letter, cypher, or royal crest from Solmere.",
-                "Estimate the value or authenticity of a rare Barovian relic or gemstone.",
-                "Recall obscure weaknesses, anatomy, or habits of an occult beast using your Journal.",
-                "Win a game of strategy, chess, or deduce a card cheat's hidden tells."
+                "Climb sheer, slippery cliff faces, castle ramparts, or knotted ropes.",
+                "Jump exceptionally long chasms or high obstacles.",
+                "Swim through raging, ice-cold river currents or flooded underground sluices.",
+                "Grapple or shove a hostile creature using sheer muscle power."
             ],
-            rules: "As a royal detective, Yvaine relies on Intelligence to reconstruct how crimes and betrayals happened. Her Monster-Hunting Journal grants Advantage when researching lore."
+            rules: "The standard check for climbing, jumping, swimming, and initiating grapples/shoves in combat."
         },
-        "WIS": {
-            name: "Wisdom Check ★ (WIS +2 | Score: 14)",
-            tag: "Perception, Intuition, Gut Instinct & Occult Sensitivity",
-            desc: "Wisdom checks measure awareness of surroundings, sharpness of senses, empathy, and intuitive animal instincts. Powers Yvaine's Ranger spellcasting and Hunter's Sense feature.",
+        "Deception": {
+            name: "Deception (CHA +0)",
+            attr: "Charisma (+0 CHA)",
+            desc: "Determines whether you can convincingly hide the truth, either verbally or through actions, misdirection, and disguises.",
             examples: [
-                "Spot lurking predators hiding in the dense mist or shadows (Passive Perception 16).",
-                "Sense whether someone is lying, terrified, or withholding critical information.",
-                "Read animal body language or calm a spooked raven or draft horse.",
-                "Navigate by stars, wind, or moss in the disorienting Svalich Woods.",
-                "Predict weather shifts or sense occult supernatural tension in the air."
+                "Fast-talk a suspicious Vallaki guard into letting you pass through the gates.",
+                "Conceal your true royal identity and background as the eldest princess of Solmere.",
+                "Mislead an interrogator or vampire spy about your party's destination and allies.",
+                "Feign weakness, ignorance, or innocence to lure an enemy into dropping their guard."
             ],
-            rules: "Wisdom governs how attuned you are to the world. It dictates your spell save DC (12) and attack modifier (+4), as well as uses of Hunter's Sense (2/Long Rest)."
+            rules: "Called when intentionally misleading, lying, disguising yourself, or feigning emotions."
         },
-        "CHA": {
-            name: "Charisma Check (CHA +0 | Score: 10)",
-            tag: "Force of Personality, Eloquence & Royal Bearing",
-            desc: "Charisma measures confidence, eloquence, persuasiveness, leadership, and personal magnetism. Though exiled and cynical, Yvaine carries an innate royal posture.",
+        "History": {
+            name: "History (INT +0)",
+            attr: "Intelligence (+0 INT)",
+            desc: "Measures your knowledge about historical events, legendary figures, past wars, fallen kingdoms, and royal lineages.",
             examples: [
-                "Command authority in a chaotic room with the ice-cold voice of Solmere royalty.",
-                "Negotiate with a suspicious merchant or fence in the undercity or Vallaki.",
-                "Blend into high society or maintain composure during an aristocratic dinner.",
-                "Intimidate a captured thug or spy by leveling a loaded revolver at their heart.",
-                "Deflect personal questions without revealing your true royal identity."
+                "Recall details about the fall of the Kingdom of Solmere and its royal court.",
+                "Identify ancient heraldry, noble sigils, and family bloodlines.",
+                "Recognize historical ruins, battlegrounds, or forgotten monarchs.",
+                "Remember old treaties, laws, or regional governance structures."
             ],
-            rules: "The DM calls for a Charisma check whenever your words, presence, or deception attempt to influence the thoughts or emotions of other intelligent creatures."
+            rules: "Called when recalling lore about kingdoms, wars, noble houses, heraldry, and ancient civilizations."
+        },
+        "Insight": {
+            name: "Insight (WIS +4 ★)",
+            attr: "Wisdom • Proficient (+2 WIS + 2 PB)",
+            desc: "Determines whether you can determine the true intentions of a creature, such as searching out a lie or predicting someone's next move through body language.",
+            examples: [
+                "Deduce whether an NPC is lying, terrified, withholding information, or under magical charm.",
+                "Read an opponent's subtle nervous tells, eye darting, or voice tremors in negotiations.",
+                "Anticipate ambush intentions or hidden hostilities during social encounters.",
+                "Glean a person's deepest emotional motive, fear, or underlying greed."
+            ],
+            rules: "Contested directly against an NPC's Deception to pierce through lies and read true motives."
+        },
+        "Intimidation": {
+            name: "Intimidation (CHA +0)",
+            attr: "Charisma (+0 CHA)",
+            desc: "Measures your ability to influence others through overt threats, hostile actions, chilling eye contact, and physical presence.",
+            examples: [
+                "Pry a confession or map from a captured thug by leveling a loaded revolver at their heart.",
+                "Deter aggressive tavern ruffians or pickpockets with cold, unblinking aristocratic disdain.",
+                "Command an uncooperative informant to speak before patience runs out.",
+                "Project lethal intent to make a pack of wild dogs or minor foes reconsider attacking."
+            ],
+            rules: "Called when using threats, menacing demeanor, or physical pressure to coerce someone."
+        },
+        "Investigation": {
+            name: "Investigation (INT +2 ★)",
+            attr: "Intelligence • Proficient (+0 INT + 2 PB)",
+            desc: "Measures your ability to look for clues, deduce how an event occurred, and make forensic connections from subtle physical evidence.",
+            examples: [
+                "Search a room for hidden compartments, secret switches, or false wall panels.",
+                "Examine a crime scene or murder wound to deduce the weapon, strike angle, and time of death.",
+                "Piece together torn journal pages, scorched letters, and coded ledgers.",
+                "Deduce how a complex mechanical trap, lock mechanism, or clockwork device functions."
+            ],
+            rules: "Yvaine's signature detective tool for forensic examination, searching crime scenes, and solving mysteries."
+        },
+        "Medicine": {
+            name: "Medicine (WIS +2)",
+            attr: "Wisdom (+2 WIS)",
+            desc: "Measures your ability to stabilize dying companions, diagnose illnesses, treat wounds, and identify toxins or cause of death.",
+            examples: [
+                "Stabilize a dying ally at 0 HP without expending spell slots or healer's kits (DC 10).",
+                "Diagnose whether an infected bite is mundane necrosis, lycanthropy, or undead rot.",
+                "Identify the specific poison, drug, or sedative used in an assassination attempt.",
+                "Perform field triage, stitch wounds, or set broken bones during camp rests."
+            ],
+            rules: "Called when stabilizing dying creatures, treating diseases, or analyzing biological trauma."
+        },
+        "Nature": {
+            name: "Nature (INT +0)",
+            attr: "Intelligence (+0 INT)",
+            desc: "Measures your recall of lore about terrain, plants, animals, weather systems, and natural poisons or habitats.",
+            examples: [
+                "Identify edible berries, clean roots, or lethal poisonous mushrooms in the Svalich Woods.",
+                "Recognize animal tracks, nesting behaviors, and migration patterns.",
+                "Predict upcoming weather anomalies, sudden blizzards, or heavy mist bank shifts.",
+                "Recall the natural ecology and habitat instincts of mundane wilderness predators."
+            ],
+            rules: "Called when identifying flora, fauna, weather, and wilderness ecosystems."
+        },
+        "Perception": {
+            name: "Perception (WIS +6 ★ [Expertise])",
+            attr: "Wisdom • Expertise (+2 WIS + 4 PB) • Passive Perception: 16",
+            desc: "Measures your awareness of your environment and the acuity of your physical senses (sight, hearing, smell, and tactile awareness).",
+            examples: [
+                "Spot ambushers lurking in dense fog, behind tombstones, or up in tree canopies.",
+                "Hear the faint click of a crossbow trigger, footsteps on wet leaves, or whispered plotting.",
+                "Catch the faint scent of sulfur ash, blood, or wet wolf fur on the night wind.",
+                "Notice subtle details like footprints in mud, tripwires, or concealed snipers."
+            ],
+            rules: "Yvaine's apex sensory skill with Expertise! Passive Perception 16 makes her virtually impossible to surprise."
+        },
+        "Performance": {
+            name: "Performance (CHA +0)",
+            attr: "Charisma (+0 CHA)",
+            desc: "Determines how well you can delight, entertain, or captivate an audience with music, dance, acting, or storytelling.",
+            examples: [
+                "Deliver a gripping aristocratic recitation or ballroom dance from the Solmere court.",
+                "Mimic a guard's cadence, posture, or speech to create a theatrical distraction.",
+                "Captivate a crowded tavern with a dramatic recounting of a monster hunt.",
+                "Play an instrument or entertain patrons to blend into an establishment unnoticed."
+            ],
+            rules: "Called when attempting to entertain, act, or hold the attention of an audience."
+        },
+        "Persuasion": {
+            name: "Persuasion (CHA +0)",
+            attr: "Charisma (+0 CHA)",
+            desc: "Measures your ability to influence someone or an entire group with tact, grace, diplomatic poise, and good faith argumentation.",
+            examples: [
+                "Negotiate a fair price or discount with a merchant, wagon driver, or arms dealer.",
+                "Convince reluctant villagers or town officials to offer shelter or aid to your party.",
+                "De-escalate a tense confrontation between hot-headed allies and local authorities.",
+                "Inspire frightened commoners to stand firm against oncoming darkness."
+            ],
+            rules: "Used when attempting to influence someone through reason, diplomacy, charm, and honest rhetoric."
+        },
+        "Religion": {
+            name: "Religion (INT +0)",
+            attr: "Intelligence (+0 INT)",
+            desc: "Measures your knowledge regarding deities, religious rites, holy orders, holy symbols, undead origins, and celestial hierarchies.",
+            examples: [
+                "Identify the iconography of the Morninglord, the Night Mother, or ancient Barovian cults.",
+                "Recall consecrated funeral rites required to prevent corpses from rising as undead.",
+                "Recognize sacred relics, holy vestments, and desecrated altars.",
+                "Understand the folklore, rites, and taboos of local religious sects and clerics."
+            ],
+            rules: "Called when recalling lore about faiths, gods, holy symbols, and religious rituals."
+        },
+        "Sleight of Hand": {
+            name: "Sleight of Hand (DEX +6 ★)",
+            attr: "Dexterity • Proficient (+4 DEX + 2 PB)",
+            desc: "Measures manual dexterity, sleight of hand, pickpocketing, planting evidence, concealing small items, and delicate finger work.",
+            examples: [
+                "Pick a target's pocket for a key, silver coin purse, or sealed document without notice.",
+                "Conceal a moon-clip speedloader, stiletto, or lockpick up your sleeve during a search.",
+                "Palming a small vial of holy water or bloodstone pendant undetected.",
+                "Tie or untie intricate knots, manacles, or rig subtle tripwire fuzes."
+            ],
+            rules: "Called for delicate manual tricks, pickpocketing, planting items, and quick finger prestidigitation."
+        },
+        "Stealth": {
+            name: "Stealth (DEX +6 ★)",
+            attr: "Dexterity • Proficient (+4 DEX + 2 PB)",
+            desc: "Measures your ability to conceal yourself from enemies, slink unseen through shadows, and move without making a sound.",
+            examples: [
+                "Sneak past watchful guards, dire wolves, or vampire spawn in the mist.",
+                "Slip from shadow to shadow along a wall without catching torchlight.",
+                "Stalk a quarry silently across gravel, dry leaves, or creaking wooden floorboards.",
+                "Conceal yourself in dense shrubbery or fog banks while lining up a sniper shot with Lament."
+            ],
+            rules: "Contested against enemy Passive Perception (or active Perception checks) to remain hidden."
+        },
+        "Survival": {
+            name: "Survival (WIS +4 ★)",
+            attr: "Wisdom • Proficient (+2 WIS + 2 PB)",
+            desc: "Measures your ability to follow tracks, hunt wild game, navigate unforgiving terrain, and avoid natural environmental hazards.",
+            examples: [
+                "Track fleeing quarry, blood trails, or wagon ruts through mud, snow, and rain.",
+                "Forage for sustenance, build weatherproof lean-tos, and find fresh water springs.",
+                "Navigate through treacherous swamps, mountain passes, and dense forests without getting lost.",
+                "Predict environmental hazards like quicksand, flash floods, or unstable snowdrifts."
+            ],
+            rules: "Yvaine gains Advantage on Wisdom (Survival) checks to track targets marked by Hunter's Mark!"
         }
     };
 
-    function openAbilityCheckModal(statKey, event) {
+    function openSkillModal(skillName, event) {
         if (event) event.stopPropagation();
-        const info = ABILITY_CHECK_INFO[statKey];
+        const info = SKILL_INFO[skillName];
         if (!info) return;
 
         const modal = document.getElementById('spell-modal');
@@ -2547,7 +2775,7 @@
         if (!modal) return;
 
         titleEl.innerHTML = info.name;
-        if (tagEl) tagEl.innerText = info.tag;
+        if (tagEl) tagEl.innerText = info.attr;
 
         const exHtml = info.examples.map(ex => `<li>${ex}</li>`).join('');
 
@@ -2557,7 +2785,7 @@
                     ${info.desc}
                 </div>
                 <div style="background:rgba(245,158,11,0.06); border-left:3px solid var(--accent-gold); border-radius:4px; padding:9px 11px; font-size:0.77rem; color:#fde68a;">
-                    <div style="font-size:0.72rem; font-weight:800; text-transform:uppercase; margin-bottom:5px;">🎯 Common In-Game Triggers &amp; Examples:</div>
+                    <div style="font-size:0.72rem; font-weight:800; text-transform:uppercase; margin-bottom:5px;">🎯 When to Use &amp; Concrete Examples:</div>
                     <ul style="padding-left:18px; display:flex; flex-direction:column; gap:4px; line-height:1.45;">
                         ${exHtml}
                     </ul>
@@ -2569,8 +2797,16 @@
         `;
 
         if (actContainer) {
+            const skillMods = {
+                "Acrobatics": 6, "Animal Handling": 2, "Arcana": 2, "Athletics": -1,
+                "Deception": 0, "History": 0, "Insight": 4, "Intimidation": 0,
+                "Investigation": 2, "Medicine": 2, "Nature": 0, "Perception": 6,
+                "Performance": 0, "Persuasion": 0, "Religion": 0, "Sleight of Hand": 6,
+                "Stealth": 6, "Survival": 4
+            };
+            const curMod = skillMods[skillName] || 0;
             actContainer.innerHTML = `
-                <button class="btn-roll-action" onclick="closeSpellDetailsModal(); rollAbilityCheck('${info.name.split(' (')[0]}', ${statKey === 'STR' ? -1 : (statKey === 'DEX' ? 4 : (statKey === 'CON' || statKey === 'WIS' ? 2 : 0))});">🎲 Roll ${statKey} Check</button>
+                <button class="btn-roll-action" onclick="closeSpellDetailsModal(); rollSkill('${info.name.split(' (')[0]}', ${curMod}, true);">🎲 Roll ${skillName}</button>
                 <button class="btn-act btn-act-pre" onclick="closeSpellDetailsModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
             `;
         }
