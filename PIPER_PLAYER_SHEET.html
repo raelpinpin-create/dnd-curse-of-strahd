@@ -710,6 +710,73 @@
             border-color: #fde68a;
             box-shadow: 0 18px 52px rgba(0, 0, 0, 0.95), 0 0 32px rgba(245, 158, 11, 0.5);
         }
+    
+        /* 🎯 ALL 18 SKILLS & ℹ️ INFO COMPENDIUM BUTTONS */
+        .check-left-wrap {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-info-tiny {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 3px;
+            padding: 0px 4px;
+            font-size: 0.65rem;
+            cursor: pointer;
+            color: #cbd5e1;
+            transition: all 0.15s ease;
+            line-height: 1.2;
+            margin-right: 3px;
+        }
+        .btn-info-tiny:hover {
+            background: var(--accent-gold);
+            color: #000;
+            border-color: var(--accent-gold);
+        }
+
+        /* 2x3 SAVING THROWS GRID */
+        .saves-grid-2x3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+        }
+        .save-box {
+            background: #090e1a;
+            border: 1px solid #1e293b;
+            border-radius: 4px;
+            padding: 4px 7px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .save-box:hover {
+            border-color: #3b82f6;
+            background: #111827;
+        }
+        .save-box.prof {
+            border: 1px solid #b45309;
+            background: rgba(245, 158, 11, 0.04);
+        }
+        .save-box.prof:hover {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+        .save-lbl {
+            font-weight: 700;
+            font-size: 0.74rem;
+            color: #f8fafc;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .save-val {
+            font-weight: 800;
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
     </style>
 </head>
 <body>
@@ -788,29 +855,34 @@
                     </div>
                 </div>
 
-                <!-- SPACIOUS 2-ROW HP & TEMPORARY HP CONTROLLER -->
+                <!-- COMPACT HP & OVERHEAL TEMP HP CONTROLLER -->
                 <div class="hp-ctrl-container">
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.7rem; font-weight:700; margin-bottom:2px;">
+                        <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.3px;">HIT POINTS STATUS</span>
+                        <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">16 / 16 (+0 Temp)</span>
+                    </div>
                     <div class="hp-health-bar-bg">
                         <div class="hp-health-bar-fill" id="hp-bar" style="width: 100%;"></div>
                         <div class="hp-health-bar-temp" id="hp-temp-bar" style="width: 0%;"></div>
                     </div>
                     
-                    <div style="display:flex; flex-direction:column; gap:6px;">
-                        <div style="display:flex; align-items:center; gap:6px; width:100%;">
-                            <input type="number" id="hp-input" class="hp-input-num" placeholder="Enter amount..." min="1" max="999" style="flex:1; height:34px; font-size:0.9rem; text-align:left; padding:4px 10px; font-weight:600; background:#0b1220; border:1.5px solid var(--card-border); border-radius:4px;">
-                            <button class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:6px 12px; height:34px; font-size:0.82rem; font-weight:700;">💥 Take Damage</button>
-                            <button class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:6px 12px; height:34px; font-size:0.82rem; font-weight:700;">💚 Heal HP</button>
+                    <div style="display:flex; flex-direction:column; gap:5px; margin-top:2px;">
+                        <div style="display:flex; align-items:center; gap:4px; width:100%;">
+                            <button class="btn-act btn-act-dmg" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
+                            <input type="number" id="hp-input" class="hp-input-num" value="16" min="1" max="999" style="width:46px; height:26px; font-size:0.9rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage or healing amount">
+                            <button class="btn-act btn-act-heal" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(1)">+1</button>
+                            <button class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">⚔️ Dmg</button>
+                            <button class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">💚 Heal</button>
                         </div>
-                        <div style="display:flex; align-items:center; justify-content:space-between; gap:4px; width:100%;">
+                        <div style="display:flex; align-items:center; justify-content:flex-start;">
+                            <button class="btn-act btn-act-pre" onclick="clearTempHP()" style="padding:3px 8px; font-size:0.7rem; color:#94a3b8; border:1px solid #334155;">Clear Temp</button>
+                        </div>
+                        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:1px;">
                             <div style="display:flex; gap:4px;">
-                                <button class="btn-act btn-act-dmg" style="padding: 4px 8px; font-size: 0.74rem; font-weight:700;" onclick="stepHP(-1)">➖ -1</button>
-                                <button class="btn-act btn-act-heal" style="padding: 4px 8px; font-size: 0.74rem; font-weight:700;" onclick="stepHP(1)">➕ +1</button>
+                                <button class="btn-act btn-act-pre" onclick="shortRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-blue);" title="Heal 25% Max HP (+4 HP), Sorcery Points restoration, &amp; +1 Help Token">☕ Short Rest</button>
+                                <button class="btn-act btn-act-pre" onclick="longRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-green);" title="Full Long Rest (Restore 16/16 HP, 3 Sorcery Points, Spell Slots, Tides of Chaos &amp; 2/2 Help)">⛺ Long Rest</button>
                             </div>
-                            <div style="display:flex; gap:4px;">
-                                <button class="btn-act btn-act-pre" onclick="clearTempHP()" style="padding:4px 7px; font-size:0.7rem; color:#94a3b8;">🛡️ Clear Temp</button>
-                                <button class="btn-act btn-act-pre" onclick="takeShortRest()" style="padding:4px 7px; font-size:0.7rem; color:var(--accent-blue);" title="Heal 25% Max HP (up to 2/day) & +1 Help Token">☕ Short Rest</button>
-                                <button class="btn-act btn-act-pre" onclick="resetHP()" style="padding:4px 7px; font-size:0.7rem; color:var(--accent-green);" title="Full Long Rest (Restore HP, Sorcery Points, Slots, Tides of Chaos, Fierna Lineage & Help)">⛺ Long Rest</button>
-                            </div>
+                            <span style="font-size:0.72rem; color:var(--text-dim); font-family:'JetBrains Mono',monospace;">Max HP: 16</span>
                         </div>
                     </div>
                 </div>
@@ -834,95 +906,187 @@
                     </div>
                 </div>
 
-                <!-- HELP TOKENS TRACKER -->
+                <!-- 4. HELP TOKENS TRACKER -->
                 <div class="panel" style="padding: 7px 10px;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.76rem; font-weight:700; color:#67e8f9;">🤝 Help Tokens:</span>
-                        <div style="display:flex; align-items:center; gap:5px;">
-                            <span id="help-tokens-disp" style="font-weight:700; color:#67e8f9; font-size:0.88rem;">2 / 2</span>
-                            <button class="btn-act btn-act-temp" onclick="rollHelpToken()" style="padding:2px 7px; font-size:0.7rem;">🎲 Spend (+1d6)</button>
-                            <button class="btn-act btn-act-pre" onclick="modHelpToken(1)" style="padding:2px 5px; font-size:0.68rem; color:#67e8f9;">+1</button>
-                            <button class="btn-act btn-act-pre" onclick="resetHelpTokens()" style="padding:2px 5px; font-size:0.68rem;">Reset</button>
+                        <span style="font-size:0.76rem; font-weight:700; color:#fbbf24;">💛 Help Tokens: <span id="help-tokens-disp" style="color:#fbbf24; font-size:0.88rem; font-weight:800; font-family:'JetBrains Mono',monospace;">2 / 2</span></span>
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <button class="btn-act btn-act-temp" onclick="rollHelpToken()" style="padding:2px 7px; font-size:0.7rem; background:#4338ca; border-color:#6366f1;">🎲 Grant +1d6</button>
+                            <button class="btn-act btn-act-pre" onclick="modHelpToken(-1)" style="padding:2px 6px; font-size:0.68rem; color:#cbd5e1;">-</button>
+                            <button class="btn-act btn-act-pre" onclick="modHelpToken(1)" style="padding:2px 6px; font-size:0.68rem; color:#67e8f9;">+</button>
+                            <button class="btn-act btn-act-pre" onclick="resetHelpTokens()" style="padding:2px 6px; font-size:0.68rem;">Reset</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 6 ABILITY SCORES STRIP -->
-                <div class="ability-strip">
-                    <div class="ability-box" onclick="rollD20('Strength Check', 0)" title="Click to roll STR Check (+0)">
-                        <div class="ability-name">STR</div>
-                        <div class="ability-score">11</div>
-                        <div class="ability-mod">+0</div>
-                    </div>
-                    <div class="ability-box" onclick="rollD20('Dexterity Check', 2)" title="Click to roll DEX Check (+2)">
-                        <div class="ability-name">DEX</div>
-                        <div class="ability-score">15</div>
-                        <div class="ability-mod">+2</div>
-                    </div>
-                    <div class="ability-box" onclick="rollD20('Constitution Check', 1)" title="Click to roll CON Check (+1)">
-                        <div class="ability-name">CON</div>
-                        <div class="ability-score">13</div>
-                        <div class="ability-mod">+1</div>
-                    </div>
-                    <div class="ability-box" onclick="rollD20('Intelligence Check', 1)" title="Click to roll INT Check (+1)">
-                        <div class="ability-name">INT</div>
-                        <div class="ability-score">12</div>
-                        <div class="ability-mod">+1</div>
-                    </div>
-                    <div class="ability-box" onclick="rollD20('Wisdom Check', 0)" title="Click to roll WIS Check (+0)">
-                        <div class="ability-name">WIS</div>
-                        <div class="ability-score">11</div>
-                        <div class="ability-mod">+0</div>
-                    </div>
-                    <div class="ability-box active-key" onclick="rollD20('Charisma Check ★', 4)" title="Key Spellcasting Stat • Click to roll CHA Check (+4)">
-                        <div class="ability-name">CHA ★</div>
-                        <div class="ability-score">18</div>
-                        <div class="ability-mod">+4</div>
-                    </div>
-                </div>
-
-                <!-- SAVING THROWS PANEL -->
+                <!-- 5. 🎯 ALL 18 SKILLS (INDIVIDUAL ROLLS) — TOP PRIORITY ROLLER -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span>🛡️ Saving Throws</span>
-                        <span style="font-size:0.68rem; color:var(--text-dim);">CON & CHA Proficient</span>
+                        <span style="text-transform:uppercase; font-size:0.78rem; font-weight:800; letter-spacing:0.3px;">🎯 ALL 18 SKILLS (INDIVIDUAL ROLLS)</span>
+                        <span id="prof-bonus-disp" style="font-size:0.68rem; color:var(--text-dim); font-weight:700;">PROF: +2 • PASS. PERC: 10</span>
                     </div>
-                    <ul class="stat-row-list">
-                        <li class="stat-row-item prof-item" onclick="rollSave('Charisma Saving Throw ★', 4, true)"><span>Charisma Save ★</span><span id="save-cha-disp">+6 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSave('Constitution Saving Throw ★', 1, true)"><span>Constitution Save ★</span><span id="save-con-disp">+3 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSave('Dexterity Saving Throw', 2, false)"><span>Dexterity Save</span><span>+2 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSave('Intelligence Saving Throw', 1, false)"><span>Intelligence Save</span><span>+1 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSave('Wisdom Saving Throw', 0, false)"><span>Wisdom Save</span><span>+0 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSave('Strength Saving Throw', 0, false)"><span>Strength Save</span><span>+0 🎲</span></li>
+                    <ul class="stat-row-list" style="max-height: 290px; overflow-y: auto;">
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Acrobatics (DEX) ★', 2, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Acrobatics', event)" title="View Acrobatics rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:700; color:#fde68a;">Acrobatics (DEX) ★</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+4 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Animal Handling', event)" title="View Animal Handling rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Animal Handling (WIS)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Arcana (INT) ★', 1, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Arcana', event)" title="View Arcana rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:700; color:#fde68a;">Arcana (INT) ★</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+3 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Athletics (STR)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Athletics', event)" title="View Athletics rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Athletics (STR)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 4, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Deception', event)" title="View Deception rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Deception (CHA)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+4 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('History (INT)', 1, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('History', event)" title="View History rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">History (INT)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+1 🎲</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 0, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Insight', event)" title="View Insight rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:700; color:#fde68a;">Insight (WIS) ★</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+2 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Intimidation (CHA)', 4, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Intimidation', event)" title="View Intimidation rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Intimidation (CHA)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+4 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Investigation (INT)', 1, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Investigation', event)" title="View Investigation rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Investigation (INT)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+1 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Medicine', event)" title="View Medicine rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Medicine (WIS)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Nature (INT)', 1, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Nature', event)" title="View Nature rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Nature (INT)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+1 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Perception (WIS)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Perception', event)" title="View Perception rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Perception (WIS)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Performance (CHA) ★', 4, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Performance', event)" title="View Performance rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:700; color:#fde68a;">Performance (CHA) ★</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+6 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Persuasion (CHA)', 4, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Persuasion', event)" title="View Persuasion rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Persuasion (CHA)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+4 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Religion (INT)', 1, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Religion', event)" title="View Religion rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Religion (INT)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+1 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Sleight of Hand (DEX)', 2, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Sleight of Hand', event)" title="View Sleight of Hand rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Sleight of Hand (DEX)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+2 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Stealth (DEX)', 2, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Stealth', event)" title="View Stealth rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Stealth (DEX)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+2 🎲</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Survival (WIS)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Survival', event)" title="View Survival rules &amp; examples">ℹ️</button>
+                                <span style="font-weight:500; color:#f8fafc;">Survival (WIS)</span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
+                        </li>
                     </ul>
                 </div>
 
-                <!-- ALL 18 SKILLS MATRIX -->
+                <!-- 6. 🛡️ SAVING THROWS (2x3 GRID - BELOW SKILLS) -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span>🎯 All 18 Skills (Individual Rolls)</span>
-                        <span id="prof-bonus-disp" style="font-size:0.7rem; color:var(--text-dim);">Prof: +2</span>
+                        <span style="font-size:0.78rem; font-weight:800;">🛡️ Saving Throws</span>
+                        <span style="font-size:0.68rem; color:var(--text-dim);">Proficiency: +2</span>
                     </div>
-                    <ul class="stat-row-list">
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Acrobatics (DEX) ★', 2, true)"><span>Acrobatics (DEX) ★</span><span class="prof-skill-val" data-base="2">+4 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 0, false)"><span>Animal Handling (WIS)</span><span>+0 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Arcana (INT) ★', 1, true)"><span>Arcana (INT) ★</span><span class="prof-skill-val" data-base="1">+3 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Athletics (STR)', 0, false)"><span>Athletics (STR)</span><span>+0 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 4, false)"><span>Deception (CHA)</span><span>+4 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('History (INT)', 1, false)"><span>History (INT)</span><span>+1 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 0, true)"><span>Insight (WIS) ★</span><span class="prof-skill-val" data-base="0">+2 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Intimidation (CHA)', 4, false)"><span>Intimidation (CHA)</span><span>+4 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Investigation (INT)', 1, false)"><span>Investigation (INT)</span><span>+1 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 0, false)"><span>Medicine (WIS)</span><span>+0 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Nature (INT)', 1, false)"><span>Nature (INT)</span><span>+1 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Perception (WIS)', 0, false)"><span>Perception (WIS)</span><span>+0 🎲</span></li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Performance (CHA) ★', 4, true)"><span>Performance (CHA) ★</span><span class="prof-skill-val" data-base="4">+6 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Persuasion (CHA)', 4, false)"><span>Persuasion (CHA)</span><span>+4 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Religion (INT)', 1, false)"><span>Religion (INT)</span><span>+1 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Sleight of Hand (DEX)', 2, false)"><span>Sleight of Hand (DEX)</span><span>+2 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Stealth (DEX)', 2, false)"><span>Stealth (DEX)</span><span>+2 🎲</span></li>
-                        <li class="stat-row-item" onclick="rollSkill('Survival (WIS)', 0, false)"><span>Survival (WIS)</span><span>+0 🎲</span></li>
-                    </ul>
+                    <div class="saves-grid-2x3">
+                        <div class="save-box" onclick="rollSave('Strength Saving Throw', 0, false)" title="Strength Saving Throw (+0)">
+                            <span class="save-lbl">STR</span>
+                            <span class="save-val" style="color:var(--text-dim);">+0</span>
+                        </div>
+                        <div class="save-box" onclick="rollSave('Dexterity Saving Throw', 2, false)" title="Dexterity Saving Throw (+2)">
+                            <span class="save-lbl">DEX</span>
+                            <span class="save-val" style="color:#38bdf8;">+2</span>
+                        </div>
+                        <div class="save-box prof" onclick="rollSave('Constitution Saving Throw ★', 1, true)" title="Constitution Saving Throw (Proficient: +3)">
+                            <span class="save-lbl">CON ★</span>
+                            <span class="save-val" style="color:var(--accent-gold);">+3</span>
+                        </div>
+                        <div class="save-box" onclick="rollSave('Intelligence Saving Throw', 1, false)" title="Intelligence Saving Throw (+1)">
+                            <span class="save-lbl">INT</span>
+                            <span class="save-val" style="color:var(--text-dim);">+1</span>
+                        </div>
+                        <div class="save-box" onclick="rollSave('Wisdom Saving Throw', 0, false)" title="Wisdom Saving Throw (+0)">
+                            <span class="save-lbl">WIS</span>
+                            <span class="save-val" style="color:var(--text-dim);">+0</span>
+                        </div>
+                        <div class="save-box prof" onclick="rollSave('Charisma Saving Throw ★', 4, true)" title="Charisma Saving Throw (Proficient: +6)">
+                            <span class="save-lbl">CHA ★</span>
+                            <span class="save-val" style="color:var(--accent-gold);">+6</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 💰 SLEEK GOLD & COIN PURSE -->
@@ -2394,6 +2558,273 @@
     // ==========================================
     // ❤️ HP, AC, RESTS & HELP TOKENS ENGINE
     // ==========================================
+    
+    function shortRest() {
+        takeShortRest();
+    }
+
+    function longRest() {
+        takeLongRest();
+    }
+
+    function takeLongRest() {
+        resetHP();
+    }
+
+    const SKILL_INFO = {
+        "Acrobatics": {
+            name: "Acrobatics (DEX +4 ★)",
+            attr: "Dexterity • Proficient (+2 DEX + 2 PB)",
+            desc: "Covers your ability to stay on your feet in tricky situations, such as running across thin ice, balancing on a narrow beam, or keeping your footing on the roof of a swaying stagecoach.",
+            examples: [
+                "Maintain balance while sprinting across slick cobblestones or icy Barovian rooflines.",
+                "Tumble, dive, or roll to reduce falling damage or avoid obstacles.",
+                "Perform acrobatic stage maneuvers like flips, vaulting over barricades, or theatrical escapes.",
+                "Contest or escape a grapple using agility and flexibility instead of raw muscle."
+            ],
+            rules: "Use Acrobatics when attempting agile feats of balance, dive-rolls, and escaping enemy grapples."
+        },
+        "Animal Handling": {
+            name: "Animal Handling (WIS +0)",
+            attr: "Wisdom (+0 WIS)",
+            desc: "Measures your ability to understand animal intentions, calm domesticated or wild beasts, and control mounts in dangerous terrain.",
+            examples: [
+                "Calm down a terrified draft horse spooked by Barovian wolves or lightning.",
+                "Keep a mount from bolting when an undead monstrosity bursts from the treeline.",
+                "Sense the intentions or mood of a raven, hunting hound, or wild beast.",
+                "Coax a stubborn or mistreated pack mule through a treacherous mountain pass."
+            ],
+            rules: "Called when you try to guide, soothe, or deduce the instincts of non-humanoid creatures."
+        },
+        "Arcana": {
+            name: "Arcana (INT +3 ★)",
+            attr: "Intelligence • Proficient (+1 INT + 2 PB)",
+            desc: "Measures your lore knowledge regarding spells, magic items, eldritch symbols, planar anomalies, wild magic surges, and arcane traditions.",
+            examples: [
+                "Identify an occult rune, teleportation circle, or warding circle carved into stone.",
+                "Recognize the school of magic behind an active spell, curse, or supernatural aura.",
+                "Recall planar traits regarding the Nine Hells, the Shadowfell, or the Astral Plane.",
+                "Understand the activation command or history of a found magic wand, focus, or talisman."
+            ],
+            rules: "Called when analyzing spells, magical artifacts, eldritch symbols, or planar phenomena."
+        },
+        "Athletics": {
+            name: "Athletics (STR +0)",
+            attr: "Strength (+0 STR)",
+            desc: "Measures physical power, conditioning, and brute body strength applied to difficult athletic activities.",
+            examples: [
+                "Climb sheer, slippery cliff faces, castle ramparts, or knotted ropes.",
+                "Jump exceptionally long chasms or high obstacles.",
+                "Swim through raging, ice-cold river currents or flooded underground sluices.",
+                "Grapple or shove a hostile creature using sheer muscle power."
+            ],
+            rules: "The standard check for climbing, jumping, swimming, and initiating grapples/shoves in combat."
+        },
+        "Deception": {
+            name: "Deception (CHA +4)",
+            attr: "Charisma (+4 CHA)",
+            desc: "Determines whether you can convincingly hide the truth, either verbally or through actions, misdirection, and disguises.",
+            examples: [
+                "Fast-talk a suspicious Vallaki guard into letting you pass through the gates.",
+                "Conceal the true origin of your fiendish heritage or chaotic magic outbursts.",
+                "Mislead an interrogator or vampire spy about your party's destination and allies.",
+                "Feign weakness, ignorance, or innocence to lure an enemy into dropping their guard."
+            ],
+            rules: "Called when intentionally misleading, lying, disguising yourself, or feigning emotions."
+        },
+        "History": {
+            name: "History (INT +1)",
+            attr: "Intelligence (+1 INT)",
+            desc: "Measures your knowledge about historical events, legendary figures, past wars, fallen kingdoms, and noble lineages.",
+            examples: [
+                "Recall details about ancient traveling carnivals and the historical legends of Faerûn.",
+                "Identify ancient heraldry, noble sigils, and family bloodlines.",
+                "Recognize historical ruins, battlegrounds, or forgotten monarchs.",
+                "Remember old treaties, laws, or regional governance structures."
+            ],
+            rules: "Called when recalling lore about kingdoms, wars, noble houses, heraldry, and ancient civilizations."
+        },
+        "Insight": {
+            name: "Insight (WIS +2 ★)",
+            attr: "Wisdom • Proficient (+0 WIS + 2 PB)",
+            desc: "Measures your ability to read people, detect lies, intuit emotional states, and predict behavioral patterns.",
+            examples: [
+                "Determine if a Barovian burgomaster or shopkeeper is being deceitful or terrified.",
+                "Read the body language and micro-expressions of an opponent before combat begins.",
+                "Intuit whether an NPC is speaking under magical charm, coercion, or genuine loyalty.",
+                "Sense hidden tension, suspicion, or deceit within an audience or gathering."
+            ],
+            rules: "Contested against an opponent's Deception check to pierce lies and see true motives."
+        },
+        "Intimidation": {
+            name: "Intimidation (CHA +4)",
+            attr: "Charisma (+4 CHA)",
+            desc: "Measures your ability to influence others through threats, physical presence, fiery infernal gazes, and hostile posturing.",
+            examples: [
+                "Demand information from a captured bandit with a sinister flare of fiendish hellfire.",
+                "Command unruly tavern patrons or panicked villagers to fall in line during a crisis.",
+                "Intimidate a haughty noble or corrupt official into backing down.",
+                "Deter a pack of opportunistic scavengers with a display of crackling wild magic."
+            ],
+            rules: "Used to coerce cooperation, instill fear, or command obedience through forceful presence."
+        },
+        "Investigation": {
+            name: "Investigation (INT +1)",
+            attr: "Intelligence (+1 INT)",
+            desc: "Measures deduction, analytical reasoning, piecing together clues, searching for hidden compartments, and crime-scene reconstruction.",
+            examples: [
+                "Deduce where a hidden key or secret compartment is concealed inside an ornate prop box.",
+                "Analyze blood spatters, footsteps, and scorch marks to reconstruct a magical duel.",
+                "Examine a complex mechanical lock, trap mechanism, or puzzle box for structural weaknesses.",
+                "Comb through spellbooks, ledger entries, or mysterious letters to uncover hidden ciphers."
+            ],
+            rules: "Called when searching specific areas for hidden objects or piecing together puzzle clues."
+        },
+        "Medicine": {
+            name: "Medicine (WIS +0)",
+            attr: "Wisdom (+0 WIS)",
+            desc: "Measures medical knowledge, first aid, stabilizing dying allies, diagnosing illnesses, and identifying toxins.",
+            examples: [
+                "Stabilize a fallen ally at 0 HP with a DC 10 Wisdom (Medicine) check.",
+                "Diagnose symptoms of vampiric drain, fever, lycanthropy, or exotic poisons.",
+                "Determine cause, weapon type, and approximate time of death on a corpse.",
+                "Bandage lacerations and burns in the field using makeshift cloth wraps."
+            ],
+            rules: "Standard check to stabilize dying creatures without a Healer's Kit (DC 10)."
+        },
+        "Nature": {
+            name: "Nature (INT +1)",
+            attr: "Intelligence (+1 INT)",
+            desc: "Measures knowledge of terrain, flora, fauna, weather patterns, and natural environmental hazards.",
+            examples: [
+                "Identify medicinal or poisonous herbs, roots, and fungi in the Svalich Woods.",
+                "Recognize the behavioral patterns and weaknesses of natural beasts.",
+                "Predict imminent weather shifts such as supernatural fog, hailstorms, or blizzards.",
+                "Differentiate between natural sinkholes and unnatural subterranean collapses."
+            ],
+            rules: "Called when recalling lore regarding non-magical animals, plants, climates, and geology."
+        },
+        "Perception": {
+            name: "Perception (WIS +0)",
+            attr: "Wisdom (+0 WIS)",
+            desc: "Measures sensory acuity, alertness, spotting hidden threats, hearing faint whispers, and detecting subtle ambushes.",
+            examples: [
+                "Spot an assassin lurking in the shadows of an alleyway before they strike.",
+                "Hear the faint rustle of creeping footsteps or fabric rustling in the dark.",
+                "Notice an unusual seam in a stone wall indicating a concealed secret door.",
+                "Track faint silhouettes moving through dense fog or rain at long range."
+            ],
+            rules: "Piper's Passive Perception is 10. Contested against enemy Stealth to detect ambushes."
+        },
+        "Performance": {
+            name: "Performance (CHA +6 ★)",
+            attr: "Charisma • Proficient (+4 CHA + 2 PB)",
+            desc: "Determines how well you can delight, entertain, or captivate an audience with stage magic, prestidigitation, sleight of hand, dramatic acting, or charismatic showmanship.",
+            examples: [
+                "Deliver a breathtaking prestidigitation stage magic act that dazzles an entire tavern.",
+                "Draw the attention of a hostile crowd away from your allies with dramatic theatrical flair.",
+                "Captivate a festival gathering or noble salon with an enchanting performance.",
+                "Blend into an entertainment troupe or carnival without arousing suspicion."
+            ],
+            rules: "Piper's signature entertainer skill! Called when dazzling an audience with theatrical charm."
+        },
+        "Persuasion": {
+            name: "Persuasion (CHA +4)",
+            attr: "Charisma (+4 CHA)",
+            desc: "Measures your ability to influence someone or an entire group with tact, grace, diplomatic poise, and charming rhetoric.",
+            examples: [
+                "Negotiate a fair price or discount with a merchant, wagon driver, or innkeeper.",
+                "Convince reluctant villagers or town officials to offer shelter or aid to your party.",
+                "De-escalate a tense confrontation between hot-headed allies and local authorities.",
+                "Charm a wary contact into sharing local gossip, rumors, and safe houses."
+            ],
+            rules: "Used when attempting to influence someone through reason, diplomacy, charm, and honest rhetoric."
+        },
+        "Religion": {
+            name: "Religion (INT +1)",
+            attr: "Intelligence (+1 INT)",
+            desc: "Measures your knowledge regarding deities, religious rites, holy orders, holy symbols, undead origins, fiendish pacts, and celestial hierarchies.",
+            examples: [
+                "Identify the iconography of the Morninglord, the Night Mother, or ancient Barovian cults.",
+                "Recall consecrated funeral rites required to prevent corpses from rising as undead.",
+                "Recognize sacred relics, holy vestments, and desecrated altars.",
+                "Understand the folklore, rites, and taboos of local religious sects and clerics."
+            ],
+            rules: "Called when recalling lore about faiths, gods, holy symbols, and religious rituals."
+        },
+        "Sleight of Hand": {
+            name: "Sleight of Hand (DEX +2)",
+            attr: "Dexterity (+2 DEX)",
+            desc: "Measures manual dexterity, sleight of hand, pickpocketing, planting evidence, concealing small items, and delicate finger work.",
+            examples: [
+                "Palm a playing card, silver coin, or small magical focus during a conversation.",
+                "Conceal a small wand, lockpick, or potion vial inside your coat sleeve.",
+                "Pick a target's pocket for a key or sealed note without being noticed.",
+                "Perform close-up coin and card tricks that baffle onlookers."
+            ],
+            rules: "Called for delicate manual tricks, pickpocketing, planting items, and quick finger prestidigitation."
+        },
+        "Stealth": {
+            name: "Stealth (DEX +2)",
+            attr: "Dexterity (+2 DEX)",
+            desc: "Measures your ability to conceal yourself from enemies, slink unseen through shadows, and move without making a sound.",
+            examples: [
+                "Sneak past watchful guards, dire wolves, or vampire spawn in the mist.",
+                "Slip from shadow to shadow along a wall without catching torchlight.",
+                "Stalk quietly across gravel, dry leaves, or creaking wooden floorboards.",
+                "Conceal yourself in dense shrubbery or fog banks while preparing an arcane ambush."
+            ],
+            rules: "Contested against enemy Passive Perception (or active Perception checks) to remain hidden."
+        },
+        "Survival": {
+            name: "Survival (WIS +0)",
+            attr: "Wisdom (+0 WIS)",
+            desc: "Measures your ability to follow tracks, hunt wild game, navigate unforgiving terrain, and avoid natural environmental hazards.",
+            examples: [
+                "Follow wagon ruts or tracks through mud, snow, and rain.",
+                "Forage for sustenance, build weatherproof lean-tos, and find fresh water springs.",
+                "Navigate through treacherous swamps, mountain passes, and dense forests without getting lost.",
+                "Predict environmental hazards like quicksand, flash floods, or unstable snowdrifts."
+            ],
+            rules: "Used to track quarry, hunt for food, guide the party through wilderness, and endure harsh weather."
+        }
+    };
+
+    function openSkillModal(skillName, event) {
+        if (event) event.stopPropagation();
+        const info = SKILL_INFO[skillName];
+        if (!info) return;
+
+        const modal = document.getElementById('spell-modal');
+        const titleEl = document.getElementById('spell-modal-title');
+        const bodyEl = document.getElementById('spell-modal-body');
+        const tagEl = document.getElementById('spell-modal-tag');
+        const actContainer = document.getElementById('spell-modal-actions');
+        if (!modal) return;
+
+        titleEl.innerHTML = info.name;
+        if (tagEl) tagEl.innerText = info.attr;
+
+        const exHtml = info.examples.map(ex => `<li>${ex}</li>`).join('');
+
+        bodyEl.innerHTML = `
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:10px 12px; font-size:0.8rem; line-height:1.5; color:#f8fafc;">
+                    ${info.desc}
+                </div>
+                <div style="background:rgba(245,158,11,0.06); border-left:3px solid var(--accent-gold); border-radius:4px; padding:9px 11px; font-size:0.77rem; color:#fde68a;">
+                    <div style="font-size:0.72rem; font-weight:800; text-transform:uppercase; margin-bottom:5px;">🎯 When to Use &amp; Concrete Examples:</div>
+                    <ul style="padding-left:18px; display:flex; flex-direction:column; gap:4px; line-height:1.45;">
+                        ${exHtml}
+                    </ul>
+                </div>
+            </div>
+        `;
+
+        if (actContainer) actContainer.innerHTML = '';
+        modal.showModal();
+    }
+
     function updateHPUI() {
         const hpDisp = document.getElementById('hp-disp');
         const hpBar = document.getElementById('hp-bar');
@@ -2739,6 +3170,46 @@
                     <div style="padding:8px 12px; background:linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(15,23,42,0.9) 100%); border:1px solid rgba(245,158,11,0.35); border-radius:6px;">
                         <div style="color:#fde68a; font-weight:800; font-size:0.86rem; letter-spacing:0.3px;">« Travelling Stage Magician • Prophesied Child of the Pocket Watch »</div>
                         <div style="color:#cbd5e1; font-size:0.75rem; margin-top:2px;">Level 3 Fierna Tiefling Wild Magic Sorcerer • Entertainer Background • 5'4" (Age 24) • Chaotic Neutral</div>
+                    </div>
+
+                                        <!-- BOX 0: 5.5e ABILITY SCORES GRID (FIRST THING SEEN) -->
+                    <div style="background:rgba(15,23,42,0.92); border:1.5px solid var(--accent-gold); border-radius:8px; padding:10px 12px; box-shadow:0 0 16px rgba(245,158,11,0.15);">
+                        <div style="font-size:0.75rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                            <span>⚡ Core 5.5e Ability Scores &amp; Attributes</span>
+                            <span style="font-size:0.68rem; color:#cbd5e1; font-weight:600;">Standard Array / Tiefling Lineage (Verified)</span>
+                        </div>
+                        <div style="display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; text-align:center;">
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:6px 2px; cursor:pointer;" onclick="closeSpellModal(); rollD20('Strength Check', 0)" title="Click to roll Strength Check (+0)">
+                                <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim);">STR</div>
+                                <div style="font-size:1.15rem; font-weight:800; color:#f8fafc; font-family:'JetBrains Mono',monospace;">10</div>
+                                <div style="font-size:0.72rem; font-weight:700; color:var(--text-dim);">+0 Mod</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:6px 2px; cursor:pointer;" onclick="closeSpellModal(); rollD20('Dexterity Check', 2)" title="Click to roll Dexterity Check (+2)">
+                                <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim);">DEX</div>
+                                <div style="font-size:1.15rem; font-weight:800; color:#f8fafc; font-family:'JetBrains Mono',monospace;">14</div>
+                                <div style="font-size:0.72rem; font-weight:700; color:var(--text-dim);">+2 Mod</div>
+                            </div>
+                            <div style="background:rgba(245,158,11,0.1); border:1.5px solid var(--accent-gold); border-radius:6px; padding:6px 2px; cursor:pointer;" onclick="closeSpellModal(); rollD20('Constitution Check ★', 1)" title="Click to roll Constitution Check (+1)">
+                                <div style="font-size:0.68rem; font-weight:800; color:var(--accent-gold);">CON ★</div>
+                                <div style="font-size:1.15rem; font-weight:800; color:#fde68a; font-family:'JetBrains Mono',monospace;">13</div>
+                                <div style="font-size:0.72rem; font-weight:800; color:var(--accent-gold);">+1 Mod</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:6px 2px; cursor:pointer;" onclick="closeSpellModal(); rollD20('Intelligence Check', 1)" title="Click to roll Intelligence Check (+1)">
+                                <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim);">INT</div>
+                                <div style="font-size:1.15rem; font-weight:800; color:#f8fafc; font-family:'JetBrains Mono',monospace;">12</div>
+                                <div style="font-size:0.72rem; font-weight:700; color:var(--text-dim);">+1 Mod</div>
+                            </div>
+                            <div style="background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:6px 2px; cursor:pointer;" onclick="closeSpellModal(); rollD20('Wisdom Check', 0)" title="Click to roll Wisdom Check (+0)">
+                                <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim);">WIS</div>
+                                <div style="font-size:1.15rem; font-weight:800; color:#f8fafc; font-family:'JetBrains Mono',monospace;">10</div>
+                                <div style="font-size:0.72rem; font-weight:700; color:var(--text-dim);">+0 Mod</div>
+                            </div>
+                            <div style="background:rgba(245,158,11,0.1); border:1.5px solid var(--accent-gold); border-radius:6px; padding:6px 2px; cursor:pointer;" onclick="closeSpellModal(); rollD20('Charisma Check ★', 4)" title="Key Sorcerer Stat • Click to roll Charisma Check (+4)">
+                                <div style="font-size:0.68rem; font-weight:800; color:var(--accent-gold);">CHA ★</div>
+                                <div style="font-size:1.15rem; font-weight:800; color:#fde68a; font-family:'JetBrains Mono',monospace;">18</div>
+                                <div style="font-size:0.72rem; font-weight:800; color:var(--accent-gold);">+4 Mod</div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- SEPARATE BOX 1: PASSIVE ABILITIES & TRAITS -->

@@ -804,7 +804,7 @@
         <header class="header-banner">
             <div class="header-title">
                 <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.filter='brightness(1.18)'" onmouseout="this.style.filter='none'" title="Click to open Yvaine's Origin Story, Feats &amp; 5.5e Ability Scores">
-                    🔫 ECLIPSA ROSALINE YVAINE <span style="font-size:0.95rem; color:#cbd5e1; font-weight:600;">("The First")</span>
+                    🔫 ECLIPSA ROSALINE "YVAINE" <span style="font-size:0.95rem; color:#cbd5e1; font-weight:600;">("The Fallen Princess")</span>
                 </h1>
                 <div style="margin-top:5px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                     <span class="pill-badge pill-gold" style="font-size:0.72rem; padding:2px 10px; letter-spacing:0.6px;">⭐ LEVEL 3</span>
@@ -1410,8 +1410,8 @@
                     <!-- MULTI-TIER SPELL SLOT TRACKER (PIPER EXACT STANDARD) -->
                     <div style="background:var(--panel-sub); border:1px solid var(--card-border); border-radius:6px; padding:6px 8px; display:flex; flex-direction:column; gap:4px; margin-bottom:5px;">
                         <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim); text-transform:uppercase; display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px;">
-                            <span>🔮 Spell Slots by Level &amp; Favored Enemy</span>
-                            <span id="favored-enemy-pips" style="font-size:0.68rem; color:#fde68a; font-weight:700; font-family:'JetBrains Mono',monospace;">Favored Enemy: 2/2 Free Casts</span>
+                            <span>🔮 Spell Slots by Level &amp; Hunter's Mark</span>
+                            <span id="favored-enemy-pips" style="font-size:0.68rem; color:#fde68a; font-weight:700; font-family:'JetBrains Mono',monospace;">Hunters Mark: 2/2 Free Casts</span>
                         </div>
                         <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:5px;">
                             <div style="background:#090e1a; border:1px solid var(--card-border); border-radius:4px; padding:3px 6px; display:flex; justify-content:space-between; align-items:center;">
@@ -2203,7 +2203,7 @@
         curSpellSlots = maxSpellSlots;
         favoredEnemyCasts = maxFavoredEnemyCasts;
         updateSpellSlotsUI();
-        document.getElementById('favored-enemy-pips').innerText = `Favored Enemy: ${favoredEnemyCasts}/${maxFavoredEnemyCasts} Free Casts`;
+        document.getElementById('favored-enemy-pips').innerText = `Hunters Mark: ${favoredEnemyCasts}/${maxFavoredEnemyCasts} Free Casts`;
         logRoll(`🔮 <strong>Spell Slots &amp; Favored Enemy Refilled:</strong> All 3 1st-level slots &amp; 2 free Favored Enemy casts ready!`);
     }
 
@@ -2222,7 +2222,7 @@
     function castTracerRoundFree() {
         if (favoredEnemyCasts > 0) {
             favoredEnemyCasts--;
-            document.getElementById('favored-enemy-pips').innerText = `Favored Enemy: ${favoredEnemyCasts}/${maxFavoredEnemyCasts} Free Casts`;
+            document.getElementById('favored-enemy-pips').innerText = `Hunters Mark: ${favoredEnemyCasts}/${maxFavoredEnemyCasts} Free Casts`;
             isTracerActive = true;
             updateTracerUI();
             logRoll(`🐺 <strong>Hunter's Mark (Tracer Round - Favored Enemy Free Cast):</strong> Target marked within 90 ft! Deals <strong style="color:#ef4444;">+1d6 Piercing/Force damage</strong> on EVERY weapon hit! Adv on Perception/Survival to track. Conc 1 hr. <em>(${favoredEnemyCasts}/2 free casts remaining).</em>`);
@@ -2518,6 +2518,19 @@
         logRoll(`🛡️ <strong>Temporary HP:</strong> Cleared.`);
     }
 
+    
+    function shortRest() {
+        takeShortRest();
+    }
+
+    function longRest() {
+        takeLongRest();
+    }
+
+    function takeLongRest() {
+        resetHP();
+    }
+
     function takeShortRest() {
         const healAmt = Math.round(maxHP * 0.25);
         if (curHP + healAmt > maxHP) {
@@ -2570,9 +2583,9 @@
 
         document.getElementById('help-tokens-disp').innerText = `${helpTokens} / ${maxHelpTokens}`;
         document.getElementById('badge-hunters-sense').innerText = `${huntersSenseUses}/${maxHuntersSenseUses} USES`;
-        document.getElementById('favored-enemy-pips').innerText = `Favored Enemy: ${favoredEnemyCasts}/${maxFavoredEnemyCasts} Free Casts`;
+        document.getElementById('favored-enemy-pips').innerText = `Hunters Mark: ${favoredEnemyCasts}/${maxFavoredEnemyCasts} Free Casts`;
 
-        logRoll(`🌙 <strong>Long Rest Completed:</strong> HP fully restored (<strong>${maxHP}/${maxHP}</strong>), all 3 Spell Slots &amp; 2 Favored Enemy casts ready, Hunter's Sense restocked, Heroic Inspiration READY, and <strong>all 2/2 Lament clips and 2/2 Revolver Speedloaders repacked at camp!</strong>`);
+        logRoll(`🌙 <strong>Long Rest Completed:</strong> HP fully restored (<strong>${maxHP}/${maxHP}</strong>), all 3 Spell Slots &amp; 2 Hunters Mark free casts ready, Hunter's Sense restocked, Heroic Inspiration READY, and <strong>all 2/2 Lament clips and 2/2 Revolver Speedloaders repacked at camp!</strong>`);
     }
 
     // ==========================================
