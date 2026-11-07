@@ -16,7 +16,7 @@
 | **ACT I** | `0:25 – 0:55` *(30m)* | **The Carriage & The High-Speed Chase:**<br>• **Adrenaline Eruption:** Coachman’s severed arm hits glass ➔ Dire wolf breaches left door ➔ **Roll Initiative!**<br>• **The Choice:** Reins vs. Jump! (**DC 11 Athletics/Acrobatics** to reach Driver's Box).<br>• **Camera Pan to Piper (Solo Spotlight):** Overturned carnival cart; surrounded by wolves ➔ **DC 12 Dex Save** ➔ She sees the carriage barreling down the road.<br>• **The Merge:** *"Do you save her?!"* ➔ Carriage drift & Piper dives onto rear rack (**DC 10 Acrobatics**).<br>• **3-Round Cinematic Chase ("1 Success Keeps You Moving" Rule):**<br>&nbsp;&nbsp;• *Round 1 (Rear Flankers):* Team attacks/maneuvers to shake pursuers.<br>&nbsp;&nbsp;• *Round 2 (Three-Point Surround):* Wolves at Left Door, Right Door, and **tearing through the Roof timber**!<br>&nbsp;&nbsp;• *Round 3 (The Dead End at the Gates):* 30-ft iron gates locked shut ahead ➔ Drift-slide crash in the mud **twenty feet in front of the locked gates** ➔ Cornered by the pack! |
 | **ACT II** | `0:55 – 1:30` *(35m)* | **The Gates of Barovia & The Lost Messenger (*DragnaCarta Reloaded Standard*):**<br>• **The Silent Command:** The wolves circle the wreck—then freeze. A distant unseen presence holds them back; they bow toward the crags of Castle Ravenloft and vanish into the mist.<br>• **The Threshold:** The 30-ft rusted iron gates swing open on their own with a deafening groan. Headless moss-eaten stone guardians loom. Cael watches from the battlements as a sleek raven/cat. The party crosses; **the gates slam shut with a thunderous BOOM**—locking the road behind them.<br>• **Dalvan Olensky Encounter:** Fresh corpse face-down in the briars. **DC 10 Medicine Check reveals he died purely of exhaustion and dehydration**—no combat wounds.<br>• **The Spinning Compass & The 13 Tally Marks:** Dalvan clutches a tarnished copper compass. The needle spins wildly in endless circles (no magnetic north in Barovia!). Hand points to a pine tree carved with **13 tally marks** and an arrow pointing down a forgotten footpath into the choking mists.<br>• **Backstory Drops:**<br>&nbsp;&nbsp;• *Jacomir & Yvaine:* Realize they cannot walk home; the mists loop them back and drain their vitality (DC 15 CON save vs. Exhaustion). The only road out lies through the master of this realm.<br>&nbsp;&nbsp;• *Piper:* Finds a frayed **Tarokka Card fragment** (*The Horseman*) and Kolyan’s authentic wax-sealed plea. She recognizes Vistani fortune-teller markings pointing to **Madam Eva at Tser Pool**! |
 | **ACT III** | `1:30 – 2:55` *(85m)* | **The Old Svalich Road & The Fortified Village of Barovia (*Under Siege*):**<br>• **Scene 1: The River Ivlis Gallows (Psychic Mirror Horror):** Creaking corpse shifts into Jacomir's or Yvaine's face (**DC 12 Wis Save**).<br>• **Scene 2: Morgantha & The Dream Pastries (Moral Horror):** Fragrant pie cart in the fog ➔ **DC 13 Perception/Insight** reveals parents trading their screaming 7-year-old son Lucian for pastries!<br>• **Scene 3: The Barricades of Barovia (Active Crisis):** Spiked timber barricades manned by paranoid, exhausted village militia under nightly assault ➔ Meeting **Ismark Kolyanovich** at the defenses.<br>• **Scene 4: Mad Mary's Attic & Bildrath's Shop:** Mad Mary weeping for Gertruda (claims Blinsky doll lead) ➔ Bildrath gouging supplies at 10x prices (facing Parriwimple).<br>• **Scene 5: Blood on the Vine Tavern:** Decompressing by the peat fire. Arik's soulless waxy stare; three Vistani sisters playing cards; Cael sleeping as a black cat by the hearth. Ismark explains the **Six Nights of Siege**, his father Kolyan's death, and the horror of the **Two Bites on Ireena**. |
-| **ACT IV** | `2:55 – 4:20` *(85m)* | **The Besieged Manor & The Midnight Climax:**<br>• Entering the barricaded Indirovich mansion; meeting **Ireena Kolyana** guarding her father Kolyan’s pine coffin with drawn rapier.<br>• **Midnight Boss Fight (3:00 AM):** A **Starved Vampire Spawn** infiltrates through the shattered skylight while undead scratch at the reinforced shutters. Tactical 3D battle (Spider Climb, Regeneration puzzle, protecting Ireena).<br>• **The Chills Climax & Cliffhanger:**<br>&nbsp;&nbsp;1. Spawn dissolves into powdery ash.<br>&nbsp;&nbsp;2. Reveal of the **2 bruised puncture wounds** on Ireena's throat (The Rule of the Third Bite).<br>&nbsp;&nbsp;3. Dead silence falls over the mansion.<br>&nbsp;&nbsp;4. **DM SLOWLY KNOCKS THREE TIMES ON THE TABLE: TAP. TAP. TAP.**<br>&nbsp;&nbsp;5. Strahd's telepathic whisper echoes inside their skulls: *"Tomorrow night, when the moon rises... I return for my third bite. Guard her well."*<br>&nbsp;&nbsp;6. A single fresh blood-red rose on the wet doorstep.<br>&nbsp;&nbsp;7. **"AND THAT IS WHERE WE END SESSION 1!"** |
+| **ACT IV** | `2:55 – 4:20` *(85m)* | **The Besieged Manor & The Midnight Climax:**<br>• Entering the barricaded Indirovich mansion; meeting **Ireena Kolyana** guarding her father Kolyan’s pine coffin with drawn rapier.<br>• **Midnight Boss Fight (3:00 AM):** A **Starved Vampire Spawn** infiltrates through the shattered skylight while undead scratch at the reinforced shutters. Tactical 3D battle (Spider Climb, Regeneration puzzle, protecting Ireena).<br>• **The Chills Climax & Cliffhanger:**<br>&nbsp;&nbsp;1. Spawn dissolves into powdery ash.<br>&nbsp;&nbsp;2. Reveal of the **2 bruised puncture wounds** on Ireena's throat (The Rule of the Third Bite).<br>&nbsp;&nbsp;3. Dead silence falls over the mansion.<br>&nbsp;&nbsp;4. **DM SLOWLY KNOCKS THREE TIMES ON THE TABLE: TAP. TAP. TAP.**<br>&nbsp;&nbsp;5. The massive black raven lands on the shattered ceiling rafter, tapping its beak (*Tap. Tap. Tap.*) and speaking in Strahd's cold, cultured voice—chillingly identifying Jacomir, Yvaine, and Piper.<br>&nbsp;&nbsp;6. The raven drops a single fresh blood-red rose atop Kolyan's coffin (*"When the sun sets tomorrow... she belongs to me."*) before taking flight into the storm.<br>&nbsp;&nbsp;7. **"AND THAT IS WHERE WE END SESSION 1!"** |
 
 ---
 
@@ -602,34 +602,49 @@ Outside, the wind abruptly dies. Dead silence falls over the estate.
   > 
   > In Barovia, the curse of the vampire is absolute: on the **third bite**, the blood stops flowing, the heart freezes... and she rises as his eternal bride."*
 
-#### 3. The Three Knocks (The Physical Table Action)
+#### 3. The Raven on the Rafter (The Physical Table Action)
 Right as Ismark finishes that sentence—
 **Dead silence falls over the entire mansion.**
-The wind stops. The rain turns to complete, unnatural stillness.
+The wind outside abruptly dies. The rain trickles into a soundless, hanging mist.
 
 * **DM INSTRUCTION — GO COMPLETELY SILENT. STARE AT YOUR PLAYERS. SLOWLY RAP YOUR KNUCKLES THREE TIMES ON THE TABLE:**
   > ***TAP. TAP. TAP.***
 
 * Ismark freezes in pure terror. Ireena's breath catches in her throat.
-* There are no footsteps on the porch. The heavy oak door does not rattle.
-* And then, vibrating directly inside the skulls of Jacomir, Yvaine, and Piper—sounding like a cultured, aristocratic whisper right behind their ears—comes **Count Strahd’s voice**:
+* The sound didn't come from the heavy front door.
+* It came from **above**.
+* Through the shattered skylight in the ceiling, amidst the jagged glass and drizzling mist, a massive, midnight-black raven lands upon the exposed oak rafter directly above the parlor.
+* It does not screech. It does not flutter. It perches motionless, tapping its black iron beak three times against the timber: *Tap. Tap. Tap.*
+* Its obsidian eye catches the pale candle flame. It turns its head slowly, fixing its gaze upon each stranger in turn with terrifying, uncanny intelligence.
+* And then... its throat ripples. Its beak opens.
+* Out of the bird’s throat comes not a squawk, but a voice. Low. Cultured. A cold, aristocratic baritone that sounds quiet, intimate, and chillingly human—as though a nobleman were standing two inches behind their ears:
 
-> *"Good evening, my honored guests.*
+> *"A king without a crown."*
 > 
-> *You fought admirably. The spawn was crude, but you handled it with style. Jacomir... Yvaine... Piper... you continue to entertain me.*
+> *(The raven's black eye locks onto Jacomir's battered plate armor.)*
 > 
-> *I know you are weary. I know you mourn the Burgomaster. Therefore, I shall grant you a courtesy.*
+> *"A hunter blinded by blood."*
 > 
-> *I give you until tomorrow at sundown to bury the old man in church soil and say your goodbyes.*
+> *(Its head snaps toward Yvaine, lingering on the smoking barrels of her pistols.)*
 > 
-> *Tomorrow night, when the moon rises over the valley... I will return for my third bite.*
+> *"And a moth... fluttering toward the fire."*
 > 
-> *Guard her well, my friends. I do so love a challenge."*
+> *(Its gaze slides onto Piper, watching the faint magical sparks trembling at her fingertips.)*
+> 
+> *(The raven hops two inches forward along the rafter, its unblinking stare dropping down to Ireena, clutching her rapier beside her father's pine coffin.)*
+> 
+> *"You fight hard for a house that is already dead, little strays.*
+> 
+> *Bury your Burgomaster. Say your goodbyes.*
+> 
+> *When the sun sets tomorrow... she belongs to me."*
 
-* A soft, aristocratic chuckle echoes through the house and dissipates into the freezing night air.
-* Outside on the stone doorstep, sitting in the puddle of rain, is a single **fresh blood-red rose**.
-* Ismark looks up at Jacomir, Yvaine, and Piper with hollow, horrified eyes:
-  > *"We have until sundown. If she is still in this valley when darkness falls... she is dead."*
+* The bird tilts its head one final time, snapping its beak with a sharp *clack*.
+* From its black talons, something slips free. It tumbles silently through the cold air, landing softly with a wet rustle atop Kolyan's pine coffin, directly between the candles:
+* **A single, fresh, blood-red Barovian rose.**
+* With a silent, heavy sweep of its wings, the raven launches upward through the shattered skylight, disappearing into the storm clouds toward the jagged heights of Castle Ravenloft.
+* In the candlelit parlor, nobody breathes. Ismark sinks to his knees, his trembling fingers clutching the silver pommel of his blade:
+  > *"We have until sundown. When darkness falls tomorrow... he is coming."*
 
 * **DM TO THE TABLE:**
   > ***"AND THAT IS WHERE WE END SESSION 1!"***
