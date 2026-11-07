@@ -45,6 +45,7 @@
 * 📄 **Active Google Docs (Tier 1 Sandbox):**
   * 🦇 [Curse of Strahd - Master 15-20 Session Director's Cut & Book Guide](https://docs.google.com/document/d/1oTUkK1zGOM7kGRmjcfHQzhRiaQAkBJpngUP6L-P6gmo/edit)
   * 🩸 [Session 1 - Blood on the Axle (The Svalich Woods Carriage Chase)](https://docs.google.com/document/d/1RTlpxBYCWJBaKDRwZ7Qq8WzYG_MfMmsIN3Bg4D7zk-U/edit)
+  * 🐾 [Curse of Strahd - Caelum Jude (Cael) Master Companion Dossier](https://docs.google.com/document/d/17KfeBe_-j6yAFMzWV0tdr4Xw-YsAwCwSX8aRsdwr4Gc/edit)
 * 🎓 **Lead DM & AI Co-Pilot Playbook (`/dmguide`):** [`.agents/skills/dmguide/SKILL.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/.agents/skills/dmguide/SKILL.md)
 
 ---

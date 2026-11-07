@@ -3,7 +3,8 @@
 > **Campaign:** Curse of Strahd (Grand Trilogy — Director's Cut)  
 > **Target Role:** Core Main Party Companion & Primary Healer (Permanent Campaign-Long Companion)  
 > **Status:** `Active & Watching (Session 1 — Feline Stalker Form)`  
-> **True Identity:** Scion of the Dark Powers & Shepherd of the Pact of Vecna
+> **True Identity:** Scion of the Dark Powers & Shepherd of the Pact of Vecna  
+> **Google Doc (Live Tier 1 Sandbox):** [Curse of Strahd - Caelum Jude (Cael) Master Companion Dossier](https://docs.google.com/document/d/17KfeBe_-j6yAFMzWV0tdr4Xw-YsAwCwSX8aRsdwr4Gc/edit)
 
 ---
 
