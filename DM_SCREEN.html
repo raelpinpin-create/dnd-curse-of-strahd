@@ -777,6 +777,7 @@
     <a href="#npc-directory" class="nav-btn">👥 2. NPC Directory (15)</a>
     <a href="#monsters-section" class="nav-btn">💀 3. Enemies & Pointy Hat Bosses (12)</a>
     <a href="#loot-vault" class="nav-btn">🎒 4. World Loot & Relics</a>
+    <a href="#factions-lore" class="nav-btn">🏛️ 4.5 Factions & Lore</a>
     <a href="#dm-rules-guide" class="nav-btn">⚖️ 5. Barovian Laws & Rules</a>
 </nav>
 
@@ -1036,6 +1037,96 @@
             <span class="section-tag">CLICK ANY ITEM FOR FULL 5.5E MECHANICS & MANUSCRIPTS</span>
         </div>
         <div class="grid-2" id="loot-containers"></div>
+    </section>
+
+    <!-- SECTION 4.5: BAROVIAN FACTIONS, PEOPLES & LORE CODEX -->
+    <section id="factions-lore">
+        <div class="section-header">
+            <span>🏛️ SECTION 4.5: BAROVIAN FACTIONS, PEOPLES & CULTURAL LORE CODEX</span>
+            <span class="section-tag">CLICK ANY FACTION BUTTON FOR FULL HISTORY, BELIEFS & DM ROLEPLAY CUES</span>
+        </div>
+        <div class="grid-4">
+            <div class="card clickable searchable-row" onclick="openLoreModal('vistani')">
+                <div class="card-header">
+                    <span class="card-title">🔮 The Vistani</span>
+                    <span class="pill gold">Mist Travelers</span>
+                </div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.81rem;">Nomadic wagon clans who saved a mortal Prince Strahd centuries ago. Granted eternal safe passage through the Mists, wielding Tarokka foresight and the Evil Eye.</p>
+                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Vistani Lore & History</span></div>
+                </div>
+            </div>
+            <div class="card clickable searchable-row" onclick="openLoreModal('villagers')">
+                <div class="card-header">
+                    <span class="card-title">🏚️ Barovian Villagers</span>
+                    <span class="pill crimson">Souls & Shells</span>
+                </div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.81rem;">Trapped subjects of the valley. <strong>9 in 10 are "Soulless Shells"</strong> (hollow, monochrome, joyless); only <strong>1 in 10 carry reincarnated souls</strong> capable of fear, color, and defiance.</p>
+                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Villager Lore & Customs</span></div>
+                </div>
+            </div>
+            <div class="card clickable searchable-row" onclick="openLoreModal('mountain_folk')">
+                <div class="card-header">
+                    <span class="card-title">⛰️ The Mountain Folk</span>
+                    <span class="pill crimson">Druids & Berserkers</span>
+                </div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.81rem;">Primal mud-and-blood-painted tribes of Yester Hill and Mt. Ghakis. They worship Count Strahd as a literal god of storm and winter (<em>"He is the Land"</em>).</p>
+                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Mountain Folk Lore</span></div>
+                </div>
+            </div>
+            <div class="card clickable searchable-row" onclick="openLoreModal('keepers')">
+                <div class="card-header">
+                    <span class="card-title">🦅 Keepers of the Feather</span>
+                    <span class="pill green">Secret Wereravens</span>
+                </div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.81rem;">Clandestine society of Lawful Good Wereravens led by the Martikov family (Blue Water Inn & Wizard of Wines). They watch over heroes from the rooftops.</p>
+                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Keepers Lore</span></div>
+                </div>
+            </div>
+            <div class="card clickable searchable-row" onclick="openLoreModal('silver_dragon')">
+                <div class="card-header">
+                    <span class="card-title">🐉 Order of the Silver Dragon</span>
+                    <span class="pill gold">Revenant Knights</span>
+                </div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.81rem;">Fallen paladins of the silver wyrm Argynvost in Argynvostholt. Cursed as undying Revenants who want Strahd to suffer forever in his prison.</p>
+                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Dragon Order Lore</span></div>
+                </div>
+            </div>
+            <div class="card clickable searchable-row" onclick="openLoreModal('dusk_elves')">
+                <div class="card-header">
+                    <span class="card-title">🧝‍♂️ The Dusk Elves</span>
+                    <span class="pill purple">Dying Remnant</span>
+                </div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.81rem;">Ancient shadow-wood elves nearly exterminated by their traitor kin Rahadin. After Strahd executed every Dusk Elf woman, only grieving males remain.</p>
+                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Dusk Elf Lore</span></div>
+                </div>
+            </div>
+            <div class="card clickable searchable-row" onclick="openLoreModal('faiths')">
+                <div class="card-header">
+                    <span class="card-title">☀️ Morninglord & Mother Night</span>
+                    <span class="pill gold">Barovian Faiths</span>
+                </div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.81rem;">The dual religions of Barovia: the fading churches of the <strong>Morninglord</strong> (dawn & hope) versus the primal nocturnal pacts of <strong>Mother Night</strong>.</p>
+                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Religion & Gods Lore</span></div>
+                </div>
+            </div>
+            <div class="card clickable searchable-row" onclick="openLoreModal('werewolves')">
+                <div class="card-header">
+                    <span class="card-title">🐺 Children of Mother Night</span>
+                    <span class="pill crimson">Werewolf Pack</span>
+                </div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.81rem;">Savage werewolf pack in the northern cliffs, fractured between Strahd's ruthless hound <strong>Kiril Stoyanovich</strong> and the imprisoned alpha <strong>Emil</strong>.</p>
+                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Werewolf Pack Lore</span></div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- SECTION 5: DM RULES & BAROVIAN LAWS -->
@@ -2998,6 +3089,121 @@ function openItemModal(key) {
         <div class="nbox nbox-cyan" style="white-space:pre-line; font-style:italic;">${it.lore}</div>
     `;
     document.getElementById('modal-dice-log').innerHTML = `Viewing Item Dossier • ${it.rarity}`;
+    modal.showModal();
+}
+
+const LORE_DATA = {
+    vistani: {
+        title: "🔮 The Vistani — Nomads of the Mists",
+        subtitle: "Wanderers of the Barrel-Topped Vardos • Sworn Blood-Guests of Strahd",
+        badge: "Tser Pool & Vallaki Camp",
+        quote: "We saved the Prince's life when his blood was still warm and red. Now the fog parts for our wheels, and the wolves never bite our horses.",
+        history: "Centuries ago, before the Mists swallowed Barovia, a mortal Prince Strahd von Zarovich was nearly slain in battle. A clan of wandering Vistani found him bleeding in the snow, nursed him back to health in their wagons, and returned him safely to his throne. In eternal gratitude, Strahd swore a royal blood-oath: <strong>all Vistani are forever welcome in his land, no beast of Barovia may harm them, and they alone possess the power to travel freely in and out of the Choking Mists</strong>.",
+        culture: "<strong>Two Very Different Clans in Barovia:</strong><br>• <strong>Madam Eva's Clan (Tser Pool Encampment):</strong> Warm, honorable, music-loving storytellers and silver-traders who secretly mourn what Strahd has become. Under Madam Eva's guidance, they read the <em>Tarokka</em> deck to guide heroes toward breaking Barovia's curse.<br>• <strong>Luvash & Arrigal's Clan (Southwest of Vallaki):</strong> Rowdy, ruthless mercenaries who actively serve Count Strahd as spies, couriers, and bounty hunters (and guard the surviving Dusk Elves).",
+        mechanics: "• <strong>Mist Navigation:</strong> Vistani wagons can enter the border Mists and emerge in any world of the multiverse—though only if they choose to.<br>• <strong>The Evil Eye (Action):</strong> A Vistani can fix their gaze on a creature within 30 ft (Wisdom Save) to inflict <em>Blindness, Charm,</em> or <em>Fear</em>.<br>• <strong>Vistani Blood Curse:</strong> Uttered as a Reaction when reduced to 0 HP or gravely wronged—imposes a permanent curse (Vulnerability to a damage type, inability to tie knots/find rest, or horrific nightmares) until lifted by <em>Remove Curse</em> or Vistani forgiveness!",
+        rp: "Vibrant silk shawls, gold coins braided into hair, violin music around roaring campfires, and a sharp eye for outsiders' silver and stories. Treat them with respect and share a drink by the fire, and they are the warmest hosts in Barovia; insult their wagons or steal from them, and their curses are lethal."
+    },
+    villagers: {
+        title: "🏚️ Barovian Villagers — The Ensouled & The Soulless Shells",
+        subtitle: "Prisoners of the Reincarnation Cycle • Village of Barovia, Vallaki & Krezk",
+        badge: "1 in 10 Have Souls",
+        quote: "Bar the shutters before the sun goes down. Never speak His name aloud. And if you hear someone crying in the fog... do not open the door.",
+        history: "When Strahd murdered his brother Sergei and became a vampire, the Dark Powers sealed Barovia behind the Mists. Nothing can leave—<strong>not even the souls of the dead</strong>. When a Barovian dies, their soul remains trapped in the valley, drifting in cold agony for years until it is reborn into a newborn infant (which is why Tatyana's soul keeps reincarnating into women like Ireena).",
+        culture: "<strong>The Secret of the 'Soulless Shells':</strong><br>• <strong>The Soulless (9 out of 10 Barovians):</strong> Because there are more bodies in Barovia than trapped souls, the Dark Powers generate hollow 'Shells' to populate the towns. Soulless Barovians wear drab gray/brown rags, never laugh, never cry, speak in flat monotones, and feel only dull numbness. Strahd finds their blood tasteless and watery—like drinking ash.<br>• <strong>The Ensouled (1 out of 10 Barovians):</strong> Those born with an actual reincarnated soul (like Ireena, Ismark, Mad Mary, and Father Donavich) wear small splashes of color, feel intense terror, grief, and courage, and have rich, nourishing blood that vampires crave!",
+        mechanics: "• <strong>Superstitions & Hospitality:</strong> Barovians distrust armored strangers (fearing they will provoke Strahd's wrath on the village). Showing genuine kindness or silver coins opens doors.<br>• <strong>The Law of Forbiddance:</strong> Villagers NEVER invite strangers across their doorway threshold on the first meeting—they force outsiders to prove they are not vampires first!",
+        rp: "Hunched shoulders, hollow eyes, whispering prayers to the Morninglord, slamming wooden window shutters at the first howl of a wolf."
+    },
+    mountain_folk: {
+        title: "⛰️ The Mountain Folk — Wild Druids & Berserkers of Balinok",
+        subtitle: "Blood-Painted Tribes of Yester Hill, Berez & Mount Ghakis",
+        badge: "Worship Strahd as 'The Land'",
+        quote: "He is the storm on the peak! He is the wolf in the pine! He is the Ancient, He is the Land—and our blood waters His roots!",
+        history: "Long before King Barov von Zarovich conquered the valley, the Balinok Mountains were ruled by wild tribal clans (such as the legendary chieftain <strong>Kavan</strong>). When Strahd conquered the valley and later became an immortal lord of storms, wolves, and winter, the surviving mountain tribes abandoned their old nature spirits and began worshipping Strahd as a literal <strong>Nature God of Blood and Winter</strong>.",
+        culture: "<strong>The Gulthias Tree & Yester Hill:</strong><br>• The Mountain Druids coat their skin in gray river-mud, ash, and human blood, weaving animal skulls and twigs into their matted hair.<br>• Atop <strong>Yester Hill</strong> grows the colossal, rotting <strong>Gulthias Tree</strong>—sprouted from the wooden stake driven through an ancient vampire centuries ago. By watering its roots with blood and stolen Wizard of Wines life-gems, the druids spawn <strong>Twig, Needle, and Vine Blights</strong>—and awaken the 30-foot colossus <strong>Wintersplinter</strong>!",
+        mechanics: "• <strong>Mountain Berserkers:</strong> Coated in woad and grave-dirt; fight with Reckless Greataxes and refuse to retreat while standing on Barovian soil.<br>• <strong>Kavan's Legacy:</strong> On Yester Hill, martial heroes (like Jacomir or Yvaine) may hear the ancestral whisper of Chieftain Kavan, guiding them to claim the <strong>Blood Spear (+2 Spear)</strong> to slay the corrupted druids.",
+        rp: "Chanting in guttural Old Balinok, pounding bone drums in the rain, viewing civilization and towns like Vallaki as weak rot that Strahd's winter will cleanse."
+    },
+    keepers: {
+        title: "🦅 The Keepers of the Feather — Secret Wereraven Resistance",
+        subtitle: "The Martikov Family Network • Blue Water Inn & Wizard of Wines",
+        badge: "Hidden Allies of the Party",
+        quote: "A raven on the windowsill is never an accident in Barovia, friend. Keep your blade sharp and your cup full.",
+        history: "The <strong>Keepers of the Feather</strong> are a clandestine society of <strong>Lawful Good Wereravens</strong> led by the extended <strong>Martikov family</strong>—specifically patriarch <strong>Davian Martikov</strong> at the Wizard of Wines Winery, and his son <strong>Urwin Martikov</strong> (and wife Danika) at the Blue Water Inn in Vallaki.",
+        culture: "<strong>How They Fight Strahd:</strong><br>• Knowing they are not strong enough to defeat Count Strahd in open battle, the Keepers wage a silent war of intelligence, survival, and hope.<br>• They ferment and deliver Barovia's only wine (<em>Purple Grapemash, Red Dragon Crush, Champagne du le Stomp</em>) for free to taverns, knowing wine is the only thing keeping Barovians from complete despair.<br>• In raven form, they perch on roofs, signposts, and battlements (including watching the party at the Gates of Barovia and Old Bonegrinder!) to warn heroes of ambushes.",
+        mechanics: "• <strong>Earning Their Trust:</strong> They guard their lycanthropy secret with their lives. Once the party saves the <strong>Wizard of Wines Winery</strong> from the Yester Hill druids (Session 7), the Keepers reveal their true nature and pledge aerial scouting, safe houses, and combat support across Barovia!",
+        rp: "Quick, bird-like head tilts, dark clothing trimmed with subtle black feathers, warm generosity with food and wine, speaking in coded tavern idioms."
+    },
+    silver_dragon: {
+        title: "🐉 The Order of the Silver Dragon — Revenants of Argynvostholt",
+        subtitle: "Undying Dragon-Paladins • Guardians of the Holy Symbol of Ravenkind",
+        badge: "Act III • Bridges to Campaign 3",
+        quote: "Why would we help you slay the monster? Death is mercy! Let Strahd rot in this valley forever, drowning in his own misery!",
+        history: "Centuries ago, the noble silver dragon <strong>Argynvost</strong> took human guise as a wealthy lord and founded a shining order of knights in the valley. Their true, secret mission was to guard the <strong>Amber Temple</strong> on Mount Ghakis so its trapped Dark Powers could never escape. When Strahd's armies invaded the valley, the Order fought heroically to the last man—until Strahd's legions slew Argynvost, hacked the dragon's corpse to pieces, and mounted his colossal skull inside Castle Ravenloft.",
+        culture: "<strong>The Paradox of Vladimir Horngaard:</strong><br>• When Strahd became a vampire and Barovia became his prison, <strong>Commander Vladimir Horngaard's</strong> hatred was so strong that he and his knights rose from their graves as immortal <strong>Revenants</strong>.<br>• Because Vladimir knows Barovia is a torture chamber designed by the Dark Powers to deny Strahd his beloved Tatyana forever, <strong>Vladimir refuses to let anyone kill Strahd</strong>—believing that slaying Strahd would free him from his suffering!<br>• Meanwhile, Vladimir's husband <strong>Sir Godfrey Gwilym</strong> remembers the true compassion of Argynvost and pleads with the party to restore the Order's honor.",
+        mechanics: "• <strong>Lighting the Beacon of Argynvostholt:</strong> If the party recovers Argynvost's skull from Ravenloft (or awakens the draconic spirit of the chapel), radiant silver dragon-light shines across all of Barovia: putting the Revenants to peaceful rest, granting the party <strong>+1 to AC and Saving Throws across the entire valley</strong>, and unlocking 🕊️ <strong>The Holy Symbol of Ravenkind</strong>!",
+        rp: "Tragic, frost-covered knights in tarnished silver dragon plate; hollow voices echoing through shattered stained glass."
+    },
+    dusk_elves: {
+        title: "🧝‍♂️ The Dusk Elves — The Dying Remnant",
+        subtitle: "Shadow-Wood Elves of the Vistani Camp • Victims of Rahadin's Genocide",
+        badge: "Led by Kasimir Velikov",
+        quote: "Look around our camp, strangers. You see no children. You hear no women's voices. We are the last autumn leaves of a felled tree.",
+        history: "The Dusk Elves are a stealthy, dark-skinned wood-elf subrace native to the forests of Barovia. Five hundred years ago, when the royal Dusk Elf family refused to bow to King Barov, one of their own—<strong>Rahadin</strong>—betrayed his people and led Barov's armies to conquer them. Later, the Dusk Elf archmage <strong>Patrina Velikovna</strong> fell in love with the vampire Strahd and sought to become his bride. To save her soul from vampirism, her own brother <strong>Kasimir Velikov</strong> led the Dusk Elves in stoning Patrina to death.",
+        culture: "<strong>Strahd's Unforgivable Retaliation:</strong><br>• Enraged that the Dusk Elves robbed him of Patrina, Strahd decreed a fate worse than swift death: he ordered Rahadin to <strong>slaughter every single female Dusk Elf in existence</strong> so the race could never reproduce, and cut off Kasimir's ears.<br>• Today, only a couple dozen ancient, immortal male Dusk Elves survive in quiet hovels inside the Vistani camp outside Vallaki, watched over by Luvash's Vistani guards.",
+        mechanics: "• <strong>Kasimir's Amber Temple Quest:</strong> Haunted by nightmares of his sister Patrina's spirit in the catacombs of Ravenloft, <strong>Kasimir Velikov</strong> seeks brave allies to escort him into the <strong>Amber Temple</strong> (Act IV) so he can claim the Dark Gift of Resurrection and bring Patrina back to life.",
+        rp: "Soft-spoken, cloaked in twilight gray, bearing centuries of quiet survivor's guilt; they flinch whenever the phantom screams of Rahadin's <em>Deathly Choir</em> echo on the wind."
+    },
+    faiths: {
+        title: "☀️ The Morninglord & Mother Night — The Gods of Barovia",
+        subtitle: "The Fading Dawn vs. The Primal Dark",
+        badge: "Barovian Theology",
+        quote: "The Morninglord brings no sun, and Mother Night demands blood for every prayer. Pray softly, or the Dark Powers will answer instead.",
+        history: "Before the Mists sealed Barovia, the people worshipped a dual pantheon of day and night. Four centuries of sunless fog have twisted both faiths into desperate survival creeds.",
+        culture: "<strong>1. ☀️ The Morninglord (Lathander Remembered):</strong><br>• God of dawn, spring, birth, and renewal—symbolized by a rose-gold sunburst.<br>• Worshipped at the <strong>Church of Barovia</strong> (Father Donavich), <strong>St. Andral's Church in Vallaki</strong> (Father Lucian Petrovich), and the <strong>Abbey of St. Markovia in Krezk</strong> (The Abbot).<br>• Because the sun has not shone in 400 years and prayers go unanswered by the heavens, most villagers believe the Morninglord has forsaken them for their ancestors' sins.<br><br><strong>2. 🌙 Mother Night:</strong><br>• The ancient, nocturnal goddess of secrets, destiny, winter, and curses.<br>• Revered by the <strong>Vistani</strong> (who thank her for Madam Eva's foresight), <strong>Baba Lysaga</strong> (who claims Mother Night blessed her to raise Strahd), and the <strong>Werewolf Pack</strong>.<br><br><strong>3. 👁️ The Dark Powers (The True Jailers):</strong><br>• Neither the Morninglord nor Mother Night rules the Mists. The true masters of Barovia are the nameless, ancient vestiges sealed in the <strong>Amber Temple</strong> (including <strong>Vampyr</strong> and the creeping shadow of <strong>Vecna</strong>).",
+        mechanics: "• <strong>Consecrated Ground:</strong> St. Andral's Church in Vallaki is only consecrated against vampires while the <strong>Bones of St. Andral</strong> rest beneath the altar!<br>• <strong>Divine Spells in Barovia:</strong> Healing and Radiant magic still function, though spells acquire an eerie Barovian cosmetic appearance (spectral ravens, pale rose-light, or starry twilight).",
+        rp: "Villagers touching two fingers to their forehead in the sign of the rising sun whenever they pass a wayside shrine or hear a raven cry."
+    },
+    werewolves: {
+        title: "🐺 The Children of Mother Night — The Werewolf Pack",
+        subtitle: "Lycanthrope Raiders of the Northern Cliffs (Northwest of Krezk)",
+        badge: "Silvered Weapons Required",
+        quote: "Only the strong deserve to run beneath the mist! Break the weak pups on the stones, and let the survivors grow fangs!",
+        history: "Deep in a cave complex styled like a howling wolf's skull northwest of Krezk lives a savage pack of two dozen <strong>Werewolves</strong> who worship Mother Night and serve as Count Strahd's long-range hunting hounds.",
+        culture: "<strong>The Pack Schism (Kiril vs. Emil):</strong><br>• The pack is torn by a bitter civil war between two alphas:<br>• <strong>Kiril Stoyanovich (Current Alpha):</strong> A sadistic brute loyal to Strahd who raids towns (and even beyond the Mists) to kidnap children, forcing the children to fight each other to the death in a stone ring and infecting the sole survivor with lycanthropy!<br>• <strong>Emil Toranescu (Imprisoned Former Alpha):</strong> Chained inside Castle Ravenloft's dungeons by Strahd after opposing Kiril's bloodbath; his mate <strong>Zuleika Toranescu</strong> secretly prays at Mother Night's shrine in the den, willing to ally with heroes who free Emil or slay Kiril!",
+        mechanics: "• <strong>Lycanthrope Immunity/Resistance:</strong> Bypasses nonmagical, non-silvered weapons! Silvered blades,Yvaine's silver bullets, and magic spells tear through their hide.<br>• <strong>Lifting the Curse:</strong> A bitten humanoid who fails a DC 12 CON save contracts werewolf lycanthropy (cured by <em>Remove Curse</em> before the next full moon).",
+        rp: "Feral yellow eyes hiding inside ragged woodsman cloaks; bone fetishes hung from pine trees around Lake Baratok."
+    }
+};
+
+function openLoreModal(key) {
+    const l = LORE_DATA[key];
+    if (!l) return;
+    const modal = document.getElementById('dm-modal');
+    document.getElementById('modal-title').innerHTML = `🏛️ ${l.title}`;
+    document.getElementById('modal-content').innerHTML = `
+        <div style="background:#131c2c; border-left:3.5px solid var(--accent-gold); padding:9px 14px; border-radius:0 6px 6px 0; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+                <strong style="color:var(--accent-gold-soft); font-size:1.02rem;">${l.title}</strong>
+                <p style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">${l.subtitle}</p>
+            </div>
+            <span class="pill gold">${l.badge}</span>
+        </div>
+
+        <div class="modal-read-aloud">"${l.quote}"</div>
+
+        <h4>📜 Origin & Barovian History</h4>
+        <div class="nbox nbox-cyan">${l.history}</div>
+
+        <h4>🧭 Culture, Divisions & Hidden Secrets</h4>
+        <div class="nbox nbox-crimson">${l.culture}</div>
+
+        <h4>⚔️ Tabletop Mechanics, Powers & Hooks</h4>
+        <div class="nbox nbox-emerald">${l.mechanics}</div>
+
+        <h4>🎭 DM Roleplay Cues & Sensory Vibe</h4>
+        <div class="nbox nbox-amber">${l.rp}</div>
+    `;
+    document.getElementById('modal-dice-log').innerHTML = `Viewing Barovian Lore Dossier • ${l.badge}`;
     modal.showModal();
 }
 

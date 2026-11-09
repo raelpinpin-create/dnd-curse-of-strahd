@@ -171,6 +171,32 @@ flowchart TD
 
 ---
 
+## 🏛️ SECTION 4.5: BAROVIAN FACTIONS, PEOPLES & CULTURAL LORE CODEX
+
+1. 🔮 **The Vistani (Nomads of the Mists):**
+   * **History:** Wandering wagon clans who saved a wounded mortal Prince Strahd centuries ago. In gratitude, Strahd swore a royal blood-oath granting all Vistani safe passage across Barovia and the unique power to travel freely through the border Mists.
+   * **Divisions:** **Madam Eva's Tser Pool Clan** are honorable storytellers who secretly guide heroes via the *Tarokka* deck; **Luvash & Arrigal's Vallaki Clan** act as Strahd's paid spies and assassins.
+   * **Powers:** *The Evil Eye* (Action: Blindness/Charm/Fear) and *Vistani Blood Curses* (spoken when reduced to 0 HP or gravely wronged).
+2. 🏚️ **Barovian Villagers (The Ensouled & The Soulless Shells):**
+   * **The Reincarnation Trap:** No soul can leave Barovia through the Mists; the dead drift in agony until reborn into new infants (like Tatyana ➔ Ireena).
+   * **Souls vs. Shells:** Because there are more bodies than trapped souls, **9 in 10 Barovians are "Soulless Shells"** (drab gray rags, flat monotone voices, incapable of laughter or tears, watery blood that vampires despise). Only **1 in 10 are Ensouled** (wearing small splashes of color, capable of fear, hope, and defiance).
+3. ⛰️ **The Mountain Folk (Yester Hill Druids & Berserkers):**
+   * **History & Belief:** Wild, mud-and-blood-painted descendants of the original Balinok Mountain tribes (Chieftain Kavan). Rather than viewing Strahd as a monster, they worship him as a literal **Nature God of Storm and Winter** (*"He is the Ancient, He is the Land"*).
+   * **Stronghold:** **Yester Hill** (around the blood-drinking **Gulthias Tree**, where they use stolen Winery gems to awaken **Wintersplinter**).
+4. 🦅 **The Keepers of the Feather (Wereraven Resistance):**
+   * **Who They Are:** Clandestine society of **Lawful Good Wereravens** led by the **Martikov family** (Wizard of Wines Winery & Blue Water Inn in Vallaki). They deliver free wine to preserve hope and watch over heroes in raven form before revealing themselves once the Winery is saved.
+5. 🐉 **The Order of the Silver Dragon (Revenants of Argynvostholt):**
+   * **History & Paradox:** Knights of the silver dragon **Argynvost** who guarded the Amber Temple before Strahd's army slaughtered them. Reborn as immortal **Revenants** under **Vladimir Horngaard**, they hate Strahd so deeply that they **refuse to let anyone kill him** (viewing Barovia as his eternal torture chamber)—until the **Silver Dragon Beacon** is lit!
+6. 🧝‍♂️ **The Dusk Elves (The Dying Remnant):**
+   * **History:** Ancient shadow-wood elves betrayed by their kin **Rahadin**. After the Dusk Elves stoned Patrina Velikovna to keep her from becoming Strahd's bride, Strahd ordered Rahadin to **execute every single female Dusk Elf**. Only a few dozen immortal, grieving males (led by **Kasimir Velikov**) remain outside Vallaki.
+7. ☀️ **The Morninglord & Mother Night (Barovian Faiths):**
+   * **The Morninglord:** Sun god of dawn and renewal (Churches of Barovia, Vallaki, and Krezk), widely believed to have forsaken the sunless valley.
+   * **Mother Night:** Primal goddess of darkness, fate, and curses (worshipped by Madam Eva, Baba Lysaga, and the Werewolves).
+8. 🐺 **The Children of Mother Night (The Werewolf Pack):**
+   * **History:** Savage lycanthropes in the northern cliffs, split between Strahd's ruthless alpha **Kiril Stoyanovich** (who forces kidnapped children to fight to the death) and the imprisoned former alpha **Emil Toranescu**.
+
+---
+
 ## ⚖️ SECTION 5: DM RULES, BAROVIAN LAWS & QUICK REFERENCE
 
 ### 📜 5.1 The Four Sacred Laws of Barovia
