@@ -120,7 +120,7 @@ Cut off their argument violently:
 ---
 
 ### 🚨 Phase 1: The Cabin Breach & The Driver's Box Choice
-* **Encounter State:** **1x Svalich Dire Wolf** (`AC 14, 37 HP`) is wedged in the left door frame, snapping inside (`+5 hit, 2d6+3 piercing + DC 13 STR save or Prone`).
+* **Encounter State:** **1x Svalich Dire Wolf** (`AC 14, 42 HP`) is wedged in the left door frame, snapping inside (`+5 hit, 2d6+3 piercing + DC 13 STR save or Prone`).
 * **The Dilemma (Seize Reins vs. Jump!):**
   * The horses are running blind toward a cliff edge. Someone must get into the driver's box outside to take the reins, OR they have to bail!
   * **Option A: Seize the Reins:** A character uses an action and makes a **DC 11 Athletics or Acrobatics check** to scramble through the broken front window onto the bloody driver's box and grab the reins.
@@ -590,13 +590,34 @@ Outside, the wind abruptly dies. Dead silence falls over the estate.
 
 ---
 
-### ⚔️ Boss Stat Block: Starved Vampire Spawn
-* **HP:** `48 HP` | **AC:** `15` | **Init:** `+3` | **Speed:** `30 ft, Spider Climb 30 ft`
-* **Spider Climb:** Moves along ceilings and walls without needing an ability check.
-* **Regeneration (10 HP/turn):** Heals 10 HP at the start of each of its turns **unless it takes Fire or Radiant damage** (Piper’s *Fire Bolt*, Yvaine’s phosphor/fire grenades, or blessed water shut this down!).
-* **Multiattack:** Makes two attacks: one with its Claws and one Bite.
-* **Claws:** `+5 to hit`, reach 5 ft, `1d6 + 3` slashing damage, and target is **Grappled** (`escape DC 13`).
-* **Bite:** Only against a grappled or restrained creature. `+5 to hit`, `1d6 + 3` piercing damage + **`2d6` necrotic damage**. The target's hit point maximum is reduced by an amount equal to the necrotic damage taken!
+### ⚔️ Boss Stat Block: The Starved Vampire Spawn (Apex Solo Boss)
+* **CR:** `5 (1,800 XP)` | **Init:** `+3` | **AC:** `15 (Supernatural Agility)` | **Speed:** `35 ft, Spider Climb 35 ft`
+* **HP:** **`82 HP`** *(Scaled specifically to challenge 3 Level 3 PCs including Jacomir with 31 HP! 3 PCs: 76–82 HP, 4 PCs: 94 HP)*
+* **Saving Throws:** `DEX +6, CON +6, WIS +3` | **Senses:** `Darkvision 60 ft, Passive Perception 13`
+* **Damage Resistances:** `Necrotic; Bludgeoning, Piercing, and Slashing from Non-Silvered / Non-Magical Attacks` *(Bypassed by Silver, Fire, Holy Water, Radiant)*
+* **Traits:**
+  * **Supernatural Regeneration:** Regains **10 HP** at the start of its turn unless it took Fire, Radiant, or Holy Water damage since its last turn.
+  * **Spider Climb:** Moves along ceilings and walls without needing an ability check.
+* **Combat Actions:**
+  * **Multiattack:** Makes **Three Attacks**: Two with its **Ripping Talons** and one with its **Exsanguinating Throat-Bite**!
+  * **Ripping Talons:** `+6 to hit`, reach 5 ft. *Hit:* `2d6 + 4` (11) slashing damage, and target is **Grappled** (`Escape DC 14`) and **Restrained**! Has two claws, can hold two victims.
+  * **Exsanguinating Throat-Bite:** `+6 to hit`, reach 5 ft., against a grappled, incapacitated, or restrained creature. *Hit:* `2d6 + 4` (11) piercing PLUS `4d6` (14) necrotic damage (**Avg 25 damage**!).
+    * **Vampiric Drain:** The target's **Max HP is reduced by the necrotic damage dealt** (lasts until a Long Rest or *Greater Restoration*), and the Spawn **regains HP equal to that amount**!
+  * **Ceiling Pounce (Recharge 5-6):** Drops from ceiling rafters; target makes DC 14 STR save or takes `3d6 + 4` (14) bludgeoning, slammed Prone, and pinned.
+* **Pointy Hat Battlefield Actions (Tell ➔ Counterplay ➔ Resolve):**
+  1. **Action 1: Rushing Ceiling Exsanguination (Pin & Drain):**
+     * **📢 TELL (End of Turn):** The Spawn scrambles up parlor drapes onto rafters above a hero, foaming with black bile dripping onto their armor, locking onto their jugular!
+     * **🛡️ COUNTERPLAY (The Round):** Target moves 15+ ft away, ally uses Action to tackle/shove them out of the drop zone (DC 13 Athletics), or party deals 16+ damage (or Fire/Radiant) to knock Spawn off ceiling!
+     * **💥 RESOLUTION (Start of Next Turn):** Plummets onto target: 17 (`3d8 + 4`) bludgeoning, knocked Prone, Spawn gets immediate free Throat-Bite with Advantage!
+  2. **Action 2: Frenzied Blood-Mist Leap (Horror Shroud):**
+     * **📢 TELL (End of Turn):** Slashes own forearms, exhaling thick black blood-mist that snuffs lamps/hearth, plunging parlor into supernatural darkness!
+     * **🛡️ COUNTERPLAY (The Round):** Relight torch/lamp (Action + DC 12 Sleight of Hand), cast Light / Dancing Lights / Faerie Fire / Bonfire, or DC 13 Perception check to track talons!
+     * **💥 RESOLUTION (Start of Next Turn):** Blinks behind two closest heroes, raking eyes: DC 14 DEX save or 15 (`3d6 + 4`) slashing + Blinded until end of next turn!
+  3. **Action 3: Sanguine Death Rattle (Starvation Frenzy):**
+     * *Trigger:* Reduced below 30 HP.
+     * **📢 TELL (End of Turn):** With broken fangs and bleeding eyes, lets out a horrific shriek shattering windows, black veins bulging as fresh blood scent drives it berserk!
+     * **🛡️ COUNTERPLAY (The Round):** Deal 20+ damage to execute before its turn, cast Calm Emotions / Tasha's Laughter, or hit with Radiant / Holy Water!
+     * **💥 RESOLUTION (Start of Next Turn):** Surges: gains **+2 AC (AC 17)**, speed 50 ft, makes 3 Claw attacks with Advantage targeting nearest hero or whoever dealt radiant/fire!
 
 #### 💡 DM Tactical Advice for the Combat:
 1. **Use the Ceiling:** The Spawn crawls up the parlor walls onto the ceiling to avoid Jacomir’s melee Greatsword, forcing Yvaine to shoot and Piper to blast it down.
