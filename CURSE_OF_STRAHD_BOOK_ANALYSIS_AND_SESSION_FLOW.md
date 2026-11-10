@@ -2,8 +2,9 @@
 
 > **Purpose of This Document:** Your single, all-in-one Master Guide to understanding and running *Curse of Strahd* from Session 1 to Session 20 without needing to read the 256-page rulebook cover-to-cover.  
 > **Campaign Scope:** **15 to 20 Sessions Max (Levels 3 ➔ 10)**  
+> **Authoritative Story Sources:** **[DragnaCarta's *Curse of Strahd: Reloaded*](https://github.com/DragnaCarta/Curse-of-Strahd-Reloaded)** + **[Official *Curse of Strahd* 5e PDF](https://drive.google.com/file/d/1_-WNJwEBvwIrYP4CUtILP7l_9MYCFQ41/view)** + **[The Cosmic Knot Master Lore](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/THE_COSMIC_KNOT_MASTER_LORE.md)**  
 > **Trilogy Role:** **Campaign 2 of 3** *(Bridging Campaign 1: Dragons of Stormwreck Isle ➔ Campaign 3: The Lost Dragon Lands, Eflein & Sylvar vs. Vecna & The Curse of Strahd Party)*  
-> **Google Drive Hub:** [CURSE OF STRAHD Folder](https://drive.google.com/drive/folders/13Wz1dfm_R4AttElN8jNFx151-abEVPCI) • [Official PDF](https://drive.google.com/file/d/1_-WNJwEBvwIrYP4CUtILP7l_9MYCFQ41/view)
+> **Google Drive Hub:** [CURSE OF STRAHD Folder](https://drive.google.com/drive/folders/13Wz1dfm_R4AttElN8jNFx151-abEVPCI) • [Master Outline Google Doc](https://docs.google.com/document/d/1oTUkK1zGOM7kGRmjcfHQzhRiaQAkBJpngUP6L-P6gmo/edit) • [Official PDF](https://drive.google.com/file/d/1_-WNJwEBvwIrYP4CUtILP7l_9MYCFQ41/view)
 
 ---
 
@@ -51,9 +52,11 @@ In 90% of D&D campaigns, the party never meets the final boss until Session 20. 
 * **The Safety Net & Corruption Mechanic:** If a PC fails their second Death Save and "dies" in Acts I–III, time freezes before the player rolls a new sheet. In the black void of the Mists, a voice from the **Amber Temple** whispers to them: *"Your story does not end in the mud. Take my hand, and rise."*
 * If the player accepts, they gasp back to life at **1 HP** on their next turn—carrying a **Dark Mark** (e.g., corpse-pale skin, eyes that gleam red in the dark, a whisper in their dreams urging them toward Mount Ghakis) and a minor boon. This naturally primes the party to accept the **Supreme Dark Gifts** in Session 15!
 
-### Rule 5: Keep the Compass Pointed Forward
-* Never let the party wander aimlessly asking *"Where do we go next?"*
-* Between **Ismark/Ireena** (pointing to Tser Pool & Vallaki), **Madam Eva's 5 Tarokka Cards** (pointing to Wachterhaus, Argynvostholt, Berez, Ezmerelda, and Sergei's Tomb), and the **Martikov Wereravens** (who fly down as friendly blue-tipped ravens to peck at hidden doors or warn of ambushes), the party will always have a razor-sharp next objective.
+### Rule 5: Keep the Compass Pointed Forward (The Three Guides: Madam Eva vs. Derek vs. Strahd)
+* Never let the party wander aimlessly asking *"Where do we go next?"* In our campaign, three distinct figures pull the party forward—each serving a completely different purpose:
+  1. **🔮 Madam Eva (The Cryptic Fate-Weaver):** Gives the mythological roadmap (the **5 Tarokka Cards + Piper's 6th Blank Omen Card**), speaking in riddles of fate without taking open sides.
+  2. **⏳ Derek ("The Man Between Seconds" — Avatar of the Dark Powers):** Introduced in Session 1 inside Father Donavich's church when three knocks sounded (`tap, tap, tap`) and **time froze completely**. Because Derek operates strictly between the ticks of the clock, **Count Strahd and his spies have ZERO knowledge that Derek exists!** Derek is the cold, transactional cosmic sponsor who appears only at **3 future Milestone Crossroads** (Post-Tarokka at Tser Falls, Vallaki/Amber Temple, and Ravenloft Gates) to push the party toward ruthless, lethal ambition (*"Eva gave you the riddles. I'm giving you the bottom line: take the weapons and kill Strahd"*). Meanwhile, **Caelum Jude ("Cael" — The Scion)** walks beside the party in real time as their beloved Stars Druid healer, shrinking back in silent terror whenever his overseer Derek freezes time.
+  3. **👑 Count Strahd von Zarovich (The Aristocratic Predator):** Appears in real time starting at the **River Ivlis Crossroads in Session 2 (`DragnaCarta Reloaded Arc C2`)**—suffocating, polite, and personal, toying with his food and testing their limits while completely unaware that the Dark Powers are grooming his executioners between seconds.
 
 ---
 
@@ -70,6 +73,7 @@ In Session 2 at **Tser Pool**, Madam Eva draws 5 cards from the Tarokka deck. In
 | **Card 3** | 🗡️ **The Sunsword**<br>*(Blade of Sunlight)* | **The Tempter** *(Marionette)* | *"I see a drowned village in a fetid marsh where no bird dares to sing. There, the woman who rocked the Devil's cradle rides in a skull of bone, and her hut walks upon the roots of a dead tree. Slay the mother of witches to claim the blade of dawn."* | **Ruins of Berez** (Inside Baba Lysaga's Creeping Walking Hut).<br>🏆 *Claimed in Session 14 (Level 8).* |
 | **Card 4** | 🤝 **Strahd's Enemy**<br>*(The Fated Ally)* | **The Mists** *(Dancer)* | *"Seek a daughter of the Vistani who walks on a leg of polished wood and silver steel. She hunts her mentor's quarry through abbey and tower alike."* | **Ezmerelda d'Avenir** (Met in Vallaki / Recruited at the Abbey in Session 12). |
 | **Card 5** | 👑 **Strahd's Location**<br>*(Final Showdown)* | **The Darklord** *(Broken One)* | *"He waits in the deep dark, weeping over the white marble tomb of the brother he murdered—where the curse began."* | **Sergei's Tomb (Catacombs K85)** inside Castle Ravenloft.<br>🏆 *Fought in Sessions 19–20 (Level 10).* |
+| **Card 6** | 🃏 **Piper's Blank Tarokka Card**<br>*(The 3-Stage Living Omen — Option 2)* | **The Unwritten Card** *(Faded Ink)* | Madam Eva pulls her hand back as if burned by ice: *"Four hundred years I have read these cards, and never has the fog stood between my eyes and a traveler's road. Something walks in the silence behind you, child—something that hides your ending even from me. Keep this card in your coat. Every time you step closer to what woke the fire in your blood, the ink will bleed higher. Pray you do not recognize the picture when it finishes drawing itself."* | **3-Stage Progressive Mist Bleed (Zero Vecna Monolith Spoilers):**<br>• **Stage 1 (Session 2 — Tser Pool):** Bottom third fills with charcoal ink — *dead pine trees & empty upturned palms rising from black water*.<br>• **Stage 2 (Vallaki / Berez):** Middle third bleeds in — *a cracked, faceless glass lantern / pocket watch drinking in threads of silver fog*.<br>• **Stage 3 (Amber Temple / Ravenloft):** Top third fills in — *a violent vortex of endless gray Mist pouring inward into the cracked glass*. |
 
 ---
 
@@ -104,15 +108,15 @@ Whenever you open `Curse of Strahd.pdf`, use this table to know which chapters m
 
 ### 🩸 ACT I: INTO THE MISTS (SESSIONS 1–4 • LEVELS 3 ➔ 4)
 
-#### 📌 SESSION 1: Blood on the Axle (Level 3 Cold Open)
-* **Full Script Ready:** [Session 1 Google Doc](https://docs.google.com/document/d/1RTlpxBYCWJBaKDRwZ7Qq8WzYG_MfMmsIN3Bg4D7zk-U/edit)
-* **How It Runs:**
-  1. **Cold Open (`Roll Initiative!`):** Do NOT let players introduce their characters before the session. Read the cold open: strangers wake up inside a runaway **Phantom Black Stagecoach** hurtling down the Old Svalich Road in a thunderstorm as **Svalich Dire Wolves** flank the carriage and an **Alpha Dire Wolf** leaps onto the roof, tearing through the timber ceiling!
-  2. **Turn 1 Action Introductions:** On each player's first turn in Round 1, ask them what the other strangers see them wearing, what weapon/magic ignites in their hands, and what they do!
-  3. **The Gates of Barovia & Strahd's Invitation:** After 3 rounds of the high-speed chase engine, the carriage drift-slides to a halt 20 feet in front of the locked iron **Gates of Barovia**. Outside the gates in the downpour, **Count Strahd** steps out, welcomes them, shares a chilling, knowing smile with Piper, and opens the gates so the players make the voluntary choice to cross the threshold into Barovia.
-  4. **The Stranger Stand-Off & Village of Barovia:** The PCs finally introduce themselves in the rain, find the **forged Kolyan bait letter** on Dalvan Olensky's body, walk into the weeping Village of Barovia, and meet **Ismark Indirovich** at the *Blood on the Vine Tavern*.
-  5. **The 3:00 AM Midnight Boss & The Three Knocks:** Ismark takes them to his barricaded mansion to meet his fierce sister **Ireena Kolyana** beside their father's coffin. At 3:00 AM, a **Starved Vampire Spawn** (CR 3-5, 48 HP, Spider Climb) crashes through the stained-glass skylight! After slaying it to ash, the party discovers Ireena's 2 bite marks. The DM slowly knocks three times under the table (`TAP. TAP. TAP.`), delivering Strahd's telepathic warning (*"Tomorrow night, when the moon rises... I return for my third bite. Guard her well."*) and leaving a fresh black rose on the doorstep for the ultimate session cliffhanger!
-* **End of Session 1 Reward:** Ismark's **Father's Armory Cache** (*1 Silvered Weapon, 2 Potions of Healing, 2 Flasks of Holy Water, 5 GP 40 SP*).
+#### 📌 SESSION 1: Blood on the Axle & The Man Between Seconds *(Completed — Level 3)*
+* **Full Script Reference:** [Session 1 Google Doc](https://docs.google.com/document/d/1RTlpxBYCWJBaKDRwZ7Qq8WzYG_MfMmsIN3Bg4D7zk-U/edit) • [`Session 1 - Blood on the Axle.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/Session%201%20-%20Blood%20on%20the%20Axle%20(The%20Svalich%20Woods%20Carriage%20Chase).md)
+* **What Actually Happened at the Table (Canonical Session 1 Summary):**
+  1. **Cold Open (`Roll Initiative!`) & Gates of Barovia:** **King Jacomir**, **Yvaine**, and **Piper** survived the runaway **Phantom Black Stagecoach** dire wolf chase, crashed before the **Eastern Gates of Barovia**, discovered **Dalvan Olensky's** corpse with the spinning compass (`DragnaCarta Reloaded`), and entered the mist-locked valley.
+  2. **Morgantha ("Granny") & Jacomir's Uneaten Dream Pastry:** On the road into the village, the party met old **Morgantha** peddling her warm *Dream Pastries*. **Piper** cast her innate Fierna *Charm Person* on the old peddler, but Morgantha's Night Hag *Magic Resistance* shrugged off the spell—leaving her semi-hostile and wary toward Piper before she departed into the mist and handed **1x Dream Pastry to King Jacomir** (who stored it in his pack **uneaten**).
+  3. **Blood on the Vine Tavern & Piper's Blank Tarokka Card:** Inside the tavern, the Vistani stared at **Piper** with eyes full of deep concern, warning her to stay safe because they saw misfortune and darkness in her eyes. When a Vistani drew a card to read her fortune, **the painted ink faded completely off the card in Piper's hand**, leaving **🃏 A Blank Tarokka Card**! They gave the Blank Card to Piper and told her to bring it directly to **Madam Eva** at Tser Pool.
+  4. **Looting Indirovich Manor & Burgomaster Kolyan's Wizard Diary:** Meeting **Ismark** and **Ireena Kolyana**, the party looted Indirovich Manor, discovering that late Burgomaster **Kolyan Indirovich** was a former wizard and recovering **📖 Burgomaster Kolyan's Wizard Diary**—in which Kolyan wrote that he knows **Davian Martikov** and **the Keepers of the Feather**, who can help with the Strahd situation if the party needs assistance!
+  5. **The Barovian Church Attic & Derek's Time-Stop Cliffhanger (`Tap, Tap, Tap`):** Inside Father Donavich's church (`Reloaded Arc B5`), the party discovered **Doru** (Donavich's vampire spawn son) hidden in the **church attic**. A tense moral dilemma erupted: **Father Donavich** begged to keep his son alive; **King Jacomir** and **Ismark** empathized with his paternal grief (though agreeing it's wrong to keep Doru chained like this), and **Jacomir was pouring his own royal blood into a cup** to feed Doru; **Piper** and **Yvaine** fiercely disagreed and wanted to kill the vampire spawn immediately; **Ireena** remained neutral.
+  6. **The Frozen Second:** At the peak of the argument, three knocks echoed (`tap, tap, tap`) and **time froze completely**. A tall white man named **Derek (Avatar of the Dark Powers)** stepped into the frozen church, speaking to **Jacomir & Yvaine** (revealing he knows who they are and promising they will get what they want and go home if they follow him and **kill Strahd**) and looking at **Piper** in astonishment (recognizing *what she is* as the chaotic Wild Magic conduit and telling her to *"take care of herself"*). Derek vanished, **unfreezing time** and dropping the party right back into the Doru blood-cup dilemma to close Session 1!
 
 ---
 
@@ -131,7 +135,8 @@ Whenever you open `Curse of Strahd.pdf`, use this table to know which chapters m
 ---
 
 #### 📌 SESSION 3: The Old Bonegrinder Windmill (Level 3 ➔ Level 4 Milestone!)
-* **Book Reference:** Chapter 6 (`Old Bonegrinder, Areas O1–O4`).
+* **Book & DragnaCarta *Reloaded* Reference:** Chapter 6 (`Old Bonegrinder, Areas O1–O4`) & *Reloaded* `Arc D: Old Bonegrinder`.
+* **Session 1 Continuity Note:** In Session 1, the party already met **Morgantha ("Granny")** on the road! **Piper** tried to cast *Charm Person* on her, which Morgantha resisted via her Night Hag *Magic Resistance*—making her semi-hostile and wary toward Piper before she left **1x Dream Pastry** with **King Jacomir** (who kept it **uneaten**). When the party reaches the windmill in Session 3, Morgantha immediately recognizes Piper's purple horns with a narrowing, suspicious glare!
 * **How It Runs:**
   1. **Scene 1 — The Black Carriage Crossroads & The Windmill on the Hill (45 mins):** Climbing the winding mountain road toward Vallaki, the party spots a hunched old woman (**Morgantha**) pushing a cart, or arrives directly at the creaking four-story stone windmill: **Old Bonegrinder**. A friendly blue-winged **Raven** perched above the door caws frantically in warning!
   2. **Scene 2 — The Horrible Discovery (45 mins):** On the ground floor, "Granny Morgantha" offers the party warm, delicious *Dream Pastries*. But if the party investigates the flour sacks, the oven, or hears tiny muffled whimpering from the third floor, the mask drops: **the pastries are baked from the ground bones of kidnapped Barovian children**, and two children (**Myrtle and Lucian**) are locked in wooden cages upstairs!
@@ -146,7 +151,8 @@ Whenever you open `Curse of Strahd.pdf`, use this table to know which chapters m
 * **How It Runs:**
   1. **Scene 1 — The Pike-Lined Gates of Vallaki (30 mins):** Emerging from the dark woods just before nightfall, the party reaches the wooden palisade walls of **Vallaki**. Wolf heads are impaled on iron pikes outside the gate. The nervous guards let them in only after warning them of the town law: *"In Vallaki, declaring that 'All Will Be Well' is mandatory. Mentioning the name 'Strahd' or frowning in public is punishable by the stocks!"*
   2. **Scene 2 — The Town Square Stocks & Izek Strazni (40 mins):** In the rain-soaked square, families—including small children—are locked in plaster donkey-heads in the wooden stocks for "malicious unhappiness." The Baron's monstrous enforcer, **Izek Strazni** (who has a colossal, barbed fiendish demon arm that hurls fire), glares at the party—and freezes in shock when he sees **Ireena** (or one of the PCs), whom he has been obsessively dreaming about!
-  3. **Scene 3 — The Blue Water Inn & Keepers of the Feather (50 mins):** The party finds warm shelter at the **Blue Water Inn**, run by **Urwin and Danika Martikov** (secretly the leaders of the **Keepers of the Feather**, a clan of good-aligned **Wereravens**—it was one of their scouts on the Bonegrinder roof!). They also meet the eccentric half-elf ringmaster **Rictavio** (undercover vampire hunter **Rudolph van Richten**) and two drunken wolf-hunters (Szoldar and Yevgeni).
+  3. **Scene 3 — The Blue Water Inn & Keepers of the Feather (50 mins):** The party finds warm shelter at the **Blue Water Inn**, run by **Urwin and Danika Martikov** (secretly the leaders of the **Keepers of the Feather**, a clan of good-aligned **Wereravens**—it was one of their scouts on the Bonegrinder roof!).
+     * **📖 Session 1 Payoff — Burgomaster Kolyan's Wizard Diary:** When **King Jacomir** presents **Burgomaster Kolyan's Wizard Diary** (which the party looted from Indirovich Manor in Session 1, wherein Kolyan wrote that he knew **Davian Martikov** and **the Keepers of the Feather**), Urwin's eyes widen in stunned respect. He immediately drops his guarded tavernkeeper mask, gives the party free rooms and wolf-steak stew on the house, and confides in them as trusted friends of Kolyan! They also meet the eccentric half-elf ringmaster **Rictavio** (undercover vampire hunter **Rudolph van Richten**).
   4. **Scene 4 — The Stolen Bones of St. Andral (50 mins):** Escorting Ireena to **St. Andral's Church** on the west edge of town, the party expects consecrated ground where Strahd can never enter. Instead, the panicked priest **Father Lucian Petrovich** pulls them into a side vestry and whispers: *"Three nights ago, the sacred Bones of St. Andral were stolen from beneath the altar! Without them, this church is just ordinary stone—and if the Devil learns of it, nothing can stop him from slaughtering everyone inside!"*
      * Questioning the terrified altar boy **Yeska** and the sullen teen gravedigger **Milivoj** (who stole the bones to buy food for his orphan siblings) reveals who paid for the bones: **Henrik van der Voort, the town Coffin Maker**!
 
@@ -355,7 +361,9 @@ Whenever you open `Curse of Strahd.pdf`, use this table to know which chapters m
 
 ## 👥 PART 6: MASTER CAST CHEAT SHEET (QUICK VOICE & MOTIVE REFERENCE)
 
-* **🧛‍♂️ Count Strahd von Zarovich:** *Velvety, unhurried Eastern-noble baritone.* Never shouts; treats the party like dinner guests while testing which of them is dark enough to inherit his throne.
+* **⏳ Derek ("The Man Between Seconds" — Avatar of the Dark Powers):** *Calm, modernly sharp, transactional corporate-cosmic poise.* Steps into Barovia only when 3 knocks sound (`tap, tap, tap`) and time freezes—invisible to Strahd's spies! Appears at 3 Milestone Crossroads (Tser Falls, Vallaki/Amber Temple, Ravenloft Gates) to push ruthless, lethal ambition so Strahd dies and the Root Anchor shatters.
+* **🌟 Caelum Jude ("Cael" — The Scion / Inside Shepherd):** *Warm, earnest, self-deprecating Percy Jackson charisma.* Level 3 Circle of Stars Druid healer who genuinely loves the party, even as he is bound from birth to channel the Barovian Root Anchor into them when Strahd falls. Shrinks back in silent terror whenever Derek freezes time!
+* **🧛‍♂️ Count Strahd von Zarovich:** *Velvety, unhurried Eastern-noble baritone.* Never shouts; treats the party like dinner guests while testing which of them is dark enough to inherit his throne (makes his 1st face-to-face appearance in Session 2 at the River Ivlis Crossroads, completely unaware of Derek!).
 * **🌹 Ireena Kolyana:** *Fierce, sleepless noble resolve.* Twice-bitten reincarnation of Tatyana; fights alongside the party with a Silvered Rapier and refuses to be a damsel.
 * **🗡️ Ismark "The Lesser" Indirovich:** *Earnest, exhausted veteran swordsman.* Willing to die holding the line if it gets his sister Ireena safely out of Barovia Village.
 * **🎭 Bride Volenta Popofsky (Act I Boss):** *High, playful, unhinged giggling behind a cracked porcelain skull-mask.* Jealous of Ireena; leads the Session 1 midnight siege.
@@ -372,3 +380,40 @@ Whenever you open `Curse of Strahd.pdf`, use this table to know which chapters m
 * **🐉 Vladimir Horngaard (Sessions 10–11 Boss):** *Hollow, frost-bitten Revenant Dragon-Knight* at Argynvostholt; guards **The Holy Symbol of Ravenkind**.
 * **⛪ The Abbot (Session 12):** *Serene, softly smiling fallen angel (Deva)* in Krezk who is stitching together a flesh-golem bride (**Vasilka**) for Strahd.
 * **💀 Baba Lysaga (Sessions 13–14 Boss):** *Croaking, fanatical swamp arch-hag* flying in a giant skull alongside her **Creeping Walking Hut** in Berez; guards **The Sunsword**.
+
+---
+
+## 🌌 PART 7: THE COSMIC KNOT MASTER LORE, THE THREE VESSELS & LIBRARIAN FILE SYSTEM
+
+### 7.1 Barovia as "Domain Zero" & The Root Anchor Protocol
+* **Why Vecna & The Dark Powers Want Strahd Dead:** Barovia was the very first Domain of Dread woven into existence (**Domain Zero**). Count Strahd's misery and immortal will act as the foundational keystone holding the Demiplane's containment seal rigid.
+* **The Shattered Seal:** When the party slays Strahd in Session 20, the cornerstone snaps. Rather than dispersing into the ether, the foundational frequency of the Mists (**The Root Anchor**) condenses violently into the party's souls—turning them into **Living Conduits** that allow Vecna to steer the unmoored Mists across the multiverse (which is how Vecna razed Moros's realm in Campaign 1!).
+
+### 7.2 The Dual Operatives: Derek (The Avatar) vs. Cael (The Scion)
+* **⏳ Derek ("The Man Between Seconds" — Avatar of the Dark Powers):**
+  * **Role:** The cold, transactional cosmic Project Manager who steps into Barovia only when three knocks sound (`tap, tap, tap`) and **time freezes completely**.
+  * **Why Strahd Doesn't Know Him:** Because Derek operates strictly between the ticks of the clock, Strahd's wolves, bats, scrying sensors, and Barovian NPCs (like Father Donavich, Ismark, and Ireena in the Session 1 church scene) are frozen like statues and **never perceive him**.
+  * **3 Future Milestone Appearances Only:** (1) Post-Tarokka reading on the Tser Falls bridge in Session 2, (2) Vallaki moral crisis in Act II, and (3) The Amber Temple / Gates of Ravenloft in Act IV. Never fights in combat; always pushes ruthless, practical ambition.
+* **🌟 Caelum Jude ("Cael" — The Scion / Inside Shepherd):**
+  * **Role:** Level 3 Circle of the Stars Druid companion (`HP 38`, `AC 14`, *Starry Chalice* dual-healing `1d8+3`) bound from birth to walk beside the party in real time, heal their wounds, and love them genuinely—making his forced betrayal in Session 20 heartbreaking. Whenever Derek freezes time near Cael, Cael shrinks back in silent terror of his overseer.
+
+### 7.3 The Three Handpicked Vessels (Piper, Jacomir & Yvaine)
+1. **🎩 Piper ("Piper the Incomparable" — The Chaotic Wild Magic Detonator):**
+   * **Why Derek Noticed Her:** In Session 1's frozen church, Derek stared at Piper in astonishment and told her to *"take care of herself"*—not out of warmth, but like an engineer inspecting a priceless detonator. Her Fierna Wild Magic soul was handpicked to house the chaotic frequency of the Mists.
+   * **🃏 The Blank Tarokka Card (Option 2 — 3-Stage Living Omen):** Given to Piper by a deeply concerned Vistani at *Blood on the Vine Tavern* after the ink faded off the card in her hand. At Tser Pool, Madam Eva pulls her hand back in cold dread, and the card slowly bleeds charcoal ink in **3 stages across the campaign** (*Stage 1: Dead pines & empty upturned palms rising from black water* ➔ *Stage 2: Cracked faceless glass lantern/pocket watch drinking in silver fog* ➔ *Stage 3: A violent vortex of endless Mist pouring inward into the cracked glass*).
+2. **👑 King Jacomir Yulle (The Martial Vanguard Anchor):**
+   * **The Monkey-Paw Promise:** Swallowed from Oakenshire at the height of his reign. Derek promised him in the church that if he kills Strahd, he will get what he wants and go home—using Jacomir's sacred King's oath as bait to forge him into the vanguard general of the Mists. Carries **📖 Burgomaster Kolyan's Wizard Diary** (naming Davian Martikov & Keepers of the Feather) and **🥧 1x Uneaten Dream Pastry**.
+3. **🔫 Eclipsa Rosaline Yvaine the First (The Multiversal Crosshairs):**
+   * **The Detective Arc & Bait:** Fallen princess of Solmere hunting the unseen palace traitor and her missing sisters **Vesper and Liora**. Derek promised her a way home if Strahd dies, inflating her hope so her *Hunter's Sense* can be bound as Vecna's targeting crosshairs in Campaign 3.
+
+### 7.4 Master Librarian File & Source Index
+* **1. Authoritative Story Sources:**
+  * **Primary Table Canon:** `00_ALWAYS_READ.md` & `01_STORY_ARCHIVE.md`
+  * **Main Storyline & Pacing Guide:** [DragnaCarta's *Curse of Strahd: Reloaded* GitHub](https://github.com/DragnaCarta/Curse-of-Strahd-Reloaded)
+  * **Official 5e Module PDF:** [Curse of Strahd.pdf](https://drive.google.com/file/d/1_-WNJwEBvwIrYP4CUtILP7l_9MYCFQ41/view)
+  * **Grand Trilogy Cosmic Lore:** `THE_COSMIC_KNOT_MASTER_LORE.md`
+* **2. Live Campaign Hub & Dashboards:**
+  * **GitHub Pages Portal:** [https://raelpinpin-create.github.io/dnd-curse-of-strahd/](https://raelpinpin-create.github.io/dnd-curse-of-strahd/)
+  * **Interactive DM Screen:** `DM_SCREEN.html` & `DM_SCREEN.md`
+  * **Interactive Character Sheets:** `PIPER_PLAYER_SHEET.html`, `JACOMIR_PLAYER_SHEET.html`, `YVAINE_PLAYER_SHEET.html` & `CHARACTER_SHEET.md`
+  * **NPC & Companion Dossiers:** `NPC_REGISTRY.md` & `CAEL_MASTER_DOSSIER.md`
