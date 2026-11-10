@@ -752,8 +752,13 @@
         }
         .loot-header-quest { background: linear-gradient(90deg, #1e1b4b, #0f172a); color: #c7d2fe; border-left: 3px solid #818cf8; }
         .loot-header-weapon { background: linear-gradient(90deg, #311317, #0f172a); color: #fecdd3; border-left: 3px solid #f43f5e; }
+        .loot-header-caster { background: linear-gradient(90deg, #2e1065, #0f172a); color: #f3e8ff; border-left: 3px solid #c084fc; }
+        .loot-header-armor { background: linear-gradient(90deg, #0c2538, #0f172a); color: #bae6fd; border-left: 3px solid #38bdf8; }
         .loot-header-heal { background: linear-gradient(90deg, #062e1e, #0f172a); color: #a7f3d0; border-left: 3px solid #10b981; }
-        .loot-header-buff { background: linear-gradient(90deg, #2e1065, #0f172a); color: #e9d5ff; border-left: 3px solid #a855f7; }
+        .loot-header-buff { background: linear-gradient(90deg, #3b2307, #0f172a); color: #fef08a; border-left: 3px solid #eab308; }
+        .loot-filter-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; background: var(--bg-card-subtle); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--border-subtle); align-items: center; }
+        .btn-loot-filter { background: #141c2c; border: 1px solid #334155; color: var(--text-main); padding: 4px 10px; border-radius: 4px; font-size: 0.74rem; font-family: 'JetBrains Mono', monospace; font-weight: 600; cursor: pointer; transition: all 0.15s ease; }
+        .btn-loot-filter:hover, .btn-loot-filter.active { background: var(--accent-gold); color: #07090e; border-color: var(--accent-gold-soft); font-weight: 700; }
     </style>
 </head>
 <body>
@@ -1037,8 +1042,20 @@
     <!-- SECTION 4: WORLD LOOT VAULT -->
     <section id="loot-vault">
         <div class="section-header">
-            <span>🎒 SECTION 4: BAROVIAN WORLD LOOT VAULT & FATED TAROKKA RELICS</span>
-            <span class="section-tag">CLICK ANY ITEM FOR FULL 5.5E MECHANICS & MANUSCRIPTS</span>
+            <span>🎒 SECTION 4: COMPLETE BAROVIAN WORLD LOOT VAULT, OFFICIAL MODULE TREASURES & POSSIBLE LOOTS (60+ ITEMS)</span>
+            <span class="section-tag">CLICK ANY ITEM FOR FULL 5.5E MECHANICS, RELOADED RULES & LORE</span>
+        </div>
+        <div class="loot-filter-bar">
+            <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Quick Loot Filter:</span>
+            <button class="btn-loot-filter active" onclick="filterLootVault('all', this)">📦 All Loot (62)</button>
+            <button class="btn-loot-filter" onclick="filterLootVault('Act I', this)">🩸 Act I (Svalich / Village / Bonegrinder)</button>
+            <button class="btn-loot-filter" onclick="filterLootVault('Act II', this)">⚔️ Act II (Vallaki / Winery / Yester Hill)</button>
+            <button class="btn-loot-filter" onclick="filterLootVault('Act III', this)">🐉 Act III (Argynvost / Krezk / Berez)</button>
+            <button class="btn-loot-filter" onclick="filterLootVault('Act IV', this)">🏰 Act IV (Amber Temple / Ravenloft)</button>
+            <button class="btn-loot-filter" onclick="filterLootVault('Piper', this)">🎭 Best for Piper</button>
+            <button class="btn-loot-filter" onclick="filterLootVault('Jacomir', this)">👑 Best for Jacomir</button>
+            <button class="btn-loot-filter" onclick="filterLootVault('Yvaine', this)">🎯 Best for Yvaine</button>
+            <button class="btn-loot-filter" onclick="filterLootVault('Possible', this)">✨ Possible / Homebrew Upgrades</button>
         </div>
         <div class="grid-2" id="loot-containers"></div>
     </section>
@@ -2682,24 +2699,35 @@ const BIOME_DATA = {
             • <strong>Hairpin Gorge Turn (Driver):</strong> DC 13 Animal Handling / Vehicles (Land) check or rear wheels skid over the cliff edge.<br>
             • <strong>Dalvan's Corpse (Inside Gates):</strong> DC 12 Medicine reveals he died of pure exhaustion; compass spins wildly; 13 tally marks on trees show the Mists loop travelers in circles.<br>
             • <strong>Choking Mists:</strong> Stepping back outside the Gates forces a DC 15 CON Save/min vs Exhaustion.</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache:</strong><br>
+            • <strong>Dalvan Olensky's Corpse:</strong> 🧭 <em>Dalvan's Spinning Brass Compass</em>, 📜 <em>Kolyan Indirovich's Sealed Warning Letter</em>, leather pouch with 1 GP 4 SP.<br>
+            • <strong>Svalich Dire Wolves:</strong> 🐺 <em>Dire Wolf Pelts (15–30 SP)</em>, 🦷 <em>Alpha Fang Necklace (+1 Intimidation in Barovia)</em>.<br>
+            • <strong>Morgantha on the Road:</strong> 🥧 <em>1x Morgantha's Dream Pastry</em> (Gifted to King Jacomir in Session 1 — currently uneaten!).</div>
         `
     },
     village: {
-        title: "🏚️ Village of Barovia & Indirovich Manor",
-        tag: "SESSION 1 ACTIVE SIEGE",
+        title: "🏚️ Village of Barovia, Indirovich Manor & Church Attic",
+        tag: "SESSIONS 1–2 ACTIVE SIEGE",
         body: `
             <div class="modal-read-aloud">"Heavy spiked timber barricades block the village square. Exhausted militia peer through peepholes with drawn bows. Every shop and home is boarded shut with heavy oak planks, the air smelling of peat smoke, wet ash, and terror."</div>
-            <div class="nbox nbox-crimson"><strong>3:00 AM Indirovich Manor Defense:</strong><br>
-            • Parlor windows are boarded (AC 12, 15 HP), heavy oak front door is barred.<br>
-            • At 3:00 AM, the grandfather clock tolls three times, the hearth fire turns ice-blue, and <strong>The Starved Vampire Spawn (82 HP, CR 5)</strong> shatters the 15-ft parlor skylight!</div>
+            <div class="nbox nbox-crimson"><strong>Church Attic Standoff (Session 1/2 Cliffhanger):</strong><br>
+            • Father Donavich has hidden his vampire spawn son <strong>Doru (85 HP, CR 5)</strong> in the church attic.<br>
+            • <strong>DragnaCarta Reloaded Blood-Cup Mechanic:</strong> Feeding Doru King Jacomir's cup of willing blood grants Doru 2 minutes of weeping human lucidity to reveal the Mad Mage (*Mordenkainen*) and Strahd's *Heart of Sorrow*!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache:</strong><br>
+            • <strong>Blood on the Vine Tavern (Claimed S1):</strong> 🃏 <em>Piper's Blank Tarokka Card</em> (Gifted by concerned Vistani).<br>
+            • <strong>Indirovich Manor (Claimed S1 / Available):</strong> 📖 <em>Burgomaster Kolyan's Wizard Diary & Spellbook</em> (Names Davian Martikov & Keepers of the Feather!), ⚔️ <em>Ismark's Silvered Armory Cache</em> (Silvered Rapier/Greatsword Coating, 10x Silvered Bullets, 2x <em>Flasks of St. Andral's Holy Water</em>, 2x <em>Potions of Healing</em>).<br>
+            • <strong>Barovia Church:</strong> 📿 <em>Father Donavich's Consecrated Morninglord Rosary</em> (1/day forces a Vampire Spawn to make DC 13 WIS Save or recoil 15 ft).</div>
         `
     },
     tserpool: {
-        title: "🔮 Tser Pool Vistani Encampment",
+        title: "🔮 Tser Pool Vistani Encampment & Tser Falls",
         tag: "SESSION 2 SANCTUARY",
         body: `
             <div class="modal-read-aloud">"A dozen colorful barrel-topped wagons ring a roaring bonfire beside the dark glassy waters of Tser Pool. Violins weep a haunting Romani melody as Vistani dancers twirl in silk, the smell of roasting boar and spiced wine cutting through the cold mist."</div>
             <div class="nbox nbox-emerald"><strong>Camp Features:</strong> Safe Long Rest sanctuary; Vistani merchants sell Silvered Weapons (5 GP) and Potions; Madam Eva's tent stands at the center.</div>
+            <div class="nbox nbox-cyan"><strong>🎁 Location Treasure & Possible Loot Cache (Book Area G & Reloaded):</strong><br>
+            • <strong>Madam Eva's Tent:</strong> 🃏 <em>Stage 1 Ink Bleed on Piper's Blank Tarokka Card</em> + Curated 5-Card Tarokka Prophecy.<br>
+            • <strong>Vistani Treasure Wagon (Book Area G, DC 15 Investigation/Thieves' Tools or Trade):</strong> 🩸 <em>Vistani Bloodwell Vial (+1 Sorcerer Focus for Piper)</em>, 🧪 <em>Potions of Healing / Climbing</em>, 💍 <em>Electrum & Gold Jewelry (25 GP)</em>, ⚔️ <em>Alchemical Silvering Service (5 GP)</em>.</div>
         `
     },
     bonegrinder: {
@@ -2707,7 +2735,11 @@ const BIOME_DATA = {
         tag: "SESSION 3 HAG LAIR",
         body: `
             <div class="modal-read-aloud">"A decrepit four-story stone windmill creaks on a wind-lashed knoll, its rotted sails turning slowly against the storm clouds. The warm aroma of caramelized sugar and cinnamon drifts from the brick oven—masking the metallic stench of ground bone."</div>
-            <div class="nbox nbox-crimson"><strong>Windmill Layout:</strong> Floor 1: Bone-grinding millstones; Floor 2: Morgantha's kitchen & oven; Floor 3: Two caged village children (Freek & Myrtle); Floor 4: Moldering hag bedchamber.</div>
+            <div class="nbox nbox-crimson"><strong>Windmill Layout:</strong> Floor 1: Bone-grinding millstones; Floor 2: Morgantha's kitchen & oven; Floor 3: Two caged village children (Myrtle & Lucian); Floor 4: Moldering hag bedchamber.</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache (Book Areas O1–O4):</strong><br>
+            • <strong>Morgantha's Apron & Coven Drop:</strong> 🧿 <em>Night Hag's Cracked Heartstone</em> (Cures 1 disease/poison per day & grants Advantage on Death Saves!).<br>
+            • <strong>Third-Floor Hag Barrels (Book Area O3):</strong> 🌿 <em>Elixir of Youth</em> (Makes drinker look 1d10 years younger + `+1d6` Temp HP), ☠️ <em>Vial of Pale Tincture Poison</em> (DC 16 CON save, `1d6` poison + poisoned condition), 🧪 <em>Cackle Fever Brew</em>.<br>
+            • <strong>Mother-of-Pearl Toad Chest (Floor 4):</strong> 20 GP in tarnished silver coins, 💍 <em>Gold Hairpin Set with Bloodstone (10 GP)</em>, 📜 <em>Deed to Old Bonegrinder Windmill</em>.</div>
         `
     },
     vallaki: {
@@ -2716,118 +2748,452 @@ const BIOME_DATA = {
         body: `
             <div class="modal-read-aloud">"Wooden palisades bristling with sharpened stakes and wolf skulls ring the town. Rain-soaked paper sun banners flap above the mud streets: 'ALL WILL BE WELL!' Yet behind shuttered windows, terrified citizens watch Izek's guards."</div>
             <div class="nbox nbox-cyan"><strong>Key Locations:</strong> Blue Water Inn (Martikovs & Rictavio), St. Andral's Church (stolen bones of St. Andral), Baron's Mansion, Wachterhaus (Tome of Strahd), Blinsky Toys.</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache (Book Chapter 5):</strong><br>
+            • <strong>Wachterhaus Cult Library (`N4`):</strong> 📜 <em>The Tome of Strahd (Tarokka Relic #1)</em>, ⚔️ <em>Baal Verzi Assassin's Dagger +1</em>.<br>
+            • <strong>Blue Water Inn Secret Loft (`N2q` — Unlocked via Kolyan's Wizard Diary!):</strong> 🐾 <em>Martikov Gray Bag of Tricks</em>, ✨ <em>Elixir of Health</em>, 🧪 <em>2x Potions of Greater Healing</em>.<br>
+            • <strong>Rictavio's Carnival Wagon (`N2r`):</strong> 🎭 <em>Hat of Disguise</em>, 🧠 <em>Ring of Mind Shielding</em>, 📜 <em>Scroll of Protection from Undead/Fiends</em>, 🔫 <em>Van Richten's Silver-Runed Scope & Clockwork Barrel (+1 Firearm Upgrade for Yvaine!)</em>.<br>
+            • <strong>Baron Vargas's Mansion Attic (`N3t`):</strong> 📖 <em>Victor Vallakovich's Spellbook</em>, 🪄 <em>Victor's Crackling Wand of Lightning/Wonder (for Piper!)</em>, 🪞 <em>Magic Mirror of the Assassin</em>.<br>
+            • <strong>Izek Strazni Boss Drop:</strong> 🔥 <em>Izek's Hellfire Brute Battleaxe +1 (+1d6 Fire)</em>.</div>
         `
     },
     winery: {
         title: "🍷 Wizard of Wines & Yester Hill",
         tag: "ACT II NATURE SIEGE",
         body: `
-            <div class="modal-read-aloud">"Rows of dead, twisted grapevines stretch across the mist-choked valley toward a two-story stone winery surrounded by ratusan needle-quilled twig blights. To the south rises Yester Hill, crowned by a ring of black lightning-struck boulders."</div>
+            <div class="modal-read-aloud">"Rows of dead, twisted grapevines stretch across the mist-choked valley toward a two-story stone winery surrounded by needle-quilled twig blights. To the south rises Yester Hill, crowned by a ring of black lightning-struck boulders."</div>
             <div class="nbox nbox-amber"><strong>Key Events:</strong> Purge the poisoned fermentation vats (DC 13 Perception), ally with the Keepers of the Feather, and stop the druids on Yester Hill from awakening <strong>Wintersplinter (138 HP)</strong>.</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache (Book Chapters 12 & 14):</strong><br>
+            • <strong>Wizard of Wines Loading Balcony (`W14`):</strong> 🌿 <em>The Gulthias Staff</em> (Vampiric healing staff; snapping it instantly kills all Blights within 300 ft!), 🍷 <em>Cases of Red Dragon Crush & Purple Grapemash</em>.<br>
+            • <strong>Keepers of the Feather Alliance Reward:</strong> 🧥 <em>Wereraven Feather Cloak of Protection (+1 AC, +1 Saves & Feather Fall glide!)</em>.<br>
+            • <strong>Yester Hill Burial Cairn (`Y4`):</strong> 🩸 <em>The Blood Spear of Kavan (+2 Magic Spear — grants 2d6 Temp HP on every kill! Ideal for King Jacomir!)</em>.<br>
+            • <strong>Wintersplinter Boss Drop:</strong> 💚 <em>First Wizard of Wines Magic Life-Gem</em>.</div>
         `
     },
     argynvost: {
-        title: "🐉 Argynvostholt & The Ruins of Berez",
+        title: "🐉 Argynvostholt, Krezk Abbey & The Ruins of Berez",
         tag: "ACT III RELIC SANCTUMS",
         body: `
             <div class="modal-read-aloud">"High on a rocky crag stands the shattered Gothic dragon-manor of Argynvostholt, its collapsed chapel open to the freezing rain. Below in the river basin lies Berez—a rotting black swamp where a colossal hut walks upon gnarled cypress roots."</div>
-            <div class="nbox nbox-emerald"><strong>Relic Rewards:</strong> Claim 🕊️ <strong>The Holy Symbol of Ravenkind</strong> in Argynvostholt and 🗡️ <strong>The Sunsword</strong> in Berez!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache (Book Chapters 7, 8 & 10):</strong><br>
+            • <strong>Argynvostholt (`Areas Q6–Q53`):</strong> 🕊️ <em>The Holy Symbol of Ravenkind (Tarokka Relic #2)</em>, 🗡️ <em>Vladimir Horngaard's +2 Silvered Greatsword (Apex Sword for King Jacomir!)</em>, 🛡️ <em>4x Potions of Invulnerability (Resist ALL damage for 1 min!)</em>, 🛡️ <em>Silvered Half-Plate / Dragonplate +1</em>, 🐉 <em>Beacon of the Silver Dragon Boon (+1 AC & +1 All Saves for whole party!)</em>.<br>
+            • <strong>Abbey of St. Markovia in Krezk (`Area S13`):</strong> 💚 <em>Ring of Regeneration (1d6 HP/10 min)</em>, 🧪 <em>Potion of Superior Healing (8d4+8)</em>, 📜 <em>Spell Scroll of Heroes' Feast</em>, 🦴 <em>Saint Markovia's Thighbone (Mace of Disruption)</em>, 💥 <em>Ezmerelda's Sunburst Cartridges (+1/+2 Firearm Ammo for Yvaine!)</em>.<br>
+            • <strong>Ruins of Berez — Baba Lysaga's Creeping Hut (`Area U3`):</strong> 🗡️ <em>The Sunsword (Tarokka Relic #3 — +2 Radiant Blade!)</em>, 🧪 <em>Oil of Sharpness (+3 Weapon/Ammo Coating!)</em>, 🍀 <em>Stone of Good Luck (Luckstone: +1 All Checks & Saves!)</em>, 🎶 <em>Pipes of Haunting</em>, 📜 <em>Scrolls of Revivify & Mass Cure Wounds</em>, 🎯 <em>10x +1 Sling/Firearm Bullets</em>, 💚 <em>Second Winery Life-Gem</em>.</div>
         `
     },
     ravenloft: {
-        title: "🏰 The Amber Temple & Castle Ravenloft",
+        title: "🏰 Tsolenka Pass, The Amber Temple & Castle Ravenloft",
         tag: "ACT IV ENDGAME",
         body: `
             <div class="modal-read-aloud">"Carved into the freezing snows of Mount Ghakis lies a windowless temple of black ice housing rows of glowing amber sarcophagi. Far below, perched atop a 1,000-foot spire of sheer rock, Castle Ravenloft pierces the blood-moon."</div>
-            <div class="nbox nbox-crimson"><strong>Endgame:</strong> Resist or accept the Dark Gifts of Vampyr and Vecna in the Amber Temple, shatter the Heart of Sorrow in the North Tower, and face Count Strahd in Sergei's Crypt!</div>
+            <div class="nbox nbox-crimson"><strong>🎁 Location Treasure & Possible Loot Cache (Book Chapters 4, 9 & 13):</strong><br>
+            • <strong>Tsolenka Pass (`T6`):</strong> 🧥 <em>Bloodhorn's Mountain Pelt (Cold Immunity Cloak)</em>, 🔥 <em>Ring of Warmth</em>.<br>
+            • <strong>The Amber Temple (`Areas X2–X42`):</strong> ❄️ <em>Staff of Frost (Area X17 — for Piper/Cael)</em>, 🪄 <em>Wand of Secrets (Area X2b)</em>, 📖 <em>Tome of Understanding (+2 Permanent WIS — Area X30)</em>, 📖 <em>Complete Wizard Library (Every Wizard spell in X30!)</em>, ⚡ <em>Supreme Dark Gifts of Vampyr, Vecna & Zhudun (Areas X33 & X42)</em>.<br>
+            • <strong>Castle Ravenloft (`Areas K15–K84`):</strong> 🏰 <em>Icon of Ravenloft (Chapel K15)</em>, ⚡ <em>Khazan's Staff of Power (+2 AC/Saves/Spell Atk — Crypt 15 K84, Apex Staff for Piper!)</em>, 👑 <em>Helm of Brilliance (Treasury K41)</em>, 🛡️ <em>+2 Shield of the Silver Wyrm</em>, 🔨 <em>Gustav's Mace of Terror (Crypt 7)</em>, 🃏 <em>Deck of Illusions (Crypt 9)</em>, 🪕 <em>Doss Lute (K37)</em>, 🏰 <em>Daern's Instant Fortress & Alchemy Jug (K41)</em>, 🍾 <em>Champagne du le Stomp</em>.</div>
         `
     }
 };
 
 const LOOT_DATA = {
+    // =========================================================================
+    // CATEGORY 1: QUEST — FATED TAROKKA RELICS, SESSION 1 ITEMS & STORY RELICS
+    // =========================================================================
     blank_tarokka: {
-        cat: "quest", name: "🃏 Piper's Blank Tarokka Card (The 3-Stage Living Omen)", rarity: "Unique Omen Relic • Carried by Piper",
-        location: "Gifted by Concerned Vistani at Blood on the Vine Tavern (Session 1)",
+        cat: "quest", name: "🃏 Piper's Blank Tarokka Card (The 3-Stage Living Omen)", rarity: "Unique Omen Relic • Claimed S1 (Piper)",
+        location: "Act I • Blood on the Vine Tavern (S1) & Madam Eva at Tser Pool (S2) • Piper",
         mechanics: "• <strong>Session 1 Origin:</strong> The painted ink faded completely off the card when a Vistani tried to read Piper's fortune.<br>• <strong>Madam Eva's Reading (Session 2 — Option 2):</strong> Madam Eva pulls her hand back in cold dread; the card bleeds charcoal Mist/Vessel imagery across <strong>3 progressive campaign stages</strong>:<br>&nbsp;&nbsp;1. <em>Stage 1 (Tser Pool):</em> Dead Barovian pines & empty upturned palms rising from black water.<br>&nbsp;&nbsp;2. <em>Stage 2 (Vallaki/Berez):</em> A cracked, faceless glass lantern/pocket watch drinking in threads of silver fog.<br>&nbsp;&nbsp;3. <em>Stage 3 (Amber Temple/Ravenloft):</em> A violent vortex of endless gray Mist pouring inward into the cracked glass.",
         lore: "Madam Eva's Whisper:\n\n'Four hundred years I have read these cards, and never has the fog stood between my eyes and a traveler's road. Something walks in the silence behind you, child—something that hides your ending even from me. Keep this card in your coat. Every time you step closer to what woke the fire in your blood, the ink will bleed higher. Pray you do not recognize the picture when it finishes drawing itself.'"
     },
     kolyan_diary: {
-        cat: "quest", name: "📖 Burgomaster Kolyan's Wizard Diary (Keepers of the Feather Lead)", rarity: "Unique Quest Tome • Carried by Jacomir",
-        location: "Looted from Indirovich Manor (Session 1)",
-        mechanics: "• <strong>Faction Key:</strong> Reveals that late Burgomaster Kolyan Indirovich was a wizard in his youth and explicitly names <strong>Davian Martikov</strong> and <strong>the Keepers of the Feather</strong> as secret allies who can help against Strahd!<br>• <strong>Social Unlock:</strong> Presenting this diary to <strong>Urwin Martikov</strong> at the <em>Blue Water Inn</em> (Vallaki) or <strong>Davian Martikov</strong> at the <em>Wizard of Wines</em> immediately earns the Keepers' trust and alliance.",
+        cat: "quest", name: "📖 Burgomaster Kolyan's Wizard Diary (Keepers of the Feather Lead)", rarity: "Unique Quest Tome • Claimed S1 (Jacomir)",
+        location: "Act I • Looted from Indirovich Manor (Session 1) • Jacomir & Party",
+        mechanics: "• <strong>Faction Key:</strong> Reveals that late Burgomaster Kolyan Indirovich was a wizard in his youth and explicitly names <strong>Davian Martikov</strong> and <strong>the Keepers of the Feather</strong> as secret allies who can help against Strahd!<br>• <strong>Social Unlock:</strong> Presenting this diary to <strong>Urwin Martikov</strong> at the <em>Blue Water Inn</em> (Vallaki, Session 4) or <strong>Davian Martikov</strong> at the <em>Wizard of Wines</em> (Session 7) immediately earns the wereravens' trust, free lodging, and access to their hidden stash.",
         lore: "Written in Kolyan Indirovich's arcane shorthand:\n\n'My old spells are no match for the Devil on the spire, and my heart grows weak under his nightly sieges. Should I fall before Ireena is safe, seek out my old friend Davian Martikov at the Wizard of Wines, or his son Urwin in Vallaki. Ask for the Keepers of the Feather—their eyes watch from every rooftop where the ravens roost.'"
     },
+    dalvan_compass: {
+        cat: "quest", name: "🧭 Dalvan Olensky's Spinning Compass & Sealed Letter", rarity: "Story Clue • Claimed S1",
+        location: "Act I • Eastern Gates of Barovia (Session 1) • DragnaCarta Reloaded Arc A",
+        mechanics: "• <strong>Spinning Needle:</strong> The brass needle spins endlessly in Barovia, proving the valley has been severed from the Material Plane's magnetic poles.<br>• <strong>Kolyan's Sealed Letter:</strong> Reveals that Count Strahd has bitten Ireena Kolyana twice and warns travelers never to enter Barovia.",
+        lore: "Recovered from the frozen fingers of messenger Dalvan Olensky, who walked in thirteen circles through the choking Mists before dying of exhaustion."
+    },
     tome_of_strahd: {
-        cat: "quest", name: "📜 The Tome of Strahd (Tarokka Relic #1)", rarity: "Legendary Relic • No Attunement",
-        location: "Wachterhaus Cult Library (Vallaki — Act II)",
-        mechanics: "• <strong>Passive Ward:</strong> Allies within 30 ft have Advantage on saves vs Strahd's Charm.<br>• <strong>Recite the Murder (1/Day Action):</strong> Read aloud Strahd's murder of Sergei; Strahd or any Bride within 30 ft must pass a <strong>DC 15 WIS Save or be Stunned until the end of their next turn</strong>!",
-        lore: "Bound in thick black leather with silver clasps, written in Strahd's own hand:\n\n'I am the Ancient. I am the Land. My beginnings are lost in the darkness of the past... In the Amber Temple I made my pact with Death, sealing it with Sergei's blood on Tatyana's wedding day...'"
+        cat: "quest", name: "📜 The Tome of Strahd (Tarokka Relic #1 — RAW + Reloaded)", rarity: "Legendary Relic • No Attunement",
+        location: "Act II • Wachterhaus Secret Cult Library (Vallaki — Session 6, Lvl 5) • Party",
+        mechanics: "• <strong>Passive Ward:</strong> Allies within 30 ft have <strong>Advantage on saving throws against Strahd's Charm</strong>.<br>• <strong>Recite the Murder (1/Day Action):</strong> Read aloud Strahd's confession of murdering Sergei; Strahd or any Bride within 30 ft must pass a <strong>DC 15 WIS Save or be Stunned until the end of their next turn</strong>!<br>• <strong>DragnaCarta Reloaded Interactive Lore:</strong> Deciphering its chapters during Long Rests unlocks memory visions of the Amber Temple pact, the Heart of Sorrow's weakness, and Castle Ravenloft's layout.",
+        lore: "Bound in thick black leather with tarnished silver clasps, written in Strahd's own hand:\n\n'I am the Ancient. I am the Land. My beginnings are lost in the darkness of the past... In the Amber Temple I made my pact with Death, sealing it with Sergei's blood on Tatyana's wedding day...'"
     },
     holy_symbol: {
-        cat: "quest", name: "🕊️ The Holy Symbol of Ravenkind (Tarokka Relic #2)", rarity: "Legendary Amulet • Attunement",
-        location: "Argynvostholt Beacon Sanctum (Act III)",
-        mechanics: "Holds <strong>10 Charges</strong> (regains 1d6+4 at dawn):<br>• <strong>Hold Vampires (1 Charge):</strong> Action; vampires within 30 ft make DC 15 WIS Save or Paralyzed for 1 minute!<br>• <strong>Sunlight Burst (5 Charges):</strong> Action; sheds <strong>30-ft True Sunlight</strong> for 10 min (20 Radiant dmg/turn to vampires & halts regen!).",
-        lore: "A platinum amulet shaped like a sunburst with a giant crystal raven embedded in its core, forged by the Order of the Silver Dragon."
+        cat: "quest", name: "🕊️ The Holy Symbol of Ravenkind (Tarokka Relic #2 — RAW + Reloaded)", rarity: "Legendary Amulet • Attunement",
+        location: "Act III • Argynvostholt Beacon Sanctum (Session 11, Lvl 7) • Cael / Good PC",
+        mechanics: "<strong>Official 5e Mode (10 Charges, regains 1d6+4 at dawn):</strong><br>• <strong>Hold Vampires (1 Charge):</strong> Action; vampires within 30 ft make DC 15 WIS Save or are <strong>Paralyzed for 1 minute</strong>!<br>• <strong>Sunlight Burst (5 Charges):</strong> Action; sheds <strong>30-ft True Sunlight</strong> for 10 min (20 Radiant dmg/turn to vampires & halts regeneration!).<br><br><strong>DragnaCarta Reloaded Mode (Bonus Option — +1 Spell Focus, 5 Charges):</strong><br>• <strong>Dawn's Embrace (1 Charge, Reaction):</strong> When an ally within 60 ft drops to 0 HP, they drop to <strong>1 HP instead and gain Immunity to ALL damage</strong> until the start of their next turn!<br>• <strong>Light of Hope (1 Charge, Action):</strong> Ends <em>Blinded, Charmed, Frightened, Paralyzed, Poisoned,</em> or <em>Stunned</em> on an ally within 30 ft.<br>• <strong>Sun's Blessing (3 Charges):</strong> 30-ft aura for 1 min granting all allies <strong>+1d4 Radiant damage</strong> on weapon attacks!",
+        lore: "A sacred platinum sunburst amulet with a giant crystal raven embedded in its core, delivered by a giant raven to the prophet Lugdana and guarded by the Order of the Silver Dragon."
     },
     sunsword: {
-        cat: "quest", name: "🗡️ The Sunsword (Tarokka Relic #3)", rarity: "Legendary Sentient Blade • Attunement",
-        location: "Guarded by Baba Lysaga in Berez (Act III)",
-        mechanics: "Sentient crystal-hilted blade of pure radiant sunlight!<br>• <strong>Finesse & Versatile:</strong> Wield with STR or DEX (<strong>+2 to Hit and Damage</strong>).<br>• <strong>Damage:</strong> 1d8 Radiant (1d10 two-handed) + extra 1d8 Radiant vs Undead (<strong>2d8+2 Radiant total!</strong>).<br>• <strong>Sunlight Aura:</strong> Emits 15-ft True Sunlight burning vampires within 15 ft for 20 Radiant damage.",
-        lore: "The blade of Sergei von Zarovich. Thought shattered by Strahd's wizard Khazan, its sentient spirit survived inside the crystal hilt."
+        cat: "quest", name: "🗡️ The Sunsword (Tarokka Relic #3 — Sentient Sun Blade)", rarity: "Legendary Blade • Attunement (Jacomir / Yvaine)",
+        location: "Act III • Guarded by Baba Lysaga in Ruins of Berez (Session 14, Lvl 8) • Jacomir / Yvaine",
+        mechanics: "Sentient crystal-hilted platinum blade that ignites with pure radiant morning sunlight (Bonus Action to ignite/extinguish)!<br>• <strong>Finesse & Versatile:</strong> Can be wielded with <strong>STR or DEX (+2 to Attack and Damage Rolls)</strong>.<br>• <strong>Radiant Damage:</strong> Deals <strong>1d8+2 Radiant</strong> (1d10+2 two-handed) + an extra <strong>1d8 Radiant against Undead (2d8+2 / 1d10+1d8+2 Radiant per hit against vampires!)</strong>.<br>• <strong>True Sunlight Aura:</strong> Emits a 15-ft radius of <strong>True Sunlight</strong> (expandable to 30 ft), dealing <strong>20 Radiant damage/turn</strong> to Strahd/vampires and shutting down their regeneration and mist-phasing!",
+        lore: "Once the royal blade of Prince Sergei von Zarovich. Strahd employed the archmage Khazan to destroy it after Sergei's murder, but the crystal hilt survived—burning with sentient, righteous fury to avenge Sergei and free Tatyana."
     },
+    icon_ravenloft: {
+        cat: "quest", name: "🏰 The Icon of Ravenloft", rarity: "Legendary Silver Statuette • Attunement",
+        location: "Act IV • Castle Ravenloft High Chapel Altar (Area K15 — Session 17) • Cael / Party",
+        mechanics: "• <strong>15-ft Sanctuary Aura:</strong> While held or carried, exudes a permanent 15-ft <em>Protection from Evil and Good</em> aura against Undead and Fiends (they have Disadvantage on all attacks against the party and cannot charm/frighten/possess!).<br>• <strong>Cure Wounds (1/Day Action):</strong> Touch a creature to restore <strong>3d8 + 3 HP</strong> and immediately cure all diseases, poisons, and blindness/deafness.<br>• <strong>Augury (1/Day):</strong> Cast <em>Augury</em> without components.",
+        lore: "A 12-inch statuette of pure, un-tarnished silver depicting a kneeling cleric of the Morninglord, gifted to King Barov by the archpriest Ciril Romulich."
+    },
+    markovia_thighbone: {
+        cat: "quest", name: "🦴 Saint Markovia's Thighbone (Mace of Disruption)", rarity: "Rare Holy Relic • Attunement",
+        location: "Act III/IV • Abbey of St. Markovia (S13) or Crypt 6 (Castle Ravenloft K84)",
+        mechanics: "Wielded as a sacred <strong>Mace of Disruption</strong> (+1 to hit/dmg, sheds 20-ft bright light):<br>• <strong>Undead Bane:</strong> Hits against Undead or Fiends deal an extra <strong>2d6 Radiant damage</strong>!<br>• <strong>Instant Destruction / Fear:</strong> If a hit reduces an Undead/Fiend to <strong>25 HP or fewer</strong>, it must pass a <strong>DC 15 WIS Save or be instantly destroyed</strong> (on a failed save by Strahd, he is <strong>Frightened</strong> until the end of your next turn!).<br>• <em>Book Note:</em> Crumples into holy dust after defeating Strahd or a major vampire boss.",
+        lore: "The preserved femur of Saint Markovia, a priestess of the Morninglord who marched on Castle Ravenloft centuries ago. Even in death, her bones burn vampires like white-hot iron."
+    },
+    winery_gems: {
+        cat: "quest", name: "💚 Wizard of Wines Magic Life-Gems (x2)", rarity: "Legendary Primal Seeds • Quest Relics",
+        location: "Act II–III • Yester Hill Wintersplinter (S8) & Baba Lysaga's Hut in Berez (S14)",
+        mechanics: "• <strong>Primal Growth:</strong> Pine-cone-sized emeralds of pure life energy that allow grapes to grow in sunless Barovia.<br>• <strong>Tactical Counterplay in Berez:</strong> Wrenching the second gem out from beneath the floorboards of Baba Lysaga's <strong>Creeping Walking Hut</strong> immediately deactivates the CR 11 Gargantuan Hut!<br>• <strong>Reward:</strong> Returning the gems to Davian Martikov unlocks infinite vintage deliveries, Keepers of the Feather aerial support, and the <em>Wereraven Feather Cloak</em>!",
+        lore: "Buried in the vineyard soil centuries ago by an ancient archdruid, glowing with warm emerald spring-light."
+    },
+    argynvost_skull: {
+        cat: "quest", name: "🐉 Skull of Argynvost & Beacon of the Silver Dragon", rarity: "Legendary Dragon Relic • Party Boon",
+        location: "Act III • Argynvostholt Beacon Tower (Area Q53 — Session 11)",
+        mechanics: "• <strong>Lighting the Silver Beacon:</strong> Restoring the spirit/skull of the silver dragon Argynvost ignites a blinding silver beam across all of Barovia.<br>• <strong>Permanent Party Boon:</strong> Every party member (Piper, Jacomir, Yvaine, and Cael) gains a permanent <strong>+1 bonus to AC and +1 bonus to all Saving Throws</strong> for the rest of the campaign!",
+        lore: "The colossal horned skull of the silver dragon Lord Argynvost, whose spirit still watches over the valley and bridges Barovia to the Lost Dragon Lands of Campaign 3."
+    },
+
+    // =========================================================================
+    // CATEGORY 2: WEAPON — MAGIC WEAPONS, SILVERED ARMS & FIREARM UPGRADES
+    // =========================================================================
     silver_weapon: {
-        cat: "weapon", name: "⚔️ Silvered Weapon (Rapier / Greatsword Coating / 10 Bullets)", rarity: "Uncommon • 5 GP",
-        location: "Ismark's Armory Cache (Session 1) & Vistani Trade",
-        mechanics: "Bypasses the damage resistance of Vampire Spawn, Werewolves, and Night Hags to nonmagical bludgeoning, piercing, and slashing attacks!",
-        lore: "Forged or alchemically plated with melted Barovian silver coins."
+        cat: "weapon", name: "⚔️ Silvered Weapons & Ammunition (Greatsword / Rapier / 10 Bullets)", rarity: "Uncommon • 5 GP",
+        location: "Act I • Ismark's Armory Cache (S1) & Tser Pool Vistani Smith (S2) • Jacomir & Yvaine",
+        mechanics: "Alchemically silver-plated blades or firearm rounds. <strong>Bypasses the damage resistance/immunity of Vampire Spawn, Werewolves, and Night Hags</strong> to nonmagical bludgeoning, piercing, and slashing attacks!",
+        lore: "Forged or alchemically plated with melted Barovian silver coins stamped with the profile of a mortal Prince Strahd."
     },
     blood_spear: {
-        cat: "weapon", name: "🩸 Kavan's Blood Spear", rarity: "Rare Magic Spear • Attunement",
-        location: "Yester Hill Cairn (Session 8)",
-        mechanics: "<strong>+2 Magic Spear</strong>. Whenever you hit and reduce a hostile creature to 0 HP, the spear siphons their life force, granting you <strong>2d6 Temporary HP</strong>!",
-        lore: "The ancient flint-and-iron spear of the first chieftain of Yester Hill."
+        cat: "weapon", name: "🩸 The Blood Spear of Kavan (+2 Vampiric Spear)", rarity: "Rare Magic Spear • Attunement (Jacomir)",
+        location: "Act II • Yester Hill Burial Cairn (Area Y4 — Session 8) • Best for Jacomir",
+        mechanics: "• <strong>Chieftain's Blessing:</strong> When a martial hero (like <strong>King Jacomir</strong>) approaches Kavan's stone cairn on Yester Hill, an ancestral whisper invites them to claim the spear—unlocking its <strong>+2 bonus to attack and damage rolls</strong> (`1d6+2` / `1d8+2` versatile, thrown 20/60 ft, <em>Sap Mastery</em>).<br>• <strong>Sanguine Siphon:</strong> Whenever you hit and reduce a hostile creature to 0 HP with this spear, you siphon their life force and immediately gain <strong>2d6 Temporary Hit Points</strong>!",
+        lore: "The ancient flint-and-bloodwood spear of Chieftain Kavan, the last warlord of the Balinok Mountain tribes before King Barov's conquest."
     },
-    bone_dagger: {
-        cat: "weapon", name: "🗡️ Volenta's Bone-Spiked Dagger +1", rarity: "Rare Magic Dagger",
-        location: "Dropped by Bride Volenta Popofsky",
-        mechanics: "<strong>+1 Dagger (1d4+1 piercing + 1d4 necrotic)</strong>. When thrown (range 20/60 ft), it snaps back to the wielder's hand on a crimson thread of blood-magic at the end of the attack.",
-        lore: "Carved from the femur of a Ravenloft courtier and bound in crimson sinew."
+    vladimir_greatsword: {
+        cat: "weapon", name: "🗡️ Vladimir Horngaard's +2 Silvered Dragon Greatsword", rarity: "Very Rare Magic Greatsword • (Jacomir)",
+        location: "Act III • Argynvostholt Throne Room (Area Q36 — Session 11) • Best for Jacomir",
+        mechanics: "• <strong>Apex Martial Greatsword:</strong> Grants a <strong>+2 bonus to attack and damage rolls</strong> (`2d6 + STR + 2` magical silvered slashing damage; <em>Graze Mastery</em> deals STR+2 damage even on a miss!).<br>• <strong>Silver Wyrm's Frost (Possible Upgrade):</strong> Once per turn on a hit, the blade rimes with silver dragon-frost, dealing an extra <strong>1d6 Cold or Radiant damage</strong>!",
+        lore: "A six-foot blade of star-silver steel with a crossguard shaped like the spread wings of the silver dragon Argynvost, wielded for four centuries by Commander Vladimir Horngaard."
     },
+    volenta_dagger: {
+        cat: "weapon", name: "🗡️ Volenta's Bone-Spiked Returning Dagger +1", rarity: "Rare Magic Dagger • Finesse / Thrown",
+        location: "Act I/II • Dropped by Bride Volenta Popofsky • Yvaine / Jacomir / Piper",
+        mechanics: "• <strong>Blood-Thread Return:</strong> <strong>+1 Dagger</strong> (`1d4 + DEX/STR + 1` piercing + <strong>`1d4` necrotic damage</strong>; <em>Nick Mastery</em>).<br>• When thrown (range 20/60 ft), a thin crimson thread of blood-magic snaps the dagger right back into the wielder's hand at the end of the attack!",
+        lore: "Carved from the femur of a Ravenloft courtier and bound in crimson sinew by Strahd's youngest bride, Volenta."
+    },
+    izek_battleaxe: {
+        cat: "weapon", name: "🔥 Izek Strazni's Hellfire Brute Battleaxe +1", rarity: "Rare Magic Battleaxe • (Jacomir)",
+        location: "Act II • Dropped by Captain Izek Strazni in Vallaki (Session 6) • Best for Jacomir",
+        mechanics: "• <strong>Fiendish Edge:</strong> <strong>+1 Battleaxe</strong> (`1d8+1` one-handed / `1d10+1` two-handed slashing; <em>Topple Mastery</em>).<br>• <strong>Cinder-Brand:</strong> Heated by Izek's barbed fiend arm, the axe deals an extra <strong>1d6 Fire damage</strong> on the first hit each turn (which also halts Vampire Regeneration if attuned to fiendish flame!).",
+        lore: "A heavy, soot-blackened executioner's battleaxe forged by Vallaki's smiths to match the monstrous strength of Baron Vargas's enforcer."
+    },
+    gulthias_staff: {
+        cat: "weapon", name: "🌿 The Gulthias Staff (Vampiric Blight Staff)", rarity: "Rare Magic Staff • Attunement (Piper / Cael)",
+        location: "Act II • Wizard of Wines Loading Balcony (Area W14 — Session 7) • Piper / Cael",
+        mechanics: "Made from the black, spongy branch of the vampire-rooted <strong>Gulthias Tree</strong> (10 Charges, regains 1d6+4 at dusk):<br>• <strong>Blight Ward:</strong> While holding it, Blights and evil plant creatures are non-hostile to you unless you harm them.<br>• <strong>Vampiric Strike (1 Charge):</strong> When you hit with a melee attack using the staff (`1d6/1d8` bludgeoning), you heal HP equal to the damage dealt!<br>• <strong>Snapping Scream (Instant AoE Victory):</strong> If a hero snaps the staff over their knee (AC 12, 10 HP), it unleashes a silent psychic scream that <strong>instantly withers and kills every single Blight within 300 feet</strong>!",
+        lore: "Hollow and porous like petrified bone, drinking in droplets of blood from the palms of the Yester Hill druids."
+    },
+    van_richten_scope: {
+        cat: "weapon", name: "🔫 Van Richten's Silver-Runed Scope & Clockwork Barrel (+1/+2 Firearm Upgrade)", rarity: "Rare Possible Upgrade • (Yvaine)",
+        location: "Act II/III • Possible Loot in Rictavio's Wagon (N2r) or Ezmerelda's Wagon (S12) • Best for Yvaine",
+        mechanics: "• <strong>Master Monster-Hunter Gunsmithing:</strong> Attaches to <strong>Yvaine's</strong> rifle <em>Lament</em> (or her twin revolvers <em>Mercy & Less</em>), upgrading them into <strong>+1 Magical Silvered Firearms</strong> in Act II (upgradable to <strong>+2</strong> in Act III!).<br>• <strong>Mist-Piercing Sight:</strong> The etched crystal lens ignores lightly obscured fog/mist up to 120 ft and allows Yvaine's <em>Hunter's Sense</em> to spot invisible or ethereal foes (like Night Hags or Strahd's Nightmare Bucephalus) within 30 ft!",
+        lore: "Hand-tooled brass and silver clockwork optics crafted by the legendary monster scholar Rudolph van Richten and his protégé Ezmerelda d'Avenir."
+    },
+    ezmerelda_ammo: {
+        cat: "weapon", name: "💥 Ezmerelda's Sunburst & Silver Alchemical Cartridges (x10)", rarity: "Rare Possible Ammunition • (Yvaine)",
+        location: "Act II/III • Possible Loot from Ezmerelda d'Avenir or Van Richten's Tower • Best for Yvaine",
+        mechanics: "• <strong>Dawn-Powder Rounds (10 Cartridges):</strong> Can be loaded into <em>Lament</em> or <em>Mercy & Less</em> (no action required).<br>• Each shot grants a <strong>+1 bonus to attack and damage rolls</strong>, deals an extra <strong>+1d6 Radiant damage</strong> on a hit, and <strong>halts Vampire Regeneration for 1 round</strong>!",
+        lore: "Brass paper cartridges packed with alchemical silver filings and powdered sunburst quartz blessed at the Shrine of the White Sun."
+    },
+    oil_of_sharpness: {
+        cat: "weapon", name: "🧪 Oil of Sharpness (+3 Weapon / Ammunition Coating)", rarity: "Very Rare Consumable • Book Area U3",
+        location: "Act III • Baba Lysaga's Creeping Hut in Berez (Area U3 — Session 14) • Jacomir / Yvaine",
+        mechanics: "• <strong>Apex Boss-Killer Coating:</strong> Taking 1 Action (or pre-combat prep) to coat 1 slashing/piercing weapon (like Jacomir's Greatsword) or <strong>5 pieces of ammunition</strong> (like Yvaine's rifle rounds): for <strong>1 full hour</strong>, the coated weapon/ammo becomes magical and gains a massive <strong>+3 bonus to attack and damage rolls</strong>!",
+        lore: "A clear, gelatinous vial of oil flecked with tiny, razor-sharp shards of pure silver, hidden inside Baba Lysaga's treasure chest."
+    },
+    baal_verzi_dagger: {
+        cat: "weapon", name: "🗡️ Baal Verzi Assassin's Mirror Dagger +1", rarity: "Rare Magic Dagger • Book Area N3/N4",
+        location: "Act II • Vallaki (Baron's Mansion Mirror / Lady Wachter's Chest) • Yvaine / Jacomir",
+        mechanics: "• <strong>+1 Magic Dagger</strong> (`1d4+1` piercing, Finesse, Thrown 20/60 ft).<br>• <strong>Shadow-Throat Strike:</strong> Deals an extra <strong>2d6 Necrotic damage</strong> when hitting a surprised target or scoring a Critical Hit.",
+        lore: "The curved, blackened-steel blade of the ancient Baal Verzi order of assassins—the same guild that once tried to assassinate a mortal General Strahd."
+    },
+    mace_of_terror: {
+        cat: "weapon", name: "🔨 Gustav Herrenghast's Mace of Terror", rarity: "Rare Magic Mace • Attunement (Book Crypt 7)",
+        location: "Act IV • Castle Ravenloft Catacombs — Crypt 7 (Area K84)",
+        mechanics: "Holds <strong>3 Charges</strong> (regains 1d3 at dawn):<br>• <strong>Wave of Terror (1 Charge, Action):</strong> Unleashes a 30-ft wave of dread; enemies of your choice within 30 ft must pass a <strong>DC 15 WIS Save or be Frightened of you for 1 minute</strong> (must spend their turns dashing away!).",
+        lore: "Buried in the crypt of the warlord Gustav Herrenghast beneath Castle Ravenloft."
+    },
+    plus1_bullets: {
+        cat: "weapon", name: "🎯 Baba Lysaga's +1 Magical Sling / Firearm Bullets (x10)", rarity: "Uncommon Ammunition • Book Area U3",
+        location: "Act III • Baba Lysaga's Creeping Hut in Berez (Area U3 — Session 14) • Best for Yvaine",
+        mechanics: "10 lead-and-silver rounds etched with Mother Night runes. Grants a <strong>+1 bonus to attack and damage rolls</strong> when fired from Yvaine's firearms or a sling.",
+        lore: "Recovered from the rotting iron strongbox inside Baba Lysaga's walking hut."
+    },
+    phosphor_grenades: {
+        cat: "weapon", name: "💣 Alchemical Phosphor & Smoke Flash-Bombs (x3)", rarity: "Uncommon Tactical Gear • Possible Loot",
+        location: "Act II/III • Ezmerelda's Wagon (V1) or Blinsky's Workshop (Vallaki N7) • Yvaine & Party",
+        mechanics: "• <strong>Action (Throw 30 ft, 10-ft radius):</strong> Targets make a <strong>DC 13 DEX/CON Save</strong> or take <strong>2d6 Fire/Radiant damage</strong> and are <strong>Blinded until the end of their next turn</strong> (also illuminates magical blood-mist!).",
+        lore: "Glass spheres packed with white phosphorus, magnesium shavings, and silver dust."
+    },
+
+    // =========================================================================
+    // CATEGORY 3: CASTER — ARCANE STAVES, WANDS, SPELLBOOKS & CASTER RELICS
+    // =========================================================================
+    bloodwell_vial: {
+        cat: "caster", name: "🩸 Vistani Bloodwell Vial (+1 / +2 Sorcerer Focus)", rarity: "Rare Possible Relic • Attunement (Piper)",
+        location: "Act I/II • Possible Loot in Tser Pool Vistani Wagon (S2) or Wachterhaus (S6) • Best for Piper",
+        mechanics: "• <strong>Sorcerer Spell Focus:</strong> Grants <strong>Piper</strong> a <strong>+1 bonus to Spell Attack Rolls and Spell Save DC</strong> (`Spell DC 15, +7 to hit` — upgradable to <strong>+2</strong> in Act III/IV!).<br>• <strong>Sanguine Font (1/Day on Short Rest):</strong> Whenever Piper rolls any Hit Dice during a Short Rest (or uses her 25% Short Rest heal), she immediately regains <strong>5 expended Sorcery Points</strong> (up to her maximum)!",
+        lore: "A fluted crystal phial bound in Vistani filigree that warms and swirls with violet-gold sparks whenever Piper's Fierna Wild Magic surges."
+    },
+    staff_of_frost: {
+        cat: "caster", name: "❄️ Staff of Frost (Amber Temple Vault)", rarity: "Very Rare Magic Staff • Attunement (Piper / Cael)",
+        location: "Act IV • The Amber Temple Upper West Hall (Book Area X17 — Session 15) • Piper / Cael",
+        mechanics: "• <strong>Winter's Mantle:</strong> Grants <strong>Resistance to Cold damage</strong>.<br>• <strong>10 Charges (regains 1d6+4 daily at dawn):</strong> Cast using your Spell Save DC:<br>&nbsp;&nbsp;• <em>Fog Cloud</em> (1 charge)<br>&nbsp;&nbsp;• <em>Ice Storm</em> (4 charges — `2d8` bludgeoning + `4d6` cold in 20-ft radius)<br>&nbsp;&nbsp;• <em>Wall of Ice</em> (4 charges)<br>&nbsp;&nbsp;• <em>Cone of Cold</em> (5 charges — `8d8` cold in 60-ft cone!)<br>• <em>Official Book Quirk:</em> The first character to hold it gains the flaw: <em>'I crave power above all else, and will do anything to obtain more of it.'</em>",
+        lore: "Clutched in the frozen, frost-bitten corpse of a wizard inside the breached breach-hall of the Amber Temple."
+    },
+    staff_of_power: {
+        cat: "caster", name: "⚡ Khazan's Staff of Power (+2 AC, Saves & Spell Attack!)", rarity: "Very Rare Apex Staff • Attunement (Piper)",
+        location: "Act IV • Castle Ravenloft — Crypt 15 of Archmage Khazan (Book Area K84 — Session 18) • Best for Piper",
+        mechanics: "• <strong>Supreme Arcane Protection:</strong> While holding this staff, <strong>Piper</strong> gains a massive <strong>+2 bonus to Armor Class, +2 to all Saving Throws, and +2 to Spell Attack Rolls</strong> (plus it acts as a `+2 Quarterstaff`)!<br>• <strong>20 Charges (regains 2d8+4 at dawn):</strong> Expend charges to cast:<br>&nbsp;&nbsp;• <em>Magic Missile</em> (1 charge) • <em>Ray of Enfeeblement</em> (1 charge) • <em>Levitate</em> (2 charges)<br>&nbsp;&nbsp;• <em>Fireball (5th-Level: 10d6 Fire!)</em> (5 charges) • <em>Lightning Bolt (5th-Level: 10d6 Lightning!)</em> (5 charges)<br>&nbsp;&nbsp;• <em>Cone of Cold</em> (5 charges) • <em>Hold Monster</em> (5 charges) • <em>Wall of Force</em> (5 charges) • <em>Globe of Invulnerability</em> (6 charges).",
+        lore: "The masterwork staff of the lich-archmage Khazan, who built Van Richten's Tower and attempted to destroy the Sunsword for Count Strahd."
+    },
+    wand_of_secrets: {
+        cat: "caster", name: "🪄 Wand of Secrets", rarity: "Uncommon Wand • No Attunement (Book Area X2b)",
+        location: "Act IV • The Amber Temple Guard Room (Book Area X2b) • Party Utility",
+        mechanics: "Holds <strong>3 Charges</strong> (regains 1d3 at dawn):<br>• <strong>Action (1 Charge):</strong> The wand pulses and points directly toward the nearest <strong>secret door or hidden trap within 60 feet</strong> (incredibly useful inside the Amber Temple and Castle Ravenloft's 88 rooms!).",
+        lore: "A slender wand of polished obsidian tipped with a silver eye."
+    },
+    victor_wand: {
+        cat: "caster", name: "🪄 Victor Vallakovich's Crackling Wand of Wonder / Lightning", rarity: "Rare Possible Wand • Attunement (Piper)",
+        location: "Act II • Baron Vargas's Mansion Attic (Book Area N3t — Session 6) • Best for Piper",
+        mechanics: "Holds <strong>7 Charges</strong> (regains 1d6+1 at dawn):<br>• <strong>Arcane Discharge (1 Charge, Action):</strong> Fires a 3rd-level <em>Lightning Bolt</em> (`8d6` Lightning, DC 15 DEX Save) OR rolls on the chaotic <strong>Wand of Wonder / Wild Magic Surge Table</strong> (granting Piper <strong>+1 Tides of Chaos recharge</strong>!).",
+        lore: "Cobbled together by Baron Vargas's rebellious teenage son Victor in his skeletal-cat-filled attic laboratory as he desperately tried to build a teleportation circle out of Barovia."
+    },
+    hat_of_disguise: {
+        cat: "caster", name: "🎭 Rictavio's Hat of Disguise", rarity: "Uncommon Wondrous Item • Attunement (Book Area N2r)",
+        location: "Act II • Rictavio's Carnival Wagon in Vallaki (Book Area N2r) • Piper / Yvaine",
+        mechanics: "While wearing this flamboyant plumed hat, you can use an Action to cast the <strong><em>Disguise Self</em> spell at will</strong> (perfect for infiltrating Wachterhaus, the Baron's mansion, or Castle Ravenloft!).",
+        lore: "Used by legendary vampire hunter Rudolph van Richten to maintain his cover identity as the half-elf carnival ringmaster 'Rictavio'."
+    },
+    ring_mind_shielding: {
+        cat: "caster", name: "🧠 Van Richten's Ring of Mind Shielding", rarity: "Uncommon Ring • Attunement (Book Chapter 5)",
+        location: "Act II/III • Worn by Rudolph van Richten ('Rictavio') in Vallaki",
+        mechanics: "• <strong>Mental Fortress:</strong> While wearing this ring, you are <strong>immune to magic that allows other creatures to read your thoughts, determine whether you are lying, know your alignment, or know your creature type</strong> (prevents Count Strahd or the Abbot from reading your mind or scrying your intentions!).",
+        lore: "A plain band of tarnished silver that shields Rudolph van Richten's true identity from Count Strahd's spies."
+    },
+    pipes_of_haunting: {
+        cat: "caster", name: "🎶 Pipes of Haunting", rarity: "Uncommon Wondrous Instrument • (Book Area U3)",
+        location: "Act III • Baba Lysaga's Creeping Hut in Berez (Book Area U3 — Session 14)",
+        mechanics: "Holds <strong>3 Charges</strong> (regains 1d3 at dawn):<br>• <strong>Eerie Dirge (1 Charge, Action):</strong> All enemies within 30 ft that hear the pipes must pass a <strong>DC 15 Wisdom Save or be Frightened for 1 minute</strong>!",
+        lore: "Panpipes carved from hollow swamp-reeds and bound in raven sinew."
+    },
+    doss_lute: {
+        cat: "caster", name: "🪕 Mac-Fuirmidh Cittern / Doss Lute of Ravenloft", rarity: "Uncommon Wondrous Instrument • (Book Area K37)",
+        location: "Act II/IV • Castle Ravenloft Study (Book Area K37) • Piper / Cael",
+        mechanics: "Can be played once per day to cast each of the following spells without expending a spell slot: <strong><em>Fly, Invisibility, Levitate, Protection from Evil and Good,</em></strong> and <strong><em>Animal Friendship / Barkskin</em></strong>.",
+        lore: "An antique masterwork lute resting untouched for three centuries inside Count Strahd's private study."
+    },
+    deck_of_illusions: {
+        cat: "caster", name: "🃏 Tarokka Deck of Illusions", rarity: "Uncommon Wondrous Deck • (Book Crypt 9)",
+        location: "Act IV • Castle Ravenloft Catacombs — Crypt 9 (Book Area K84) • Best for Piper",
+        mechanics: "A leather pouch containing <strong>34 parchment cards</strong>. As an Action, draw a card and throw it up to 30 ft away to conjure a <strong>lifelike, moving illusion of a creature</strong> (Red Dragon, Archmage, Iron Golem, Knight, Goblin, etc.) that acts under your mental command until dispelled!",
+        lore: "Hidden inside the crypt of 'Grorald the Trickster' beneath Castle Ravenloft—a natural fit for Piper's stage-magician flair!"
+    },
+    barovian_spellbooks: {
+        cat: "caster", name: "📖 The Four Master Spellbooks of Barovia", rarity: "Rare Arcane Grimoires • Book Locations",
+        location: "Act I–IV • Indirovich Manor (S1), Baron's Attic (N3t), Kasimir (N9a) & Amber Temple (X30)",
+        mechanics: "• <strong>1. Kolyan's Wizard Diary (Claimed S1):</strong> Early protection rituals & Keepers of the Feather lead.<br>• <strong>2. Victor Vallakovich's Spellbook (Vallaki N3t):</strong> Contains <em>Misty Step, Knock, Glyph of Warding, Fireball, Animate Dead, Greater Invisibility, Cone of Cold, Teleportation Circle</em>.<br>• <strong>3. Kasimir Velikov's Spellbook (Dusk Elf Camp N9a):</strong> Contains <em>Counterspell, Fly,Phantom Steed, Polymorph, Wall of Fire</em>.<br>• <strong>4. Amber Temple Library (Area X30):</strong> Contains <strong>every single Wizard spell in the Player's Handbook</strong>!",
+        lore: "Can be studied during Long Rests to unlock bonus ritual spells, transcribed into spell scrolls, or traded to arcanists."
+    },
+    spell_scroll_cache: {
+        cat: "caster", name: "📜 Barovian Master Spell Scrolls Cache (Revivify, Heroes' Feast & More)", rarity: "Uncommon–Very Rare Scrolls • Book Locations",
+        location: "Act II–III • Rictavio's Wagon (N2r), Berez Hut (U3) & Krezk Abbey (S13) • Cael & Piper",
+        mechanics: "Official spell scrolls hidden across the module:<br>• 📜 <strong>Scrolls of Protection from Undead & Fiends:</strong> Rictavio's Wagon (`N2r`).<br>• 📜 <strong>Spell Scroll of Revivify (3rd-Lvl) & Mass Cure Wounds (5th-Lvl):</strong> Baba Lysaga's Hut in Berez (`Area U3`).<br>• 📜 <strong>Spell Scroll of Heroes' Feast (6th-Lvl!):</strong> Abbey of St. Markovia (`Area S13` — grants the entire party <strong>+2d10 Max HP, Poison/Fear Immunity, and Advantage on ALL Wisdom Saves for 24 hours</strong> before the Ravenloft/Amber Temple siege!).",
+        lore: "Wax-sealed vellum scrolls preserved in lead tubes against the damp Barovian fog."
+    },
+
+    // =========================================================================
+    // CATEGORY 4: ARMOR — MAGIC ARMOR, RINGS, CLOAKS & DEFENSIVE RELICS
+    // =========================================================================
+    dragonplate_armor: {
+        cat: "armor", name: "🛡️ Silvered Dragonplate / Strahd's Animated Plate (+1 Heavy Armor)", rarity: "Rare/Very Rare Armor • (Jacomir)",
+        location: "Act III/IV • Argynvostholt (Q36) or Castle Ravenloft (Area K41) • Best for Jacomir",
+        mechanics: "• <strong>Silver Wyrm's Bulwark:</strong> Suits of masterwork <strong>+1 Plate Armor (AC 19 — or AC 20 with Jacomir's Defense Fighting Style!)</strong> or <strong>+1 Half-Plate</strong>.<br>• Grants <strong>Resistance to Cold damage</strong> (Argynvostholt Dragonplate) or <strong>Lightning damage</strong> (Strahd's Animated Armor), and imposes no Disadvantage on Stealth checks if blessed at the Silver Beacon!",
+        lore: "Embossed with the silver scales and wings of Lord Argynvost, or forged in blood-red steel for Count Strahd's mortal campaigns."
+    },
+    shield_plus2: {
+        cat: "armor", name: "🛡️ +2 Heraldic Shield of the Silver Wyrm", rarity: "Rare Magic Shield • Book Area K41",
+        location: "Act III/IV • Castle Ravenloft Treasury (Area K41) or Argynvostholt Vault • Jacomir / Cael",
+        mechanics: "While holding this silver-embossed shield, you gain a <strong>+2 bonus to AC in addition to the shield's normal +2 bonus (+4 AC total!)</strong>.",
+        lore: "Stamped with the rampant dragon crest of the Order of the Silver Dragon."
+    },
+    luckstone: {
+        cat: "armor", name: "🍀 Stone of Good Luck (Luckstone)", rarity: "Uncommon Wondrous Item • Attunement (Book Area U3)",
+        location: "Act III • Baba Lysaga's Creeping Hut in Berez (Book Area U3 — Session 14) • Any PC",
+        mechanics: "While this polished, cat's-eye agate is on your person, you gain a <strong>+1 bonus to all Ability Checks and +1 bonus to all Saving Throws</strong>!",
+        lore: "A smooth, green-and-gold river agate tucked inside Baba Lysaga's treasure chest."
+    },
+    ring_regeneration: {
+        cat: "armor", name: "💚 Ring of Regeneration", rarity: "Very Rare Ring • Attunement (Book Chapter 8 / K84)",
+        location: "Act III/IV • Abbey of St. Markovia (S13) or Castle Ravenloft Crypts • Jacomir / Yvaine / Piper",
+        mechanics: "While wearing this sapphire-set gold ring, you <strong>regain 1d6 Hit Points every 10 minutes</strong> (6d6 HP per hour — ensuring you enter every encounter at 100% Full HP!), provided you have at least 1 HP. If you lose a body part, the ring regrows it in 1d6+1 days.",
+        lore: "Worn by a sainted martyr of the Morninglord, pulsing with a steady, warm heartbeat."
+    },
+    ring_of_warmth: {
+        cat: "armor", name: "🔥 Ring of Warmth", rarity: "Uncommon Ring • Attunement (Book Area N9a / T6)",
+        location: "Act III/IV • Kasimir Velikov (Dusk Elf Camp N9a) or Tsolenka Pass • Party",
+        mechanics: "• <strong>Mountain Survival:</strong> Grants <strong>Resistance to Cold damage</strong>.<br>• In addition, you and everything you wear and carry are <strong>unharmed by freezing temperatures as low as -50 degrees Fahrenheit</strong> (negates the extreme cold exhaustion saves of Tsolenka Pass and the Amber Temple!).",
+        lore: "A band of hammered red gold set with a glowing garnet that never cools."
+    },
+    helm_of_brilliance: {
+        cat: "armor", name: "👑 Helm of Brilliance", rarity: "Very Rare Wondrous Helm • Attunement (Book Area K41)",
+        location: "Act IV • Castle Ravenloft Sealed Treasury Vault (Book Area K41) • Apex Vault Treasure",
+        mechanics: "Set with diamonds, rubies, fire opals, and opals:<br>• <strong>Undead Burn Aura:</strong> Sheds dim light in a 30-ft radius; any Undead that starts its turn in that area takes <strong>1d6 Radiant damage</strong>!<br>• <strong>Flaming Weapon:</strong> As long as the helm has 1 ruby, any weapon you wield bursts into flame (+<strong>1d6 Fire damage</strong> per hit).<br>• <strong>Resistance:</strong> Grants <strong>Resistance to Fire damage</strong>.<br>• <strong>Gem Spells:</strong> Expend gems to cast <em>Daylight, Fireball (DC 18), Prismatic Spray (DC 18),</em> or <em>Wall of Fire</em>!",
+        lore: "The crown jewel of Count Strahd's sealed treasury tower (`Area K41`) inside Castle Ravenloft."
+    },
+    wereraven_cloak: {
+        cat: "armor", name: "🧥 Wereraven Feather Cloak of Protection (+1 AC & Saves)", rarity: "Rare Possible Faction Reward • Attunement",
+        location: "Act II • Possible Reward from Davian/Urwin Martikov after Saving Wizard of Wines (Session 7)",
+        mechanics: "• <strong>Keepers' Blessing:</strong> Grants a <strong>+1 bonus to AC and +1 to all Saving Throws</strong>.<br>• <strong>Raven's Glide (Reaction):</strong> When you fall, you can spread the cloak like black raven wings to descend at 60 ft/round, taking <strong>zero falling damage</strong> (lifesaver on the 1,000-ft cliffs of Ravenloft and North Tower!).",
+        lore: "Woven from the shed pinfeathers of three generations of the Martikov clan and gifted only to sworn friends of the Keepers of the Feather."
+    },
+    bloodhorn_pelt: {
+        cat: "armor", name: "🧥 Bloodhorn's Mountain Goat Pelt (Mantle of the Balinok Peaks)", rarity: "Uncommon Wondrous Cloak • Book Area T6",
+        location: "Act IV • Tsolenka Pass Guard Tower (Book Area T6 — Session 15) • Yvaine / Jacomir",
+        mechanics: "Thick white-and-crimson fur cloak taken from the giant mountain ram <em>Bloodhorn</em>. Grants <strong>immunity to extreme cold weather</strong> on Mount Ghakis and <strong>Advantage on Stealth and Athletics checks</strong> in snowy or rocky mountain terrain.",
+        lore: "Still warm to the touch, smelling of alpine pine and ozone."
+    },
+    volenta_mask: {
+        cat: "armor", name: "💀 Volenta's Porcelain Skull-Mask Charm", rarity: "Uncommon Wondrous Charm • Boss Drop",
+        location: "Act I/II • Dropped by Bride Volenta Popofsky • Piper / Yvaine",
+        mechanics: "• <strong>False Life (1/Day Bonus Action):</strong> Cast 2nd-level <em>False Life</em> on yourself, gaining <strong>1d4 + 9 Temporary Hit Points</strong> for 1 hour.<br>• <strong>Dread Visage:</strong> Grants <strong>Advantage on Intimidation checks</strong> while worn or hung from a belt.",
+        lore: "A cracked, hand-painted white porcelain half-mask shaped like a grinning human skull."
+    },
+    hag_heartstone: {
+        cat: "armor", name: "🧿 Morgantha's Cracked Night Hag Heartstone", rarity: "Rare Wondrous Gem • Boss Drop (Session 3)",
+        location: "Act I • Old Bonegrinder Windmill (Dropped by Morgantha — Session 3) • Cael / Party",
+        mechanics: "• <strong>Purifying Touch (1/Day Action):</strong> Touch a creature to immediately <strong>cure any 1 disease, poison, or hag nightmare curse</strong>.<br>• <strong>Soul-Tether Ward:</strong> While carried in your pocket, you have <strong>Advantage on Death Saving Throws</strong>!",
+        lore: "A lustrous, cracked jet-black gem worn around Granny Morgantha's neck. Though cracked enough to lose its Etherealness power, it still drinks away sickness and death."
+    },
+    bag_of_tricks: {
+        cat: "armor", name: "🐾 Martikov Gray Bag of Tricks", rarity: "Uncommon Wondrous Item • (Book Area N2q)",
+        location: "Act II • Blue Water Inn Secret Loft Stash in Vallaki (Book Area N2q — Session 4)",
+        mechanics: "Up to <strong>3 times per day</strong> as an Action, pull a fuzzy gray ball from the bag and toss it up to 20 ft to summon a friendly animal companion (roll d8: <em>Weasel, Giant Rat, Badger, Boar, Panther, Giant Badger, Dire Wolf,</em> or <em>Giant Elk</em>) that fights on your turn until dawn!",
+        lore: "Hidden by Urwin Martikov behind a loose wall-panel in the Blue Water Inn's attic."
+    },
+    alchemy_fortress: {
+        cat: "armor", name: "🏰 Daern's Instant Fortress & Alchemy Jug", rarity: "Rare Wondrous Vault Relics • (Book Area K41)",
+        location: "Act IV • Castle Ravenloft Sealed Treasury Vault (Book Area K41)",
+        mechanics: "• <strong>Daern's Instant Fortress:</strong> 1-inch adamantine cube that expands on command into a 20×20-ft, 30-ft-tall adamantine tower (each wall has 100 HP, immune to nonmagical weapons!).<br>• <strong>Alchemy Jug:</strong> Ceramic jug that pours up to 2 gallons of wine, beer, fresh water, oil, acid (2 vials/day), or basic poison (1/2 ounce/day) on command!",
+        lore: "Locked inside the iron vault of Count Strahd's treasury."
+    },
+
+    // =========================================================================
+    // CATEGORY 5: HEAL — POTIONS, ELIXIRS, HOLY WATER & BAROVIAN VINTAGES
+    // =========================================================================
     healing_potion: {
-        cat: "heal", name: "🧪 Potion of Healing", rarity: "Common Consumable • 5 GP",
-        location: "Ismark's Armory Cache & Vallaki Merchants",
-        mechanics: "<strong>Bonus Action</strong> to drink yourself or <strong>Action</strong> to feed an ally: restores <strong>2d6 + 1 HP</strong> (overflow above Max HP converts to Temp HP!).",
+        cat: "heal", name: "🧪 Potion of Healing (Standard)", rarity: "Common Consumable • 5 GP",
+        location: "Act I–IV • Ismark's Cache, Vistani Camp, Blue Water Inn & Dungeon Caches",
+        mechanics: "<strong>Bonus Action</strong> to drink yourself or <strong>Action</strong> to feed a downed ally: restores <strong>2d6 + 1 HP</strong> (any healing above Max HP automatically channels into Temporary HP!).",
         lore: "A crystal vial of glowing crimson liquid smelling of mountain herbs."
+    },
+    greater_healing: {
+        cat: "heal", name: "🧪 Potion of Greater Healing", rarity: "Uncommon Consumable • 15 GP (Book Area N2q)",
+        location: "Act II–III • Blue Water Inn Stash (N2q), Ezmerelda's Wagon & Argynvostholt",
+        mechanics: "<strong>Bonus Action</strong> self / <strong>Action</strong> ally: restores <strong>4d4 + 4 HP</strong> (overflow above Max HP converts to Temp HP!).",
+        lore: "A heavy, wax-stoppered flask of concentrated ruby restorative."
+    },
+    superior_healing: {
+        cat: "heal", name: "🧪 Potion of Superior Healing", rarity: "Rare Consumable • 45 GP (Book Area S13)",
+        location: "Act III–IV • Abbey of St. Markovia (S13), Amber Temple & Castle Ravenloft",
+        mechanics: "<strong>Bonus Action</strong> self / <strong>Action</strong> ally: restores a massive <strong>8d4 + 8 HP (Avg 28 HP!)</strong>.",
+        lore: "Distilled by the Deva Abbot in Krezk using blessed spring water from the Shrine of the White Sun."
+    },
+    potion_invulnerability: {
+        cat: "heal", name: "🛡️ Potion of Invulnerability (x4 in Argynvostholt!)", rarity: "Rare Consumable • Book Area Q6",
+        location: "Act III • Argynvostholt Wine Storage / Vault (Book Area Q6 — Session 10)",
+        mechanics: "<strong>Bonus Action / Action to drink:</strong> For <strong>1 full minute (10 rounds)</strong>, you have <strong>Resistance to ALL damage types</strong> (halves all slashing, piercing, bludgeoning, necrotic, fire, lightning, and radiant damage taken during boss fights!).",
+        lore: "Four dust-covered iron vials resembling liquid mercury, left behind by the knights of the Silver Dragon."
+    },
+    elixir_of_health: {
+        cat: "heal", name: "✨ Elixir of Health", rarity: "Rare Consumable • Book Area N2q",
+        location: "Act II • Blue Water Inn Secret Stash in Vallaki (Book Area N2q)",
+        mechanics: "When you drink this clear blue-green liquid, it <strong>cures any disease</strong> afflicting you and immediately removes the <strong>Blinded, Deafened, Paralyzed, and Poisoned</strong> conditions!",
+        lore: "Kept by the Martikov family for emergencies against hag poisons and vampire curses."
     },
     holy_water: {
         cat: "heal", name: "💧 Flask of St. Andral's Holy Water", rarity: "Uncommon Consumable • 2 GP 5 SP",
-        location: "Ismark's Cache & Father Donavich",
+        location: "Act I–IV • Ismark's Cache, Father Donavich, Father Lucian & Ezmerelda",
         mechanics: "Throw (20 ft) or splash on a weapon/target: deals <strong>2d6 Radiant damage</strong> to Undead/Fiends and <strong>immediately halts Vampire Regeneration for 1 full round</strong>!",
         lore: "Pure spring water consecrated beneath the altar of the Morninglord."
     },
-    icon_ravenloft: {
-        cat: "heal", name: "🏰 Icon of Ravenloft", rarity: "Legendary Silver Statuette • Attunement",
-        location: "Castle Ravenloft High Chapel",
-        mechanics: "15-ft <em>Protection from Evil and Good</em> aura; 1/day Action to heal a creature for <strong>3d8 + 3 HP</strong> and cure all curses/diseases.",
-        lore: "A 12-inch statuette of pure silver depicting a kneeling cleric of the Morninglord."
-    },
-    dream_pastry: {
-        cat: "buff", name: "🥧 Morgantha's Dream Pastry", rarity: "Cursed Consumable • 1 GP",
-        location: "Sold by Morgantha on Old Svalich Road",
-        mechanics: "Action to eat: grants <strong>1d6 Temporary HP</strong>, removes 1 level of Exhaustion, and induces 8 hours of blissful dreams. DC 13 CON Save at dawn or suffer -1d4 to Wisdom checks until eating another pastry!",
-        lore: "Warm flaky golden crust baked with bone-flour from Old Bonegrinder."
+    purple_grapemash: {
+        cat: "heal", name: "🍷 Wizard of Wines — Purple Grapemash No. 3", rarity: "Common Vintage • 5 SP",
+        location: "Act I–IV • Blood on the Vine Tavern, Blue Water Inn & Winery",
+        mechanics: "Barovia's everyday table wine. Sharing a bottle during a Short Rest warms the party against the damp fog, granting <strong>+1 additional HP restored</strong> from Short Rest healing.",
+        lore: "A tart, earthy purple table wine that keeps the people of Barovia from losing their minds to the gloom."
     },
     dragon_crush: {
-        cat: "buff", name: "🍷 Wizard of Wines — Red Dragon Crush", rarity: "Fine Vintage • 1 GP",
-        location: "Blood on the Vine Tavern & Blue Water Inn",
+        cat: "heal", name: "🍷 Wizard of Wines — Red Dragon Crush", rarity: "Fine Vintage • 1 GP",
+        location: "Act I–IV • Blood on the Vine Tavern, Blue Water Inn & Wizard of Wines",
         mechanics: "Drinking a goblet during a Short Rest grants <strong>+1d4 Temporary HP</strong> and <strong>Advantage on the next saving throw against being Frightened</strong> for 2 hours.",
-        lore: "The richest, rarest ruby vintage fermented by the Martikov family."
+        lore: "The rich, full-bodied ruby vintage fermented by the Martikov family."
     },
-    dark_gifts: {
-        cat: "buff", name: "⚡ Amber Temple Dark Gifts (Vampyr & Vecna)", rarity: "Artifact Boon • Act IV",
-        location: "Amber Temple Sarcophagi (Sessions 15–16)",
-        mechanics: "• <strong>Gift of Vampyr:</strong> +20 Max HP & melee crits heal HP equal to damage dealt.<br>• <strong>Gift of the Whispering Hand (Vecna):</strong> +2 Primary Stat (up to 22) & 1 free 5th-level spell slot/day (binds soul to Campaign 3 Monoliths!).",
-        lore: "Ancient vestiges trapped in glowing blocks of amber."
+    champagne_stomp: {
+        cat: "heal", name: "🍾 Wizard of Wines — Champagne du le Stomp (Lost Vintage)", rarity: "Rare Vintage • Book Chapter 12 / K63",
+        location: "Act II–IV • Wizard of Wines Cellar (W16) & Castle Ravenloft Wine Cellar (K63)",
+        mechanics: "The rarest vintage in Barovia (lost since the first Life-Gem was stolen!). Drinking a glass grants <strong>+2d4 Temporary HP</strong>, removes <strong>1 level of Exhaustion</strong>, and grants <strong>Advantage on saves vs Charm and Fear for 4 hours</strong>!",
+        lore: "Golden, sparkling wine sealed in heavy green glass bottles stamped with the Martikov raven."
+    },
+    hag_brews: {
+        cat: "heal", name: "🌿 Old Bonegrinder Hag Brews (Elixir of Youth & Pale Tincture)", rarity: "Uncommon/Rare Brews • Book Area O3",
+        location: "Act I • Old Bonegrinder Windmill 3rd Floor Barrels (Book Area O3 — Session 3)",
+        mechanics: "• 🧪 <strong>Elixir of Youth:</strong> Permanently reduces the drinker's physical appearance by `1d6 + 4` years and grants <strong>2d6 Temporary HP</strong>.<br>• ☠️ <strong>Pale Tincture (Hag Poison):</strong> Can coat 1 weapon or 3 bullets; target hit must pass a <strong>DC 16 CON Save</strong> or take <strong>1d6 Poison damage and be Poisoned</strong>!",
+        lore: "Stored in pickled-toad barrels on the third floor of Old Bonegrinder."
+    },
+
+    // =========================================================================
+    // CATEGORY 6: BUFF — DARK GIFTS, CURSED DELICACIES & PERMANENT BOONS
+    // =========================================================================
+    dream_pastry: {
+        cat: "buff", name: "🥧 Morgantha's Dream Pastry (1x Uneaten in Jacomir's Pack!)", rarity: "Cursed Consumable • 1 GP (Session 1)",
+        location: "Act I • Gifted to King Jacomir by Morgantha on Old Svalich Road (Session 1) & Old Bonegrinder",
+        mechanics: "Action to eat: grants <strong>1d6 Temporary HP</strong>, removes <strong>1 level of Exhaustion</strong>, and induces 8 hours of blissful dreams of your homeland. At dawn, make a <strong>DC 13 CON Save</strong> or suffer `-1d4` to Wisdom checks until eating another pastry (or cured by <em>Lesser Restoration / Elixir of Health</em>)!",
+        lore: "Warm flaky golden crust smelling of nutmeg and caramelized sugar—secretly baked from the ground bones of kidnapped Barovian children at Old Bonegrinder."
+    },
+    tome_understanding: {
+        cat: "buff", name: "📖 Tome of Understanding (+2 Permanent Wisdom!)", rarity: "Very Rare Tome • Book Area X30",
+        location: "Act IV • The Amber Temple Treasury / Arcanaloth Vault (Book Area X30 — Session 15) • Cael / Yvaine",
+        mechanics: "Studying this crystal-bound manual for 48 hours over 6 days permanently increases your <strong>Wisdom score AND your maximum Wisdom score by +2</strong> (raising Wisdom Saves, Perception, Insight, and Ranger/Druid Spell DC by +1 permanently!).",
+        lore: "Preserved for two millennia inside the secret library of the Amber Temple."
+    },
+    gift_of_vampyr: {
+        cat: "buff", name: "🩸 Supreme Dark Gift of Vampyr (Undying Bloodlord — Jacomir)", rarity: "Artifact Boon • Act IV (Book Area X42)",
+        location: "Act IV • The Amber Temple Lower Vault (Area X42 — Session 16) • Tailored for Jacomir",
+        mechanics: "• <strong>Sanguine Titan:</strong> Permanently increases <strong>Max HP by +20</strong>.<br>• <strong>Vampiric Criticals:</strong> Whenever you score a Critical Hit (or reduce a foe to 0 HP), you regain HP equal to 100% of the damage dealt.<br>• <strong>Misty Escape (1/Day):</strong> When reduced to 0 HP, dissolve into crimson mist and reform 30 ft away at <strong>15 HP</strong>.<br>• <em>Trilogy Corruption:</em> Binds the bearer as the Martial Vanguard of the Mists for Campaign 3!",
+        lore: "Offered from the blood-red amber sarcophagus in the West Vault—the exact vestige that forged Count Strahd von Zarovich."
+    },
+    gift_of_vecna: {
+        cat: "buff", name: "🟣 Supreme Dark Gift of the Whispering Hand (Vecna's Monolith — Piper)", rarity: "Artifact Boon • Act IV (Area X42)",
+        location: "Act IV • The Amber Temple Obsidian Monolith (Area X42 — Session 16) • Tailored for Piper",
+        mechanics: "• <strong>Ascendant Arcana:</strong> Permanently increases <strong>Charisma by +2 (up to 22 — raising Spell Save DC & Attack by +1!)</strong>.<br>• <strong>Undying Secret:</strong> Grants <strong>Immunity to Necrotic damage</strong>.<br>• <strong>Dread Arcanum (1/Long Rest):</strong> Cast <em>Finger of Death, Disintegrate,</em> or <em>Eyebite</em> once per Long Rest without expending a spell slot!<br>• <em>Trilogy Corruption:</em> Completes Stage 3 of Piper's Blank Tarokka Card, priming her as the Chaotic Conduit of the Mists in Campaign 3!",
+        lore: "Pulsing from the weeping Obsidian Monolith at the heart of the Amber Temple."
+    },
+    gift_of_zhudun: {
+        cat: "buff", name: "👁️ Supreme Dark Gift of Zhudun & Sykane (The Corpse Star — Yvaine)", rarity: "Artifact Boon • Act IV (Book Area X33)",
+        location: "Act IV • The Amber Temple East Vault (Area X33 — Session 16) • Tailored for Yvaine",
+        mechanics: "• <strong>Apex Marksman:</strong> Permanently increases <strong>Dexterity by +2 (up to 22 — raising AC, Initiative & Firearm Hit/Dmg by +1!)</strong>.<br>• <strong>Star-Sight & Slaying:</strong> Cast <em>True Seeing</em> 1/day (120-ft truesight!) and deal an extra <strong>+1d8 Necrotic/Radiant damage</strong> on the first firearm hit each turn.<br>• <strong>Corpse Star Resurrection:</strong> Cast <em>Raise Dead / Revivify</em> 1/day by touch without material components.<br>• <em>Trilogy Corruption:</em> Binds Yvaine's <em>Hunter's Sense</em> as Vecna's multiversal crosshairs in Campaign 3!",
+        lore: "Whispered from the gleaming black-and-silver sarcophagi of Zhudun the Corpse Star and Sykane the Soul Hungerer."
+    },
+    amber_minor_gifts: {
+        cat: "buff", name: "🪽 The 20 Official Amber Temple Sarcophagi Dark Gifts (Book Areas X33a–f)", rarity: "Artifact Boons • Book Chapter 13",
+        location: "Act IV • The Amber Temple Vaults (Book Areas X33a–X33f — Sessions 15–16)",
+        mechanics: "Official 5e Amber Sarcophagi gifts available in the vaults:<br>• <strong>Fekre (Pox):</strong> Cast <em>Contagion</em> (3x).<br>• <strong>Zrin-Hala (Howling Storm):</strong> Cast <em>Lightning Bolt</em> (3x).<br>• <strong>Sykane (Soul Hungerer):</strong> Cast <em>Raise Dead</em> (3x).<br>• <strong>Savnok (Inscrutable):</strong> Cast <em>Mind Blank</em> (3x — immune to Psychic & Scrying!).<br>• <strong>Tarakamedes (Grave Wyrm):</strong> Sprout permanent <strong>Skeletal Bat Wings (50-ft Fly Speed!)</strong>.<br>• <strong>Shami-Amourae:</strong> Cast <em>Suggestion</em> (3x) + +2 CHA.<br>• <strong>Drizlash (Nine-Eyed Spider):</strong> Permanent <strong>Spider Climb</strong> on walls/ceilings.<br>• <strong>Dahlver-Nar (He of the Many Teeth):</strong> Reincarnate automatically 3 times upon death!<br>• <strong>Zantras (The Kingmaker):</strong> <strong>+4 to Charisma (up to 22!)</strong>.<br>• <strong>Delban (Star of Ice):</strong> Cast <em>Cone of Cold</em> (7x).<br>• <strong>Khirad (Star of Secrets):</strong> Cast <em>Scrying</em> (3x).<br>• <strong>Yrrga (Eye of Shadows):</strong> Gain <strong>30 days of 120-ft Truesight</strong>.<br>• <strong>Great Taar Haak (Five-Headed Destroyer):</strong> Set <strong>Strength to 25 (+7)</strong> for 10 days.<br>• <strong>Norganas (Finger of Oblivion):</strong> Cast <em>Finger of Death</em> (3x).<br>• <strong>Vaund the Evasive:</strong> Benefits of <em>Amulet of Proof against Detection</em> & <em>Ring of Evasion</em>.",
+        lore: "Each amber block houses a trapped vestige of primordial evil, offering immense power at the cost of a gothic physical transformation or flaw."
     }
 };
 
@@ -3469,22 +3835,31 @@ function renderMonsterTable() {
     `;
 }
 
-function renderLootVault() {
+function renderLootVault(filterTag = 'all') {
     const container = document.getElementById('loot-containers');
     if (!container) return;
     const cats = [
-        { id: 'quest', title: '📜 Fated Tarokka Relics & Story Manuscripts', cls: 'loot-header-quest' },
-        { id: 'weapon', title: '⚔️ Sun-Blades, Silvered Weapons & Offensive Gear', cls: 'loot-header-weapon' },
-        { id: 'heal', title: '🧪 Potions, Holy Water & Restoratives', cls: 'loot-header-heal' },
-        { id: 'buff', title: '✨ Dark Gifts, Dream Pastries & Fine Vintages', cls: 'loot-header-buff' }
+        { id: 'quest', title: '📜 4.1 Fated Tarokka Relics, Session 1 Items & Story Artifacts (10)', cls: 'loot-header-quest' },
+        { id: 'weapon', title: '⚔️ 4.2 Magic Weapons, Silvered Arms & Firearm Upgrades (13)', cls: 'loot-header-weapon' },
+        { id: 'caster', title: '🔮 4.3 Arcane Staves, Wands, Spellbooks & Caster Relics (12)', cls: 'loot-header-caster' },
+        { id: 'armor', title: '🛡️ 4.4 Magic Armor, Rings, Cloaks & Defensive Relics (12)', cls: 'loot-header-armor' },
+        { id: 'heal', title: '🧪 4.5 Potions, Elixirs, Holy Water & Barovian Vintages (10)', cls: 'loot-header-heal' },
+        { id: 'buff', title: '⚡ 4.6 Amber Temple Dark Gifts, Cursed Delicacies & Boons (6)', cls: 'loot-header-buff' }
     ];
+    const q = (filterTag || 'all').toLowerCase();
     container.innerHTML = cats.map(c => {
-        const items = Object.entries(LOOT_DATA).filter(([_, it]) => it.cat === c.id);
+        const items = Object.entries(LOOT_DATA).filter(([_, it]) => {
+            if (it.cat !== c.id) return false;
+            if (q === 'all') return true;
+            const blob = `${it.name} ${it.rarity} ${it.location} ${it.mechanics}`.toLowerCase();
+            return blob.includes(q);
+        });
+        if (items.length === 0) return '';
         return `
             <div class="table-wrap">
                 <div class="loot-cat-title ${c.cls}">${c.title}</div>
                 <table class="guide-table">
-                    <thead><tr><th>Item Name</th><th>Rarity / Cost</th><th>Location / Source</th></tr></thead>
+                    <thead><tr><th style="width:42%;">Item Name</th><th style="width:20%;">Rarity / Cost</th><th style="width:38%;">Act, Location & Best Fit</th></tr></thead>
                     <tbody>
                         ${items.map(([k, it]) => `
                             <tr class="searchable-row">
@@ -3498,6 +3873,12 @@ function renderLootVault() {
             </div>
         `;
     }).join('');
+}
+
+function filterLootVault(tag, btnEl) {
+    document.querySelectorAll('.btn-loot-filter').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    renderLootVault(tag);
 }
 
 function filterDashboard(query) {
