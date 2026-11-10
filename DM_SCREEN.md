@@ -9,10 +9,10 @@
 
 | Slot | Hero / Companion | Class & Level | HP | AC | Init | Key Passive / Resource |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **PC 1** | 🎭 **Piper ("The Incomparable")** | Level 3 Wild Magic Sorcerer (Fierna Tiefling • Native) | `17/17` | `12 (15)` | `+2` | ✨ `3/3 SP` • 🎲 `Tides` • 🌲 `Native Acumen (Nature +3, Survival +2)` • 🔥 `Fire Resist` • 💛 `2/2 Help` |
-| **PC 2** | 👑 **Jacomir Yulle ("King of Oakenshire")** | Level 3 Battle Master Fighter (Human • Noble) | `31/31` | `17` | `+0` | ⚔️ `4/4 d8` *(Parry/Riposte/Menacing DC 13)* • ☕ `3/3 SW` • ⚡ `Action Surge` • 💛 `2/2 Help` |
+| **PC 1** | 🎭 **Piper ("The Incomparable")** | Level 3 Wild Magic Sorcerer (Fierna Tiefling • Native) | `17/17` | `12 (15)` | `+2` | ✨ `3/3 SP` • 🎲 `Tides` • 💖 `Fierna Charm 0/1` • 🃏 **Blank Tarokka Card** • 💛 `2/2 Help` |
+| **PC 2** | 👑 **Jacomir Yulle ("King of Oakenshire")** | Level 3 Battle Master Fighter (Human • Noble) | `31/31` | `17` | `+0` | ⚔️ `4/4 d8` • ☕ `3/3 SW` • 📖 **Kolyan's Wizard Diary** • 🥧 **1x Dream Pastry (Uneaten)** • 💛 `2/2 Help` |
 | **PC 3** | 🎯 **Eclipsa "Yvaine" the First** | Level 3 Monster Slayer Ranger (Human • Gunner) | `28/28` | `16` | `+6` | 🔫 *Lament* `+8 (1d12+4)` • 💥 *Mercy & Less* `+8 (1d6+4)` • 👁️ *Hunter's Sense 2/2* • 🎯 *Slayer's Prey (+1d6)* • ⚡ *Alert (+6 Init)* • 💛 `2/2 Help` |
-| **PC 4** | 👤 **Stranger #4** *(TBD)* | Level 3 *[TBD]* | `--/--` | `--` | `+--` | 💛 Help Tokens: `2 / 2` • ☕ Short Rest: 25% Max HP (2/day) |
+| **Emissary** | ⏳ **Derek ("The Man Between Seconds")** | Avatar / Project Manager of the Dark Powers | `∞` | `--` | `--` | **Froze Time (`Tap, Tap, Tap`) in S1 Church!** Invisible to Strahd • Appears at 3 Future Milestones Only |
 | **Companion** | 🌟 **Caelum Jude ("Cael")** | Level 3 Circle of the Stars Druid (Main Companion & Primary Healer) | `38/38` | `14` | `+2` | ✨ Chalice Dual Heals (`1d8+3`) • 🏹 Archer Form (`1d8+3` Rad) • ⚡ Guiding Bolt (`2/2`) • 🐈 Black Cat • 🛡️ *Vow of Dark Powers (Stabilizes at 1 HP)* |
 | **Escort** | 🌹 **Ireena Kolyana** | Noble Swordswoman (Tatyana Reborn) | `28/28` | `15` | `+2` | ⚔️ Silvered Rapier `+5 (1d8+2)` • 🛡️ Parry `+2 AC` |
 | **Ally** | 🗡️ **Ismark Indirovich** | Veteran Swordsman *(Act I)* | `58/58` | `17` | `+1` | Multiattack: 2x Longsword `+5 (1d10+3)` • ☕ Second Wind |
@@ -24,8 +24,8 @@
 
 ```mermaid
 flowchart TD
-    A["🌲 SESSION 1: Svalich Carriage Chase & The 3-Knock Midnight Climax"] --> B["🏚️ Village of Barovia: Ismark, Ireena & The Starved Vampire Spawn Breach"]
-    B --> C["⛪ SESSION 2: Dawn Funeral (Doru) & Madam Eva's Tarokka Reading at Tser Pool"]
+    A["✅ SESSION 1 (DONE): Svalich Chase, Morgantha Pie, Blank Card, Kolyan's Wizard Diary"] --> B["✅ Church Attic Standoff: Doru Blood-Cup Dilemma & Derek's Time-Stop ('Tap, Tap, Tap')"]
+    B --> C["⛪ SESSION 2 (NEXT): Doru Resolution & Funeral ➔ Strahd at Crossroads (Arc C2) ➔ Madam Eva + Blank Card (Arc C4)"]
     C --> D["🥧 SESSION 3: Old Bonegrinder (Morgantha's Night Hag Coven) ➔ Level 4"]
     D --> E["⚔️ SESSIONS 4–6: Vallaki Powderkeg (St. Andral's Feast, Blazing Sun & Wachterhaus)"]
     E -->|"Claim 📜 Tome of Strahd ➔ Level 5"| F["🍷 SESSIONS 7–8: Wizard of Wines & Yester Hill (Wintersplinter)"]
@@ -60,6 +60,13 @@ flowchart TD
    * **Card Drawn:** *The Executioner (High Deck)*
    * **Madam Eva's Prophecy:** *"I see the spire of black stone piercing a blood-moon. He waits where his brother's blood first touched the stones, beneath the high chapel where stained glass portrays saints with blind eyes. Face him beneath the gaze of the dead saints, and the master shall fall."*
    * **DM Location Key:** **Castle Ravenloft — The Chapel of Saint Andral / Sergei's Crypt** — *Session 19–20.*
+6. **🃏 Sixth Card — Piper's Blank Tarokka Card (The 3-Stage Living Omen — Option 2):**
+   * **Origin:** Handed to Piper by a deeply concerned Vistani at *Blood on the Vine Tavern* in Session 1 after the painted ink faded off the card in her hand.
+   * **Madam Eva's Reaction (No Direct Lore-Dump!):** Eva touches the blank parchment and pulls her hand back as if burned by ice: *"Four hundred years I have read these cards, and never has the fog stood between my eyes and a traveler's road. Something walks in the silence behind you, child—something that hides your ending even from me. Keep this card in your coat. Every time you step closer to what woke the fire in your blood, the ink will bleed higher. Pray you do not recognize the picture when it finishes drawing itself."*
+   * **3-Stage Progressive Mist Bleed (Zero Tiefling/Monolith Spoilers):**
+     * **Stage 1 (Session 2 — Tser Pool):** Bottom third fills with charcoal ink — *dead pine trees and a pair of empty, upturned palms rising out of black water*.
+     * **Stage 2 (Mid-Campaign — Vallaki / Berez):** Middle third bleeds in — *a cracked, faceless glass lantern / pocket watch suspended in midair with threads of silver-gray fog curling into its cracks*.
+     * **Stage 3 (Act IV — Amber Temple / Ravenloft):** Top third fills in — *a violent vortex of endless gray Mist pouring inward into the cracked glass, with a faint, unblinking shadow-grin in the smoke above*.
 
 ---
 
@@ -67,15 +74,16 @@ flowchart TD
 
 | NPC Name & Condition | Live Status | Role & Location | Key Offerings, Services, Quests & Advice | 🎭 Voice & Roleplay Cue |
 | :--- | :--- | :--- | :--- | :--- |
-| 🌟 **Caelum Jude ("Cael")**<br>`[Main Party Companion]` | 🟢 Met & Active | Primary Healer & Companion • Barovia | **Starry Chalice dual-heals 1d8+3**, free Guiding Bolts, Goodberries, scout. *Stabilizes at 1 HP (Plot Armor).* | Earnest, self-deprecating Percy Jackson warmth: *"I don't want to die out here alone. Let me walk with you."* |
-| 👑 **Count Strahd von Zarovich**<br>`[Darklord of Barovia]` | 🟢 Active Overlord | Supreme Ruler • Castle Ravenloft | **Dinner Invitation (Act II)**, psychological trials, corrupting bargains. Seeks Ireena & worthy heirs. | Deep aristocratic velvet baritone: *"I am the Ancient. I am the Land."* |
-| 🌹 **Ireena Kolyana**<br>`[Twice-Bitten / Tatyana]` | 🟡 Unmet | Escort Heroine • Barovia Manor | Fights alongside party (**AC 15, 28 HP**, Silvered Rapier `+5`, Parry `+2 AC`). Refuses to cower. | Fierce sleepless noble resolve: *"Give me a blade and tell me where to stand."* |
-| 🗡️ **Ismark 'The Lesser' Indirovich**<br>`[New Burgomaster]` | 🟡 Unmet | Frontline Defender • Tavern & Barricades | **Father's Armory Cache** (Silvered Weapon, 2 Potions, 2 Holy Waters, 5 GP 40 SP). AC 17, 58 HP. | Exhausted gravelly baritone: *"They call me the Lesser... but I will die holding the line."* |
-| ⛪ **Father Donavich & Doru**<br>`[Broken Priest & Vampire Son]` | 🟡 Unmet | Village Priest • Barovia Church | Performs Kolyan's funeral; blesses 2 Holy Waters; points party to Vallaki/Krezk. Doru in cellar. | Hoarse weeping prayers trying to drown out Doru's screaming from the cellar. |
-| 🔮 **Madam Eva**<br>`[Ancient Vistani Seer]` | 🟡 Unmet | Tarokka Oracle • Tser Pool Camp | **5-Card Tarokka Reading**; safe Long Rest camp; Vistani silver weapon trade. | Ancient woodsmoke-thick voice: *"The cards have waited centuries for your hands."* |
+| ⏳ **Derek ("Man Between Seconds")**<br>`[Avatar of the Dark Powers]` | 🟢 Met & Active | Time-Stopping Emissary • Frozen Moments | Froze time (`tap, tap, tap`) in S1 Church! Promised Jacomir & Yvaine a way home if they kill Strahd; told Piper to *"take care of herself."* **Strahd cannot perceive him!** | Calm, modernly sharp, transactional: *"I'm the only one giving you a straight deal: kill the vampire, and go home."* |
+| 🌟 **Caelum Jude ("Cael")**<br>`[The Scion / Inside Shepherd]` | 🟢 Met & Active | Primary Healer & Companion • Barovia | **Starry Chalice dual-heals 1d8+3**, free Guiding Bolts, Goodberries, scout. *Stabilizes at 1 HP (Plot Armor).* Shrinks in silent terror when Derek freezes time! | Earnest, self-deprecating Percy Jackson warmth: *"I don't want to die out here alone. Let me walk with you."* |
+| 👑 **Count Strahd von Zarovich**<br>`[Darklord of Barovia]` | 🟢 Active Overlord | Supreme Ruler • Castle Ravenloft | **First Face-to-Face in Session 2 (`Reloaded Arc C2: River Ivlis Crossroads`)**! Unaware of Derek's time-stops; seeks Ireena & tests the heroes. | Deep aristocratic velvet baritone: *"I am the Ancient. I am the Land."* |
+| 🌹 **Ireena Kolyana**<br>`[Twice-Bitten / Tatyana]` | 🟢 Met & Active | Escort Heroine • In Barovia Church | Fights alongside party (**AC 15, 28 HP**, Silvered Rapier `+5`, Parry `+2 AC`). Currently neutral in the Doru attic standoff. | Fierce sleepless noble resolve: *"Give me a blade and tell me where to stand."* |
+| 🗡️ **Ismark 'The Lesser' Indirovich**<br>`[New Burgomaster]` | 🟢 Met & Active | Frontline Defender • In Barovia Church | Empathizes with Father Donavich alongside Jacomir in the church attic standoff. AC 17, 58 HP. | Exhausted gravelly baritone: *"They call me the Lesser... but I will die holding the line."* |
+| ⛪ **Father Donavich & Doru**<br>`[Priest & Son in Church Attic]` | 🟢 Met & Active | Village Priest • Barovia Church Attic | **Active S1/S2 Cliffhanger:** Doru is hidden in the **church attic**! Jacomir is pouring his own blood into a cup to feed Doru (`Reloaded` lucidity mechanic), while Piper & Yvaine want to kill Doru! | Hoarse weeping prayers: *"He's still my boy! Just one cup of blood to calm his mind!"* |
+| 🔮 **Madam Eva**<br>`[Ancient Vistani Seer]` | 🟡 Unmet | Tarokka Oracle • Tser Pool Camp | **5-Card Tarokka Reading + Piper's Blank 6th Card**; safe Long Rest camp; Vistani silver weapon trade. | Ancient woodsmoke-thick voice: *"The cards have waited centuries for your hands."* |
 | 🎭 **Bride Volenta Popofsky**<br>`[Porcelain Skull-Mask]` | 🟡 Active Hunter | Youngest Bride • Castle Ravenloft | Stalks Ireena; drops Bone Dagger +1 & Porcelain Skull-Mask Charm (False Life). | High-pitched unhinged giggling: *"Little sister Ireena! Come out and play!"* |
-| 🥧 **Morgantha ('Granny')**<br>`[Night Hag Matron]` | 🟡 Unmet | Coven Leader • Old Bonegrinder | Sells Dream Pastries (1 GP: 1d6 Temp HP + 8hr trance, ground from children's bones). | Sweet grandmotherly cackle hiding iron malice: *"Just one warm pie, dearies!"* |
-| 🦅 **Urwin & Danika Martikov**<br>`[Keepers of the Feather]` | 🟡 Unmet | Wereraven Innkeepers • Blue Water Inn | Free room & warm stew in Vallaki; raven scouts warn of ambushes; Winery quest. | Warm observant hospitality: *"A warm bowl of soup and a locked door..."* |
+| 🥧 **Morgantha ('Granny')**<br>`[Night Hag Matron]` | 🟢 Met & Wary | Coven Leader • Old Bonegrinder | **Met in S1:** Resisted Piper's *Charm Person* (semi-hostile/wary of Piper) & gifted **1x Dream Pastry to Jacomir** (uneaten). | Sweet grandmotherly cackle hiding iron malice: *"Just one warm pie, dearies!"* |
+| 🦅 **Urwin, Danika & Davian Martikov**<br>`[Keepers of the Feather]` | 🟡 Named in Diary | Wereraven Allies • Blue Water Inn & Winery | **Named in Burgomaster Kolyan's Wizard Diary (looted in S1)!** Showing Kolyan's diary to Urwin or Davian unlocks instant Keepers of the Feather trust. | Warm observant hospitality: *"You carry old Kolyan's journal? Then our wings are yours."* |
 | ☀️ **Baron Vargas Vallakovich**<br>`[Paranoid Mayor]` | 🟡 Unmet | Burgomaster • Vallaki | Town authority & shelter if party praises his festivals; enforcer Izek Strazni. | Manic booming forced cheer: *"ALL WILL BE WELL!"* |
 | 🕯️ **Lady Fiona Wachter**<br>`[Cult Leader]` | 🟡 Unmet | Strahd Loyalist • Wachterhaus | Shelters **The Tome of Strahd**; seeks to overthrow the Baron; cultists. | Cold calculating aristocratic poise: *"Strahd is not a monster. He is a lord."* |
 | ⚔️ **Ezmerelda d'Avenir**<br>`[Fated Ally]` | 🟡 Unmet | Vistani Vampire Hunter • Act II–IV | Swashbuckling hunter (AC 17, HP 82, Rapier +8, 4th-level Wizard spells). | Swashbuckling confidence: *"I don't need a prophecy to tell me how to kill a vampire."* |
@@ -95,7 +103,7 @@ flowchart TD
 | | 🐺 **Svalich Alpha Dire Wolf** *(Roof Breacher)* | 2 | `+2` | **`58`** | 15 | 50 ft | Bite `+6` (`2d6+4`) + Roof Claws `+6` (`2d4+4`) | **Roof Breach:** rips timber ceiling (DC 13 Dex or `1d6` slash) • **Howl** (DC 13 Wis) |
 | **🩸 Act I Climax: Indirovich Manor** | 🩸 **The Starved Vampire Spawn** *(3 AM Climax Solo Boss)* | **5** | `+3` | **`82`** | 15 | 35 ft / Climb 35 | 2x Talons `+6` (`2d6+4` / Grapple DC 14) + Throat-Bite `+6` (`2d6+4` + `4d6` Necro) | **Spider Climb** • **Regen 10 HP** • **Apex Drain reduces Max HP** • **3 Pointy Hat Actions** |
 | **⛪ Act I–II: Churchyard & Road** | 🧟 **Strahd Zombie** *(Cemetery Hazard)* | 1 | `-2` | **`34`** | 8 | 20 ft | Bite `+3` (`1d4+1`) + 2x Claws `+3` (`1d6+1`) | **Loathsome Limbs:** hits of 5+ sever limbs that attack independently! |
-| | 🩸 **Doru (The Starving Son)** *(Church Undercroft Boss)* | 5 | `+3` | **`85`** | 15 | 30 ft / Climb 30 | 2x Claws `+6` (`2d6+4`) + Bite `+6` (`2d6+4` + `4d6` Necro) | **Regen 10 HP** • Cellar Chain Whip • Father's Weeping Agony |
+| | 🩸 **Doru (The Starving Son)** *(Church Attic Boss — S1/S2 Cliffhanger)* | 5 | `+3` | **`85`** | 15 | 30 ft / Climb 30 | 2x Claws `+6` (`2d6+4`) + Bite `+6` (`2d6+4` + `4d6` Necro) | **Hidden in Church Attic!** Feeding Jacomir's blood cup (`Reloaded Arc B5`) grants 2 mins of weeping lucidity (reveals Mad Mage & Heart of Sorrow)! |
 | **🏰 Act II: Bonegrinder & Vallaki** | 🎭 **Bride Volenta Popofsky** *(Porcelain Bride)* | 5 | `+4` | **`95`** | 16 | 35 ft / Climb 35 | 2x Bone-Dagger `+7` (`1d4+4` + `2d6` Necro) + Bite `+7` (`1d6+4` + `3d6` Necro) | **Pointy Hat Boss:** *Corpse-Puppet Strings* & *Skull-Mask Shriek* |
 | | 🥧 **Morgantha, Night Hag Matron** *(Old Bonegrinder Boss)* | 5 | `+2` | **`112`** | 17 | 30 ft | Talons `+7` (`2d8+4` magic slash) • *Magic Missile* / *Ray* | **Pointy Hat Boss:** *Bone-Flour Combustion Cloud* • Magic Resistance |
 | | 👑 **Count Strahd von Zarovich** *(Campaign Apex Darklord)* | 15 | `+4` | **`144`** *(+50 Heart)* | 16 | 30 ft / Fly 30 | 2x Strike `+9` (`1d8+4` + `4d6` Necro / Grapple) + Bite `+9` + 5th-Lvl Spells | **Pointy Hat Boss:** *Wrath of Land* • Lair Wall-Phase • **Regen 20 HP** |
@@ -158,6 +166,8 @@ flowchart TD
 ---
 
 ### ⚔️ 4.2 Barovian Gear, Relics & Consumables Catalog
+* 🃏 **Piper's Blank Tarokka Card (The 3-Stage Living Omen — S1 Vistani Gift)** *(Unique Omen Relic • Carried by Piper)*: Handed to Piper at *Blood on the Vine Tavern* after a concerned Vistani saw misfortune/darkness in her eyes and the painted ink faded off the card. When Madam Eva touches it at Tser Pool in Session 2, she pulls her hand back in cold dread (*"Something walks in the silence behind you, child—something that hides your ending even from me"*). Bleeds charcoal ink in **3 progressive stages** (*Stage 1: Dead pines & empty upturned hands rising from black water* ➔ *Stage 2: Cracked faceless glass lantern/pocket watch drinking in silver fog* ➔ *Stage 3: Violent vortex of endless Mist pouring inward into the cracked glass*).
+* 📖 **Burgomaster Kolyan's Wizard Diary (Keepers of the Feather VIP Lead — S1 Manor Loot)** *(Unique Quest Tome • Carried by Jacomir)*: Looted from Indirovich Manor in Session 1. Reveals that late Burgomaster Kolyan Indirovich was a wizard who knew **Davian Martikov** and **the Keepers of the Feather**, naming them as trusted allies who can help against Strahd! Presenting this diary to **Urwin Martikov** (*Blue Water Inn*, Vallaki) or **Davian Martikov** (*Wizard of Wines*) immediately earns the wereravens' trust.
 * ⚔️ **Silvered Weapon (Rapier / Dagger / Shortsword / 10 Bolts)** *(Uncommon • 5 GP)*: Bypasses nonmagical B/P/S resistance of Werewolves, Vampire Thralls, and Night Hags.
 * 🧪 **Potion of Healing** *(Common Consumable • 5 GP)*: **Bonus Action** self (`2d6 + 1 HP`) | **Action** administer to downed ally.
 * 💧 **Flask of St. Andral's Holy Water** *(Uncommon Consumable • 2 GP 5 SP)*: Ranged attack (20 ft) or splash; deals **`2d6` Radiant damage** to Undead/Fiends and **halts Vampire Regeneration for 1 round**!
@@ -204,6 +214,7 @@ flowchart TD
 2. **The Law of the Overcast Sky:** Barovia's natural daytime light is filtered through perpetual storm clouds and mist—it **never** triggers Vampire *Sunlight Hypersensitivity*. Only magical true sunlight (*Sunsword*, *Holy Symbol of Ravenkind*, *Dawn*) burns vampires.
 3. **The Law of Running Water:** Vampires taking a turn in running river water (such as the Ivlis River or Tser Falls) take **20 Acid damage** at the end of their turn and cannot regenerate.
 4. **The Law of the Mists (Death Save Whisper):** Under our **2-Strike / 1-Success Death Save Rule**, if a character fails 2 Death Saves in Act I–II (Levels 3–5), time freezes for a split second and a voice in the Mists offers to breathe life back into their lungs at **1 HP**—in exchange for accepting a **Dark Power Touched Mark** (stepping one rung closer to the Campaign 3 corruption!).
+5. **The Law of the Frozen Second (Derek's Time-Stop Blind Spot):** Whenever **Derek (Avatar of the Dark Powers)** visits the party (`tap, tap, tap`), **time freezes completely** across the room. Because Derek operates strictly between the ticks of the clock, **Count Strahd, his spies, bats, wolves, and Barovian NPCs (like Donavich, Ismark, and Ireena) have ZERO knowledge that Derek exists!** Meanwhile, **Cael (The Scion)** is aware of Derek and shrinks back in silent terror whenever time freezes.
 
 ### 🎲 5.2 Standard Table House Rules
 * **Brutal Critical Hits:** `Max Base Die + 1 Rolled Die + Modifier`.

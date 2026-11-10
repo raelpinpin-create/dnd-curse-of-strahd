@@ -765,7 +765,7 @@
     </div>
     <div class="header-controls">
         <input type="text" id="global-search" class="search-input" placeholder="🔍 Filter NPCs, Monsters, Loot, Biomes..." oninput="filterDashboard(this.value)">
-        <span class="badge-mode">🩸 SCALED FOR 3 LEVEL 3 PCs (SESSION 1 READY)</span>
+        <span class="badge-mode">🩸 SESSION 2 READY — CHURCH ATTIC CLIFFHANGER (3 LEVEL 3 PCs)</span>
     </div>
 </header>
 
@@ -793,18 +793,18 @@
             <div class="card clickable" onclick="window.open('PIPER_PLAYER_SHEET.html', '_blank')">
                 <div class="card-header"><span class="card-title">🎭 Piper ("The Incomparable")</span><span class="pill purple">HP 17/17 • AC 12 (15)</span></div>
                 <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Fierna Tiefling Wild Magic Sorcerer.</strong> Searching for her tiefling parents inside Barnaby's Brass Pocket Watch. <strong>Barovian Native Acumen:</strong> Nature (+3) & Survival (+2) auto-detects safe foraging & tracks.</p>
+                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Fierna Tiefling Wild Magic Sorcerer.</strong> Given <strong>🃏 The Blank Tarokka Card</strong> by a concerned Vistani at the tavern (ink faded!). Warned by <strong>Derek</strong> in frozen time to <em>"take care of herself."</em></p>
                     <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#d8b4fe; margin-top:auto;">
-                        ✨ 3/3 SP • 🎲 Tides • ⚡ Chaos Bolt (+6, DC 14) • 💛 2/2 Help
+                        ✨ 3/3 SP • 🎲 Tides • 💖 Fierna Charm 0/1 • 🃏 Blank Card • 💛 2/2 Help
                     </div>
                 </div>
             </div>
             <div class="card clickable" onclick="window.open('JACOMIR_PLAYER_SHEET.html', '_blank')">
                 <div class="card-header"><span class="card-title">👑 Jacomir Yulle ("King")</span><span class="pill crimson">HP 31/31 • AC 17</span></div>
                 <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Human Battle Master Fighter (Noble).</strong> Exiled Sovereign searching for swallowed Oakenshire. Ancestral Greatsword (`+5`, `2d6+3`, Graze + Savage Attacker + Action Surge).</p>
+                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Human Battle Master Fighter (Noble).</strong> Holds <strong>📖 Kolyan's Wizard Diary</strong> (Martikov/Keepers lead) & <strong>🥧 1x Uneaten Dream Pastry</strong>. Pouring his blood into a cup for Doru in the church attic!</p>
                     <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--accent-gold-soft); margin-top:auto;">
-                        ⚔️ 4/4 d8 (Parry/Riposte/Menacing DC 13) • ☕ 3/3 SW • ⚡ Surge
+                        ⚔️ 4/4 d8 • ☕ 3/3 SW • 📖 Kolyan Diary • 🥧 Dream Pie (Uneaten)
                     </div>
                 </div>
             </div>
@@ -853,12 +853,12 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header"><span class="card-title">👤 Stranger #4 (Optional)</span><span class="pill">Slot Ready</span></div>
+            <div class="card clickable" onclick="openNpcModal('derek')">
+                <div class="card-header"><span class="card-title">⏳ Derek ("The Avatar")</span><span class="pill purple">Time-Stop Emissary</span></div>
                 <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);">Optional 4th player slot. All Session 1 encounters are balanced specifically for your <strong>3 Level 3 PCs</strong> (Jacomir 31 HP, Yvaine 28 HP, Piper 17 HP)!</p>
+                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Avatar of the Dark Powers (Met in S1 Church).</strong> Froze time (<code>tap, tap, tap</code>) during the Doru blood-cup dilemma! Invisible to Strahd's spies. Appears at <strong>3 Future Milestones Only</strong>.</p>
                     <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#93c5fd; margin-top:auto;">
-                        💛 Help Tokens: 2/2 • ☕ Short Rest: 25% Max HP
+                        ⏳ Frozen Time Blind Spot • 🎯 Goal: Kill Strahd • 👁️ Watching Piper
                     </div>
                 </div>
             </div>
@@ -878,7 +878,7 @@
                     <span class="pill crimson">Levels 3 ➔ 4</span>
                 </div>
                 <div class="card-body">
-                    <p><strong>Session 1:</strong> Svalich Carriage Chase (<em>Roll Initiative!</em>), Gates of Barovia & Dalvan's Spinning Compass (DragnaCarta <em>Reloaded</em>), Village Barricades Under Active Siege, 3:00 AM <strong>Starved Vampire Spawn (82 HP, CR 5)</strong> Skylight Breach & The Three-Knock Cliffhanger.<br><strong>Session 2:</strong> Dawn Funeral (Doru) & <strong>Madam Eva's Tarokka Reading</strong> at Tser Pool.<br><strong>Session 3–4:</strong> Old Bonegrinder Hags & Arrival in Vallaki.</p>
+                    <p><strong>Session 1 (Completed):</strong> Svalich Carriage Chase, Morgantha (resisted Piper's <em>Charm Person</em>; gifted 1x uneaten Dream Pastry to Jacomir), Vistani gave Piper <strong>🃏 The Blank Tarokka Card</strong>, found <strong>📖 Kolyan's Wizard Diary</strong> (Martikov/Keepers lead), discovered <strong>Doru in the Church Attic</strong> (Jacomir pouring blood cup vs. Piper/Yvaine), & <strong>Derek (Avatar of Dark Powers)</strong> froze time (<code>tap, tap, tap</code>)!<br><strong>Session 2 (Next — Reloaded Arc B5 ➔ C7):</strong> Doru Blood-Cup Resolution & Funeral ➔ <strong>Strahd's 1st Appearance at River Ivlis Crossroads</strong> ➔ <strong>Madam Eva's 5-Card + Blank 6th Card Reading</strong> at Tser Pool ➔ Cael & Derek at Tser Falls.</p>
                 </div>
             </div>
             <div class="card clickable" onclick="openQuestModal('act2')">
@@ -937,6 +937,10 @@
             <div class="card clickable" onclick="openQuestModal('tarokka5')">
                 <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🏰 5. The Final Battlefield</span><span class="pill crimson">The Executioner</span></div>
                 <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>Location:</strong> Castle Ravenloft — The Chapel of St. Andral / Sergei's Crypt (Sessions 19–20, Lvl 10 Finale).</p></div>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('tarokka6')">
+                <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🃏 6. Piper's Blank Omen Card</span><span class="pill purple">3-Stage Mist Bleed</span></div>
+                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>The Unwritten Card (Option 2):</strong> Madam Eva pulls back in cold dread. Bleeds charcoal Mist/Vessel imagery across 3 stages (Dead Pines & Empty Hands ➔ Cracked Glass ➔ Inward Mist Vortex).</p></div>
             </div>
         </div>
     </section>
@@ -1143,6 +1147,7 @@
                     <p><strong>2. Law of the Overcast Sky:</strong> Barovia's natural daytime is filtered through perpetual storm clouds and fog—it <strong>never</strong> triggers Vampire Sunlight Hypersensitivity (only The Sunsword, Holy Symbol of Ravenkind, and <em>Dawn</em> spell do!).</p>
                     <p><strong>3. Law of Running Water:</strong> Ending a turn in running river water (Ivlis River, Tser Falls) deals <strong>20 Acid damage</strong> and suppresses vampire regeneration.</p>
                     <p><strong>4. Law of the Mists (Dark Whisper):</strong> 2 failed Death Saves in Act I–II triggers a split-second time freeze: a voice in the Mists offers revival at <strong>1 HP</strong> in exchange for accepting a permanent Dark Power Touched Mark!</p>
+                    <p><strong>5. Law of the Frozen Second (Derek's Blind Spot):</strong> Whenever <strong>Derek (Avatar of the Dark Powers)</strong> visits (<code>tap, tap, tap</code>), time freezes completely. Because he walks strictly between the ticks of the clock, <strong>Count Strahd, his spies, and Barovian NPCs have ZERO knowledge that Derek exists!</strong></p>
                 </div>
             </div>
             <div class="card">
@@ -1650,7 +1655,7 @@ const MONSTER_DATA = {
         id: 'doru',
         name: "🩸 Doru (The Starving Son)",
         lineage: "Broken Vampire Spawn of Barovia Church",
-        type: "Medium Undead, Neutral Evil (Session 2 Undercroft Boss)",
+        type: "Medium Undead, Neutral Evil (Session 1/2 Church Attic Cliffhanger Boss)",
         cr: "5 (1,800 XP)",
         init: "+3",
         ac: "15",
@@ -1661,11 +1666,11 @@ const MONSTER_DATA = {
         stats: "STR 16 (+3) | DEX 16 (+3) | CON 16 (+3) | INT 11 (+0) | WIS 10 (+0) | CHA 12 (+1)",
         senses: "Darkvision 60 ft., Passive Perception 13 • Saves: Dex +6, Wis +3",
         immunities: "Resist: Necrotic & Non-Silvered B/P/S • Regeneration 10 HP/turn",
-        desc: "Father Donavich's 20-year-old son, turned by Strahd after storming Castle Ravenloft with the Mad Mage a year ago. Locked in the dark church undercroft, he clings to the foundation pillars in tattered robes, weeping for his father one moment and shrieking for blood the next.",
+        desc: "Father Donavich's 20-year-old son, turned by Strahd after storming Castle Ravenloft with the Mad Mage a year ago. Hidden in the dark church attic in Session 1, he clings to the rafters in tattered robes, weeping for his father one moment and shrieking for blood the next.",
         philosophy: "<strong>Fractured Filial Torment.</strong> Half of his mind loves his father Donavich; the other half is an agonizing furnace of vampire hunger.",
-        problem: "Starved for twelve months in pitch darkness beneath the church altar.",
-        morals: "Showing him Father Donavich's silver crucifix or speaking his mortal name with a DC 14 Persuasion/Religion check causes him to weep and lose 1 attack on his next turn.",
-        tactics: "Attempts to flee up the cellar stairs if the trapdoor is opened, or uses his broken iron chains to whip defenders in the dark.",
+        problem: "Starved in the church attic; in Session 1, King Jacomir began pouring his own blood into a cup to feed Doru while Piper and Yvaine demanded his execution!",
+        morals: "<strong>DragnaCarta Reloaded Blood-Cup Mechanic:</strong> If fed Jacomir's cup of willing blood, Doru regains 2 minutes of weeping human lucidity—revealing he marched on Ravenloft with the Mad Mage and saw Strahd's <em>Heart of Sorrow</em> in the North Tower before begging for a clean mercy death!",
+        tactics: "Clings to the church attic rafters with Spider Climb, or weeps in lucid remorse if fed Jacomir's blood cup.",
         attacks: [
             {
                 name: "Multiattack (2x Claws + 1x Starved Bite)",
@@ -2146,6 +2151,33 @@ const MONSTER_DATA = {
 // 3. MASTER NPC DATASET (15 PROFILES WITH ROLL BUTTONS)
 // =========================================================
 const NPC_DATA = {
+    derek: {
+        name: "⏳ Derek ('The Man Between Seconds')",
+        region: "🌲 Village of Barovia & Tser Pool (Act I)",
+        role: "Avatar / Emissary of the Dark Powers • Time-Stop Sponsor",
+        alignment: "Lawful Evil (Cosmic Pact Manager)",
+        status: "🟢 Met & Active",
+        voice: "Calm, modernly sharp, transactional, unnervingly well-informed. 'Everyone else in this valley gives you riddles or fangs. I'm the only one giving you a straight deal: kill the vampire, and go home.'",
+        look: "Tall, pale-skinned white man with sharp, unblinking features who steps into rooms only when three knocks sound (tap, tap, tap) and time freezes solid.",
+        philosophy: "<strong>Pragmatic Cosmic Engineering.</strong> He wants Count Strahd dead at all costs so the Barovian Root Anchor shatters and channels into the party.",
+        problem: "Must keep the Vessels (Piper, Jacomir, Yvaine) focused on lethal ambition without alerting Count Strahd to the Dark Powers' trap.",
+        involves: "The Dark Powers' Pact, Piper (the chaotic detonator), Jacomir & Yvaine (the martial anchors), and Caelum Jude (the Inside Shepherd who fears him).",
+        approach: "Operates strictly inside frozen pockets of time ('between the ticks of the clock') so Strahd's bats, wolves, and scrying NEVER perceive him! Appears only at 3 future Milestone Crossroads (Tser Falls post-Tarokka, Vallaki/Amber Temple, and Ravenloft Gates).",
+        morals: "Never fights in combat or carries bags; always advises the ruthless, practical choice during moral dilemmas.",
+        stats: "Avatar Projection (Outside Time) | Immune to Detection by Strahd's Spies | Triggers on 3 Knocks (Tap, Tap, Tap)",
+        saves: "All Saves Immune inside Time-Stop",
+        actions: [
+            "⏳ Between the Ticks (Time-Stop Visit): Freezes all Barovian NPCs and Strahd's spies in the room so only Jacomir, Yvaine, and Piper can see or hear him.",
+            "👁️ Inspect the Conduit: Recognizes Piper's Wild Magic soul as the Dark Powers' chosen detonator ('Take care of yourself')."
+        ],
+        rollBtns: [
+            { label: "⏳ Trigger 3-Knock Time-Stop", func: "logRoll('⏳ TAP. TAP. TAP. Time freezes across the room! All NPCs and Strahd spies turn to statues as Derek steps out between seconds!')" }
+        ],
+        rp: "Transactional toward Jacomir and Yvaine; chillingly protective-yet-calculating toward Piper; causes Cael to shrink back in silent terror.",
+        offerings: "Straight-shooting milestone guidance pushing the party to claim the Tarokka weapons and slay Strahd.",
+        loot: "None (Avatar of the Dark Powers)."
+    },
+
     cael: {
         name: "🌟 Caelum Jude ('Cael')",
         region: "🌲 Village of Barovia & Tser Pool (Act I)",
@@ -2184,7 +2216,7 @@ const NPC_DATA = {
         region: "🌲 Village of Barovia & Tser Pool (Act I)",
         role: "Escort Heroine • Tatyana Reborn • Barovia Manor",
         alignment: "Lawful Good",
-        status: "🟡 Unmet (In Manor)",
+        status: "🟢 Met & Active (In Church)",
         voice: "Fierce, sleepless noble resolve. 'Give me a blade and tell me where to stand. I will not die cowering in an attic.'",
         look: "Striking young woman with auburn hair and determined brown eyes. Two puncture wounds on her throat concealed by a high silver-threaded lace collar.",
         philosophy: "<strong>Defiant Sovereignty.</strong> Refuses to be treated as luggage or a helpless damsel. Prefers death with a blade in hand over eternal servitude in Castle Ravenloft.",
@@ -2213,7 +2245,7 @@ const NPC_DATA = {
         region: "🌲 Village of Barovia & Tser Pool (Act I)",
         role: "New Burgomaster & Frontline Defender • Barovia Barricades",
         alignment: "Lawful Good",
-        status: "🟡 Unmet (At Barricades)",
+        status: "🟢 Met & Active (In Church)",
         voice: "Exhausted, earnest, gravelly baritone. 'They call me the Lesser... but I will die before I let the devil take my sister.'",
         look: "Tall, broad-shouldered swordsman with dark hair and heavy bags under his eyes, wearing battered steel splint mail and a heavy longsword.",
         philosophy: "<strong>Crushing Filial Duty.</strong> Willing to throw himself onto vampire fangs if it buys Ireena ten seconds to reach safety.",
@@ -2240,13 +2272,13 @@ const NPC_DATA = {
     donavich: {
         name: "⛪ Father Donavich",
         region: "🌲 Village of Barovia & Tser Pool (Act I)",
-        role: "Broken Priest of Barovia Church • Session 2",
+        role: "Broken Priest of Barovia Church • Doru in Church Attic (S1/S2 Cliffhanger)",
         alignment: "Lawful Good (Mad with Grief)",
-        status: "🟡 Unmet (In Church)",
-        voice: "Hoarse, weeping prayers trying to drown out Doru's screaming from the cellar beneath the altar.",
+        status: "🟢 Met & Active (Attic Standoff)",
+        voice: "Hoarse, weeping prayers pleading for Doru's life in the church attic while Jacomir pours his own blood into a cup.",
         look: "Haggard elderly priest in soiled vestments, clutching an iron holy symbol of the Morninglord with bleeding knuckles.",
-        philosophy: "<strong>Desperate Paternal Denial.</strong> Believes with all his heart that prayer can cure his vampire son Doru.",
-        problem: "Doru is trapped in the church undercroft starving for blood; Donavich cannot bring himself to destroy him.",
+        philosophy: "<strong>Desperate Paternal Denial.</strong> Believes with all his heart that prayer and mercy can save his vampire son Doru.",
+        problem: "Doru is hidden in the church attic starving for blood; Jacomir & Ismark empathize with him (Jacomir pouring blood into a cup), while Piper & Yvaine want to kill Doru!",
         involves: "Doru, Kolyan's dawn funeral, Morninglord shrine.",
         approach: "Performs Kolyan's dawn burial and advises taking Ireena to the Abbey of St. Markovia in Krezk.",
         morals: "Will beg on his knees for Doru's mercy if the party enters the undercroft.",
@@ -2294,7 +2326,7 @@ const NPC_DATA = {
         region: "⚔️ Old Bonegrinder & Vallaki (Act II)",
         role: "Night Hag Matron • Old Bonegrinder Windmill",
         alignment: "Neutral Evil",
-        status: "🟡 Unmet (Windmill)",
+        status: "🟢 Met & Wary (Resisted Piper's Charm)",
         voice: "Sweet, wheezing grandmotherly cackle hiding iron malice. 'Just one warm pie, dearies! It chases the fog away!'",
         look: "Stooped old peddler woman in woolen shawls pushing a wooden cart of warm golden meat pies.",
         philosophy: "<strong>Parasitic Despair Harvesting.</strong> Feeds on the broken addiction of Barovians who trade their children for blissful dreams.",
@@ -2314,11 +2346,11 @@ const NPC_DATA = {
     },
 
     martikov: {
-        name: "🦅 Urwin & Danika Martikov",
+        name: "🦅 Urwin, Danika & Davian Martikov",
         region: "⚔️ Old Bonegrinder & Vallaki (Act II)",
-        role: "Wereraven Innkeepers • Blue Water Inn (Keepers of the Feather)",
+        role: "Wereraven Allies • Blue Water Inn & Winery (Named in Kolyan's Wizard Diary!)",
         alignment: "Lawful Good",
-        status: "🟡 Unmet (Vallaki)",
+        status: "🟡 Named in Kolyan's Diary",
         voice: "Warm, observant, quiet solidarity. 'A hot bowl of wolf-steak stew and a locked door—on the house for friends of the road.'",
         look: "Stout, bearded chef with silver-streaked hair and a sharp-eyed tavern mistress wearing black feather earrings; both move with quick, avian head-tilts.",
         philosophy: "<strong>Silent Resistance from the Rooftops.</strong> The Keepers of the Feather watch over Barovia from the skies, aiding true heroes in secret.",
@@ -2546,16 +2578,17 @@ const QUEST_DATA = {
         title: "🌲 ACT I: Into the Mists (Sessions 1–4 • Levels 3 ➔ 4)",
         tag: "SESSIONS 1 TO 4",
         body: `
-            <div class="nbox nbox-cyan"><strong>Session 1 — Blood on the Axle (Level 3 Cold Open):</strong><br>
-            • <strong>High-Speed Carriage Chase (Roll Initiative!):</strong> Heroes wake inside the runaway Black Stagecoach on Old Svalich Road! 3-round chase against flanking <strong>Svalich Dire Wolves (42 HP)</strong> and an <strong>Alpha Dire Wolf (58 HP)</strong> ripping through the roof timber!<br>
-            • <strong>Gates of Barovia & The Silent Threshold:</strong> Drift crash 20 ft before the locked iron gates. Wolves halt at Strahd's silent command; gates swing open on their own and slam shut behind the party.<br>
-            • <strong>Dalvan's Spinning Compass (DragnaCarta Reloaded):</strong> Corpse died of pure exhaustion (no wounds); compass needle spins uselessly; 13 tree tallies show he walked in circles in the Mists; Piper finds Tarokka fragment pointing to Madam Eva.<br>
-            • <strong>Fortified Village Under Active Siege:</strong> Meet <strong>Ismark Indirovich</strong> at the spiked barricades, receive Silvered Armory Cache, fortify Indirovich Manor.<br>
-            • <strong>3:00 AM Manor Climax:</strong> <strong>The Starved Vampire Spawn (82 HP, CR 5)</strong> shatters the parlor skylight! 3 Pointy Hat Battlefield Actions test Jacomir (31 HP), Yvaine (28 HP), and Piper (17 HP) to the limit!<br>
-            • <strong>Cliffhanger:</strong> Giant raven taps beak 3 times on the rafters: <em>"Tap. Tap. Tap. Foreign steel. Black powder. Wild magic... Tomorrow at dusk, I shall come down from the castle to properly welcome you."</em></div>
-            <div class="nbox nbox-crimson"><strong>Session 2 — The Funeral & The Tarokka Prophecy:</strong><br>
-            • Dawn burial of Kolyan at Barovia Church (Strahd Zombies & Doru in the undercroft); Cael formally joins the party.<br>
-            • Journey to Tser Pool Encampment for <strong>Madam Eva's 5-Card Tarokka Reading</strong>!</div>
+            <div class="nbox nbox-cyan"><strong>Session 1 (Completed) — Blood on the Axle & The Man Between Seconds:</strong><br>
+            • <strong>Svalich Woods Carriage Chase & Gates of Barovia:</strong> Survived the dire wolf chase, passed the Iron Gates, and found Dalvan Olensky's spinning compass.<br>
+            • <strong>Morgantha & Jacomir's Uneaten Dream Pastry:</strong> Met Morgantha on the road; she shrugged off <strong>Piper's</strong> <em>Charm Person</em> (leaving semi-hostile/wary) and gave <strong>1x Dream Pastry to King Jacomir</strong> (stored uneaten).<br>
+            • <strong>Blood on the Vine Tavern & Piper's Blank Tarokka Card:</strong> A deeply concerned Vistani saw darkness and misfortune in Piper's eyes; the ink faded off her Tarokka card, and she handed the <strong>🃏 Blank Tarokka Card</strong> to Piper to bring to Madam Eva.<br>
+            • <strong>Indirovich Manor & Kolyan's Wizard Diary:</strong> Discovered late Burgomaster Kolyan was a wizard and looted <strong>📖 Kolyan's Wizard Diary</strong>, naming <strong>Davian Martikov & the Keepers of the Feather</strong> as secret allies against Strahd!<br>
+            • <strong>Church Attic Standoff & Derek's Time-Stop (<code>Tap, Tap, Tap</code>):</strong> Found <strong>Doru</strong> starving in the church attic. As <strong>Jacomir</strong> poured his own blood into a cup for Doru (empathizing alongside Ismark while Piper & Yvaine demanded Doru's execution), 3 knocks froze time—and <strong>Derek (Avatar of the Dark Powers)</strong> stepped in, promising Jacomir & Yvaine a way home if they kill Strahd and warning Piper to <em>"take care of herself"</em> before unfreezing time!</div>
+            <div class="nbox nbox-crimson"><strong>Session 2 (Next — DragnaCarta Reloaded Arc B5 ➔ C7):</strong><br>
+            • <strong>Arc B5 (Church Attic & Funeral):</strong> Resolve Doru's blood-cup standoff (feeding him Jacomir's blood grants 2 mins of weeping lucidity revealing the Mad Mage & Strahd's <em>Heart of Sorrow</em>) and bury Kolyan.<br>
+            • <strong>Arc C2 (River Ivlis Crossroads):</strong> <strong>Count Strahd's 1st Face-to-Face Appearance</strong> stepping out of the Black Carriage (Strahd has zero knowledge of Derek!).<br>
+            • <strong>Arc C4 (Tser Pool):</strong> <strong>Madam Eva's 5-Card Tarokka Reading + Card #6: Piper's Blank Omen Card</strong> (Stage 1 charcoal ink bleed: dead pines & empty upturned hands rising from black water).<br>
+            • <strong>Arc C7 (Tser Falls):</strong> <strong>Cael</strong> shifts from black cat to join as healer; <strong>Derek</strong> makes his 10-second Milestone 1 check-in while Cael shrinks in silent terror.</div>
             <div class="nbox nbox-amber"><strong>Sessions 3–4 — Old Bonegrinder & Arrival in Vallaki:</strong><br>
             • Confront Morgantha's coven at Old Bonegrinder Windmill (Milestone: <strong>Level 4</strong>!) and reach the walled town of Vallaki.</div>
         `
@@ -2624,6 +2657,16 @@ const QUEST_DATA = {
         body: `
             <div class="modal-read-aloud">"I see the spire of black stone piercing a blood-moon. He waits where his brother's blood first touched the stones, beneath the high chapel where stained glass portrays saints with blind eyes. Face him beneath the gaze of the dead saints, and the master shall fall."</div>
             <div class="nbox nbox-crimson"><strong>DM Location Key:</strong> <strong>Castle Ravenloft — The Chapel of St. Andral / Sergei's Crypt</strong> — Sessions 19–20 Finale.</div>
+        `
+    },
+    tarokka6: {
+        title: "🃏 Sixth Card: Piper's Blank Tarokka Card — The 3-Stage Living Omen (Option 2)",
+        tag: "PIPER'S PERSONAL OMEN CARD",
+        body: `
+            <div class="modal-read-aloud">"Four hundred years I have read these cards, and never has the fog stood between my eyes and a traveler's road. Something walks in the silence behind you, child—something that hides your ending even from me. Keep this card in your coat. Every time you step closer to what woke the fire in your blood, the ink will bleed higher. Pray you do not recognize the picture when it finishes drawing itself."</div>
+            <div class="nbox nbox-cyan"><strong>Stage 1 Ink Bleed (Session 2 — Tser Pool):</strong> Only the bottom third fills with charcoal ink — showing <strong>dead Barovian pine trees and a pair of empty, upturned palms rising out of black water</strong>.</div>
+            <div class="nbox nbox-amber"><strong>Stage 2 Ink Bleed (Mid-Campaign — Vallaki / Berez):</strong> The middle third bleeds in — showing <strong>a cracked, faceless glass lantern / pocket watch suspended in midair</strong>, with threads of silver-gray fog curling into its cracks.</div>
+            <div class="nbox nbox-crimson"><strong>Stage 3 Ink Bleed (Act IV — Amber Temple / Ravenloft):</strong> The top third fills in — showing <strong>a violent vortex of endless gray Mist pouring inward into the cracked glass</strong>, with a faint, unblinking shadow-grin in the smoke above.</div>
         `
     }
 };
@@ -2702,6 +2745,18 @@ const BIOME_DATA = {
 };
 
 const LOOT_DATA = {
+    blank_tarokka: {
+        cat: "quest", name: "🃏 Piper's Blank Tarokka Card (The 3-Stage Living Omen)", rarity: "Unique Omen Relic • Carried by Piper",
+        location: "Gifted by Concerned Vistani at Blood on the Vine Tavern (Session 1)",
+        mechanics: "• <strong>Session 1 Origin:</strong> The painted ink faded completely off the card when a Vistani tried to read Piper's fortune.<br>• <strong>Madam Eva's Reading (Session 2 — Option 2):</strong> Madam Eva pulls her hand back in cold dread; the card bleeds charcoal Mist/Vessel imagery across <strong>3 progressive campaign stages</strong>:<br>&nbsp;&nbsp;1. <em>Stage 1 (Tser Pool):</em> Dead Barovian pines & empty upturned palms rising from black water.<br>&nbsp;&nbsp;2. <em>Stage 2 (Vallaki/Berez):</em> A cracked, faceless glass lantern/pocket watch drinking in threads of silver fog.<br>&nbsp;&nbsp;3. <em>Stage 3 (Amber Temple/Ravenloft):</em> A violent vortex of endless gray Mist pouring inward into the cracked glass.",
+        lore: "Madam Eva's Whisper:\n\n'Four hundred years I have read these cards, and never has the fog stood between my eyes and a traveler's road. Something walks in the silence behind you, child—something that hides your ending even from me. Keep this card in your coat. Every time you step closer to what woke the fire in your blood, the ink will bleed higher. Pray you do not recognize the picture when it finishes drawing itself.'"
+    },
+    kolyan_diary: {
+        cat: "quest", name: "📖 Burgomaster Kolyan's Wizard Diary (Keepers of the Feather Lead)", rarity: "Unique Quest Tome • Carried by Jacomir",
+        location: "Looted from Indirovich Manor (Session 1)",
+        mechanics: "• <strong>Faction Key:</strong> Reveals that late Burgomaster Kolyan Indirovich was a wizard in his youth and explicitly names <strong>Davian Martikov</strong> and <strong>the Keepers of the Feather</strong> as secret allies who can help against Strahd!<br>• <strong>Social Unlock:</strong> Presenting this diary to <strong>Urwin Martikov</strong> at the <em>Blue Water Inn</em> (Vallaki) or <strong>Davian Martikov</strong> at the <em>Wizard of Wines</em> immediately earns the Keepers' trust and alliance.",
+        lore: "Written in Kolyan Indirovich's arcane shorthand:\n\n'My old spells are no match for the Devil on the spire, and my heart grows weak under his nightly sieges. Should I fall before Ireena is safe, seek out my old friend Davian Martikov at the Wizard of Wines, or his son Urwin in Vallaki. Ask for the Keepers of the Feather—their eyes watch from every rooftop where the ravens roost.'"
+    },
     tome_of_strahd: {
         cat: "quest", name: "📜 The Tome of Strahd (Tarokka Relic #1)", rarity: "Legendary Relic • No Attunement",
         location: "Wachterhaus Cult Library (Vallaki — Act II)",

@@ -2852,6 +2852,8 @@
     // 🎒 INVENTORY & BAROVIAN LOOT VAULT ENGINE
     // ==========================================
     const defaultItems = [
+        "📖 Burgomaster Kolyan's Wizard Diary (Davian Martikov & Keepers of the Feather Lead)",
+        "🥧 1x Morgantha's Dream Pastry (Uneaten — Gifted by Granny)",
         "🗡️ Ancestral Greatsword (Graze Mastery)",
         "🪓 2x Handaxes (Vex Mastery)",
         "⛓️ Chain Mail Armor (AC 16 + 1 Defense Style)",
@@ -2867,6 +2869,27 @@
     ];
 
     const worldLootVault = {
+        "wizard diary": {
+            name: "📖 Burgomaster Kolyan's Wizard Diary",
+            category: "QUEST TOME & FACTION LEAD • Session 1 Indirovich Manor Loot",
+            origin: "Hidden Study of Late Burgomaster Kolyan Indirovich",
+            desc: "A leather-bound arcane journal written by Ismark and Ireena's late father, Burgomaster Kolyan Indirovich, revealing that he practiced wizardry in his youth and quietly researched ways to resist Count Strahd's grip on the valley.",
+            effect: "• <strong>Keepers of the Feather Lead:</strong> Kolyan explicitly writes that he knows <strong>Davian Martikov</strong> (master of the <em>Wizard of Wines</em>) and a secret fellowship called <strong>the Keepers of the Feather</strong>, noting that if his children or their champions ever need aid against Strahd, they should present this diary to the Martikov family (at the <em>Blue Water Inn</em> in Vallaki or the Winery).<br>• <strong>Social Key:</strong> Showing this diary to Urwin or Davian Martikov grants immediate trust and faction assistance!"
+        },
+        "kolyan": {
+            name: "📖 Burgomaster Kolyan's Wizard Diary",
+            category: "QUEST TOME & FACTION LEAD • Session 1 Indirovich Manor Loot",
+            origin: "Hidden Study of Late Burgomaster Kolyan Indirovich",
+            desc: "A leather-bound arcane journal written by Ismark and Ireena's late father, Burgomaster Kolyan Indirovich, revealing that he practiced wizardry in his youth and quietly researched ways to resist Count Strahd's grip on the valley.",
+            effect: "• <strong>Keepers of the Feather Lead:</strong> Kolyan explicitly writes that he knows <strong>Davian Martikov</strong> (master of the <em>Wizard of Wines</em>) and a secret fellowship called <strong>the Keepers of the Feather</strong>, noting that if his children or their champions ever need aid against Strahd, they should present this diary to the Martikov family (at the <em>Blue Water Inn</em> in Vallaki or the Winery).<br>• <strong>Social Key:</strong> Showing this diary to Urwin or Davian Martikov grants immediate trust and faction assistance!"
+        },
+        "dream pastry": {
+            name: "🥧 Morgantha's Dream Pastry (Uneaten)",
+            category: "SUSPICIOUS CONSUMABLE • Gifted by 'Granny' Morgantha in Session 1",
+            origin: "Old Bonegrinder Windmill Peddler Cart",
+            desc: "A warm, golden-crusted minced-meat hand pie dusted with sweet spices, handed to King Jacomir by old Morgantha after she shrugged off Piper's enchantment and grew wary of the party.",
+            effect: "• <strong>Currently Uneaten:</strong> Stored safely in Jacomir's pack.<br>• <strong>If Eaten (Action):</strong> Grants <strong>1d6 Temporary HP</strong>, removes 1 level of Exhaustion, and plunges the eater into 8 hours of vivid, blissful dreams of home—followed by a <strong>DC 13 CON Save</strong> at dawn against withdrawal cravings!"
+        },
         "greatsword": {
             name: "🗡️ Ancestral Greatsword of Oakenshire",
             category: "MARTIAL MELEE WEAPON • Heavy, Two-Handed",
@@ -2938,7 +2961,24 @@
             localStorage.setItem('cos_inv_jacomir_v2', JSON.stringify(defaultItems));
             return [...defaultItems];
         }
-        try { return JSON.parse(stored); } catch(e) { return [...defaultItems]; }
+        try {
+            const parsed = JSON.parse(stored);
+            const diaryStr = "📖 Burgomaster Kolyan's Wizard Diary (Davian Martikov & Keepers of the Feather Lead)";
+            const pieStr = "🥧 1x Morgantha's Dream Pastry (Uneaten — Gifted by Granny)";
+            let changed = false;
+            if (Array.isArray(parsed)) {
+                if (!parsed.some(i => i.toLowerCase().includes('dream pastry'))) {
+                    parsed.unshift(pieStr);
+                    changed = true;
+                }
+                if (!parsed.some(i => i.toLowerCase().includes('wizard diary') || i.toLowerCase().includes('kolyan'))) {
+                    parsed.unshift(diaryStr);
+                    changed = true;
+                }
+                if (changed) localStorage.setItem('cos_inv_jacomir_v2', JSON.stringify(parsed));
+            }
+            return parsed;
+        } catch(e) { return [...defaultItems]; }
     }
 
     function saveStoredItems(items) {
@@ -3116,6 +3156,16 @@
             id: 'base_vanguard',
             title: "The Sovereign's Oath",
             text: "A crown is an unbreakable debt owed to every soul under my banner. Until my realm is found, these fellow strangers in the Mists are my vanguard."
+        },
+        {
+            id: 's1_diary',
+            title: "S1: Kolyan's Wizard Diary",
+            text: "Burgomaster Kolyan's diary reveals he was a wizard and names Davian Martikov & the Keepers of the Feather as secret allies who can help us against Strahd."
+        },
+        {
+            id: 's1_derek_doru',
+            title: "S1: Doru & Derek's Promise",
+            text: "As I poured my blood into a cup for Father Donavich's vampire son Doru in the church attic, 3 knocks froze time. Derek promised Yvaine and me a way home if we kill Strahd."
         }
     ];
     let editingNoteId = null;
@@ -3126,7 +3176,19 @@
             localStorage.setItem('cos_notes_jacomir_v2', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
-        try { return JSON.parse(stored); } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
+        try {
+            const notes = JSON.parse(stored);
+            const removed = getRemovedNoteTitles();
+            let changed = false;
+            defaultPlayerNotes.forEach(def => {
+                if (!notes.some(n => n.id === def.id) && !removed.includes(def.title)) {
+                    notes.push({ ...def });
+                    changed = true;
+                }
+            });
+            if (changed) localStorage.setItem('cos_notes_jacomir_v2', JSON.stringify(notes));
+            return notes;
+        } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {

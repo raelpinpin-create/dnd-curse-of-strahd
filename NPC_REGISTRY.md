@@ -5,9 +5,24 @@
 
 ---
 
-## 🌟 CORE MAIN PARTY COMPANION & TRAGIC SHEPHERD
+## 🌟 CORE COSMIC EMISSARIES: THE AVATAR (DEREK) & THE SCION (CAEL)
 
-### 🐾 Caelum Jude ("Cael") — The Starlit Healer & Scion of the Dark Powers
+### ⏳ Derek ("The Man Between Seconds") — Avatar & Emissary of the Dark Powers
+* **Status:** `🟢 MET IN SESSION 1 (Froze Time in Father Donavich's Church)`
+* **Role:** Physical Avatar / Cosmic Project Manager of the Dark Powers' Pact (Paired with **Caelum Jude**, the Inside Shepherd)
+* **Appearance:** A tall, pale-skinned white man with sharp, unblinking features and an eerily composed, modernly transactional demeanor. Appears only when three knocks sound (`tap, tap, tap`) and time freezes around the party.
+* **Crucial Canon Rules (How Derek Blends 100% into *Curse of Strahd*):**
+  * **1. Strahd Does NOT Know Derek Exists:** Because Derek never walks around Barovia in normal time—stepping only into frozen pockets between the ticks of the clock—Strahd's wolves, bats, ravens, and scrying sensors **never see or hear him** (during the church visit, Donavich, Ismark, and Ireena were frozen like statues!).
+  * **2. Session 1 Church Visit (`Tap, Tap, Tap`):** Stepped into Father Donavich's church right as King Jacomir was pouring his own blood into a cup to feed Doru in the attic (while Piper and Yvaine demanded Doru's execution). Spoke directly to **Jacomir & Yvaine**, revealing he knows who they are and promising they will get what they want and go home if they follow him and **kill Strahd**. Looked at **Piper** with curiosity and astonishment—recognizing *what she is* (the chaotic Wild Magic vessel/detonator) and what the Dark Powers plan for her—and told her to *"take care of herself"* before vanishing and unfreezing time.
+  * **3. Strict 3-Milestone Future Appearances Only (Never a Combatant or DM-PC):**
+    * **Milestone 1 (Post-Tarokka Reading — Tser Falls Bridge in Session 2):** Appears for 10 frozen seconds after Madam Eva's reading (and after Cael joins the party). While Cael freezes/shrinks back in silent terror of his overseer, Derek translates Eva's riddles into cold action: *"The old woman gave you the riddles. I'm giving you the bottom line: take the book, take the amulet, take the sword, and don't let Barovia's sob stories slow your blade."*
+    * **Milestone 2 (Act II Moral Crossroads — Vallaki / Feast of St. Andral):** Freezes time during a political/moral crisis to push the ruthless, pragmatic choice (*"Save your strength for the castle"*).
+    * **Milestone 3 (Act IV — The Amber Temple & Gates of Ravenloft):** Walks among the Amber Sarcophagi in real time (where Strahd's spies cannot reach), encouraging the party to claim the Dark Gifts before the final siege.
+* **Voice & Roleplay Cue:** Calm, transactional, razor-sharp, unnervingly well-informed. *"Everyone else in this valley will give you riddles or fangs. I'm the only one giving you a straight deal: kill the vampire on the hill, and you go home. And you, little spark... take care of yourself. You're far too valuable to burn out early."*
+
+---
+
+### 🐾 Caelum Jude ("Cael") — The Starlit Healer & Scion of the Dark Powers (The Inside Shepherd)
 * **Status:** `🟢 ACTIVE & WATCHING (Session 1: Stealth Feline Stalker Form)`
 * **Role:** Dedicated Main Party Companion, Primary Healer, & Secret Shepherd of the Dark Powers / Vecna Pact
 * **Full Master Dossier:** [`CAEL_MASTER_DOSSIER.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/CAEL_MASTER_DOSSIER.md)
@@ -81,7 +96,7 @@
 ## 🛡️ SECTION 2: THE VILLAGE OF BAROVIA & TSER POOL (ACT I ALLIES)
 
 ### 🌹 Ireena Kolyana (The Twice-Bitten Noblewoman & Tatyana Reborn)
-* **Status:** `⚪ NOT MET (Meet in Session 1 Act IV)`
+* **Status:** `🟢 MET IN SESSION 1 (Currently in Barovia Church with Party — Neutral in Doru Dilemma)`
 * **Role:** Key Escort Ally & Target of Strahd's Obsession (Village of Barovia ➔ Vallaki / Krezk)
 * **Stat Block Snapshot:** AC 15 (Breastplate) | HP 28 *(Upgraded for Party Survival!)* | Speed 30 ft | Silvered Rapier (`+5 hit`, `1d8+2` piercing) | *Parry Reaction (+2 AC)* | *Help Action*.
 * **Psychological Dossier:**
@@ -92,7 +107,7 @@
 ---
 
 ### 🗡️ Ismark "The Lesser" Indirovich (New Burgomaster of Barovia Village)
-* **Status:** `⚪ NOT MET (Meet in Session 1 Act III)`
+* **Status:** `🟢 MET IN SESSION 1 (Currently in Barovia Church — Empathizes with Donavich Alongside Jacomir)`
 * **Role:** Veteran Swordsman & Quest Giver (Blood on the Vine Tavern)
 * **Stat Block Snapshot (Veteran):** AC 17 (Splint) | HP 58 | Speed 30 ft | Multiattack: 2x Longsword (`+5 hit`, `1d10+3`) + 1x Shortsword (`+5 hit`, `1d6+3`).
 * **Psychological Dossier:**
@@ -102,10 +117,11 @@
 
 ---
 
-### ⛪ Father Donavich & Doru (The Broken Priest & The Starving Son — Session 2)
-* **Status:** `⚪ NOT MET`
-* **Role:** Village Priest of the Morninglord (`Donavich`) & Trapped Vampire Spawn (`Doru`)
-* **Location:** Church of the Village of Barovia (Area E5)
+### ⛪ Father Donavich & Doru (The Broken Priest & The Starving Son in the Attic — Session 1/2 Cliffhanger)
+* **Status:** `🟢 MET IN SESSION 1 (Active Standoff in Barovia Church — Doru Hidden in the Church Attic!)`
+* **Role:** Village Priest of the Morninglord (`Donavich`) & Trapped Vampire Spawn (`Doru` — Hidden in the Attic)
+* **Location:** Church of the Village of Barovia (Area E5 — Attic)
+* **Session 1 Cliffhanger State (*DragnaCarta Reloaded* `Arc B5`):** The party discovered Doru hidden in the **church attic**. Father Donavich begged to keep his son alive; **King Jacomir** and **Ismark** understood his paternal pain (though agreeing it's wrong to keep Doru like this), and **Jacomir was pouring his own royal blood into a cup** to let Donavich feed Doru (*in DragnaCarta's Reloaded, feeding Doru willing blood briefly restores his sanity so he weeps, reveals he stormed Ravenloft with the Mad Mage and saw Strahd's Heart of Sorrow, and begs for peace!*). **Piper** and **Yvaine** fiercely disagreed and wanted to kill Doru immediately, while **Ireena** stayed neutral—right when **Derek** froze time (`tap, tap, tap`)!
 * **Psychological Dossier:**
   * 🧭 **Core Philosophy:** **Desperate Paternal Denial**. A year ago, Donavich's twenty-year-old son **Doru** joined a wizard's rebellion against Castle Ravenloft. Strahd turned Doru into a Vampire Spawn and sent him back to his father as a cruel joke. Donavich has kept Doru locked in the church undercroft for months without a single drop of blood, praying until his voice bleeds for a miracle cure.
   * ⚡ **Immediate Problem:** Doru is screaming in starvation beneath the church floorboards during Burgomaster Kolyan's funeral!
@@ -139,10 +155,16 @@
 * **Role:** Undercover Half-Elf Bard at the Blue Water Inn (Vallaki) with an armored Saber-Toothed Tiger in his carnival wagon.
 * **Voice & Cue:** As Rictavio: flamboyant, eccentric ringmaster. As Van Richten: weary, calculating, ruthless old hunter. *"Monsters do not lose to heroes. Monsters lose to preparation."*
 
-### 🪶 Urwin & Danika Martikov (Keepers of the Feather — Blue Water Inn)
-* **Status:** `⚪ NOT MET`
-* **Role:** Secret Wereraven Spy Network & Owners of the Blue Water Inn in Vallaki.
+### 🪶 Urwin & Danika Martikov + Davian Martikov (Keepers of the Feather — Discovered via Kolyan's Wizard Diary!)
+* **Status:** `🟡 NAMED IN KOLYAN'S WIZARD DIARY (Session 1 Manor Loot — Party Has Direct Lead!)`
+* **Role:** Secret Wereraven Spy Network, Owners of the Blue Water Inn (Vallaki), & Masters of the Wizard of Wines Winery (`Davian Martikov`).
+* **Session 1 Connection:** While looting Indirovich Manor in Session 1, the party discovered that late Burgomaster **Kolyan Indirovich** was a former wizard and found his **Wizard Diary**, in which he explicitly wrote that he knows **Davian Martikov** and **the Keepers of the Feather**, who can help with the Strahd situation if they need more assistance! Presenting Kolyan's diary to Urwin in Vallaki or Davian at the Winery immediately earns the Keepers' trust!
 * **Voice & Cue:** Warm, hospitable, quietly observant. *"A warm bowl of beet soup and a locked door are the rarest treasures in Vallaki, friends."*
+
+### 🥧 Morgantha / "Granny" (Night Hag Matron of Old Bonegrinder — Met in Session 1!)
+* **Status:** `🟢 MET IN SESSION 1 (Semi-Hostile/Wary of Piper • Gifted 1x Uneaten Dream Pastry to Jacomir)`
+* **Role:** Night Hag Matron peddling cursed bone-flour **Dream Pastries** from Old Bonegrinder Windmill.
+* **Session 1 Encounter:** Met on the road in Session 1. **Piper** attempted to cast her innate Fierna *Charm Person* on her; Morgantha's fiendish *Magic Resistance* shrugged off the spell, leaving her semi-hostile and wary toward Piper before she departed into the mist—after handing **1x Dream Pastry to King Jacomir** (who kept it **uneaten**).
 
 ### ☀️ Baron Vargas Vallakovich & Lady Fiona Wachter (Vallaki Rivals)
 * **Baron Vargas:** Paranoid, tyrannical mayor of Vallaki who arrests anyone who frowns and forces weekly rainy festivals (*"ALL WILL BE WELL!"*), protected by his demon-armed enforcer **Izek Strazni**.

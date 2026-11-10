@@ -3640,6 +3640,7 @@
     // 🎒 INVENTORY & BAROVIAN LOOT VAULT ENGINE
     // ==========================================
     const defaultItems = [
+        "🃏 The Blank Tarokka Card (Unwritten Vistani Omen — Give to Madam Eva)",
         "🕰️ Barnaby's Brass Pocket Watch (Blurred Portrait of Tiefling Parents)",
         "🎩 False-Bottom Stage Props & Rigged Card Deck",
         "🪄 Quarterstaff (Magician's Cane & Spellcasting Focus)",
@@ -3653,6 +3654,20 @@
     ];
 
     const worldLootVault = {
+        "blank tarokka": {
+            name: "🃏 The Blank Tarokka Card (Unwritten Vistani Omen)",
+            category: "MYSTERIOUS OMEN RELIC • Session 1 Vistani Gift",
+            origin: "Given by a Deeply Concerned Vistani at Blood on the Vine Tavern",
+            desc: "A heavy, velvet-backed Vistani Tarokka card whose painted ink literally bled and faded into nothingness the moment the fortune-teller tried to read Piper's future. Its parchment surface is currently stark, cold, and unwritten.",
+            effect: "• <strong>Vistani Warning:</strong> The Vistani in the tavern stared into Piper's eyes with deep concern, warning her to stay safe because they saw gathering misfortune and darkness around her.<br>• <strong>Quest Hook:</strong> Deliver this Blank Tarokka Card directly to the ancient seer <strong>Madam Eva</strong> at the <strong>Tser Pool Encampment</strong>.<br>• <strong>Living Omen:</strong> Sometimes the edges of the blank parchment feel icy to the touch, as if waiting for dark charcoal ink to bleed back into the card as Piper approaches the truth of her awakened magic."
+        },
+        "tarokka": {
+            name: "🃏 The Blank Tarokka Card (Unwritten Vistani Omen)",
+            category: "MYSTERIOUS OMEN RELIC • Session 1 Vistani Gift",
+            origin: "Given by a Deeply Concerned Vistani at Blood on the Vine Tavern",
+            desc: "A heavy, velvet-backed Vistani Tarokka card whose painted ink literally bled and faded into nothingness the moment the fortune-teller tried to read Piper's future. Its parchment surface is currently stark, cold, and unwritten.",
+            effect: "• <strong>Vistani Warning:</strong> The Vistani in the tavern stared into Piper's eyes with deep concern, warning her to stay safe because they saw gathering misfortune and darkness around her.<br>• <strong>Quest Hook:</strong> Deliver this Blank Tarokka Card directly to the ancient seer <strong>Madam Eva</strong> at the <strong>Tser Pool Encampment</strong>.<br>• <strong>Living Omen:</strong> Sometimes the edges of the blank parchment feel icy to the touch, as if waiting for dark charcoal ink to bleed back into the card as Piper approaches the truth of her awakened magic."
+        },
         "pocket watch": {
             name: "🕰️ Barnaby's Brass Pocket Watch",
             category: "PRICELESS PERSONAL RELIC • Prophecy Keepsake",
@@ -3710,7 +3725,15 @@
             localStorage.setItem('cos_inv_piper_v1', JSON.stringify(defaultItems));
             return [...defaultItems];
         }
-        try { return JSON.parse(stored); } catch(e) { return [...defaultItems]; }
+        try {
+            const parsed = JSON.parse(stored);
+            const blankCardStr = "🃏 The Blank Tarokka Card (Unwritten Vistani Omen — Give to Madam Eva)";
+            if (Array.isArray(parsed) && !parsed.some(i => i.toLowerCase().includes('blank tarokka'))) {
+                parsed.unshift(blankCardStr);
+                localStorage.setItem('cos_inv_piper_v1', JSON.stringify(parsed));
+            }
+            return parsed;
+        } catch(e) { return [...defaultItems]; }
     }
 
     function saveStoredItems(items) {
@@ -3888,6 +3911,16 @@
             id: 'base_fog',
             title: "Awakening in Svalich Woods",
             text: "Fell asleep after a tavern card act in Daggerford and woke up in the choking silver fog of Barovia with no memory of crossing the border."
+        },
+        {
+            id: 's1_blank_card',
+            title: "S1: The Blank Tarokka Card",
+            text: "A concerned Vistani at the tavern saw darkness and misfortune in my eyes. The ink faded off her Tarokka card—she told me to bring the Blank Card to Madam Eva!"
+        },
+        {
+            id: 's1_derek',
+            title: "S1: Derek & The Frozen Church",
+            text: "While arguing over killing Doru in the church attic, 3 knocks froze time. A tall man named Derek knew what I am, told me to 'take care of myself', and said to kill Strahd."
         }
     ];
     let editingNoteId = null;
@@ -3898,7 +3931,19 @@
             localStorage.setItem('cos_notes_piper_v1', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
-        try { return JSON.parse(stored); } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
+        try {
+            const notes = JSON.parse(stored);
+            const removed = getRemovedNoteTitles();
+            let changed = false;
+            defaultPlayerNotes.forEach(def => {
+                if (!notes.some(n => n.id === def.id) && !removed.includes(def.title)) {
+                    notes.push({ ...def });
+                    changed = true;
+                }
+            });
+            if (changed) localStorage.setItem('cos_notes_piper_v1', JSON.stringify(notes));
+            return notes;
+        } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {

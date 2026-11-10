@@ -21,7 +21,7 @@
 * **Class & Lineage Resources:**
   - ✨ **Sorcery Points (`Font of Magic`):** `3 / 3` *(Long Rest)* — **Metamagic:** *Subtle Spell (1 SP)*, *Twinned Spell (1–2 SP)*, *Bend Fate ("Is That Your Card?!" — 2 SP for ±1d4 to a roll)*
   - 🃏 **Tides of Chaos ("Pick-a-Card, Any Card!"):** `1 / 1 Ready` *(Gain Advantage on 1 Attack/Check/Save; once spent, her next 1st+ level spell automatically triggers a d100 Wild Magic Surge and recharges Tides of Chaos!)*
-  - 💖 **Legacy of Phlegethos (Fierna Lineage):** Knows *Friends* cantrip + **1/Long Rest Free 2nd-Level *Charm Person*** (targets up to 2 humanoids)
+  - 💖 **Legacy of Phlegethos (Fierna Lineage):** Knows *Friends* cantrip + **1/Long Rest Free 2nd-Level *Charm Person*** (`0 / 1 Used` — cast on Morgantha in Session 1; resisted by Hag Magic Resistance)
   - 🔥 **Hellish Resistance & Darkvision:** **Resistance to Fire Damage** • **Darkvision 60 ft**
   - 🌲 **Barovian Lore & Wilderness Acumen (Native Boon):** Proficient in **Nature (+3 ★)** and **Survival (+2 ★)**. As the sole Barovian native in the party, Piper automatically identifies safe vs. dream-inducing/lethal berries & mushrooms, distinguishes normal wolf prints from dire wolf/werewolf tracks, and locates clean well-water untainted by cemetery runoff.
   - 🤝 **Help Tokens:** `2 / 2`
@@ -30,6 +30,7 @@
   - **2nd-Level Slots (`2 / 2`):** *Web* (`DC 14 DEX` Restrained), *Misty Step* (`30ft Bonus Action teleport`), *Charm Person (Fierna 2nd-Lvl)*
   - **Cantrips (At-Will):** *Fire Bolt* (`+6 hit`, `1d10` Fire), *Friends*, *Prestidigitation*, *Minor Illusion* (`DC 14`), *Mage Hand*
 * **Equipment & Inventory (`15 GP, 0 SP`):**
+  - 🃏 ***The Blank Tarokka Card (Unwritten Vistani Omen — Give to Madam Eva):*** Given to Piper in Session 1 at *Blood on the Vine Tavern* after a Vistani stared into her eyes with deep concern (seeing misfortune and darkness) and the painted ink faded completely off the card in Piper's hand! (**Option 2 Living Omen Card:** Bleeds charcoal Mist/Vessel imagery across 3 campaign stages starting when Madam Eva touches it at Tser Pool in Session 2).
   - 🕰️ *Barnaby's Brass Pocket Watch* (Blurred portrait of her purple-horned tiefling parents)
   - 🎩 *False-Bottom Stage Props & Rigged Card Deck*
   - 🪄 *Quarterstaff* (Magician's Cane & Arcane Focus • `+2 hit`, `1d6/1d8` bludgeoning)
@@ -64,6 +65,8 @@
   - 🌲 **Barovian Lore & Wilderness Acumen (Native Boon):** Proficient in **Nature (+3 ★)** and **Survival (+2 ★)**. As the sole Barovian native in the party, Piper automatically identifies safe vs. dream-inducing/lethal berries & mushrooms, distinguishes normal wolf prints from dire wolf/werewolf tracks, and locates clean well-water untainted by cemetery runoff.
   - 🤝 **Help Tokens:** `2 / 2`
 * **Equipment & Royal Regalia (`25 GP, 0 SP`):**
+  - 📖 ***Burgomaster Kolyan's Wizard Diary (Davian Martikov & Keepers of the Feather Lead):*** Found by looting Indirovich Manor in Session 1. Reveals that late Burgomaster Kolyan Indirovich was a wizard who knew **Davian Martikov** and the **Keepers of the Feather**, naming them as trusted allies who can help against Strahd!
+  - 🥧 ***1x Morgantha's Dream Pastry (Uneaten — Gifted by Granny):*** Given to King Jacomir by Morgantha in Session 1 after she resisted Piper's *Charm Person*. Stored **uneaten** (Action to eat: `1d6 Temp HP`, removes 1 Exhaustion, triggers 8-hr dream trance; secretly baked with bone-flour from Old Bonegrinder).
   - 🗡️ *Ancestral Greatsword*, 🪓 *2x Handaxes*, ⛓️ *Chain Mail (AC 16)*
   - 💍 *Signet Ring bearing the Lost Crest of Oakenshire*, 🧥 *Tattered Royal Traveling Cloak with Fur Mantle*, 📜 *Empty Scroll Case*
   - ♟️ *Dragonchess Gaming Set*, 👔 *Fine Traveler's Garments*, 🎒 *Explorer's Pack*

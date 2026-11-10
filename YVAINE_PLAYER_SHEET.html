@@ -3390,6 +3390,11 @@
             id: 'note_3',
             title: "Barovian Silver Ratios",
             text: "Ghouls and wolves roam the mist. Slugs crimped with silver ash stagger them. Maintain firearms daily with tinker kit."
+        },
+        {
+            id: 's1_derek_church',
+            title: "S1: Derek & The Church Standoff",
+            text: "Found Doru (vampire spawn) in the church attic. Piper & I wanted him dead while Jacomir poured blood in a cup. 3 knocks froze time—Derek promised we'd go home if we kill Strahd."
         }
     ];
     let editingNoteId = null;
@@ -3400,7 +3405,19 @@
             localStorage.setItem('cos_notes_yvaine_v5', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
-        try { return JSON.parse(stored); } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
+        try {
+            const notes = JSON.parse(stored);
+            const removed = getRemovedNoteTitles();
+            let changed = false;
+            defaultPlayerNotes.forEach(def => {
+                if (!notes.some(n => n.id === def.id) && !removed.includes(def.title)) {
+                    notes.push({ ...def });
+                    changed = true;
+                }
+            });
+            if (changed) localStorage.setItem('cos_notes_yvaine_v5', JSON.stringify(notes));
+            return notes;
+        } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {
