@@ -782,7 +782,7 @@
     <a href="#npc-directory" class="nav-btn">👥 2. NPC Directory (15)</a>
     <a href="#monsters-section" class="nav-btn">💀 3. Enemies & Pointy Hat Bosses (12)</a>
     <a href="#loot-vault" class="nav-btn">🎒 4. World Loot & Relics</a>
-    <a href="#factions-lore" class="nav-btn">🏛️ 4.5 Factions & Lore</a>
+    <a href="#factions-lore" class="nav-btn">🏛️ 4.5 Factions, Villages & Lore (20)</a>
     <a href="#dm-rules-guide" class="nav-btn">⚖️ 5. Barovian Laws & Rules</a>
 </nav>
 
@@ -1060,91 +1060,246 @@
         <div class="grid-2" id="loot-containers"></div>
     </section>
 
-    <!-- SECTION 4.5: BAROVIAN FACTIONS, PEOPLES & LORE CODEX -->
+    <!-- SECTION 4.5: BAROVIAN FACTIONS, VILLAGES, HISTORY, VITAL SECRETS & COSMIC LORE CODEX -->
     <section id="factions-lore">
         <div class="section-header">
-            <span>🏛️ SECTION 4.5: BAROVIAN FACTIONS, PEOPLES & CULTURAL LORE CODEX</span>
-            <span class="section-tag">CLICK ANY FACTION BUTTON FOR FULL HISTORY, BELIEFS & DM ROLEPLAY CUES</span>
+            <span>🏛️ SECTION 4.5: BAROVIAN FACTIONS, VILLAGES, HISTORY, VITAL SECRETS & COSMIC LORE CODEX (20 DOSSIERS)</span>
+            <span class="section-tag">CLICK ANY CARD FOR FULL PDF + RELOADED + COSMIC KNOT DOSSIER</span>
         </div>
-        <div class="grid-4">
-            <div class="card clickable searchable-row" onclick="openLoreModal('vistani')">
-                <div class="card-header">
-                    <span class="card-title">🔮 The Vistani</span>
-                    <span class="pill gold">Mist Travelers</span>
+
+        <div class="loot-filter-bar" id="lore-filter-bar">
+            <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Quick Lore Filter:</span>
+            <button class="btn-loot-filter active" onclick="filterLoreCodex('all', this)">📚 All Lore (20)</button>
+            <button class="btn-loot-filter" onclick="filterLoreCodex('factions', this)">🛡️ 4.5A Factions, Orders & Covens (8)</button>
+            <button class="btn-loot-filter" onclick="filterLoreCodex('villages', this)">🏘️ 4.5B Villages, Towns & Settlements (4)</button>
+            <button class="btn-loot-filter" onclick="filterLoreCodex('history', this)">⏳ 4.5C History, Souls & Vital Secrets (4)</button>
+            <button class="btn-loot-filter" onclick="filterLoreCodex('cosmic', this)">🌌 4.5D Cosmic Knot & Dark Powers (4)</button>
+        </div>
+
+        <!-- 4.5A: BAROVIAN FACTIONS, SECRET ORDERS & COVENS -->
+        <div class="lore-group" data-lore-cat="factions" style="margin-bottom: 18px;">
+            <div class="loot-cat-title loot-header-quest" style="margin-bottom: 10px; border-radius: 6px;">🛡️ 4.5A: Barovian Factions, Secret Orders, Covens & Court of Ravenloft (8 Dossiers)</div>
+            <div class="grid-4">
+                <div class="card clickable searchable-row" onclick="openLoreModal('vistani')">
+                    <div class="card-header">
+                        <span class="card-title">🔮 1. The Vistani</span>
+                        <span class="pill gold">Mist Travelers</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Nomadic wagon clans who saved a mortal Prince Strahd. Includes <strong>Madam Eva's secret Zarovich bloodline</strong>, Tser Pool vs. Luvash's Vallaki spy camp, the Evil Eye, Blood Curses, and <strong>Piper's Blank Tarokka Card</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Vistani & Eva Lore</span></div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.81rem;">Nomadic wagon clans who saved a mortal Prince Strahd centuries ago. Granted eternal safe passage through the Mists, wielding Tarokka foresight and the Evil Eye.</p>
-                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Vistani Lore & History</span></div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('keepers')">
+                    <div class="card-header">
+                        <span class="card-title">🦅 2. Keepers of the Feather</span>
+                        <span class="pill green">Secret Wereravens</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Lawful Good Wereraven spy network led by the <strong>Martikov clan</strong> (Blue Water Inn & Wizard of Wines). Named in <strong>📖 Kolyan's Wizard Diary (S1)</strong>; guards Barovia's wine and watches from the rooftops.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Keepers & Martikov Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('silver_dragon')">
+                    <div class="card-header">
+                        <span class="card-title">🐉 3. Order of the Silver Dragon</span>
+                        <span class="pill gold">Revenant Knights</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Undying paladins of the silver dragon <strong>Argynvost</strong> (who secretly guarded the Amber Temple). <strong>Vladimir Horngaard's</strong> revenant hatred vs. <strong>Sir Godfrey's</strong> love, the Silver Beacon (+1 AC/Saves), & Campaign 3 Dragon bridge.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Silver Dragon Order Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('dusk_elves')">
+                    <div class="card-header">
+                        <span class="card-title">🧝‍♂️ 4. The Dusk Elves</span>
+                        <span class="pill purple">Dying Remnant</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Shadow-wood elves betrayed by <strong>Rahadin</strong>. After stoning <strong>Patrina Velikovna</strong> to keep her from Strahd, Strahd ordered Rahadin to slaughter every Dusk Elf woman. Led by <strong>Kasimir Velikov</strong> toward the Amber Temple.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Dusk Elf & Patrina Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('mountain_folk')">
+                    <div class="card-header">
+                        <span class="card-title">⛰️ 5. The Mountain Folk</span>
+                        <span class="pill crimson">Druids & Berserkers</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Mud-and-blood-painted Balinok tribes of <strong>Yester Hill</strong>. They worship Strahd as a primal god of storm and winter (<em>"He is the Land"</em>), tend the blood-drinking <strong>Gulthias Tree</strong>, and awaken <strong>Wintersplinter</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Mountain Folk & Kavan Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('hag_coven')">
+                    <div class="card-header">
+                        <span class="card-title">🥧 6. Old Bonegrinder Coven</span>
+                        <span class="pill purple">Night Hag Fiends</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;"><strong>Morgantha, Bella Sunbane & Offalia Wormwiggle.</strong> The Dream Pastry addiction cycle, child-bone flour mill, Ethereal Nightmare Haunting, and Morgantha's Session 1 grudge against <strong>Piper</strong>!</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Night Hag Coven Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('court_of_ravenloft')">
+                    <div class="card-header">
+                        <span class="card-title">🩸 7. Court of Castle Ravenloft</span>
+                        <span class="pill crimson">Brides & Consorts</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;"><em>Reloaded</em> & Book hierarchy of Strahd's court: <strong>Ludmilla</strong> (Archmage), <strong>Anastrasya</strong> (Vallaki Feast), <strong>Volenta</strong> (Porcelain Stalker), <strong>Escher</strong> (Melancholy Bard), and <strong>Rahadin</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Brides & Court Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('werewolves')">
+                    <div class="card-header">
+                        <span class="card-title">🐺 8. Children of Mother Night</span>
+                        <span class="pill crimson">Werewolf Pack</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Lycanthrope pack in the northern cliffs torn by civil war between Strahd's ruthless hound <strong>Kiril Stoyanovich</strong> (child-fighting ring) and imprisoned alpha <strong>Emil & Zuleika Toranescu</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Werewolf Pack Lore</span></div>
+                    </div>
                 </div>
             </div>
-            <div class="card clickable searchable-row" onclick="openLoreModal('villagers')">
-                <div class="card-header">
-                    <span class="card-title">🏚️ Barovian Villagers</span>
-                    <span class="pill crimson">Souls & Shells</span>
+        </div>
+
+        <!-- 4.5B: VILLAGES, TOWNS & SETTLEMENTS OF BAROVIA -->
+        <div class="lore-group" data-lore-cat="villages" style="margin-bottom: 18px;">
+            <div class="loot-cat-title loot-header-armor" style="margin-bottom: 10px; border-radius: 6px;">🏘️ 4.5B: Villages, Towns & Settlements of Barovia — History, Politics & Secrets (4 Dossiers)</div>
+            <div class="grid-4">
+                <div class="card clickable searchable-row" onclick="openLoreModal('village_barovia')">
+                    <div class="card-header">
+                        <span class="card-title">🏚️ 9. Village of Barovia</span>
+                        <span class="pill crimson">Act I • Ch. 3</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Huddled under Ravenloft's 1,000-ft cliff. <strong>Kolyan's secret wizard past</strong>, Ismark & Ireena, <strong>Doru's church attic blood-cup dilemma</strong>, Mad Mary & Gertruda, Bildrath's, and Blood on the Vine Tavern.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Village of Barovia Lore</span></div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.81rem;">Trapped subjects of the valley. <strong>9 in 10 are "Soulless Shells"</strong> (hollow, monochrome, joyless); only <strong>1 in 10 carry reincarnated souls</strong> capable of fear, color, and defiance.</p>
-                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Villager Lore & Customs</span></div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('town_vallaki')">
+                    <div class="card-header">
+                        <span class="card-title">⚔️ 10. Walled Town of Vallaki</span>
+                        <span class="pill purple">Act II • Ch. 5</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Barovia's political powderkeg: <strong>Baron Vargas's</strong> mandatory happiness festivals & <strong>Izek Strazni</strong> (Ireena's lost brother!) vs. <strong>Lady Fiona Wachter's</strong> cult & <strong>St. Andral's stolen bones</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Town of Vallaki Lore</span></div>
+                    </div>
                 </div>
-            </div>
-            <div class="card clickable searchable-row" onclick="openLoreModal('mountain_folk')">
-                <div class="card-header">
-                    <span class="card-title">⛰️ The Mountain Folk</span>
-                    <span class="pill crimson">Druids & Berserkers</span>
+                <div class="card clickable searchable-row" onclick="openLoreModal('commune_krezk')">
+                    <div class="card-header">
+                        <span class="card-title">⛪ 11. Krezk & St. Markovia Abbey</span>
+                        <span class="pill gold">Act III • Ch. 8</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Isolationist mountain commune, the sacred <strong>Pool of the White Sun</strong> (Sergei's spirit reaching for Ireena), the fallen Deva <strong>The Abbot</strong> corrupted by "Vasili von Holtz," Mongrelfolk, & <strong>Vasilka</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Krezk & Abbey Lore</span></div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.81rem;">Primal mud-and-blood-painted tribes of Yester Hill and Mt. Ghakis. They worship Count Strahd as a literal god of storm and winter (<em>"He is the Land"</em>).</p>
-                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Mountain Folk Lore</span></div>
-                </div>
-            </div>
-            <div class="card clickable searchable-row" onclick="openLoreModal('keepers')">
-                <div class="card-header">
-                    <span class="card-title">🦅 Keepers of the Feather</span>
-                    <span class="pill green">Secret Wereravens</span>
-                </div>
-                <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.81rem;">Clandestine society of Lawful Good Wereravens led by the Martikov family (Blue Water Inn & Wizard of Wines). They watch over heroes from the rooftops.</p>
-                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Keepers Lore</span></div>
-                </div>
-            </div>
-            <div class="card clickable searchable-row" onclick="openLoreModal('silver_dragon')">
-                <div class="card-header">
-                    <span class="card-title">🐉 Order of the Silver Dragon</span>
-                    <span class="pill gold">Revenant Knights</span>
-                </div>
-                <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.81rem;">Fallen paladins of the silver wyrm Argynvost in Argynvostholt. Cursed as undying Revenants who want Strahd to suffer forever in his prison.</p>
-                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Dragon Order Lore</span></div>
-                </div>
-            </div>
-            <div class="card clickable searchable-row" onclick="openLoreModal('dusk_elves')">
-                <div class="card-header">
-                    <span class="card-title">🧝‍♂️ The Dusk Elves</span>
-                    <span class="pill purple">Dying Remnant</span>
-                </div>
-                <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.81rem;">Ancient shadow-wood elves nearly exterminated by their traitor kin Rahadin. After Strahd executed every Dusk Elf woman, only grieving males remain.</p>
-                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Dusk Elf Lore</span></div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('ruins_berez')">
+                    <div class="card-header">
+                        <span class="card-title">🌊 12. Drowned Ruins of Berez</span>
+                        <span class="pill green">Act III • Ch. 10</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Flooded by Strahd after Burgomaster Ulrich & Brother Grigor staked Tatyana's incarnation <strong>Marina</strong>. Ruled by Strahd's dark midwife <strong>Baba Lysaga</strong>, her Creeping Hut, and <strong>The Sunsword</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Ruins of Berez Lore</span></div>
+                    </div>
                 </div>
             </div>
-            <div class="card clickable searchable-row" onclick="openLoreModal('faiths')">
-                <div class="card-header">
-                    <span class="card-title">☀️ Morninglord & Mother Night</span>
-                    <span class="pill gold">Barovian Faiths</span>
+        </div>
+
+        <!-- 4.5C: BAROVIAN HISTORY, SOULS & VITAL CAMPAIGN SECRETS -->
+        <div class="lore-group" data-lore-cat="history" style="margin-bottom: 18px;">
+            <div class="loot-cat-title loot-header-buff" style="margin-bottom: 10px; border-radius: 6px;">⏳ 4.5C: Chronological History, Reincarnation & Vital Campaign Secrets (4 Dossiers)</div>
+            <div class="grid-4">
+                <div class="card clickable searchable-row" onclick="openLoreModal('timeline_barovia')">
+                    <div class="card-header">
+                        <span class="card-title">📜 13. 5-Era History of Barovia</span>
+                        <span class="pill gold">Master Timeline</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Complete timeline: <strong>Amber Temple Wizards</strong> ➔ <strong>Argynvost's Watch</strong> ➔ <strong>Strahd's Conquest (347 BC)</strong> ➔ <strong>Vampyr's Pact & Sergei's Murder (351 BC)</strong> ➔ <strong>Mordenkainen & Doru's Siege (1 Yr Ago)</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Master Timeline</span></div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.81rem;">The dual religions of Barovia: the fading churches of the <strong>Morninglord</strong> (dawn & hope) versus the primal nocturnal pacts of <strong>Mother Night</strong>.</p>
-                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Religion & Gods Lore</span></div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('villagers')">
+                    <div class="card-header">
+                        <span class="card-title">👻 14. Souls, Shells & Tatyana</span>
+                        <span class="pill crimson">1 in 10 Ensouled</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Why <strong>9 in 10 Barovians are "Soulless Shells"</strong>, how the Mists trap souls in a reincarnation cycle, Tatyana's cursed past lives, and why Strahd plays a slow psychological siege for Ireena.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Souls & Tatyana Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('vital_secrets')">
+                    <div class="card-header">
+                        <span class="card-title">💎 15. Heart of Sorrow, Gems & Hunters</span>
+                        <span class="pill green">Vital Secrets</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Crucial secrets that play out at the table: <strong>The Heart of Sorrow (K20)</strong>, the <strong>3 Winery Life-Gems & Gulthias Tree</strong>, <strong>Van Richten's Vistani Curse</strong>, <strong>Ezmerelda</strong>, and <strong>The Mad Mage</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Vital Campaign Secrets</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('faiths')">
+                    <div class="card-header">
+                        <span class="card-title">☀️ 16. Morninglord & Mother Night</span>
+                        <span class="pill gold">Barovian Faiths</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Theology of the valley: the faded dawn of the <strong>Morninglord</strong> (Lathander), nocturnal bargains of <strong>Mother Night</strong>, <strong>St. Andral & St. Markovia's relics</strong>, and the <strong>Priests of Osybus</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Religion & Gods Lore</span></div>
+                    </div>
                 </div>
             </div>
-            <div class="card clickable searchable-row" onclick="openLoreModal('werewolves')">
-                <div class="card-header">
-                    <span class="card-title">🐺 Children of Mother Night</span>
-                    <span class="pill crimson">Werewolf Pack</span>
+        </div>
+
+        <!-- 4.5D: THE COSMIC KNOT, THE DARK POWERS & GRAND TRILOGY LORE -->
+        <div class="lore-group" data-lore-cat="cosmic" style="margin-bottom: 6px;">
+            <div class="loot-cat-title loot-header-caster" style="margin-bottom: 10px; border-radius: 6px;">🌌 4.5D: The Cosmic Knot, The Dark Powers & Grand Trilogy Twist (4 Dossiers)</div>
+            <div class="grid-4">
+                <div class="card clickable searchable-row" onclick="openLoreModal('cosmic_reactor')">
+                    <div class="card-header">
+                        <span class="card-title">🌑 17. Domain Zero & Dark Powers</span>
+                        <span class="pill purple">Despair Reactor</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Why Ravenloft is decoupled from the Shadowfell: an ancient primordial reactor harvesting false hope and despair. Why <strong>Barovia is "Domain Zero" (The Root Anchor)</strong> and Strahd is its Keystone.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Domain Zero Lore</span></div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.81rem;">Savage werewolf pack in the northern cliffs, fractured between Strahd's ruthless hound <strong>Kiril Stoyanovich</strong> and the imprisoned alpha <strong>Emil</strong>.</p>
-                    <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Werewolf Pack Lore</span></div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('vecna_pact')">
+                    <div class="card-header">
+                        <span class="card-title">🟣 18. Vecna's Pact & Time Loop</span>
+                        <span class="pill purple">Trilogy Bridge</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Why a god like <strong>Lord Vecna</strong> cannot touch Ravenloft directly, why he needs the 3 PCs as <strong>Mortal Surge Protectors</strong>, and the <strong>Non-Linear Temporal Loop</strong> linking Moros & <em>Stormwreck Isle</em>!</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Vecna Pact & Time Loop</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('dual_operatives')">
+                    <div class="card-header">
+                        <span class="card-title">⏳ 19. Derek & Cael (Dual Operatives)</span>
+                        <span class="pill crimson">Avatar vs. Scion</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;"><strong>Derek ("The Man Between Seconds")</strong> freezing time in S1 Church (100% invisible to Strahd!) vs. <strong>Cael ("The Mortal Scion")</strong> who loves the party, fears Derek, and triggers the S20 Root Anchor.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Derek & Cael Hierarchy</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('three_vessels')">
+                    <div class="card-header">
+                        <span class="card-title">🃏 20. The 3 Vessels & Blank Card</span>
+                        <span class="pill gold">The Grim Smile</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">The recurring <strong>Grim Smile</strong> motif & manufactured false hopes of <strong>Piper</strong> (Chaotic Battery & <strong>3-Stage Blank Tarokka Card</strong>), <strong>Jacomir</strong> (Oakenshire Vanguard), and <strong>Yvaine</strong> (Solmere Crosshairs).</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open 3 Vessels & Blank Card</span></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3514,87 +3669,314 @@ function openItemModal(key) {
 }
 
 const LORE_DATA = {
+    // =========================================================================
+    // 4.5A: BAROVIAN FACTIONS, SECRET ORDERS, COVENS & COURT OF RAVENLOFT (8)
+    // =========================================================================
     vistani: {
-        title: "🔮 The Vistani — Nomads of the Mists",
-        subtitle: "Wanderers of the Barrel-Topped Vardos • Sworn Blood-Guests of Strahd",
+        title: "🔮 The Vistani — Nomads of the Mists & Madam Eva's Secret Royal Bloodline",
+        subtitle: "Wanderers of the Barrel-Topped Vardos • Sworn Blood-Guests of Strahd (Book p. 26–28, 233 & Reloaded Arc C4)",
         badge: "Tser Pool & Vallaki Camp",
         quote: "We saved the Prince's life when his blood was still warm and red. Now the fog parts for our wheels, and the wolves never bite our horses.",
-        history: "Centuries ago, before the Mists swallowed Barovia, a mortal Prince Strahd von Zarovich was nearly slain in battle. A clan of wandering Vistani found him bleeding in the snow, nursed him back to health in their wagons, and returned him safely to his throne. In eternal gratitude, Strahd swore a royal blood-oath: <strong>all Vistani are forever welcome in his land, no beast of Barovia may harm them, and they alone possess the power to travel freely in and out of the Choking Mists</strong>.",
-        culture: "<strong>Two Very Different Clans in Barovia:</strong><br>• <strong>Madam Eva's Clan (Tser Pool Encampment):</strong> Warm, honorable, music-loving storytellers and silver-traders who secretly mourn what Strahd has become. Under Madam Eva's guidance, they read the <em>Tarokka</em> deck to guide heroes toward breaking Barovia's curse.<br>• <strong>Luvash & Arrigal's Clan (Southwest of Vallaki):</strong> Rowdy, ruthless mercenaries who actively serve Count Strahd as spies, couriers, and bounty hunters (and guard the surviving Dusk Elves).",
-        mechanics: "• <strong>Mist Navigation:</strong> Vistani wagons can enter the border Mists and emerge in any world of the multiverse—though only if they choose to.<br>• <strong>The Evil Eye (Action):</strong> A Vistani can fix their gaze on a creature within 30 ft (Wisdom Save) to inflict <em>Blindness, Charm,</em> or <em>Fear</em>.<br>• <strong>Vistani Blood Curse:</strong> Uttered as a Reaction when reduced to 0 HP or gravely wronged—imposes a permanent curse (Vulnerability to a damage type, inability to tie knots/find rest, or horrific nightmares) until lifted by <em>Remove Curse</em> or Vistani forgiveness!",
-        rp: "Vibrant silk shawls, gold coins braided into hair, violin music around roaring campfires, and a sharp eye for outsiders' silver and stories. Treat them with respect and share a drink by the fire, and they are the warmest hosts in Barovia; insult their wagons or steal from them, and their curses are lethal."
-    },
-    villagers: {
-        title: "🏚️ Barovian Villagers — The Ensouled & The Soulless Shells",
-        subtitle: "Prisoners of the Reincarnation Cycle • Village of Barovia, Vallaki & Krezk",
-        badge: "1 in 10 Have Souls",
-        quote: "Bar the shutters before the sun goes down. Never speak His name aloud. And if you hear someone crying in the fog... do not open the door.",
-        history: "When Strahd murdered his brother Sergei and became a vampire, the Dark Powers sealed Barovia behind the Mists. Nothing can leave—<strong>not even the souls of the dead</strong>. When a Barovian dies, their soul remains trapped in the valley, drifting in cold agony for years until it is reborn into a newborn infant (which is why Tatyana's soul keeps reincarnating into women like Ireena).",
-        culture: "<strong>The Secret of the 'Soulless Shells':</strong><br>• <strong>The Soulless (9 out of 10 Barovians):</strong> Because there are more bodies in Barovia than trapped souls, the Dark Powers generate hollow 'Shells' to populate the towns. Soulless Barovians wear drab gray/brown rags, never laugh, never cry, speak in flat monotones, and feel only dull numbness. Strahd finds their blood tasteless and watery—like drinking ash.<br>• <strong>The Ensouled (1 out of 10 Barovians):</strong> Those born with an actual reincarnated soul (like Ireena, Ismark, Mad Mary, and Father Donavich) wear small splashes of color, feel intense terror, grief, and courage, and have rich, nourishing blood that vampires crave!",
-        mechanics: "• <strong>Superstitions & Hospitality:</strong> Barovians distrust armored strangers (fearing they will provoke Strahd's wrath on the village). Showing genuine kindness or silver coins opens doors.<br>• <strong>The Law of Forbiddance:</strong> Villagers NEVER invite strangers across their doorway threshold on the first meeting—they force outsiders to prove they are not vampires first!",
-        rp: "Hunched shoulders, hollow eyes, whispering prayers to the Morninglord, slamming wooden window shutters at the first howl of a wolf."
-    },
-    mountain_folk: {
-        title: "⛰️ The Mountain Folk — Wild Druids & Berserkers of Balinok",
-        subtitle: "Blood-Painted Tribes of Yester Hill, Berez & Mount Ghakis",
-        badge: "Worship Strahd as 'The Land'",
-        quote: "He is the storm on the peak! He is the wolf in the pine! He is the Ancient, He is the Land—and our blood waters His roots!",
-        history: "Long before King Barov von Zarovich conquered the valley, the Balinok Mountains were ruled by wild tribal clans (such as the legendary chieftain <strong>Kavan</strong>). When Strahd conquered the valley and later became an immortal lord of storms, wolves, and winter, the surviving mountain tribes abandoned their old nature spirits and began worshipping Strahd as a literal <strong>Nature God of Blood and Winter</strong>.",
-        culture: "<strong>The Gulthias Tree & Yester Hill:</strong><br>• The Mountain Druids coat their skin in gray river-mud, ash, and human blood, weaving animal skulls and twigs into their matted hair.<br>• Atop <strong>Yester Hill</strong> grows the colossal, rotting <strong>Gulthias Tree</strong>—sprouted from the wooden stake driven through an ancient vampire centuries ago. By watering its roots with blood and stolen Wizard of Wines life-gems, the druids spawn <strong>Twig, Needle, and Vine Blights</strong>—and awaken the 30-foot colossus <strong>Wintersplinter</strong>!",
-        mechanics: "• <strong>Mountain Berserkers:</strong> Coated in woad and grave-dirt; fight with Reckless Greataxes and refuse to retreat while standing on Barovian soil.<br>• <strong>Kavan's Legacy:</strong> On Yester Hill, martial heroes (like Jacomir or Yvaine) may hear the ancestral whisper of Chieftain Kavan, guiding them to claim the <strong>Blood Spear (+2 Spear)</strong> to slay the corrupted druids.",
-        rp: "Chanting in guttural Old Balinok, pounding bone drums in the rain, viewing civilization and towns like Vallaki as weak rot that Strahd's winter will cleanse."
+        h1: "📜 Origin, Strahd's Blood-Oath & Madam Eva's True Identity",
+        history: "• <strong>The Ancient Blood-Oath:</strong> Centuries ago, before the Mists swallowed Barovia, a mortal Prince Strahd von Zarovich was nearly slain in battle. A clan of wandering Vistani found him bleeding in the snow, nursed him back to health in their wagons, and returned him safely to his throne. In eternal gratitude, Strahd swore a royal blood-oath: <strong>all Vistani are forever welcome in his land, no beast of Barovia may harm them, and they alone possess the power to travel freely in and out of the Choking Mists</strong>.<br>• <strong>Madam Eva's Secret Royal Bloodline (<code>Curse of Strahd PDF p. 233</code>):</strong> Unknown even to Count Strahd himself, the ancient Vistani seer <strong>Madam Eva</strong> is actually <strong>Katarina von Zarovich</strong>—Strahd's half-sister (born to King Barov and a Vistani woman during his military crusades). Over four hundred years ago, Katarina forged a bargain with the goddess <strong>Mother Night</strong>, trading her youth for ageless life and the power to read fate through the <em>Tarokka</em> deck in hopes of one day freeing her half-brother from his curse.",
+        h2: "🧭 Two Very Different Clans in Barovia",
+        culture: "• <strong>1. Madam Eva's Clan (Tser Pool Encampment, <code>Book Area G</code> — Session 2):</strong> Warm, honorable, music-loving storytellers and silver-traders who secretly mourn what Strahd has become. At the <em>Blood on the Vine Tavern</em> in Session 1, a Vistani from this circle stared into <strong>Piper's</strong> eyes in deep concern and handed her <strong>🃏 The Blank Tarokka Card</strong> after its ink faded off!<br>• <strong>2. Luvash & Arrigal's Clan (Southwest of Vallaki, <code>Book Area N9</code> — Act II):</strong> Rowdy, ruthless mercenaries led by brothers <strong>Luvash</strong> and <strong>Arrigal</strong> (a lethal CR 8 Assassin loyal to Strahd). They act as Strahd's paid spies, couriers, and bounty hunters across the Mists, and stand guard over the surviving <strong>Dusk Elves</strong>.",
+        h3: "⚔️ Tabletop Mechanics, Powers & Campaign Hooks",
+        mechanics: "• <strong>Mist Navigation:</strong> Vistani wagons can enter the border Mists and emerge in any world of the multiverse—though only if they choose to.<br>• <strong>The Evil Eye (Action — <code>Book p. 28</code>):</strong> A Vistani targets a creature within 10–30 ft (Charisma/Wisdom Save) to inflict <em>Animal Friendship, Charm Person, Hold Person,</em> or <em>Dazzle (Blinded)</em>. If the target succeeds on the save, the Vistani is <strong>Blinded until the end of their next turn</strong>!<br>• <strong>Vistani Blood Curse (Reaction at 0 HP or When Wronged):</strong> Target must pass a Wisdom Save or suffer a permanent curse (Vulnerability to a damage type, Disadvantage on Persuasion/Appearance, or inability to tie knots/find rest) until lifted by <em>Remove Curse</em>—and the Vistani suffer <strong>1d6 psychic feedback per curse level</strong>.<br>• <strong>Session 2 Tarokka Reading (<code>Reloaded Arc C4</code>):</strong> Madam Eva deals the 5 Curated Cards + recoils in cold dread from <strong>Piper's 6th Blank Omen Card</strong> (triggering Stage 1 ink bleed).",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Vibrant silk shawls, gold coins braided into hair, weeping Romani violin music around roaring campfires, and roasted boar with spiced wine. Treat them as honored hosts and share a story by the fire, and they offer safe Long Rest sanctuary and 5 GP weapon silvering; insult their wagons or steal from them, and their curses are unforgiving."
     },
     keepers: {
-        title: "🦅 The Keepers of the Feather — Secret Wereraven Resistance",
-        subtitle: "The Martikov Family Network • Blue Water Inn & Wizard of Wines",
-        badge: "Hidden Allies of the Party",
-        quote: "A raven on the windowsill is never an accident in Barovia, friend. Keep your blade sharp and your cup full.",
-        history: "The <strong>Keepers of the Feather</strong> are a clandestine society of <strong>Lawful Good Wereravens</strong> led by the extended <strong>Martikov family</strong>—specifically patriarch <strong>Davian Martikov</strong> at the Wizard of Wines Winery, and his son <strong>Urwin Martikov</strong> (and wife Danika) at the Blue Water Inn in Vallaki.",
-        culture: "<strong>How They Fight Strahd:</strong><br>• Knowing they are not strong enough to defeat Count Strahd in open battle, the Keepers wage a silent war of intelligence, survival, and hope.<br>• They ferment and deliver Barovia's only wine (<em>Purple Grapemash, Red Dragon Crush, Champagne du le Stomp</em>) for free to taverns, knowing wine is the only thing keeping Barovians from complete despair.<br>• In raven form, they perch on roofs, signposts, and battlements (including watching the party at the Gates of Barovia and Old Bonegrinder!) to warn heroes of ambushes.",
-        mechanics: "• <strong>Earning Their Trust:</strong> They guard their lycanthropy secret with their lives. Once the party saves the <strong>Wizard of Wines Winery</strong> from the Yester Hill druids (Session 7), the Keepers reveal their true nature and pledge aerial scouting, safe houses, and combat support across Barovia!",
-        rp: "Quick, bird-like head tilts, dark clothing trimmed with subtle black feathers, warm generosity with food and wine, speaking in coded tavern idioms."
+        title: "🦅 The Keepers of the Feather — Secret Wereraven Intelligence Network",
+        subtitle: "The Martikov Family Clan • Blue Water Inn (N2) & Wizard of Wines (Ch. 12)",
+        badge: "Named in Kolyan's S1 Diary!",
+        quote: "A raven on the windowsill is never an accident in Barovia, friend. You carry old Kolyan's wizard journal? Then our wings—and our cellars—are yours.",
+        h1: "📜 Origin, The Martikov Family Feud & The Three Gems",
+        history: "• <strong>The Clandestine Resistance:</strong> The <strong>Keepers of the Feather</strong> are a secret society of <strong>Lawful Good Wereravens</strong> led by the extended <strong>Martikov family</strong>. Knowing they lack the raw power to slay Count Strahd in open battle, they wage a quiet, centuries-long war of intelligence, survival, and hope.<br>• <strong>The Lifeblood of Barovia:</strong> At the <strong>Wizard of Wines Winery (<code>Book Chapter 12</code>)</strong>, patriarch <strong>Davian Martikov</strong> uses three ancient magic <strong>Life-Gems</strong> to grow grapes in sunless Barovia, delivering free barrels of wine (<em>Purple Grapemash No. 3, Red Dragon Crush</em>) to every tavern so the people do not succumb to despair.<br>• <strong>The Father-Son Feud:</strong> Ten years ago, the finest gem (which grew <em>Champagne du le Stomp</em>) was stolen while Davian's son <strong>Urwin Martikov</strong> was on night watch. Davian accused Urwin of negligence; Urwin moved to <strong>Vallaki</strong> with his wife <strong>Danika Dorakova</strong> and sons Brom & Bray to run the <strong>Blue Water Inn (<code>Area N2</code>)</strong>.",
+        h2: "🧭 How the Keepers Operate Across the Valley",
+        culture: "• <strong>Eyes on Every Roof:</strong> Whenever the party spots a lone raven with blue-black wingtips—at the Gates of Barovia (Session 1), cawing frantically above the door of <strong>Old Bonegrinder (Session 3)</strong>, or perched on Vallaki's rafters—it is a Keeper scout!<br>• <strong>Strict Secrecy:</strong> If Strahd discovers the Martikovs are wereravens, he will burn the Blue Water Inn and the Winery to ash. They never transform in front of strangers until the party proves themselves trustworthy.",
+        h3: "⚔️ How It Plays Out in Campaign (Session 1 Diary ➔ Session 4 & 7)",
+        mechanics: "• <strong>📖 Session 1 Payoff — Burgomaster Kolyan's Wizard Diary:</strong> In Session 1, <strong>King Jacomir</strong> looted <strong>Burgomaster Kolyan's Wizard Diary</strong> from Indirovich Manor, wherein Kolyan wrote that he knew <strong>Davian Martikov</strong> and <strong>the Keepers of the Feather</strong>! When Jacomir shows this diary to <strong>Urwin Martikov</strong> at the Blue Water Inn in <strong>Session 4</strong>, Urwin's guarded tavernkeeper mask drops immediately—unlocking free rooms, wolf-steak stew, and access to the secret inn loft stash (<em>Gray Bag of Tricks, Elixir of Health, Potions of Greater Healing</em>)!<br>• <strong>Session 7 Winery Siege:</strong> Saving the Wizard of Wines from the Yester Hill Druids and snapping the <strong>Gulthias Staff</strong> reconciles Davian and Urwin, earns the party the <strong>🧥 Wereraven Feather Cloak of Protection (+1 AC/Saves & Feather Fall)</strong>, and unlocks wereraven aerial support for the rest of the campaign!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Quick, bird-like head tilts, dark vests trimmed with subtle black feathers, warm noisy tavern hospitality, and speaking in coded idioms ('The crows are thick on the eastern road tonight')."
     },
     silver_dragon: {
         title: "🐉 The Order of the Silver Dragon — Revenants of Argynvostholt",
-        subtitle: "Undying Dragon-Paladins • Guardians of the Holy Symbol of Ravenkind",
+        subtitle: "Undying Dragon-Paladins • Guardians of the Holy Symbol of Ravenkind (Ch. 7 & Reloaded)",
         badge: "Act III • Bridges to Campaign 3",
         quote: "Why would we help you slay the monster? Death is mercy! Let Strahd rot in this valley forever, drowning in his own misery!",
-        history: "Centuries ago, the noble silver dragon <strong>Argynvost</strong> took human guise as a wealthy lord and founded a shining order of knights in the valley. Their true, secret mission was to guard the <strong>Amber Temple</strong> on Mount Ghakis so its trapped Dark Powers could never escape. When Strahd's armies invaded the valley, the Order fought heroically to the last man—until Strahd's legions slew Argynvost, hacked the dragon's corpse to pieces, and mounted his colossal skull inside Castle Ravenloft.",
-        culture: "<strong>The Paradox of Vladimir Horngaard:</strong><br>• When Strahd became a vampire and Barovia became his prison, <strong>Commander Vladimir Horngaard's</strong> hatred was so strong that he and his knights rose from their graves as immortal <strong>Revenants</strong>.<br>• Because Vladimir knows Barovia is a torture chamber designed by the Dark Powers to deny Strahd his beloved Tatyana forever, <strong>Vladimir refuses to let anyone kill Strahd</strong>—believing that slaying Strahd would free him from his suffering!<br>• Meanwhile, Vladimir's husband <strong>Sir Godfrey Gwilym</strong> remembers the true compassion of Argynvost and pleads with the party to restore the Order's honor.",
-        mechanics: "• <strong>Lighting the Beacon of Argynvostholt:</strong> If the party recovers Argynvost's skull from Ravenloft (or awakens the draconic spirit of the chapel), radiant silver dragon-light shines across all of Barovia: putting the Revenants to peaceful rest, granting the party <strong>+1 to AC and Saving Throws across the entire valley</strong>, and unlocking 🕊️ <strong>The Holy Symbol of Ravenkind</strong>!",
-        rp: "Tragic, frost-covered knights in tarnished silver dragon plate; hollow voices echoing through shattered stained glass."
+        h1: "📜 Origin, Argynvost's Secret Watch & The Dragon Star-Mural",
+        history: "• <strong>The Silver Wyrm's Secret Mission (<code>Book Chapter 7</code>):</strong> Over four centuries ago, the noble silver dragon <strong>Lord Argynvost</strong> disguised himself as a wealthy human nobleman (just like <strong>Elder Runara</strong> in Campaign 1's <em>Stormwreck Isle</em>!) and built the shining gothic fortress of <strong>Argynvostholt</strong>. While publicly aiding refugees, the Order's true mission was to <strong>guard the Amber Temple on Mount Ghakis</strong> so the trapped Dark Powers could never escape.<br>• <strong>The Trilogy Bridge (Ancient Dragon Lands):</strong> Hidden inside Argynvostholt (`Areas Q1–Q16`) is Argynvost's ancient stone star-mural depicting <strong>Clyssavar, Terradaer, and Astalagan</strong> guarding the sea-route to the <strong>Lost Dragon Lands</strong>—revealing how <strong>Vecna's</strong> shadow poisoned the Amber Temple!<br>• <strong>The Fall of the Order:</strong> During Strahd's mortal conquest of the valley (`347 BC`), Strahd's armies surrounded Argynvostholt, slew the silver dragon, hacked his body to pieces, and mounted <strong>Argynvost's colossal skull</strong> inside Castle Ravenloft's Bone Room (`Area K67`).",
+        h2: "🧭 The Paradox of Vladimir Horngaard vs. Sir Godfrey Gwilym",
+        culture: "• <strong>Vladimir Horngaard's Undying Hatred (<code>Area Q36</code>):</strong> When Barovia became Strahd's prison, First Knight <strong>Vladimir Horngaard's</strong> hatred was so consuming that he and his fallen paladins rose from their graves as immortal <strong>Revenants</strong>. Because Vladimir knows Barovia is Strahd's personal Hell where he can never have Tatyana, <strong>Vladimir refuses to let anyone kill Strahd</strong>—believing that slaying Strahd would free him from his eternal torment!<br>• <strong>Sir Godfrey Gwilym's Tragic Love (<code>Area Q37</code>):</strong> Vladimir's husband in life and death, <strong>Sir Godfrey</strong>, is the only revenant who still remembers Argynvost's compassion. He weeps over what his beloved Vladimir has become and begs the party to awaken the Dragon Beacon to free Vladimir from his hatred.",
+        h3: "⚔️ How It Plays Out in Campaign (Sessions 10–11)",
+        mechanics: "• <strong>Showdown or Redemption (`Sessions 10–11`):</strong> The party confronts <strong>Commander Vladimir Horngaard (CR 7 Boss, 145 HP)</strong> on the third floor (`Area Q36`). They can battle him through his <em>Spectral Silver Wyrm Breath</em>—or invoke Sir Godfrey's love and restore Argynvost's honor!<br>• <strong>Lighting the Beacon of Argynvostholt (`Area Q53`):</strong> Ascending to the roof chapel tower and igniting the <strong>Silver Dragon Beacon</strong> sends a blinding beam of silver light across all of Barovia: putting the Revenants to peaceful rest, rewarding <strong>🕊️ The Holy Symbol of Ravenkind (Tarokka Relic #2)</strong> + <strong>🗡️ Vladimir's +2 Silvered Greatsword (for Jacomir!)</strong>, and granting the entire party a permanent <strong>+1 bonus to AC and +1 bonus to all Saving Throws</strong> for the rest of the campaign!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Shattered dragon-wing stained glass, freezing mist curling around rusted silver plate armor, spectral dragon roars echoing from empty fireplaces, and Vladimir's hollow, frost-bitten rasp."
     },
     dusk_elves: {
-        title: "🧝‍♂️ The Dusk Elves — The Dying Remnant",
-        subtitle: "Shadow-Wood Elves of the Vistani Camp • Victims of Rahadin's Genocide",
+        title: "🧝‍♂️ The Dusk Elves — Rahadin's Genocide & Kasimir's Amber Pact",
+        subtitle: "The Extinction of Barovia's Ancient Elves • Vallaki Vistani Camp (Area N9a)",
         badge: "Led by Kasimir Velikov",
-        quote: "Look around our camp, strangers. You see no children. You hear no women's voices. We are the last autumn leaves of a felled tree.",
-        history: "The Dusk Elves are a stealthy, dark-skinned wood-elf subrace native to the forests of Barovia. Five hundred years ago, when the royal Dusk Elf family refused to bow to King Barov, one of their own—<strong>Rahadin</strong>—betrayed his people and led Barov's armies to conquer them. Later, the Dusk Elf archmage <strong>Patrina Velikovna</strong> fell in love with the vampire Strahd and sought to become his bride. To save her soul from vampirism, her own brother <strong>Kasimir Velikov</strong> led the Dusk Elves in stoning Patrina to death.",
-        culture: "<strong>Strahd's Unforgivable Retaliation:</strong><br>• Enraged that the Dusk Elves robbed him of Patrina, Strahd decreed a fate worse than swift death: he ordered Rahadin to <strong>slaughter every single female Dusk Elf in existence</strong> so the race could never reproduce, and cut off Kasimir's ears.<br>• Today, only a couple dozen ancient, immortal male Dusk Elves survive in quiet hovels inside the Vistani camp outside Vallaki, watched over by Luvash's Vistani guards.",
-        mechanics: "• <strong>Kasimir's Amber Temple Quest:</strong> Haunted by nightmares of his sister Patrina's spirit in the catacombs of Ravenloft, <strong>Kasimir Velikov</strong> seeks brave allies to escort him into the <strong>Amber Temple</strong> (Act IV) so he can claim the Dark Gift of Resurrection and bring Patrina back to life.",
-        rp: "Soft-spoken, cloaked in twilight gray, bearing centuries of quiet survivor's guilt; they flinch whenever the phantom screams of Rahadin's <em>Deathly Choir</em> echo on the wind."
+        quote: "Look around our camp, strangers. You see no children. You hear no women's voices. And whenever the chamberlain rides down from the castle, our dead sisters scream in the wind around his cloak.",
+        h1: "📜 Origin, Rahadin's Betrayal & The Stoning of Patrina Velikovna",
+        history: "• <strong>Rahadin's First Betrayal (<code>Book p. 237</code>):</strong> The Dusk Elves are a stealthy, dark-skinned wood-elf subrace native to the ancient forests of Barovia. Five hundred years ago, when the royal Dusk Elf house refused to kneel to King Barov von Zarovich, one of their own—<strong>Rahadin</strong>—betrayed his people and led Barov's armies to crush them, earning the King's adoption and eternal favor.<br>• <strong>Patrina Velikovna's Forbidden Ambition:</strong> A century later, the Dusk Elf archmage <strong>Patrina Velikovna</strong> learned of the <strong>Amber Temple</strong>, shared its dark secrets with Strahd, and sought to become his immortal vampire bride. After Strahd became a vampire, Patrina returned to her people hoping to rule beside him—so her own brother, <strong>Kasimir Velikov</strong>, led the Dusk Elves in <strong>stoning Patrina to death</strong> to save her soul from undeath!",
+        h2: "🧭 Strahd's Unforgivable Retaliation & The Deathly Choir",
+        culture: "• <strong>The Extinction Decree:</strong> Enraged that the Dusk Elves robbed him of Patrina (whom he entombed as a Banshee in <code>Crypt 21, Area K84</code>), Strahd decreed a punishment worse than swift execution: he ordered Rahadin to <strong>slaughter every single female Dusk Elf in existence</strong> so the race could never bear children again, and personally sliced off Kasimir's ears.<br>• <strong>Rahadin's Deathly Choir:</strong> So many Dusk Elf women and children died beneath Rahadin's scimitar that their phantom screams permanently cling to him—forming his <strong>Deathly Choir (10-ft passive aura dealing <code>3d10</code> Psychic damage, DC 16 Wis save)</strong>!",
+        h3: "⚔️ How It Plays Out in Campaign (Act II Vallaki ➔ Act IV Amber Temple)",
+        mechanics: "• <strong>The Last Male Survivors (`Book Area N9a`):</strong> Today, only two dozen immortal, aging male Dusk Elves survive in stone hovels inside the Vistani camp southwest of Vallaki, watched over by Luvash's Vistani.<br>• <strong>Kasimir's Amber Temple Hook (`Sessions 15–16`):</strong> Wearing a <strong>🔥 Ring of Warmth</strong> and concealing a master spellbook, <strong>Kasimir Velikov</strong> is haunted by dreams of Patrina telling him that the <strong>Amber Temple</strong> holds the power to resurrect the ancient dead (<em>The Dark Gift of Zhudun, the Corpse Star, in Area X33d</em>). He offers his <em>Ring of Warmth</em>, spellbook, and guidance up Mount Ghakis to help the party reach the Amber Temple!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Soft-spoken, cloaked in twilight gray, hoods pulled low to hide mutilated ears, bearing four centuries of quiet survivor's guilt; they flinch whenever Rahadin's black carriage rolls past."
     },
-    faiths: {
-        title: "☀️ The Morninglord & Mother Night — The Gods of Barovia",
-        subtitle: "The Fading Dawn vs. The Primal Dark",
-        badge: "Barovian Theology",
-        quote: "The Morninglord brings no sun, and Mother Night demands blood for every prayer. Pray softly, or the Dark Powers will answer instead.",
-        history: "Before the Mists sealed Barovia, the people worshipped a dual pantheon of day and night. Four centuries of sunless fog have twisted both faiths into desperate survival creeds.",
-        culture: "<strong>1. ☀️ The Morninglord (Lathander Remembered):</strong><br>• God of dawn, spring, birth, and renewal—symbolized by a rose-gold sunburst.<br>• Worshipped at the <strong>Church of Barovia</strong> (Father Donavich), <strong>St. Andral's Church in Vallaki</strong> (Father Lucian Petrovich), and the <strong>Abbey of St. Markovia in Krezk</strong> (The Abbot).<br>• Because the sun has not shone in 400 years and prayers go unanswered by the heavens, most villagers believe the Morninglord has forsaken them for their ancestors' sins.<br><br><strong>2. 🌙 Mother Night:</strong><br>• The ancient, nocturnal goddess of secrets, destiny, winter, and curses.<br>• Revered by the <strong>Vistani</strong> (who thank her for Madam Eva's foresight), <strong>Baba Lysaga</strong> (who claims Mother Night blessed her to raise Strahd), and the <strong>Werewolf Pack</strong>.<br><br><strong>3. 👁️ The Dark Powers (The True Jailers):</strong><br>• Neither the Morninglord nor Mother Night rules the Mists. The true masters of Barovia are the nameless, ancient vestiges sealed in the <strong>Amber Temple</strong> (including <strong>Vampyr</strong> and the creeping shadow of <strong>Vecna</strong>).",
-        mechanics: "• <strong>Consecrated Ground:</strong> St. Andral's Church in Vallaki is only consecrated against vampires while the <strong>Bones of St. Andral</strong> rest beneath the altar!<br>• <strong>Divine Spells in Barovia:</strong> Healing and Radiant magic still function, though spells acquire an eerie Barovian cosmetic appearance (spectral ravens, pale rose-light, or starry twilight).",
-        rp: "Villagers touching two fingers to their forehead in the sign of the rising sun whenever they pass a wayside shrine or hear a raven cry."
+    mountain_folk: {
+        title: "⛰️ The Mountain Folk — Yester Hill Druids, Berserkers & Kavan's Legacy",
+        subtitle: "Blood-Painted Tribes of the Balinok Mountains (Book Ch. 12, 13 & 14)",
+        badge: "Worship Strahd as 'The Land'",
+        quote: "He is the storm on the peak! He is the wolf in the pine! He is the Ancient, He is the Land—and our blood waters His roots!",
+        h1: "📜 Origin: From Chieftain Kavan to Worshippers of the Vampire",
+        history: "• <strong>The Original Tribes of Balinok:</strong> Long before King Barov and General Strahd conquered the valley, the Balinok Mountains were ruled by fierce, nature-worshipping tribal clans. Their greatest warlord was <strong>Chieftain Kavan</strong>, who slept by day and hunted by night, drinking the warm blood of elk and wielding a magical flint spear.<br>• <strong>'He Is The Land':</strong> When Strahd conquered the tribes and later became an immortal lord who commanded the thunder, the wolves, the mist, and the river floods, the surviving Mountain Folk abandoned their ancient gods and began worshipping Strahd as a literal <strong>Primal God of Storm and Winter</strong>.",
+        h2: "🧭 The Gulthias Tree, The Blights & The Wall of Fog",
+        culture: "• <strong>Atop Yester Hill (<code>Book Chapter 14</code>):</strong> High on the southern hill stands a ring of black lightning-struck boulders surrounding the <strong>Gulthias Tree (`Area Y3`)</strong>—a colossal, rotting oak that sprouted from the blood-soaked wooden stake driven through an ancient vampire centuries ago. Watering its roots with human blood spawns <strong>Twig, Needle, and Vine Blights</strong>.<br>• <strong>The Wall of Fog (`Area Y2`):</strong> At the western edge of Yester Hill, Count Strahd often stands silently beside his flaming Nightmare steed <strong>Bucephalus</strong>, gazing into the white Wall of Fog at a ghostly mirage of his ancient sunlit homeland before the curse.",
+        h3: "⚔️ How It Plays Out in Campaign (Sessions 7–8)",
+        mechanics: "• <strong>Session 7 (Wizard of Wines Siege):</strong> The Mountain Druids poison the Martikov fermentation vats and command 30+ Blights using the <strong>🌿 Gulthias Staff (`Area W14`)</strong>. Snapping the staff over a knee unleashes a psychic scream that <strong>instantly kills every Blight within 300 ft</strong>!<br>• <strong>Session 8 (Yester Hill & Kavan's Cairn):</strong> As the party climbs Yester Hill, Kavan's ancestral spirit whispers from a stone burial cairn (`Area Y4`) to <strong>King Jacomir</strong>: <em>\"Take my spear, warrior King, and reclaim the mountain from those who kneel to the corpse!\"</em>—rewarding <strong>🩸 The Blood Spear of Kavan (+2 Spear, grants +2d6 Temp HP on every kill!)</strong> right before the druids embed the stolen Winery Gem into the 30-ft effigy to awaken <strong>Wintersplinter (CR 7, 138 HP)</strong>!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Skin caked in gray river-mud, ash, and dried blood; deer antlers and dead twigs woven into matted hair; pounding bone drums in the freezing rain."
+    },
+    hag_coven: {
+        title: "🥧 The Night Hag Coven of Old Bonegrinder — Morgantha, Bella & Offalia",
+        subtitle: "The Dream Pastry Despair Economy (Book Chapter 6 & DragnaCarta Reloaded Arc D)",
+        badge: "Session 1 Met • Session 3 Boss",
+        quote: "Why weep in the cold dark, dearies? One bite of Granny's warm plum pie, and you'll sleep in a meadow of golden sunshine... and if you have no coin left tomorrow, we can always talk about your little boy.",
+        h1: "📜 The Dream Pastry Addiction Loop & Child-Bone Flour",
+        history: "• <strong>Parasites of the Mists (<code>Book Chapter 6</code>):</strong> The decrepit four-story stone windmill known as <strong>Old Bonegrinder</strong> on the road between Barovia Village and Vallaki is the lair of a Night Hag coven led by \"Granny\" <strong>Morgantha</strong> and her wretched daughters, <strong>Bella Sunbane</strong> and <strong>Offalia Wormwiggle</strong>.<br>• <strong>How the Trap Works:</strong> Anyone who eats a <strong>Dream Pastry (1 GP)</strong> falls into an 8-hour trance of vivid, blissful dreams where the sun shines and loved ones are alive (granting <code>1d6</code> Temp HP & curing 1 Exhaustion, but forcing a DC 13 CON save at dawn against addiction). Once impoverished Barovian parents are hopelessly addicted and out of coin, Morgantha refuses to sell them another crumb—until they hand over their own <strong>children</strong>!",
+        h2: "🧭 Inside the Four-Story Windmill (`Areas O1–O4`)",
+        culture: "• <strong>Only Ensouled Children Work:</strong> In the third-floor cages (`Area O3`), the hags prick kidnapped children (currently <strong>Myrtle and Lucian</strong>) with iron needles. Because Soulless Shells cannot feel true terror or hope, only <strong>Ensouled children</strong> who weep make the magic work! Their bones are ground between the first-floor millstones (`O1`) into white flour and baked with sugar and plums in the second-floor brick oven (`O2`).<br>• <strong>Session 1 Table Continuity (Piper's Grudge & Jacomir's Pie):</strong> In Session 1, <strong>Piper</strong> cast her Fierna <em>Charm Person</em> on Morgantha; Morgantha's Night Hag <em>Magic Resistance</em> shrugged it off, making her semi-hostile and suspicious of Piper before she gifted <strong>1x Dream Pastry to King Jacomir</strong> (currently stored <strong>uneaten</strong> in Jacomir's pack!).",
+        h3: "⚔️ How It Plays Out in Campaign (Session 3 Windmill Showdown)",
+        mechanics: "• <strong>The Raven's Warning (`Reloaded Arc D`):</strong> A Keepers of the Feather raven perched above the windmill door caws frantically to warn the party before they step inside.<br>• <strong>Tactical Coven Balance (`Session 3`):</strong>Morgantha fights on Floor 1/2 using her <strong>🔥 Bone-Flour Combustion Cloud (3d10 Fire, DC 14 Dex)</strong> while Bella and Offalia descend from Floor 3. Smashing the <strong>Mother-of-Pearl Toad Chest</strong> on Floor 4 or dropping Morgantha below 25 HP forces the hags to slip into the <strong>Ethereal Plane</strong>!<br>• <strong>Nightmare Haunting & Loot:</strong> Claiming <strong>🧿 Morgantha's Cracked Heartstone</strong> cures diseases/poisons and prevents her from haunting the party's Long Rests from the Ethereal Plane!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Warm, mouth-watering scent of caramelized sugar, nutmeg, and cinnamon masking the metallic tang of wet bone-dust; creaking wooden mill-gears; a sweet grandmotherly cackle that drops instantly into a 7-foot blue-skinned fiend with iron talons."
+    },
+    court_of_ravenloft: {
+        title: "🩸 The Court of Castle Ravenloft — The Three Brides, Escher & Rahadin",
+        subtitle: "Strahd's Active Lieutenants & Consorts (Book Ch. 4 & DragnaCarta Reloaded Overhaul)",
+        badge: "Act I–IV Recurring Villains",
+        quote: "He promised each of us eternity at his side. Yet the moment a girl with Tatyana's face draws breath in the valley, we are nothing more than dressed-up corpses waiting for the crypt.",
+        h1: "📜 Why the Court Matters (*DragnaCarta Reloaded* Upgrade)",
+        history: "In the raw 5e book, Strahd's three vampire brides sit silently in his crypt (`Area K84`) until the final session. Under <strong>DragnaCarta's <em>Curse of Strahd: Reloaded</em></strong> and our 15–20 Session Director's Cut, each Bride and Consort is a distinct, recurring regional lieutenant who executes Strahd's schemes across Acts I–III, meets the party face-to-face at the <strong>Session 9 Ravenloft Dinner</strong>, and defends the castle during the <strong>Act IV Final Siege</strong>!",
+        h2: "🧭 The Five Members of the Crimson Court",
+        culture: "• <strong>1. 🎭 Volenta Popofsky (The Porcelain Sadist — Act I–II Stalker):</strong> The youngest bride, a feral former assassin wearing a cracked white porcelain skull-mask and a gown woven with human finger-bones. Obsessively jealous of Ireena; stalks the party in Act I–II with <em>Corpse-Puppet Blood Strings</em>.<br>• <strong>2. 🩸 Anastrasya Karelova (The Vallaki Aristocrat — Session 5 Boss):</strong> A proud, manipulative Vallakian noblewoman who despises getting her hands dirty. She coerces coffin maker Henrik van der Voort into stealing the <strong>Bones of St. Andral</strong> and leads the six-spawn ambush during the <strong>Feast of St. Andral (`Session 5`)</strong>!<br>• <strong>3. ❄️ Ludmilla Vilisevic (The Archmage Bride — Act III–IV Strategist):</strong> The oldest, coldest, and most intelligent bride. Accepting that Strahd will never love her, she studies wizardry at the <strong>Amber Temple</strong> and engineered the <strong>Werewolf Pack coup</strong> (installing Kiril and chaining Emil in Ravenloft).<br>• <strong>4. 🎻 Escher (The Melancholy Consort — `Area K49`, Session 9 Dinner):</strong> A dashing former adventurer and bard turned by Strahd decades ago. Terrified that Strahd has grown bored of him and is about to brick him up in the catacombs to make room for Ireena.<br>• <strong>5. 🗡️ Rahadin (The Dusk Elf Chamberlain — `Area K72`, CR 10):</strong> Strahd's adoptive brother and ruthless executioner (not a vampire—a mortal Dusk Elf wrapped in the screaming <em>Deathly Choir</em> of his genocide).",
+        h3: "⚔️ How It Plays Out in Campaign (Session 5, Session 9 & Sessions 17–18)",
+        mechanics: "• <strong>Session 5 (Vallaki):</strong> Anastrasya springs the crate ambush at Henrik's Coffin Shop, turning Vallaki into a dusk rooftop relay race to restore St. Andral's Bones!<br>• <strong>Session 9 (The Black Carriage Dinner):</strong> All three Brides, Escher, and Rahadin dine with the party in `Area K10`. If a PC speaks privately with <strong>Escher</strong> in the lounge (`K49`), the terrified bard secretly warns them how to sever the <strong>Heart of Sorrow (`Area K20`)</strong>!<br>• <strong>Sessions 17–18 (Final Siege):</strong> Eliminating the Brides and Rahadin before descending into Sergei's Crypt prevents them from reinforcing Strahd in the finale!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Velvet and silk gowns stained with old wine and blood; toxic courtly rivalry where each bride smiles politely while hoping the heroes embarrass the other brides in front of Strahd."
     },
     werewolves: {
-        title: "🐺 The Children of Mother Night — The Werewolf Pack",
-        subtitle: "Lycanthrope Raiders of the Northern Cliffs (Northwest of Krezk)",
+        title: "🐺 The Children of Mother Night — The Werewolf Pack Schism",
+        subtitle: "Lycanthrope Raiders of the Northern Cliffs (Book Chapter 15 & Reloaded)",
         badge: "Silvered Weapons Required",
         quote: "Only the strong deserve to run beneath the mist! Break the weak pups on the stones, and let the survivors grow fangs!",
-        history: "Deep in a cave complex styled like a howling wolf's skull northwest of Krezk lives a savage pack of two dozen <strong>Werewolves</strong> who worship Mother Night and serve as Count Strahd's long-range hunting hounds.",
-        culture: "<strong>The Pack Schism (Kiril vs. Emil):</strong><br>• The pack is torn by a bitter civil war between two alphas:<br>• <strong>Kiril Stoyanovich (Current Alpha):</strong> A sadistic brute loyal to Strahd who raids towns (and even beyond the Mists) to kidnap children, forcing the children to fight each other to the death in a stone ring and infecting the sole survivor with lycanthropy!<br>• <strong>Emil Toranescu (Imprisoned Former Alpha):</strong> Chained inside Castle Ravenloft's dungeons by Strahd after opposing Kiril's bloodbath; his mate <strong>Zuleika Toranescu</strong> secretly prays at Mother Night's shrine in the den, willing to ally with heroes who free Emil or slay Kiril!",
-        mechanics: "• <strong>Lycanthrope Immunity/Resistance:</strong> Bypasses nonmagical, non-silvered weapons! Silvered blades,Yvaine's silver bullets, and magic spells tear through their hide.<br>• <strong>Lifting the Curse:</strong> A bitten humanoid who fails a DC 12 CON save contracts werewolf lycanthropy (cured by <em>Remove Curse</em> before the next full moon).",
-        rp: "Feral yellow eyes hiding inside ragged woodsman cloaks; bone fetishes hung from pine trees around Lake Baratok."
+        h1: "📜 Origin & Worship of Mother Night",
+        history: "Deep in a torch-lit cavern complex shaped like a howling wolf's skull northwest of Krezk (`Book Chapter 15`) lives a savage pack of two dozen <strong>Werewolves</strong>. They revere the nocturnal goddess <strong>Mother Night</strong>, piling stolen treasure and bones beneath her cave shrine (`Area Z7`) while serving as Count Strahd's long-range hunting hounds—even crossing through the Mists to abduct travelers when Strahd commands.",
+        h2: "🧭 The Pack Civil War: Kiril Stoyanovich vs. Emil & Zuleika",
+        culture: "• <strong>Kiril Stoyanovich (The Sadistic Alpha — Backed by Bride Ludmilla):</strong> Ahulking, black-furred brute who seized leadership with the backing of Castle Ravenloft. To grow the pack's numbers, Kiril raids villages to kidnap children, locking them in iron cages and forcing them to <strong>fight each other to the death with spears in a stone ring (`Area Z5b`)</strong>—infecting only the last child standing with lycanthropy!<br>• <strong>Emil Toranescu (The Imprisoned Former Alpha — `Ravenloft Area K75a`):</strong> Opposed Kiril's child-fighting pits, arguing the pack should convert strong adults instead. Strahd and Ludmilla had Emil dragged in chains to Castle Ravenloft's flooded dungeons.<br>• <strong>Zuleika Toranescu (The Rebel Priestess — `Area Z7`):</strong> Emil's devoted mate, who tends Mother Night's shrine in the den. She despises Kiril and will gladly strike a bargain with the party to ambush Kiril or rescue the caged children if the party promises to free Emil from Ravenloft!",
+        h3: "⚔️ Tabletop Mechanics, Curses & Silvered Firepower",
+        mechanics: "• <strong>Silvered & Magical Bypass:</strong> Werewolves are immune/resistant to nonmagical, non-silvered B/P/S damage—making <strong>Jacomir's silvered blade</strong>, <strong>Yvaine's silver bullets & runic firearms</strong>, and <strong>Piper/Cael's spells</strong> essential!<br>• <strong>Curse of Lycanthropy:</strong> A humanoid hit by a werewolf's bite must succeed on a <strong>DC 12 CON Save</strong> or contract werewolf lycanthropy (cured by <em>Remove Curse</em> before the next full moon).<br>• <strong>Shrine of Mother Night (`Area Z7`):</strong> Stealing treasure from Mother Night's pile curses the thief with horrifying nightmares (**DC 15 Wis save** or gain 0 benefit from Long Rests) until the loot is returned or <em>Remove Curse</em> is cast.",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Feral yellow eyes glinting inside ragged woodsman cloaks; bone fetishes hung from pine trees around Lake Baratok; low, guttural growls that vibrate in the floorboards."
+    },
+
+    // =========================================================================
+    // 4.5B: VILLAGES, TOWNS & SETTLEMENTS OF BAROVIA (4)
+    // =========================================================================
+    village_barovia: {
+        title: "🏚️ The Village of Barovia — In the Shadow of the Pillarstone",
+        subtitle: "First Settlement of the Valley • Act I (Book Chapter 3 & DragnaCarta Reloaded Arc B)",
+        badge: "Sessions 1–2 Active Hub",
+        quote: "Look up through the fog, stranger. That black spire a thousand feet above our roofs is Castle Ravenloft. The Devil doesn't need walls to cage us—he just looks down from his balcony.",
+        h1: "📜 History, Geography & Why the Village Is Dying",
+        history: "• <strong>Beneath the Vampire's Window (<code>Book Chapter 3</code>):</strong> The Village of Barovia is the oldest and most miserable settlement in the valley, huddled directly at the base of the 1,000-foot <strong>Pillarstone of Ravenloft</strong>. Unlike Vallaki or Krezk, it has no stone walls—only hastily erected timber barricades (`Reloaded Arc B`) manned by exhausted militia.<br>• <strong>Why Strahd Besieges It Now:</strong> For weeks, Count Strahd has sent waves of dire wolves, zombies, and vampire spawn against the village—Specifically targeting <strong>Indirovich Manor (`Area E4`)</strong> to wear down the village's defenses, break the spirit of <strong>Ireena Kolyana</strong> (whom he has already bitten twice), and drive her father, Burgomaster <strong>Kolyan Indirovich</strong>, to a fatal heart attack.",
+        h2: "🧭 Key Landmarks, Residents & Session 1 Table Canon",
+        culture: "• <strong>1. Indirovich Manor (`Area E4`):</strong> Home of new Burgomaster <strong>Ismark 'The Lesser'</strong> and <strong>Ireena Kolyana</strong>. In Session 1, the party discovered that late Burgomaster Kolyan was secretly a <strong>former wizard</strong> and looted <strong>📖 Burgomaster Kolyan's Wizard Diary</strong> (which names <strong>Davian Martikov & the Keepers of the Feather</strong> as secret allies!).<br>• <strong>2. Church of the Morninglord (`Area E5` — Active Session 1/2 Cliffhanger!):</strong> Priest <strong>Father Donavich</strong> has gone half-mad hiding his starving vampire spawn son <strong>Doru</strong> in the <strong>church attic</strong> (`Reloaded Arc B5`). Session 1 ended here as <strong>King Jacomir</strong> poured his own royal blood into a cup to feed Doru (while Piper & Yvaine demanded Doru's death)—interrupted for a frozen second by <strong>Derek (Avatar of the Dark Powers)</strong>!<br>• <strong>3. Blood on the Vine Tavern (`Area E2`):</strong> Owned by three Vistani sisters (Alenka, Mirabel, Sorvia); where a deeply concerned Vistani gave <strong>Piper</strong> <strong>🃏 The Blank Tarokka Card</strong> after its ink faded off!<br>• <strong>4. Bildrath's Mercantile (`Area E1`) & Mad Mary's House (`Area E3`):</strong> Bildrath price-gouges travelers beside his hulking nephew <strong>Parriwimple (Gladiator stat block)</strong>; across the street, <strong>Mad Mary</strong> clutches a creepy Blinsky doll, weeping for her teenage daughter <strong>Gertruda</strong> (who slipped out to Castle Ravenloft thinking it was a fairy-tale palace).",
+        h3: "⚔️ How It Plays Out in Campaign (Session 2 Resolution)",
+        mechanics: "• <strong>Session 2 Opening (`Reloaded Arc B5`):</strong> If Jacomir feeds Doru his cup of willing blood in the church attic, Doru regains <strong>2 minutes of weeping human lucidity</strong>—revealing he marched on Castle Ravenloft a year ago with the <strong>Mad Mage (*Mordenkainen*)</strong> and warning the party that Strahd could not be harmed because of a <strong>giant red crystal beating in the North Tower (*The Heart of Sorrow*)</strong> before begging Donavich and Jacomir for a merciful death!<br>• <strong>Dawn Burial & Departure:</strong> Burying Burgomaster Kolyan at dawn allows Ismark and Ireena to depart west with the party toward Tser Pool and Vallaki.",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Boarded-up windows nailed with garlic and iron horseshoes; muddy cart-ruts filled with freezing rain; the relentless, hollow tolling of Father Donavich's cracked church bell; and the ever-present shadow of Castle Ravenloft towering overhead."
+    },
+    town_vallaki: {
+        title: "⚔️ The Walled Town of Vallaki — The Political Powderkeg",
+        subtitle: "Baron Vargas vs. Lady Wachter • Act II (Book Chapter 5 & Reloaded Arc E–H)",
+        badge: "Sessions 4–6 Central Hub",
+        quote: "Smile, citizen! In Vallaki, declaring that 'ALL WILL BE WELL!' is mandatory by decree of the Baron! Frown in the rain, or whisper the Devil's name, and Captain Izek will fit you for a donkey-head in the stocks!",
+        h1: "📜 History, Defenses & The Illusion of Safety",
+        history: "• <strong>The Largest Town in Barovia (<code>Book Chapter 5</code>):</strong> Founded centuries ago along the Old Svalich Road beside the dark, freezing waters of <strong>Lake Zarovich</strong>, Vallaki is enclosed by a 15-foot wooden palisade bristling with sharpened stakes and impaled wolf heads. Because Count Strahd has not openly walked Vallaki's streets in over a century (secretly visiting only in disguise as the polite nobleman <strong>\"Vasili von Holtz\"</strong>), the townsfolk cling to the delusion that their walls and festivals keep the Devil out.",
+        h2: "🧭 The Two Warring Factions & Secret Family Ties",
+        culture: "• <strong>1. ☀️ Baron Vargas Vallakovich (`Burgomaster's Mansion, Area N3`):</strong> A paranoid, tyrannical noble who believes that misery attracts Strahd—and therefore <strong>mandatory, forced happiness</strong> will banish the Mists! He forces the town to build props for weekly rain-soaked festivals (<em>The Wolf's Head Jamboree</em>, <em>The Festival of the Blazing Sun</em>), locking anyone who complains into plaster donkey-head stocks (`Area N8`).<br>&nbsp;&nbsp;• <strong>Izek Strazni's Dark Secret:</strong> The Baron's monstrous enforcer <strong>Izek</strong> (who grew a barbed, fire-hurling fiend arm after losing his arm as a child) is secretly <strong>Ireena Kolyana's long-lost biological brother</strong>! Haunted by dreams of her, he forces toymaker <strong>Gadof Blinsky (`Area N7`)</strong> to sew dozens of eerie dolls in Ireena's exact likeness.<br>&nbsp;&nbsp;• <strong>Victor's Attic (`Area N3t`):</strong> In the Baron's attic, his sullen teenage son <strong>Victor Vallakovich</strong> is self-teaching wizardry from an old spellbook, testing a defective <em>Teleportation Circle</em> that disintegrates servants into skeletal cats.<br>• <strong>2. 🕯️ Lady Fiona Wachter (`Wachterhaus, Area N4`):</strong> A cold, calculating matriarch whose family has loyally served the Zarovich bloodline for 400 years (<em>\"Strahd is a negligent landlord; Vargas is a raving lunatic\"</em>). She sleeps beside the magically preserved corpse of her dead husband Nikolai (`Gentle Repose`), runs a fake devil-cult in her cellar to rally conspirators, and guards <strong>📜 The Tome of Strahd (Tarokka Relic #1)</strong> in her secret cult library!",
+        h3: "⚔️ How It Plays Out in Campaign (Sessions 4, 5 & 6)",
+        mechanics: "• <strong>Session 4 (Arrival & The Blue Water Inn):</strong> Presenting <strong>📖 Kolyan's Wizard Diary</strong> to <strong>Urwin Martikov</strong> at the <strong>Blue Water Inn (`Area N2`)</strong> unlocks the Keepers of the Feather alliance, while Father Lucian at <strong>St. Andral's Church (`Area N1`)</strong> reveals that the sacred <strong>Bones of St. Andral</strong> were stolen!<br>• <strong>Session 5 (The Coffin Maker's Shop & Feast of St. Andral):</strong> Tracking the stolen bones through orphan gravedigger <strong>Milivoj</strong> to coffin maker <strong>Henrik van der Voort (`Area N6`)</strong> triggers Bride <strong>Anastrasya's</strong> six-spawn crate ambush and a thrilling dusk relay race to reconsecrate St. Andral's Church!<br>• <strong>Session 6 (Wachterhaus & The Festival of the Blazing Sun):</strong> The party infiltrates or negotiates at Wachterhaus to claim <strong>📜 The Tome of Strahd</strong>, right before Baron Vargas's rain-drenched wicker sun sparks a town-wide riot against Izek Strazni!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Soggy paper sun-banners bleeding yellow dye into mud puddles; terrified citizens stretching their mouths into trembling, forced grins whenever Izek's guards walk past; clockwork bat-toys ticking in Blinsky's shop window ('Is No Fun, Is No Blinsky!')."
+    },
+    commune_krezk: {
+        title: "⛪ The Commune of Krezk & The Abbey of Saint Markovia",
+        subtitle: "The Fallen Angel, The Flesh Golem Bride & The White Sun (Book Chapter 8 & Reloaded)",
+        badge: "Act III • Session 12",
+        quote: "The Count is not a beast to be slain with silver, my children. He is a broken man grieving a lost bride. Once I finish stitching her new face... all of Barovia shall be healed.",
+        h1: "📜 The Fortified Pine Commune & The Pool of the White Sun",
+        history: "• <strong>Fortified Isolation (<code>Book Chapter 8</code>):</strong> Perched high on the snow-dusted western cliffs at the foot of Mount Baratok, <strong>Krezk</strong> is a self-sufficient commune of pine cabins surrounded by a 20-foot stone wall. Governed by <strong>Burgomaster Dmitri Krezkov</strong> and his wife Anna (whose last child, Ilya, recently died of illness), Krezk refuses entry to armed outsiders unless they earn Dmitri's trust by delivering a wagonload of wine from the <strong>Wizard of Wines (`Session 7`)</strong>.<br>• <strong>The Pool & Shrine of the White Sun (`Area S4`):</strong> At the north end of the village lies a miraculous, crystal-clear pool fed by an underground spring that the Morninglord blessed centuries ago—the only water in Barovia where a faint reflection of true blue sky can be seen.",
+        h2: "🧭 The Tragedy of Saint Markovia & The Fallen Deva ('The Abbot')",
+        culture: "• <strong>Saint Markovia's Fall:</strong> Four hundred years ago, a priestess of the Morninglord named <strong>Markovia</strong> founded a hospital convent above Krezk and led an uprising against Strahd—only to be slain and sealed inside <strong>Castle Ravenloft Crypt 6 (`Area K84` / `S13`)</strong>, where her preserved femur became <strong>🦴 Saint Markovia's Thighbone (Mace of Disruption)</strong>.<br>• <strong>How 'Vasili von Holtz' Corrupted an Angel:</strong> Over a century ago, the heavens sent a genuine <strong>Deva angel (known simply as 'The Abbot')</strong> to heal the people of Krezk. Count Strahd could not defeat the radiant Deva by force—so instead, Strahd visited the Abbey disguised as the humble, remorseful nobleman <strong>'Vasili von Holtz'</strong>. Playing on the angel's hubris, Strahd convinced the Abbot that the curse of Barovia could only be broken if Strahd were united with his true love!<br>• <strong>The Mongrelfolk & Vasilka:</strong> Driven into quiet, smiling madness, the Abbot cured the inbred <strong>Belview family's</strong> illnesses by grafting animal parts onto them (creating the pathetic <strong>Mongrelfolk</strong> who shriek in the asylum wings), and spent years harvesting corpses from Krezk's graves to stitch together a 'perfect bride' for Strahd: <strong>Vasilka the Flesh Golem</strong>, complete with red hair dyed to match Tatyana!",
+        h3: "⚔️ How It Plays Out in Campaign (Session 12)",
+        mechanics: "• <strong>Ireena's Choice at the Pool (`Area S4`):</strong> When Ireena kneels by the Pool of the White Sun, the spectral hand of <strong>Prince Sergei</strong> reaches up from the water calling <em>\"Tatyana!\"</em> If the party lets her take his hand, her soul ascends beyond Strahd's reach forever (or the party can pull her back to fight beside them)—either way, Strahd hurls a bolt of crimson lightning from the storm clouds into the pool, roaring: <em>\"SHE IS MINE!\"</em><br>• <strong>Inside the Abbey (`Areas S13–S24`):</strong> The party meets their Tarokka Fated Ally <strong>⚔️ Ezmerelda d'Avenir</strong> (in `Area S19`), discovers the horror of <strong>Vasilka</strong> (and the Abbot's demand for a bridal wedding dress!), and can claim the <strong>💚 Ring of Regeneration</strong>, <strong>📜 Scroll of Heroes' Feast</strong>, and <strong>🦴 Saint Markovia's Thighbone</strong>!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Snowflakes falling through silent pine boughs; the jarring contrast between the Abbot's breathtaking, golden-eyed angelic beauty (speaking in a serene, loving whisper) and the blood-stained butcher's apron he wears while teaching a mute, stitched flesh-corpse how to curtsy."
+    },
+    ruins_berez: {
+        title: "🌊 The Drowned Ruins of Berez — Marina's Tragedy & Baba Lysaga",
+        subtitle: "The Flooded Swamp, The Midwife of Night & The Sunsword (Book Chapter 10 & Reloaded)",
+        badge: "Act III • Sessions 13–14",
+        quote: "She was my child before she ever drew milk from Ravenovia's breast! I put the spark of magic in my little Strahd's blood—and I will feed these wretched ravens to the bog!",
+        h1: "📜 The Murder of Marina & How Strahd Drowned a Town",
+        history: "• <strong>Tatyana's First Reincarnation (`Book Chapter 10`):</strong> Less than a century after Barovia was swallowed by the Mists, Tatyana's soul reincarnated for the first time in the prosperous riverside town of <strong>Berez</strong> as a poor peasant girl named <strong>Marina</strong>. Count Strahd discovered her, visited her at night, and prepared to turn her into his vampire bride.<br>• <strong>The Stake & The Deluge:</strong> Terrified that Marina's soul would be damned to undeath, Berez's burgomaster <strong>Lazlo Ulrich</strong> and the town priest <strong>Brother Grigor</strong> ambushed Marina before Strahd arrived and <strong>drove a wooden stake through her heart</strong> to 'save' her soul. When Strahd found Marina's corpse, his grief erupted into cataclysmic wrath: he slaughtered Grigor, cursed Ulrich's ghost to haunt the mud forever (`Area U2`), and <strong>commanded the Luna River to rise and drown the entire town of Berez into a fetid, black marsh</strong>.",
+        h2: "🧭 Baba Lysaga — The Delusional 'True Mother' of Strahd",
+        culture: "• <strong>The Midwife's Curse (`Book p. 228`):</strong> <strong>Baba Lysaga (`CR 11 Arch-Witch`)</strong> was the midwife who delivered infant Prince Strahd. Obsessed with the baby, she prayed to <strong>Mother Night</strong> to place the 'spark of magic' in Strahd's blood and cast fatal curses of sickness upon Strahd's real mother, <strong>Queen Ravenovia</strong> (causing Ravenovia's death on the journey to Barovia!). Banished by Rahadin, Lysaga now lives in the drowned ruins of Berez, bathing in goat's blood for eternal life while rocking an <strong>illusory baby Strahd</strong> in a crib!<br>• <strong>Her War Against the Wereravens:</strong> Because Lysaga knows the <strong>Keepers of the Feather</strong> oppose her 'son' Strahd, she stole the <strong>third Wizard of Wines Life-Gem</strong> and animated an entire army of flesh-ripping <strong>Scarecrows</strong> (`Area U1`) and her colossal <strong>Creeping Walking Hut (`Area U3`)</strong> to crush the ravens.",
+        h3: "⚔️ How It Plays Out in Campaign (Sessions 13–14 Boss & The Sunsword)",
+        mechanics: "• <strong>Stalking the Flooded Marsh (`Sessions 13–14`):</strong> Passing the white marble <strong>Monument to Marina (`Area U5`)</strong> and consulting Burgomaster Ulrich's ghost (`Area U2`), the party approaches Baba Lysaga's hut.<br>• <strong>Boss Fight — Baba Lysaga & The Creeping Walking Hut (`Area U3`):</strong> Baba Lysaga flies 30 ft up inside an upside-down <strong>Hill Giant Skull (+5 AC Three-Quarters Cover ➔ AC 20)</strong> casting <em>Blight (8d8)</em>, <em>Evard's Black Tentacles</em>, and <em>Finger of Death</em>, while her <strong>140-HP Creeping Hut</strong> stomps on gnarled cypress roots (`3x +11 slams for 3d10+8 bludgeoning`)!<br>• <strong>The Tactical Counterplay & Tarokka Relic #3:</strong> A hero who leaps inside the pitching hut and pries the glowing green <strong>💚 Winery Life-Gem</strong> out from beneath the crib floorboards (`DC 15 Sleight of Hand/Athletics`) <strong>instantly deactivates the Creeping Hut</strong>! Defeating Lysaga rewards <strong>🗡️ The Sunsword (Tarokka Relic #3!)</strong>, <strong>🍀 Stone of Good Luck (+1 Checks & Saves)</strong>, <strong>🧪 Oil of Sharpness (+3 Hit/Dmg!)</strong>, and <strong>📜 Scroll of Revivify</strong>!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Knee-deep black bog water buzzing with millions of biting marsh flies; rotting scarecrows stuffed with dead ravens twitching on wooden crosses; and a blood-drenched crone cackling lullabies from inside a hovering giant skull."
+    },
+
+    // =========================================================================
+    // 4.5C: CHRONOLOGICAL HISTORY, SOULS & VITAL CAMPAIGN SECRETS (4)
+    // =========================================================================
+    timeline_barovia: {
+        title: "📜 The Five-Era Chronological History of Barovia",
+        subtitle: "From the Dawn of the Amber Temple to Session 1 (Master DM Timeline)",
+        badge: "2,000 Years of Lore",
+        quote: "I am the Ancient. I am the Land. My beginnings are lost in the darkness of the past. I was the warrior, I was good and just. I thundered across the land like the wrath of a just god... but the war years and the killing years wore down my soul.",
+        h1: "📜 Eras I & II: The Amber Temple Wizards & The Silver Dragon's Watch",
+        history: "• <strong>Era I — The Amber Temple Wizards (<code>2,000+ Years Ago • Book Ch. 13</code>):</strong> A secret council of good-aligned archmages builds a windowless vault high in the freezing snows of Mount Ghakis: <strong>The Amber Temple</strong>. Inside 20+ blocks of solid amber, they trap the disembodied vestiges of primordial evil entities (<strong>The Dark Powers</strong>, including <em>Vampyr</em>, <em>Zhudun</em>, and the <em>Whispering Hand of Vecna</em>). Over centuries, the vestiges whisper through the amber and corrupt the wizards into slaughtering one another—leaving only the amnesiac lich <strong>Exethanter (`Area X27`)</strong> and the arcanaloth <strong>Neferon (`Area X5`)</strong>.<br>• <strong>Era II — Lord Argynvost & The Silver Order (<code>~450 Years Ago • Book Ch. 7</code>):</strong> Discovering the evil sleeping in Mount Ghakis, the noble silver dragon <strong>Argynvost</strong> settles in the valley as a human lord, builds <strong>Argynvostholt</strong>, and founds the <strong>Order of the Silver Dragon</strong> to guard the Amber Temple and protect the draconic star-routes to the <em>Lost Dragon Lands</em>.",
+        h2: "🧭 Eras III & IV: Strahd's Conquest (347 BC) & The Wedding Massacre (351 BC)",
+        culture: "• <strong>Era III — The Conquest of General Strahd (<code>347 Barovian Calendar</code>):</strong> After decades of bloody crusades for his father <strong>King Barov</strong> and mother <strong>Queen Ravenovia</strong> (guided from birth by the dark midwife <strong>Baba Lysaga</strong>), middle-aged warlord <strong>Strahd von Zarovich</strong> conquers the valley from Chieftain Kavan's mountain tribes and slaughters Argynvost's dragon knights. Naming the valley <strong>Barovia</strong>, he forces architect Artimus to raise <strong>Castle Ravenloft</strong> atop a 1,000-foot sheer rock spire.<br>• <strong>Era IV — The Pact of Vampyr & The Birth of Domain Zero (<code>351 BC — 400 Years Ago</code>):</strong> Queen Ravenovia dies en route to Barovia, but Strahd's radiant, beloved younger brother <strong>Prince Sergei</strong> arrives—and falls in love with a young Barovian woman named <strong>Tatyana</strong>. Consumed by envy of Sergei's youth, Strahd is guided by <strong>Rahadin</strong> and Dusk Elf archmage <strong>Patrina Velikovna</strong> to the <strong>Amber Temple</strong>, where he seals a pact with <strong>Vampyr (`Area X42`)</strong>. On Sergei and Tatyana's wedding day, Strahd murders Sergei in cold blood, drinks his blood, and corners Tatyana on the <strong>Overlook Balcony (`Area K6`)</strong>—where she flings herself 1,000 feet into the mists. Shot full of arrows by his own guards, Strahd rises as the first vampire as the <strong>Dark Powers rip Barovia into the Demiplane of Dread (Domain Zero)</strong>.",
+        h3: "⚔️ Era V: Four Centuries of Failed Rebellions & The Mad Mage (352–735 BC)",
+        mechanics: "• <strong>~380 BC (Saint Markovia's Crusade):</strong> Priestess Markovia marches on Ravenloft; Strahd seals her in Crypt 6 (`K84`), though her femur becomes a <em>Mace of Disruption</em>.<br>• <strong>~400 BC (The Dusk Elf Genocide):</strong> Dusk Elves stone Patrina Velikovna; Strahd orders Rahadin to execute every Dusk Elf female.<br>• <strong>~450 BC (The Drowning of Berez):</strong> Tatyana reincarnates as <strong>Marina</strong>; after Burgomaster Ulrich stakes Marina, Strahd floods Berez into a swamp.<br>• <strong>734 BC (1 Year Ago — Mordenkainen & Doru's Failed Siege):</strong> The legendary archmage <strong>Mordenkainen</strong> rallies young <strong>Doru</strong> and the villagers to storm Castle Ravenloft. Because of Strahd's <strong>Heart of Sorrow (`Area K20`)</strong>, Mordenkainen's spells fail—breaking the archmage's mind into the <em>Mad Mage of Mount Baratok</em>, while Strahd turns Doru into a starving vampire spawn and sends him back to Father Donavich's church (`Session 1/2 Cliffhanger`)!",
+        h4: "🎭 DM Roleplay Cues & How to Reveal the Timeline",
+        rp: "Never dump all five eras at once! Let the party piece the timeline together organically: <strong>Doru</strong> reveals the Mad Mage & Heart of Sorrow in Session 2; <strong>The Tome of Strahd</strong> reveals Sergei & Tatyana's wedding in Session 6; <strong>Argynvostholt</strong> reveals the Silver Dragon war in Session 10; and <strong>Exethanter</strong> reveals the Amber Pact in Session 15!"
+    },
+    villagers: {
+        title: "👻 Souls, Soulless Shells & Tatyana's Reincarnation Curse",
+        subtitle: "Why 9 in 10 Barovians Have No Souls & Why Strahd Plays a Slow Game (Book p. 24–26 & Reloaded)",
+        badge: "1 in 10 Have Souls",
+        quote: "Bar the shutters before the sun goes down. Never speak His name aloud. And if you see a woman with auburn hair who looks like the portraits in the castle... pray for her, because the Devil never stops hunting.",
+        h1: "📜 The Reincarnation Trap & The Secret of the 'Soulless Shells'",
+        history: "• <strong>No Soul Escapes the Mists (<code>Book p. 24</code>):</strong> When the Dark Powers sealed Barovia behind the Choking Mists, they trapped not only the living, but <strong>every mortal soul</strong>. When a Barovian dies, their spirit cannot pass to the outer planes; it drifts in cold, silent agony through the fog for decades until it is reborn into a newborn Barovian infant.<br>• <strong>Souls vs. Soulless Shells (The 1-in-10 Rule):</strong> Because Barovia's population has grown larger than the finite pool of original trapped souls, <strong>9 out of 10 Barovians are 'Soulless Shells'</strong>—hollow biological constructs generated by the Mists to populate Strahd's prison:<br>&nbsp;&nbsp;• <strong>Soulless Shells (90%):</strong> Wear drab monochrome gray/brown rags, never laugh, never weep, speak in flat monotones, and feel only dull, cattle-like apathy. Vampires despise drinking their blood—it tastes like cold water and ash.<br>&nbsp;&nbsp;• <strong>The Ensouled (10%):</strong> Born with a reincarnated soul (like <em>Ireena, Ismark, Father Donavich, Mad Mary, and the Martikovs</em>). They wear small splashes of color, feel fierce terror, grief, and courage, and have rich, warm blood that vampires crave!",
+        h2: "🧭 Tatyana's Reincarnation Loop (Why Barovia Is Strahd's Hell)",
+        culture: "• <strong>The Cruel Joke of the Dark Powers:</strong> Every few decades, the soul of Sergei's betrothed, <strong>Tatyana</strong>, is reborn into a Barovian woman with the exact same auburn hair and noble features. Every single time Strahd finds her and tries to claim her by force, the Dark Powers engineer a tragedy that kills her right before the wedding (<strong>Marina</strong> staked in Berez; others bitten by vipers, struck by lightning, or falling from cliffs).<br>• <strong>Today's Reincarnation — Ireena Kolyana:</strong> Found as a toddler at the base of the Pillarstone of Ravenloft after wandering out of the Mists with zero memory of her past, she was adopted by Burgomaster Kolyan Indirovich in the Village of Barovia.",
+        h3: "⚔️ Why Doesn't Strahd Just Kidnap Ireena on Day 1? (*Reloaded* Logic)",
+        mechanics: "• <strong>Strahd's Psychological Siege Strategy:</strong> Strahd has already charmed his way into Indirovich Manor twice and bitten Ireena's neck twice. A third bite will turn her into a vampire bride—<strong>but after 400 years of failures, Strahd realizes that taking Tatyana by brute force always triggers the Dark Powers' curse and kills her!</strong><br>• <strong>The Cat-and-Mouse Game (Acts I–III):</strong> This time, Strahd is determined to make Ireena walk into Castle Ravenloft <strong>of her own free will</strong>. That is why he lets the party escort her west—and then systematically destroys every sanctuary she trusts (orchestrating the <strong>Feast of St. Andral in Vallaki</strong> in Session 5 and corrupting the <strong>Abbot in Krezk</strong>) to prove to Ireena that nowhere in Barovia is safe except beside him on his throne!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Describe tavern crowds as eerily silent, gray-clothed mannequins chewing stew without speaking—making the rare Ensouled NPCs (who wear a crimson scarf, weep real tears, or laugh at Piper's card tricks) stand out like beacons of warmth."
+    },
+    vital_secrets: {
+        title: "💎 Vital Campaign Secrets: The Heart of Sorrow, The 3 Gems & The Hunters",
+        subtitle: "Crucial Mechanical & Narrative Twists That Play Out in Acts I–IV (PDF + Reloaded)",
+        badge: "Master DM Cheat Sheet",
+        quote: "We hit him with everything the archmage had! Lightning, fire, radiant lances—and every wound on his chest closed in a heartbeat, while a giant red crystal pulsed high up in the North Tower!",
+        h1: "📜 1. The Heart of Sorrow (Castle Ravenloft North Tower, Area K20)",
+        history: "• <strong>What It Is (<code>Book p. 59, Area K20</code>):</strong> Suspended by heavy iron chains inside the swaying spiral spire of Castle Ravenloft's North Tower is a colossal, 10-foot-tall crystalline heart that beats with a deafening crimson pulse.<br>• <strong>How the Party Learns About It Early (`Session 2 — Reloaded Arc B5`):</strong> If <strong>King Jacomir</strong> feeds his cup of willing royal blood to <strong>Doru</strong> in the church attic at the start of Session 2, Doru regains 2 minutes of weeping lucidity and warns the party: <em>\"When I marched on the castle with the Mad Mage, our spells couldn't touch him! Look to the North Tower—shatter the red crystal heart before you face him, or you will die like we did!\"</em> (Escher can also tip them off at the Session 9 Dinner).<br>• <strong>Combat Mechanics:</strong> So long as Strahd is telepathically linked to the Heart, <strong>the Heart of Sorrow absorbs the first 50 HP of damage Strahd takes</strong> (and regenerates to full 50 HP every dawn!). In <strong>Session 17</strong>, the party must climb the North Tower (`K20`), fight off 10 animated flying halberds and vampire spawn as the tower sways violently (`DC 10 Dex save` vs falling), and shatter the 50-HP crystal!",
+        h2: "🧭 2. The Mystery of the Three Wizard of Wines Life-Gems",
+        culture: "• <strong>The Three Primal Seeds (`Book Ch. 12, 10 & 14`):</strong> Centuries ago, an archdruid blessed the soil of the <strong>Wizard of Wines</strong> with three glowing green pinecone-sized emeralds of pure life force:<br>&nbsp;&nbsp;1. <strong>Gem #1 (<em>Champagne du le Stomp</em>):</strong> Stolen 10 years ago on Urwin Martikov's watch (the deepest mystery of Barovia; rumored taken by Baba Lysaga or hidden inside Vasilka's chest at the Abbey!).<br>&nbsp;&nbsp;2. <strong>Gem #2 (<em>Red Dragon Crush</em>):</strong> Stolen three weeks ago by the <strong>Yester Hill Druids</strong> and embedded inside the chest of <strong>Wintersplinter (`Session 8`)</strong>—ripping it out (`DC 15`) deals 40 damage and restores the Winery!<br>&nbsp;&nbsp;3. <strong>Gem #3 (<em>Purple Grapemash</em>):</strong> Stolen days ago by <strong>Baba Lysaga in Berez</strong> and hidden beneath the crib floorboards inside her <strong>Creeping Walking Hut (`Session 14, Area U3`)</strong>—wrenching this gem out (`DC 15`) <strong>instantly deactivates the CR 11 Gargantuan Hut</strong>!",
+        h3: "⚔️ 3. The Three Legendary Monster Hunters & Castle Teleport Brazier",
+        mechanics: "• <strong>📜 Rudolph van Richten ('Rictavio' — `Vallaki Area N2`):</strong> After Vistani kidnappers sold his teenage son Erasmus to Baron Metus (forcing Van Richten to mercy-kill his own vampiric son), Van Richten slaughtered the clan—and was cursed by their dying seer: <em>\"Live among monsters, and see everyone you love die by their claws!\"</em> That is why he hides in Vallaki disguised as the flamboyant half-elf bard <strong>Rictavio</strong> (keeping a vampire-hunting <strong>Saber-Toothed Tiger</strong> in his carnival wagon `N2r`, alongside a <strong>🔫 Silver-Runed Scope & Barrel Upgrade for Yvaine</strong>!) and keeps his distance so his curse doesn't kill the party.<br>• <strong>⚔️ Ezmerelda d'Avenir (Tarokka Fated Ally — `Act II–IV`):</strong> Van Richten's former Vistani protégé (whose own parents were the kidnappers of Erasmus!). Fierce, pragmatic, sporting a silvered prosthetic lower leg and a wagon rigged with 100 alchemical flasks (`Area V1`) and <strong>💥 Sunburst Cartridges for Yvaine</strong>.<br>• <strong>🔥 The Brazier Room (`Ravenloft Area K78`):</strong> In the basement of Castle Ravenloft sits an hourglass and white-fire brazier; tossing in one of 7 colored stones teleports the party across Barovia (<em>Violet = Crypts K84, Orange = North Tower K60, Red = Tsolenka Pass, Blue = Abbey, Green = Coffin Shop</em>)!",
+        h4: "🎭 DM Roleplay Cues & Pacing Advice",
+        rp: "Whenever Strahd takes damage in Session 2 (Crossroads) or Session 8 (Yester Hill) while linked to the Heart of Sorrow, describe a faint, crimson pulse rippling across his black armor as the wound seals instantly—accompanied by the distant, subterranean thud of a giant heartbeat echoing from Castle Ravenloft's highest spire!"
+    },
+    faiths: {
+        title: "☀️ The Morninglord, Mother Night & The Priests of Osybus",
+        subtitle: "The Fading Dawn, The Nocturnal Dark & The Cult of Undeath (Barovian Theology)",
+        badge: "Relics & Consecration",
+        quote: "The Morninglord brings no sun, and Mother Night demands blood for every prayer. Pray softly, or the things locked in the mountain amber will answer instead.",
+        h1: "📜 1. The Morninglord (Lathander Remembered Through 400 Years of Fog)",
+        history: "• <strong>The God of the Lost Dawn:</strong> Before the Mists swallowed Barovia in `351 BC`, the valley worshipped <strong>Lathander</strong>, god of dawn, spring, and renewal. Over four sunless centuries, his name faded into <strong>The Morninglord</strong>—depicted in tarnished rose-gold sunbursts and stained glass with blind, weeping eyes.<br>• <strong>The Three Churches:</strong> Worshipped by broken <strong>Father Donavich</strong> (`Village of Barovia, Area E5`), embattled <strong>Father Lucian Petrovich</strong> (`St. Andral's Church in Vallaki, Area N1`), and the corrupted Deva <strong>The Abbot</strong> (`Abbey of St. Markovia in Krezk, Chapter 8`). Because prayers go unanswered by the outer heavens, most Barovians believe the Morninglord has forsaken them.",
+        h2: "🧭 2. Mother Night & The Secret Priests of Osybus",
+        culture: "• <strong>🌙 Mother Night:</strong> The ancient, primal goddess of darkness, fate, winter, and midnight bargains. Unlike the silent Morninglord, Mother Night's presence is felt palpably in the valley: she granted <strong>Madam Eva</strong> her ageless Tarokka foresight, empowers <strong>Baba Lysaga's</strong> swamp curses in Berez, and receives stolen offerings at the <strong>Werewolf Den shrine (`Area Z7`)</strong>.<br>• <strong>💀 The Priests of Osybus (`Van Richten's Guide / Reloaded` Lore):</strong> An ancient cult of soul-stealing necromancers who originally Whispered to mortal General Strahd, guided him toward the Amber Temple, and whose surviving descendants founded <strong>Lady Fiona Wachter's devil-cult</strong> in Vallaki (`Area N4`)!",
+        h3: "⚔️ Sacred Relics, Consecrated Ground & Spell Cosmetics in Barovia",
+        mechanics: "• <strong>Consecrated Ground (`St. Andral's Bones`):</strong> Ordinary churches in Barovia (like Father Donavich's church) are <strong>not</strong> consecrated—Strahd and his spawn can walk right through the doors! Only <strong>St. Andral's Church in Vallaki (`Area N1`)</strong> enjoys a permanent <em>Hallow</em> effect, and <strong>ONLY while the Bones of St. Andral rest beneath the altar</strong> (`Session 4–5` quest)!<br>• <strong>The Three Holy Relics of the Morninglord:</strong> <strong>🕊️ The Holy Symbol of Ravenkind</strong> (delivered to prophet Lugdana by a giant celestial raven), <strong>🏰 The Icon of Ravenloft (`Area K15`)</strong>, and <strong>🦴 Saint Markovia's Thighbone (`Area K84/S13`)</strong>.<br>• <strong>Barovian Spell Cosmetics (`Book p. 24`):</strong> Divine, Nature, and Wild Magic spells cast by <strong>Cael</strong> and <strong>Piper</strong> take on eerie gothic visuals in Barovia (e.g., <em>Guiding Bolt</em> streaks like a spectral silver raven; <em>Revivify</em> sounds like a distant church bell).",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Villagers touching two fingers to their forehead and lips in the sign of the rising sun whenever they pass a wayside shrine, hear a wolf howl, or see a black carriage on the road."
+    },
+
+    // =========================================================================
+    // 4.5D: THE COSMIC KNOT, THE DARK POWERS & GRAND TRILOGY TWIST (4)
+    // =========================================================================
+    cosmic_reactor: {
+        title: "🌑 Domain Zero & The Dark Powers — Ravenloft as an Autonomous Reactor",
+        subtitle: "Decoupled Primordial Cosmology & The Root Anchor (THE_COSMIC_KNOT_MASTER_LORE.md)",
+        badge: "Grand Trilogy Core Lore",
+        quote: "You think this valley is a kingdom? It is an engine. Every time the vampire reaches for the girl and watches her die, the stones drink his agony. And when you finally drive the stake through his heart... you pull the pin from the grenade.",
+        h1: "📜 1. Sovereign Isolation: Why Ravenloft Is Decoupled from the Shadowfell",
+        history: "• <strong>The Dawn-Entities (`THE_COSMIC_KNOT_MASTER_LORE.md Section 1`):</strong> In our Grand Trilogy canon, Ravenloft is <strong>not</strong> a mere annex of the Shadowfell reachable by standard astral sailing. Long before recorded mortal history or current pantheons, primal multiversal entities known as the <strong>Dark Powers</strong> constructed the Demiplane of Dread as an isolated cosmic quarantine, eternal prison, and <strong>kinetic dark-energy reactor</strong>.<br>• <strong>The False Hope & Despair Engine:</strong> By placing the multiverse's most irredeemable monsters into bespoke, inescapable pocket realms and subjecting them to perpetual cycles of <strong>false hope and absolute despair</strong> (such as dangle-feeding Tatyana's reincarnations to Strahd and killing her every time), the Dark Powers harvest immense emotional and metaphysical energy.<br>• <strong>Hermetic Physics:</strong> Standard planar transit (<em>Plane Shift, Gate, Banishment,</em> or Dalvan Olensky's spinning magnetic compass) fails completely inside the Mists.",
+        h2: "🧭 2. Barovia as 'Domain Zero' & Strahd as the Load-Bearing Keystone",
+        culture: "• <strong>The First Domain (`Section 3`):</strong> Barovia is <strong>'Domain Zero'</strong>—the very first domain woven into existence by the Dark Powers four hundred years ago. Count Strahd von Zarovich is not just an ordinary prisoner; his iron will, misery, and bond to the land serve as the <strong>primary load-bearing Keystone</strong> locking the foundational architecture of the entire Demiplane of Dread in place.<br>• <strong>The Anchor vs. The Infinite Ocean:</strong> Mortals cannot ingest the infinite, non-Euclidean ocean of the Mists across all domains without being erased from existence. Instead, Barovia houses the <strong>Metaphysical Root Anchor</strong>—the master key, tuning fork, and command frequency of the Mists.",
+        h3: "⚔️ 3. What Happens When the Party Kills Strahd (The Session 20 Cascade)",
+        mechanics: "• <strong>Step 1 — Snapping the Keystone:</strong> When <strong>Piper, King Jacomir, and Yvaine</strong> stake Count Strahd in Sergei's Crypt in <strong>Session 20 (Level 10 Finale)</strong>, the cornerstone holding the containment network rigid snaps.<br>• <strong>Step 2 — The Inward Collapse:</strong> Instead of dispersing harmlessly to let the villagers walk free into the sun, the localized foundational Mists of Barovia condense violently inward.<br>• <strong>Step 3 — Swallowing the Pulled Pin:</strong> Guided by the Scion Companion (<strong>Cael</strong>) and the Avatar (<strong>Derek</strong>), the collapsing <strong>Barovian Root Anchor</strong> is channeled directly into the three PCs' souls—turning them into the <strong>Living Conduits</strong> who house the master frequency of the Mists for Campaign 3!",
+        h4: "🎭 DM Foreshadowing Cues Across Acts I–IV",
+        rp: "Drop subtle hints that Barovia is a machine, not just a valley: compasses spinning endlessly, Vladimir Horngaard insisting that killing Strahd breaks the prison, and the Amber Sarcophagi humming like dynamo coils whenever Piper casts Wild Magic nearby."
+    },
+    vecna_pact: {
+        title: "🟣 The Unholy Covenant — Lord Vecna, The Amber Temple & The Time Loop",
+        subtitle: "Why Vecna Needs Mortal Conduits & How Campaign 1 Connects to Campaign 2 & 3",
+        badge: "Campaign 1 ➔ 2 ➔ 3 Bridge",
+        quote: "A god cannot reach his hand into the rot of Ravenloft without the Mists tearing his divinity to shreds. He needed three mortal surge protectors strong enough to kill the Devil and swallow the key.",
+        h1: "📜 1. The Mutually Parasitic Pact in the Amber Temple",
+        history: "• <strong>Scaling the Harvest (`THE_COSMIC_KNOT_MASTER_LORE.md Section 2`):</strong> Traditionally, the Dark Powers only harvested despair from isolated pocket domains. Then came <strong>Lord Vecna, the Whispered One</strong>. Through the deepest forbidden vaults of the <strong>Amber Temple (`Area X42`)</strong>, Vecna struck a cosmic bargain with the Dark Powers:<br>&nbsp;&nbsp;• <strong>What the Dark Powers Get:</strong> By partnering with Vecna's multiversal conquest, their energy harvest scales from a handful of demiplanes to <strong>entire conquered universes and slaughtered pantheons</strong>.<br>&nbsp;&nbsp;• <strong>Vecna's Divine Limitation:</strong> An immortal deity cannot touch the chaotic, unraveling rot of Ravenloft directly—a god's rigid divine anatomy would be violently torn apart by direct exposure to the Demiplane of Dread.<br>&nbsp;&nbsp;• <strong>The Solution — Mortal Surge Protectors:</strong> Vecna needed three mortal champions of extraordinary willpower, chaotic conductivity, and lethality (<strong>Piper, Jacomir, and Yvaine</strong>) to slay Strahd, absorb the Barovian Root Anchor, and act as his grounded <strong>Living Conduits</strong>!",
+        h2: "🧭 2. The Non-Linear Temporal Loop (Connection to Stormwreck Isle & Moros!)",
+        culture: "• <strong>Time Is Non-Linear in the Mists (`Section 4`):</strong> Because the Demiplane of Dread is completely decoupled from the Great Wheel's timeline, the moment the party is destined to kill Strahd and swallow the Root Anchor in Session 20, the cosmic ripple radiates <strong>backward, forward, and outward simultaneously</strong> across timelines.<br>• <strong>The Chilling Campaign 1 Revelation (Moros & <em>The Asflumph</em>):</strong> During <strong>Campaign 1 (<em>Dragons of Stormwreck Isle</em> / <em>Mal'Goroth</em>)</strong>, <strong>Eflein, Sylvar Link, and Father Flubs</strong> encountered <strong>Moros</strong>—a broken, dying god summoned through a rift of eerie Mist from a world Vecna had already razed—and saw Vecna's weeping <strong>Obsidian Monoliths</strong> rising as <em>The Asflumph</em> set sail for the Lost Dragon Lands.<br>• <strong>The Loop Closed:</strong> Vecna was only able to unleash that Mist and annihilate Moros's realm in Campaign 1 because <strong>he already had Piper, Jacomir, and Yvaine locked down as his Living Conduits from the end of Campaign 2</strong>!",
+        h3: "⚔️ 3. Vecna's Multiversal Conquest Engine & Campaign 3 Crossover",
+        mechanics: "• <strong>The Inter-Planar Interstate (`Section 5`):</strong> With the Root Anchor housed inside the party and tethered to Vecna's will via the <strong>Supreme Dark Gifts of the Amber Temple (`Session 16`)</strong>, Vecna uses the Mists as an omni-directional bridge to bypass divine wards and envelop entire worlds in Fog.<br>• <strong>The Grand Endgame Collision (Campaign 3):</strong> After Session 20 of <em>Curse of Strahd</em>, Campaign 3 returns to <strong>Eflein and Sylvar Link</strong> sailing aboard <em>The Asflumph</em> to the <strong>Ancient Dragon Lands</strong>—where they will come face-to-face with <strong>King Jacomir, Piper, and Yvaine</strong> marching out of the Mists as Vecna's corrupted Vanguard Conduits!",
+        h4: "🎭 DM Pacing Rule: Zero Early Vecna Spoilers!",
+        rp: "<strong>CRITICAL DM RULE:</strong> In Acts I–III, NEVER drop the name 'Vecna' or show glowing purple obsidian monoliths! Keep all early horror grounded strictly in Barovian fog, time-stops, and hollow vessel symbolism until the party reaches the <strong>Ambervecna Vaults (`Area X42`)</strong> in Session 15–16!"
+    },
+    dual_operatives: {
+        title: "⏳ The Dual Operatives — Derek ('The Avatar') & Cael ('The Scion')",
+        subtitle: "The Time-Stopping Enforcer Outside the Clock vs. The Beloved Healer Inside the Party",
+        badge: "Sacred Law #5: Time-Stop",
+        quote: "Tap, tap, tap. The candle flames freeze. The rain stops falling in midair. And the man in the clean coat steps around the frozen priest, looking straight at the three of you.",
+        h1: "📜 1. ⏳ Derek ('The Man Between Seconds' — Avatar of the Dark Powers)",
+        history: "• <strong>Who He Is (`THE_COSMIC_KNOT_MASTER_LORE.md Section 8`):</strong> Derek is the physical avatar and cold, transactional 'project manager' of the Dark Powers' pact. He does not walk through Barovia's mud—he walks <strong>strictly between the ticks of the clock inside frozen pockets of time (`tap, tap, tap`)</strong>.<br>• <strong>Session 1 Debut (Father Donavich's Church Attic):</strong> At the climax of Session 1's argument over Doru (as Jacomir poured his blood into a cup while Piper and Yvaine demanded Doru's death), Derek froze time completely. Stepping past the frozen Donavich, Ismark, and Ireena, Derek told <strong>Jacomir & Yvaine</strong> he knows who they are and promised they will get what they want and go home if they follow him and <strong>kill Strahd</strong>; then he looked at <strong>Piper</strong> in genuine astonishment—recognizing <em>what she is</em> (the chaotic Wild Magic detonator/vessel)—and told her to <em>\"take care of herself.\"</em><br>• <strong>Why Strahd Is 100% Blind to Derek (`Sacred Law #5`):</strong> Because Derek only ever manifests while time is frozen (`0.0 seconds elapsed` in real time), <strong>Count Strahd, his bats, wolves, scrying sensors, and Barovian NPCs have ZERO knowledge that Derek exists!</strong>",
+        h2: "🧭 2. 🌟 Caelum Jude ('Cael' — The Mortal Scion & Inside Shepherd)",
+        culture: "• <strong>Who He Is (`CAEL_MASTER_DOSSIER.md`):</strong> While Derek is the cold overseer outside of time, <strong>Cael</strong> (Level 3 Circle of the Stars Druid, 38 HP) is a mortal youth bound from birth by the Dark Powers (<em>Vow of the Dark Powers: Plot Armor stabilizes him at 1 HP so he cannot die before Act IV</em>) to walk beside the party in real time, heal their wounds with <em>Starry Chalice</em>, and guide them to Level 10.<br>• <strong>The Tragic Contrast:</strong> Unlike Derek, Cael is <strong>not</strong> a heartless monster—he is an earnest, self-deprecating kid who genuinely falls in love with the party's camaraderie and hates what he is bound to do.<br>• <strong>Cael's Terror of Derek:</strong> Unlike Strahd, Cael <strong>can feel</strong> when Derek freezes time! Whenever the three knocks sound (`tap, tap, tap`), Cael shrinks back in silent, sweating terror of his overseer.",
+        h3: "⚔️ 3. Derek's 3 Future Milestone Crossroads & The Session 20 Betrayal",
+        mechanics: "• <strong>Milestone 1 (Session 2 — `Reloaded Arc C7: Tser Falls Bridge`):</strong> Right after Cael shifts from his black cat form to join the party after Madam Eva's reading, Derek freezes time for 10 seconds on the misty gorge bridge (while Cael cowers in terror): <em>\"The old woman gave you the riddles. Now go take the weapons and don't let anyone stand in your way.\"</em><br>• <strong>Milestone 2 (Session 15 — `The Amber Temple Doors`):</strong> Derek freezes the blizzard outside the Amber Temple, urging the party to open the Amber Sarcophagi and claim the strength needed to survive Strahd.<br>• <strong>Milestone 3 (Session 17/20 — `Ravenloft Gates & Sergei's Crypt`):</strong> As Strahd turns to ash in Session 20, Derek freezes the crypt one last time and forces a weeping Cael—whose voice twists into Barnaby's—to channel the collapsing <strong>Barovian Root Anchor</strong> into the three heroes!",
+        h4: "🎭 DM Roleplay Contrast: Derek vs. Cael vs. Strahd",
+        rp: "• <strong>Derek:</strong> Modernly sharp, unbothered, transactional corporate handler (<em>\"I'm the only one giving you a straight deal: kill the vampire, and go home\"</em>).<br>• <strong>Cael:</strong> Warm, protective Percy Jackson earnestness (<em>\"Stay behind me—I've got a Starry Chalice with your name on it\"</em>).<br>• <strong>Strahd:</strong> Aristocratic, operatic gothic predator (<em>\"I am the Ancient. I am the Land\"</em>)."
+    },
+    three_vessels: {
+        title: "🃏 The Three Chosen Vessels, The Grim Smile & Piper's Blank Card",
+        subtitle: "Manufactured Backstory Bait & The 3-Stage Progressive Mist Omen (THE_COSMIC_KNOT_MASTER_LORE.md)",
+        badge: "PC Destiny Secrets",
+        quote: "First comes the high, thin ringing in your ears. Then the sound of carriage hooves where no road exists. Then the fog curls over your boots... and someone in the room stares dead at you, unblinking, before their mouth stretches into a slow, grim smile.",
+        h1: "📜 1. The Crucible of Barovia & The Recurring 'Grim Smile' Motif",
+        history: "• <strong>Why These Three Were Chosen (`Section 6`):</strong> Mortals content with peaceful lives never push themselves to Level 10 or risk death to slay Count Strahd. The Dark Powers scoured timelines to select three mortals whose genuine innate talents—<strong>Piper's volatile Wild Magic, Jacomir's tactical leadership, and Yvaine's lethal marksmanship</strong>—could withstand the Root Anchor.<br>• <strong>Manufactured Tragedies & False Hope:</strong> To give them the obsessive drive required to kill Strahd, the Dark Powers engineered tragedies in their pasts and planted false hopes of resolution inside Barovia—always accompanied by the signature <strong>Grim Smile Motif</strong> (<em>ringing ears, phantom carriage hooves, creeping fog, and an unblinking stare that stretches into a slow, grim smile</em>).",
+        h2: "🧭 2. 🎭 Piper ('The Chaotic Battery') & Her 3-Stage Blank Tarokka Card",
+        culture: "• <strong>Piper's Secret Origin (`Section 7.2`):</strong> Shunned in an orphanage for her Fierna horns, Piper swore never to use real magic, performing sleight-of-hand as <em>\"Piper the Incomparable\"</em> with props from old <strong>Barnaby</strong> (secretly a Dark Power handler who gave her her parents' pocket watch). Two weeks ago, an Amber Temple psychic nightmare lured her into the Svalich Woods and <strong>deliberately triggered her Wild Magic awakening</strong>—because the Dark Powers needed a chaotic soul to conduct the unmoored frequency of the Mists!<br>• <strong>🃏 Piper's Blank Tarokka Card (*Option 2 — 3-Stage Mist Bleed*):</strong> In Session 1 at <em>Blood on the Vine Tavern</em>, the ink faded off a Vistani's card in Piper's hand. In Session 2 at Tser Pool, Madam Eva pulls her hand back as if burned by ice (<em>\"Every time you step closer to what woke the fire in your blood, the ink will bleed higher. Pray you do not recognize the picture when it finishes drawing itself\"</em>). The card draws itself in <strong>3 progressive stages (with zero early Vecna spoilers)</strong>:<br>&nbsp;&nbsp;• <strong>Stage 1 (`Session 2 — Tser Pool`):</strong> Bottom third fills with charcoal ink — <em>dead Barovian pines and a pair of empty, upturned palms rising out of black water</em>.<br>&nbsp;&nbsp;• <strong>Stage 2 (`Mid-Campaign — Vallaki / Berez`):</strong> Middle third bleeds in — <em>a cracked, faceless glass lantern / pocket watch suspended in midair, with threads of silver-gray fog curling into its cracks</em>.<br>&nbsp;&nbsp;• <strong>Stage 3 (`Act IV — Amber Temple / Ravenloft`):</strong> Top third fills in — <em>a violent vortex of endless gray Mist pouring inward into the cracked glass, with a faint, unblinking shadow-grin in the smoke above</em>.",
+        h3: "⚔️ 3. 👑 King Jacomir ('The Vanguard') & 🔫 Yvaine ('The Crosshairs')",
+        mechanics: "• <strong>👑 King Jacomir Yulle (`Section 7.1 — Exiled Sovereign of Oakenshire`):</strong><br>&nbsp;&nbsp;• <em>The Selection:</em> During his throneroom victory speech in Oakenshire, his ears rang, fog rolled across the marble, and members of his court stared with that <strong>Grim Smile</strong> as the Mists swallowed his kingdom.<br>&nbsp;&nbsp;• <em>False Hope vs. S20 Betrayal:</em> Jacomir finds proof in Barovia that Oakenshire is held in outer Mist-quarantine and believes slaying Strahd will free his people—only for Session 20 to bind his King's oath as the <strong>Frontline Vanguard General</strong> of Vecna's multiversal horde!<br>• <strong>🔫 Eclipsa Rosaline Yvaine the First (`Section 7.3 — Fallen Princess of Solmere`):</strong><br>&nbsp;&nbsp;• <em>The Selection:</em> Her white-stone palace of Solmere was betrayed from the inside during her birthday; her parents were slain and her younger sisters <strong>Vesper and Liora</strong> vanished. Snatched by the Mists in an alley ambush right before learning the traitor's name.<br>&nbsp;&nbsp;• <em>False Hope vs. S20 Betrayal:</em> In Detective Mode across Barovia, Yvaine discovers the truth: <strong>Vesper and Liora are alive and safe back home!</strong> Her hope reaches its peak as she slays Strahd to open the border—only for Session 20 to lock the Mists' targeting array into her <em>Hunter's Sense</em> eyes, leaving her sisters safe but forever unreachable!",
+        h4: "🎭 DM Roleplay Cues for Personal Spotlights",
+        rp: "In every Act, give each PC 1 breadcrumb feeding their False Hope (a rumor of Oakenshire's banner in the fog for Jacomir; a clue from Solmere's assassin guild / Vistani travelers confirming Vesper & Liora are alive for Yvaine; and Stage 1 ➔ 2 ➔ 3 ink bleeds on the Blank Card + Barnaby's pocket watch warming near leyline magic for Piper)."
     }
 };
+
+function filterLoreCodex(cat, btnEl) {
+    document.querySelectorAll('#lore-filter-bar .btn-loot-filter').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    document.querySelectorAll('.lore-group').forEach(group => {
+        if (!cat || cat === 'all' || group.getAttribute('data-lore-cat') === cat) {
+            group.style.display = '';
+        } else {
+            group.style.display = 'none';
+        }
+    });
+}
 
 function openLoreModal(key) {
     const l = LORE_DATA[key];
@@ -3612,16 +3994,16 @@ function openLoreModal(key) {
 
         <div class="modal-read-aloud">"${l.quote}"</div>
 
-        <h4>📜 Origin & Barovian History</h4>
+        <h4>${l.h1 || '📜 Origin & Barovian History'}</h4>
         <div class="nbox nbox-cyan">${l.history}</div>
 
-        <h4>🧭 Culture, Divisions & Hidden Secrets</h4>
+        <h4>${l.h2 || '🧭 Culture, Divisions & Hidden Secrets'}</h4>
         <div class="nbox nbox-crimson">${l.culture}</div>
 
-        <h4>⚔️ Tabletop Mechanics, Powers & Hooks</h4>
+        <h4>${l.h3 || '⚔️ Tabletop Mechanics, Powers & Campaign Hooks'}</h4>
         <div class="nbox nbox-emerald">${l.mechanics}</div>
 
-        <h4>🎭 DM Roleplay Cues & Sensory Vibe</h4>
+        <h4>${l.h4 || '🎭 DM Roleplay Cues & Sensory Vibe'}</h4>
         <div class="nbox nbox-amber">${l.rp}</div>
     `;
     document.getElementById('modal-dice-log').innerHTML = `Viewing Barovian Lore Dossier • ${l.badge}`;
