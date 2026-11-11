@@ -778,11 +778,11 @@
     <a href="#party-specs" class="nav-btn">🛡️ 0. Party & Allies</a>
     <a href="#active-quests" class="nav-btn">📜 1. 15–20 Session Roadmap</a>
     <a href="#tarokka-oracle" class="nav-btn">🔮 1.1 Tarokka Oracle</a>
-    <a href="#biomes-explorer" class="nav-btn">🗺️ 1.5 Biomes & Locations</a>
+    <a href="#biomes-explorer" class="nav-btn">🗺️ 1.5 Biomes & Locations (17)</a>
     <a href="#npc-directory" class="nav-btn">👥 2. NPC Directory (15)</a>
     <a href="#monsters-section" class="nav-btn">💀 3. Enemies & Pointy Hat Bosses (12)</a>
     <a href="#loot-vault" class="nav-btn">🎒 4. World Loot & Relics</a>
-    <a href="#factions-lore" class="nav-btn">🏛️ 4.5 Factions, Villages & Lore (20)</a>
+    <a href="#factions-lore" class="nav-btn">🏛️ 4.5 Factions, Locations & Lore (26)</a>
     <a href="#dm-rules-guide" class="nav-btn">⚖️ 5. Barovian Laws & Rules</a>
 </nav>
 
@@ -950,44 +950,97 @@
         </div>
     </section>
 
-    <!-- SECTION 1.5: BIOMES & LOCATIONS EXPLORER -->
+    <!-- SECTION 1.5: BIOMES, DUNGEONS & LOCATIONS EXPLORER -->
     <section id="biomes-explorer">
         <div class="section-header">
-            <span>🗺️ SECTION 1.5: CAMPAIGN BIOMES & LOCATIONS EXPLORER</span>
-            <span class="section-tag">CLICK ANY LOCATION FOR SENSORY PALETTES, TRAPS & DCs</span>
+            <span>🗺️ SECTION 1.5: CAMPAIGN BIOMES, DUNGEONS & LOCATIONS EXPLORER (17 LOCATIONS)</span>
+            <span class="section-tag">CLICK ANY LOCATION FOR ROOM KEYS, SENSORY READ-ALOUDS, TRAPS, DCs & LOOT</span>
         </div>
-        <div class="grid-4">
-            <div class="card clickable" onclick="openBiomeModal('svalich')">
-                <div class="card-header"><span class="card-title">🌲 Old Svalich Road</span><span class="pill crimson">Session 1</span></div>
-                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Mud-slicked gorge cliffs, howling dire wolves, moss-covered iron gates, and Dalvan Olensky's spinning compass.</p></div>
+
+        <div class="loot-filter-bar" id="biome-filter-bar">
+            <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Filter Locations by Act:</span>
+            <button class="btn-loot-filter active" onclick="filterBiomes('all', this)">🗺️ All Locations (17)</button>
+            <button class="btn-loot-filter" onclick="filterBiomes('act1', this)">🩸 Act I: Barovia, Crossroads, Tser Pool & Bonegrinder (5)</button>
+            <button class="btn-loot-filter" onclick="filterBiomes('act2', this)">⚔️ Act II: Vallaki, Winery, Yester Hill & Dinner (5)</button>
+            <button class="btn-loot-filter" onclick="filterBiomes('act3', this)">🐉 Act III: Argynvostholt, Krezk, Berez & Baratok (4)</button>
+            <button class="btn-loot-filter" onclick="filterBiomes('act4', this)">🏰 Act IV: Tsolenka Pass, Amber Temple & Ravenloft (3)</button>
+        </div>
+
+        <div class="grid-4" id="biomes-grid">
+            <!-- ACT I LOCATIONS (5) -->
+            <div class="card clickable searchable-row biome-card" data-biome-act="act1" onclick="openBiomeModal('svalich')">
+                <div class="card-header"><span class="card-title">🌲 1. Old Svalich Road & Gates</span><span class="pill crimson">Session 1 • Area A</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Mud-slicked gorge cliffs, howling dire wolves, Eastern Gates of Barovia, Choking Mists (DC 15 CON), and Dalvan Olensky's spinning compass.</p></div>
             </div>
-            <div class="card clickable" onclick="openBiomeModal('village')">
-                <div class="card-header"><span class="card-title">🏚️ Barovia & Manor</span><span class="pill crimson">Session 1 Climax</span></div>
-                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Spiked timber barricades, Blood on the Vine Tavern, Mad Mary's attic, and the besieged Burgomaster's parlor at 3:00 AM.</p></div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act1" onclick="openBiomeModal('village')">
+                <div class="card-header"><span class="card-title">🏚️ 2. Barovia, Manor & Church</span><span class="pill crimson">Sessions 1–2 • E1–E5</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Indirovich Manor (<code>E4</code>, Kolyan's Wizard Diary), Blood on the Vine Tavern (<code>E2</code>), Mad Mary (<code>E3</code>), & Father Donavich's Church Attic (<code>E5</code>, Doru standoff!).</p></div>
             </div>
-            <div class="card clickable" onclick="openBiomeModal('tserpool')">
-                <div class="card-header"><span class="card-title">🔮 Tser Pool Camp</span><span class="pill gold">Session 2</span></div>
-                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Vistani campfire circle, roasted boar, Romani violins, silver weapon trade, and Madam Eva's silk tent.</p></div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act1" onclick="openBiomeModal('crossroads_falls')">
+                <div class="card-header"><span class="card-title">⚖️ 3. Crossroads & Tser Falls</span><span class="pill gold">Session 2 • Areas F & H</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">River Ivlis Gallows illusion, <strong>Count Strahd's 1st Face-to-Face Appearance</strong> (<code>Reloaded Arc C2</code>), & 1,000-ft Tser Falls bridge where <strong>Cael joins & Derek freezes time</strong>!</p></div>
             </div>
-            <div class="card clickable" onclick="openBiomeModal('bonegrinder')">
-                <div class="card-header"><span class="card-title">🥧 Old Bonegrinder</span><span class="pill gold">Session 3</span></div>
-                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Four-story creaking stone mill, sweet aroma of baking sugar masking ground children's bones, and Morgantha's coven.</p></div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act1" onclick="openBiomeModal('tserpool')">
+                <div class="card-header"><span class="card-title">🔮 4. Tser Pool Vistani Camp</span><span class="pill gold">Session 2 • Area G</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Vistani campfire sanctuary, Romani violins, 5 GP weapon silvering, Vistani Treasure Wagon, and <strong>Madam Eva's 5-Card + Blank 6th Card Reading</strong>.</p></div>
             </div>
-            <div class="card clickable" onclick="openBiomeModal('vallaki')">
-                <div class="card-header"><span class="card-title">⚔️ Town of Vallaki</span><span class="pill purple">Sessions 4–6</span></div>
-                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Baron Vargas's forced happiness banners ("ALL WILL BE WELL!"), St. Andral's Church, Wachterhaus, and Blue Water Inn.</p></div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act1" onclick="openBiomeModal('bonegrinder')">
+                <div class="card-header"><span class="card-title">🥧 5. Old Bonegrinder Windmill</span><span class="pill gold">Session 3 • Areas O1–O4</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Four-story Night Hag windmill, Four Ancient Megaliths behind the mill, explosive bone-flour millstones, caged children Myrtle & Lucian, and Morgantha's coven.</p></div>
             </div>
-            <div class="card clickable" onclick="openBiomeModal('winery')">
-                <div class="card-header"><span class="card-title">🍷 Winery & Yester Hill</span><span class="pill purple">Sessions 7–8</span></div>
-                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Besieged Martikov vineyards, poisoned fermentation vats, ancient druid cairns, and the colossal Gulthias Tree.</p></div>
+
+            <!-- ACT II LOCATIONS (5) -->
+            <div class="card clickable searchable-row biome-card" data-biome-act="act2" onclick="openBiomeModal('vallaki')">
+                <div class="card-header"><span class="card-title">⚔️ 6. Town of Vallaki & Inn</span><span class="pill purple">Sessions 4–6 • Ch. 5</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Wolf-pike palisades, Blue Water Inn & Wereraven Loft (<code>N2q</code>), Baron's Mansion & Victor's Attic (<code>N3t</code>), Blinsky Toys (<code>N7</code>), & Rictavio's Wagon (<code>N2r</code>).</p></div>
             </div>
-            <div class="card clickable" onclick="openBiomeModal('argynvost')">
-                <div class="card-header"><span class="card-title">🐉 Argynvost & Berez</span><span class="pill gold">Sessions 10–14</span></div>
-                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Ruined silver dragon fortress of spectral revenants, and the fetid drowned swamp of Baba Lysaga's Creeping Hut.</p></div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act2" onclick="openBiomeModal('coffin_wachter')">
+                <div class="card-header"><span class="card-title">⚰️ 7. Coffin Shop & Wachterhaus</span><span class="pill purple">Sessions 5–6 • N1, N4, N6</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Henrik's Coffin Shop (<code>N6</code>, Bride Anastrasya's 6-Spawn Crate Ambush), St. Andral's Church relay race (<code>N1</code>), & Wachterhaus Cult Library (<code>N4</code>, <strong>📜 Tome of Strahd</strong>).</p></div>
             </div>
-            <div class="card clickable" onclick="openBiomeModal('ravenloft')">
-                <div class="card-header"><span class="card-title">🏰 Amber & Ravenloft</span><span class="pill crimson">Sessions 15–20</span></div>
-                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Frozen obsidian vaults of the Dark Powers on Mt. Ghakis, and Count Strahd's 1,000-ft cliffside fortress.</p></div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act2" onclick="openBiomeModal('winery')">
+                <div class="card-header"><span class="card-title">🍷 8. Wizard of Wines Winery</span><span class="pill purple">Session 7 • Areas W1–W20</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Two-story Martikov winery besieged by Yester Hill Druids & 30+ Blights: poisoned fermentation vats, loading dock ramp, and snapping <strong>The Gulthias Staff (<code>W14</code>)</strong>.</p></div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act2" onclick="openBiomeModal('yester_hill')">
+                <div class="card-header"><span class="card-title">⛈️ 9. Yester Hill & Gulthias Tree</span><span class="pill purple">Session 8 • Areas Y1–Y5</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Lightning-struck stone circle, Kavan's Cairn (<code>Y4</code>, <strong>🩸 Blood Spear</strong>), Wall of Fog (<code>Y2</code>, Strahd on Bucephalus), blood-drinking <strong>Gulthias Tree (<code>Y3</code>)</strong>, & <strong>Wintersplinter</strong>.</p></div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act2" onclick="openBiomeModal('ravenloft_dinner')">
+                <div class="card-header"><span class="card-title">🍷 10. Ravenloft (Dinner Layout)</span><span class="pill crimson">Session 9 • K1, K7, K10</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Act II non-combat psychological dinner: 1,000-ft Drawbridge, Dining Hall Organ (<code>K10</code>) with Strahd & 3 Brides, Escher's Lounge (<code>K49</code>), & Midnight Bell scouting window.</p></div>
+            </div>
+
+            <!-- ACT III LOCATIONS (4) -->
+            <div class="card clickable searchable-row biome-card" data-biome-act="act3" onclick="openBiomeModal('argynvost')">
+                <div class="card-header"><span class="card-title">🐉 11. Argynvostholt Mansion</span><span class="pill gold">Sessions 10–11 • Q1–Q53</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Ruined 3-story Silver Dragon fortress: Ancient Dragon Lands Star-Mural, Sir Godfrey (<code>Q37</code>), <strong>Vladimir Horngaard (<code>Q36</code>)</strong>, & Roof Beacon (<code>Q53</code>, <strong>🕊️ Holy Symbol</strong> + <code>+1 AC/Saves</code>).</p></div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act3" onclick="openBiomeModal('krezk_abbey')">
+                <div class="card-header"><span class="card-title">⛪ 12. Krezk & St. Markovia Abbey</span><span class="pill gold">Session 12 • S1–S24</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Walled mountain commune, <strong>Pool of the White Sun (<code>S4</code></strong>, Sergei's spirit), Abbey Main Hall (<code>S13</code>) with <strong>The Abbot & Vasilka</strong>, Mongrelfolk wing, & <strong>Ezmerelda's Room (<code>S19</code>)</strong>.</p></div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act3" onclick="openBiomeModal('berez')">
+                <div class="card-header"><span class="card-title">🌊 13. Drowned Ruins of Berez</span><span class="pill green">Sessions 13–14 • U1–U7</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Flooded black swamp: Scarecrow Marsh (<code>U1</code>), Ulrich's Ghost (<code>U2</code>), <strong>Marina's Monument (<code>U5</code>)</strong>, and <strong>Baba Lysaga's Creeping Walking Hut (<code>U3</code>, 🗡️ The Sunsword)</strong>.</p></div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act3" onclick="openBiomeModal('baratok_tower')">
+                <div class="card-header"><span class="card-title">🗼 14. Van Richten's Tower & Den</span><span class="pill green">Act II–III • Ch. 11 & 15</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Khazan's 4-story <strong>Anti-Magic Tower on Lake Baratok (<code>V1–V7</code>)</strong>, Ezmerelda's explosive wagon, the <strong>Mad Mage on Mt. Baratok</strong>, and the <strong>Werewolf Den (<code>Z1–Z8</code>)</strong>.</p></div>
+            </div>
+
+            <!-- ACT IV LOCATIONS (3) -->
+            <div class="card clickable searchable-row biome-card" data-biome-act="act4" onclick="openBiomeModal('tsolenka')">
+                <div class="card-header"><span class="card-title">❄️ 15. Tsolenka Pass Gatehouse</span><span class="pill crimson">Session 15 • Areas T1–T9</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Freezing Mt. Ghakis cliff road (-50°F), <strong>Wall of Green Fire (<code>T2</code>)</strong>, Vrock Demon Statues, Guard Tower (<code>T6</code>, <strong>Bloodhorn</strong>), and the <strong>Roc of Mount Ghakis</strong> on the bridge!</p></div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act4" onclick="openBiomeModal('amber_temple')">
+                <div class="card-header"><span class="card-title">⚡ 16. The Amber Temple Vaults</span><span class="pill purple">Sessions 15–16 • X1–X42</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Ancient 2-level mountain vault: <strong>Neferon the Arcanaloth (<code>X5</code>)</strong>, Amber Golem, <strong>Lich Exethanter (<code>X27</code>)</strong>, Complete Wizard Library (<code>X30</code>), & <strong>Amber Sarcophagi (<code>X33 & X42</code>)</strong>!</p></div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-act="act4" onclick="openBiomeModal('ravenloft_siege')">
+                <div class="card-header"><span class="card-title">🏰 17. Castle Ravenloft (Final Siege)</span><span class="pill crimson">Sessions 17–20 • K6–K86</span></div>
+                <div class="card-body"><p style="color:var(--text-muted); font-size:0.81rem;">Endgame room keys: <strong>Chapel (<code>K15</code>)</strong>, <strong>Heart of Sorrow Tower (<code>K20</code>)</strong>, <strong>Treasury (<code>K41</code>)</strong>, <strong>Brazier Room (<code>K78</code>)</strong>, <strong>Catacombs (<code>K84</code>)</strong>, <strong>Sergei's Crypt (<code>K85</code>)</strong>, & <strong>Overlook (<code>K6</code>)</strong>.</p></div>
             </div>
         </div>
     </section>
@@ -1060,18 +1113,18 @@
         <div class="grid-2" id="loot-containers"></div>
     </section>
 
-    <!-- SECTION 4.5: BAROVIAN FACTIONS, VILLAGES, HISTORY, VITAL SECRETS & COSMIC LORE CODEX -->
+    <!-- SECTION 4.5: BAROVIAN FACTIONS, VILLAGES, SANCTUMS, HISTORY, VITAL SECRETS & COSMIC LORE CODEX -->
     <section id="factions-lore">
         <div class="section-header">
-            <span>🏛️ SECTION 4.5: BAROVIAN FACTIONS, VILLAGES, HISTORY, VITAL SECRETS & COSMIC LORE CODEX (20 DOSSIERS)</span>
+            <span>🏛️ SECTION 4.5: BAROVIAN FACTIONS, VILLAGES, SANCTUMS, HISTORY, VITAL SECRETS & COSMIC LORE CODEX (26 DOSSIERS)</span>
             <span class="section-tag">CLICK ANY CARD FOR FULL PDF + RELOADED + COSMIC KNOT DOSSIER</span>
         </div>
 
         <div class="loot-filter-bar" id="lore-filter-bar">
             <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Quick Lore Filter:</span>
-            <button class="btn-loot-filter active" onclick="filterLoreCodex('all', this)">📚 All Lore (20)</button>
+            <button class="btn-loot-filter active" onclick="filterLoreCodex('all', this)">📚 All Lore (26)</button>
             <button class="btn-loot-filter" onclick="filterLoreCodex('factions', this)">🛡️ 4.5A Factions, Orders & Covens (8)</button>
-            <button class="btn-loot-filter" onclick="filterLoreCodex('villages', this)">🏘️ 4.5B Villages, Towns & Settlements (4)</button>
+            <button class="btn-loot-filter" onclick="filterLoreCodex('villages', this)">🏘️ 4.5B Villages, Sanctums & Iconic Locations (10)</button>
             <button class="btn-loot-filter" onclick="filterLoreCodex('history', this)">⏳ 4.5C History, Souls & Vital Secrets (4)</button>
             <button class="btn-loot-filter" onclick="filterLoreCodex('cosmic', this)">🌌 4.5D Cosmic Knot & Dark Powers (4)</button>
         </div>
@@ -1163,9 +1216,9 @@
             </div>
         </div>
 
-        <!-- 4.5B: VILLAGES, TOWNS & SETTLEMENTS OF BAROVIA -->
+        <!-- 4.5B: VILLAGES, TOWNS, SANCTUMS & ICONIC LOCATIONS OF BAROVIA -->
         <div class="lore-group" data-lore-cat="villages" style="margin-bottom: 18px;">
-            <div class="loot-cat-title loot-header-armor" style="margin-bottom: 10px; border-radius: 6px;">🏘️ 4.5B: Villages, Towns & Settlements of Barovia — History, Politics & Secrets (4 Dossiers)</div>
+            <div class="loot-cat-title loot-header-armor" style="margin-bottom: 10px; border-radius: 6px;">🏘️ 4.5B: Villages, Towns, Sanctums & Iconic Locations of Barovia — History, Politics & Secrets (10 Dossiers)</div>
             <div class="grid-4">
                 <div class="card clickable searchable-row" onclick="openLoreModal('village_barovia')">
                     <div class="card-header">
@@ -1207,6 +1260,66 @@
                         <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Ruins of Berez Lore</span></div>
                     </div>
                 </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('lore_amber_temple')">
+                    <div class="card-header">
+                        <span class="card-title">⚡ 13. The Amber Temple</span>
+                        <span class="pill gold">Act IV • Ch. 13</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">2,000-year-old vault of the Dawn Wizards in Mount Ghakis. Houses 20+ <strong>Amber Sarcophagi of the Dark Powers</strong>, amnesiac Lich <strong>Exethanter</strong>, <strong>Vampyr's Sarcophagus (X42)</strong>, & the 3 PCs' Supreme Dark Gifts.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Amber Temple Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('lore_castle_ravenloft')">
+                    <div class="card-header">
+                        <span class="card-title">🏰 14. Castle Ravenloft</span>
+                        <span class="pill crimson">Acts II & IV • Ch. 4</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Built by <strong>Architect Artimus</strong> atop the 1,000-ft Pillarstone. How the castle is fused to Strahd's soul (Wall-Phasing, <strong>Heart of Sorrow K20</strong>), the Overlook tragedy (`K6`), Brazier Room (`K78`), & Catacombs (`K84`).</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Castle Ravenloft Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('lore_argynvostholt')">
+                    <div class="card-header">
+                        <span class="card-title">🐉 15. Argynvostholt Sanctum</span>
+                        <span class="pill gold">Act III • Ch. 7</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Ruined dragon-manor of <strong>Lord Argynvost</strong>. Why he settled in Barovia, Strahd's desecration of his skeleton, the <strong>Beacon of Argynvostholt (Q53)</strong>, and the <strong>Lost Dragon Lands Star-Mural (Campaign 3 Bridge)</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Argynvostholt Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('lore_winery_yester')">
+                    <div class="card-header">
+                        <span class="card-title">🍷 16. Winery & Yester Hill</span>
+                        <span class="pill green">Act II • Ch. 12 & 14</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">How an ancient Archdruid blessed the <strong>Wizard of Wines</strong> with <strong>3 Life-Gems</strong>, Kavan's pre-Zarovich stone circle on <strong>Yester Hill</strong>, the vampire-staked <strong>Gulthias Tree (Y3)</strong>, and the <strong>Wall of Fog (Y2)</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Winery & Yester Hill Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('lore_tower_baratok')">
+                    <div class="card-header">
+                        <span class="card-title">🗼 17. Khazan's Tower & Baratok</span>
+                        <span class="pill purple">Act III • Ch. 11</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">History of <strong>Archmage Khazan</strong> (who destroyed the <em>Sunsword</em> blade and failed to ascend as a demilich), the Anti-Magic Spire on Lake Baratok, Van Richten's safehouse, & <strong>Mordenkainen (The Mad Mage)</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Tower & Baratok Lore</span></div>
+                    </div>
+                </div>
+                <div class="card clickable searchable-row" onclick="openLoreModal('lore_tsolenka_pass')">
+                    <div class="card-header">
+                        <span class="card-title">❄️ 18. Tsolenka Pass & Ghakis</span>
+                        <span class="pill gold">Act IV • Ch. 9</span>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--text-muted); font-size:0.81rem;">Frozen cliff-road carved into <strong>Mount Ghakis</strong> by the Dawn Wizards to seal the Amber Temple behind a <strong>Wall of Green Fire (T2)</strong> & Vrock statues; haunted by <strong>Sangzor</strong> and the <strong>Roc of Mount Ghakis</strong>.</p>
+                        <div style="margin-top:auto;"><span class="btn-roll" style="width:100%; justify-content:center;">📖 Open Tsolenka & Ghakis Lore</span></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1216,7 +1329,7 @@
             <div class="grid-4">
                 <div class="card clickable searchable-row" onclick="openLoreModal('timeline_barovia')">
                     <div class="card-header">
-                        <span class="card-title">📜 13. 5-Era History of Barovia</span>
+                        <span class="card-title">📜 19. 5-Era History of Barovia</span>
                         <span class="pill gold">Master Timeline</span>
                     </div>
                     <div class="card-body">
@@ -1226,7 +1339,7 @@
                 </div>
                 <div class="card clickable searchable-row" onclick="openLoreModal('villagers')">
                     <div class="card-header">
-                        <span class="card-title">👻 14. Souls, Shells & Tatyana</span>
+                        <span class="card-title">👻 20. Souls, Shells & Tatyana</span>
                         <span class="pill crimson">1 in 10 Ensouled</span>
                     </div>
                     <div class="card-body">
@@ -1236,7 +1349,7 @@
                 </div>
                 <div class="card clickable searchable-row" onclick="openLoreModal('vital_secrets')">
                     <div class="card-header">
-                        <span class="card-title">💎 15. Heart of Sorrow, Gems & Hunters</span>
+                        <span class="card-title">💎 21. Heart of Sorrow, Gems & Hunters</span>
                         <span class="pill green">Vital Secrets</span>
                     </div>
                     <div class="card-body">
@@ -1246,7 +1359,7 @@
                 </div>
                 <div class="card clickable searchable-row" onclick="openLoreModal('faiths')">
                     <div class="card-header">
-                        <span class="card-title">☀️ 16. Morninglord & Mother Night</span>
+                        <span class="card-title">☀️ 22. Morninglord & Mother Night</span>
                         <span class="pill gold">Barovian Faiths</span>
                     </div>
                     <div class="card-body">
@@ -1263,7 +1376,7 @@
             <div class="grid-4">
                 <div class="card clickable searchable-row" onclick="openLoreModal('cosmic_reactor')">
                     <div class="card-header">
-                        <span class="card-title">🌑 17. Domain Zero & Dark Powers</span>
+                        <span class="card-title">🌑 23. Domain Zero & Dark Powers</span>
                         <span class="pill purple">Despair Reactor</span>
                     </div>
                     <div class="card-body">
@@ -1273,7 +1386,7 @@
                 </div>
                 <div class="card clickable searchable-row" onclick="openLoreModal('vecna_pact')">
                     <div class="card-header">
-                        <span class="card-title">🟣 18. Vecna's Pact & Time Loop</span>
+                        <span class="card-title">🟣 24. Vecna's Pact & Time Loop</span>
                         <span class="pill purple">Trilogy Bridge</span>
                     </div>
                     <div class="card-body">
@@ -1283,7 +1396,7 @@
                 </div>
                 <div class="card clickable searchable-row" onclick="openLoreModal('dual_operatives')">
                     <div class="card-header">
-                        <span class="card-title">⏳ 19. Derek & Cael (Dual Operatives)</span>
+                        <span class="card-title">⏳ 25. Derek & Cael (Dual Operatives)</span>
                         <span class="pill crimson">Avatar vs. Scion</span>
                     </div>
                     <div class="card-body">
@@ -1293,7 +1406,7 @@
                 </div>
                 <div class="card clickable searchable-row" onclick="openLoreModal('three_vessels')">
                     <div class="card-header">
-                        <span class="card-title">🃏 20. The 3 Vessels & Blank Card</span>
+                        <span class="card-title">🃏 26. The 3 Vessels & Blank Card</span>
                         <span class="pill gold">The Grim Smile</span>
                     </div>
                     <div class="card-body">
@@ -2844,109 +2957,339 @@ const QUEST_DATA = {
 };
 
 const BIOME_DATA = {
+    // =========================================================================
+    // ACT I LOCATIONS (SESSIONS 1–3)
+    // =========================================================================
     svalich: {
-        title: "🌲 Old Svalich Road & The Gates of Barovia",
-        tag: "SESSION 1 COLD OPEN BIOME",
+        title: "🌲 1. Old Svalich Road & The Eastern Gates of Barovia",
+        tag: "SESSION 1 COLD OPEN BIOME (BOOK AREA A & RELOADED ARC A)",
         body: `
-            <div class="modal-read-aloud">"Towering black pines press in like prison bars, branches weeping freezing rain and strands of suffocating ground-fog. Two hundred feet below the mud-slicked cliff edge, the black waters of the Ivlis River roar over jagged stones."</div>
-            <div class="nbox nbox-amber"><strong>Carriage Chase Mechanics & DCs:</strong><br>
-            • <strong>Slick Roof Balance:</strong> DC 10 Acrobatics check or fall Prone grabbing the brass rail.<br>
-            • <strong>Hairpin Gorge Turn (Driver):</strong> DC 13 Animal Handling / Vehicles (Land) check or rear wheels skid over the cliff edge.<br>
-            • <strong>Dalvan's Corpse (Inside Gates):</strong> DC 12 Medicine reveals he died of pure exhaustion; compass spins wildly; 13 tally marks on trees show the Mists loop travelers in circles.<br>
-            • <strong>Choking Mists:</strong> Stepping back outside the Gates forces a DC 15 CON Save/min vs Exhaustion.</div>
-            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache:</strong><br>
+            <div class="modal-read-aloud">"Towering black pines press in like prison bars, branches weeping freezing rain and strands of suffocating ground-fog. Ahead, two colossal stone statues of headless kings flank a pair of rusted iron gates that swing open with a shriek of their own accord."</div>
+            <div class="nbox nbox-cyan"><strong>🗺️ Key Landmarks & Lore (Book Area A):</strong><br>
+            • <strong>The Headless King Statues:</strong> Depict King Barov and Strahd's ancestors; their stone heads lie shattered in the weeds below.<br>
+            • <strong>Automatic Gate Closure:</strong> The gates swing open as the stagecoach approaches and slam shut behind the party, locking automatically.</div>
+            <div class="nbox nbox-amber"><strong>⚙️ Hazards, Traps & DCs:</strong><br>
+            • <strong>Slick Carriage Roof Balance:</strong> DC 10 Acrobatics check or fall Prone grabbing the brass rail.<br>
+            • <strong>Hairpin Gorge Turn:</strong> DC 13 Animal Handling / Vehicles (Land) check or rear wheels skid over the 200-ft cliff.<br>
+            • <strong>Dalvan Olensky's Corpse (300 ft Inside Gates):</strong> DC 12 Medicine reveals he died of pure exhaustion; 13 tally marks carved into trees prove the Mists turn fleeing travelers around in endless circles.<br>
+            • <strong>The Choking Mists:</strong> Stepping back outside the Gates forces a <strong>DC 15 CON Save every minute</strong> or gain 1 level of Exhaustion.</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Claimed S1 Loot:</strong><br>
             • <strong>Dalvan Olensky's Corpse:</strong> 🧭 <em>Dalvan's Spinning Brass Compass</em>, 📜 <em>Kolyan Indirovich's Sealed Warning Letter</em>, leather pouch with 1 GP 4 SP.<br>
             • <strong>Svalich Dire Wolves:</strong> 🐺 <em>Dire Wolf Pelts (15–30 SP)</em>, 🦷 <em>Alpha Fang Necklace (+1 Intimidation in Barovia)</em>.<br>
-            • <strong>Morgantha on the Road:</strong> 🥧 <em>1x Morgantha's Dream Pastry</em> (Gifted to King Jacomir in Session 1 — currently uneaten!).</div>
+            • <strong>Morgantha on the Road:</strong> 🥧 <em>1x Morgantha's Dream Pastry</em> (Gifted to King Jacomir in Session 1 — stored uneaten!).</div>
         `
     },
     village: {
-        title: "🏚️ Village of Barovia, Indirovich Manor & Church Attic",
-        tag: "SESSIONS 1–2 ACTIVE SIEGE",
+        title: "🏚️ 2. Village of Barovia, Indirovich Manor & Church Attic",
+        tag: "SESSIONS 1–2 ACTIVE SIEGE (BOOK CHAPTER 3, AREAS E1–E5 & RELOADED ARC B)",
         body: `
-            <div class="modal-read-aloud">"Heavy spiked timber barricades block the village square. Exhausted militia peer through peepholes with drawn bows. Every shop and home is boarded shut with heavy oak planks, the air smelling of peat smoke, wet ash, and terror."</div>
-            <div class="nbox nbox-crimson"><strong>Church Attic Standoff (Session 1/2 Cliffhanger):</strong><br>
-            • Father Donavich has hidden his vampire spawn son <strong>Doru (85 HP, CR 5)</strong> in the church attic.<br>
-            • <strong>DragnaCarta Reloaded Blood-Cup Mechanic:</strong> Feeding Doru King Jacomir's cup of willing blood grants Doru 2 minutes of weeping human lucidity to reveal the Mad Mage (*Mordenkainen*) and Strahd's *Heart of Sorrow*!</div>
-            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache:</strong><br>
-            • <strong>Blood on the Vine Tavern (Claimed S1):</strong> 🃏 <em>Piper's Blank Tarokka Card</em> (Gifted by concerned Vistani).<br>
-            • <strong>Indirovich Manor (Claimed S1 / Available):</strong> 📖 <em>Burgomaster Kolyan's Wizard Diary & Spellbook</em> (Names Davian Martikov & Keepers of the Feather!), ⚔️ <em>Ismark's Silvered Armory Cache</em> (Silvered Rapier/Greatsword Coating, 10x Silvered Bullets, 2x <em>Flasks of St. Andral's Holy Water</em>, 2x <em>Potions of Healing</em>).<br>
-            • <strong>Barovia Church:</strong> 📿 <em>Father Donavich's Consecrated Morninglord Rosary</em> (1/day forces a Vampire Spawn to make DC 13 WIS Save or recoil 15 ft).</div>
+            <div class="modal-read-aloud">"Heavy spiked timber barricades block the village square beneath the 1,000-foot black cliff of Castle Ravenloft. Every shop and home is boarded shut with oak planks, the air smelling of peat smoke, wet ash, and the hollow tolling of a cracked church bell."</div>
+            <div class="nbox nbox-cyan"><strong>🗺️ Room-by-Room Village Guide (Book Areas E1–E5):</strong><br>
+            • <strong>Area E1 — Bildrath's Mercantile:</strong> Run by greedy Bildrath Cantemir (sells standard gear at 10x price) and his hulking nephew <strong>Parriwimple</strong> (Gladiator stat block, AC 16, 112 HP, loyal and simple-minded).<br>
+            • <strong>Area E2 — Blood on the Vine Tavern:</strong> Owned by three Vistani sisters (Alenka, Mirabel, Sorvia). Where a deeply concerned Vistani gave <strong>Piper</strong> <strong>🃏 The Blank Tarokka Card</strong> in Session 1 after its ink faded off!<br>
+            • <strong>Area E3 — Mad Mary's Townhouse:</strong> Weeping mother clutching a Blinsky doll ("Maloriga"); her sheltered teenage daughter <strong>Gertruda</strong> ran away to Castle Ravenloft (`Area K42`).<br>
+            • <strong>Area E4 — Burgomaster Indirovich's Mansion:</strong> Claw-scarred manor of <strong>Ismark</strong> and <strong>Ireena Kolyana</strong>. Late Burgomaster Kolyan's body lies in a pine coffin; in Session 1, the party discovered Kolyan was a former wizard and looted <strong>📖 Kolyan's Wizard Diary</strong>!</div>
+            <div class="nbox nbox-crimson"><strong>🩸 Area E5 — Church of the Morninglord & The Attic Cliffhanger (Reloaded Arc B5):</strong><br>
+            • Half-mad priest <strong>Father Donavich</strong> has locked his starving vampire spawn son <strong>Doru (85 HP, CR 5)</strong> in the <strong>church attic</strong>!<br>
+            • <strong>Session 1/2 Cliffhanger & Blood-Cup Mechanic:</strong> Seconds after <strong>Derek (Avatar of the Dark Powers)</strong> unfreezes time, <strong>King Jacomir</strong> is holding a cup of his own royal blood to feed Doru (while Piper & Yvaine demand Doru's execution). Feeding Doru willing blood grants him <strong>2 minutes of weeping human lucidity</strong>—revealing he stormed Ravenloft a year ago with the <strong>Mad Mage (*Mordenkainen*)</strong> and saw Strahd's <strong>Heart of Sorrow</strong> in the North Tower before begging for a clean mercy death!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Loot Cache:</strong><br>
+            • <strong>Claimed in S1:</strong> 🃏 <em>Piper's Blank Tarokka Card</em> (`E2`) & 📖 <em>Burgomaster Kolyan's Wizard Diary</em> (`E4`, names Davian Martikov & Keepers of the Feather!).<br>
+            • <strong>Ismark's Armory Cache (`E4`):</strong> ⚔️ <em>Silvered Weapons / 10x Silvered Bullets</em>, 💧 <em>2x Flasks of St. Andral's Holy Water</em>, 🧪 <em>2x Potions of Healing</em>.<br>
+            • <strong>Barovia Church (`E5`):</strong> 📿 <em>Father Donavich's Consecrated Rosary</em> (1/day forces a Vampire Spawn to pass DC 13 WIS Save or recoil 15 ft).</div>
+        `
+    },
+    crossroads_falls: {
+        title: "⚖️ 3. River Ivlis Crossroads & Tser Falls Gorge Bridge",
+        tag: "SESSION 2 MILESTONE ENCOUNTERS (BOOK AREAS F & H • RELOADED ARC C2 & C7)",
+        body: `
+            <div class="modal-read-aloud">"Where the muddy road forks toward Tser Pool, a rotting wooden gallows creaks over eleven unmarked graves. As lightning flashes across the storm clouds, the empty noose suddenly jerks taut—and swinging from the rope is a corpse wearing your exact face."</div>
+            <div class="nbox nbox-crimson"><strong>👑 Beat 1 — River Ivlis Crossroads (`Book Area F` & `Reloaded Arc C2`):</strong><br>
+            • <strong>The Gallows Illusion (`Area F`):</strong> As the party passes the gallows, one random PC sees their own rotting corpse hanging from the rope (DC 12 WIS save vs Frightened for 1 min; vanishes when touched).<br>
+            • <strong>Count Strahd's 1st Canonical Face-to-Face Appearance (`Arc C2`):</strong> The <strong>Black Carriage</strong> rolls out of the fog at the crossroads, and <strong>Count Strahd von Zarovich</strong> steps into the rain! Strahd has <strong>ZERO knowledge of Derek</strong> (who operates strictly in frozen time). Strahd offers polite, chilling condolences to *"my beloved Ireena"* for Kolyan's death, tests the party's defiance (while his *Heart of Sorrow* effortlessly absorbs any rash strike), and departs with a slow smile.</div>
+            <div class="nbox nbox-cyan"><strong>⏳ Beat 2 — Tser Falls Stone Bridge (`Book Area H` & `Reloaded Arc C7`):</strong><br>
+            • <strong>The 1,000-Foot Waterfall:</strong> North of Tser Pool, a roaring curtain of white water plummets 1,000 feet from a high stone bridge veiled in freezing spray.<br>
+            • <strong>Cael Joins & Derek's Milestone 1 Time-Stop (`Tap, Tap, Tap`):</strong> Here, the stalking black cat shifts into <strong>Caelum Jude ("Cael")</strong> to join as the party's Stars Druid healer. Seconds later on the high stone arch, three knocks sound (`tap, tap, tap`)—time freezes, Cael shrinks back against the parapet in silent terror, and <strong>Derek</strong> appears for 10 seconds: *"The old woman gave you the riddles. Now go take the weapons and don't let anyone stand in your way."*</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Hidden Grave Cache (`Book Area F`):</strong><br>
+            • <strong>Crossroads Unmarked Graves (Digging / DC 13 Perception):</strong> One rotted coffin holds a moldering velvet pouch containing 💍 <em>15 Silver Pieces</em> and a 🪄 <em>Spell Scroll of Protection from Evil and Good</em>.</div>
         `
     },
     tserpool: {
-        title: "🔮 Tser Pool Vistani Encampment & Tser Falls",
-        tag: "SESSION 2 SANCTUARY",
+        title: "🔮 4. Tser Pool Vistani Encampment",
+        tag: "SESSION 2 ORACLE SANCTUARY (BOOK AREA G & RELOADED ARC C4)",
         body: `
-            <div class="modal-read-aloud">"A dozen colorful barrel-topped wagons ring a roaring bonfire beside the dark glassy waters of Tser Pool. Violins weep a haunting Romani melody as Vistani dancers twirl in silk, the smell of roasting boar and spiced wine cutting through the cold mist."</div>
-            <div class="nbox nbox-emerald"><strong>Camp Features:</strong> Safe Long Rest sanctuary; Vistani merchants sell Silvered Weapons (5 GP) and Potions; Madam Eva's tent stands at the center.</div>
-            <div class="nbox nbox-cyan"><strong>🎁 Location Treasure & Possible Loot Cache (Book Area G & Reloaded):</strong><br>
-            • <strong>Madam Eva's Tent:</strong> 🃏 <em>Stage 1 Ink Bleed on Piper's Blank Tarokka Card</em> + Curated 5-Card Tarokka Prophecy.<br>
-            • <strong>Vistani Treasure Wagon (Book Area G, DC 15 Investigation/Thieves' Tools or Trade):</strong> 🩸 <em>Vistani Bloodwell Vial (+1 Sorcerer Focus for Piper)</em>, 🧪 <em>Potions of Healing / Climbing</em>, 💍 <em>Electrum & Gold Jewelry (25 GP)</em>, ⚔️ <em>Alchemical Silvering Service (5 GP)</em>.</div>
+            <div class="modal-read-aloud">"A dozen colorful barrel-topped vardos ring a roaring bonfire beside the dark, glassy waters of Tser Pool. Violins weep a haunting Romani melody as Vistani dancers twirl in gold-threaded silk, the warm scent of roasting boar and spiced plum wine cutting through the cold mist."</div>
+            <div class="nbox nbox-cyan"><strong>🔮 Madam Eva's Silk Tent (`Book Area G` & `Reloaded Arc C4`):</strong><br>
+            • <strong>The 5 Curated Tarokka Cards:</strong> Madam Eva deals the 5 relic/ally prophecies (*1. Tome in Wachterhaus, 2. Holy Symbol in Argynvostholt, 3. Sunsword in Berez, 4. Ezmerelda as Fated Ally, 5. Sergei's Crypt*).<br>
+            • <strong>🃏 Card #6 — Piper's Blank Tarokka Card (Option 2):</strong> When Piper hands Eva the Blank Card from the tavern, Eva pulls her hand back as if burned by ice: *"Four hundred years I have read these cards, and never has the fog stood between my eyes and a traveler's road... Keep this card in your coat. Every time you step closer to what woke the fire in your blood, the ink will bleed higher."* **Stage 1 charcoal ink** bleeds into the bottom third: *dead Barovian pines and empty upturned palms rising from black water*.</div>
+            <div class="nbox nbox-amber"><strong>🏕️ Camp Services & Vistani Customs:</strong><br>
+            • <strong>100% Safe Long Rest Sanctuary:</strong> Protected by Strahd's ancient blood-oath; no wolves or undead ever attack Tser Pool.<br>
+            • <strong>Vistani Alchemical Silver-Smith:</strong> Plated silvering for blades or 10 firearm bullets for **5 GP**.</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Vistani Wagon Cache (`Book Area G`):</strong><br>
+            • <strong>Vistani Treasure Wagon (Trade, Storytelling Contest, or DC 15 Thieves' Tools):</strong> 🩸 <em>Vistani Bloodwell Vial (+1 Sorcerer Focus for Piper!)</em>, 🧪 <em>2x Potions of Healing</em>, 🧪 <em>Potion of Climbing</em>, 💍 <em>Electrum & Gold Jewelry (25 GP)</em>.</div>
         `
     },
     bonegrinder: {
-        title: "🥧 Old Bonegrinder Windmill",
-        tag: "SESSION 3 HAG LAIR",
+        title: "🥧 5. Old Bonegrinder Windmill & The Four Megaliths",
+        tag: "SESSION 3 NIGHT HAG LAIR (BOOK CHAPTER 6, AREAS O1–O4 & RELOADED ARC D)",
         body: `
-            <div class="modal-read-aloud">"A decrepit four-story stone windmill creaks on a wind-lashed knoll, its rotted sails turning slowly against the storm clouds. The warm aroma of caramelized sugar and cinnamon drifts from the brick oven—masking the metallic stench of ground bone."</div>
-            <div class="nbox nbox-crimson"><strong>Windmill Layout:</strong> Floor 1: Bone-grinding millstones; Floor 2: Morgantha's kitchen & oven; Floor 3: Two caged village children (Myrtle & Lucian); Floor 4: Moldering hag bedchamber.</div>
-            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache (Book Areas O1–O4):</strong><br>
-            • <strong>Morgantha's Apron & Coven Drop:</strong> 🧿 <em>Night Hag's Cracked Heartstone</em> (Cures 1 disease/poison per day & grants Advantage on Death Saves!).<br>
-            • <strong>Third-Floor Hag Barrels (Book Area O3):</strong> 🌿 <em>Elixir of Youth</em> (Makes drinker look 1d10 years younger + <code>+1d6</code> Temp HP), ☠️ <em>Vial of Pale Tincture Poison</em> (DC 16 CON save, <code>1d6</code> poison + poisoned condition), 🧪 <em>Cackle Fever Brew</em>.<br>
-            • <strong>Mother-of-Pearl Toad Chest (Floor 4):</strong> 20 GP in tarnished silver coins, 💍 <em>Gold Hairpin Set with Bloodstone (10 GP)</em>, 📜 <em>Deed to Old Bonegrinder Windmill</em>.</div>
+            <div class="modal-read-aloud">"A decrepit four-story stone windmill creaks on a wind-lashed hill, its rotted canvas sails turning slowly against the storm clouds. A blue-winged raven perched above the oak door caws frantically at you, as the warm scent of caramelized sugar and nutmeg drifts from the brick oven—masking the metallic stench of wet bone."</div>
+            <div class="nbox nbox-crimson"><strong>🏚️ Four-Floor Windmill Dungeon Breakdown (`Book Areas O1–O4`):</strong><br>
+            • <strong>Floor 1 (`Area O1 — Ground Millfloor`):</strong> Dirty linen sacks of "white flour," barrels of chicken/toad parts, and the heavy millstones. **Morgantha** meets the party here (immediately recognizing **Piper** from her Session 1 *Charm Person* attempt!).<br>
+            • <strong>Floor 2 (`Area O2 — Bone Mill & Brick Oven`):</strong> Colossal stone grinding wheel and blazing brick oven. Where Morgantha triggers her Pointy Hat **🔥 Bone-Flour Combustion Cloud (3d10 Fire, DC 14 Dex)**!<br>
+            • <strong>Floor 3 (`Area O3 — The Children's Cages & Hag Nursery`):</strong> Morgantha's daughters **Bella Sunbane** and **Offalia Wormwiggle** tend two wooden cages holding kidnapped village children **Myrtle and Lucian** (whom they prick with needles to test for souls), plus three barrels of dark ichor (summons **Dretches** if tipped over!).<br>
+            • <strong>Floor 4 (`Area O4 — Moldering Attic Bedchamber`):</strong> Rotting heaps of clothes from eaten children and the **Mother-of-Pearl Toad Chest** (smashing the chest forces the hags to flee into the Ethereal Plane!).</div>
+            <div class="nbox nbox-cyan"><strong>🗿 Behind the Windmill — The Four Megaliths of the Four Cities (`Book p. 128`):</strong><br>
+            • Four ancient moss-covered boulders carved with the symbols of the **Four Seasons / Four Ancient Cities** (*Spring, Summer, Autumn, Winter*) and greasy raven feathers left by the hags. Placing fresh wildflowers or wine on the stones grants a **+1d4 blessing on Saving Throws for 24 hours** (`Reloaded` Fanes nod)!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Loot Cache (`Areas O1–O4`):</strong><br>
+            • <strong>Morgantha Boss Drop:</strong> 🧿 <em>Morgantha's Cracked Night Hag Heartstone</em> (1/day cures any disease/poison/curse & grants carrier **Advantage on Death Saving Throws**!).<br>
+            • <strong>Floor 3 Hag Cabinet (`Area O3`):</strong> 🌿 <em>Elixir of Youth</em> (Looks `1d6+4` yrs younger + `2d6` Temp HP) & ☠️ <em>Pale Tincture Poison</em> (`DC 16 CON` or `1d6` Poison + Poisoned).<br>
+            • <strong>Floor 4 Toad Chest (`Area O4`):</strong> 💰 20 GP in silver coins, 💍 <em>Bloodstone Gold Hairpin (10 GP)</em>, 📜 <em>Deed to Old Bonegrinder Windmill & Indirovich Mortgage</em>.</div>
         `
     },
+
+    // =========================================================================
+    // ACT II LOCATIONS (SESSIONS 4–9)
+    // =========================================================================
     vallaki: {
-        title: "⚔️ Walled Town of Vallaki",
-        tag: "ACT II POLITICAL POWDERKEG",
+        title: "⚔️ 6. Walled Town of Vallaki & The Blue Water Inn",
+        tag: "SESSIONS 4–6 TOWN HUB (BOOK CHAPTER 5, AREAS N2, N3, N7, N8 & RELOADED)",
         body: `
-            <div class="modal-read-aloud">"Wooden palisades bristling with sharpened stakes and wolf skulls ring the town. Rain-soaked paper sun banners flap above the mud streets: 'ALL WILL BE WELL!' Yet behind shuttered windows, terrified citizens watch Izek's guards."</div>
-            <div class="nbox nbox-cyan"><strong>Key Locations:</strong> Blue Water Inn (Martikovs & Rictavio), St. Andral's Church (stolen bones of St. Andral), Baron's Mansion, Wachterhaus (Tome of Strahd), Blinsky Toys.</div>
-            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache (Book Chapter 5):</strong><br>
-            • <strong>Wachterhaus Cult Library (<code>N4</code>):</strong> 📜 <em>The Tome of Strahd (Tarokka Relic #1)</em>, ⚔️ <em>Baal Verzi Assassin's Dagger +1</em>.<br>
-            • <strong>Blue Water Inn Secret Loft (<code>N2q</code> — Unlocked via Kolyan's Wizard Diary!):</strong> 🐾 <em>Martikov Gray Bag of Tricks</em>, ✨ <em>Elixir of Health</em>, 🧪 <em>2x Potions of Greater Healing</em>.<br>
-            • <strong>Rictavio's Carnival Wagon (<code>N2r</code>):</strong> 🎭 <em>Hat of Disguise</em>, 🧠 <em>Ring of Mind Shielding</em>, 📜 <em>Scroll of Protection from Undead/Fiends</em>, 🔫 <em>Van Richten's Silver-Runed Scope & Clockwork Barrel (+1 Firearm Upgrade for Yvaine!)</em>.<br>
-            • <strong>Baron Vargas's Mansion Attic (<code>N3t</code>):</strong> 📖 <em>Victor Vallakovich's Spellbook</em>, 🪄 <em>Victor's Crackling Wand of Lightning/Wonder (for Piper!)</em>, 🪞 <em>Magic Mirror of the Assassin</em>.<br>
-            • <strong>Izek Strazni Boss Drop:</strong> 🔥 <em>Izek's Hellfire Brute Battleaxe +1 (+1d6 Fire)</em>.</div>
+            <div class="modal-read-aloud">"Wooden palisades bristling with sharpened stakes and impaled wolf skulls ring the town. Rain-soaked paper sun banners bleed yellow dye above the mud streets: 'ALL WILL BE WELL!' Yet behind shuttered windows, terrified citizens stretch their mouths into trembling, forced smiles as Captain Izek's guards march past."</div>
+            <div class="nbox nbox-cyan"><strong>🏘️ Key Town Landmarks & Room Keys (`Book Chapter 5`):</strong><br>
+            • <strong>Area N2 — The Blue Water Inn:</strong> Run by **Urwin and Danika Martikov** (leaders of the **Keepers of the Feather** wereravens). Showing **📖 Burgomaster Kolyan's Wizard Diary (looted S1)** to Urwin unlocks instant wereraven trust, free rooms, and the secret loft stash (`N2q`)! In the taproom sits flamboyant half-elf ringmaster **Rictavio** (disguised vampire hunter **Rudolph van Richten**).<br>
+            • <strong>Area N3 — Baron Vargas Vallakovich's Mansion:</strong> Guarded by demon-armed **Izek Strazni** (`N3j`, whose bedroom is filled with creepy Blinsky dolls of his long-lost sister **Ireena**!). In the locked attic (`N3t`), teenage **Victor Vallakovich** tests a defective *Teleportation Circle* that turns servants into skeletal cats.<br>
+            • <strong>Area N5 — Arasek Stockyard & Rictavio's Carnival Wagon (`N2r`):</strong> Padlocked wagon housing Rictavio's armored **Saber-Toothed Tiger** (fed through a roof hatch) and a hidden compartment under the driver's seat!<br>
+            • <strong>Area N7 — Blinsky Toys:</strong> Eccentric toymaker **Gadof Blinsky** (with his pet monkey Piccolo in a tutu); crafts toys stamped *"Is No Fun, Is No Blinsky!"*<br>
+            • <strong>Area N8 — Town Square Stocks & Lake Zarovich (`Area L`):</strong> Families locked in plaster donkey-heads for "malicious unhappiness." North of town lies freezing **Lake Zarovich**, where drunk fisherman **Bluto Krogarov** is about to throw Vistani girl **Arabelle** (Madam Eva's niece) into the water as a "lucky fish offering"!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache (`Areas N2–N7`):</strong><br>
+            • <strong>Blue Water Inn Secret Loft (`Area N2q` — Unlocked via Kolyan's Diary!):</strong> 🐾 <em>Martikov Gray Bag of Tricks</em>, ✨ <em>Elixir of Health</em>, 🧪 <em>2x Potions of Greater Healing</em>.<br>
+            • <strong>Rictavio's Carnival Wagon (`Area N2r`, DC 15 Investigation):</strong> 🎭 <em>Hat of Disguise</em>, 🧠 <em>Ring of Mind Shielding</em>, 📜 <em>Scroll of Protection from Undead/Fiends</em>, 🔫 <em>Van Richten's Silver-Runed Scope & Barrel (+1 Firearm Upgrade for Yvaine!)</em>.<br>
+            • <strong>Baron's Attic (`Area N3t`):</strong> 📖 <em>Victor's Master Spellbook</em>, 🪄 <em>Victor's Crackling Wand of Lightning / Wonder (for Piper!)</em>.<br>
+            • <strong>Izek Strazni Boss Drop (Session 6):</strong> 🔥 <em>Izek's Hellfire Brute Battleaxe +1 (+1d6 Fire for Jacomir!)</em>.</div>
+        `
+    },
+    coffin_wachter: {
+        title: "⚰️ 7. St. Andral's Church, Henrik's Coffin Shop & Wachterhaus",
+        tag: "SESSIONS 5–6 VALLAKI DUNGEONS & COUP (BOOK CHAPTER 5, AREAS N1, N4, N6)",
+        body: `
+            <div class="modal-read-aloud">"Upstairs in the dusty coffin workshop, six long wooden crates packed with black Castle Ravenloft grave-dirt begin to splinter from the inside. A pale, aristocratic hand adorned with blood-rubies pushes open the center lid, and Bride Anastrasya smiles: 'Did you truly think the Count would leave the church doors locked?'"</div>
+            <div class="nbox nbox-crimson"><strong>⚰️ Session 5 Dungeon — St. Andral's Church (`N1`) & Henrik's Coffin Shop (`N6`):</strong><br>
+            • <strong>The Missing Bones (`Area N1`):</strong> Priest **Father Lucian Petrovich** confides that the sacred **Bones of St. Andral** (the only relic keeping the church consecrated with *Hallow*!) were stolen 3 nights ago. Questioning altar boy **Yeska** and gravedigger **Milivoj** (who stole them to feed his orphan siblings) points directly to **Henrik van der Voort's Coffin Shop (`Area N6`)**.<br>
+            • <strong>The Vampire Crate Ambush (`Area N6e–f`):</strong> Trembling Henrik admits the bones are hidden in his upstairs bedroom wardrobe (`N6e`, DC 12 Investigation). Next door (`N6f`), **Bride Anastrasya Karelova** and **5 Vampire Spawn** burst from dirt-filled crates—sparking a high-adrenaline **4-block rooftop & street relay chase** across Vallaki at dusk to slam the bones back under St. Andral's altar and sear the vampires with Morninglord radiance!</div>
+            <div class="nbox nbox-cyan"><strong>🕯️ Session 6 Dungeon — Wachterhaus (`Area N4`) & The Tome of Strahd:</strong><br>
+            • <strong>Lady Fiona Wachter's Manor (`Area N4`):</strong> Fulfilling Madam Eva's 1st Tarokka Card (*"A noble house of cats and whispers, where a widow sleeps beside the dead"*). Upstairs in `Area N4o`, Fiona sleeps beside the preserved corpse of her husband **Nikolai** (`Gentle Repose`); in the cellar (`N4s–t`), her "Book Club" cultists chant over pentagrams and skeletons.<br>
+            • <strong>The Political Bargain or Heist:</strong> Fiona offers to hand over **📜 The Tome of Strahd** if the party eliminates **Izek Strazni** before tomorrow's **Festival of the Blazing Sun**—or the party can infiltrate her locked cult library (`N4n`, DC 15 Thieves' Tools) past her imp familiar **Majesto**!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Loot Cache (`Areas N1, N4, N6`):</strong><br>
+            • <strong>Wachterhaus Secret Cult Library (`Area N4n`):</strong> 📜 <em>The Tome of Strahd (Tarokka Relic #1 — 30-ft Advantage vs Charm & 1/day DC 15 Wis Stun on Strahd/Brides!)</em>, 🗡️ <em>Baal Verzi Assassin's Mirror Dagger +1 (+2d6 Necrotic on surprise/crit)</em>, 💰 Iron chest with 45 GP & electrum.<br>
+            • <strong>Henrik's Wardrobe (`Area N6e`):</strong> 🦴 <em>The Sacred Bones of St. Andral</em> & 💰 15 SP blood-money pouch.</div>
         `
     },
     winery: {
-        title: "🍷 Wizard of Wines & Yester Hill",
-        tag: "ACT II NATURE SIEGE",
+        title: "🍷 8. The Wizard of Wines Winery",
+        tag: "SESSION 7 VINEYARD SIEGE (BOOK CHAPTER 12, AREAS W1–W20 & RELOADED)",
         body: `
-            <div class="modal-read-aloud">"Rows of dead, twisted grapevines stretch across the mist-choked valley toward a two-story stone winery surrounded by needle-quilled twig blights. To the south rises Yester Hill, crowned by a ring of black lightning-struck boulders."</div>
-            <div class="nbox nbox-amber"><strong>Key Events:</strong> Purge the poisoned fermentation vats (DC 13 Perception), ally with the Keepers of the Feather, and stop the druids on Yester Hill from awakening <strong>Wintersplinter (138 HP)</strong>.</div>
-            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache (Book Chapters 12 & 14):</strong><br>
-            • <strong>Wizard of Wines Loading Balcony (<code>W14</code>):</strong> 🌿 <em>The Gulthias Staff</em> (Vampiric healing staff; snapping it instantly kills all Blights within 300 ft!), 🍷 <em>Cases of Red Dragon Crush & Purple Grapemash</em>.<br>
-            • <strong>Keepers of the Feather Alliance Reward:</strong> 🧥 <em>Wereraven Feather Cloak of Protection (+1 AC, +1 Saves & Feather Fall glide!)</em>.<br>
-            • <strong>Yester Hill Burial Cairn (<code>Y4</code>):</strong> 🩸 <em>The Blood Spear of Kavan (+2 Magic Spear — grants 2d6 Temp HP on every kill! Ideal for King Jacomir!)</em>.<br>
-            • <strong>Wintersplinter Boss Drop:</strong> 💚 <em>First Wizard of Wines Magic Life-Gem</em>.</div>
+            <div class="modal-read-aloud">"Rows of dead, twisted grapevines stretch across the mist-choked valley toward a two-story stone winery. Over thirty needle-quilled twig and vine blights skitter across the muddy courtyard while mud-caked Yester Hill druids pour black poison into the giant oak fermentation vats!"</div>
+            <div class="nbox nbox-cyan"><strong>🏚️ Winery Dungeon Layout (`Book Areas W1–W20`):</strong><br>
+            • <strong>The Vineyard Approaches (`W1`):</strong> Patriarch **Davian Martikov** and his family hide in the pine trees, explaining that the Yester Hill Druids stole the second magic **Life-Gem** and seized the winery.<br>
+            • <strong>Area W9 — The Fermentation Room (Ground Floor):</strong> Four colossal wooden vats on two levels. A druid on the upper catwalk is pouring poison into the wine (**DC 13 Perception** to spot; **DC 14 Arcana/Purify Food & Drink** to neutralize).<br>
+            • <strong>Area W6 & W14 — Veranda & Loading Winch Balcony (2nd Floor):</strong> Where the lead Yester Hill Druid stands wielding the spongy black **🌿 Gulthias Staff** (`Area W14`)!<br>
+            • <strong>Area W16–W20 — Cellars & Brown Mold Cave:</strong> Wine cellar housing the last bottles of *Red Dragon Crush*, guarded by a patch of freezing **Brown Mold (`W15` — 10-ft aura: DC 12 CON save or `4d10` Cold damage; immune to fire, instantly destroyed by any Cold damage!)**.</div>
+            <div class="nbox nbox-amber"><strong>⚡ The Level 5 Power-Fantasy Mechanic (Snapping the Gulthias Staff):</strong><br>
+            • The lead Druid in `Area W14` commands all 30+ Blights via **The Gulthias Staff**. The moment a PC disarms or slays the druid and **snaps the staff over their knee (AC 12, 10 HP)**, it unleashes a silent psychic shriek that **instantly withers and kills every single Blight within 300 feet**!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Faction Rewards (`Areas W14–W16`):</strong><br>
+            • <strong>Loading Balcony (`Area W14`):</strong> 🌿 <em>The Gulthias Staff</em> (10 Charges: *Vampiric Strike* heals wielder for melee damage dealt; breaking it kills all Blights in 300 ft).<br>
+            • <strong>Keepers of the Feather Alliance Reward:</strong> 🧥 <em>Wereraven Feather Cloak of Protection (+1 AC, +1 All Saving Throws, & Reaction Feather Fall glide!)</em>.<br>
+            • <strong>Winery Cellar (`Area W16`):</strong> 🍷 Cases of *Red Dragon Crush* (`+1d4` Temp HP & Adv vs Fear) & *Purple Grapemash No. 3*.</div>
         `
     },
+    yester_hill: {
+        title: "⛈️ 9. Yester Hill, Kavan's Cairn & The Gulthias Tree",
+        tag: "SESSION 8 COLOSSUS RITUAL (BOOK CHAPTER 14, AREAS Y1–Y5 & RELOADED)",
+        body: `
+            <div class="modal-read-aloud">"At the summit of the lightning-lashed hill stands a ring of colossal black boulders piled with skulls. In the center, six blood-painted druids chant around a thirty-foot effigy of dead roots, pressing a glowing green emerald into its chest—while at the western cliff edge stands Count Strahd beside his flaming Nightmare steed, gazing silently into the white Wall of Fog."</div>
+            <div class="nbox nbox-cyan"><strong>🗺️ Hilltop Landmarks (`Book Areas Y1–Y5`):</strong><br>
+            • <strong>Area Y1 & Y4 — Trail & Kavan's Burial Cairn:</strong> Concentric rings of ancient burial cairns. As **King Jacomir** (or Yvaine) passes `Area Y4`, Chieftain Kavan's ancestral voice whispers in their mind: *"Take my spear, warrior, and spill the blood of those who kneel to the corpse!"*<br>
+            • <strong>Area Y2 — The Western Wall of Fog:</strong> Looking west into the border Mists, travelers see a ghostly, sunlit mirage of an ancient city with white towers—**Strahd's mortal homeland before the curse**. Count Strahd stands here beside **Bucephalus**.<br>
+            • <strong>Area Y3 — The Druid Circle & Wintersplinter:</strong> Ring of 15-ft black boulders (lightning strikes the boulders every round on Initiative 20: **DC 14 Dex save** or `4d10` Lightning if touching the stones!).<br>
+            • <strong>Area Y5 — The Gulthias Tree:</strong> Just south of the circle stands the colossal, blood-weeping **Gulthias Tree** (guarded by 3 Vine Blights and 6 Twig Blights), with a dead adventurer's skeleton entangled in its roots.</div>
+            <div class="nbox nbox-crimson"><strong>🌲 Boss Fight — Wintersplinter & The Invitation (`Session 8`):</strong><br>
+            • Strahd nods to the druids and lets **Wintersplinter (CR 7 Siege Boss, 138 HP, Vulnerable to Fire!)** tear free from the earth. A hero who climbs its trunk (`DC 14 Athletics`) and pries out the glowing green **Winery Gem (`DC 15 Sleight of Hand/STR`)** deals 40 instant damage!<br>
+            • **The Climax:** When Wintersplinter falls, Strahd rides down on Bucephalus, slow-clapping, and tosses a wax-sealed parchment at their boots: **A Formal Invitation to Dine at Castle Ravenloft (`Session 9`)**!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Loot Cache (`Areas Y3–Y5`):</strong><br>
+            • <strong>Kavan's Burial Cairn (`Area Y4`):</strong> 🩸 <em>The Blood Spear of Kavan (+2 Magic Spear — grants +2d6 Temp HP every time you reduce a foe to 0 HP! Ideal for King Jacomir!)</em>.<br>
+            • <strong>Wintersplinter's Chest (`Area Y3`):</strong> 💚 <em>First Stolen Wizard of Wines Magic Life-Gem</em>.<br>
+            • <strong>Skeleton in Gulthias Tree Roots (`Area Y5`):</strong> 🪓 *+1 Battleaxe (carved with tree leaves)*, 🧪 *Potion of Greater Healing*, & 💰 18 GP.</div>
+        `
+    },
+    ravenloft_dinner: {
+        title: "🍷 10. Castle Ravenloft — The Act II Black Carriage Dinner Layout",
+        tag: "SESSION 9 SOCIAL THRILLER (BOOK CHAPTER 4, AREAS K1, K7, K8, K10, K49)",
+        body: `
+            <div class="modal-read-aloud">"The driverless Black Stagecoach rolls across the rotting drawbridge a thousand feet above the mist-choked abyss. Inside the torch-lit marble foyer, thunderous pipe-organ music shakes the floor from the Great Dining Hall—where Count Strahd sits at a bone-keyed organ beside a feast of roast pheasant and ruby wine, flanked by Rahadin and his Three Brides."</div>
+            <div class="nbox nbox-cyan"><strong>🏰 Dinner Party Room Guide (`Book Areas K1–K49` • Zero Combat Required!):</strong><br>
+            • <strong>Area K1 & K7 — Courtyard & Great Entry:</strong> **Rahadin** meets the party in the rain, bowing politely to escort them across the red carpet beneath four stone gargoyles and dragons (`K7`).<br>
+            • <strong>Area K10 — The Great Dining Hall:</strong> Crystal chandeliers, silk tapestries, and a massive pipe organ. Here **Count Strahd**, **Rahadin**, **Ludmilla**, **Anastrasya**, and **Volenta** dine with the heroes under the sacred Law of Hospitality.<br>
+            • <strong>Strahd's Psychological Game:</strong> Strahd praises their victories at Bonegrinder, Vallaki, and Yester Hill, hints at the **Amber Temple** (*"Climb Mount Ghakis, claim the power in the amber, and prove which of you is worthy to sit upon my throne"*), and privately tempts each PC to betray the others or hand over Ireena/Van Richten.</div>
+            <div class="nbox nbox-amber"><strong>🕯️ The 30-Minute Midnight Scouting Window (`Areas K8, K20, K49`):</strong><br>
+            • After dessert, Strahd vanishes from his chair and Rahadin announces: *"The Count grants you safe passage out of the castle until the twelfth chime of midnight. Do not descend into the lower vaults."*<br>
+            • **Area K49 — Escher's Lounge (2nd Floor):** The party meets **Escher** (Strahd's terrified vampire bard consort), who secretly whispers how to sever the **Heart of Sorrow** high up in the **North Tower (`Area K20`)**!<br>
+            • **Spotting the Heart (`Area K8/K20`):** Looking up the hollow shaft of the North Tower Stair (`K20`), the party sees the colossal crimson crystal beating in the dark—giving them crucial intel for Act IV before sprinting across the drawbridge at midnight!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Session 9 Rewards & Possible Dining Hall Loot:</strong><br>
+            • **Milestone:** Party reaches **LEVEL 6** upon escaping the drawbridge at midnight!<br>
+            • **Dining Table & Lounge (`K10 / K49`):** 🍾 *1x Bottle of Champagne du le Stomp (`+2d4` Temp HP, removes 1 Exhaustion)*, 🗺️ *First-Floor Map & Heart of Sorrow Intel*, and 💍 *Silver Zarovich Goblet (10 GP)*.</div>
+        `
+    },
+
+    // =========================================================================
+    // ACT III LOCATIONS (SESSIONS 10–14)
+    // =========================================================================
     argynvost: {
-        title: "🐉 Argynvostholt, Krezk Abbey & The Ruins of Berez",
-        tag: "ACT III RELIC SANCTUMS",
+        title: "🐉 11. Argynvostholt — Ruined Fortress of the Silver Dragon",
+        tag: "SESSIONS 10–11 RELIC SANCTUM (BOOK CHAPTER 7, AREAS Q1–Q53 & RELOADED)",
         body: `
-            <div class="modal-read-aloud">"High on a rocky crag stands the shattered Gothic dragon-manor of Argynvostholt, its collapsed chapel open to the freezing rain. Below in the river basin lies Berez—a rotting black swamp where a colossal hut walks upon gnarled cypress roots."</div>
-            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Possible Loot Cache (Book Chapters 7, 8 & 10):</strong><br>
-            • <strong>Argynvostholt (<code>Areas Q6–Q53</code>):</strong> 🕊️ <em>The Holy Symbol of Ravenkind (Tarokka Relic #2)</em>, 🗡️ <em>Vladimir Horngaard's +2 Silvered Greatsword (Apex Sword for King Jacomir!)</em>, 🛡️ <em>4x Potions of Invulnerability (Resist ALL damage for 1 min!)</em>, 🛡️ <em>Silvered Half-Plate / Dragonplate +1</em>, 🐉 <em>Beacon of the Silver Dragon Boon (+1 AC & +1 All Saves for whole party!)</em>.<br>
-            • <strong>Abbey of St. Markovia in Krezk (<code>Area S13</code>):</strong> 💚 <em>Ring of Regeneration (1d6 HP/10 min)</em>, 🧪 <em>Potion of Superior Healing (8d4+8)</em>, 📜 <em>Spell Scroll of Heroes' Feast</em>, 🦴 <em>Saint Markovia's Thighbone (Mace of Disruption)</em>, 💥 <em>Ezmerelda's Sunburst Cartridges (+1/+2 Firearm Ammo for Yvaine!)</em>.<br>
-            • <strong>Ruins of Berez — Baba Lysaga's Creeping Hut (<code>Area U3</code>):</strong> 🗡️ <em>The Sunsword (Tarokka Relic #3 — +2 Radiant Blade!)</em>, 🧪 <em>Oil of Sharpness (+3 Weapon/Ammo Coating!)</em>, 🍀 <em>Stone of Good Luck (Luckstone: +1 All Checks & Saves!)</em>, 🎶 <em>Pipes of Haunting</em>, 📜 <em>Scrolls of Revivify & Mass Cure Wounds</em>, 🎯 <em>10x +1 Sling/Firearm Bullets</em>, 💚 <em>Second Winery Life-Gem</em>.</div>
+            <div class="modal-read-aloud">"High on a jagged crag southwest of Vallaki stands the shattered Gothic dragon-manor of Argynvostholt. On a granite pedestal in the fog-drenched courtyard sits a mossy stone statue of a noble silver dragon—its wings battered by centuries of hail, its eyes gazing toward the freezing peaks of Mount Ghakis."</div>
+            <div class="nbox nbox-cyan"><strong>🐉 Three-Floor Dragon Mansion Breakdown (`Book Areas Q1–Q53`):</strong><br>
+            • <strong>Area Q1 — Dragon Statue Courtyard:</strong> Passing the statue triggers a harmless cone of cold fog and a spectral whisper: *"My knights have fallen into darkness. Save them, if you can."*<br>
+            • <strong>Area Q3 & Q13 — Foyer & Chapel of the Morninglord:</strong> Where a shadow of a giant silver dragon unfurls on the wall. In the chapel (`Q13`), the party discovers **Argynvost's Ancient Star-Mural**—carved with **Clyssavar, Terradaer, and Astalagan** guarding the sea-route to Campaign 3's **Lost Dragon Lands**, and showing how **Vecna** poisoned the Amber Temple!<br>
+            • <strong>Area Q6 — Wine Storage Barrel:</strong> Three smashed barrels and one intact barrel containing **🛡️ 4 doses of Potion of Invulnerability**!<br>
+            • <strong>Area Q37 — Knights' Parlor (2nd/3rd Floor):</strong> Five revenants sit around a table; **Sir Godfrey Gwilym** (Vladimir's beloved husband) speaks calmly with the party, begging them to break Vladimir's hatred by lighting the roof beacon.<br>
+            • <strong>Area Q36 — Dragon's Audience Hall (3rd Floor):</strong> **Commander Vladimir Horngaard (CR 7 Boss, 145 HP)** sits on a rubble throne clutching his `+2 Silver Greatsword`, refusing to let anyone kill Strahd!<br>
+            • <strong>Area Q53 — The Beacon of Argynvostholt (Roof Tower):</strong> Placing **Argynvost's Skull** (or awakening the dragon's spirit after redeeming Vladimir) ignites a blinding silver beam across all of Barovia!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Party Boon (`Areas Q6–Q53` — Level 7 Milestone!):</strong><br>
+            • <strong>Beacon Sanctum (`Area Q36 / Q53`):</strong> 🕊️ <em>The Holy Symbol of Ravenkind (Tarokka Relic #2!)</em>.<br>
+            • <strong>Vladimir Horngaard's Blade (`Area Q36`):</strong> 🗡️ <em>Vladimir's +2 Silvered Dragon Greatsword (+1d6 Cold/Radiant — Apex Greatsword for King Jacomir!)</em>.<br>
+            • <strong>Permanent Party-Wide Boon (`Area Q53`):</strong> 🐉 <em>Beacon of the Silver Dragon</em> — Every party member gains a permanent **`+1 to AC and +1 to all Saving Throws`** across Barovia!<br>
+            • <strong>Wine Storage (`Area Q6`):</strong> 🛡️ <em>4x Potions of Invulnerability (Resistance to ALL damage for 1 min!)</em> & 🛡️ <em>Silvered Dragonplate +1 (`Q36`)</em>.</div>
         `
     },
-    ravenloft: {
-        title: "🏰 Tsolenka Pass, The Amber Temple & Castle Ravenloft",
-        tag: "ACT IV ENDGAME",
+    krezk_abbey: {
+        title: "⛪ 12. Village of Krezk & The Abbey of Saint Markovia",
+        tag: "SESSION 12 ANGELIC ASYLUM (BOOK CHAPTER 8, AREAS S1–S24 & RELOADED)",
         body: `
-            <div class="modal-read-aloud">"Carved into the freezing snows of Mount Ghakis lies a windowless temple of black ice housing rows of glowing amber sarcophagi. Far below, perched atop a 1,000-foot spire of sheer rock, Castle Ravenloft pierces the blood-moon."</div>
-            <div class="nbox nbox-crimson"><strong>🎁 Location Treasure & Possible Loot Cache (Book Chapters 4, 9 & 13):</strong><br>
-            • <strong>Tsolenka Pass (<code>T6</code>):</strong> 🧥 <em>Bloodhorn's Mountain Pelt (Cold Immunity Cloak)</em>, 🔥 <em>Ring of Warmth</em>.<br>
-            • <strong>The Amber Temple (<code>Areas X2–X42</code>):</strong> ❄️ <em>Staff of Frost (Area X17 — for Piper/Cael)</em>, 🪄 <em>Wand of Secrets (Area X2b)</em>, 📖 <em>Tome of Understanding (+2 Permanent WIS — Area X30)</em>, 📖 <em>Complete Wizard Library (Every Wizard spell in X30!)</em>, ⚡ <em>Supreme Dark Gifts of Vampyr, Vecna & Zhudun (Areas X33 & X42)</em>.<br>
-            • <strong>Castle Ravenloft (<code>Areas K15–K84</code>):</strong> 🏰 <em>Icon of Ravenloft (Chapel K15)</em>, ⚡ <em>Khazan's Staff of Power (+2 AC/Saves/Spell Atk — Crypt 15 K84, Apex Staff for Piper!)</em>, 👑 <em>Helm of Brilliance (Treasury K41)</em>, 🛡️ <em>+2 Shield of the Silver Wyrm</em>, 🔨 <em>Gustav's Mace of Terror (Crypt 7)</em>, 🃏 <em>Deck of Illusions (Crypt 9)</em>, 🪕 <em>Doss Lute (K37)</em>, 🏰 <em>Daern's Instant Fortress & Alchemy Jug (K41)</em>, 🍾 <em>Champagne du le Stomp</em>.</div>
+            <div class="modal-read-aloud">"Above the snow-dusted pine cabins of Krezk winds a switchback cliff trail to the twin stone wings of the Abbey of Saint Markovia. Inside the candle-lit main hall, a strikingly handsome young monk with golden eyes and a blood-stained apron smiles serenely—teaching a mute woman stitched together from mismatched corpses how to curtsy."</div>
+            <div class="nbox nbox-cyan"><strong>⛪ Key Locations in Krezk & The Abbey (`Book Areas S1–S24`):</strong><br>
+            • <strong>Area S1–S3 — Krezk Gatehouse & Burgomaster's Cottage:</strong> **Burgomaster Dmitri Krezkov** opens the gates once the party brings wine from the **Wizard of Wines (`Session 7`)**.<br>
+            • <strong>Area S4 — The Pool & Shrine of the White Sun:</strong> Miraculous sunlit spring. If **Ireena** approaches the water, the spirit of **Prince Sergei** reaches up calling *"Tatyana!"* The party can let her ascend to peace or pull her back to fight beside them—causing Strahd to strike the pool with crimson lightning from the storm clouds!<br>
+            • <strong>Area S13 — Abbey Main Hall (The Abbot & Vasilka):</strong> The fallen Deva **The Abbot** (corrupted by Strahd posing as *"Vasili von Holtz"*) introduces his flesh-golem bride **Vasilka**, convinced that marrying her to Strahd will end Barovia's curse.<br>
+            • <strong>Area S12 & S17 — The Madhouse & Mongrelfolk Cells:</strong> Where the deformed **Belview family** (Clovin the two-headed bell-ringer in `S17` with his Viol, Otto, and Zygfrek) shriek in cages.<br>
+            • <strong>Area S19 — Ezmerelda's Hideout (Barracks):</strong> Where our Tarokka Fated Ally **⚔️ Ezmerelda d'Avenir** is studying monster lore and joins the party for the rest of the campaign!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Loot Cache (`Areas S4–S19`):</strong><br>
+            • <strong>Shrine Gazebo (`Area S4` / Abbey Crypt):</strong> 🦴 <em>Saint Markovia's Thighbone (Mace of Disruption — +2d6 Radiant vs Undead & DC 15 Wis instant destroy at <=25 HP!)</em>.<br>
+            • <strong>Abbot's Loft & Clovin's Room (`Area S13 / S17`):</strong> 💚 <em>Ring of Regeneration (Regains 1d6 HP every 10 minutes!)</em>, 📜 <em>Spell Scroll of Heroes' Feast (+2d10 Max HP & Fear/Poison Immunity for 24 hrs!)</em>, 🧪 <em>Potion of Superior Healing (8d4+8)</em>.<br>
+            • <strong>Ezmerelda's Arsenal (`Area S19`):</strong> 💥 <em>Ezmerelda's Sunburst & Silver Cartridges (+1/+2 Hit/Dmg, +1d6 Radiant for Yvaine!)</em>.</div>
+        `
+    },
+    berez: {
+        title: "🌊 13. The Drowned Ruins of Berez & Baba Lysaga's Hut",
+        tag: "SESSIONS 13–14 SWAMP BOSS LAIR (BOOK CHAPTER 10, AREAS U1–U7 & RELOADED)",
+        body: `
+            <div class="modal-read-aloud">"Cold black river water swallows your boots as you wade into the drowned ruins of Berez. Rotting scarecrows stuffed with dead ravens twitch upon wooden crosses in the fog. Ahead, at the center of the bog, a colossal hut of moldering logs squats atop the gnarled roots of a giant cypress stump—while an old woman cackles inside a floating hill giant skull!"</div>
+            <div class="nbox nbox-cyan"><strong>🌊 Swamp Landmarks (`Book Areas U1–U7`):</strong><br>
+            • <strong>Area U1 — The Scarecrow Marsh:</strong> Seven animated **Scarecrows** (`CR 1`, stuffed with dead ravens) wade through the fog as Baba Lysaga's early alarm system; cages hold dozens of trapped **Swarms of Ravens** waiting to be freed!<br>
+            • <strong>Area U2 — Ulrich Mansion Ruins:</strong> Haunted by the tragic **Ghost of Burgomaster Lazlo Ulrich**, who confesses how he staked **Marina** (Tatyana's incarnation) 400 years ago, prompting Strahd to flood the Luna River and drown Berez.<br>
+            • <strong>Area U5 — Marina's Monument:</strong> Hidden in the reeds stands Strahd's lifelike white marble statue of kneeling Marina (`"Marina, Taken by the Mist"`), surrounded by a permanent *Nondetection* ward.<br>
+            • <strong>Area U6 — The Ancient Standing Stones:</strong> A circle of prehistoric menhirs west of the river (**Druid Circle of the Swamp**; meditating here grants Cael/Piper a `1/day` bonus spell slot recharge!).</div>
+            <div class="nbox nbox-crimson"><strong>💀 Area U3 — Boss Fight: Baba Lysaga & The Creeping Walking Hut (`Sessions 13–14`):</strong><br>
+            • **Baba Lysaga (`CR 11`, 120 HP)** hovers 30 ft up inside an upside-down **Hill Giant Skull (+5 AC Cover ➔ AC 20)** casting *Blight (8d8)*, *Evard's Black Tentacles*, and *Finger of Death*, while her **140-HP Gargantuan Creeping Hut** uproots itself (`3x +11 root slams for 3d10+8 bludgeoning`)!<br>
+            • **Tactical Shut-Down Mechanic:** Beneath the illusory baby Strahd crib inside the pitching hut, the floor planks glow emerald green! A hero who leaps inside the hut, dodges its interior roots, and pries out the **💚 Second Wizard of Wines Life-Gem (`DC 15 Sleight of Hand/Athletics`)** **instantly deactivates the 140-HP Creeping Hut**!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Iron Trunk Cache (`Area U3` — Level 8 Milestone!):</strong><br>
+            • <strong>Buried in the Creeping Hut Roots (`Area U3`):</strong> 🗡️ <em>The Sunsword (Tarokka Relic #3 — +2 Finesse/Versatile Sun Blade dealing 2d8+2 Radiant vs Undead & 15–30 ft True Sunlight!)</em> & 💚 <em>Second Winery Life-Gem</em>.<br>
+            • <strong>Baba Lysaga's warded Iron Trunk (`Area U3`, DC 17 Dispel Magic or Command Word):</strong> 🧪 <em>Oil of Sharpness (+3 Hit & Damage for 1 hr!)</em>, 🍀 <em>Stone of Good Luck (Luckstone: +1 All Ability Checks & Saving Throws!)</em>, 🎶 <em>Pipes of Haunting</em>, 📜 <em>Spell Scrolls of Revivify & Mass Cure Wounds</em>, 🎯 <em>10x +1 Sling/Firearm Bullets (for Yvaine!)</em>, 📖 <em>Baba Lysaga's Spellbook</em>, & 💰 130 GP + 5 Gems (50 GP each).</div>
+        `
+    },
+    baratok_tower: {
+        title: "🗼 14. Van Richten's Tower (Khazan's Tower), Lake Baratok & Werewolf Den",
+        tag: "ACT II–III OPTIONAL LANDMARKS (BOOK CHAPTERS 11 & 15, AREAS V1–V7 & Z1–Z8)",
+        body: `
+            <div class="modal-read-aloud">"On a tiny island in the freezing waters of Lake Baratok leans a four-story stone tower with a crumbling golden lightning-rod dome. Parked before the causeway sits a brightly painted Vistani wagon—rigged with a hundred alchemical fire flasks!"</div>
+            <div class="nbox nbox-cyan"><strong>🗼 Van Richten's Tower on Lake Baratok (`Book Chapter 11, Areas V1–V7`):</strong><br>
+            • <strong>Khazan's Anti-Magic Field:</strong> Built centuries ago by the archmage **Khazan** (who tried to destroy the *Sunsword* for Strahd). The entire 4-story tower is enveloped in a permanent **Anti-Magic Field**—no spells (even Strahd's scrying!) or magic items function inside, making it **Rudolph van Richten's** ultimate safehouse!<br>
+            • <strong>Area V1 — Ezmerelda's Booby-Trapped Wagon:</strong> Parked outside; rigged with **100 flasks of Alchemist's Fire** (`DC 15 Perception` to spot tripwire, or `10d10` Fire in 30 ft!). Contains her spare gear and silvered munitions.<br>
+            • <strong>Area V2 — The Stick-Figure Door Trap:</strong> Tracing the 7-move stick-figure dance on the iron door opens it silently; forcing it or failing the dance triggers **Lightning (`4d10`, DC 15 Dex)** and summons a **Young Blue Dragon** if triggered twice!<br>
+            • <strong>Area V3–V7 — Clay Golem Elevator & Yan's Head:</strong> Four-chain platform elevator operated by a **Clay Golem** (`V3`); the top floor (`V7`) holds Van Richten's desk and the preserved head of Vistani outlaw **Yan**.<br>
+            • <strong>Mount Baratok (North Shore):</strong> Where the amnesiac **Mad Mage (*Mordenkainen*)** hides inside a *Mordenkainen's Magnificent Mansion* after his failed siege with Doru (`Cure via Greater Restoration/Mind Blank`).</div>
+            <div class="nbox nbox-crimson"><strong>🐺 The Werewolf Den (`Book Chapter 15, Areas Z1–Z8`):</strong><br>
+            • Wolf-skull cave complex northwest of Krezk. **Area Z5b (The Stone Fighting Ring):** Where sadistic alpha **Kiril Stoyanovich** forces kidnapped children to fight to the death. **Area Z7 (Shrine of Mother Night):** Where rebel priestess **Zuleika Toranescu** guards the pack's cursed treasure hoard and offers an alliance if the party frees her mate **Emil** from Ravenloft (`K75a`).</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Loot Cache (`Areas V1 & Z7`):</strong><br>
+            • <strong>Ezmerelda's Wagon (`Area V1`):</strong> 💣 <em>3x Alchemical Phosphor & Smoke Bombs</em>, 💥 <em>10x Silvered Bullets</em>, 🧪 <em>Potion of Greater Healing</em>, 📖 <em>Ezmerelda's Spellbook</em>, & 💰 45 GP.<br>
+            • <strong>Mother Night's Shrine (`Area Z7` — Lift Curse w/ Remove Curse):</strong> 💰 90 GP in electrum/gold, 💍 <em>6x Gemstones (10 GP each)</em>, & 🗡️ <em>Silvered Shortsword</em>.</div>
+        `
+    },
+
+    // =========================================================================
+    // ACT IV LOCATIONS (SESSIONS 15–20)
+    // =========================================================================
+    tsolenka: {
+        title: "❄️ 15. Tsolenka Pass & The Balinok Mountain Gatehouse",
+        tag: "SESSION 15 PART 1 BLIZZARD CLIMB (BOOK CHAPTER 9, AREAS T1–T9 & RELOADED)",
+        body: `
+            <div class="modal-read-aloud">"Howling blizzards whip across a narrow gravel road carved into the sheer, thousand-foot ice cliffs of Mount Ghakis. Blocking the pass stands an ancient stone gatehouse crowned with horned demon statues—its archway sealed by a roaring curtain of emerald-green flame!"</div>
+            <div class="nbox nbox-amber"><strong>❄️ High-Altitude Hazards & Gatehouse Keys (`Book Areas T1–T9`):</strong><br>
+            • <strong>Extreme Cold (-50°F):</strong> Without Cold Resistance (*Ring of Warmth*, *Staff of Frost*, or *Bloodhorn's Mountain Pelt*), creatures must make a **DC 10 CON Save every hour** or gain 1 level of Exhaustion.<br>
+            • <strong>Area T2–T3 — The Curtain of Green Flame & Vrock Statues:</strong> Passing through the magical green fire deals **`6d6` Fire/Necrotic damage** unless dispelled (`DC 16 Dispel Magic`), bypassed via climbing over the gatehouse roof (`T4`, DC 12 Athletics), or accompanied by **Kasimir Velikov**. Two demon statues animate into a **Vrock** (`CR 6`) if attacked.<br>
+            • <strong>Area T4–T6 — Guard Tower & Bloodhorn (Sangzor):</strong> Inside the tower (`T4–T5`) lie frozen skeletons of ancient guards; atop the crags (`T6`) stalks the monstrous demonic mountain goat **Bloodhorn (*Sangzor*)**, who tries to ram PCs off the 500-ft cliff (`+5 hit, 2d6+3 + DC 13 STR save vs knocked 15 ft`)!<br>
+            • <strong>Area T7–T9 — The 500-Foot Stone Bridge & The Roc of Mount Ghakis:</strong> Crossing the freezing stone arch over the Luna River gorge triggers the shadow of the colossal **Roc of Mount Ghakis (`CR 11`)** swooping down from the clouds (or **Rahadin** ambushing the party before the Amber Temple!).</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Loot Cache (`Areas T5–T6`):</strong><br>
+            • <strong>Bloodhorn Boss Drop (`Area T6`):</strong> 🧥 <em>Bloodhorn's Mountain Goat Pelt (Grants Cold Weather Immunity & Advantage on Stealth/Athletics in snowy mountain terrain!)</em>.<br>
+            • <strong>Frozen Guard Captain (`Area T5`):</strong> 🔥 <em>Ring of Warmth (Cold Resistance!)</em> & 💰 Chest with 30 GP in silver.</div>
+        `
+    },
+    amber_temple: {
+        title: "⚡ 16. The Amber Temple — Vault of the Dark Powers",
+        tag: "SESSIONS 15–16 DARK POWERS DUNGEON (BOOK CHAPTER 13, AREAS X1–X42 & RELOADED)",
+        body: `
+            <div class="modal-read-aloud">"Carved directly into the black mountain ice at 2,000 feet elevation stands a windowless facade of six cracked stone pillars. Inside the pitch-black main hall, a forty-foot statue of a hooded god of secrets looms over the balcony—while in the subterranean vaults below, twenty monoliths of golden amber pulse with trapped, primordial shadows."</div>
+            <div class="nbox nbox-cyan"><strong>⚡ Complete Two-Level Amber Temple Dungeon Key (`Book Areas X1–X42`):</strong><br>
+            • <strong>Area X1–X2b — Cracked Ice Facade & Secret Architect's Room:</strong> Entering through the cracked right pillar (`X1`) leads to the upper balcony; `Area X2b` holds a skeletal architect with a **🪄 Wand of Secrets**.<br>
+            • <strong>Area X4–X5 — The God of Secrets Statue & Neferon the Arcanaloth:</strong> Standing in the center of the main floor (`X4`) is a 40-ft black statue surrounded by magical *Darkness*. Inside the hollow head (`X5`), the disguised **Arcanaloth Neferon ("Heinrich Stolt", CR 12)** peers through eye-slits (Three-Quarters Cover, `+5 AC`) and blasts intruders with *Chain Lightning*, *Fireball*, and *Finger of Death* while 3 **Flameskulls** (`X4`) attack from the balcony!<br>
+            • <strong>Area X17 — Upper West Corridor & Staff of Frost:</strong> A dead wizard frozen to the floor clutches the **❄️ Staff of Frost**.<br>
+            • <strong>Area X27 & X30 — Lich Exethanter's Sanctum & The Master Library:</strong> In `Area X27` sits **Exethanter**, an ancient, amnesiac **Lich** (`CR 21`, non-hostile!) who has forgotten his own name and spells. **Tactical Key:** If Cael or a PC casts ***Greater Restoration*** on Exethanter, his memory returns—he gratefully gives the party the **command words to every locked door and Amber Vault in the temple**, deactivates the **Amber Golem**, and opens the **Master Wizard Library (`Area X30`)** containing **every Wizard spell in the PHB** + the **📖 Tome of Understanding (+2 Permanent WIS)**!</div>
+            <div class="nbox nbox-crimson"><strong>🟣 The Amber Sarcophagi Vaults (`Areas X33a–f` & Breached Vault `X42`):</strong><br>
+            • <strong>The 20 Minor Dark Gifts (`X33a–f`):</strong> Touching an amber sarcophagus offers a Dark Gift (*Tarakamedes: 50-ft Bat Wings Fly Speed*, *Zantras: +4 CHA up to 22*, *Taar Haak: 25 STR*, *Dahlver-Nar: 3x Reincarnate*, *Yrrga: 120-ft Truesight*, etc.).<br>
+            • <strong>Area X42 — The West Vault (Vampyr, Zhudun & The Whispering Hand of Vecna):</strong> Where Strahd made his pact with **Vampyr**! Here **Derek (Avatar of the Dark Powers)** freezes time (`Milestone 2`) as the three tailored **Supreme Dark Gifts** call out to **Jacomir (*Vampyr: +20 Max HP & Vampiric Crits*)**, **Piper (*The Whispering Hand: +2 CHA, Necro Immunity & Stage 3 Blank Card Completion*)**, and **Yvaine (*Zhudun: +2 DEX & Truesight*)**!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Location Treasure & Vault Cache (`Areas X2b–X42` — Level 9 Milestone!):</strong><br>
+            • <strong>Upper Halls (`X2b` & `X17`):</strong> 🪄 <em>Wand of Secrets</em> & ❄️ <em>Staff of Frost (for Piper/Cael!)</em>.<br>
+            • <strong>Master Library (`Area X30`):</strong> 📖 <em>Tome of Understanding (+2 Permanent Wisdom for Cael/Yvaine!)</em> & 📖 <em>Complete PHB Wizard Spellbooks</em>.<br>
+            • <strong>Treasury (`Area X40`, Guarded by Amber Golem):</strong> 💍 *Jeweled Gold Crown (250 GP)*, *Robe of Useful Items*, & 💰 150 GP.<br>
+            • <strong>Amber Vaults (`X33 & X42`):</strong> ⚡ <em>The Supreme Dark Gifts of Vampyr, Vecna & Zhudun</em>.</div>
+        `
+    },
+    ravenloft_siege: {
+        title: "🏰 17. Castle Ravenloft — The Final Siege Room-by-Room Guide",
+        tag: "SESSIONS 17–20 ENDGAME DUNGEON (BOOK CHAPTER 4, KEY ROOMS K6–K86)",
+        body: `
+            <div class="modal-read-aloud">"Lightning splinters the blood-moon sky above Castle Ravenloft as you breach the main doors for the final time. Above you in the swaying North Tower beats the crimson Heart of Sorrow; far below in the mist-choked catacombs, Count Strahd waits beside the white marble tomb of the brother he murdered."</div>
+            <div class="nbox nbox-cyan"><strong>🏰 Do Not Read All 88 Rooms! Use These 9 Essential Siege Rooms (`Sessions 17–20`):</strong><br>
+            • <strong>1. Area K15 — The Chapel of Ravenloft (Main Floor):</strong> Shattered stained glass depicting blind saints. Upon the altar rests the silver statuette **🏰 The Icon of Ravenloft** (grants a permanent 15-ft *Protection from Evil and Good* aura against Undead/Fiends & `3d8+3` heal!).<br>
+            • <strong>2. Area K20 — The North Tower & Heart of Sorrow (Spire):</strong> A 10-foot crimson crystal suspended by chains that **absorbs the first 50 HP of damage Strahd takes**. Approaching it causes the spiral stairs to sway violently (`DC 10 Dex save` vs falling) while **10 Flying Halberds** and **4 Vampire Spawn** attack! Shattering the 50-HP crystal severs Strahd's shield permanently.<br>
+            • <strong>3. Area K41 — The Castle Treasury (Inside the Daern's Tower Vault):</strong> Accessed from the roof (`K40`); holds **👑 The Helm of Brilliance**, **🛡️ +2 Shield of the Silver Wyrm**, **🏰 Daern's Instant Fortress**, and **Alchemy Jug**!<br>
+            • <strong>4. Area K67 — The Hall of Bones (Dungeons):</strong> Floored with thousands of skulls and holding the **🐉 Colossal Skull of Argynvost**.<br>
+            • <strong>5. Area K72 — Rahadin's Office (Dungeons):</strong> Where **🗡️ Chamberlain Rahadin (CR 10, 142 HP)** makes his final stand with his *Deathly Choir* (`3d10` psychic aura).<br>
+            • <strong>6. Area K78 — The Brazier Teleportation Room:</strong> Hourglass & white flame; tossing in a colored stone teleports the party (*Violet = Catacombs K84*, *Orange = North Tower K60*).</div>
+            <div class="nbox nbox-crimson"><strong>👑 The Catacombs (`K84`), Sergei's Crypt (`K85`) & The Cosmic Knot Finale (`Sessions 19–20`):</strong><br>
+            • <strong>7. Area K84 — The Catacombs (39 Crypts):</strong> Bats swarm the ceiling. **Crypt 6:** *St. Markovia's Thighbone*; **Crypt 7:** *Gustav's Mace of Terror*; **Crypt 9:** *Deck of Illusions*; **Crypt 15 (Archmage Khazan):** **⚡ Khazan's Staff of Power (+2 AC, +2 Saves, +2 Spell Atk — Apex Staff for Piper!)**; **Crypt 21:** *Banshee Patrina Velikovna*.<br>
+            • <strong>8. Area K85 & K86 — Sergei's White Marble Crypt & Strahd's Tomb (Tarokka Final Battlefield!):</strong> Where the party confronts **Count Strahd von Zarovich (CR 15 Apex Boss)** across a vertical multi-room battle climbing from Sergei's Tomb (`K85`) up to the storm-lashed **Overlook Balcony (`Area K6`)** and back down to stake Strahd in his coffin (`K86`)!<br>
+            • <strong>9. The Session 20 Cosmic Knot Twist:</strong> The moment Strahd is staked in `K86` and turns to ash, the Domain Zero Keystone snaps! Time freezes (`tap, tap, tap`), **Derek** steps into the crypt, and a weeping **Cael** (speaking in Barnaby's voice with that **Grim Smile**) channels the collapsing **Barovian Root Anchor** into **Piper, Jacomir, and Yvaine**—sealing them as Vecna's Living Conduits for Campaign 3!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Endgame Castle Ravenloft Treasure Vault (`Areas K15, K41, K84` — Level 10 Finale!):</strong><br>
+            • **Chapel (`K15`):** 🏰 *The Icon of Ravenloft*.<br>
+            • **Crypt 15 (`K84`):** ⚡ *Khazan's Staff of Power (+2 AC/Saves/Spell Atk, 5th-lvl Fireball/Lightning Bolt, Wall of Force — for Piper!)*.<br>
+            • **Treasury (`K41`):** 👑 *Helm of Brilliance (+1d6 Fire to weapons, Daylight, Fireball, Prismatic Spray — for Jacomir!)*, 🛡️ *+2 Shield of the Silver Wyrm (+4 AC)*, 🏰 *Daern's Instant Fortress*, *Alchemy Jug*, & 💰 500+ GP in royal Zarovich gold.<br>
+            • **Crypts 6, 7, 9 (`K84`) & Study (`K37`):** 🦴 *St. Markovia's Thighbone*, 🔨 *Mace of Terror*, 🃏 *Deck of Illusions*, & 🪕 *Doss Lute*.</div>
         `
     }
 };
+
+function filterBiomes(act, btnEl) {
+    document.querySelectorAll('#biome-filter-bar .btn-loot-filter').forEach(b => b.classList.remove('active'));
+    if (btnEl) btnEl.classList.add('active');
+    document.querySelectorAll('.biome-card').forEach(card => {
+        if (!act || act === 'all' || card.getAttribute('data-biome-act') === act) {
+            card.style.display = '';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
 
 const LOOT_DATA = {
     // =========================================================================
@@ -3843,6 +4186,90 @@ const LORE_DATA = {
         mechanics: "• <strong>Stalking the Flooded Marsh (`Sessions 13–14`):</strong> Passing the white marble <strong>Monument to Marina (`Area U5`)</strong> and consulting Burgomaster Ulrich's ghost (`Area U2`), the party approaches Baba Lysaga's hut.<br>• <strong>Boss Fight — Baba Lysaga & The Creeping Walking Hut (`Area U3`):</strong> Baba Lysaga flies 30 ft up inside an upside-down <strong>Hill Giant Skull (+5 AC Three-Quarters Cover ➔ AC 20)</strong> casting <em>Blight (8d8)</em>, <em>Evard's Black Tentacles</em>, and <em>Finger of Death</em>, while her <strong>140-HP Creeping Hut</strong> stomps on gnarled cypress roots (`3x +11 slams for 3d10+8 bludgeoning`)!<br>• <strong>The Tactical Counterplay & Tarokka Relic #3:</strong> A hero who leaps inside the pitching hut and pries the glowing green <strong>💚 Winery Life-Gem</strong> out from beneath the crib floorboards (`DC 15 Sleight of Hand/Athletics`) <strong>instantly deactivates the Creeping Hut</strong>! Defeating Lysaga rewards <strong>🗡️ The Sunsword (Tarokka Relic #3!)</strong>, <strong>🍀 Stone of Good Luck (+1 Checks & Saves)</strong>, <strong>🧪 Oil of Sharpness (+3 Hit/Dmg!)</strong>, and <strong>📜 Scroll of Revivify</strong>!",
         h4: "🎭 DM Roleplay Cues & Sensory Vibe",
         rp: "Knee-deep black bog water buzzing with millions of biting marsh flies; rotting scarecrows stuffed with dead ravens twitching on wooden crosses; and a blood-drenched crone cackling lullabies from inside a hovering giant skull."
+    },
+    lore_amber_temple: {
+        title: "⚡ The Amber Temple — Vault of the Dark Powers, Exethanter & The Vestiges",
+        subtitle: "2,000-Year-Old Mountain Vault • Act IV (Book Chapter 13, Reloaded & Cosmic Knot)",
+        badge: "Act IV • Sessions 15–16",
+        quote: "We carved these halls out of frozen black stone to cage the remnants of dead and dying gods in solid amber. We thought ourselves wardens. We did not realize that the amber was a lens—and that for two thousand years, the prisoners were studying us.",
+        h1: "📜 Origins of the Dawn Wizards & How the Temple Fell",
+        history: "• <strong>The Secret Society of the Dawn (<code>2,000+ Years Ago • Book Ch. 13</code>):</strong> Over two millennia before Strahd von Zarovich was born, a secret parliament of good-aligned archmages built a windowless, black-stone subterranean fortress at the 2,000-foot snowline of <strong>Mount Ghakis</strong>. Their mission was to capture disembodied, malignant remnants of ancient primordial entities—<strong>The Vestiges of the Dark Powers</strong>—and imprison them inside twenty monoliths of golden, magically hardened amber.<br>• <strong>Corrosion From Within:</strong> Unable to shatter the amber physically, the Vestiges whispered telepathically into the dreams of their wizard wardens. Century by century, paranoia and greed poisoned the order: the archmages turned their spells on one another in the darkened galleries, dying as Nothics (`Area X4`), Flameskulls (`Area X8`), and Deathlocks. Only one archmage survived by bargaining for lichdom: <strong>Exethanter (`Area X27`)</strong>.",
+        h2: "🧭 Key Denizens: Lich Exethanter, Arcanaloth Neferon & Rahadin's Pilgrimage",
+        culture: "• <strong>1. 💀 Lich Exethanter (`Area X27 — East Shrine`):</strong> Over the centuries, Exethanter's mind decayed until he forgot his own name, his spells (save cantrips), and the command passwords to the Temple's vaults. Because of his senility, he greets the party politely like visiting scholars rather than attacking! <strong>Vital Secret:</strong> Casting <em>Greater Restoration</em> on Exethanter restores his memory (and his <code>CR 21 Lich</code> spell list!), causing him to gratefully escort the party, share the <strong>command words to every sealed Amber Vault</strong>, and unlock the <strong>Complete PHB Wizard Spellbook Library (`Area X30`)</strong> (containing every Wizard spell in the Player's Handbook!).<br>• <strong>2. 🦊 Neferon the Arcanaloth (`Area X5 — The Faceless Statue`):</strong> An outsider fiend named <strong>Neferon</strong> wears <em>Goggles of Night</em> inside the hollowed-out head of a 40-foot black marble statue of a faceless god in the main sanctuary (`X5`). Disguised with <em>Alter Self</em> as an old human wizard named 'Heinrich,' he blasts intruders through the statue's eye-slits with <em>Chain Lightning (10d8)</em> and <em>Fireball</em> from Three-Quarters Cover (`+5 AC`).<br>• <strong>3. 🧝‍♂️ Rahadin's Secret Ritual (`Area X33e`):</strong> Strahd's chamberlain <strong>Rahadin</strong> travels here regularly to swallow a live frog whole as a groveling prayer to the Dark Powers (`Book p. 193`), pleading for Strahd to be freed from his obsession with Tatyana.",
+        h3: "⚔️ The 20+ Amber Sarcophagi, Vampyr (X42) & The 3 PCs' Supreme Dark Gifts",
+        mechanics: "• <strong>How the Amber Sarcophagi Work (`Book p. 191`):</strong> Each 8-foot block of amber houses a shadowy Vestige. Touching a sarcophagus allows the Vestige to whisper a bargain into the character's mind (`Charisma Save DC 12` upon accepting a gift, or suffer a permanent physical/moral flaw). An amber block has <strong>AC 16, 80 HP (Immune to poison, psychic, and nonmagical weapons)</strong>.<br>• <strong>Blood-Stained West Vault (`Area X42`):</strong> Houses the 3 supreme sarcophagi:<br>&nbsp;&nbsp;1. <strong>🩸 Vampyr (The Undying Hunger):</strong> Where Strahd forged his pact in 351 BC (must murder a loved one who loves you, drink their blood, and die a violent death).<br>&nbsp;&nbsp;2. <strong>💀 Zhudun (The Corpse Star):</strong> Sought by Dusk Elf archmage <strong>Kasimir Velikov</strong> to cast <em>Resurrection</em> on his ancient sister Patrina in Ravenloft Crypt 21.<br>&nbsp;&nbsp;3. <strong>🟣 Tenebrous / Whispering Hand of Vecna (Cosmic Knot Twist):</strong> Where <strong>Cael (Scion of the Dark Powers)</strong> and <strong>Derek</strong> reveal the truth of Domain Zero and offer the 3 PCs their <strong>Supreme Dark Gifts (+30 Max HP & 3x/Long Rest 9th-Level Powers)</strong> so they can survive Strahd's wrath and serve as Vecna's Surge Protectors:<br>&nbsp;&nbsp;&nbsp;&nbsp;• <strong>🎭 Piper (<em>Weaver of the Unwritten Deck</em>):</strong> Stage 3 of the Blank Tarokka Card (<code>DC 20</code> reality-rewrite + <em>Foresight / Time Ravage</em>) — flaw: <em>The Frozen Grin</em>.<br>&nbsp;&nbsp;&nbsp;&nbsp;• <strong>🛡️ Jacomir (<em>Sovereign of the Ash-Crowned Throne</em>):</strong> 30-ft aura of Stun/Fear immunity + 3x/day <em>Blade of Disaster / Power Word Heal</em> — flaw: <em>Crown of Cold Iron</em>.<br>&nbsp;&nbsp;&nbsp;&nbsp;• <strong>❄️ Yvaine (<em>Herald of the Corpse Star</em>):</strong> 120-ft Truesight + 3x/day <em>Meteor Swarm (Cold/Necrotic) / Astral Projection</em> — flaw: <em>Eyes of the Void</em>.",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Crushing sub-zero silence (-30°F); black marble floors polished like obsidian mirrors; warm, golden-veined amber blocks that thrum like living hearts against a player's palm while a soothing voice whispers exactly what that hero fears losing most."
+    },
+    lore_castle_ravenloft: {
+        title: "🏰 Castle Ravenloft — The Living Spire, Architect Artimus & The Catacombs",
+        subtitle: "Seat of Count Strahd von Zarovich • Acts II & IV (Book Chapter 4 & Reloaded)",
+        badge: "Sessions 9 & 17–20",
+        quote: "Artimus built these walls out of stone and mortar, yes. But for four hundred years, every stone has drunk my blood and breathed my thoughts. You do not walk through a castle, little heroes—you walk through my ribs.",
+        h1: "📜 Construction atop the Pillarstone & The Tragedy of Architect Artimus",
+        history: "• <strong>Raised on the 1,000-Foot Crag (<code>347–350 BC • Book Chapter 4</code>):</strong> After conquering the valley, General Strahd commissioned master architect <strong>Artimus</strong> to construct an impregnable fortress atop the sheer 1,000-foot rock spire known as the <strong>Pillarstone of Ravenloft</strong>, naming the castle in honor of his mother, <strong>Queen Ravenovia</strong>.<br>• <strong>The Scale Model in the Amber Temple (`Area X24`):</strong> Artimus built a breathtakingly detailed, 10-foot-tall stone architectural model of Castle Ravenloft inside the Amber Temple (`Area X24`) so the party can study the castle's secret stairs and towers before the Final Siege! Artimus himself is entombed in <strong>Ravenloft Crypt 5 (`Area K84`)</strong>.",
+        h2: "🧭 Why the Castle Is Alive: Lair Mechanics & The Heart of Sorrow (K20)",
+        culture: "• <strong>Fused to the Vampire's Soul:</strong> When Barovia became Domain Zero in 351 BC, Castle Ravenloft fused metaphysically with Strahd. On <strong>Initiative Count 20 (Lair Actions)</strong> anywhere inside the castle:<br>&nbsp;&nbsp;• <strong>Solid Wall Phasing:</strong> Until Initiative 20 of the next round, Strahd can move through any solid stone wall, door, ceiling, or floor in Castle Ravenloft as if it were air—making him impossible to corner until the party forces him into his fated Tarokka room (`The Overlook, K6`) or floods the room with sunlight!<br>&nbsp;&nbsp;• <strong>Slamming Doors & Angry Shadows:</strong> Strahd can telekinetically slam and Arcane Lock (`DC 20 STR`) any door/window or rip a player's shadow off the wall as an undead <em>Shadow</em>.<br>• <strong>💎 The Heart of Sorrow (`Area K20 — North Tower Spire`):</strong> A 10-foot-tall, floating crimson crystal held aloft by the veins of the castle at the top of a 190-foot spiral staircase (`AC 15, 50 HP`). While intact, it absorbs the <strong>first 50 damage</strong> Strahd takes anywhere in Barovia (regenerating at dawn). Attacking it triggers the tower itself to sway like a living throat while <strong>10 Halberds of Force</strong> (`+8 to hit, 1d10+3 slashing`) detach from the walls!",
+        h3: "⚔️ Key Sanctums of Ravenloft (Acts II & IV)",
+        mechanics: "• <strong>🍽️ Main Floor (`K1–K21`):</strong> <strong>The Dining Hall (`K10`)</strong> where Strahd's illusion plays the pipe organ during the Act II Dinner (`Session 9`); <strong>The Chapel (`K15`)</strong> holding the <strong>☀️ Icon of Ravenloft</strong> on the altar; and <strong>The Overlook (`K6`)</strong>, the wind-lashed 1,000-ft balcony where Tatyana leaped to her death and where the Tarokka deck decrees Strahd's final stand!<br>• <strong>🔥 Dungeons & Brazier Room (`K73–K78`):</strong> Flooded torture cells (`K73–K76`), Rahadin's office (`K72`), and the <strong>Iron Golem Brazier Room (`K78`)</strong>—where tossing a colored stone into the white-hot flame teleports the party across Barovia while two <strong>Iron Golems</strong> guard the hourglass!<br>• <strong>⚰️ The Catacombs (`K84–K88`):</strong> A pitch-black subterranean labyrinth of 40 noble crypts swarming with 100,000 bats, containing <strong>Sergei's Marble Tomb (`K85`)</strong>, <strong>King Barov & Queen Ravenovia's Tomb (`K88`)</strong>, <strong>Saint Markovia's Crypt 6</strong>, <strong>Archmage Khazan's Crypt 15</strong>, <strong>Patrina's Crypt 21</strong>, and <strong>Strahd's Coffin (`K86`)</strong>!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Dust-choked cobwebs thick as velvet curtains; portraits of Tatyana whose painted eyes follow the party down the hall; thunder shaking the stained-glass windows while pipe-organ chords vibrate up through the soles of the players' boots."
+    },
+    lore_argynvostholt: {
+        title: "🐉 Argynvostholt — Fortress of the Silver Wyrm & The Lost Dragon Lands",
+        subtitle: "Sanctum of the Order of the Silver Dragon • Act III (Book Chapter 7, Reloaded & Trilogy Bridge)",
+        badge: "Act III • Session 10",
+        quote: "Look upon the shattered stained glass, travelers. Before the Devil came, a silver dragon walked these halls as a knight of light—and his wings sheltered the secrets of the stars.",
+        h1: "📜 Why a Silver Dragon Built a Mansion in Barovia",
+        history: "• <strong>The Guardian of the Mountain Pass (<code>~450 Years Ago • Book Chapter 7</code>):</strong> Centuries before King Barov's armies marched into the valley, a wise and ancient silver dragon named <strong>Argynvost</strong> discovered the existence of the <strong>Amber Temple</strong> high in Mount Ghakis. Determined that no mortal warlord should ever claim the Dark Powers sealed inside the amber, Argynvost assumed the disguise of a noble human philanthropist named <strong>Lord Argynvost</strong>, used his dragon hoard to build the palatial limestone fortress of <strong>Argynvostholt</strong> overlooking the Svalich woods, and knighted the purest paladins across the realm into the <strong>Order of the Silver Dragon</strong>.",
+        h2: "🧭 The Fall of the Mansion & The Desecration of Argynvost's Bones",
+        culture: "• <strong>The Siege of 347 BC:</strong> During Strahd's conquest of the valley, the Order of the Silver Dragon sheltered refugees and fought Strahd's legions to a standstill. When his knights were finally outnumbered, Argynvost shed his human guise, burst from the mansion's battlements as a colossal silver dragon, and froze hundreds of Strahd's soldiers with his breath—before Strahd's generals brought him down with siege ballistae and sorcery.<br>• <strong>Strahd's Ultimate Insult:</strong> To ensure the dragon could never be resurrected or honored, Strahd ordered Argynvost's corpse hacked apart, stripped the flesh from his bones, and hauled the <strong>Giant Dragon Skull</strong> to <strong>Castle Ravenloft's Hall of Bones (`Area K67`)</strong> as a macabre trophy. That desecration—combined with Commander <strong>Vladimir Horngaard's (`Area Q36`)</strong> refusal to forgive—cursed every fallen knight to rise from their graves as undying <strong>Revenants</strong>.",
+        h3: "⚔️ The Beacon of Argynvostholt (Q53) & Campaign 3 Trilogy Lore",
+        mechanics: "• <strong>The Fractured Mansion Today (`Areas Q1–Q53`):</strong> The southern wall of the mansion is blasted open; giant spiders nest in the ballroom (`Q3`), spectral dragon wings lash intruders in the foyer (`Q2`), and a wounded archer hides on the roof (`Savid the Dusk Elf, Q40`). In the chapel (`Q13–Q16`), <strong>Sir Godfrey Gwilym</strong> (Vladimir's tragic husband) begs the party to end Vladimir's madness not with blades, but by restoring the dragon's skull.<br>• <strong>Lighting the Silver Beacon (`Area Q53`):</strong> Returning the <strong>🐉 Skull of Argynvost</strong> from Castle Ravenloft (`Session 9 Heist`) to the mausoleum (`Q16`) ignites a blinding silver light in the 100-foot lighthouse tower (`Q53`) visible across all of Barovia—putting the revenants to rest and granting the entire party the permanent <strong>🐉 Beacon of Argynvostholt Boon (+1 AC and +1 to ALL Saving Throws for the rest of the campaign!)</strong>.<br>• <strong>Campaign 3 Bridge — The Ancient Star-Mural (`Area Q36`):</strong> Behind Vladimir's throne is a 400-year-old silver-leaf celestial mural depicting the leyline star-charts connecting **Stormwreck Isle (Campaign 1)** to the **Lost Dragon Lands (Campaign 3)**—confirming that Argynvost was guarding the planar leyline gate that Vecna's S20 ritual will shatter open!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Cold white mist curling around decapitated dragon gargoyles; frost-rimmed chandeliers chiming in the wind; and the sorrowful, echoing voice of Argynvost's spirit speaking from the shadows whenever a hero shows chivalry."
+    },
+    lore_winery_yester: {
+        title: "🍷 The Wizard of Wines, Yester Hill & The Blood-Drinking Gulthias Tree",
+        subtitle: "The Three Life-Gems, Kavan's Cairn & The Wall of Fog (Book Chapters 12 & 14 & Reloaded)",
+        badge: "Act II • Sessions 7–8",
+        quote: "Without the wine, the people have nothing left to drown the terror. And without the three gems of the vineyard, the soil itself turns to gray dust.",
+        h1: "📜 How an Ancient Archdruid Created the Wizard of Wines",
+        history: "• <strong>The Archdruid's Three Seeds (<code>Over 500 Years Ago • Book Chapter 12</code>):</strong> Long before the Krezkov or Martikov families owned the vineyard, an ancient archdruid (called the 'Wizard of Wines' by locals) planted three glowing emerald seeds—<strong>The Three Magic Life-Gems</strong>—into the rocky soil of western Barovia. Their druidic magic allowed plump, sweet grapes to flourish year-round even after the Mists choked out the sun.<br>• <strong>The Three Vintages of Barovia:</strong> Each gem powered a distinct vintage distributed for free by <strong>Davian Martikov (`Keeper of the Feather Patriarch`)</strong> to keep Barovians from succumbing to despair:<br>&nbsp;&nbsp;• <strong>1. <em>Champagne du le Stomp</em> (First Gem — Missing for 10 Years):</strong> The finest, rarest bubbly vintage. Secretly ripped out by <strong>Count Strahd</strong> a decade ago and forged into the core of the <strong>💎 Heart of Sorrow (`Area K20`)</strong>!<br>&nbsp;&nbsp;• <strong>2. <em>Red Dragon Crush</em> (Second Gem — Stolen by Baba Lysaga):</strong> Stolen three weeks ago by <strong>Baba Lysaga's Scarecrows</strong> and wedged beneath the floorboards of her <strong>Creeping Walking Hut in Berez (`Area U3`)</strong>!<br>&nbsp;&nbsp;• <strong>3. <em>Purple Grapemash No. 3</em> (Third Gem — Stolen by Yester Hill Druids):</strong> Stolen days ago by the <strong>Yester Hill Druids</strong> to awaken the 50-foot tree blight <strong>Wintersplinter (`Area Y4`)</strong>!",
+        h2: "🧭 Yester Hill: Kavan's Pre-Zarovich Cairn & The Wall of Fog (Y2)",
+        culture: "• <strong>Before Strahd Came — Chieftain Kavan (`Book Chapter 14`):</strong> At the southern tip of the valley rises <strong>Yester Hill</strong>, crowned by a black-boulder ring of megaliths older than Castle Ravenloft. Here ruled the last primal chieftain of the Balinok tribes, <strong>Kavan the Blood-Drinker</strong>, before General Strahd shattered his warbands in 347 BC. Kavan's spirit still lingers in the cairn (`Area Y4`), gifting his <strong>🩸 +2 Blood Spear of Kavan (+2d6 Temp HP on kill)</strong> to a warrior of primal strength (`King Jacomir`).<br>• <strong>Why Strahd Visits the Wall of Fog (`Area Y2`):</strong> At the western edge of the stone ring, looking into the white Wall of Mists (`Y2`), stands a mirage of a sunlit, white-walled city from Strahd's long-lost mortal homeland. Strahd flies here on his Nightmare steed <strong>Beucephalus</strong> to gaze silently into the fog at the youth he lost forever—allowing the Mountain Druids to worship him as a god of storm and winter.",
+        h3: "⚔️ The Progenitor Stake & The Gulthias Tree (Area Y3)",
+        mechanics: "• <strong>Origin of the Gulthias Tree (`Area Y3`):</strong> According to ancient lore (`The Sunless Citadel` & `Book p. 198`), a wooden stake driven through the heart of an ancient vampire took root in the blood-soaked soil of a hidden grove on Yester Hill's southern slope, growing into the pale, twisted, blood-oozing <strong>Gulthias Tree (`AC 10, 250 HP, Vulnerable to Fire`)</strong>.<br>• <strong>The Blight Factory & The Gulthias Staff:</strong> Every Twig, Needle, and Vine Blight in Barovia sprouts from the Gulthias Tree's roots. Its branches are controlled by the chief druid's <strong>🦯 Gulthias Staff</strong> (`10 charges: Vampiric Touch & Blight`)—and <strong>snapping the Gulthias Staff in half (`10 HP`) instantly kills every Blight within 300 feet</strong>!<br>• <strong>Wintersplinter's Ritual (`Sessions 7–8`):</strong> In Session 7, the party purges the winery using the staff-break trick; in Session 8, they race up Yester Hill during a lightning storm to slay <strong>Wintersplinter (`CR 7`)</strong>, hack down the Gulthias Tree (recovering the <strong>🪓 Treebane Greataxe</strong>), and return the 2nd Life-Gem to Davian Martikov!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "At the Winery: purple grape-mash mixed with rain and thousands of rustling dry twigs. On Yester Hill: deafening thunder, jagged lightning illuminating a circle of black stones, and a pale white tree that bleeds warm crimson blood when struck by an axe."
+    },
+    lore_tower_baratok: {
+        title: "🗼 Khazan's Tower (Van Richten's Tower), Lake Baratok & The Mad Mage",
+        subtitle: "The Lich-Apprentice's Anti-Magic Spire & The Broken Archmage (Book Chapter 11 & Reloaded)",
+        badge: "Act III • Session 11",
+        quote: "Khazan was a fool who thought he could outlive the Devil by tearing his own soul from his bones. Yet his tower remains the one place in Barovia where Strahd's scrying eyes go blind.",
+        h1: "📜 Who Was Archmage Khazan? (The Destroyer of the Sunsword)",
+        history: "• <strong>Strahd's Court Wizard (<code>Book p. 167 & Crypt 15</code>):</strong> Shortly after Strahd became a vampire, an ambitious archmage named <strong>Khazan</strong> served as his court wizard. Fearful of the radiant crystal blade that had belonged to murdered Prince Sergei, Strahd commanded Khazan to destroy the sword. Khazan succeeded in shattering the crystal blade—<strong>but his apprentice stole the platinum hilt before it could be melted down</strong>, allowing the sentient soul of the sword to survive as the <strong>🗡️ Sunsword</strong>!<br>• <strong>The Tower on Lake Baratok & Khazan's Demise:</strong> Rewarded by Strahd, Khazan retreated to an island on <strong>Lake Baratok</strong> and raised a four-story stone wizard's tower (`Book Chapter 11`). Obsessed with achieving demilichdom and escaping Barovia, Khazan attempted a magical ascension ritual—only for the Dark Powers' Mists to rebound his spell, destroying his body! His skeletal remains and his legendary <strong>🪄 Staff of Power (+2 AC, Saves, Spell Attack & 20 Charges)</strong> are sealed inside <strong>Castle Ravenloft Crypt 15 (`Area K84`)</strong>.",
+        h2: "🧭 How the Tower Works Today: The Anti-Magic Field & Door Trap",
+        culture: "• <strong>Why Van Richten & Ezmerelda Use It (`Areas V1–V7`):</strong> Because Khazan Enchanted the entire tower and island with a permanent <strong>8th-Level Antimagic Field</strong>, <strong>neither Strahd nor Baba Lysaga can scry on anyone inside the tower</strong>, and all spells, magic items, and summoned creatures are suppressed within its walls! Legendary monster hunter <strong>Rudolph van Richten</strong> used it as his secret base (leaving the severed head of <strong>Yan the Vistani</strong> on the 4th floor to interrogate with <em>Speak with Dead</em>), and <strong>Ezmerelda d'Avenir</strong> parked her booby-trapped wagon (`Area V1`) outside.<br>• <strong>The Stick-Figure Door Puzzle & Blue Dragon Trap (`Area V2`):</strong> The front door is sealed with an engraved metal diagram of six stick figures dancing around a lightning bolt. Performing the 6-step stick-figure dance opens the door safely (and bonds the <strong>Clay Golem elevator</strong> on Floor 1 to obey the party!). Touching the door without dancing triggers a <strong>7th-level Lightning Bolt (12d6)</strong>, summons an <strong>Young Blue Dragon</strong> on a second failure, and collapses the crumbling 1st-floor ceiling (`4d10 bludgeoning`)!",
+        h3: "⚔️ Lake Baratok & The Mad Mage of Mount Baratok (Mordenkainen)",
+        mechanics: "• <strong>The Mad Mage (`Book p. 39 — Northern Shore of Lake Baratok`):</strong> One year ago (734 BC), the legendary Oerth archmage <strong>Mordenkainen</strong> entered Barovia and led young <strong>Doru</strong> and the villagers in an assault on Castle Ravenloft. Because Strahd was shielded by the <strong>Heart of Sorrow (`K20`)</strong>, Strahd shattered Mordenkainen's staff and hurled him off the Tser Falls cliff.<br>• <strong>Curing His Paranoia (`Session 11`):</strong> Having cast <em>Mind Blank</em> on himself to hide from Strahd after losing his spellbook and staff, Mordenkainen wanders the northern cliffs of Lake Baratok disguised as an elk, firing lightning at anyone he thinks works for Strahd. If the party approaches peacefully or removes his madness with <em>Greater Restoration</em> (or outlasts his <em>Mind Blank</em>), he regains his sanity, shares deep lore on Castle Ravenloft's defenses, and bestows a permanent <strong>Charm of Heroism (+10 Temp HP & Bless)</strong>!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Inside the Tower: an eerie, sudden vacuum in the air as Piper's Wild Magic and Yvaine's spells abruptly go silent inside the Antimagic Field, leaving only the creak of rotting chains and a silent Clay Golem waiting for orders."
+    },
+    lore_tsolenka_pass: {
+        title: "❄️ Tsolenka Pass, The Balinok Gatehouse & Mount Ghakis",
+        subtitle: "The Frozen Gateway to the Amber Temple • Act IV (Book Chapter 9 & Reloaded)",
+        badge: "Act IV • Session 15",
+        quote: "Turn back from the snows of Ghakis! The wizards who built that gate set green hellfire in the archway—and above the clouds, a bird with wings as wide as a galleon hunts the mountain road!",
+        h1: "📜 Why the Dawn Wizards Built Tsolenka Pass",
+        history: "• <strong>The Only Road up Mount Ghakis (<code>2,000+ Years Ago • Book Chapter 9</code>):</strong> When the Dawn Wizards constructed the <strong>Amber Temple</strong> near the summit of <strong>Mount Ghakis</strong>, they carved a narrow, treacherous gravel road along a sheer 1,000-foot cliff face overlooking the freezing Luna River canyon: <strong>Tsolenka Pass</strong>.<br>• <strong>The Guardhouse & The Wall of Green Fire (`Areas T1–T6`):</strong> To prevent mortal kings, cultists, or armies from marching up the mountain to claim the Amber Sarcophagi, the wizards erected a black-stone portcullis gatehouse (`Area T1`) flanked by two horned demon statues (`Area T3`), sealing the archway with a permanent, roaring curtain of emerald-green hellfire (`Area T2`).",
+        h2: "🧭 The Three Guardians of the Pass: Green Fire, Vrocks & Sangzor",
+        culture: "• <strong>1. 🔥 The Wall of Green Fire (`Area T2`):</strong> Any creature attempting to walk or leap through the gatehouse archway without dispelling it (`Dispel Magic DC 16`) or crawling along the icy outer cliff ledge (`DC 12 DEX Acrobatics`) takes <strong>8d6 Fire Damage</strong>!<br>• <strong>2. 🦅 The Horned Demon Statues (`Area T3`):</strong> Two stone statues of winged demons flank the gate; if anyone passes the green fire or steals the <strong>🤍 Silver-Plated Spear</strong> from the frozen guard tower (`Area T6`), the statues shed their stone shells and animate as two shrieking fiendish <strong>Vrocks</strong>!<br>• <strong>3. 🐐 Bloodhorn ('Sangzor', `Book p. 158`):</strong> A monstrous, half-demonic <strong>Giant Goat (`CR 3 • 66 HP, Resistance to nonmagical weapons, Charge +7 for 4d6+4 + DC 15 STR or flung off the 1,000-ft cliff!`)</strong> with blood-red fur and black horns that stalks the blinding blizzards above the pass, ambushing travelers from the fog and knocking them into the abyss.",
+        h3: "⚔️ The Stone Bridge (T7–T9) & The Roc of Mount Ghakis",
+        mechanics: "• <strong>Crossing the 500-Foot Abyss (`Areas T7–T9`):</strong> Beyond the gatehouse, a crumbling stone arch bridge spans a 500-foot-deep freezing gorge between two ancient stone guard towers.<br>• <strong>Boss Ambush — The Roc of Mount Ghakis (`CR 11 • 248 HP, 120-ft Fly`):</strong> Nesting at the icy peak of Mount Ghakis is a prehistoric, 200-foot-wingspan <strong>Roc</strong> that survived the Dawn Wizards' era. As the party crosses the exposed stone bridge (`T8`), the sky darkens and the Roc dives out of the blizzard: making a <strong>Beak Attack (`+13 to hit, 4d12+9 piercing`)</strong> and a <strong>Talon Snatch (`+13 to hit, 4d8+9 slashing + Grappled/Restrained DC 19`)</strong> to carry a hero or mount off the bridge toward its nest!<br>• <strong>Tactical Survival:</strong> Ducking into the twin stone bridge towers (`T7` or `T9`), anchoring characters with rope/chains, or grounding the Roc's wings lets the party survive the crossing and claim the treasures in the snow before reaching the Amber Temple (`Session 15`)!",
+        h4: "🎭 DM Roleplay Cues & Sensory Vibe",
+        rp: "Howling horizontal blizzards that freeze eyelashes shut; emerald-green flames reflecting off black ice; two glowing red goat-eyes watching from a high crag; and a shadow as wide as a ship blotting out the snow-clouds overhead."
     },
 
     // =========================================================================
