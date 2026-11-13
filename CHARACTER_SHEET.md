@@ -124,7 +124,7 @@
 * **Vitals:** **HP:** `28 / 28` | **AC:** `15` (Breastplate) | **Speed:** `30 ft` | **Init:** `+2`
 * **Actions:** Silvered Rapier (`+5 to hit`, `1d8+2` piercing), **Parry Reaction** (`+2 AC` against one melee attack), **Defiant Help** (Grants Advantage within 5 ft).
 
-### ⚔️ Ezmerelda d'Avenir (Curated Tarokka Fated Ally — Act II–IV)
+### ⚔️ Ezmerelda d'Avenir (Independent Vistani Hunter Ally — Act II–III)
 * **Role:** Vistani Monster Hunter & Spellblade
 * **Vitals:** **HP:** `82 / 82` | **AC:** `17` (Studded Leather + DEX) | **Speed:** `30 ft` | **Init:** `+4`
 * **Actions:** Multiattack (2x `+1 Rapier` `+8 hit, 1d8+5` + 1x `+1 Silvered Handaxe` `+6 hit, 1d6+3`), *Evil Eye* (Curse/Charm), 4th-Level Wizard Spellcasting (*Lightning Bolt, Greater Invisibility, Magic Circle, Protection from Evil and Good*).

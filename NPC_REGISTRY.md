@@ -144,9 +144,9 @@
 
 ## 🦅 SECTION 3: FATED ALLIES, VALLAKI FACTIONS & ENDGAME LEGENDS
 
-### ⚔️ Ezmerelda d'Avenir (Vistani Vampire Hunter & Fated Ally)
+### ⚔️ Ezmerelda d'Avenir (Independent Vistani Vampire Hunter Ally)
 * **Status:** `⚪ NOT MET`
-* **Role:** Curated Fated Tarokka Ally (Artillerist, Spellblade, & Monster Hunter)
+* **Role:** Independent Vistani Monster Hunter & Optional Raid Support (kept off Card #4 so Cael stays the party's sole permanent healer)
 * **Appearance:** Fierce, athletic Vistani woman in crimson-and-leather traveling gear with a masterwork prosthetic lower leg concealed beneath her boot, armed with a **+1 Rapier**, **+1 Handaxe**, and silvered weapons.
 * **Voice & Cue:** Sharp, fearless, pragmatic confidence. *"Silver for the wolves, running water for the spawn, and a stake through the ribs for the Count. Keep up."*
 
@@ -155,11 +155,16 @@
 * **Role:** Undercover Half-Elf Bard at the Blue Water Inn (Vallaki) with an armored Saber-Toothed Tiger in his carnival wagon.
 * **Voice & Cue:** As Rictavio: flamboyant, eccentric ringmaster. As Van Richten: weary, calculating, ruthless old hunter. *"Monsters do not lose to heroes. Monsters lose to preparation."*
 
-### 🪶 Urwin & Danika Martikov + Davian Martikov (Keepers of the Feather — Discovered via Kolyan's Wizard Diary!)
-* **Status:** `🟡 NAMED IN KOLYAN'S WIZARD DIARY (Session 1 Manor Loot — Party Has Direct Lead!)`
-* **Role:** Secret Wereraven Spy Network, Owners of the Blue Water Inn (Vallaki), & Masters of the Wizard of Wines Winery (`Davian Martikov`).
-* **Session 1 Connection:** While looting Indirovich Manor in Session 1, the party discovered that late Burgomaster **Kolyan Indirovich** was a former wizard and found his **Wizard Diary**, in which he explicitly wrote that he knows **Davian Martikov** and **the Keepers of the Feather**, who can help with the Strahd situation if they need more assistance! Presenting Kolyan's diary to Urwin in Vallaki or Davian at the Winery immediately earns the Keepers' trust!
+### 🪶 Urwin & Danika Martikov (Blue Water Inn • Vallaki Area N2)
+* **Status:** `🟡 UNMET / NAMED IN KOLYAN'S WIZARD DIARY (Session 1 Manor Loot — Estranged from Patriarch Davian)`
+* **Role:** Secret Wereraven Spymasters & Proprietors of the Blue Water Inn (`Vallaki N2`), guarding hidden loft sanctuary (`Bag of Tricks`, `2x Elixirs of Health`).
 * **Voice & Cue:** Warm, hospitable, quietly observant. *"A warm bowl of beet soup and a locked door are the rarest treasures in Vallaki, friends."*
+
+### 🦅 Davian Martikov (Patriarch of Keepers of the Feather • Old Friend of Kolyan Indirovich)
+* **Status:** `🟡 UNMET (Key Secrecy Lead via Kolyan's Wizard Diary — Vallaki / Wizard of Wines)`
+* **Role:** Gruff Wereraven Patriarch (`HP 31`, `AC 12`, `CoS p. 242`) commanding the Keepers' aerial network & **Wizard of Wines Winery** (`Book Ch. 12`), listed in Vallaki & Krezk/Winery filters in `DM_SCREEN.html`.
+* **Session 1 Connection (Why Secrecy Breaks Only for Kolyan):** The Keepers of the Feather are fiercely secretive and deny their existence to outsiders (`DC 18 Persuasion` cold). While looting Indirovich Manor in Session 1, the party discovered late Burgomaster **Kolyan Indirovich's Wizard Diary**, which explicitly notes his personal friendship with **Davian Martikov** and that if the village needs extra assistance, they can turn to the Keepers of the Feather for aid. Invoking Kolyan's friendship or showing his diary immediately lowers Davian's guard and unlocks Keeper sanctuary and winery quests!
+* **Voice & Cue:** Gruff suspicion until Kolyan's name drops: *"Keepers of what? I'm just an old grape-farmer... wait—you carry Kolyan Indirovich's own writing? Lower your voices and step behind the barrels."*
 
 ### 🥧 Morgantha / "Granny" (Night Hag Matron of Old Bonegrinder — Met in Session 1!)
 * **Status:** `🟢 MET IN SESSION 1 (Semi-Hostile/Wary of Piper • Gifted 1x Uneaten Dream Pastry to Jacomir)`
@@ -178,3 +183,14 @@
 ### 💀 Baba Lysaga (Mother of Night & Swamp Witch of Berez — Act III)
 * **Status:** `⚪ NOT MET`
 * **Role:** CR 11 Arch-Hag flying in a giant skull while her **Creeping Walking Hut** (powered by a stolen Winery Gem) crushes intruders in the drowned ruins of Berez. Guards 🗡️ **The Sunsword**!
+
+---
+
+## 📜 SECTION 4: EXPANDED OFFICIAL BOOK NPCS IN `DM_SCREEN.html` (37 TOTAL DOSSIERS)
+
+All 21 additional canonical & Court NPCs below feature complete 3-Tab Dossiers in `DM_SCREEN.html` (Top 6-Stat Strip + Live HP Steppers + Philosophy/Dilemma/Morals/Secrets + Clickable Section 4 Loot Links + Full 5e Spellbooks/Combat + Expandable Lore Accordions + Bidirectional Enemy ⇄ NPC Sheet & Lore Cross-Links):
+* **Village of Barovia (Act I):** **Doru Donavich** *(Linked to CR 5 Attic Boss)*, **Parriwimple** *(Area E1, CR 5 Gladiator, HP 112)*, **Mad Mary** *(Area E3, Gertruda -> K42 Ravenloft lead)*.
+* **Town of Vallaki & Vistani Camp (Act II):** **Davian Martikov** *(Standalone Keepers Patriarch Dossier — Kolyan Diary Friendship Key & Wereraven `HP 31 / AC 12`)*, **Father Lucian Petrovich** *(Area N1, St. Andral's Bones & L3 Cleric Spells)*, **Izek Strazni** *(Linked to Vallaki Enforcer Boss, Demon Arm & Ireena Obsession)*, **Victor Vallakovich** *(Area N3t, 9th-Lvl Mage + Attic Spellbook)*, **Gadof Blinsky & Piccolo** *(Area N7, Ireena doll & Rictavio lead)*, **Arrigal** *(Area N9, CR 8 Assassin, Assassinate + 4d6 Sneak + 7d6 Venom + Treasure Wagon N9i)*, **Kasimir Velikov** *(Area N9a, CR 6 Dusk Elf Elder Mage, Ring of Warmth, Mount Ghakis & Amber Temple guide)*.
+* **Argynvostholt, Krezk, Werewolf Den & Mount Baratok (Act III):** **Sir Godfrey Gwilym** *(Area Q37, CR 6 Revenant Paladin, HP 136, L1–L4 Smites)*, **The Abbot & Vasilka** *(Area S13, Linked to CR 10 Deva Boss + Bridal Gown Quest)*, **Kiril Stoyanovich** *(Linked to Werewolf Alpha Boss, Pack Dominance & Silvered Spear)*, **Zuleika Toranescu** *(Area Z7, Rebel Werewolf Matriarch seeking Emil's rescue)*, **Mordenkainen / Mad Mage** *(Mount Baratok, CR 12 18th-Lvl Archmage L1–L9 w/ Time Stop, Mind Blank & Magnificent Mansion)*.
+* **Tsolenka Pass & The Amber Temple (Act III):** **Neferon ("Heinrich Stolt")** *(Linked to CR 8 Arcanaloth Guardian Boss inside Area X5a, False Scholar Disguise & Amber Secrets)*, **Exethanter** *(Linked to CR 21 Ancient Archlich of Area X27, Amnesiac Restorable via Greater Restoration, Dark Vestige Password Master)*.
+* **Castle Ravenloft Court & Act II–IV (Act I–IV):** **Bride Anastrasya Karelova** *(Linked to CR 5 Vallaki Feast Boss + Gilded Razor Fan +1)*, **Bride Ludmilla Vilisevic** *(Linked to CR 5+ Archmage Consort + Amber-Inlaid Spell Ring +1)*, **Escher** *(Area K49, Fading Dhampir-Consort & secret Castle Informant)*, **Rahadin** *(Linked to CR 10 Dusk Elf Chamberlain Boss & Deathly Choir)*.
