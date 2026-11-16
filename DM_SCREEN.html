@@ -845,6 +845,176 @@
         .spell-info-drawer.open { display: block; }
         .conc-pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(234, 179, 8, 0.14); border: 1px solid #ca8a04; color: #fef08a; padding: 3px 9px; border-radius: 99px; font-family: 'JetBrains Mono', monospace; font-size: 0.71rem; font-weight: 600; }
         .conc-pill.free { background: rgba(30, 41, 59, 0.6); border-color: #334155; color: #94a3b8; }
+
+        /* Modal Scroll Containment & Location / Map Image Lightbox */
+        dialog:modal { overscroll-behavior: contain; }
+        dialog::backdrop { overflow: hidden; overscroll-behavior: contain; }
+
+        .btn-map-ref {
+            background: linear-gradient(135deg, #2b1d12, #1b1116);
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold-soft);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.18s ease;
+            white-space: nowrap;
+        }
+        .btn-map-ref:hover {
+            background: var(--accent-gold);
+            color: #07090e;
+            box-shadow: 0 0 12px rgba(197, 160, 89, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-img-open {
+            background: linear-gradient(135deg, #0f2942, #0b1b2e);
+            border: 1px solid #38bdf8;
+            color: #e0f2fe;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+        .btn-img-open:hover {
+            background: #0284c7;
+            border-color: #7dd3fc;
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .biome-card-img-btn {
+            background: rgba(14, 116, 144, 0.25);
+            border: 1px solid #38bdf8;
+            color: #bae6fd;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+        .biome-card-img-btn:hover {
+            background: #0284c7;
+            color: #ffffff;
+            border-color: #e0f2fe;
+        }
+        .img-pending-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: #64748b;
+            border: 1px dashed #334155;
+            background: rgba(15, 23, 42, 0.55);
+            padding: 3px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        dialog.lightbox-dialog {
+            background: transparent;
+            border: none;
+            max-width: 96vw;
+            width: 1200px;
+            max-height: 94vh;
+            margin: auto;
+            padding: 0;
+            overflow: visible;
+        }
+        dialog.lightbox-dialog::backdrop {
+            background: rgba(3, 5, 10, 0.9);
+            backdrop-filter: blur(8px);
+        }
+        .lightbox-wrapper {
+            background: #0b1019;
+            border: 1.5px solid var(--accent-gold-dark);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 94vh;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.92);
+            animation: modalFadeIn 0.15s ease-out;
+        }
+        .lightbox-header {
+            background: linear-gradient(90deg, #141b2b, #24141b);
+            border-bottom: 1px solid var(--border-color);
+            padding: 11px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .lightbox-header h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-gold-soft);
+            font-size: 1.05rem;
+            margin: 0;
+        }
+        .lightbox-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .lightbox-tabs {
+            display: flex;
+            gap: 6px;
+            padding: 8px 16px;
+            background: #090e17;
+            border-bottom: 1px solid var(--border-subtle);
+            flex-wrap: wrap;
+        }
+        .lightbox-stage {
+            flex: 1;
+            min-height: 260px;
+            overflow: auto;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #111928 0%, #06090f 100%);
+        }
+        .lightbox-stage.is-zoomed {
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+        .lightbox-img {
+            max-width: 100%;
+            max-height: calc(94vh - 132px);
+            width: auto;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid #263349;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.75);
+            cursor: zoom-in;
+            display: block;
+        }
+        .lightbox-stage.is-zoomed .lightbox-img {
+            max-width: none;
+            max-height: none;
+            width: auto;
+            cursor: zoom-out;
+        }
     </style>
 </head>
 <body>
@@ -864,7 +1034,8 @@
     <a href="#party-specs" class="nav-btn">🛡️ 0. Party & Allies</a>
     <a href="#active-quests" class="nav-btn">📜 1. 15–20 Session Roadmap</a>
     <a href="#tarokka-oracle" class="nav-btn">🔮 1.1 Tarokka Oracle</a>
-    <a href="#biomes-explorer" class="nav-btn">🗺️ 1.5 Biomes & Locations (17)</a>
+    <a href="#biomes-explorer" class="nav-btn">🗺️ 1.5 Biomes & Locations (25)</a>
+    <button type="button" class="btn-map-ref" onclick="openWorldMapLightbox()">🗺️ Map of Barovia</button>
     <a href="#npc-directory" class="nav-btn">👥 2. NPC Directory (15)</a>
     <a href="#monsters-section" class="nav-btn">💀 3. Enemies & Pointy Hat Bosses (20)</a>
     <a href="#loot-vault" class="nav-btn">🎒 4. World Loot & Relics</a>
@@ -1039,125 +1210,177 @@
     <!-- SECTION 1.5: BIOMES, DUNGEONS & LOCATIONS EXPLORER -->
     <section id="biomes-explorer">
         <div class="section-header">
-            <span>🗺️ SECTION 1.5: CAMPAIGN BIOMES, DUNGEONS &amp; LOCATIONS EXPLORER (17 LOCATIONS)</span>
-            <span class="section-tag">CLICK ANY LOCATION FOR DETAILED LANDMARKS, HAZARDS, DCs, TREASURES &amp; HISTORY/LORE LINK</span>
+            <span>🗺️ SECTION 1.5: CAMPAIGN BIOMES, DUNGEONS &amp; LOCATIONS EXPLORER (25 LOCATIONS)</span>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="btn-map-ref" onclick="openWorldMapLightbox()">🗺️ Full Map of Barovia</button>
+                <span class="section-tag">CLICK ANY LOCATION FOR LANDMARKS, HAZARDS, DCs, IMAGES &amp; LORE</span>
+            </div>
         </div>
 
         <div class="loot-filter-bar" id="biome-filter-bar">
             <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Filter Locations by Act:</span>
-            <button class="btn-loot-filter active" onclick="filterBiomes('all', this)">🗺️ All Locations (17)</button>
-            <button class="btn-loot-filter" onclick="filterBiomes('act1', this)">🩸 Act I: Barovia, Crossroads, Tser Pool &amp; Bonegrinder (5)</button>
-            <button class="btn-loot-filter" onclick="filterBiomes('act2', this)">⚔️ Act II: Vallaki, Winery, Yester Hill &amp; Dinner (5)</button>
-            <button class="btn-loot-filter" onclick="filterBiomes('act3', this)">🐉 Act III: Argynvostholt, Krezk, Berez &amp; Baratok (4)</button>
+            <button class="btn-loot-filter active" onclick="filterBiomes('all', this)">🗺️ All Locations (25)</button>
+            <button class="btn-loot-filter" onclick="filterBiomes('act1', this)">🩸 Act I: Gates, Woods, Barovia, Tser Falls, Pool &amp; Mill (8)</button>
+            <button class="btn-loot-filter" onclick="filterBiomes('act2', this)">⚔️ Act II: Vallaki Sites, Winery, Yester Hill &amp; Dinner (8)</button>
+            <button class="btn-loot-filter" onclick="filterBiomes('act3', this)">🐉 Act III: Argynvostholt, Krezk, Abbey, Berez, Tower &amp; Den (6)</button>
             <button class="btn-loot-filter" onclick="filterBiomes('act4', this)">🏰 Act IV: Tsolenka Pass, Amber Temple &amp; Ravenloft (3)</button>
+            <button type="button" class="btn-map-ref" style="margin-left:auto;" onclick="openWorldMapLightbox()">🗺️ Map of Barovia</button>
         </div>
 
         <div class="grid-4" id="biomes-grid">
-            <!-- ACT I LOCATIONS (5) -->
-            <div class="card clickable searchable-row biome-card" data-biome-act="act1" onclick="openBiomeModal('svalich')">
-                <div class="card-header"><span class="card-title">🌲 1. Old Svalich Road &amp; Gates</span><span class="pill crimson">Session 1 • Areas A–B</span></div>
+            <!-- ACT I LOCATIONS (8) -->
+            <div class="card clickable searchable-row biome-card" data-biome-key="gates_barovia" data-biome-act="act1" onclick="openBiomeModal('gates_barovia')">
+                <div class="card-header"><span class="card-title">🚪 1. Gates of Barovia</span><span class="pill crimson">Session 1 • Areas A–B</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Towering headless stone king colossi (<code>Area B</code>), freezing gorge hairpin above the Ivlis ravine, &amp; Dalvan Olensky's mist-choked trail markers.<br><strong>⚠️ Hazards:</strong> Choking Border Mists (<code>DC 20 CON/min</code> +1 Exhaustion), slick mud skid (<code>DC 13</code>), Dire Wolf ambush.<br><strong>🎁 Loot:</strong> Spinning Brass Compass, Kolyan's decoy letter, wolf pelts &amp; Alpha Fang.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Decapitated 40-ft stone king colossi, 30-ft living wrought-iron gates (<code>Area A</code>), &amp; Milepost 13 Dalvan Olensky corpse.<br><strong>⚠️ Hazards:</strong> Choking Border Mists (<code>DC 15 CON/min</code> +1 Exhaustion), spatial fog loop.<br><strong>🎁 Loot:</strong> Spinning Brass Compass, Kolyan's real sealed letter, 1 GP / 4 SP / 9 CP.</p>
                 </div>
             </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act1" onclick="openBiomeModal('village')">
-                <div class="card-header"><span class="card-title">🏚️ 2. Barovia, Manor &amp; Church</span><span class="pill crimson">Sessions 1–2 • E1–E5</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="svalich" data-biome-act="act1" onclick="openBiomeModal('svalich')">
+                <div class="card-header"><span class="card-title">🌲 2. Svalich Woods</span><span class="pill crimson">Session 1 • Old Svalich Rd</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Bildrath's Mercantile (<code>E1</code>, 10x prices), Blood on the Vine Vistani tavern (<code>E2</code>), Mad Mary's (<code>E3</code>), Indirovich Manor (<code>E4</code>), &amp; Donavich's Church Attic (<code>E5</code>).<br><strong>⚠️ Hazards:</strong> <strong>Doru (85 HP CR 5)</strong> starving in attic standoff, Zombie houses, Strahd's wolves.<br><strong>🎁 Loot:</strong> Kolyan's Wizard Diary, Blank Tarokka Card, Ismark's Silver &amp; Holy Water cache.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Cathedral-tall 80-ft black pines, gravel stagecoach road, Razor-Back Hairpin Cliff Gorge, &amp; Morgantha's road pushcart.<br><strong>⚠️ Hazards:</strong> Runaway Stagecoach Dire Wolf chase (<code>DC 10/13</code>), nightly wolf patrols.<br><strong>🎁 Loot:</strong> Alpha Dire Wolf Pelts &amp; Fang Trophy, Morgantha's Dream Pastry (uneaten).</p>
                 </div>
             </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act1" onclick="openBiomeModal('crossroads_falls')">
-                <div class="card-header"><span class="card-title">⚖️ 3. Crossroads &amp; Tser Falls</span><span class="pill gold">Session 2 • Areas F &amp; H</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="village" data-biome-act="act1" onclick="openBiomeModal('village')">
+                <div class="card-header"><span class="card-title">🏚️ 3. Village of Barovia</span><span class="pill crimson">Sessions 1–2 • E1–E3</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Creaking timber gallows over 11 nameless graves (<code>F</code>), cobblestones of the <strong>Black Carriage</strong>, &amp; the 1,000-ft granite span over Tser Falls (<code>H</code>).<br><strong>⚠️ Hazards:</strong> Hanged Doppelganger Illusion (<code>DC 12 WIS</code>), slick mist-soaked cliffs, <strong>Derek's Time-Stop</strong>.<br><strong>🎁 Loot:</strong> Grave <em>Protection vs Evil &amp; Good</em> scroll, 15 SP pouch, Strahd's first greeting.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Timber-barricaded square beneath Pillarstone Crag, Bildrath's Mercantile (<code>E1</code>), Blood on the Vine Tavern (<code>E2</code>), &amp; Mad Mary's (<code>E3</code>).<br><strong>⚠️ Hazards:</strong> Nightly Zombie &amp; Ghoul prowlers (<code>DC 12 Perception</code>), 10x Bildrath markup.<br><strong>🎁 Loot:</strong> <strong>🃏 Blank Tarokka Card</strong> (S1 Tavern), Blinsky "Maloriga" doll lead.</p>
                 </div>
             </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act1" onclick="openBiomeModal('tserpool')">
-                <div class="card-header"><span class="card-title">🔮 4. Tser Pool Vistani Camp</span><span class="pill gold">Session 2 • Area G</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="indirovich_manor" data-biome-act="act1" onclick="openBiomeModal('indirovich_manor')">
+                <div class="card-header"><span class="card-title">🕯️ 4. Indirovich Manor</span><span class="pill crimson">Session 1 • Area E4</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Lantern-strung vardo circle on a black-glass glacial pool, crackling storytelling bonfire, &amp; <strong>Madam Eva's crimson silk tent</strong>.<br><strong>⚠️ Hazards:</strong> 100% Blood-Oath Safe Haven (unless players draw steel—triggering Vistani Evil Eye &amp; Curses).<br><strong>🎁 Loot:</strong> 5-Card + Blank 6th Card Reading, 5 GP weapon silvering, Vistani Bloodwell Vial (+1).</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Claw-gouged Burgomaster hall, trampled salt perimeter, Kolyan's parlor coffin vigil, secret wizard study, &amp; cellar armory.<br><strong>⚠️ Hazards:</strong> Law of Forbiddance perimeter siege (wolves/spawn probing shuttered windows).<br><strong>🎁 Loot:</strong> <strong>📖 Kolyan's Wizard Diary</strong> (Keepers lead), Ismark's Silver &amp; Holy Water cache.</p>
                 </div>
             </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act1" onclick="openBiomeModal('bonegrinder')">
-                <div class="card-header"><span class="card-title">🥧 5. Old Bonegrinder Windmill</span><span class="pill gold">Session 3 • Areas O1–O4</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="barovia_church" data-biome-act="act1" onclick="openBiomeModal('barovia_church')">
+                <div class="card-header"><span class="card-title">⛪ 5. Barovia Church</span><span class="pill crimson">Sessions 1–2 • Area E5</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> 4-story rotting windmill (millstones <code>O1</code>, brick oven <code>O2</code>, bone-craft nursery <code>O3</code>, toad attic <code>O4</code>) + ancient <strong>Four Cities Megaliths</strong> behind the ridge.<br><strong>⚠️ Hazards:</strong> 3-Hag Shared Spellcasting, <em>Bone-Flour Combustion (3d10 Fire)</em>, tipped Dretch ichor barrel.<br><strong>🎁 Loot:</strong> Night Hag Heartstone, Elixir of Youth, Pale Tincture, Mill Deed &amp; Stone Blessing (+1d4).</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Scorched Church of the Morninglord nave, bronze bell-loft attic ladder, &amp; soggy eastern dawn graveyard.<br><strong>⚠️ Hazards:</strong> <strong>Doru (85 HP CR 5)</strong> attic blood-cup standoff, tight 15-ft rafters (<code>DC 14</code>), <strong>Derek Time-Stop</strong>.<br><strong>🎁 Loot:</strong> <strong>📿 Father Donavich's Consecrated Rosary</strong>, Doru's Heart of Sorrow &amp; Mad Mage intel.</p>
                 </div>
             </div>
-
-            <!-- ACT II LOCATIONS (5) -->
-            <div class="card clickable searchable-row biome-card" data-biome-act="act2" onclick="openBiomeModal('vallaki')">
-                <div class="card-header"><span class="card-title">⚔️ 6. Town of Vallaki &amp; Inn</span><span class="pill purple">Sessions 4–6 • Ch. 5</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="tser_falls" data-biome-act="act1" onclick="openBiomeModal('tser_falls')">
+                <div class="card-header"><span class="card-title">🌊 6. Tser Falls</span><span class="pill gold">Session 2 • Area H</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> 15-ft wolf-pike palisade, Blue Water Inn wereraven loft (<code>N2q</code>), Baron's Mansion &amp; Victor's Attic (<code>N3t</code>), Stockyard Wagon (<code>N5</code>), Blinsky's (<code>N7</code>), &amp; Lake Zarovich.<br><strong>⚠️ Hazards:</strong> Tyrannical curfew, Izek's Hellfire fist, Rictavio's Saber-Toothed Tiger trap, Mirror Assassin.<br><strong>🎁 Loot:</strong> Gray Bag of Tricks, Hat of Disguise, Silver Scope, Victor's Wand &amp; Spellbook, Bluto rescue.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> 90-ft gargoyle stone bridge over the 1,000-ft cataract (<em>plus River Ivlis Crossroads Area F gallows &amp; Black Carriage reference OTW</em>).<br><strong>⚠️ Hazards:</strong> OTW Gallows Phantasm (<code>DC 12 WIS</code>), slick spray parapet (<code>DC 11</code>), <strong>Cael &amp; Derek Milestone 1</strong>.<br><strong>🎁 Loot:</strong> OTW Grave <em>Protection vs Evil &amp; Good</em> scroll, 15 SP, abandoned Silvered Dagger.</p>
                 </div>
             </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act2" onclick="openBiomeModal('coffin_wachter')">
-                <div class="card-header"><span class="card-title">⚰️ 7. Coffin Shop &amp; Wachterhaus</span><span class="pill purple">Sessions 5–6 • N1, N4, N6</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="tserpool" data-biome-act="act1" onclick="openBiomeModal('tserpool')">
+                <div class="card-header"><span class="card-title">🔮 7. Tser Pool Vistani Camp</span><span class="pill gold">Session 2 • Area G</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> St. Andral's Sanctuary (<code>N1</code>), Henrik's Coffin Loft (<code>N6</code>), &amp; Wachterhaus Cult Library &amp; Skeleton Cellar (<code>N4</code>).<br><strong>⚠️ Hazards:</strong> <strong>Bride Anastrasya + 5 Spawn Crate Ambush</strong>, dusk 4-block rooftop relay, Imp Majesto &amp; <code>DC 15</code> Vault locks.<br><strong>🎁 Loot:</strong> <strong>📜 The Tome of Strahd</strong>, Sacred Bones of St. Andral, Baal Verzi Mirror Dagger +1, 45 GP.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Lantern-strung vardo circle on a black-glass glacial pool, crackling bonfire, &amp; <strong>Madam Eva's crimson silk tent</strong>.<br><strong>⚠️ Hazards:</strong> 100% Blood-Oath Safe Haven (unless players draw steel—triggering Vistani Evil Eye &amp; Curses).<br><strong>🎁 Loot:</strong> 5-Card + Blank 6th Card Reading, 5 GP weapon silvering, Vistani Bloodwell Vial (+1).</p>
                 </div>
             </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act2" onclick="openBiomeModal('winery')">
-                <div class="card-header"><span class="card-title">🍷 8. Wizard of Wines Winery</span><span class="pill purple">Session 7 • Areas W1–W20</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="bonegrinder" data-biome-act="act1" onclick="openBiomeModal('bonegrinder')">
+                <div class="card-header"><span class="card-title">🥧 8. Old Bonegrinder Windmill</span><span class="pill gold">Session 3 • Areas O1–O4</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Mist-choked trellis fields, 2-story Veranda &amp; Loading Winch (<code>W6/W14</code>), giant 2-tier Fermentation Vats (<code>W9</code>), &amp; Brown Mold Cellars (<code>W16–W20</code>).<br><strong>⚠️ Hazards:</strong> 30+ Blights, Druids poisoning wine vats (<code>DC 13</code> spot), Brown Mold Cold Trap (<code>4d10 Cold</code>; grows in Fire!).<br><strong>🎁 Loot:</strong> <strong>🌿 Gulthias Staff</strong> (snap kills all blights!), Wereraven Feather Cloak (+1), Red Dragon Crush.</p>
-                </div>
-            </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act2" onclick="openBiomeModal('yester_hill')">
-                <div class="card-header"><span class="card-title">⛈️ 9. Yester Hill &amp; Gulthias Tree</span><span class="pill purple">Session 8 • Areas Y1–Y5</span></div>
-                <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Concentric tribal cairns (<code>Y1</code>), Kavan's Tombstone (<code>Y4</code>), 50-ft black Boulder Circle (<code>Y3</code>), sunlit mirage Wall of Fog (<code>Y2</code>), &amp; bleeding <strong>Gulthias Tree (<code>Y5</code>)</strong>.<br><strong>⚠️ Hazards:</strong> Init 20 Lightning Strikes on boulders (<code>4d10</code>), Berserkers + <strong>Wintersplinter (138 HP)</strong>, blood-oozing roots.<br><strong>🎁 Loot:</strong> <strong>🩸 Blood Spear of Kavan (+2)</strong>, 🪓 Treebane Battleaxe (+1), 💚 1st Winery Life-Gem, Dinner Invite.</p>
-                </div>
-            </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act2" onclick="openBiomeModal('ravenloft_dinner')">
-                <div class="card-header"><span class="card-title">🍷 10. Ravenloft (Dinner Layout)</span><span class="pill crimson">Session 9 • K1, K7, K10</span></div>
-                <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> 1,000-ft Drawbridge, Dragon-Skull Great Entry (<code>K7</code>), Crimson Pipe-Organ Dining Hall (<code>K10</code>), &amp; Escher's 2nd-Floor Lounge (<code>K49</code>).<br><strong>⚠️ Hazards:</strong> Strahd &amp; 3 Brides' psychological table chess, midnight exit deadline, sweeping spire illusions.<br><strong>🎁 Loot:</strong> <strong>Level 6 Milestone</strong>, Heart of Sorrow location intel, Champagne du le Stomp, Zarovich goblet &amp; Floor Map.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> 4-story rotting windmill (millstones <code>O1</code>, brick oven <code>O2</code>, bone nursery <code>O3</code>, toad attic <code>O4</code>) + <strong>Four Cities Megaliths</strong> behind ridge.<br><strong>⚠️ Hazards:</strong> 3-Hag Shared Spellcasting, <em>Bone-Flour Combustion (3d10 Fire)</em>, tipped Dretch ichor barrel.<br><strong>🎁 Loot:</strong> Night Hag Heartstone, Elixir of Youth, Pale Tincture, Mill Deed &amp; Stone Blessing (+1d4).</p>
                 </div>
             </div>
 
-            <!-- ACT III LOCATIONS (4) -->
-            <div class="card clickable searchable-row biome-card" data-biome-act="act3" onclick="openBiomeModal('argynvost')">
-                <div class="card-header"><span class="card-title">🐉 11. Argynvostholt Mansion</span><span class="pill gold">Sessions 10–11 • Q1–Q53</span></div>
+            <!-- ACT II LOCATIONS (8) -->
+            <div class="card clickable searchable-row biome-card" data-biome-key="vallaki" data-biome-act="act2" onclick="openBiomeModal('vallaki')">
+                <div class="card-header"><span class="card-title">⚔️ 9. Town of Vallaki</span><span class="pill purple">Sessions 4–6 • Ch. 5</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Dragon Statue Courtyard (<code>Q1</code>), Spider Ballroom &amp; Star-Mural Chapel (<code>Q13</code>), Wine Vault (<code>Q6</code>), Parlor (<code>Q37</code>), Throne Hall (<code>Q36</code>), &amp; Roof Beacon (<code>Q53</code>).<br><strong>⚠️ Hazards:</strong> Spectral dragon-claw shadow traps, Phantom Warriors, <strong>Commander Horngaard (CR 7)</strong> &amp; Revenant Knights.<br><strong>🎁 Loot:</strong> <strong>🕊️ Holy Symbol of Ravenkind</strong>, <strong>+1 AC/Saves Party Boon</strong>, Vladimir's +2 Greatsword, 4x Invulnerability Potions.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> 15-ft wolf-pike palisade, Baron's Mansion &amp; Victor's Attic (<code>N3</code>), Stockyard Wagon (<code>N5</code>), Blinsky's (<code>N7</code>), Square Stocks (<code>N8</code>), &amp; Lake Zarovich.<br><strong>⚠️ Hazards:</strong> Tyrannical curfew, Izek's Hellfire fist, Rictavio's Saber-Toothed Tiger trap, Mirror Assassin.<br><strong>🎁 Loot:</strong> Hat of Disguise, Silver Scope, Victor's Wand &amp; Spellbook, Bluto rescue, Izek's Battleaxe +1.</p>
                 </div>
             </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act3" onclick="openBiomeModal('krezk_abbey')">
-                <div class="card-header"><span class="card-title">⛪ 12. Krezk &amp; St. Markovia Abbey</span><span class="pill gold">Session 12 • S1–S24</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="blue_water_inn" data-biome-act="act2" onclick="openBiomeModal('blue_water_inn')">
+                <div class="card-header"><span class="card-title">🦅 10. Blue Water Inn</span><span class="pill purple">Sessions 4–7 • Area N2</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> 20-ft wine-locked Gatehouse (<code>S1</code>), sunlit <strong>Pool of the White Sun (<code>S4</code>)</strong>, Abbey Operating Hall (<code>S13</code>), Mongrelfolk Wing (<code>S17</code>), &amp; Ezmerelda's Quarters (<code>S19</code>).<br><strong>⚠️ Hazards:</strong> <strong>Strahd's Pool Lightning (if Sergei rises)</strong>, The Abbot (CR 10 Deva) + Vasilka, Clovin's frenzy.<br><strong>🎁 Loot:</strong> <strong>🦴 St. Markovia's Thighbone</strong>, Ring of Regeneration, Scroll of Heroes' Feast, Ezmerelda's Sunburst Ammo.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Warm taproom hearth, Urwin &amp; Danika Martikov's safehouse, Rictavio's corner booth, &amp; Brom/Bray's secret wereraven loft (<code>N2q</code>).<br><strong>⚠️ Hazards:</strong> Keepers secrecy check (unlocked via <strong>📖 Kolyan's Diary</strong>!), watchful Strahd spies outside.<br><strong>🎁 Loot:</strong> <strong>🐾 Gray Bag of Tricks</strong>, Elixir of Health, 2x Potions of Greater Healing, safe rest.</p>
                 </div>
             </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act3" onclick="openBiomeModal('berez')">
-                <div class="card-header"><span class="card-title">🌊 13. Drowned Ruins of Berez</span><span class="pill green">Sessions 13–14 • U1–U7</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="st_andral" data-biome-act="act2" onclick="openBiomeModal('st_andral')">
+                <div class="card-header"><span class="card-title">✝️ 11. St. Andral's Church</span><span class="pill purple">Sessions 4–5 • Area N1</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Raven-stuffed Scarecrow Marsh (<code>U1</code>), Ulrich's Ghostly Ruin (<code>U2</code>), Marina's Marble Statue (<code>U5</code>), Swamp Standing Stones (<code>U6</code>), &amp; <strong>Baba Lysaga's Hut (<code>U3</code>)</strong>.<br><strong>⚠️ Hazards:</strong> Difficult black-mud terrain, Giant Poisonous Snakes, <strong>Flying Skull AC 20 + 140-HP Creeping Hut</strong>!<br><strong>🎁 Loot:</strong> <strong>🗡️ The Sunsword</strong>, 💚 2nd Life-Gem, Oil of Sharpness (+3), Luckstone (+1), Pipes of Haunting, Revivify Scroll.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Stone Morninglord nave on Vallaki's west rise, Father Lucian's vestry, altar bone-crypt, &amp; orphan helper Milivoj's steps.<br><strong>⚠️ Hazards:</strong> Broken <em>Hallow</em> ward until Bones return; dusk Vampire Spawn siege during the Feast!<br><strong>🎁 Loot:</strong> Restored permanent consecrated sanctuary for Ireena &amp; Dawn shockwave victory.</p>
                 </div>
             </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act3" onclick="openBiomeModal('baratok_tower')">
-                <div class="card-header"><span class="card-title">🗼 14. Van Richten's Tower &amp; Den</span><span class="pill green">Act II–III • Ch. 11 &amp; 15</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="coffin_shop" data-biome-act="act2" onclick="openBiomeModal('coffin_shop')">
+                <div class="card-header"><span class="card-title">⚰️ 12. Henrik's Coffin Shop</span><span class="pill purple">Session 5 • Area N6</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Khazan's 4-story Lake Baratok Spire (<code>V1–V7</code>), Mad Mage's northern cliff (Mordenkainen), &amp; Skull-Mouth <strong>Werewolf Den (<code>Z1–Z8</code>)</strong>.<br><strong>⚠️ Hazards:</strong> <strong>Permanent Antimagic Field</strong>, 100-Flask Alchemical Wagon Trap (<code>10d6 Fire</code>), Stick-Figure Lightning/Blue Dragon Trap.<br><strong>🎁 Loot:</strong> Hunter Wagon Arsenal, Mad Mage Charm of Heroism, <em>Staff of Power</em> lead, Mother Night's Hoard (<code>Z7</code>).</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Claustrophobic pine-coffin showroom, Henrik's bedroom wardrobe, &amp; sawdust-choked Ravenloft-dirt storage loft.<br><strong>⚠️ Hazards:</strong> <strong>Bride Anastrasya + 5 Vampire Spawn Crate Ambush</strong>, 4-block dusk rooftop relay chase!<br><strong>🎁 Loot:</strong> <strong>🦴 Sacred Bones of St. Andral</strong>, <strong>🪭 Anastrasya's Gilded Razor Fan +1</strong>, 15 SP.</p>
+                </div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="wachterhaus" data-biome-act="act2" onclick="openBiomeModal('wachterhaus')">
+                <div class="card-header"><span class="card-title">🕯️ 13. Wachterhaus</span><span class="pill purple">Session 6 • Area N4</span></div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Gothic estate full of black cats, dead Nikolai's preserved bedchamber (<code>N4o</code>), devil-cult wine cellar, &amp; iron cult library.<br><strong>⚠️ Hazards:</strong> Poison-needle vault trap (<code>DC 13 CON</code>), invisible Imp Majesto, cult &amp; skeleton basement ambush.<br><strong>🎁 Loot:</strong> <strong>📜 The Tome of Strahd (Tarokka #1)</strong>, Baal Verzi Mirror Dagger +1, 45 GP.</p>
+                </div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="winery" data-biome-act="act2" onclick="openBiomeModal('winery')">
+                <div class="card-header"><span class="card-title">🍷 14. Wizard of Wines Winery</span><span class="pill purple">Session 7 • Areas W1–W20</span></div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Mist-choked trellis fields, 2-story Veranda &amp; Winch (<code>W6/W14</code>), giant Fermentation Vats (<code>W9</code>), &amp; Brown Mold Cellars (<code>W16–W20</code>).<br><strong>⚠️ Hazards:</strong> 30+ Blights, Druids poisoning wine vats (<code>DC 13</code>), Brown Mold Cold Trap (<code>4d10 Cold</code>).<br><strong>🎁 Loot:</strong> <strong>🌿 Gulthias Staff</strong> (snap kills all blights!), Wereraven Feather Cloak (+1), Red Dragon Crush.</p>
+                </div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="yester_hill" data-biome-act="act2" onclick="openBiomeModal('yester_hill')">
+                <div class="card-header"><span class="card-title">⛈️ 15. Yester Hill</span><span class="pill purple">Session 8 • Areas Y1–Y5</span></div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Concentric tribal cairns (<code>Y1</code>), Kavan's Tombstone (<code>Y4</code>), 50-ft Boulder Circle (<code>Y3</code>), Wall of Fog (<code>Y2</code>), &amp; weeping <strong>Gulthias Tree (<code>Y5</code>)</strong>.<br><strong>⚠️ Hazards:</strong> Init 20 Lightning Strikes on boulders (<code>4d10</code>), Berserkers + <strong>Wintersplinter (138 HP)</strong>.<br><strong>🎁 Loot:</strong> <strong>🩸 Blood Spear of Kavan (+2)</strong>, 🪓 Treebane Battleaxe (+1), 💚 1st Winery Life-Gem, Dinner Invite.</p>
+                </div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="ravenloft_dinner" data-biome-act="act2" onclick="openBiomeModal('ravenloft_dinner')">
+                <div class="card-header"><span class="card-title">🥂 16. Castle Ravenloft (Act II Dinner)</span><span class="pill crimson">Session 9 • K1, K7, K10</span></div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> 1,000-ft Drawbridge, Dragon-Skull Great Entry (<code>K7</code>), Crimson Pipe-Organ Dining Hall (<code>K10</code>), &amp; Escher's 2nd-Floor Lounge (<code>K49</code>).<br><strong>⚠️ Hazards:</strong> Strahd &amp; 3 Brides' psychological table chess, midnight exit deadline, sweeping spire illusions.<br><strong>🎁 Loot:</strong> <strong>Level 6 Milestone</strong>, Heart of Sorrow location intel, Champagne du le Stomp, Floor Map.</p>
+                </div>
+            </div>
+
+            <!-- ACT III LOCATIONS (6) -->
+            <div class="card clickable searchable-row biome-card" data-biome-key="argynvost" data-biome-act="act3" onclick="openBiomeModal('argynvost')">
+                <div class="card-header"><span class="card-title">🐉 17. Argynvostholt Mansion (The Fortress)</span><span class="pill gold">Sessions 10–11 • Q1–Q53</span></div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Dragon Statue Courtyard (<code>Q1</code>), Star-Mural Chapel (<code>Q13</code>), Wine Vault (<code>Q6</code>), Parlor (<code>Q37</code>), Throne Hall (<code>Q36</code>), &amp; Beacon Spire (<code>Q53</code>).<br><strong>⚠️ Hazards:</strong> Spectral dragon shadows, Phantom Warriors, <strong>Commander Horngaard (CR 7)</strong> &amp; Revenant Knights.<br><strong>🎁 Loot:</strong> <strong>🕊️ Holy Symbol of Ravenkind</strong>, <strong>+1 AC/Saves Boon</strong>, Vladimir's +2 Greatsword, 4x Invulnerability Potions.</p>
+                </div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="krezk" data-biome-act="act3" onclick="openBiomeModal('krezk')">
+                <div class="card-header"><span class="card-title">🏘️ 18. Village of Krezk</span><span class="pill gold">Session 12 • Areas S1–S4</span></div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> 20-ft wine-locked Gatehouse (<code>S1</code>), Burgomaster Krezkov's Cottage (<code>S3</code>), &amp; sunlit <strong>Pool of the White Sun (<code>S4</code>)</strong>.<br><strong>⚠️ Hazards:</strong> Wine-tribute entry gate, <strong>Sergei's Pool choice &amp; Strahd's Sky-Lightning (6d10)</strong> if Ireena stays.<br><strong>🎁 Loot:</strong> Mountain sanctuary refuge, Burgomaster alliance, &amp; Ireena's White Sun Pool destiny.</p>
+                </div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="abbey_markovia" data-biome-act="act3" onclick="openBiomeModal('abbey_markovia')">
+                <div class="card-header"><span class="card-title">⛪ 19. Abbey of Saint Markovia</span><span class="pill gold">Session 12 • Areas S12–S24</span></div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Cliffside monastery cloisters, Operating Hall (<code>S13</code>), Belview Mongrelfolk Wing (<code>S12/S17</code>), &amp; Ezmerelda's Quarters (<code>S19</code>).<br><strong>⚠️ Hazards:</strong> <strong>The Fallen Abbot (CR 10 Deva)</strong> + <strong>Vasilka (CR 5 Flesh Golem)</strong>, Clovin's frenzy.<br><strong>🎁 Loot:</strong> <strong>🦴 St. Markovia's Thighbone</strong>, Ring of Regeneration, Scroll of Heroes' Feast, Ezmerelda's Sunburst Ammo.</p>
+                </div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="berez" data-biome-act="act3" onclick="openBiomeModal('berez')">
+                <div class="card-header"><span class="card-title">🌊 20. Drowned Ruins of Berez</span><span class="pill green">Sessions 13–14 • U1–U7</span></div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Raven-stuffed Scarecrow Marsh (<code>U1</code>), Ulrich's Ghostly Ruin (<code>U2</code>), Marina's Marble Statue (<code>U5</code>), Standing Stones (<code>U6</code>), &amp; <strong>Baba Lysaga's Hut (<code>U3</code>)</strong>.<br><strong>⚠️ Hazards:</strong> Black-mud bog, Giant Poisonous Snakes, <strong>Flying Skull AC 20 + 140-HP Creeping Hut</strong>!<br><strong>🎁 Loot:</strong> <strong>🗡️ The Sunsword</strong>, 💚 2nd Life-Gem, Oil of Sharpness (+3), Luckstone (+1), Pipes of Haunting.</p>
+                </div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="van_richten_tower" data-biome-act="act3" onclick="openBiomeModal('van_richten_tower')">
+                <div class="card-header"><span class="card-title">🗼 21. Van Richten's Tower (Lake Baratok)</span><span class="pill green">Act II–III • Ch. 11 V1–V7</span></div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Khazan's 4-story Lake Baratok Spire (<code>V1–V7</code>), Ezmerelda's wagon (<code>V1</code>), Stick-Figure Door (<code>V2</code>), &amp; Mad Mage's northern cliff.<br><strong>⚠️ Hazards:</strong> <strong>Permanent Antimagic Field</strong>, 100-Flask Wagon Trap (<code>10d6 Fire</code>), Dance-Door Dragon Trap.<br><strong>🎁 Loot:</strong> Hunter Wagon Arsenal, Mad Mage Charm of Heroism, <em>Staff of Power</em> lead.</p>
+                </div>
+            </div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="werewolf_den" data-biome-act="act3" onclick="openBiomeModal('werewolf_den')">
+                <div class="card-header"><span class="card-title">🐺 22. Werewolf Den</span><span class="pill green">Act II–III • Ch. 15 Z1–Z8</span></div>
+                <div class="card-body">
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Howling wolf-skull cavern mouth (<code>Z1</code>), child fighting pit &amp; cages (<code>Z5b</code>), &amp; torch-lit <strong>Shrine of Mother Night (<code>Z7</code>)</strong>.<br><strong>⚠️ Hazards:</strong> <strong>Kiril Stoyanovich</strong> pack ambush (non-silvered immunity!), Mother Night's Hoard Curse (<code>DC 12 CON</code>).<br><strong>🎁 Loot:</strong> Mother Night's Hoard (90 GP, 6 Gems, Silvered Shortsword) &amp; Zuleika rebel alliance.</p>
                 </div>
             </div>
 
             <!-- ACT IV LOCATIONS (3) -->
-            <div class="card clickable searchable-row biome-card" data-biome-act="act4" onclick="openBiomeModal('tsolenka')">
-                <div class="card-header"><span class="card-title">❄️ 15. Tsolenka Pass Gatehouse</span><span class="pill crimson">Session 15 • Areas T1–T9</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="tsolenka" data-biome-act="act4" onclick="openBiomeModal('tsolenka')">
+                <div class="card-header"><span class="card-title">❄️ 23. Tsolenka Pass Gatehouse</span><span class="pill crimson">Session 15 • Areas T1–T9</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Cliffside Portcullis &amp; Green Flame Curtain (<code>T1–T3</code>), Guard Tower (<code>T6</code>), Blinding Blizzard Crags, &amp; the 500-ft Luna Gorge Arch Bridge (<code>T7–T9</code>).<br><strong>⚠️ Hazards:</strong> -50°F Extreme Cold (<code>DC 10 CON/hr</code>), <code>8d6</code> Green Fire, 2 Animated Vrocks, <strong>Sangzor cliff-ram</strong>, <strong>CR 11 Roc</strong>!<br><strong>🎁 Loot:</strong> Bloodhorn's Cold-Immunity Pelt, Silver-Plated Spear, Ring of Warmth, 30 GP Frozen Guard Chest.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Cliffside Portcullis &amp; Green Flame Curtain (<code>T1–T3</code>), Guard Tower (<code>T6</code>), Blinding Blizzard Crags, &amp; 500-ft Luna Gorge Bridge (<code>T7–T9</code>).<br><strong>⚠️ Hazards:</strong> -50°F Extreme Cold (<code>DC 10 CON/hr</code>), <code>6d10</code> Green Fire, 2 Animated Vrocks, <strong>Sangzor</strong>, <strong>CR 11 Roc</strong>!<br><strong>🎁 Loot:</strong> Bloodhorn's Cold-Immunity Pelt, Silver-Plated Spear, Ring of Warmth, 30 GP Frozen Guard Chest.</p>
                 </div>
             </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act4" onclick="openBiomeModal('amber_temple')">
-                <div class="card-header"><span class="card-title">⚡ 16. The Amber Temple Vaults</span><span class="pill purple">Sessions 15–16 • X1–X42</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="amber_temple" data-biome-act="act4" onclick="openBiomeModal('amber_temple')">
+                <div class="card-header"><span class="card-title">⚡ 24. The Amber Temple</span><span class="pill purple">Sessions 15–16 • X1–X42</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> 40-ft Hooded Statue Sanctuary (<code>X5</code>), Upper Corridors (<code>X17</code>), <strong>Exethanter's Shrine &amp; PHB Library (<code>X27/X30</code>)</strong>, Ravenloft Model (<code>X24</code>), &amp; <strong>Amber Vaults (<code>X33/X42</code>)</strong>.<br><strong>⚠️ Hazards:</strong> <strong>Neferon the Arcanaloth (+5 Cover)</strong> + 3 Flameskulls, Amber Golem, <code>-30°F</code> Frost, <em>DC 12 CHA</em> Vestige Corruption.<br><strong>🎁 Loot:</strong> <strong>❄️ Staff of Frost</strong>, 📖 Tome of Understanding (+2 WIS), 🪄 Wand of Secrets, Shield Guardian, <strong>3 Supreme Dark Gifts</strong>.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> 40-ft Hooded Statue Sanctuary (<code>X5</code>), Upper Corridors (<code>X17</code>), <strong>Exethanter's Sanctum &amp; PHB Library (<code>X27/X30</code>)</strong>, Ravenloft Model (<code>X24</code>), &amp; <strong>Amber Vaults (<code>X33/X42</code>)</strong>.<br><strong>⚠️ Hazards:</strong> <strong>Neferon the Arcanaloth (+5 Cover)</strong> + 3 Flameskulls, Amber Golem, <code>-30°F</code> Frost, <em>DC 12 CHA</em> Vestige Corruption.<br><strong>🎁 Loot:</strong> <strong>❄️ Staff of Frost</strong>, 📖 Tome of Understanding (+2 WIS), 🪄 Wand of Secrets, Shield Guardian, <strong>3 Supreme Dark Gifts</strong>.</p>
                 </div>
             </div>
-            <div class="card clickable searchable-row biome-card" data-biome-act="act4" onclick="openBiomeModal('ravenloft_siege')">
-                <div class="card-header"><span class="card-title">🏰 17. Castle Ravenloft (Final Siege)</span><span class="pill crimson">Sessions 17–20 • K6–K86</span></div>
+            <div class="card clickable searchable-row biome-card" data-biome-key="ravenloft_siege" data-biome-act="act4" onclick="openBiomeModal('ravenloft_siege')">
+                <div class="card-header"><span class="card-title">🏰 25. Castle Ravenloft (Final Siege)</span><span class="pill crimson">Sessions 17–20 • K6–K86</span></div>
                 <div class="card-body">
                     <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Chapel (<code>K15</code>), North Tower <strong>Heart of Sorrow (<code>K20</code>)</strong>, Treasury (<code>K41</code>), Hall of Bones (<code>K67</code>), Brazier Room (<code>K78</code>), Catacombs (<code>K84–K86</code>), &amp; Overlook (<code>K6</code>).<br><strong>⚠️ Hazards:</strong> Strahd Lair Wall-Phasing, 50-HP Crystal Tower Sway, 2 Iron Golems (<code>K78</code>), Rahadin's Choir, Bat Swarm Crypts.<br><strong>🎁 Loot:</strong> <strong>⚡ Khazan's Staff of Power</strong>, 👑 Helm of Brilliance, 🌠 Luck Blade (1 Wish!), 🏰 Icon of Ravenloft, 🛡️ +2 Wyrm Shield.</p>
                 </div>
@@ -1258,7 +1481,10 @@
     <section id="factions-lore">
         <div class="section-header">
             <span>🏛️ SECTION 4.5: BAROVIAN FACTIONS, VILLAGES, SANCTUMS, HISTORY, VITAL SECRETS &amp; COSMIC LORE CODEX (33 DOSSIERS)</span>
-            <span class="section-tag">CLICK ANY CARD FOR FULL PDF + RELOADED + COSMIC KNOT DOSSIER</span>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="btn-map-ref" onclick="openWorldMapLightbox()">🗺️ Full Map of Barovia</button>
+                <span class="section-tag">CLICK ANY CARD FOR FULL PDF + RELOADED + COSMIC KNOT DOSSIER</span>
+            </div>
         </div>
 
         <div class="loot-filter-bar" id="lore-filter-bar">
@@ -1268,6 +1494,7 @@
             <button class="btn-loot-filter" onclick="filterLoreCodex('villages', this)">🏘️ 4.5B All 17 Location Histories &amp; Lore (17)</button>
             <button class="btn-loot-filter" onclick="filterLoreCodex('history', this)">⏳ 4.5C History, Souls &amp; Vital Secrets (4)</button>
             <button class="btn-loot-filter" onclick="filterLoreCodex('cosmic', this)">🌌 4.5D Cosmic Knot &amp; Dark Powers (4)</button>
+            <button type="button" class="btn-map-ref" style="margin-left:auto;" onclick="openWorldMapLightbox()">🗺️ Map of Barovia</button>
         </div>
 
         <!-- 4.5A: BAROVIAN FACTIONS, SECRET ORDERS & COVENS -->
@@ -1714,6 +1941,26 @@
                 <button class="btn-roll" onclick="rollDie(6)">🎲 Roll d6</button>
             </div>
             <button class="btn-step" onclick="closeDmModal()">Close Window (Esc)</button>
+        </div>
+    </div>
+</dialog>
+
+<!-- LOCATION & BAROVIA WORLD MAP IMAGE LIGHTBOX -->
+<dialog id="image-lightbox" class="lightbox-dialog" closedby="any" aria-labelledby="lightbox-title">
+    <div class="lightbox-wrapper">
+        <div class="lightbox-header">
+            <div>
+                <h3 id="lightbox-title">🗺️ Location Reference Image</h3>
+                <p id="lightbox-subtitle" style="font-size:0.76rem; color:var(--text-muted); margin:2px 0 0 0;"></p>
+            </div>
+            <div class="lightbox-controls">
+                <button type="button" id="lightbox-zoom-btn" class="btn-roll" onclick="toggleLightboxZoom()">🔍 Zoom 100%</button>
+                <button type="button" class="modal-close-btn" onclick="closeImageLightbox()" aria-label="Close image viewer" title="Close (Esc)">✕</button>
+            </div>
+        </div>
+        <div id="lightbox-tabs" class="lightbox-tabs" style="display:none;"></div>
+        <div id="lightbox-stage" class="lightbox-stage">
+            <img id="lightbox-img" class="lightbox-img" src="" alt="" onclick="toggleLightboxZoom()" title="Click image to toggle Zoom / Fit to Screen">
         </div>
     </div>
 </dialog>
@@ -2532,7 +2779,7 @@ const MONSTER_DATA = {
     bandit: {
         encounterWhere: "All Acts • Svalich Road Crossroads, Vistani Camp Margins & Vallaki Outskirts",
         encounterWhen: "Any road ambush, mist-edge toll shakedown, or Wachter / Arrigal hired thugs (use 3–6 Bandits + optional 1 Captain).",
-        biomeKey: "crossroads_falls",
+        biomeKey: "tser_falls",
         loreKey: "lore_crossroads_falls",
         linkedNpc: null,
         id: 'bandit',
@@ -2802,7 +3049,7 @@ const MONSTER_DATA = {
     vampire_spawn: {
         encounterWhere: "All Acts • Vallaki Coffin Shop (N6), Night Ambush Roads & Ravenloft Crypts",
         encounterWhen: "Classic CoS lurking packs (Henrik's 6 crates in Vallaki), Strahd hunting parties, or Ravenloft dungeon ambushes.",
-        biomeKey: "coffin_wachter",
+        biomeKey: "coffin_shop",
         loreKey: "court_of_ravenloft",
         linkedNpc: null,
         id: 'vampire_spawn',
@@ -2975,7 +3222,7 @@ const MONSTER_DATA = {
     doru: {
         encounterWhere: "Act I • Village of Barovia Church Attic / Undercroft (Area E5)",
         encounterWhen: "Sessions 1–2 (Donavich's funeral cliffhanger). Lucid if fed willing blood (Reloaded); hostile only if starved or provoked!",
-        biomeKey: "village",
+        biomeKey: "barovia_church",
         loreKey: "village_barovia",
         linkedNpc: "doru_npc",
         id: 'doru',
@@ -3198,7 +3445,7 @@ const MONSTER_DATA = {
     anastrasya: {
         encounterWhere: "Act II • Vallaki (Henrik's Coffin Shop N6 & St. Andral's N1) • Act IV Ravenloft (K10/K86)",
         encounterWhen: "Sessions 5–6 (leads Feast of St. Andral spawn ambush), dines at Session 9 Ravenloft Banquet, and defends Tomb K86 in Act IV.",
-        biomeKey: "coffin_wachter",
+        biomeKey: "coffin_shop",
         loreKey: "court_of_ravenloft",
         linkedNpc: "anastrasya_npc",
         id: 'anastrasya',
@@ -3459,7 +3706,7 @@ const MONSTER_DATA = {
     kiril: {
         encounterWhere: "Act II–III • Old Svalich Roads East/West of Vallaki & Werewolf Den Caverns (Area Z7)",
         encounterWhen: "Sessions 6–11 road wolf-pack ambush or Shrine of Mother Night standoff inside Werewolf Den (Z7).",
-        biomeKey: "baratok_tower",
+        biomeKey: "werewolf_den",
         loreKey: "werewolves",
         linkedNpc: "kiril_npc",
         id: 'kiril',
@@ -3730,7 +3977,7 @@ const MONSTER_DATA = {
     abbot: {
         encounterWhere: "Act III • Village of Krezk — Abbey of Saint Markovia Main Hall (Area S13 / S15)",
         encounterWhen: "Session 12 (calm surgeon roleplay first if bringing Lydia's gown or seeking Raise Dead; fights violently if Vasilka is harmed!).",
-        biomeKey: "krezk_abbey",
+        biomeKey: "abbey_markovia",
         loreKey: "commune_krezk",
         linkedNpc: "abbot_npc",
         id: 'abbot',
@@ -4684,7 +4931,7 @@ const MONSTER_DATA = {
 const NPC_DATA = {
     derek: {
         encounterMeta: "Act I • Session 1 (Frozen Time-Stop in Barovia Church E5) — Reappears in silent time-stops across Acts II–IV",
-        biomeKey: "village",
+        biomeKey: "barovia_church",
         loreKey: "dual_operatives",
         name: "⏳ Derek ('The Man Between Seconds')",
         region: "🌲 Village of Barovia & Tser Pool (Act I)",
@@ -4819,7 +5066,7 @@ const NPC_DATA = {
 
     ireena: {
         encounterMeta: "Act I–III • Met in Session 1 (Indirovich Manor E4 / Barovia Church E5) — Escorted to Vallaki N1 & Krezk S4",
-        biomeKey: "village",
+        biomeKey: "indirovich_manor",
         loreKey: "villagers",
         name: "🌹 Ireena Kolyana",
         region: "🌲 Village of Barovia & Tser Pool (Act I)",
@@ -4883,7 +5130,7 @@ const NPC_DATA = {
 
     ismark: {
         encounterMeta: "Act I • Met in Session 1 (Blood on the Vine Tavern E2 / Manor E4) — Stays guarding Barovia Village after burial",
-        biomeKey: "village",
+        biomeKey: "indirovich_manor",
         loreKey: "village_barovia",
         name: "🗡️ Ismark 'The Lesser' Indirovich",
         region: "🌲 Village of Barovia & Tser Pool (Act I)",
@@ -4941,7 +5188,7 @@ const NPC_DATA = {
 
     donavich: {
         encounterMeta: "Act I • Met in Session 1 (Village of Barovia Church E5 during Kolyan's burial & Doru attic cliffhanger)",
-        biomeKey: "village",
+        biomeKey: "barovia_church",
         loreKey: "village_barovia",
         name: "⛪ Father Donavich",
         region: "🌲 Village of Barovia & Tser Pool (Act I)",
@@ -5003,7 +5250,7 @@ const NPC_DATA = {
 
     doru_npc: {
         encounterMeta: "Act I • Sessions 1–2 (Locked inside Barovia Church Attic / Undercroft E5; S1 cliffhanger focal point)",
-        biomeKey: "village",
+        biomeKey: "barovia_church",
         loreKey: "village_barovia",
         name: "🩸 Doru Donavich (Attic Prisoner)",
         region: "🌲 Village of Barovia & Tser Pool (Act I)",
@@ -5255,7 +5502,7 @@ const NPC_DATA = {
 
     martikov: {
         encounterMeta: "Act I Lead (Named in Kolyan's Diary!) ➔ Act II S4 (Blue Water Inn N2, Vallaki)",
-        biomeKey: "vallaki",
+        biomeKey: "blue_water_inn",
         loreKey: "keepers",
         name: "🦅 Urwin & Danika Martikov",
         region: "⚔️ Old Bonegrinder & Town of Vallaki (Act II)",
@@ -5381,7 +5628,7 @@ const NPC_DATA = {
 
     father_lucian: {
         encounterMeta: "Act II • Sessions 4–6 (St. Andral's Church Nave, Vallaki Area N1 — pleads for stolen Saints' Bones)",
-        biomeKey: "coffin_wachter",
+        biomeKey: "st_andral",
         loreKey: "lore_coffin_wachter",
         name: "✝️ Father Lucian Petrovich",
         region: "⚔️ Old Bonegrinder & Town of Vallaki (Act II)",
@@ -5616,7 +5863,7 @@ const NPC_DATA = {
 
     fiona: {
         encounterMeta: "Act II • Sessions 5–6 (Wachterhaus Parlor & Secret Basement, Vallaki Area N4 — guards Tome of Strahd!)",
-        biomeKey: "coffin_wachter",
+        biomeKey: "wachterhaus",
         loreKey: "lore_coffin_wachter",
         name: "🕯️ Lady Fiona Wachter",
         region: "⚔️ Old Bonegrinder & Town of Vallaki (Act II)",
@@ -5853,7 +6100,7 @@ const NPC_DATA = {
 
     ezmerelda: {
         encounterMeta: "Act II–III • Sessions 8–12 (Wagon at Baratok Tower V1, Krezk Abbey S13, or hunting beside party in Argynvostholt/Berez)",
-        biomeKey: "baratok_tower",
+        biomeKey: "abbey_markovia",
         loreKey: "vistani",
         name: "⚔️ Ezmerelda d'Avenir",
         region: "🐉 Argynvostholt, Krezk, Berez & Mt. Baratok (Act III)",
@@ -5937,7 +6184,7 @@ const NPC_DATA = {
 
     van_richten: {
         encounterMeta: "Act II (Disguised as 'Rictavio' in Vallaki Blue Water Inn N2, Sessions 4–6) ➔ Act III (Khazan's Tower V1–V4, S11)",
-        biomeKey: "baratok_tower",
+        biomeKey: "van_richten_tower",
         loreKey: "vital_secrets",
         name: "📜 Rudolph van Richten ('Rictavio')",
         region: "🐉 Argynvostholt, Krezk, Berez & Mt. Baratok (Act III)",
@@ -6127,7 +6374,7 @@ const NPC_DATA = {
 
     abbot_npc: {
         encounterMeta: "Act III • Session 12 (Village of Krezk — Abbey of Saint Markovia Main Hall, Areas S13 & S15)",
-        biomeKey: "krezk_abbey",
+        biomeKey: "abbey_markovia",
         loreKey: "commune_krezk",
         name: "🪽 The Abbot & Vasilka (Fallen Deva)",
         region: "🐉 Argynvostholt, Krezk, Berez & Mt. Baratok (Act III)",
@@ -6168,7 +6415,7 @@ const NPC_DATA = {
         status: "🟡 Unmet (Roads / Werewolf Den Z7)",
         linkedMonster: "kiril",
         encounterMeta: "Act II–III • Sessions 6–11 — Leads road hunting packs outside Vallaki & Krezk; rules Mother Night's Shrine inside Werewolf Den (Area Z7)!",
-        biomeKey: "baratok_tower",
+        biomeKey: "werewolf_den",
         loreKey: "werewolves",
         statsStrip: "STR 15 (+2) | DEX 13 (+1) | CON 14 (+2) | INT 10 (+0) | WIS 11 (+0) | CHA 10 (+0)",
         senses: "Keen Hearing & Smell (Adv Perception) • Passive Perception 14 • Immune: Non-Silvered, Non-Magical B/P/S",
@@ -6198,7 +6445,7 @@ const NPC_DATA = {
 
     zuleika: {
         encounterMeta: "Act III • Session 11 (Inside Shrine of Mother Night, Werewolf Den Cavern Area Z7 — opposes Kiril)",
-        biomeKey: "baratok_tower",
+        biomeKey: "werewolf_den",
         loreKey: "werewolves",
         name: "🐺 Zuleika Toranescu (Rebel Werewolf)",
         region: "🐉 Argynvostholt, Krezk, Berez & Mt. Baratok (Act III)",
@@ -6288,7 +6535,7 @@ const NPC_DATA = {
 
     mordenkainen: {
         encounterMeta: "Act III • Session 11 (Amnesiac Elk/Hermit along northern Lake Baratok cliffs above Khazan's Tower)",
-        biomeKey: "baratok_tower",
+        biomeKey: "van_richten_tower",
         loreKey: "lore_tower_baratok",
         name: "🧙 Mordenkainen (The Mad Mage of Mt. Baratok)",
         region: "🐉 Argynvostholt, Krezk, Berez & Mt. Baratok (Act III)",
@@ -6482,7 +6729,7 @@ const NPC_DATA = {
 
     anastrasya_npc: {
         encounterMeta: "Act II • Sessions 5–6 (Vallaki Feast Plot inside Henrik's Shop N6) ➔ Session 9 (Dinner K10) & Act IV (Crypt K86)",
-        biomeKey: "coffin_wachter",
+        biomeKey: "coffin_shop",
         loreKey: "court_of_ravenloft",
         name: "🍷 Bride Anastrasya Karelova",
         region: "🏰 Castle Ravenloft Court & Finale (Act I–IV)",
@@ -6800,93 +7047,179 @@ const QUEST_DATA = {
     }
 };
 
+const WORLD_MAP_IMAGE = {
+    title: "🗺️ Map of Barovia — Valley Reference",
+    subtitle: "Full Demiplane Geography • Old Svalich Road, Settlements, Lakes & Mountain Passes",
+    src: "IMAGES/Map of Barovia.webp"
+};
+
+const LOCATION_IMAGES = {
+    svalich: [
+        { src: "IMAGES/Svalich Woods.jpg", label: "Svalich Woods" }
+    ],
+    village: [
+        { src: "IMAGES/Barovia Village.webp", label: "Barovia Village" }
+    ]
+};
+
+const BIOME_ALIASES = {
+    crossroads_falls: "tser_falls",
+    coffin_wachter: "wachterhaus",
+    krezk_abbey: "krezk",
+    baratok_tower: "van_richten_tower"
+};
+
+function resolveBiomeKey(key) {
+    return BIOME_ALIASES[key] || key;
+}
+
+function getBiomeImages(key) {
+    const resolved = resolveBiomeKey(key);
+    if (Array.isArray(LOCATION_IMAGES[resolved])) return LOCATION_IMAGES[resolved];
+    const b = BIOME_DATA[resolved];
+    if (b && Array.isArray(b.images)) return b.images;
+    if (b && b.image) return [{ src: b.image, label: b.title }];
+    return [];
+}
+
 const BIOME_DATA = {
     // =========================================================================
     // ACT I LOCATIONS (SESSIONS 1–3)
     // =========================================================================
-    svalich: {
-        title: "🌲 1. Old Svalich Road & The Eastern Gates of Barovia",
-        tag: "SESSION 1 COLD OPEN BIOME (BOOK CHAPTER 2 AREA A & RELOADED ARC A)",
+    gates_barovia: {
+        title: "🚪 1. Gates of Barovia",
+        tag: "SESSION 1 BORDER PORTAL (BOOK CHAPTER 2 AREAS A–B & RELOADED ARC A)",
         loreKey: "lore_svalich_gates",
         lootLinks: [
-            { key: "dalvan_compass", note: "Dalvan Corpse" },
-            { key: "dream_pastry", note: "Morgantha Cart" },
-            { key: "crossroads_grave_cache", note: "Roadside Spur" }
+            { key: "dalvan_compass", note: "Dalvan Corpse" }
         ],
         body: `
-            <div class="modal-read-aloud">"Towering 80-foot black pines lean inward like prison bars above a gravel track choked with black mud and cold ground-fog. Ahead, two colossal stone statues of headless kings flank thirty-foot wrought-iron gates whose rust-reddened hinges shriek open of their own accord before slamming shut behind your wheels."</div>
-            <div class="nbox nbox-cyan"><strong>📍 Specific Landmarks & Architectural Room Details (Book Area A & Chapter 2):</strong><br>
+            <div class="modal-read-aloud">"Two forty-foot stone colossi—their carved heads sheared away cleanly at the neck—tower above thirty-foot wrought-iron gates choked with dripping mountain fog. With a grinding scream of rusted hinges, the iron portals swing inward on their own before slamming shut behind your axle with final, echoing certainty."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Border Gate Landmarks (Book Chapter 2 Areas A–B):</strong><br>
             • <strong>The Decapitated King Buttresses:</strong> Twin 40-foot mossy granite piers guard the eastern pass; their severed stone crowns lie cracked in the thistle ditch 20 feet east, still chiseled with ancient Delmor/Barovian crests worn smooth by centuries of freezing sleet.<br>
-            • <strong>The Living Wrought-Iron Gates (Area A):</strong> Thirty-foot iron bars forged with spearhead finials that require <strong>zero wind</strong> to part for incoming travelers and automatically lock upon passage (DC 20 Strength to force outward; rusty hinges cannot be unpinned while Barovia claims a soul).<br>
-            • <strong>Milepost 13 — Dalvan Olensky's Clearing (300 ft Inside):</strong> Half-buried beside a gnarled silver fir lies the rigid, mud-caked corpse of courier <strong>Dalvan Olensky</strong> (died 4 days prior), clutching a torn leather satchel. Thirteen vertical knife-notches gouged into the bark circle the clearing—proving the Mists turned his frantic sprint back east toward the wolf packs.<br>
-            • <strong>The Razor-Back Svalich Hairpin Gorge:</strong> A single-lane shelf road 1,200 yards west of the gates where slick slate overhangs a sheer 200-foot drop into pine treetops and snapping deadfall.</div>
-            <div class="nbox nbox-amber"><strong>⚠️ Hazards, Traps, Environmental Rules & DCs:</strong><br>
-            • <strong>The Choking Wall of Fog (Edge of Barovia):</strong> Anyone stepping past the eastern stone buttresses enters dense, stinging gray mist: <strong>DC 15 CON Save at the start of every minute</strong> or suffer <strong>1 level of Exhaustion</strong> (cannot be removed until returning inside Barovia or clearing the fog entirely). No Darkvision pierces beyond 15 feet.<br>
-            • <strong>Stagecoach Roof & Axle Crisis (S1 Open):</strong> Clinging to slick coach brass requires <strong>DC 10 Acrobatics</strong> or fall Prone; keeping panicked draft horses on the 200-ft cliff turn demands <strong>DC 13 Animal Handling / Land Vehicles</strong>.<br>
-            • <strong>Forensic Inspection of Dalvan (DC 12 Medicine / Investigation):</strong> Confirms he was not torn apart first—massive heart failure from nonstop running, though half-eaten wolf prints ring the pine trunks waiting only until dusk. Stepping off the gravel road risks a <strong>Strahd Wolf Patrol</strong> (1d4+1 Dire Wolves per hour after twilight).</div>
-            <div class="nbox nbox-emerald"><strong>🎁 Treasures, Evidence & Claimed Session 1 Haul:</strong><br>
-            • <strong>Dalvan's Courier Satchel:</strong> 🧭 <em>Dalvan's Spinning Brass Compass</em> (needle spins wildly near the Mists/Dark Powers—claimed in S1!), 📜 <em>Burgomaster Kolyan Indirovich's Sealed Warning Letter</em> (real wax-sealed plea warning outsiders away), and a damp pouch holding <strong>1 GP, 4 SP, and 9 CP</strong>.<br>
-            • <strong>Alpha Dire Wolf Trophy Harvest (S1 Fight):</strong> 🐺 <em>Thick Gray Dire Wolf Pelts</em> (15–30 SP in Vallaki) & 🦷 <em>Alpha Dire Wolf Fang Trophy</em> (+1 Intimidation among Barovian villagers).<br>
-            • <strong>Morgantha's Roadside Pushcart (S1):</strong> 🥧 <em>1x Morgantha's Dream Pastry</em> (gifted warmly to King Jacomir at zero coin; preserved uneaten in party stores).</div>
+            • <strong>The Sentient Wrought-Iron Gates (Area A):</strong> Thirty-foot spearhead-topped iron gates that open effortlessly for newcomers arriving in Barovia and lock tight behind them (<code>DC 20 Strength</code> to force outward; rusty pins cannot be unseated while Barovia claims a soul).<br>
+            • <strong>Milepost 13 — Dalvan Olensky's Clearing (300 ft Inside):</strong> Half-buried beside a gnarled silver fir lies the rigid, mud-caked corpse of courier <strong>Dalvan Olensky</strong> (died 4 days prior), clutching a torn leather satchel. Thirteen vertical knife-notches gouged into the bark circle the clearing—proving the Mists looped his frantic sprint back west.</div>
+            <div class="nbox nbox-amber"><strong>⚠️ Hazards, Choking Mists &amp; Forensic DCs:</strong><br>
+            • <strong>The Choking Wall of Fog (Edge of Barovia):</strong> Anyone stepping past the eastern stone buttresses enters dense, stinging gray mist: <strong>DC 15 CON Save at the start of every minute</strong> or suffer <strong>1 level of Exhaustion</strong> (cannot be removed until returning inside Barovia). No Darkvision pierces beyond 15 feet.<br>
+            • <strong>Forensic Inspection of Dalvan (DC 12 Medicine / Investigation):</strong> Confirms massive heart failure from nonstop running rather than wolf bites, though scavenger wolf prints ring the clearing waiting for nightfall.</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Claimed Session 1 Evidence:</strong><br>
+            • <strong>Dalvan's Courier Satchel:</strong> 🧭 <em>Dalvan's Spinning Brass Compass</em> (needle spins wildly near the Mists/Dark Powers—claimed in S1!), 📜 <em>Burgomaster Kolyan Indirovich's Sealed Warning Letter</em> (real wax-sealed plea warning outsiders away), and a damp pouch holding <strong>1 GP, 4 SP, and 9 CP</strong>.</div>
+        `
+    },
+    svalich: {
+        title: "🌲 2. Svalich Woods (Old Svalich Road)",
+        tag: "SESSION 1 COLD OPEN FOREST (BOOK CHAPTER 2 & RELOADED ARC A)",
+        loreKey: "lore_svalich_gates",
+        lootLinks: [
+            { key: "dream_pastry", note: "Morgantha Cart" }
+        ],
+        body: `
+            <div class="modal-read-aloud">"Cathedral-tall eighty-foot black pines interlock overhead until noon feels like dusk, choking a muddy gravel road wrapped in clammy ground-fog. Behind the snapping timber shadows, amber eyes flare between trunks as panicked hooves thunder down toward a sheer mountain cliff hairpin."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Forest Trail &amp; Roadside Beats (Book Chapter 2):</strong><br>
+            • <strong>The Towering Black Spruce Canopy:</strong> Dense evergreen woods stretching across the entire valley—muffling thunder, dripping iron-scented resin, and hiding Strahd's scouting wolf packs and nocturnal riders.<br>
+            • <strong>The Razor-Back Svalich Hairpin Gorge:</strong> A single-lane gravel shelf road 1,200 yards west of the gates where slick slate overhangs a sheer 200-foot drop into jagged pine treetops and snapping deadfall (Session 1 stagecoach crash site!).<br>
+            • <strong>Morgantha's Roadside Pushcart Turnoff:</strong> Muddy wheel-ruts where old <strong>Morgantha ("Granny")</strong> met the party in Session 1—shrugging off <strong>Piper's</strong> innate <em>Charm Person</em> via Night Hag Magic Resistance before gifting <strong>King Jacomir</strong> one still-uneaten <em>Dream Pastry</em>.</div>
+            <div class="nbox nbox-amber"><strong>⚠️ Hazards, Stagecoach Chase &amp; Forest Patrol DCs:</strong><br>
+            • <strong>Stagecoach Roof &amp; Axle Crisis (S1 Open):</strong> Clinging to slick coach brass requires <strong>DC 10 Acrobatics</strong> or fall Prone; keeping panicked draft horses on the 200-ft cliff turn demands <strong>DC 13 Animal Handling / Land Vehicles</strong>.<br>
+            • <strong>Nighttime Wolf Patrols:</strong> Stepping off the gravel road after twilight risks a <strong>Strahd Wolf Patrol</strong> (1d4+1 Dire Wolves + Alpha Dire Wolf leading Pack Tactics ambush).</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Session 1 Road Haul:</strong><br>
+            • <strong>Alpha Dire Wolf Trophy Harvest (S1 Fight):</strong> 🐺 <em>Thick Gray Dire Wolf Pelts</em> (15–30 SP in Vallaki) &amp; 🦷 <em>Alpha Dire Wolf Fang Trophy</em> (+1 Intimidation among Barovian villagers).<br>
+            • <strong>Morgantha's Roadside Gift (S1):</strong> 🥧 <em>1x Morgantha's Dream Pastry</em> (held uneaten by King Jacomir).</div>
         `
     },
     village: {
-        title: "🏚️ 2. Village of Barovia, Indirovich Manor & Church Attic",
-        tag: "SESSIONS 1–2 ACTIVE SIEGE (BOOK CHAPTER 3 AREAS E1–E5 & RELOADED ARC B)",
+        title: "🏚️ 3. Village of Barovia",
+        tag: "SESSIONS 1–2 FIRST SETTLEMENT (BOOK CHAPTER 3 AREAS E1–E3 & RELOADED ARC B)",
         loreKey: "village_barovia",
         lootLinks: [
             { key: "blank_tarokka", note: "S1 Tavern" },
-            { key: "kolyan_diary", note: "S1 Manor" },
-            { key: "donavich_rosary", note: "Church E5" },
-            { key: "holy_water", note: "Ismark Cache" },
-            { key: "healing_potion", note: "Ismark Cache" },
-            { key: "silver_weapon", note: "Ismark Cache" },
             { key: "cloak_of_protection_dh", note: "Village Cache" }
         ],
         body: `
-            <div class="modal-read-aloud">"Sharp timber palisades and overturned ale carts barricade the muddy square directly beneath the thousand-foot black fang of Pillarstone Crag. Every clapboard shutter is spiked shut with coffin nails, peat smoke hangs low between crooked eaves, and a cracked iron church bell tolls the dusk from atop the northern rise."</div>
-            <div class="nbox nbox-cyan"><strong>📍 Room-by-Room Village Directory (Book Chapter 3 Areas E1–E5):</strong><br>
+            <div class="modal-read-aloud">"Sharp timber palisades and overturned ale carts barricade the muddy square directly beneath the thousand-foot black fang of Pillarstone Crag. Every clapboard shutter is spiked shut with coffin nails, peat smoke hangs low between crooked eaves, and pale eyes peer cautiously from behind torn linen curtains."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Village Streets, Shops &amp; Tavern (Book Chapter 3 Areas E1–E3):</strong><br>
             • <strong>Area E1 — Bildrath's Mercantile:</strong> Dimly lit general store smelling of tallow and cabbage. Tight-fisted <strong>Bildrath Cantemir</strong> charges an outrageous <strong>10x PHB markup</strong> (even 1 GP for a crowbar) while his gentle-giant nephew <strong>Parriwimple</strong> (Gladiator stat block, AC 16, 112 HP, STR 18) stacks flour sacks by the door and refuses theft.<br>
-            • <strong>Area E2 — Blood on the Vine Tavern:</strong> Warm hearth watched by three quiet Vistani owners (<strong>Alenka, Mirabel, Sorvia</strong>) while brooding <strong>Ismark Kolyanovich</strong> drinks alone in the corner booth. Here in Session 1, a shaken Vistana pressed <strong>🃏 Piper's Blank Tarokka Card</strong> into the party's hands after every inked symbol bled off.<br>
-            • <strong>Area E3 — Mad Mary's Townhouse:</strong> Crooked shutters muffled by sobs; half-crazed <strong>Mary</strong> rocks a crooked-eyed Blinsky doll named <em>"Maloriga"</em> beside an unmade loft bed—pleading for rescue of her missing 17-year-old daughter <strong>Gertruda</strong>, who slipped away to Castle Ravenloft.<br>
-            • <strong>Area E4 — Burgomaster Indirovich's Mansion:</strong> Claw-gouged two-story timber home ringed by wolf tracks and trampled salt lines; Burgomaster <strong>Kolyan Indirovich</strong> lies in an open pine coffin in the parlor while <strong>Ireena Kolyana</strong> stands vigil. In Session 1, the party looted <strong>📖 Kolyan's Secret Wizard Diary</strong> from his study desk!<br>
-            • <strong>Area E5 — Church of the Morninglord & Bell-Loft Attic (Reloaded Arc B5):</strong> Scorched stone nave lit by twelve stuttering beeswax tapers around a chipped gold-leafed sun altar; a narrow pine ladder behind the vestry ascends into the shadowy church attic.</div>
-            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Active Cliffhanger & Tactical DCs:</strong><br>
+            • <strong>Area E2 — Blood on the Vine Tavern:</strong> Warm hearth watched by three quiet Vistani owners (<strong>Alenka, Mirabel, Sorvia</strong>) while brooding <strong>Ismark Kolyanovich</strong> drinks alone in the corner booth. Here in Session 1, a shaken Vistana stared into <strong>Piper's</strong> eyes in dread and pressed <strong>🃏 Piper's Blank Tarokka Card</strong> into her hands after every inked symbol bled off!<br>
+            • <strong>Area E3 — Mad Mary's Townhouse:</strong> Crooked shutters muffled by sobs; half-crazed <strong>Mary</strong> rocks a crooked-eyed Blinsky doll named <em>"Maloriga"</em> beside an unmade loft bed—pleading for rescue of her missing 17-year-old daughter <strong>Gertruda</strong>, who slipped away to Castle Ravenloft.</div>
+            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Barricades &amp; Alley Prowlers:</strong><br>
             • <strong>Nightly Death-House / Ghoul Prowlers (1d4+2 Zombies/Strahd Zombies):</strong> Every boarded alley after sundown risks stumbling into shambling corpses bursting from collapsed cellar hatches (<strong>DC 12 Perception</strong> avoids Surprise).<br>
-            • <strong>Church Attic Siege — Doru the Starved Spawn (CR 5, 85 HP):</strong> Half-mad priest <strong>Father Donavich</strong> locked his turned vampire spawn son <strong>Doru</strong> behind oak beams in the church attic rather than stake him. Seconds after <strong>Derek</strong> unfroze time at the S1/S2 cliffhanger, <strong>King Jacomir</strong> is offering a cup of his own royal blood while <strong>Piper &amp; Yvaine</strong> urge immediate execution!<br>
-            • <strong>The Willing Blood-Cup Rule (DM Special):</strong> Drinking <em>willing</em> mortal blood grants Doru <strong>2 minutes of weeping, unbroken human lucidity</strong>—letting him reveal he marched on Ravenloft with the <strong>Mad Mage (Mordenkainen)</strong> a year ago and saw Strahd's pulsating crystal <strong>Heart of Sorrow</strong> inside the North Tower before begging for a clean mercy death. Denying blood or missing diplomacy triggers full feral frenzy in the tight attic rafters (<strong>DC 14 Acrobatics</strong> to keep footing on joists above the 15-ft church drop).</div>
-            <div class="nbox nbox-emerald"><strong>🎁 Treasures, Loot Caches & S1 Recoveries:</strong><br>
-            • <strong>Claimed in S1:</strong> 🃏 <em>Piper's Blank Tarokka Card</em> (Dormant Stage 0 until Madam Eva inspects it) &amp; 📖 <em>Kolyan Indirovich's Wizard Diary</em> (contains 1st-level wizard margin notes &amp; reveals <strong>Davian Martikov</strong> leads the <strong>Keepers of the Feather</strong>!).<br>
-            • <strong>Ismark's Secret Armory Strongbox (E4 Cellar / Escort Reward):</strong> ⚔️ <em>2x Silvered Shortswords or 10x Silvered Firearm Bullets</em>, 💧 <em>2x Flasks of St. Andral's Holy Water</em>, 🧪 <em>2x Potions of Healing</em>, and 🧥 <em>Worn Barovian Guard Cloak (Cloak of Protection archetype if gifted)</em>.<br>
-            • <strong>Vestry Altar Drawer (E5):</strong> 📿 <em>Father Donavich's Consecrated Rosary</em> (1/day action forces any Vampire Spawn within 15 ft to pass <strong>DC 13 WIS Save</strong> or recoil 15 ft and lose reactions).</div>
+            • <strong>Soulless Villagers (9 in 10):</strong> Drab, silent townsfolk provide eerie atmosphere but freeze indoors after dusk out of terror of Strahd's wolves and night raids.</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Session 1 Village Claims:</strong><br>
+            • <strong>Blood on the Vine Tavern (Claimed in S1):</strong> 🃏 <em>Piper's Blank Tarokka Card</em> (Dormant Stage 0 until Madam Eva inspects it at Tser Pool).<br>
+            • <strong>Mad Mary's Clues &amp; Abandoned Street Cache:</strong> 🧸 <em>"Is No Fun, Is No Blinsky!"</em> doll tag pointing toward Vallaki toyshop (<code>N7</code>) and Gertruda's trail, plus optional 🧥 <em>Worn Barovian Guard Cloak</em>.</div>
         `
     },
-    crossroads_falls: {
-        title: "⚖️ 3. River Ivlis Crossroads & Tser Falls Gorge Bridge",
-        tag: "SESSION 2 MILESTONE ENCOUNTERS (BOOK AREAS F & H • RELOADED ARC C2 & C7)",
-        loreKey: "lore_crossroads_falls",
+    indirovich_manor: {
+        title: "🕯️ 4. Indirovich Manor",
+        tag: "SESSION 1 SIEGED BURGOMASTER ESTATE (BOOK CHAPTER 3 AREA E4)",
+        loreKey: "village_barovia",
         lootLinks: [
-            { key: "crossroads_grave_cache", note: "Gallows Grave" },
-            { key: "silver_weapon", note: "Crossroads Patrol" }
+            { key: "kolyan_diary", note: "S1 Study Loot" },
+            { key: "holy_water", note: "Ismark Cache" },
+            { key: "healing_potion", note: "Ismark Cache" },
+            { key: "silver_weapon", note: "Ismark Cache" }
         ],
         body: `
-            <div class="modal-read-aloud">"Where three slick mud tracks split beneath a creaking oak gibbet, eleven sunken graves gape open around a mossy stone bridge spanning the emerald-black River Ivlis. Miles further north, the gorge narrows to a mossy ninety-foot stone arch veiled in roaring white mist above a dizzying thousand-foot plummet."</div>
-            <div class="nbox nbox-cyan"><strong>📍 Location Landmarks & Story Beats (Areas F &amp; H • Reloaded Arcs C2 &amp; C7):</strong><br>
-            • <strong>Area F — The Ivlis Gibbet &amp; Eleven Headstones:</strong> A twelve-foot gallows arm faces the intersection with three weathered signposts pointing to <em>Barovia Village</em>, <em>Tser Pool</em>, and <em>Ravenloft / Vallaki</em>. Eleven shallow, unmarked plots ring the post—each freshly sunken within living memory.<br>
-            • <strong>The Black Carriage Arrival (Beat 1 — Strahd's 1st Appearance):</strong> Out of the mist rolls Count Strahd's sleek obsidian carriage drawn by two silent black draft horses. <strong>Strahd von Zarovich</strong> steps into the drizzle in person—offering chillingly formal condolences to <em>"my dearest Ireena"</em> while casually testing the party's spines. <em>CRITICAL: Strahd knows NOTHING about Derek</em>, who operates strictly in frozen time.<br>
-            • <strong>Area H — Tser Falls 90-Foot Stone Bridge (Beat 2 — 1,000 ft Above Pool):</strong> Supported by gargoyle-carved limestone piers spanning a 1,000-foot cataract whose spray freezes into black ice along the parapet. Four stone gargoyles crouch along the parapets as silent sentinels.<br>
-            • <strong>Cael Joins &amp; Derek's Milestone 1 Time-Stop:</strong> Near the Tser Pool turnoff, the stalking black cat sheds its beast shape into <strong>Caelum Jude ("Cael")</strong> to join as the party's Stars Druid healer. Crossing the high Tser Falls arch later, <strong>three unseen knocks echo inside their skulls</strong>—time snaps rigid, Cael shrinks against the stone wall in mute dread, and <strong>Derek</strong> manifests for ten icy seconds: <em>"The old woman gave you the riddles. Now go take the weapons and don't let anyone stand in your way."</em></div>
-            <div class="nbox nbox-amber"><strong>⚠️ Hazards, Illusions & Saving Throws:</strong><br>
-            • <strong>The Gallows Corpse Phantasm (Area F):</strong> One random PC sees their own blue-lipped, bloated corpse twitching from the rope (<strong>DC 12 WIS Save</strong> or <strong>Frightened for 1 minute</strong>; vanishes to mist if touched or attacked).<br>
-            • <strong>Testing Strahd's Patience (Area F):</strong> Any rash attack against Strahd at Level 3–4 bounces seamlessly off his <strong>Heart of Sorrow</strong> (50 HP temporary buffer) without drawing real blood, while Strahd counters with a calm Unarmed Strike or <em>Charm</em> before vanishing back into the carriage.<br>
-            • <strong>Icy Tser Falls Parapet (Area H):</strong> Slick moss and spray force <strong>DC 11 Acrobatics</strong> during combat movement near the 3-foot low wall; failing a shove or knockback threatens a <strong>1,000-foot plunge (20d6 bludgeoning on impact into Tser Pool)</strong>!</div>
-            <div class="nbox nbox-emerald"><strong>🎁 Treasures & Grave Cache:</strong><br>
-            • <strong>Sunken Sixth Coffin (Grave Digging or DC 13 Perception under loose turf):</strong> An iron-banded soldier's pouch holding 🪙 <em>15 tarnished Barovian Silver Pieces</em> and a wax-sealed 🪄 <em>Spell Scroll of Protection from Evil and Good</em> (<code>Crossroads Grave Cache</code> in Vault!).<br>
-            • <strong>Abandoned Scout Belt (Edge of Gorge Bushes — DC 14 Investigation):</strong> ⚔️ <em>1x Silvered Dagger</em> dropped by a fleeing monster hunter weeks ago.</div>
+            <div class="modal-read-aloud">"Claw-gouged mahogany shutters hang splintered over trampled lines of rock salt along the garden porch. Inside the timber-beamed parlor, a simple pine coffin rests upon two sawhorses surrounded by guttering tallow candles while Ismark and Ireena keep grim, sleepless vigil beside their late father's study."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Manor Rooms &amp; Family Secrets (Book Area E4):</strong><br>
+            • <strong>The Boarded Parlor &amp; Vigil:</strong> Burgomaster <strong>Kolyan Indirovich</strong> lies in an open pine coffin after suffering a fatal heart attack under nightly sieges. Twice before, Count Strahd charmed his way across this threshold and drank from <strong>Ireena Kolyana's</strong> neck.<br>
+            • <strong>Kolyan's Secret Study (Session 1 Discovery):</strong> Behind locked oak shelving, the party uncovered proof that late Burgomaster Kolyan once practiced hedge-wizardry—recovering <strong>📖 Burgomaster Kolyan's Wizard Diary</strong>, which explicitly names <strong>Davian Martikov</strong> and the <strong>Keepers of the Feather</strong> as trusted allies!<br>
+            • <strong>Ismark's Cellar Armory:</strong> Hidden beneath loose flagstones lies old town guard steel and consecrated flasks reserved by Ismark for anyone bold enough to escort Ireena safely west toward Vallaki.</div>
+            <div class="nbox nbox-crimson"><strong>⚠️ Hazards &amp; Law of Forbiddance:</strong><br>
+            • <strong>Perimeter Night Siege:</strong> Vampire Spawn, Bride Volenta, and Dire Wolves test shutter seams and try to bait or drag heroes outdoors—<strong>though vampires physically cannot step across the private threshold unless invited by a living occupant!</strong><br>
+            • <strong>Coffin Transport Vulnerability:</strong> Opening the front door at dawn to haul Kolyan's heavy coffin down toward the village church leaves Ireena briefly exposed across the foggy street.</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Claimed Manor Haul:</strong><br>
+            • <strong>Study Desk (Claimed in S1 by Jacomir):</strong> 📖 <em>Burgomaster Kolyan's Wizard Diary</em> (1st-level arcane margin notes + crucial Keepers of the Feather trust key for Vallaki &amp; Winery!).<br>
+            • <strong>Ismark's Secret Armory Strongbox (Escort Reward):</strong> ⚔️ <em>2x Silvered Shortswords or 10x Silvered Firearm Bullets</em>, 💧 <em>2x Flasks of St. Andral's Holy Water</em>, 🧪 <em>2x Potions of Healing</em>, and 🧥 <em>Worn Barovian Guard Cloak</em>.</div>
+        `
+    },
+    barovia_church: {
+        title: "⛪ 5. Barovia Church (Church of the Morninglord)",
+        tag: "SESSIONS 1–2 ATTIC CLIFFHANGER (BOOK CHAPTER 3 AREA E5 & RELOADED ARC B5)",
+        loreKey: "village_barovia",
+        lootLinks: [
+            { key: "donavich_rosary", note: "Altar Drawer E5" }
+        ],
+        body: `
+            <div class="modal-read-aloud">"Twelve stuttering beeswax tapers ring a chipped stone altar beneath fractured stained glass at the northern edge of Barovia Village. High above the nave's dusty vestry ladder, jagged claws scrape across dark attic rafters as a starved voice begs for blood—before three unseen knocks lock every drop of candle-smoke frozen in midair."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Chapel, Attic &amp; Dawn Graveyard (Book Area E5 &amp; Reloaded Arc B5):</strong><br>
+            • <strong>Main Chapel Nave:</strong> Unconsecrated stone chapel (vampires CAN enter!) tended by hoarse, broken <strong>Father Donavich</strong> praying ceaselessly beside a chipped golden Morninglord sunburst.<br>
+            • <strong>The Bell-Loft Attic (Active S1/S2 Cliffhanger!):</strong> Unlike standard modules that drop Doru into an empty cellar, our table positioned <strong>Doru (CR 5, 85 HP)</strong> chained among dark attic beams overhead! Seconds after <strong>Derek</strong> unfroze time (<code>tap, tap, tap</code>), <strong>King Jacomir</strong> is pouring a cup of his own royal blood while <strong>Piper &amp; Yvaine</strong> urge steel.<br>
+            • <strong>Eastern Foggy Cemetery:</strong> Waterlogged hillside behind the apse where Burgomaster Kolyan Indirovich is laid to rest at dawn before escorting Ireena westward.</div>
+            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Blood-Cup Lucidity Rule &amp; Attic DCs:</strong><br>
+            • <strong>The Willing Blood-Cup Rule (Reloaded Arc B5):</strong> Drinking <em>willing</em> mortal blood grants Doru <strong>2 minutes of weeping, unbroken human lucidity</strong>—letting him confess he marched on Ravenloft with the <strong>Mad Mage (Mordenkainen)</strong> a year ago and saw Strahd's pulsating crystal <strong>Heart of Sorrow</strong> inside the North Tower before begging for a clean mercy death!<br>
+            • <strong>Attic Joist Combat (DC 14 Acrobatics):</strong> Denying blood or attacking blindly triggers feral frenzy across narrow oak beams above a 15-ft drop into the nave (Spider Climb + Talon Grapple DC 13).<br>
+            • <strong>Derek's Time-Stop Blind Spot:</strong> Donavich, Ismark, Ireena, and Strahd have ZERO memory of Derek's frozen-second visit inside this chapel!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Chapel Relics:</strong><br>
+            • <strong>Vestry Altar Drawer (E5):</strong> 📿 <em>Father Donavich's Consecrated Rosary</em> (1/day action forces any Vampire Spawn within 15 ft to pass <strong>DC 13 WIS Save</strong> or recoil 15 ft and lose reactions).<br>
+            • <strong>Story Payoff:</strong> Doru's Heart of Sorrow confession + Donavich's tearful blessing on Ireena's journey west.</div>
+        `
+    },
+    tser_falls: {
+        title: "🌊 6. Tser Falls (Including Crossroads Road OTW)",
+        tag: "SESSION 2 GORGE BRIDGE & STRAHD CROSSROADS OTW (BOOK AREAS H & F • RELOADED C2 & C7)",
+        loreKey: "lore_crossroads_falls",
+        lootLinks: [
+            { key: "crossroads_grave_cache", note: "Crossroads Grave OTW" },
+            { key: "silver_weapon", note: "Gorge Scout Belt" }
+        ],
+        body: `
+            <div class="modal-read-aloud">"High above a thousand-foot cataract where freezing spray turns parapet stone to black ice, four carved stone gargoyles crouch along a mossy ninety-foot arch. Miles back down the muddy ascent, three gravel roads still split beneath a creaking oak gibbet where Count Strahd's obsidian coach awaits in the drizzle."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Tser Falls Span &amp; River Ivlis Crossroads Reference (Areas H &amp; F):</strong><br>
+            • <strong>En Route Reference — River Ivlis Crossroads (Area F • Beat 1):</strong> On the way toward Tser Pool &amp; Tser Falls, the gravel road splits beside a 12-ft oak gallows and 11 sunken graves. Here Count Strahd's sleek <strong>Black Carriage</strong> glides up in person for his <strong>1st canonical face-to-face meeting</strong> (offering icy condolences to Ireena while knowing NOTHING of Derek!).<br>
+            • <strong>Area H — Tser Falls 90-Foot Stone Bridge (Beat 2 — 1,000 ft Above Pool):</strong> Supported by gargoyle-carved limestone piers spanning the roaring white cataract dropping down into Tser Pool.<br>
+            • <strong>Cael Joins &amp; Derek's Milestone 1 Time-Stop (Reloaded Arc C7):</strong> Near the falls turnoff, the stalking black cat sheds wild shape into <strong>Caelum Jude ("Cael")</strong> to join as party healer. Crossing the misty arch, <strong>three unseen knocks echo</strong>—time snaps rigid, Cael shrinks against the stone wall in mute dread, and <strong>Derek</strong> manifests for ten seconds: <em>"The old woman gave you the riddles. Now go take the weapons and don't let anyone stand in your way."</em></div>
+            <div class="nbox nbox-amber"><strong>⚠️ Hazards, OTW Gallows Phantasm &amp; Parapet DCs:</strong><br>
+            • <strong>OTW Gallows Phantasm (Area F):</strong> Passing the crossroads shows one random PC their own swollen corpse twitching from the rope (<strong>DC 12 WIS Save</strong> or <strong>Frightened for 1 minute</strong>; turns to mist if touched).<br>
+            • <strong>Testing Strahd OTW (Area F):</strong> Any rash Level 3–4 strike bounces seamlessly off his <strong>Heart of Sorrow</strong> (50 HP buffer) before Strahd casually exits into the mist.<br>
+            • <strong>Icy Tser Falls Parapet (Area H):</strong> Slick moss and spray force <strong>DC 11 Acrobatics</strong> during combat near the 3-ft wall; failing a shove risks a <strong>1,000-foot plunge (20d6 bludgeoning into Tser Pool)</strong>!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Roadside Finds:</strong><br>
+            • <strong>OTW Sunken Sixth Coffin (Area F — Digging or DC 13 Perception):</strong> Velvet pouch holding 🪙 <em>15 tarnished Barovian Silver Pieces</em> and a sealed 🪄 <em>Spell Scroll of Protection from Evil and Good</em> (<code>Crossroads Grave Cache</code>).<br>
+            • <strong>Gorge Edge Bushes (Area H — DC 14 Investigation):</strong> ⚔️ <em>1x Silvered Dagger</em> dropped by a fleeing hunter weeks prior.</div>
         `
     },
     tserpool: {
-        title: "🔮 4. Tser Pool Vistani Encampment",
+        title: "🔮 7. Tser Pool Vistani Encampment",
         tag: "SESSION 2 ORACLE SANCTUARY (BOOK CHAPTER 2 AREA G & RELOADED ARC C4)",
         loreKey: "lore_tser_pool",
         lootLinks: [
@@ -6913,7 +7246,7 @@ const BIOME_DATA = {
         `
     },
     bonegrinder: {
-        title: "🥧 5. Old Bonegrinder Windmill & The Four Megaliths",
+        title: "🥧 8. Old Bonegrinder Windmill",
         tag: "SESSION 3 NIGHT HAG LAIR (BOOK CHAPTER 6 AREAS O1–O4 & RELOADED ARC D)",
         loreKey: "lore_bonegrinder",
         lootLinks: [
@@ -6947,71 +7280,127 @@ const BIOME_DATA = {
     // ACT II LOCATIONS (SESSIONS 4–9)
     // =========================================================================
     vallaki: {
-        title: "⚔️ 6. Walled Town of Vallaki & The Blue Water Inn",
-        tag: "SESSIONS 4–6 TOWN HUB (BOOK CHAPTER 5 AREAS N2, N3, N5, N7, N8 & RELOADED)",
+        title: "⚔️ 9. Town of Vallaki",
+        tag: "SESSIONS 4–6 WALLED TOWN HUB (BOOK CHAPTER 5 AREAS N3, N5, N7, N8, N9 & RELOADED)",
         loreKey: "town_vallaki",
         lootLinks: [
-            { key: "bag_of_tricks", note: "Blue Water Loft" },
-            { key: "elixir_of_health", note: "Martikov Loft" },
-            { key: "greater_healing", note: "Martikov Loft" },
-            { key: "van_richten_scope", note: "Rictavio Wagon" },
-            { key: "hat_of_disguise", note: "Rictavio Wagon" },
-            { key: "ring_mind_shielding", note: "Rictavio Wagon" },
+            { key: "van_richten_scope", note: "Rictavio Wagon N5" },
+            { key: "hat_of_disguise", note: "Rictavio Wagon N5" },
+            { key: "ring_mind_shielding", note: "Rictavio Wagon N5" },
             { key: "silvered_hand_crossbow", note: "Rictavio Arsenal" },
-            { key: "victor_wand", note: "Baron Attic" },
-            { key: "magic_mirror_vargas", note: "Vargas Mansion" },
+            { key: "victor_wand", note: "Baron Attic N3" },
+            { key: "magic_mirror_vargas", note: "Vargas Mansion N3" },
             { key: "blinsky_toys", note: "Toyshop N7" },
             { key: "vasilka_gown", note: "Lydia Commission" },
             { key: "izek_battleaxe", note: "Izek Boss Drop" }
         ],
         body: `
             <div class="modal-read-aloud">"Sharp timber palisades crowned with wolf skulls ring a sprawling cobblestone market choked with mud and rain-soaked yellow banners shouting 'ALL WILL BE WELL!' Behind shuttered casements, gaunt shopkeepers force stiff, trembling smiles as red-cloaked guards drag a whistling baker toward the town stocks."</div>
-            <div class="nbox nbox-cyan"><strong>📍 Specific Landmarks & Town Districts (Book Chapter 5 Areas N2, N3, N5, N7, N8):</strong><br>
-            • <strong>Area N2 — The Blue Water Inn (Martikov Safehouse):</strong> Run by brave wereravens <strong>Urwin &amp; Danika Martikov</strong>. Presenting <strong>📖 Burgomaster Kolyan's Wizard Diary</strong> (looted S1) immediately earns wereraven sanctuary, free beds, and entry to the hidden loft armory. In the corner booth strums flamboyant half-elf ringmaster <strong>Rictavio</strong> (disguised vampire hunter <strong>Rudolph van Richten</strong>).<br>
+            <div class="nbox nbox-cyan"><strong>📍 Vallaki Districts, Mansion &amp; Lake Zarovich (Book Chapter 5 Areas N3, N5, N7, N8, N9):</strong><br>
             • <strong>Area N3 — Burgomaster Vargas Vallakovich's Mansion:</strong> Heavy stone manor guarded by devil-armed <strong>Izek Strazni</strong> (whose locked attic bedroom hides dozens of custom-commissioned Blinsky dolls resembling <em>Ireena Kolyana</em>—his forgotten sister!). Across the hall in the scorched conservatory attic, erratic prodigy <strong>Victor Vallakovich</strong> experiments on an unstable <em>Teleportation Circle</em> etched over skeletal cat remains.<br>
             • <strong>Area N5 — Arasek Stockyard &amp; Rictavio's Carnival Wagon:</strong> Muddy wagon yard housing Rictavio's steel-armored <strong>Saber-Toothed Tiger</strong> (trained to hunt evil Vistani) plus a secret locked trapdoor underneath the driver's bench.<br>
             • <strong>Area N7 — Blinsky Toys:</strong> Cluttered workshop brimming with clockwork spiders, ventriloquist dummies, and gentle tinkerer <strong>Gadof Blinsky</strong> alongside his tutu-wearing monkey Piccolo (<em>"Is No Fun, Is No Blinsky!"</em>).<br>
-            • <strong>Area N8 — Town Square Stocks &amp; Lake Zarovich:</strong> Citizens trapped inside donkey-headed plaster stocks for <em>"malicious unhappiness."</em> Half a mile north lies icy <strong>Lake Zarovich</strong>, where drunken fisherman <strong>Bluto Krogarov</strong> rows out to drown 7-year-old Vistani seer <strong>Arabelle</strong> in a burlap sack for "fish luck."</div>
+            • <strong>Area N8 — Town Square Stocks &amp; Lake Zarovich:</strong> Citizens trapped inside donkey-headed plaster stocks for <em>"malicious unhappiness."</em> Half a mile north lies icy <strong>Lake Zarovich</strong>, where drunken fisherman <strong>Bluto Krogarov</strong> rows out to drown 7-year-old Vistani seer <strong>Arabelle</strong> in a burlap sack for "fish luck."<br>
+            • <strong>Area N9 — Southwest Vistani &amp; Dusk Elf Camp:</strong> Outside the western palisade sits Luvash &amp; Arrigal's mercenary Vistani camp beside the dilapidated huts of surviving Dusk Elf elder <strong>Kasimir Velikov</strong>.</div>
             <div class="nbox nbox-amber"><strong>⚠️ Hazards, Curfew Police State &amp; Exploration DCs:</strong><br>
             • <strong>Mandatory Festival Happiness Decree:</strong> Uttering Strahd's true name ("the Devil Strahd") or criticizing the Baron triggers arrest by <strong>6–12 Vallaki Guards</strong> led by Captain Izek (CR 5, Hurl Flame + Cleave).<br>
             • <strong>Victor's Defective Teleportation Glyph (N3 Attic):</strong> Crossing the chalk sigil without speaking the command phrase triggers an unstable arcane feedback blast: <strong>4d10 Force damage (DC 15 CON Save half)</strong>.<br>
             • <strong>Rictavio's Wagon Ward (N5):</strong> Picking the brass carriage clasp (<strong>DC 15 Thieves' Tools</strong>) without calming the Saber-Toothed Tiger via the roof hatch unleashes the beast and trips a hidden <em>Fireball/Alchemist</em> glyph trap (<strong>DC 15 Investigation</strong> to spot).<br>
             • <strong>Drowning at Lake Zarovich (N8):</strong> Arabelle sinks in 3 rounds once Bluto drops the weighted sack; freezing lake water imposes <strong>DC 10 CON Save per minute</strong> against Exhaustion while swimming.</div>
             <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Hidden Town Caches:</strong><br>
-            • <strong>Blue Water Inn Secret Loft (Unlocked via Kolyan's Diary!):</strong> 🐾 <em>Martikov Gray Bag of Tricks</em>, ✨ <em>Elixir of Health</em>, and 🧪 <em>2x Potions of Greater Healing</em>.<br>
             • <strong>Rictavio's Secret Wagon Compartment (N5):</strong> 🎭 <em>Hat of Disguise</em>, 🧠 <em>Ring of Mind Shielding</em>, 🔫 <em>Van Richten's Silver-Runed Scope &amp; Barrel (+1 Firearm Upgrade — ideal for Yvaine!)</em>, and 🏹 <em>Silvered Hand Crossbow</em>.<br>
             • <strong>Baron's Attic &amp; Bridal Parlor (N3):</strong> 🪄 <em>Victor's Crackling Wand</em> (Lightning/Wonder for Piper), 📖 <em>Victor's Wizard Spellbook</em>, 🪞 <em>Burgomaster's Haunted Assassin Mirror</em>, and 👗 <em>Bridal Silk Gown</em> sought by Krezk's Abbot.<br>
             • <strong>Captain Izek Boss Drop (Session 6 Coup):</strong> 🔥 <em>Izek's Hellfire Brute Battleaxe +1</em> (+1d6 Fire on every hit — built for King Jacomir!).</div>
         `
     },
-    coffin_wachter: {
-        title: "⚰️ 7. St. Andral's Church, Henrik's Coffin Shop & Wachterhaus",
-        tag: "SESSIONS 5–6 VALLAKI DUNGEONS & COUP (BOOK CHAPTER 5 AREAS N1, N4, N6)",
+    blue_water_inn: {
+        title: "🦅 10. Blue Water Inn",
+        tag: "SESSIONS 4–7 KEEPERS SAFEHOUSE (BOOK CHAPTER 5 AREA N2)",
+        loreKey: "keepers",
+        lootLinks: [
+            { key: "bag_of_tricks", note: "Blue Water Loft N2q" },
+            { key: "elixir_of_health", note: "Martikov Loft N2q" },
+            { key: "greater_healing", note: "Martikov Loft N2q" }
+        ],
+        body: `
+            <div class="modal-read-aloud">"Warm wolf-steak aroma and low violin notes spill through rain-streaked leaded panes beneath a swung wooden sign depicting a waterfall. Inside, broad-shouldered Urwin Martikov polishes mugs behind the oak bar while a brightly dressed half-elf ringmaster strums quietly in the corner booth and black ravens watch every roof-beam overhead."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Inn Taproom &amp; Secret Wereraven Loft (Book Area N2):</strong><br>
+            • <strong>Taproom Hearth &amp; Martikov Hospitality:</strong> Run by brave wereravens <strong>Urwin &amp; Danika Martikov</strong> alongside their young sons Brom and Bray. Presenting <strong>📖 Burgomaster Kolyan's Wizard Diary</strong> (looted in Session 1!) shatters Urwin's guarded reserve—immediately earning free beds, wolf-steak stew, and entry to the hidden loft armory!<br>
+            • <strong>Rictavio's Corner Booth:</strong> Flamboyant half-elf ringmaster <strong>Rictavio</strong> (undercover vampire hunter <strong>Rudolph van Richten</strong>) observes newcomers shrewdly, testing their bravery before revealing his identity or offering monster-hunting lore.<br>
+            • <strong>Area N2q — Secret Loft &amp; Raven Perch:</strong> Concealed behind heavy cedar beams sits the Keepers of the Feather reconnaissance nest, stocked with emergency potions and magical scouting gear.</div>
+            <div class="nbox nbox-amber"><strong>⚠️ Hazards &amp; Keepers Secrecy Protocol:</strong><br>
+            • <strong>Deadly Wereraven Exposure Risk:</strong> If Strahd or Vallaki's spies learn the Martikovs are wereravens, the inn will be burned to ash. Urwin never transforms or admits their secret until proven allies (via Kolyan's Diary or rescuing the Wizard of Wines).<br>
+            • <strong>The Raven Spy Watch:</strong> Blue Water Inn's eaves are watched by both Martikov scouts AND Strahd's town spies (Ernst Larnak)—careless boasts in the common room reach Lady Wachter or Ravenloft before dawn!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Secret Loft Cache (Area N2q):</strong><br>
+            • <strong>Blue Water Inn Secret Loft (Unlocked via Kolyan's Diary or Winery Plea!):</strong> 🐾 <em>Martikov Gray Bag of Tricks</em>, ✨ <em>Elixir of Health</em>, and 🧪 <em>2x Potions of Greater Healing</em>, plus safe Long Rest lodging inside Vallaki!</div>
+        `
+    },
+    st_andral: {
+        title: "✝️ 11. St. Andral's Church",
+        tag: "SESSIONS 4–5 VALLAKI SANCTUARY (BOOK CHAPTER 5 AREA N1)",
         loreKey: "lore_coffin_wachter",
         lootLinks: [
-            { key: "st_andral_bones", note: "Henrik Wardrobe" },
-            { key: "tome_of_strahd", note: "Wachter Library" },
-            { key: "gilded_razor_fan", note: "Anastrasya Drop" },
-            { key: "baal_verzi_dagger", note: "Wachter Secret Chest" }
+            { key: "st_andral_bones", note: "Altar Crypt N1" }
+        ],
+        body: `
+            <div class="modal-read-aloud">"Huddled at the western wall of Vallaki beneath weeping birch trees rises a vaulted stone church built around the sainted bones of Morninglord martyr Andral. Inside the vestry, pale Father Lucian Petrovich paces frantically beside a pried-up flagstone beneath the golden altar—whispering that the ward keeping Count Strahd outside has vanished."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Sanctuary Interior &amp; Feast Climax (Book Area N1):</strong><br>
+            • <strong>The Altar Crypt &amp; Broken Hallow Ward:</strong> For four centuries, the buried skull and bones of Saint Andral projected a permanent divine <em>Hallow</em> field searing any undead or fiend crossing the doors. Three nights prior, altar helper <strong>Yeska</strong> slipped up and gravedigger <strong>Milivoj</strong> dug up the bones for Henrik van der Voort.<br>
+            • <strong>Father Lucian Petrovich's Vestry:</strong> Compassionate 5th-level priest (Baron Vargas's estranged brother-in-law!) begging heroes discreetly to recover the relics before sunset without sparking panic across Vallaki.<br>
+            • <strong>The Feast of St. Andral Climax:</strong> Should the party fail or race the bones back across Vallaki's rooftops, slamming the bones back beneath the altar triggers a blinding wave of Morninglord sunlight—vaporizing spawn and blasting Bride Anastrasya backward out the doors!</div>
+            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Undead Raid &amp; Consecration Clock:</strong><br>
+            • <strong>Unprotected Church Trap:</strong> While the bones remain missing, vampires, spawn, and Count Strahd himself can walk cleanly through the sanctuary doors (public churches are NOT protected by the Law of Forbiddance!).<br>
+            • <strong>Questioning Yeska &amp; Milivoj (DC 12 Persuasion / Insight):</strong> Milivoj admits stealing the bones only to buy food for his hungry siblings, pointing straight toward <strong>Henrik's Coffin Shop</strong>.</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Sanctuary Payoff:</strong><br>
+            • <strong>Restored Hallow Sanctuary:</strong> Permanently locks out Count Strahd and all undead from St. Andral's Church (safe shelter for Ireena during Act II!), plus Father Lucian's clerical healing &amp; <em>Remove Curse</em> aid.</div>
+        `
+    },
+    coffin_shop: {
+        title: "⚰️ 12. Henrik's Coffin Shop",
+        tag: "SESSION 5 VAMPIRE CRATE AMBUSH (BOOK CHAPTER 5 AREA N6)",
+        loreKey: "lore_coffin_wachter",
+        lootLinks: [
+            { key: "st_andral_bones", note: "Henrik Wardrobe N6" },
+            { key: "gilded_razor_fan", note: "Anastrasya Drop" }
         ],
         body: `
             <div class="modal-read-aloud">"Upstairs in the sawdust-choked loft above Henrik van der Voort's workshop, six pine coffins packed with black Castle Ravenloft soil crack open from within. Pale fingers dripping ruby rings peel back the center lid as Bride Anastrasya purrs: 'Did the little priests truly think hemlock mortar would keep the Count outside?'"</div>
-            <div class="nbox nbox-cyan"><strong>📍 Room Keys — Church (N1), Coffin Shop (N6) &amp; Wachterhaus (N4):</strong><br>
-            • <strong>Area N1 — Church of St. Andral:</strong> Usually protected from undead entry by a permanent <em>Hallow</em> field sustained by saintly bones beneath the altar. Three nights ago, young gravedigger <strong>Milivoj</strong> pried up the flagstone on altar boy <strong>Yeska's</strong> accidental slip—leaving the refuge naked before sunset.<br>
-            • <strong>Area N6 — Henrik van der Voort's Coffin Maker Shop:</strong> Claustrophobic ground showroom stacked with cheap pine boxes. Henrik's upstairs quarters hold the missing <strong>Sacred Bones of St. Andral</strong> hidden inside his bedroom wardrobe while the adjoining storage attic conceals <strong>six Ravenloft dirt crates</strong> containing <strong>Bride Anastrasya Karelova</strong> and <strong>5 Vampire Spawn</strong>.<br>
-            • <strong>Area N4 — Wachterhaus (Tarokka #1 — The Tome of Strahd):</strong> Decaying gothic manor matching Madam Eva's 1st Card (<em>"Master of Stars: a noble house of cats and whispers"</em>). Upstairs, matriarch <strong>Lady Fiona Wachter</strong> preserves her dead husband <strong>Nikolai's</strong> corpse under <em>Gentle Repose</em> on a canopy bed; inside the cellar crawlspace beneath the wine barrels, blind cultists chant beside pentagrams, while her iron cult library guards the <strong>📜 Tome of Strahd</strong> alongside her imp <strong>Majesto</strong>.</div>
-            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Rooftop Chase Mechanics &amp; Coup Intrigue:</strong><br>
-            • <strong>The Feast of St. Andral 4-Block Relay Chase (N6 to N1):</strong> Opening the storage crates unleashes Anastrasya and her spawn pack in a deadly multi-round pursuit across Vallaki slate rooftops (<strong>DC 13 Athletics/Acrobatics</strong> obstacle checks). Slamming the Bones back under St. Andral's altar detonates an explosive consecration wave—forcing all spawn to flee in smoking terror!<br>
+            <div class="nbox nbox-cyan"><strong>📍 Workshop Showroom &amp; Vampire Loft (Book Area N6):</strong><br>
+            • <strong>Ground Showroom:</strong> Claustrophobic workshop stacked with cheap unpainted pine coffins, brass handles, and shivering, guilt-stricken widower <strong>Henrik van der Voort</strong>—who points silently upstairs rather than risk his throat.<br>
+            • <strong>Henrik's Upstairs Bedroom:</strong> Inside a plain oak wardrobe behind folded wool coats hides the leather sack containing <strong>🦴 The Sacred Bones of St. Andral</strong> (alongside Henrik's 15 SP blood-money).<br>
+            • <strong>Adjoining Storage Loft (The 6 Crates):</strong> Stacked from floor to rafters sit six heavy wooden crates shipped from Castle Ravenloft packed with dark earth—housing <strong>Bride Anastrasya Karelova</strong> and <strong>5 Vampire Spawn</strong> waiting for dusk!</div>
+            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Crate Ambush &amp; 4-Block Relay Chase:</strong><br>
+            • <strong>Bride Anastrasya + 5 Spawn Ambush:</strong> Cracking any crate triggers a deadly enclosed melee on creaking pine floorboards! Rather than trading hits in a 20-ft loft against 6 regenerating vampires at Level 4, run an explosive <strong>4-block dusk rooftop relay chase</strong> back to <strong>St. Andral's Church (N1)</strong>!<br>
+            • <strong>Rooftop Relay DCs:</strong> Sprinting across slick slate tiles and laundry lines calls for <strong>DC 13 Athletics / Acrobatics</strong> checks while spawn leap via Spider Climb alongside!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Boss Drop:</strong><br>
+            • <strong>Henrik's Bedroom Wardrobe (N6):</strong> 🦴 <em>The Sacred Bones of St. Andral</em> &amp; 💰 <em>15 SP blood-money pouch</em>.<br>
+            • <strong>Bride Anastrasya Confrontation Drop:</strong> 🪭 <em>Anastrasya's Gilded Razor Fan +1</em> (collapsible silvered-silk war fan +1/+1d6 Slashing finesse/thrown weapon &amp; Karelova Ruby Signet!).</div>
+        `
+    },
+    wachterhaus: {
+        title: "🕯️ 13. Wachterhaus",
+        tag: "SESSION 6 CULT MANOR & TAROKKA #1 (BOOK CHAPTER 5 AREA N4)",
+        loreKey: "lore_coffin_wachter",
+        lootLinks: [
+            { key: "tome_of_strahd", note: "Wachter Library N4" },
+            { key: "baal_verzi_dagger", note: "Wachter Secret Chest" }
+        ],
+        body: `
+            <div class="modal-read-aloud">"Sagging eaves and unwashed mullioned windows brood behind wrought-iron fencing where dozens of sleek black housecats prowl in eerie silence. Upstairs beside cold beeswax tapers, Lady Fiona Wachter sleeps calmly next to her embalmed dead husband—while below her wine barrels, blindfolded cultists whisper around crimson pentagrams guarding Strahd's own confession."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Cult Manor Rooms &amp; Library (Book Area N4):</strong><br>
+            • <strong>First-Floor Parlor &amp; Study:</strong> Aristocratic widow <strong>Lady Fiona Wachter</strong> welcomes guests calmly over tea alongside her invisible imp familiar <strong>Majesto</strong> and manservant <strong>Ernst Larnak</strong>—openly praising Count Strahd as a strict yet rightful lord compared to lunatic Baron Vargas.<br>
+            • <strong>Master Bedroom (Area N4o):</strong> Locked canopy suite where Fiona casts daily <em>Gentle Repose</em> over her preserved deceased husband Nikolai's corpse—adjacent to the hidden study iron trunk.<br>
+            • <strong>Secret Cult Wine Cellar:</strong> Behind sliding brick shelves wait pseudo-infernal pentagrams, animated skeletons, and Fiona's loyal townsfolk conspirators.<br>
+            • <strong>Secret Iron Cult Library (Tarokka #1):</strong> Matches Madam Eva's 1st Card (<em>"Master of Stars: a noble house of cats and whispers"</em>)—housing <strong>📜 The Tome of Strahd</strong> inside the iron-locked chest alongside Leo Dilisnya's bone box!</div>
+            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Vault Trap &amp; Coup Intrigue:</strong><br>
             • <strong>Wachterhaus Secret Vault Trap (N4 — DC 15 Thieves' Tools):</strong> Fiona's iron cult chest is warded with poison needles (<strong>DC 13 CON Save</strong> or 2d6 Poison) and watched silently by invisible imp <strong>Majesto</strong>.<br>
             • <strong>Fiona's Devils' Bargain:</strong> Lady Wachter offers to hand over the <strong>Tome of Strahd</strong> willingly without bloodshed if the party eliminates tyrannical <strong>Izek Strazni</strong> prior to the <em>Festival of the Blazing Sun</em>—flipping Vallaki's government overnight!</div>
             <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Tarokka Relic #1:</strong><br>
-            • <strong>Henrik's Bedroom Wardrobe (N6):</strong> 🦴 <em>The Sacred Bones of St. Andral</em> (re-arms permanent sanctuary + blasts nearby undead at climax) &amp; 💰 <em>15 SP blood-money pouch</em>.<br>
-            • <strong>Bride Anastrasya Confrontation Drop:</strong> 🪭 <em>Anastrasya's Gilded Razor Fan +1</em> (collapsible silvered-silk war fan +1/+1d6 Slashing finesse/thrown weapon &amp; noble signet!).<br>
             • <strong>Wachterhaus Secret Library (N4):</strong> 📜 <em>The Tome of Strahd (Tarokka Relic #1 — Advantage vs Strahd's Charm in 30 ft + 1/day DC 15 WIS Stun on Strahd/Brides!)</em>, 🗡️ <em>Baal Verzi Assassin's Mirror Dagger +1</em> (+2d6 Necrotic on surprise/crit), and 💰 <em>45 GP Iron Cult Strongbox</em>.</div>
         `
     },
     winery: {
-        title: "🍷 8. The Wizard of Wines Winery",
+        title: "🍷 14. Wizard of Wines Winery",
         tag: "SESSION 7 VINEYARD SIEGE (BOOK CHAPTER 12 AREAS W1–W20 & RELOADED)",
         loreKey: "lore_winery",
         lootLinks: [
@@ -7039,8 +7428,8 @@ const BIOME_DATA = {
         `
     },
     yester_hill: {
-        title: "⛈️ 9. Yester Hill, Kavan's Cairn & The Gulthias Tree",
-        tag: "SESSION 8 COLOSSUS RITUAL (BOOK CHAPTER 14 AREAS Y1–Y5 & RELOADED)",
+        title: "⛈️ 15. Yester Hill",
+        tag: "SESSION 8 COLOSSUS RITUAL & GULTHIAS TREE (BOOK CHAPTER 14 AREAS Y1–Y5 & RELOADED)",
         loreKey: "lore_yester_hill",
         lootLinks: [
             { key: "blood_spear", note: "Kavan's Cairn Y4" },
@@ -7053,7 +7442,7 @@ const BIOME_DATA = {
             • <strong>Area Y1 &amp; Y4 — Switchback Trail &amp; Kavan's Burial Cairn:</strong> Rings of piled river-stones mark ancient berserker chieftains. Approaching the central tomb awakens the ancestral spirit of <strong>Kavan the Grim</strong> in a warrior PC's mind: <em>"Take my spear, warrior, and spill the blood of those who kneel to the corpse!"</em><br>
             • <strong>Area Y2 — The Western Fog Vision:</strong> Peering west over the chasm reveals a ghostly golden mirage of an ancient city beyond Barovia—Strahd's lost homeland glimpsed only on Yester Hill. Strahd watches calmly beside flaming <strong>Bucephalus</strong>.<br>
             • <strong>Area Y3 — The Obsidian Druid Ring &amp; Effigy Chamber:</strong> Twelve monoliths surround a muddy mound housing <strong>Wintersplinter's</strong> root-chrysalis and six chanting berserkers/druids performing the 10-round summoning rite.<br>
-            • <strong>Area Y5 — The Weeping Gulthias Tree:</strong> Just south of the ridge stands the cursed thirty-foot mother-tree bleeding thick crimson sap over tangled corpses, guarded by 3 Vine Blights and 6 Twig Blights.</div>
+            • <strong>Area Y5 — The Weeping Gulthias Tree (Southern Slope):</strong> Standing right on the southern hill ridge grows the cursed thirty-foot mother-tree bleeding thick crimson sap over tangled corpses, guarded by 3 Vine Blights and 6 Twig Blights.</div>
             <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Wintersplinter Boss Mechanics &amp; Strahd's Gift:</strong><br>
             • <strong>Static Lightning Boulders (Area Y3):</strong> On Initiative Count 20 each round, lightning arcs down onto the stone ring: anyone touching or hiding within 5 ft of a boulder takes <strong>4d10 Lightning damage (DC 14 DEX Save half)</strong>.<br>
             • <strong>Wintersplinter (CR 7 Siege Monster, 138 HP, Fire Vulnerability):</strong> Unless all druids are halted before Round 10, the colossal wicker-and-root treant erupts free! Heroes can scale its tangled flank (<strong>DC 14 Athletics</strong>) and yank the glowing emerald <strong>Winery Life-Gem</strong> directly out of its ribcage—dealing <strong>40 instant siege damage</strong> and crippling its regeneration!<br>
@@ -7065,7 +7454,7 @@ const BIOME_DATA = {
         `
     },
     ravenloft_dinner: {
-        title: "🍷 10. Castle Ravenloft — The Act II Black Carriage Dinner Layout",
+        title: "🥂 16. Castle Ravenloft (Act II Dinner Layout)",
         tag: "SESSION 9 SOCIAL THRILLER (BOOK CHAPTER 4 AREAS K1, K7, K8, K10, K49)",
         loreKey: "lore_ravenloft_dinner",
         lootLinks: [
@@ -7095,7 +7484,7 @@ const BIOME_DATA = {
     // ACT III LOCATIONS (SESSIONS 10–14)
     // =========================================================================
     argynvost: {
-        title: "🐉 11. Argynvostholt — Ruined Fortress of the Silver Dragon",
+        title: "🐉 17. Argynvostholt Mansion (The Fortress)",
         tag: "SESSIONS 10–11 RELIC SANCTUM (BOOK CHAPTER 7 AREAS Q1–Q53 & RELOADED)",
         loreKey: "lore_argynvostholt",
         lootLinks: [
@@ -7106,7 +7495,7 @@ const BIOME_DATA = {
             { key: "dragonplate_armor", note: "Vault Armory" }
         ],
         body: `
-            <div class="modal-read-aloud">"Perched atop a jagged spur southwest of Vallaki looms the shattered Gothic keep of Argynvostholt. In the fog-choked courtyard, a towering stone dragon watches the mountain clouds through hail-scarred eyes—spreading a sudden wave of silver frost as you cross between its weathered buttresses."</div>
+            <div class="modal-read-aloud">"Perched atop a jagged spur southwest of Vallaki looms the shattered Gothic fortress-mansion of Argynvostholt. In the fog-choked courtyard, a towering stone dragon watches the mountain clouds through hail-scarred eyes—spreading a sudden wave of silver frost as you cross between its weathered buttresses."</div>
             <div class="nbox nbox-cyan"><strong>📍 Three-Floor Fortress Directory (Book Chapter 7 Areas Q1–Q53):</strong><br>
             • <strong>Area Q1 — Dragon Statue Courtyard:</strong> Passing the statue unleashes a cold fog whisper: <em>"My knights have fallen into darkness. Save them, if you can."</em> Three phantom dragon-drakes patrol the gatehouse loft.<br>
             • <strong>Area Q3 &amp; Q13 — Foyer &amp; Chapel of the Morninglord:</strong> A towering dragon shadow unfurls silently across the cracked marble foyer. Inside the chapel (Q13) stands <strong>Argynvost's Ancient Star-Mural</strong>—depicting constellations guarding a forgotten sea-route beyond the mists and warning how an ancient Whispered Shadow poisoned the distant mountain vault.<br>
@@ -7125,9 +7514,27 @@ const BIOME_DATA = {
             • <strong>Wine Vault (Q6) &amp; Keep Armory:</strong> 🛡️ <em>4x Potions of Invulnerability</em> (Resistance to ALL damage for 1 min) &amp; 🛡️ <em>Silvered Dragonplate +1</em>.</div>
         `
     },
-    krezk_abbey: {
-        title: "⛪ 12. Village of Krezk & The Abbey of Saint Markovia",
-        tag: "SESSION 12 ANGELIC ASYLUM (BOOK CHAPTER 8 AREAS S1–S24 & RELOADED)",
+    krezk: {
+        title: "🏘️ 18. Village of Krezk",
+        tag: "SESSION 12 WALLED MOUNTAIN COMMUNE (BOOK CHAPTER 8 AREAS S1–S4 & RELOADED)",
+        loreKey: "commune_krezk",
+        lootLinks: [],
+        body: `
+            <div class="modal-read-aloud">"Twenty-foot stone ramparts rimmed in pine frost ring a quiet alpine logging commune beneath Mount Baratok. Along the northern slope above the timber cottages, a crystal mountain spring reflects the only scrap of clean blue sky inside Barovia—shimmering softly around an ivory stone gazebo."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Village Gates, Burgomaster &amp; Blessed Spring (Book Chapter 8 Areas S1–S4):</strong><br>
+            • <strong>Areas S1–S2 — Timber Gatehouse &amp; 20-ft Stone Walls:</strong> Fiercely isolationist mountain guards bar outsiders completely—opening the iron-barred gatehouse ONLY once the party delivers fresh wine barrels from <strong>The Wizard of Wines</strong>.<br>
+            • <strong>Area S3 — Burgomaster Dmitri Krezkov's Cottage:</strong> Grieving Burgomaster <strong>Dmitri</strong> and his wife <strong>Anna</strong> mourn their recently buried son Ilya, hiding dark secrets about how the Abbot upstairs miraculously "raised" children before demanding bizarre favors.<br>
+            • <strong>Area S4 — Pool &amp; Shrine of the White Sun:</strong> Sunlit stone gazebo framing sacred mountain water consecrated by the Morninglord. If <strong>Ireena Kolyana</strong> kneels beside the pool, the shimmering spirit of <strong>Prince Sergei</strong> reaches out calling <em>"Tatyana!"</em></div>
+            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Gate Barriers &amp; Strahd's Sky-Lightning (Area S4):</strong><br>
+            • <strong>Wine-Locked Entry:</strong> Approaching Krezk without Winery barrels or Martikov endorsement forces icy stone-wall refusal (or risky cliff-scaling under crossbow watches).<br>
+            • <strong>Sergei's Pool Choice &amp; Strahd's Fury (Area S4):</strong> Allowing Ireena to enter the pool frees Tatyana's soul forever; pulling her back infuriates Count Strahd, who blasts the gazebo with a roaring <strong>Call Lightning bolt (6d10 Lightning, DC 15 DEX Save half in 20 ft)</strong>!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Sanctuary Payoffs &amp; Mountain Refuge:</strong><br>
+            • <strong>Safe Alpine Hub:</strong> Once trusted, Krezk serves as a secure western rest sanctuary far from Vallaki politics and unlocks direct access up the switchback road to <strong>Abbey of Saint Markovia</strong>.</div>
+        `
+    },
+    abbey_markovia: {
+        title: "⛪ 19. Abbey of Saint Markovia",
+        tag: "SESSION 12 ANGELIC ASYLUM (BOOK CHAPTER 8 AREAS S12–S24 & RELOADED)",
         loreKey: "commune_krezk",
         lootLinks: [
             { key: "markovia_thighbone", note: "Abbey Crypt / Shrine" },
@@ -7138,17 +7545,14 @@ const BIOME_DATA = {
             { key: "ezmerelda_ammo", note: "Barracks S19" }
         ],
         body: `
-            <div class="modal-read-aloud">"Above the frost-rimmed log cabins of Krezk winds a switchback cliff path to the twin fieldstone wings of Saint Markovia's Abbey. Inside the candlelit sanctuary, a serene young monk with luminescent golden eyes and a blood-spattered linen apron murmurs encouragingly—teaching a tall, mute patchwork woman stitched from twenty corpses how to bow like a countess."</div>
-            <div class="nbox nbox-cyan"><strong>📍 Village &amp; Abbey Directory (Book Chapter 8 Areas S1–S24):</strong><br>
-            • <strong>Areas S1–S3 — Timber Wall Gatehouse &amp; Burgomaster Krezkov's Cottage:</strong> Fiercely insular gates barred against all outsiders until the party delivers fresh wine barrels from <strong>The Wizard of Wines</strong>, mourning their sickly final heir Ilyich.<br>
-            • <strong>Area S4 — The Pool &amp; Shrine of the White Sun:</strong> Sunlit stone gazebo framing crystal-clear sacred water. If <strong>Ireena Kolyana</strong> approaches the surface, the phantom of <strong>Prince Sergei</strong> reaches forth calling <em>"Tatyana!"</em>—forcing a monumental party choice between granting her eternal escape or keeping her in the fight (which makes a furious Strahd smash the gazebo with crimson sky-lightning!).<br>
-            • <strong>Area S13 — Abbey Main Hall (The Abbot &amp; Vasilka):</strong> Fallen Deva <strong>The Abbot</strong> (manipulated by Strahd's <em>"Vasili von Holtz"</em> guise) tends to his flesh-golem masterpiece <strong>Vasilka</strong>, earnestly believing crafting a bride for the Devil will lift Barovia's curse.<br>
-            • <strong>Areas S12 &amp; S17 — Madhouse Cloister &amp; Mongrelfolk Cages:</strong> Shrieking cells holding the mutated <strong>Belview clan</strong> (two-headed violist <strong>Clovin</strong> in the belfry S17, Otto, and Zygfrek).<br>
-            • <strong>Area S19 — North Barracks (Ezmerelda's Safehouse):</strong> Where monster hunter <strong>⚔️ Ezmerelda d'Avenir</strong> keeps salt-circles, alchemy kits, and spare silvered cartridges!</div>
-            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Deva Wrath &amp; Moral Tensions:</strong><br>
-            • <strong>The Abbot's Angelic Judgement (CR 10 Deva + Vasilka CR 5 Flesh Golem):</strong> Attacking the Abbot inside S13 forces two high-CR bosses in tight quarters while howling Mongrelfolk alert the wing. Diplomacy (exposing <em>"Vasili"</em> or supplying a wedding gown from Vallaki) delays or splits combat!<br>
-            • <strong>Sergei's Pool Lightning Strike (Area S4):</strong> If the heroes pull Ireena back from the White Sun Pool, Count Strahd instantly blasts the water with an angry <strong>Call Lightning bolt (6d10 Lightning, DC 15 DEX Save half in 20 ft)</strong>.<br>
-            • <strong>Corrupted Madness Cells (S12):</strong> Liberating starving Mongrelfolk without food or calm spells risks stampedes down the narrow snowy cliff switchback.</div>
+            <div class="modal-read-aloud">"Above the frost-rimmed roofs of Krezk winds a steep switchback trail to the twin fieldstone wings of Saint Markovia's Abbey. Inside the candlelit sanctuary, a serene young monk with luminescent golden eyes and a blood-spattered linen apron murmurs encouragingly—teaching a tall, mute patchwork woman stitched from twenty corpses how to bow like a countess."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Monastery Cloisters &amp; Surgical Sanctum (Book Chapter 8 Areas S12–S24):</strong><br>
+            • <strong>Area S13 — Abbey Main Hall (The Abbot &amp; Vasilka):</strong> Fallen Deva <strong>The Abbot</strong> (corrupted silently by Strahd's <em>"Vasili von Holtz"</em> guise) tends to his flesh-golem masterpiece <strong>Vasilka</strong>, serenely convinced that gifting Count Strahd a flawless bride will cure Barovia's curse.<br>
+            • <strong>Areas S12 &amp; S17 — Madhouse Cloister &amp; Belfry:</strong> Shrieking iron-barred cells holding the mutated <strong>Belview Mongrelfolk</strong> clan (two-headed violist <strong>Clovin</strong> in the bell tower S17, Otto, and Zygfrek).<br>
+            • <strong>Area S19 — North Barracks (Ezmerelda's Safehouse):</strong> Where Vistani monster hunter <strong>⚔️ Ezmerelda d'Avenir</strong> caches salt-circles, silvered stakes, alchemy kits, and spare enchanted cartridges!</div>
+            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Deva Wrath &amp; Madhouse DCs:</strong><br>
+            • <strong>The Abbot's Angelic Judgement (CR 10 Deva + Vasilka CR 5 Flesh Golem):</strong> Fighting the Abbot inside S13 pits the party against two dangerous bosses in tight masonry while howling Mongrelfolk alert the hall. Exposing <em>"Vasili"</em> or delivering a bridal gown from Vallaki buys truce or healing favors!<br>
+            • <strong>Corrupted Madness Cells (S12):</strong> Liberating starving Mongrelfolk without food or calm magic risks frantic stampedes down the icy cliff switchback.</div>
             <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Sacred Relics:</strong><br>
             • <strong>Abbey Crypt / Shrine Alcove:</strong> 🦴 <em>Saint Markovia's Thighbone</em> (Counts as a <em>Mace of Disruption</em>: +2d6 Radiant vs Undead/Fiends + DC 15 WIS instant-destroy at &lt;=25 HP).<br>
             • <strong>Abbot's Study &amp; Cloister Loft:</strong> 💚 <em>Ring of Regeneration</em> (Regains 1d6 HP every 10 minutes), 📜 <em>Spell Scroll of Heroes' Feast</em> (+2d10 Max HP &amp; Poison/Fear Immunity 24 hrs!), 🧪 <em>Potion of Superior Healing (8d4+8)</em>, and 💰 <em>Abbey Treasury Coins</em>.<br>
@@ -7156,7 +7560,7 @@ const BIOME_DATA = {
         `
     },
     berez: {
-        title: "🌊 13. The Drowned Ruins of Berez & Baba Lysaga's Hut",
+        title: "🌊 20. Drowned Ruins of Berez",
         tag: "SESSIONS 13–14 SWAMP BOSS LAIR (BOOK CHAPTER 10 AREAS U1–U7 & RELOADED)",
         loreKey: "ruins_berez",
         lootLinks: [
@@ -7184,37 +7588,54 @@ const BIOME_DATA = {
             • <strong>Baba Lysaga's Warded Iron Trunk (DC 17 Dispel Magic or Whispered Password):</strong> 🧪 <em>Oil of Sharpness</em> (+3 Hit/Dmg 1 hr), 🍀 <em>Stone of Good Luck (Luckstone: +1 Saves/Checks)</em>, 🎶 <em>Pipes of Haunting</em>, 🎯 <em>10x +1 Sling/Firearm Bullets</em> (for Yvaine), 📜 <em>Scrolls of Revivify &amp; Mass Cure Wounds</em>, 📖 <em>Baba's Grimoire</em>, &amp; 💰 130 GP + 5 Gems (250 GP).</div>
         `
     },
-    baratok_tower: {
-        title: "🗼 14. Van Richten's Tower (Khazan's Tower), Lake Baratok & Werewolf Den",
-        tag: "ACT II–III OPTIONAL SANCTUMS (BOOK CHAPTERS 11 & 15 AREAS V1–V7 & Z1–Z8)",
+    van_richten_tower: {
+        title: "🗼 21. Van Richten's Tower (Lake Baratok)",
+        tag: "ACT II–III ANTI-MAGIC SANCTUM (BOOK CHAPTER 11 AREAS V1–V7)",
         loreKey: "lore_tower_baratok",
         lootLinks: [
             { key: "ezmerelda_arsenal", note: "V1 Painted Wagon" },
             { key: "phosphor_grenades", note: "Ezmerelda Bombs V1" },
             { key: "mordenkainen_boon", note: "Mt Baratok Shore" },
-            { key: "werewolf_den_hoard", note: "Shrine Z7 Hoard" },
             { key: "staff_of_power", note: "Khazan Fate Hint" }
         ],
         body: `
-            <div class="modal-read-aloud">"Connected to the muddy shore of Lake Baratok by a rotting gravel causeway stands a leaning four-story tower crowned with a green-oxidized copper cupola. Outside the reinforced iron door sits a gaily painted Vistani wagon crackling faintly with chemical fumes—while miles north across the howling cliffs yawns a jagged cavern carved like a roaring wolf's skull."</div>
-            <div class="nbox nbox-cyan"><strong>📍 Baratok Tower Keys (Areas V1–V7) &amp; Werewolf Cave Keys (Areas Z1–Z8):</strong><br>
+            <div class="modal-read-aloud">"Connected to the muddy shore of Lake Baratok by a rotting gravel causeway stands a leaning four-story tower crowned with a green-oxidized copper cupola. Outside the reinforced iron door sits a gaily painted Vistani wagon crackling faintly with chemical fumes—while stepping across the threshold kills every glowing arcane spark in complete silence."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Baratok Tower Keys &amp; Mad Mage Cliffs (Book Chapter 11 Areas V1–V7):</strong><br>
             • <strong>Khazan's Anti-Magic Aura (Entire Tower):</strong> Built by legendary archmage <strong>Khazan</strong> (who died trying to forge Ravenloft's heart and shatter the Sunsword). The entire 4-story interior lies within a permanent <strong>100-ft Anti-Magic Field</strong>—blocking Strahd's scrying, <em>Fireball</em>, <em>Sending</em>, and magical armor alike!<br>
             • <strong>Area V1 — Ezmerelda's Alchemical Wagon:</strong> Parked outside the anti-magic radius; rigged with <strong>100 flasks of Alchemist's Fire</strong>! Disarming the latch (<strong>DC 15 Perception / Thieves' Tools</strong>) opens a safe haven stocked with monster-hunting tools.<br>
             • <strong>Area V2 — The Stick-Figure Dance Door:</strong> Replicating the embossed 7-step skeleton dance carved on the iron jamb opens the tower silently; prying the door triggers a lightning counter-shock.<br>
             • <strong>Areas V3–V7 — Clay Golem Elevator &amp; Yan's Head:</strong> A silent <strong>Clay Golem</strong> operates the four-chain pulley platform up to the 4th-floor attic, where <strong>Van Richten's desk</strong> preserves the talking mummified head of Vistani bandit <strong>Yan</strong>.<br>
-            • <strong>Mount Baratok North Shore &amp; The Werewolf Den (Z5b / Z7):</strong> Across the misty bay, the amnesiac <strong>Mad Mage (<em>Mordenkainen</em>)</strong> roams the cliffs above his hidden <em>Magnificent Mansion</em>, while to the northwest <strong>Zuleika Toranescu</strong> leads a covert rebellion against sadistic alpha <strong>Kiril Stoyanovich</strong> inside the wolf-skull caverns.</div>
-            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Wagon Blast &amp; Lycanthrope Curse DCs:</strong><br>
+            • <strong>Mount Baratok North Shore Reference:</strong> Across the misty bay, the amnesiac <strong>Mad Mage (<em>Mordenkainen</em>)</strong> stalks the cliffs above his hidden <em>Magnificent Mansion</em> until cured with <em>Greater Restoration</em>.</div>
+            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Wagon Blast &amp; Door Dragon Traps:</strong><br>
             • <strong>V1 Wagon Detonation (If Tripped):</strong> Blasts everyone within 30 ft for <strong>10d6 Fire damage (DC 15 DEX Save half)</strong>—annihilating Ezmerelda's supplies and shaking the tower walls!<br>
-            • <strong>V2 Door Failure Shock + Dragon Summon:</strong> First failed lock/force shocks creatures within 30 ft for <strong>4d10 Lightning (DC 15 DEX half)</strong>; a second force attempt summons a roaring <strong>Young Blue Dragon (CR 9)</strong> from the storm clouds!<br>
-            • <strong>Mother Night's Hoard Curse (Area Z7):</strong> Touching coins piled at Zuleika's altar without casting <em>Remove Curse</em> first afflicts thieves with <strong>Werewolf Lycanthropy (DC 12 CON Save on bite or full-moon gold)</strong>!</div>
-            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Companion Alliances:</strong><br>
+            • <strong>V2 Door Failure Shock + Dragon Summon:</strong> First failed lock/force shocks creatures within 30 ft for <strong>4d10 Lightning (DC 15 DEX half)</strong>; a second force attempt summons a roaring <strong>Young Blue Dragon (CR 9)</strong> from the storm clouds!</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Archmage Allies:</strong><br>
             • <strong>Ezmerelda's Wagon (V1):</strong> 💥 <em>Ezmerelda's Monster-Hunter Arsenal</em> (silvered blades, bullets, spellbook), 💣 <em>3x Alchemical Phosphor &amp; Smoke Bombs</em>, 🧪 <em>Potion of Greater Healing</em>, &amp; 💰 <em>45 GP</em>.<br>
-            • <strong>Werewolf Shrine Hoard (Z7):</strong> 💰 <em>90 GP + 6 Gemstones (60 GP)</em>, 🗡️ <em>Silvered Shortsword</em>, and ally loyalty from <strong>Zuleika</strong> if her mate Emil is freed in Ravenloft.<br>
             • <strong>Mount Baratok Payoff:</strong> Curing <strong>Mordenkainen</strong> unlocks the <strong>Archmage's Arcane Boon</strong> (Charm of Heroism / <em>Mind Blank</em> scroll aid) and vital intelligence about <strong>Khazan's Staff of Power</strong> buried beneath Ravenloft!</div>
         `
     },
+    werewolf_den: {
+        title: "🐺 22. Werewolf Den",
+        tag: "ACT II–III LYCANTHROPE CAVERNS (BOOK CHAPTER 15 AREAS Z1–Z8)",
+        loreKey: "werewolves",
+        lootLinks: [
+            { key: "werewolf_den_hoard", note: "Shrine Z7 Hoard" }
+        ],
+        body: `
+            <div class="modal-read-aloud">"Carved high into the northern pine cliffs of Barovia yawns a jagged cavern mouth shaped like a snarling wolf's skull. Pine torches flicker against wet limestone pillars inside, echoing with metallic spear-clangs from a blood-stained fighting pit and low, guttural chants around a bone-heaped altar to Mother Night."</div>
+            <div class="nbox nbox-cyan"><strong>📍 Werewolf Cavern Layout &amp; Pack Civil War (Book Chapter 15 Areas Z1–Z8):</strong><br>
+            • <strong>Area Z1 — The Wolf-Skull Cavern Entrance:</strong> Guarded by misty timber lookouts and two werewolf sentries clad in ragged woodsmen pelts.<br>
+            • <strong>Area Z5b — Iron Cages &amp; Child-Fighting Pit:</strong> Where sadistic Strahd-backed alpha <strong>Kiril Stoyanovich</strong> locks abducted village children and forces them to fight with wooden spears so only the cruelest survivor earns lycanthropy.<br>
+            • <strong>Area Z7 — Shrine of Mother Night:</strong> Deep limestone alcove guarded by rebel priestess <strong>Zuleika Toranescu</strong>, who despises Kiril's brutality and will aid heroes against Kiril if they promise to rescue her chained mate <strong>Emil</strong> from Castle Ravenloft dungeons (<code>K75a</code>)!</div>
+            <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Non-Silvered Immunity &amp; Shrine Curse:</strong><br>
+            • <strong>Lycanthrope Pack Ambush:</strong> Werewolves are immune/resistant to nonmagical, non-silvered B/P/S damage—making Jacomir's silvered steel, Yvaine's silver bullets, and Piper/Cael's spells vital! Bite hits inflict <strong>Lycanthropy (DC 12 CON Save)</strong>.<br>
+            • <strong>Mother Night's Hoard Curse (Area Z7):</strong> Touching stolen coins piled at Zuleika's altar without casting <em>Remove Curse</em> curses thieves with relentless sleep-denying nightmares (<strong>DC 15 WIS Save</strong> or zero benefit from Long Rests).</div>
+            <div class="nbox nbox-emerald"><strong>🎁 Treasures &amp; Rebel Pack Alliance:</strong><br>
+            • <strong>Werewolf Shrine Hoard (Z7):</strong> 💰 <em>90 GP + 6 Gemstones (60 GP)</em>, 🗡️ <em>Silvered Shortsword</em>, rescued village children, and pack ally loyalty from <strong>Zuleika</strong> once Emil is freed!</div>
+        `
+    },
     tsolenka: {
-        title: "❄️ 15. Tsolenka Pass & The Balinok Mountain Gatehouse",
+        title: "❄️ 23. Tsolenka Pass Gatehouse",
         tag: "SESSION 15 PART 1 BLIZZARD CLIMB (BOOK CHAPTER 9 AREAS T1–T9 & RELOADED)",
         loreKey: "lore_tsolenka_pass",
         lootLinks: [
@@ -7238,7 +7659,7 @@ const BIOME_DATA = {
         `
     },
     amber_temple: {
-        title: "⚡ 16. The Amber Temple — Vault of the Dark Powers",
+        title: "⚡ 24. The Amber Temple",
         tag: "SESSIONS 15–16 DARK POWERS DUNGEON (BOOK CHAPTER 13 AREAS X1–X42 & RELOADED)",
         loreKey: "lore_amber_temple",
         lootLinks: [
@@ -7271,7 +7692,7 @@ const BIOME_DATA = {
         `
     },
     ravenloft_siege: {
-        title: "🏰 17. Castle Ravenloft — The Final Siege Room-by-Room Guide",
+        title: "🏰 25. Castle Ravenloft (Final Siege)",
         tag: "SESSIONS 17–20 ENDGAME DUNGEON (BOOK CHAPTER 4 KEY ROOMS K6–K86)",
         loreKey: "lore_castle_ravenloft",
         lootLinks: [
@@ -8234,7 +8655,7 @@ function openMonsterModal(key, preserveUi = false, fromNav = false) {
                         ${m.linkedNpc && NPC_DATA[m.linkedNpc] ? `<button class="btn-modal-mini" style="background:linear-gradient(135deg,#1e3a5f,#0f2342); border-color:#38bdf8; color:#e0f2fe;" onclick="navigateModalFromInside('npc', '${m.linkedNpc}')" title="Open NPC Sheet & Roleplay">🎭 Sheet &amp; Roleplay</button>` : ''}
                         ${m.linkedNpc && NPC_DATA[m.linkedNpc] ? `<button class="btn-modal-mini" style="background:linear-gradient(135deg,#581c87,#3b0764); border-color:#c084fc; color:#f3e8ff;" onclick="navigateModalFromInside('npc_lore', '${m.linkedNpc}')" title="Open NPC Lore & History">📜 NPC Lore</button>` : ''}
                         ${m.loreKey && LORE_DATA[m.loreKey] ? `<button class="btn-modal-mini" style="background:linear-gradient(135deg,#78350f,#451a03); border-color:#f59e0b; color:#fef3c7;" onclick="navigateModalFromInside('lore', '${m.loreKey}')" title="Open Region / Faction Lore">🏛️ ${m.linkedNpc ? 'Faction Lore' : 'Region Lore'}</button>` : ''}
-                        ${m.biomeKey && BIOME_DATA[m.biomeKey] ? `<button class="btn-modal-mini" onclick="navigateModalFromInside('biome', '${m.biomeKey}')" title="Open Location Guide">🗺️ Location Guide</button>` : ''}
+                        ${m.biomeKey && BIOME_DATA[resolveBiomeKey(m.biomeKey)] ? `<button class="btn-modal-mini" onclick="navigateModalFromInside('biome', '${resolveBiomeKey(m.biomeKey)}')" title="Open Location Guide">🗺️ Location Guide</button>` : ''}
                     </div>
                     <p style="font-size:0.78rem; color:var(--text-muted); margin-top:3px;">${m.type} • Lineage: <span style="color:var(--accent-gold);">${m.lineage}</span></p>
                 </div>
@@ -8462,7 +8883,7 @@ function openNpcModal(key, opts = {}) {
                         ${linkedBossKey ? `<button class="btn-modal-mini" style="background:linear-gradient(135deg,#2c1219,#15090d); border-color:#f87171; color:#fecaca;" onclick="navigateModalFromInside('monster', '${linkedBossKey}')" title="Open Further Combat: Enemy & Boss Sheet">⚔️ Enemy / Boss Sheet</button>` : ''}
                         <button id="npc-switch-char-btn" class="btn-modal-mini" style="display:${activeTab === 'character' ? 'none' : 'inline-flex'}; background:linear-gradient(135deg,#1e3a5f,#0f2342); border-color:#38bdf8; color:#e0f2fe;" onclick="setNpcModalTab('${key}', 'character')" title="Switch to NPC Character Sheet & Roleplay">🎭 Sheet &amp; Roleplay</button>
                         ${n.loreKey && LORE_DATA[n.loreKey] ? `<button class="btn-modal-mini" style="background:linear-gradient(135deg,#78350f,#451a03); border-color:#f59e0b; color:#fef3c7;" onclick="navigateModalFromInside('lore', '${n.loreKey}')" title="Open Codex / Faction Lore">🏛️ Faction Lore</button>` : ''}
-                        ${n.biomeKey && BIOME_DATA[n.biomeKey] ? `<button class="btn-modal-mini" onclick="navigateModalFromInside('biome', '${n.biomeKey}')" title="Open Location Guide">🗺️ Location Guide</button>` : ''}
+                        ${n.biomeKey && BIOME_DATA[resolveBiomeKey(n.biomeKey)] ? `<button class="btn-modal-mini" onclick="navigateModalFromInside('biome', '${resolveBiomeKey(n.biomeKey)}')" title="Open Location Guide">🗺️ Location Guide</button>` : ''}
                     </div>
                     <p style="font-size:0.78rem; color:var(--text-muted); margin-top:3px;">${n.role}</p>
                 </div>
@@ -8617,10 +9038,11 @@ function openQuestModal(key) {
 }
 
 function openBiomeModal(key, fromNav = false) {
-    const b = BIOME_DATA[key];
+    const resolvedKey = resolveBiomeKey(key);
+    const b = BIOME_DATA[resolvedKey];
     if (!b) return;
     activeModalKind = 'biome';
-    activeModalBiomeKey = key;
+    activeModalBiomeKey = resolvedKey;
     activeModalNpcKey = null;
     activeModalMonsterKey = null;
     activeModalItemKey = null;
@@ -8628,20 +9050,158 @@ function openBiomeModal(key, fromNav = false) {
     if (!fromNav) modalNavStack = [];
     const modal = document.getElementById('dm-modal');
     const loreEntry = b.loreKey ? LORE_DATA[b.loreKey] : null;
-    const loreBarHtml = b.loreKey
-        ? `<div style="background:#131c2c; border-left:3.5px solid var(--accent-gold); padding:9px 14px; border-radius:0 6px 6px 0; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-               <div>
-                   <span style="font-size:0.75rem; color:var(--text-muted); display:block;">${b.tag}</span>
-                   ${loreEntry ? `<strong style="color:#e2e8f0; font-size:0.84rem;">📜 Archive Dossier: ${loreEntry.title}</strong>` : ''}
-               </div>
-               <button class="btn-roll" style="background:linear-gradient(135deg,#92400e,#b45309); border-color:#f59e0b; color:#fef3c7; font-weight:700; padding:6px 12px;" onclick="navigateModalFromInside('lore', '${b.loreKey}')">📜 History & Deep Lore ➔</button>
-           </div>`
-        : '';
+    const imgs = getBiomeImages(resolvedKey);
+    const imgActionHtml = imgs.length > 0
+        ? `<button type="button" class="btn-img-open" onclick="openLocationLightbox('${resolvedKey}')">🖼️ View ${imgs.length > 1 ? `Location Images (${imgs.length})` : 'Location Image'}</button>`
+        : `<span class="img-pending-pill" title="Drop an image into CURSE OF STRAHD/IMAGES/ to link this location">🖼️ No Image Yet</span>`;
+    const loreBarHtml = `
+        <div style="background:#131c2c; border-left:3.5px solid var(--accent-gold); padding:9px 14px; border-radius:0 6px 6px 0; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+                <span style="font-size:0.75rem; color:var(--text-muted); display:block;">${b.tag}</span>
+                ${loreEntry ? `<strong style="color:#e2e8f0; font-size:0.84rem;">📜 Archive Dossier: ${loreEntry.title}</strong>` : `<strong style="color:#e2e8f0; font-size:0.84rem;">📍 ${b.title}</strong>`}
+            </div>
+            <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
+                ${imgActionHtml}
+                <button type="button" class="btn-map-ref" style="padding:5px 10px; font-size:0.74rem;" onclick="openWorldMapLightbox()">🗺️ Map of Barovia</button>
+                ${b.loreKey && loreEntry ? `<button type="button" class="btn-roll" style="background:linear-gradient(135deg,#92400e,#b45309); border-color:#f59e0b; color:#fef3c7; font-weight:700; padding:6px 12px;" onclick="navigateModalFromInside('lore', '${b.loreKey}')">📜 History &amp; Deep Lore ➔</button>` : ''}
+            </div>
+        </div>`;
     const lootPillsHtml = renderLootLinksPillsHtml(b.lootLinks, '🔗 CLICKABLE WORLD LOOT VAULT ENTRIES (SECTION 4 ITEM DOSSIERS):');
     document.getElementById('modal-title').innerHTML = `${renderModalBackBtnHtml()}🗺️ ${b.title}`;
     document.getElementById('modal-content').innerHTML = `${loreBarHtml}${b.body}${lootPillsHtml}`;
     setModalLogsHtml(`Viewing Location Guide • ${b.tag}`);
     if (!modal.open) modal.showModal();
+}
+
+// =========================================================
+// 5B. LOCATION & WORLD MAP LIGHTBOX ENGINE
+// =========================================================
+let activeLightboxImages = [];
+let activeLightboxIdx = 0;
+
+function openWorldMapLightbox() {
+    openImageLightbox(
+        WORLD_MAP_IMAGE.title,
+        WORLD_MAP_IMAGE.subtitle,
+        [{ src: WORLD_MAP_IMAGE.src, label: "Full Map of Barovia" }],
+        0
+    );
+}
+
+function openLocationLightbox(biomeKey, startIdx = 0) {
+    const resolvedKey = resolveBiomeKey(biomeKey);
+    const b = BIOME_DATA[resolvedKey];
+    const imgs = getBiomeImages(resolvedKey);
+    if (!b || imgs.length === 0) return;
+    openImageLightbox(`🖼️ ${b.title}`, b.tag, imgs, startIdx);
+}
+
+function openImageLightbox(title, subtitle, imagesList, startIdx = 0) {
+    const lightbox = document.getElementById('image-lightbox');
+    if (!lightbox || !Array.isArray(imagesList) || imagesList.length === 0) return;
+    activeLightboxImages = imagesList;
+    activeLightboxIdx = Math.max(0, Math.min(startIdx, imagesList.length - 1));
+
+    const titleEl = document.getElementById('lightbox-title');
+    const subEl = document.getElementById('lightbox-subtitle');
+    if (titleEl) titleEl.textContent = title;
+    if (subEl) subEl.textContent = subtitle || '';
+
+    renderLightboxTabs();
+    renderLightboxActiveImage();
+    if (!lightbox.open) lightbox.showModal();
+}
+
+function renderLightboxTabs() {
+    const tabsEl = document.getElementById('lightbox-tabs');
+    if (!tabsEl) return;
+    if (activeLightboxImages.length <= 1) {
+        tabsEl.style.display = 'none';
+        tabsEl.innerHTML = '';
+        return;
+    }
+    tabsEl.style.display = 'flex';
+    tabsEl.innerHTML = activeLightboxImages.map((img, i) => `
+        <button type="button" class="btn-loot-filter ${i === activeLightboxIdx ? 'active' : ''}" onclick="selectLightboxImage(${i})">🖼️ ${img.label || ('Image ' + (i + 1))}</button>
+    `).join('');
+}
+
+function selectLightboxImage(idx) {
+    if (idx < 0 || idx >= activeLightboxImages.length) return;
+    activeLightboxIdx = idx;
+    renderLightboxTabs();
+    renderLightboxActiveImage();
+}
+
+function renderLightboxActiveImage() {
+    const imgEl = document.getElementById('lightbox-img');
+    const stageEl = document.getElementById('lightbox-stage');
+    const zoomBtn = document.getElementById('lightbox-zoom-btn');
+    const item = activeLightboxImages[activeLightboxIdx];
+    if (!imgEl || !item) return;
+
+    if (stageEl) {
+        stageEl.classList.remove('is-zoomed');
+        stageEl.scrollTop = 0;
+        stageEl.scrollLeft = 0;
+    }
+    if (zoomBtn) zoomBtn.textContent = '🔍 Zoom 100%';
+    imgEl.src = encodeURI(item.src);
+    imgEl.alt = item.label || 'Barovia Location Reference';
+}
+
+function toggleLightboxZoom() {
+    const stageEl = document.getElementById('lightbox-stage');
+    const zoomBtn = document.getElementById('lightbox-zoom-btn');
+    if (!stageEl) return;
+    const zoomed = stageEl.classList.toggle('is-zoomed');
+    if (zoomBtn) zoomBtn.textContent = zoomed ? '📐 Fit to Screen' : '🔍 Zoom 100%';
+}
+
+function closeImageLightbox() {
+    const lightbox = document.getElementById('image-lightbox');
+    if (lightbox && lightbox.open) lightbox.close();
+}
+
+const imageLightboxEl = document.getElementById('image-lightbox');
+if (imageLightboxEl && !('closedBy' in HTMLDialogElement.prototype)) {
+    let pressedOutsideLightbox = false;
+    const isOutsideLightbox = (e) => {
+        const wrapper = imageLightboxEl.querySelector('.lightbox-wrapper');
+        if (!wrapper) return false;
+        const r = wrapper.getBoundingClientRect();
+        return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+    };
+    imageLightboxEl.addEventListener('pointerdown', (e) => {
+        pressedOutsideLightbox = isOutsideLightbox(e);
+    });
+    imageLightboxEl.addEventListener('pointerup', (e) => {
+        if (pressedOutsideLightbox && isOutsideLightbox(e)) closeImageLightbox();
+        pressedOutsideLightbox = false;
+    });
+}
+
+function decorateBiomeCardsWithImages() {
+    document.querySelectorAll('.biome-card[data-biome-key]').forEach(card => {
+        const key = card.getAttribute('data-biome-key');
+        const imgs = getBiomeImages(key);
+        const header = card.querySelector('.card-header');
+        if (!header) return;
+        const existing = header.querySelector('.biome-card-img-btn');
+        if (existing) existing.remove();
+        if (imgs.length > 0) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'biome-card-img-btn';
+            btn.title = `Open ${imgs.length > 1 ? imgs.length + ' location images' : 'location image'}`;
+            btn.textContent = imgs.length > 1 ? `🖼️ ${imgs.length}` : '🖼️ View';
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openLocationLightbox(key);
+            });
+            header.appendChild(btn);
+        }
+    });
 }
 
 function openItemModal(key, fromNav = false) {
@@ -8813,6 +9373,7 @@ const LORE_DATA = {
         subtitle: "King Barov's Imperial Trade Highway • Act I (Book Chapter 2 Areas A–B & Reloaded Arc A)",
         badge: "Act I • Session 1 Open",
         biomeKey: "svalich",
+        extraBiomeKeys: ["gates_barovia"],
         quote: "General Strahd carved this gravel road through wolf-haunted pines for supply wagons and legions. When the Mists fell in 351 BC, he did not lock the iron gates to keep armies out—he locked them to keep his cattle inside.",
         h1: "📜 Imperial Highway Origins & The Decapitated Colossi",
         history: "• <strong>Before the Mists Fell (<code>Pre-351 BC • Book Area A</code>):</strong> Centuries ago, the Old Svalich Road served as the thriving imperial thoroughfare linking the Barovian valley cleanly across the Balinok Mountains to the royal Delmor ancestral seat. When King Barov's conqueror son <strong>General Strahd von Zarovich</strong> erected the twin 40-foot stone buttresses along the eastern gorge pass, they carried monumental granite portraits of Strahd's conquered ancestors guarding the border in triumph.<br>• <strong>The Night the Sky Died:</strong> When Barovia was ripped from the Material Plane into <strong>Domain Zero</strong> during Sergei's wedding massacre, elemental shockwaves and four centuries of freezing mountain sleet sheared the colossal stone heads clean off their necks—leaving both crumbling stone crowns half-buried in pine-needles beneath the iron arches.<br>• <strong>The Sentient Iron Portals:</strong> Fed by Strahd's arcane perimeter link to the <strong>Choking Mists</strong>, the thirty-foot wrought-iron gates shriek open of their own accord for newly baited outsiders (and trusted Vistani coaches), only to slam shut behind them with immovable dreadlock permanence.",
@@ -8830,6 +9391,7 @@ const LORE_DATA = {
         subtitle: "First Settlement of the Valley • Act I (Book Chapter 3 & DragnaCarta Reloaded Arc B)",
         badge: "Sessions 1–2 Active Hub",
         biomeKey: "village",
+        extraBiomeKeys: ["indirovich_manor", "barovia_church"],
         quote: "Look up through the fog, stranger. That black spire a thousand feet above our roofs is Castle Ravenloft. The Devil doesn't need walls to cage us—he just looks down from his balcony.",
         h1: "📜 Centuries Beneath the Crag & The Four-Hundred-Year Slow Bleed",
         history: "• <strong>Older Than the Castle Itself (<code>Pre-347 BC • Book Chapter 3</code>):</strong> Originally an agrarian river-market built beside the fertile floodplains beneath the Pillarstone Crag, the Village of Barovia became the dark lord's immediate peasant serfdom the day Strahd crowned his mountain fortress overhead. Every generation of villagers has lived under the literal vertical drop of Ravenloft's south ramparts—watching faint carriage torches crawl down the switchback road at dusk.<br>• <strong>The Plague of Hopelessness & Soulless Shells:</strong> Over four centuries, famine, wolf raids, and the 1-in-10 reincarnation scarcity reduced three-quarters of its plaster cottages into sagging, mold-rotted shells. Only the outer square survives behind jagged timber barricades (<code>Reloaded Arc B</code>) built after Kolyan Indirovich refused to yield his adopted daughter.<br>• <strong>Kolyan Indirovich's Secret Arcane Past:</strong> Unlike any written book baseline, Session 1 revealed that late Burgomaster <strong>Kolyan</strong> once studied arcane arts as a young hedge-wizard and secretly corresponded with <strong>Davian Martikov &amp; the Keepers of the Feather</strong>—tucking vital network notes inside <strong>📖 Kolyan's Wizard Diary</strong> before his fatal heart attack under siege!",
@@ -8846,7 +9408,7 @@ const LORE_DATA = {
         title: "⚖️ River Ivlis Crossroads & Tser Falls Gorge — The Hangman's Span",
         subtitle: "Royal Highway Junction & 1,000-Foot Waterfall • Act I (Book Areas F & H • Reloaded Arcs C2 & C7)",
         badge: "Act I • Session 2 Crossing",
-        biomeKey: "crossroads_falls",
+        biomeKey: "tser_falls",
         quote: "Four centuries ago they hanged thieves where the three roads meet. Now the noose chooses its own neck before the ink dries on your fate.",
         h1: "📜 Barov's Execution Fork & The Gargoyle-Carved Canyon Span",
         history: "• <strong>The Eleven Graves of Area F (<code>Pre-351 BC &amp; Modern Curse</code>):</strong> Long before Strahd drank Sergei's blood, General Strahd erected a towering oak gallows where the eastern Svalich highway forks toward <strong>Tser Pool</strong> and <strong>Vallaki</strong> to execute rebel mountain tribesmen. After the Mists trapped the valley, Dark Powers residue soaked the red mud beneath those unmarked graves—causing the empty gibbet to project ghostly doppelganger hangings of condemned travelers.<br>• <strong>The Engineer's Masterwork — Tser Falls Arch (<code>Area H</code>):</strong> Farther north, ancient Barovian masons spanned the 90-foot limestone gorge directly in front of the roaring 1,000-foot <strong>Tser Falls cataract</strong>, carving four crouching stone gargoyles atop the battlements to ward off mountain bandits.<br>• <strong>Where Mordenkainen Fell (<code>734 BC</code>):</strong> A year before the campaign, after Strahd shattered the Mad Mage's staff aboard Ravenloft's battlements, locals witnessed a blazing lightning-shrouded figure plunge straight down past the freezing spray of Tser Falls into the foam far below.",
@@ -8898,6 +9460,7 @@ const LORE_DATA = {
         subtitle: "Baron Vargas vs. Lady Wachter • Act II (Book Chapter 5 & Reloaded Arc E–H)",
         badge: "Sessions 4–6 Central Hub",
         biomeKey: "vallaki",
+        extraBiomeKeys: ["blue_water_inn"],
         quote: "Smile, citizen! In Vallaki, declaring that 'ALL WILL BE WELL!' is mandatory by decree of the Baron! Frown in the rain, or whisper the Devil's name, and Captain Izek will fit you for a donkey-head in the stocks!",
         h1: "📜 Foundation, Timber Bastions & The Illusion of Safety",
         history: "• <strong>The Largest Living Town in Barovia (<code>Book Chapter 5</code>):</strong> Founded centuries ago along the muddy northwestern crossroads beside glassy <strong>Lake Zarovich</strong>, Vallaki sits ringed behind fifteen-foot sharpened oak palisades studded with decaying wolf heads. Unlike open Barovia Village, Vallaki's merchants kept taverns, stables, and workshops functioning under noble charters.<br>• <strong>Vasili von Holtz &amp; A Century of Delusion:</strong> Because Count Strahd has not attacked Vallaki with open undead armies in over a hundred years—preferring instead to visit discreetly in mortal noble guise as charming antiquarian <strong>\"Vasili von Holtz\"</strong>—Baron Vargas convinced the populace that constant civic cheer acts as an invisible wall of sunlight.",
@@ -8914,7 +9477,8 @@ const LORE_DATA = {
         title: "⛪ The Commune of Krezk & The Abbey of Saint Markovia",
         subtitle: "The Fallen Angel, The Flesh Golem Bride & The White Sun (Book Chapter 8 & Reloaded)",
         badge: "Act III • Session 12",
-        biomeKey: "krezk_abbey",
+        biomeKey: "krezk",
+        extraBiomeKeys: ["abbey_markovia"],
         quote: "The Count is not a beast to be slain with silver, my children. He is a broken man grieving a lost bride. Once I finish stitching her new face... all of Barovia shall be healed.",
         h1: "📜 The Fortified Pine Commune & The Shrine of the White Sun",
         history: "• <strong>Bastion Beneath Mount Baratok (<code>Pre-351 BC &amp; Modern • Book Chapter 8</code>):</strong> Perched high along snow-dusted pine switchbacks at Barovia's western edge, <strong>Krezk</strong> was founded as an imperial frontier logging garrison and walled quarry commune. Since the Mists locked the valley, twenty-foot stone ramparts turned it into a fierce, self-sufficient sanctuary governed by <strong>Burgomaster Dmitri Krezkov</strong> and his grieving wife Anna (after the death of their final son, Ilya). No outsider with swords enters Krezk's iron gates until earning trust with wine barrels from <strong>The Wizard of Wines</strong>.<br>• <strong>The Miraculous Pool &amp; White Sun Shrine (<code>Area S4</code>):</strong> At the northern end of Krezk bubbles a crystal-clear mountain spring once consecrated by celestial light from the <strong>Morninglord</strong>—remaining the sole mirror of true blue sky anywhere inside Count Strahd's gloomy realm.",
@@ -8982,7 +9546,8 @@ const LORE_DATA = {
         title: "⚰️ St. Andral's Church, Henrik's Shop & Wachterhaus — Faith & Conspiracy",
         subtitle: "Vallaki's Broken Ward, The Dilisnya Blood Feud & Zarovich Vassals (Book Ch. 5 Areas N1, N4, N6)",
         badge: "Act II • Sessions 5–6",
-        biomeKey: "coffin_wachter",
+        biomeKey: "wachterhaus",
+        extraBiomeKeys: ["st_andral", "coffin_shop"],
         quote: "Four centuries ago, my ancestor Lovina stood by the Count when traitors burned his wedding hall. A few skeletons in a cellar are hardly treason—they are tradition.",
         h1: "📜 Saint Andral's Sanctuary, The Dilisnya Chest & Four Centuries of Wachter Loyalty",
         history: "• <strong>Why St. Andral Kept Vallaki Upright (<code>Pre-351 BC &amp; Modern • Area N1</code>):</strong> Before Barovia vanished behind the Mists, Saint Andral served as Vallaki's compassionate priest of the Morninglord. Upon his death, his sacred bones were interred directly beneath the parish altar—generating a permanent divine <em>Hallow</em> field that physically seared away any fiend or undead setting foot inside the stone nave.<br>• <strong>Wachterhaus &amp; Lovina's Wedding Massacre Pact (<code>Area N4</code>):</strong> The Wachter bloodline has guarded Strahd's political seat in Vallaki since Strahd's mortal general days. When traitor mercenary captain Leo Dilisnya orchestrated the assassination of Strahd and Sergei's wedding attendants in 351 BC, <strong>Lady Lovina Wachter</strong> hid loyal soldiers before Strahd sealed Dilisnya alive inside concrete (and kept Dilisnya's iron-bound bone chest inside Wachterhaus!).<br>• <strong>The Tome in the Cult Library:</strong> Generations later, <strong>Lady Fiona Wachter</strong> discovered <strong>📜 The Tome of Strahd</strong> (likely placed via Vistani courier or quiet Strahd neglect) and hid it behind an iron lock in her secret library—matching Madam Eva's 1st Card prophecy (<em>Master of Stars: a noble house of cats and whispers</em>).",
@@ -9067,7 +9632,8 @@ const LORE_DATA = {
         title: "🗼 Khazan's Tower (Van Richten's Tower), Lake Baratok & The Mad Mage",
         subtitle: "The Lich-Apprentice's Anti-Magic Spire & The Broken Archmage (Book Chapter 11 & Reloaded)",
         badge: "Act III • Session 11",
-        biomeKey: "baratok_tower",
+        biomeKey: "van_richten_tower",
+        extraBiomeKeys: ["werewolf_den"],
         quote: "Khazan was a fool who thought he could outlive the Devil by tearing his own soul from his bones. Yet his tower remains the one place in Barovia where Strahd's scrying eyes go blind.",
         h1: "📜 Who Was Archmage Khazan? (The Destroyer of the Sunsword)",
         history: "• <strong>Strahd's Court Wizard (<code>Book p. 167 &amp; Crypt 15</code>):</strong> Shortly after Strahd fell into undeath, ambitious human wizard <strong>Khazan</strong> accepted patronage as Ravenloft's chief arcanist. Fearing the sentient sun-blade forged for Prince Sergei, Strahd commanded Khazan to unmake it forever. Khazan shattered the shimmering blade—<strong>though his terrified apprentice pocketed the platinum hilt before furnace flames melted it</strong>, letting Sergei's crystal soul endure intact as <strong>🗡️ The Sunsword</strong>.<br>• <strong>Lake Baratok's Tower &amp; Ascension Failure:</strong> Flush with royal coin, Khazan retreated across a gravel spit onto a misty islet on <strong>Lake Baratok</strong> (<code>Book Chapter 11</code>) to erect a four-story copper-spired wizard keep encased inside a permanent antimagic dome. When Khazan eventually attempted a dark demilich ascension rite, the jealous Mists of Barovia cracked the spell cleanly backward—annihilating his mortal frame while burying his gilded staff inside <strong>Castle Ravenloft Crypt 15 (<code>Area K84</code>)</strong>.",
@@ -9246,7 +9812,16 @@ function openLoreModal(key, fromNav = false) {
     activeModalBiomeKey = null;
     if (!fromNav) modalNavStack = [];
     const modal = document.getElementById('dm-modal');
-    const hasLinkedBiome = !!(l.biomeKey && BIOME_DATA[l.biomeKey]);
+    const resolvedBiomeKey = l.biomeKey ? resolveBiomeKey(l.biomeKey) : null;
+    const hasLinkedBiome = !!(resolvedBiomeKey && BIOME_DATA[resolvedBiomeKey]);
+    const extraBiomeBtns = Array.isArray(l.extraBiomeKeys)
+        ? l.extraBiomeKeys.map(k => resolveBiomeKey(k)).filter(k => k !== resolvedBiomeKey && BIOME_DATA[k])
+            .map(k => `<button type="button" class="btn-roll" style="font-size:0.73rem;" onclick="navigateModalFromInside('biome', '${k}')">📍 ${BIOME_DATA[k].title.replace(/^[^\w]+?\d+\.\s*/, '')} ➔</button>`).join('')
+        : '';
+    const biomeImgs = hasLinkedBiome ? getBiomeImages(resolvedBiomeKey) : [];
+    const loreImgBtn = biomeImgs.length > 0
+        ? `<button type="button" class="btn-img-open" onclick="openLocationLightbox('${resolvedBiomeKey}')">🖼️ View Location Image</button>`
+        : '';
     const validNpcLinks = Array.isArray(l.npcLinks) ? l.npcLinks.filter(k => NPC_DATA[k]) : [];
     const validMonsterLinks = Array.isArray(l.monsterLinks) ? l.monsterLinks.filter(k => MONSTER_DATA[k]) : [];
     const crossLinksBar = (validNpcLinks.length || validMonsterLinks.length) ? `
@@ -9263,7 +9838,9 @@ function openLoreModal(key, fromNav = false) {
             </div>
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <span class="pill gold">${l.badge}</span>
-                ${hasLinkedBiome ? `<button class="btn-roll" onclick="navigateModalFromInside('biome', '${l.biomeKey}')">🗺️ Location Room Keys &amp; Hazards ➔</button>` : ''}
+                ${loreImgBtn}
+                ${hasLinkedBiome ? `<button type="button" class="btn-roll" onclick="navigateModalFromInside('biome', '${resolvedBiomeKey}')">🗺️ Location Room Keys &amp; Hazards ➔</button>` : ''}
+                ${extraBiomeBtns}
             </div>
         </div>
         ${crossLinksBar}
@@ -9580,6 +10157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNpcTable();
     renderMonsterTable();
     renderLootVault();
+    decorateBiomeCardsWithImages();
 });
 </script>
 </body>
