@@ -2819,14 +2819,15 @@ const MONSTER_DATA = {
         morals: "<strong>Roof Hazard Vulnerability:</strong> Can be shoved or blasted off the slick carriage roof (contested Athletics DC 14 or Thunderwave/Repelling Blast) to crash onto the road for 3d6 road-impact damage!",
         tactics: "Tears open a 5-ft roof breach on Round 2, raining splinters on casters below and biting downward with Pack Tactics advantage.",
         traits: [
+            { name: "Multiattack", text: "The Svalich Alpha makes <strong>two attacks</strong> on its turn: one with its <strong>Crushing Bite (+6)</strong> and one with its <strong>4-Inch Roof Claws (+6)</strong>." },
             { name: "Pack Tactics & Alpha Resolve", text: "Has <strong>Advantage</strong> on attack rolls when an allied wolf is within 5 ft, plus <strong>Advantage on saving throws</strong> against being Charmed or Frightened." },
             { name: "Keen Hearing & Smell", text: "Has <strong>Advantage</strong> on Wisdom (Perception) checks that rely on hearing or smell (Passive Perception 14)." },
             { name: "Carriage Roof Vulnerability", text: "Can be shoved or blasted off a moving carriage roof (contested Athletics DC 14 or forced movement) to crash onto the road for <strong>3d6 bludgeoning damage</strong>." }
         ],
         attacks: [
             {
-                name: "Multiattack (Crushing Bite + 4-Inch Roof Claws)",
-                desc: "The Alpha makes two attacks: one with its Crushing Bite (+6) and one with its 4-Inch Roof Claws (+6).",
+                name: "Crushing Bite & 4-Inch Roof Claws (Reach 5 ft)",
+                desc: "<strong>Bite (+6):</strong> 11 (2d6+4) piercing damage.<br><strong>Roof Claws (+6):</strong> 9 (2d4+4) slashing damage.",
                 hitBtn: { label: "🎲 Bite (+6)", func: "rollAttack('Alpha Wolf Bite', 6, '2d6+4', '0', 'piercing')" },
                 dmgBtn: { label: "💥 Bite (2d6+4)", func: "rollDamage('Alpha Wolf Bite', '2d6+4', '0', 16, 'piercing')" },
                 buttons: [
@@ -2888,6 +2889,7 @@ const MONSTER_DATA = {
             { flag: 'rawHp', label: '👑 Swap Profile: Bandit Captain (CR 2 • 65 HP • AC 15)', cls: 'active-gold', notice: '👑 Bandit Captain Leader Profile toggled <strong>{STATE}</strong>!' }
         ],
         traits: [
+            { name: "Bandit Captain Multiattack (CR 2 Variant)", text: "Standard Bandits (AC 12, 11 HP) make <strong>1 attack</strong>. When promoted to <strong>Bandit Captain (CR 2, 65 HP)</strong>, makes <strong>three melee attacks (2x Scimitar + 1x Dagger)</strong> or <strong>two Ranged Daggers (20/60 ft)</strong>." },
             { name: "Parry (Captain Variant Reaction)", text: "Adds <strong>+2 to AC</strong> against one melee attack that would hit the Bandit Captain, provided it can see the attacker and is wielding a melee weapon." },
             { name: "Highwaymen Discipline", text: "Drops weapons, begs, or flees into the mist if outnumbered 2-to-1 or bribed with silver/food." }
         ],
@@ -2905,8 +2907,8 @@ const MONSTER_DATA = {
                 dmgBtn: { label: "💥 Dmg (1d8+1)", func: "rollDamage('Bandit Light Crossbow', '1d8+1', '0', 9, 'piercing')" }
             },
             {
-                name: "Captain Variant Multiattack (2x Scimitar + 1x Dagger)",
-                desc: "<em>(If Bandit Captain Toggle Active)</em> Makes three melee attacks (2x Scimitar, 1x Dagger) or two Ranged Dagger throws (20/60 ft.).",
+                name: "Bandit Captain Blade & Dagger (CR 2 Variant)",
+                desc: "<em>(If Bandit Captain Toggle Active)</em> Scimitar (+5, 1d6+3 slashing) and Dagger (+5, 1d4+3 piercing, melee or 20/60 ft.).",
                 hitBtn: { label: "🎲 Capt Scimitar (+5)", func: "rollAttack('Captain Scimitar', 5, '1d6+3', '0', 'slashing')" },
                 dmgBtn: { label: "💥 Dmg (1d6+3)", func: "rollDamage('Captain Scimitar', '1d6+3', '0', 9, 'slashing')" },
                 buttons: [
@@ -3085,19 +3087,12 @@ const MONSTER_DATA = {
             { flag: 'ravenRegen', label: '💚 VRGtR Variant: Regen 10 HP/Turn (Halted by Silver/Magic)', cls: 'active-emerald', notice: '💚 VRGtR Wereraven Regeneration toggled <strong>{STATE}</strong>!' }
         ],
         traits: [
+            { name: "Multiattack (Human or Hybrid Form)", text: "Makes <strong>two weapon attacks</strong>, one of which can be with its Hand Crossbow (Shortsword/Beak + Hand Crossbow)." },
             { name: "Shapechanger (Human, Tiny Raven, or Hybrid)", text: "Uses an Action to polymorph between Human, Tiny Raven (30 ft, Fly 50 ft), or Hybrid form. Equipment isn't transformed; reverts to true form if killed." },
             { name: "Mimicry & Keen Perception", text: "Can mimic simple animal sounds or short humanoid phrases; listeners spot imitation with <strong>DC 10 Wisdom (Insight)</strong>." },
             { name: "Keeper Weapon Resistance", text: "CoS 2016 RAW grants full immunity to nonmagical, non-silvered B/P/S; optionally use the toggle above to run Van Richten's Guide Regeneration (10 HP/turn) instead." }
         ],
         attacks: [
-            {
-                name: "Multiattack (Human or Hybrid Form)",
-                desc: "Makes two weapon attacks, one of which can be with its Hand Crossbow.",
-                buttons: [
-                    { label: "⚔️ Announce 2x Multiattack", func: "logRoll('🦅 Wereraven Scout executes 2x Multiattack (Shortsword / Beak + Hand Crossbow)!')" },
-                    { label: "💚 Regen +10 HP", func: "modHP('wereraven', 10)" }
-                ]
-            },
             {
                 name: "Shortsword (Human or Hybrid)",
                 desc: "Melee Weapon Attack: <strong>+4 to hit</strong>, reach 5 ft. Hit: <strong>5 (1d6 + 2) piercing</strong> damage.",
@@ -3116,6 +3111,7 @@ const MONSTER_DATA = {
                 hitBtn: { label: "🎲 Beak (+4)", func: "rollAttack('Wereraven Beak', 4, '1d4+2', '0', 'piercing')" },
                 dmgBtn: { label: "💥 Hybrid (1d4+2)", func: "rollDamage('Wereraven Hybrid Beak', '1d4+2', '0', 6, 'piercing')" },
                 buttons: [
+                    { label: "💚 Regen +10 HP", func: "modHP('wereraven', 10)" },
                     { label: "🎲 DC 10 CON (Curse)", func: "rollDie(20, 'DC 10 CON Save vs Wereraven Lycanthropy')" }
                 ]
             }
@@ -3158,19 +3154,12 @@ const MONSTER_DATA = {
         morals: "<strong>RAW 5e Vampire Rules:</strong> Regains <strong>10 HP</strong> at the start of its turn unless damaged by <strong>Sunlight or Running Water</strong> (and Radiant/Holy Water at your table; note in 5e MM p.298 Radiant & Holy Water also stop Regen!). Cannot enter a private residence uninvited (<strong>Forbiddance</strong>).",
         tactics: "Skirts along ceilings via Spider Climb to bypass shield lines and ambush backline casters. Uses Multiattack (2 attacks, max 1 Bite): first Claws to <strong>Grapple (Escape DC 13)</strong> instead of damage, then immediately follows with Bite on the grappled target.",
         traits: [
+            { name: "Multiattack", text: "Makes <strong>two attacks</strong> total, only one of which can be a <strong>Bite</strong> attack (e.g., 2x Claws, or 1x Claw Grapple + 1x Bite)." },
             { name: "Regeneration (10 HP/Turn)", text: "Regains 10 HP at the start of its turn if it has at least 1 HP and isn't in Sunlight or Running Water (negated until next turn by Radiant damage or Holy Water)." },
             { name: "Spider Climb", text: "Can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check." },
             { name: "Vampire Weaknesses", text: "<strong>Forbiddance:</strong> Can't enter residence uninvited. <strong>Harmed by Running Water:</strong> 20 Acid dmg ending turn in water. <strong>Stake to Heart:</strong> Paralyzed if pierced while incapacitated in resting place. <strong>Sunlight Hypersensitivity:</strong> 20 Radiant dmg at start of turn & Disadvantage in sunlight." }
         ],
         attacks: [
-            {
-                name: "Multiattack (2 Attacks, Only 1 Can Be a Bite)",
-                desc: "The Vampire Spawn makes <strong>two attacks</strong>, only one of which can be a Bite attack.",
-                buttons: [
-                    { label: "⚔️ Announce 2x Multiattack", func: "logRoll('🩸 Vampire Spawn strikes: 2 Attacks (2x Claws, or 1x Claw Grapple + 1x Bite)!')" },
-                    { label: "💚 Regen +10 HP", func: "modHP('vampire_spawn', 10)" }
-                ]
-            },
             {
                 name: "Claws (Slash or Auto-Grapple DC 13)",
                 desc: "Melee Weapon Attack: <strong>+6 to hit</strong>, reach 5 ft. Hit: <strong>8 (2d4 + 3) slashing</strong> damage. Instead of dealing damage, the Spawn can grapple the target (<strong>Escape DC 13</strong>).",
@@ -3181,7 +3170,10 @@ const MONSTER_DATA = {
                 name: "Bite (Vs Willing, Grappled, Incapacitated, or Restrained)",
                 desc: "Melee Weapon Attack: <strong>+6 to hit</strong>, reach 5 ft. Hit: <strong>6 (1d6 + 3) piercing + 7 (2d6) necrotic</strong> damage. Target's <strong>Max HP is reduced</strong> by the necrotic damage taken, and the Spawn regains that many HP.",
                 hitBtn: { label: "🎲 Bite (+6)", func: "rollAttack('Vampire Spawn Bite', 6, '1d6+3', '2d6', 'pierc + necrotic')" },
-                dmgBtn: { label: "💥 Full Bite (1d6+3 + 2d6)", func: "rollDamage('Vampire Spawn Bite', '1d6+3', '2d6', 9, 'pierc + necrotic (Reduces Max HP & Heals)')" }
+                dmgBtn: { label: "💥 Full Bite (1d6+3 + 2d6)", func: "rollDamage('Vampire Spawn Bite', '1d6+3', '2d6', 9, 'pierc + necrotic (Reduces Max HP & Heals)')" },
+                buttons: [
+                    { label: "💚 Regen +10 HP", func: "modHP('vampire_spawn', 10)" }
+                ]
             }
         ],
         lootTable: [
@@ -3221,24 +3213,20 @@ const MONSTER_DATA = {
         morals: "<strong>Deceptively Tough Construct:</strong> With <strong>AC 21</strong> and <strong>112 HP</strong>, Strahd's Animated Armor hits far harder than ordinary Death House Animated Armor (+1d6 lightning on every Greatsword swing PLUS 60-ft Shocking Bolts!). Smart casters can shut it down for 1 minute with <em>Dispel Magic</em> (<strong>DC 15 CON Save</strong>).",
         tactics: "Stands utterly motionless alongside heraldic banners (<strong>False Appearance</strong>) until intruders touch an object or pass it, then steps behind the vanguard to cut off escape. Uses <strong>2x Greatsword</strong> on adjacent fighters or snipes backline/flying PCs twice per turn with <strong>60-ft Shocking Bolt</strong>!",
         traits: [
+            { name: "Multiattack", text: "Makes <strong>two melee attacks</strong> with its Lightning-Infused Greatsword (+6), OR shoots <strong>two Shocking Bolts (+4)</strong> up to 60 ft." },
             { name: "False Appearance", text: "While motionless in a hall, staircase, or vault, it is completely indistinguishable from an ordinary decorative suit of gothic plate armor." },
             { name: "Antimagic Susceptibility", text: "Incapacitated while in an <em>Antimagic Field</em>. If targeted by <em>Dispel Magic</em>, the armor must succeed on a <strong>DC 15 CON Save (+3)</strong> against the caster's spell save DC or fall Unconscious for 1 minute!" },
             { name: "Constructed Nature", text: "Does not require air, food, drink, or sleep, and is immune to poison, psychic damage, fear, charm, and paralysis." }
         ],
         attacks: [
             {
-                name: "Multiattack (2x Greatsword OR 2x Shocking Bolt)",
-                desc: "Makes two melee attacks with its lightning-charged Greatsword, or shoots two Shocking Bolts up to 60 ft.",
-                buttons: [
-                    { label: "⚔️ Announce 2x Multiattack", func: "logRoll('🛡️ Strahd\\'s Animated Armor unleashes 2x Lightning Greatswords (+6) or 2x Shocking Bolts (+4, 60ft)!')" },
-                    { label: "🎲 CON Save (+3) vs Dispel", func: "logRoll('⚡ <strong>Antimagic CON Save (+3 vs Spell DC / DC 15):</strong> ' + (Math.floor(Math.random()*20)+1+3))" }
-                ]
-            },
-            {
                 name: "Lightning-Infused Greatsword",
                 desc: "Melee Weapon Attack: <strong>+6 to hit</strong>, reach 5 ft. Hit: <strong>10 (2d6 + 3) slashing PLUS 3 (1d6) lightning</strong> damage!",
                 hitBtn: { label: "🎲 Greatsword (+6)", func: "rollAttack('Animated Armor Greatsword', 6, '2d6+3', '1d6', 'slashing + lightning')" },
-                dmgBtn: { label: "💥 Dmg (2d6+3 + 1d6)", func: "rollDamage('Animated Armor Greatsword', '2d6+3', '1d6', 15, 'slashing + lightning')" }
+                dmgBtn: { label: "💥 Dmg (2d6+3 + 1d6)", func: "rollDamage('Animated Armor Greatsword', '2d6+3', '1d6', 15, 'slashing + lightning')" },
+                buttons: [
+                    { label: "🎲 CON Save (+3) vs Dispel", func: "logRoll('⚡ <strong>Antimagic CON Save (+3 vs Spell DC / DC 15):</strong> ' + (Math.floor(Math.random()*20)+1+3))" }
+                ]
             },
             {
                 name: "Shocking Bolt (60 ft. Ranged Arc)",
@@ -3286,14 +3274,15 @@ const MONSTER_DATA = {
         morals: "<strong>Loathsome Limbs:</strong> Whenever the zombie takes 5+ bludgeoning or slashing damage at once, roll 1d8: a limb or head severs and acts on its own initiative! Radiant damage prevents splitting.",
         tactics: "Swarms frontliners to grapple them while severed hands crawl toward spellcasters.",
         traits: [
+            { name: "Multiattack", text: "Makes <strong>three attacks</strong>: one with its <strong>Bite (+3, 1d4+1 piercing)</strong> and two with its <strong>Rotting Claws (+3, 1d6+1 slashing)</strong>." },
             { name: "Loathsome Limbs", text: "Whenever the zombie takes <strong>5+ bludgeoning or slashing damage</strong> at once, roll <strong>1d8</strong>: a leg (1–4), arm (5–7), or head (8) severs and acts independently on its own initiative. <em>Radiant damage prevents severing!</em>" },
             { name: "Severed Limb Stats", text: "<strong>Severed Arm/Leg:</strong> AC 8, 5 HP, Speed 10 ft, Claw/Slam +3 (1d4+1). <strong>Severed Head:</strong> AC 8, 5 HP, Speed 0 ft (rolls 5 ft), Bite +3 (1d4+1)." },
             { name: "Undead Nature", text: "Darkvision 60 ft. Immune to Poison damage and Exhaustion; doesn't require air, food, drink, or sleep." }
         ],
         attacks: [
             {
-                name: "Multiattack (Bite + 2x Rotting Claws)",
-                desc: "Reach 5 ft, <strong>+3 to hit</strong>. Bite deals <strong>3 (1d4+1) piercing</strong>; each Claw deals <strong>4 (1d6+1) slashing</strong>.",
+                name: "Rotting Claws & Bite (Reach 5 ft)",
+                desc: "<strong>+3 to hit</strong>. Bite deals <strong>3 (1d4+1) piercing</strong>; each Claw deals <strong>4 (1d6+1) slashing</strong>.",
                 hitBtn: { label: "🎲 Claw (+3)", func: "rollAttack('Strahd Zombie Claw', 3, '1d6+1', '0', 'slashing')" },
                 dmgBtn: { label: "💥 Claw (1d6+1)", func: "rollDamage('Strahd Zombie Claw', '1d6+1', '0', 7, 'slashing')" },
                 buttons: [
@@ -3339,19 +3328,12 @@ const MONSTER_DATA = {
         morals: "<strong>DragnaCarta Reloaded Blood-Cup Mechanic:</strong> If fed Jacomir's cup of willing blood, Doru regains 2 minutes of weeping human lucidity—revealing he marched on Ravenloft with the Mad Mage and saw Strahd's <em>Heart of Sorrow</em> in the North Tower before begging for a clean mercy death!",
         tactics: "Clings to the church attic rafters with Spider Climb, or weeps in lucid remorse if fed Jacomir's blood cup.",
         traits: [
+            { name: "Multiattack", text: "Makes <strong>two attacks</strong> total, only one of which can be a <strong>Bite</strong> attack (e.g., 2x Claws, or 1x Claw Grapple + 1x Starved Bite). <em>(Optional Blood-Frenzy Hard Mode: 2x Claws + 1x Bite.)</em>" },
             { name: "Regeneration (10 HP/Turn)", text: "Regains 10 HP at the start of his turn if at >=1 HP and not in Sunlight/Running Water (negated until next turn by Radiant/Holy Water)." },
             { name: "Spider Climb", text: "Climbs difficult surfaces, including upside down on church attic rafters and ceilings, without needing to make an ability check." },
             { name: "Vampire Weaknesses", text: "Forbiddance (cannot enter residences uninvited), Running Water (20 acid dmg), Stake to the Heart (paralyzed if incapacitated in resting place), Sunlight Hypersensitivity (20 radiant/turn &amp; Disadvantage)." }
         ],
         attacks: [
-            {
-                name: "Multiattack (2 Attacks Total — Max 1 Bite)",
-                desc: "Makes <strong>two attacks</strong>: two Claws, or one Claw and one Starved Bite. <em>(Optional Blood-Frenzy Hard Mode: 2x Claws + 1x Bite.)</em>",
-                buttons: [
-                    { label: "⚔️ Announce 2x Multiattack", func: "logRoll('🩸 Doru strikes: 2 Attacks (2x Claws, or 1x Claw Grapple + 1x Starved Bite)!')" },
-                    { label: "💚 Regen +10 HP", func: "modHP('doru', 10)" }
-                ]
-            },
             {
                 name: "Claws (Slash or Auto-Grapple DC 14)",
                 desc: "Melee Weapon Attack: <strong>+6 to hit</strong>, reach 5 ft. Hit: <strong>11 (2d6 + 4) slashing</strong> damage. Instead of dealing damage, Doru can <strong>Grapple</strong> the target (<strong>Escape DC 14</strong>).",
@@ -3365,7 +3347,10 @@ const MONSTER_DATA = {
                 name: "Starved Bite (Vs Willing, Grappled, Incapacitated, or Restrained)",
                 desc: "Melee Weapon Attack: <strong>+6 to hit</strong>, reach 5 ft. Hit: <strong>11 (2d6 + 4) piercing + 14 (4d6) necrotic</strong> damage. Target's <strong>Max HP is reduced</strong> by the necrotic taken, and Doru <strong>heals that amount</strong>.",
                 hitBtn: { label: "🎲 Bite (+6)", func: "rollAttack('Doru Bite', 6, '2d6+4', '4d6', 'pierc + necrotic')" },
-                dmgBtn: { label: "💥 Bite (2d6+4+4d6)", func: "rollDamage('Doru Bite', '2d6+4', '4d6', 16, 'pierc + necrotic (Reduces Max HP & Heals)')" }
+                dmgBtn: { label: "💥 Bite (2d6+4+4d6)", func: "rollDamage('Doru Bite', '2d6+4', '4d6', 16, 'pierc + necrotic (Reduces Max HP & Heals)')" },
+                buttons: [
+                    { label: "💚 Regen +10 HP", func: "modHP('doru', 10)" }
+                ]
             }
         ],
         lootTable: [
@@ -3401,19 +3386,12 @@ const MONSTER_DATA = {
         morals: "Retreats into mist/bats around 45–50 HP vs Level 3 parties in Act I (or below 25 HP at Level 4+), keeping players guessing when she will strike again.",
         tactics: "Skirmishes from church roofs and cemetery fog, using Claws to grapple or Twin Bone-Daggers at range while puppeteering undead.",
         traits: [
+            { name: "Multiattack", text: "Volenta makes <strong>two attacks</strong> total, only one of which can be a <strong>Bite</strong> attack (e.g., 2x Claws, 2x Bone-Daggers, or 1x Claw/Dagger + 1x Crimson Kiss Bite). <em>(Optional Hard Mode for higher levels: 2x Claws/Daggers + 1x Bite.)</em>" },
             { name: "Regeneration (10 HP/Turn)", text: "Regains 10 HP at the start of her turn if at >=1 HP and not in Sunlight/Running Water (negated until next turn by Radiant/Holy Water)." },
             { name: "Spider Climb", text: "Climbs difficult surfaces, including upside down on church eaves and ceilings, without needing to make an ability check." },
             { name: "Vampire Weaknesses", text: "Forbiddance (cannot enter residences uninvited), Running Water (20 acid dmg), Stake to the Heart (destroyed if incapacitated in resting place), Sunlight Hypersensitivity (20 radiant/turn &amp; Disadvantage)." }
         ],
         attacks: [
-            {
-                name: "Multiattack (2 Attacks Total — Max 1 Bite)",
-                desc: "Volenta makes <strong>two attacks</strong>: 2x Claws, 2x Bone-Daggers, or 1x Claw/Dagger and 1x Crimson Kiss Bite. <em>(Optional Hard Mode for higher levels: 2x Claws/Daggers + 1x Bite.)</em>",
-                buttons: [
-                    { label: "⚔️ Announce 2x Multiattack", func: "logRoll('🎭 Bride Volenta strikes: 2 Attacks (2x Claws/Bone-Daggers, or 1x Claw Grapple + 1x Crimson Kiss Bite)!')" },
-                    { label: "💚 Regen +10 HP", func: "modHP('volenta', 10)" }
-                ]
-            },
             {
                 name: "Claws (Slash or Auto-Grapple DC 14)",
                 desc: "Melee Weapon Attack: <strong>+7 to hit</strong>, reach 5 ft. Hit: <strong>9 (2d4 + 4) slashing</strong> damage. Instead of dealing damage, Volenta can <strong>Grapple</strong> the target (<strong>Escape DC 14</strong>) to set up her Bite.",
@@ -3433,7 +3411,10 @@ const MONSTER_DATA = {
                 name: "Crimson Kiss (Bite — Vs Willing, Grappled, Incapacitated, or Restrained)",
                 desc: "Melee Weapon Attack: <strong>+7 to hit</strong>, reach 5 ft. Hit: <strong>7 (1d6 + 4) piercing + 10 (3d6) necrotic</strong> damage. Target's <strong>Max HP is reduced</strong> by necrotic taken, and Volenta <strong>heals that amount</strong>.",
                 hitBtn: { label: "🎲 Bite (+7)", func: "rollAttack('Volenta Bite', 7, '1d6+4', '3d6', 'pierc + necrotic')" },
-                dmgBtn: { label: "💥 Bite (1d6+4 + 3d6)", func: "rollDamage('Volenta Bite', '1d6+4', '3d6', 10, 'pierc + necrotic (Reduces Max HP & Heals)')" }
+                dmgBtn: { label: "💥 Bite (1d6+4 + 3d6)", func: "rollDamage('Volenta Bite', '1d6+4', '3d6', 10, 'pierc + necrotic (Reduces Max HP & Heals)')" },
+                buttons: [
+                    { label: "💚 Regen +10 HP", func: "modHP('volenta', 10)" }
+                ]
             }
         ],
         battlefieldActions: [
@@ -3602,18 +3583,12 @@ const MONSTER_DATA = {
         morals: "RAW CoS stats match the Vampire Spawn (MM p.298); her pride blinds her—insulting her standing in front of Strahd's portrait provokes reckless overextension.",
         tactics: "Commands coffin-shop vampire spawn with battlefield decrees while darting along walls via Spider Climb and grappling isolators.",
         traits: [
+            { name: "Multiattack", text: "Makes <strong>two attacks</strong> total, only one of which can be a <strong>Bite</strong> attack (2x Claws, or 1x Claw + 1x Bite)." },
             { name: "Regeneration (10 HP/Turn)", text: "Regains 10 HP at the start of her turn if at >=1 HP and not in Sunlight/Running Water (negated until next turn by Radiant/Holy Water)." },
             { name: "Spider Climb", text: "Climbs difficult surfaces, including upside down on church ceilings, without making an ability check." },
             { name: "Vampire Weaknesses", text: "Forbiddance (cannot enter residences uninvited), Running Water (20 acid dmg), Stake to the Heart (destroyed if incapacitated in resting place), Sunlight Hypersensitivity (20 radiant/turn & Disadvantage)." }
         ],
         attacks: [
-            {
-                name: "Multiattack (2 Attacks, Max 1 Bite)",
-                desc: "Makes two attacks: two Claws, or one Claw and one Bite.",
-                buttons: [
-                    { label: "💚 Regen +10 HP", func: "modHP('anastrasya', 10)" }
-                ]
-            },
             {
                 name: "Claws (Slash or Grapple)",
                 desc: "Melee Weapon Attack: <strong>+6 to hit</strong>, reach 5 ft. Hit: <strong>8 (2d4+3) slashing damage</strong>. Instead of dealing damage, can grapple target (escape DC 13).",
@@ -3624,7 +3599,10 @@ const MONSTER_DATA = {
                 name: "Bite (Vs Willing, Grappled, Incapacitated or Restrained)",
                 desc: "Melee Weapon Attack: <strong>+6 to hit</strong>, reach 5 ft. Hit: <strong>6 (1d6+3) piercing + 7 (2d6) necrotic</strong>. Reduces target's Max HP and heals Anastrasya by necrotic taken.",
                 hitBtn: { label: "🎲 Bite (+6)", func: "rollAttack('Anastrasya Bite', 6, '1d6+3', '2d6', 'pierc + necrotic')" },
-                dmgBtn: { label: "💥 Bite (1d6+3 + 2d6)", func: "rollDamage('Anastrasya Bite', '1d6+3', '2d6', 6, 'pierc + necrotic')" }
+                dmgBtn: { label: "💥 Bite (1d6+3 + 2d6)", func: "rollDamage('Anastrasya Bite', '1d6+3', '2d6', 6, 'pierc + necrotic')" },
+                buttons: [
+                    { label: "💚 Regen +10 HP", func: "modHP('anastrasya', 10)" }
+                ]
             }
         ],
         battlefieldActions: [
@@ -3686,17 +3664,11 @@ const MONSTER_DATA = {
             { flag: 'consortCaster', label: '📜 Optional Consort Wizard Spells (CoS Reloaded Style)', cls: 'active-purple', notice: '📜 Ludmilla Consort Spellcasting toggled <strong>{STATE}</strong>!' }
         ],
         traits: [
+            { name: "Multiattack", text: "Makes <strong>two attacks</strong> total, only one of which can be a <strong>Bite</strong> attack (2x Claws, or 1x Claw + 1x Bite)." },
             { name: "Regeneration (10 HP/Turn)", text: "Regains 10 HP at the start of her turn if >=1 HP and not in Sunlight/Running Water (negated by Radiant/Holy Water)." },
             { name: "Spider Climb & Vampire Weaknesses", text: "Climbs walls/ceilings freely. Standard Vampire weaknesses (Forbiddance, Running Water, Stake, Sunlight Hypersensitivity)." }
         ],
         attacks: [
-            {
-                name: "Multiattack (2 Attacks, Max 1 Bite)",
-                desc: "Makes two attacks: two Claws, or one Claw and one Bite.",
-                buttons: [
-                    { label: "💚 Regen +10 HP", func: "modHP('ludmilla', 10)" }
-                ]
-            },
             {
                 name: "Claws (Slash or Grapple)",
                 desc: "Melee Weapon Attack: <strong>+6 to hit</strong>, reach 5 ft. Hit: <strong>8 (2d4+3) slashing</strong>, or grapple target (escape DC 13).",
@@ -3707,7 +3679,10 @@ const MONSTER_DATA = {
                 name: "Bite (Vs Willing, Grappled, Incapacitated or Restrained)",
                 desc: "Melee Weapon Attack: <strong>+6 to hit</strong>, reach 5 ft. Hit: <strong>6 (1d6+3) piercing + 7 (2d6) necrotic</strong> (lowers Max HP & heals Ludmilla).",
                 hitBtn: { label: "🎲 Bite (+6)", func: "rollAttack('Ludmilla Bite', 6, '1d6+3', '2d6', 'pierc + necrotic')" },
-                dmgBtn: { label: "💥 Bite (1d6+3 + 2d6)", func: "rollDamage('Ludmilla Bite', '1d6+3', '2d6', 6, 'pierc + necrotic')" }
+                dmgBtn: { label: "💥 Bite (1d6+3 + 2d6)", func: "rollDamage('Ludmilla Bite', '1d6+3', '2d6', 6, 'pierc + necrotic')" },
+                buttons: [
+                    { label: "💚 Regen +10 HP", func: "modHP('ludmilla', 10)" }
+                ]
             }
         ],
         spellcasting: {
@@ -3787,12 +3762,13 @@ const MONSTER_DATA = {
             { flag: 'rawHp', label: '⚖️ RAW CoS HP (112)', notice: '⚖️ Izek Strazni HP mode toggled (<strong>{STATE}</strong>).' }
         ],
         traits: [
+            { name: "Multiattack", text: "Izek makes <strong>two attacks</strong> with his <strong>Battleaxe</strong> (1H: 2d8+4 or 2H: 2d10+4), OR one <strong>Battleaxe</strong> and one <strong>Hurl Fiendish Flame (+5, 60 ft)</strong>." },
             { name: "Brute (Official CoS p.231)", text: "A melee weapon deals one extra die of its damage when Izek hits with it (included in the Battleaxe 2d8+4 / 2d10+4 below)." }
         ],
         attacks: [
             {
-                name: "Multiattack (2x Battleaxe — or 1x Axe + Hurl Flame)",
-                desc: "Izek makes two attacks with his Battleaxe (1H: 2d8+4 or 2H: 2d10+4), or one Battleaxe and Hurl Flame (+5).",
+                name: "Brute Battleaxe (Melee 5 ft)",
+                desc: "Melee Weapon Attack: <strong>+7 to hit</strong>, reach 5 ft. Hit: <strong>13 (2d8+4) slashing</strong> (1H) or <strong>15 (2d10+4) slashing</strong> (2H).",
                 buttons: [
                     { label: "🎲 Axe 2H (+7)", func: "rollAttack('Izek Battleaxe (2H)', 7, '2d10+4', '0', 'slashing')" },
                     { label: "💥 2H (2d10+4)", dmg: true, func: "rollDamage('Izek Battleaxe (2H)', '2d10+4', '0', 20, 'slashing')" },
@@ -3863,13 +3839,14 @@ const MONSTER_DATA = {
         morals: "Non-silvered, nonmagical weapons do <strong>ZERO damage</strong>! Freeing Emil or defeating Kiril in pack honor combat rallies half the den against him.",
         tactics: "Shifts into Hybrid Form (AC 12, Bite + Claws), spreading the Lycanthropy curse while dire wolves flank casters.",
         traits: [
+            { name: "Multiattack (Humanoid or Hybrid Form)", text: "Makes <strong>two attacks</strong>: one with his <strong>Lycanthropic Bite (+4, DC 12 CON Lycanthropy!)</strong> and one with his <strong>Claws (Hybrid) or Spear (Humanoid)</strong>." },
             { name: "Shapechanger", text: "Action: Polymorphs into a wolf-humanoid hybrid, a wolf, or back into human form. Stats remain the same in each form (Hybrid/Wolf AC 12; Human AC 11)." },
             { name: "Keen Hearing and Smell", text: "Advantage on Wisdom (Perception) checks that rely on hearing or smell." }
         ],
         attacks: [
             {
-                name: "Multiattack (Humanoid or Hybrid: 1x Bite + 1x Claws/Spear)",
-                desc: "Hybrid/Wolf Bite (+4) transmits <strong>Werewolf Lycanthropy (DC 12 CON Save)</strong>!",
+                name: "Lycanthropic Bite (Hybrid or Wolf Form)",
+                desc: "Melee Weapon Attack: <strong>+4 to hit</strong>, reach 5 ft. Hit: <strong>6 (1d8+2) piercing</strong> damage and transmits <strong>Werewolf Lycanthropy (DC 12 CON Save)</strong>!",
                 hitBtn: { label: "🎲 Bite (+4)", func: "rollAttack('Kiril Lycan Bite', 4, '1d8+2', '0', 'piercing + DC 12 CON Lycanthropy!')" },
                 dmgBtn: { label: "💥 Bite (1d8+2)", func: "rollDamage('Kiril Lycan Bite', '1d8+2', '0', 10, 'piercing')" }
             },
@@ -3934,13 +3911,14 @@ const MONSTER_DATA = {
             { flag: 'rawHp', label: '⚖️ RAW CoS HP (149)', notice: '⚖️ Wintersplinter HP mode toggled (<strong>{STATE}</strong>).' }
         ],
         traits: [
+            { name: "Multiattack", text: "Makes <strong>four attacks</strong> on its turn: <strong>two with Branches (+9)</strong> and <strong>two with Grasping Roots</strong>. If it has a target grappled, it can also make a <strong>Bite</strong> attack as a Bonus Action." },
             { name: "False Appearance", text: "While the blight remains motionless, it is indistinguishable from a dead tree." },
             { name: "Siege Monster", text: "The blight deals double damage to objects and structures (such as the Wizard of Wines)." }
         ],
         attacks: [
             {
-                name: "Multiattack (2x Branch + 2x Grasping Root + Bonus Bite)",
-                desc: "Makes four attacks: two with branches and two with grasping roots. If it has a target grappled, it can also make a Bite attack as a Bonus Action.",
+                name: "Branch Slam (Reach 15 ft)",
+                desc: "Melee Weapon Attack: <strong>+9 to hit</strong>, reach 15 ft. Hit: <strong>16 (3d6+6) bludgeoning</strong> damage.",
                 buttons: [
                     { label: "🎲 Branch (+9)", func: "rollAttack('Wintersplinter Branch', 9, '3d6+6', '0', 'bludgeoning')" },
                     { label: "💥 Branch (3d6+6)", dmg: true, func: "rollDamage('Wintersplinter Branch', '3d6+6', '0', 24, 'bludgeoning')" }
@@ -4035,24 +4013,19 @@ const MONSTER_DATA = {
             { flag: 'rawHp', label: '⚖️ RAW CoS HP (136)', notice: '⚖️ Horngaard HP mode toggled (<strong>{STATE}</strong>).' }
         ],
         traits: [
+            { name: "Multiattack", text: "Makes <strong>two attacks</strong> with his <strong>+2 Greatsword</strong> (2x) or <strong>Fist</strong> (2x). Sworn Vengeance targets take an extra <strong>14 (4d6)</strong> damage on any hit (included in Greatsword 4d6+6; add +4d6 for sworn Fist)." },
             { name: "Regeneration (10 HP/Turn)", text: "Regains 10 HP at the start of his turn. If he takes Fire or Radiant damage, this trait doesn't function at the start of his next turn. Dies only if at 0 HP and trait doesn't function." },
             { name: "Rejuvenation & Turn Immunity", text: "Immune to effects that turn undead. If destroyed, his soul inhabits another corpse in Barovia within 24 hours until his vow ends." }
         ],
         attacks: [
-            {
-                name: "Multiattack (2x +2 Greatsword or 2x Fist)",
-                desc: "Sworn Vengeance targets take an extra <strong>14 (4d6)</strong> damage on any hit (already included in Greatsword 4d6+6; add +4d6 for sworn Fist).",
-                buttons: [
-                    { label: "💚 Regen +10 HP", func: "modHP('horngaard', 10)" }
-                ]
-            },
             {
                 name: "+2 Greatsword (Reach 5 ft)",
                 desc: "Melee Weapon Attack: <strong>+9 to hit</strong>. Hit: <strong>20 (4d6+6) slashing damage</strong> against sworn enemies (2d6+6 vs others).",
                 hitBtn: { label: "🎲 Greatsword (+9)", func: "rollAttack('Horngaard +2 Greatsword', 9, '4d6+6', '0', 'slashing')" },
                 dmgBtn: { label: "💥 +Sworn (4d6+6)", func: "rollDamage('Horngaard +2 Greatsword', '4d6+6', '0', 30, 'slashing')" },
                 buttons: [
-                    { label: "💥 Base (2d6+6)", dmg: true, func: "rollDamage('Horngaard Greatsword (Unmarked)', '2d6+6', '0', 18, 'slashing')" }
+                    { label: "💥 Base (2d6+6)", dmg: true, func: "rollDamage('Horngaard Greatsword (Unmarked)', '2d6+6', '0', 18, 'slashing')" },
+                    { label: "💚 Regen +10 HP", func: "modHP('horngaard', 10)" }
                 ]
             },
             {
@@ -4150,19 +4123,20 @@ const MONSTER_DATA = {
             }
         ],
         traits: [
+            { name: "Multiattack (Abbot & Vasilka)", text: "<strong>The Abbot</strong> makes <strong>two attacks</strong> with his <strong>Celestial Mace (+8)</strong>. <strong>Vasilka (Flesh Golem)</strong> makes <strong>two Golem Slam (+7)</strong> attacks." },
             { name: "Angelic Weapons (Abbot)", text: "The Abbot's weapon attacks are magical. When he hits with any weapon, it deals an extra <strong>4d8 radiant damage</strong> (included in Mace)." },
             { name: "Magic Resistance & Truesight", text: "Both the Abbot and Vasilka have Advantage on saving throws against spells and magical effects. Abbot sees through illusions/darkness up to 120 ft." },
             { name: "Vasilka Golem Traits", text: "<strong>Lightning Absorption:</strong> heals equal to lightning dmg. <strong>Aversion to Fire:</strong> Disadvantage on attacks/checks if damaged by fire. <strong>Berserk:</strong> <=40 HP roll d6 (on 6, goes berserk)." }
         ],
         attacks: [
             {
-                name: "Abbot Multiattack (2x Celestial Mace)",
+                name: "The Abbot — Celestial Mace",
                 desc: "Melee Weapon Attack: <strong>+8 to hit</strong>, reach 5 ft. Hit: <strong>7 (1d6+4) bludgeoning + 18 (4d8) radiant damage</strong>.",
                 hitBtn: { label: "🎲 Abbot Mace (+8)", func: "rollAttack('Abbot Celestial Mace', 8, '1d6+4', '4d8', 'bludgeon + radiant')" },
                 dmgBtn: { label: "💥 Mace (1d6+4 + 4d8)", func: "rollDamage('Abbot Celestial Mace', '1d6+4', '4d8', 10, 'bludgeon + radiant')" }
             },
             {
-                name: "Vasilka Multiattack (2x Golem Slam)",
+                name: "Vasilka — Golem Slam",
                 desc: "Melee Weapon Attack: <strong>+7 to hit</strong>, reach 5 ft. Hit: <strong>13 (2d8+4) bludgeoning damage</strong>. Check Berserk (d6) if <=40 HP!",
                 hitBtn: { label: "🎲 Vasilka Slam (+7)", func: "rollAttack('Vasilka Golem Slam', 7, '2d8+4', '0', 'bludgeoning')" },
                 dmgBtn: { label: "💥 Slam (2d8+4)", func: "rollDamage('Vasilka Golem Slam', '2d8+4', '0', 20, 'bludgeoning')" },
@@ -4275,6 +4249,7 @@ const MONSTER_DATA = {
             }
         ],
         traits: [
+            { name: "Multiattack (Baba & Creeping Hut)", text: "<strong>Baba Lysaga</strong> makes <strong>three Quarterstaff (+8)</strong> attacks. <strong>The Creeping Hut</strong> makes <strong>three Root (+12, 60 ft)</strong> attacks, OR <strong>two Roots + one Boulder Rock (+12, 120 ft)</strong>." },
             { name: "Giant Skull Flying Mount (AC 15 • 50 HP • Grapple/Shove DC 12)", text: "Upside-down <strong>Stone Giant's Skull</strong> (<strong>AC 15 | 50 HP</strong>, <em>Fly 40 ft. Hover</em>, Large bone object immune to Poison &amp; Psychic — shatters at 0 HP and drops Baba). Grants <strong>Three-Quarters Cover (+5 AC ➔ AC 20, +5 DEX Saves)</strong> while riding inside. <strong>Pull / Shove Out:</strong> Contested Athletics vs. Baba Lysaga (<strong>STR +0 / DEX +0</strong>) or flat <strong>DM DC 12 Athletics</strong> check once within reach to haul/topple her over the 1-ft bone rim; forced movement (<em>Repelling Blast, Push Mastery, Thunderwave, Gust</em>) immediately tumbles her out and drops her AC <strong>20 ➔ 15</strong>." },
             { name: "Blessing of Mother Night", text: "Baba Lysaga is shielded against divination magic as though protected by a <em>nondetection</em> spell (cannot be targeted by divination or scrying sensors)." },
             { name: "Shapechanger (Baba Lysaga)", text: "Action: Polymorphs into a <strong>swarm of insects (flies)</strong> (5 ft walk, 30 ft fly; worn gear transforms, carried gear does not) or back into her true form." },
@@ -4283,7 +4258,7 @@ const MONSTER_DATA = {
         ],
         attacks: [
             {
-                name: "Baba Multiattack (3x Quarterstaff)",
+                name: "Baba Lysaga — Quarterstaff",
                 desc: "Melee Weapon Attack: <strong>+8 to hit</strong>, reach 5 ft. Hit: <strong>7 (1d6+4) bludgeoning</strong> (or <strong>8 / 1d8+4</strong> two-handed).",
                 hitBtn: { label: "🎲 Staff (+8)", func: "rollAttack('Baba Lysaga Quarterstaff', 8, '1d8+4', '0', 'bludgeoning (2H)')" },
                 dmgBtn: { label: "💥 2H (1d8+4)", func: "rollDamage('Baba Lysaga Quarterstaff (2H)', '1d8+4', '0', 12, 'bludgeoning')" },
@@ -4299,7 +4274,7 @@ const MONSTER_DATA = {
                 ]
             },
             {
-                name: "Creeping Hut Multiattack (3x Root, or 2x Root + 1x Rock)",
+                name: "Creeping Hut — Roots & Boulder Rock",
                 desc: "<strong>Root:</strong> +12 to hit, <strong>reach 60 ft! Hit: 30 (4d10+8)</strong> bludgeoning.<br><strong>Rock:</strong> +12 to hit, range 120 ft. Hit: <strong>21 (3d8+8)</strong> bludgeoning.",
                 buttons: [
                     { label: "🎲 Hut Root (+12)", func: "rollAttack('Creeping Hut Root (60ft)', 12, '4d10+8', '0', 'bludgeoning')" },
@@ -4424,12 +4399,13 @@ const MONSTER_DATA = {
             { flag: 'rawHp', label: '⚖️ RAW MM/CoS HP (248)', notice: '⚖️ Roc of Mount Ghakis HP toggled (<strong>{STATE}</strong>).' }
         ],
         traits: [
+            { name: "Multiattack", text: "Makes <strong>two attacks</strong>: one with its <strong>Piercing Beak (+13)</strong> and one with its <strong>Snatching Talons (+13, Grapple/Restrain DC 19)</strong>. Once grappled, uses remaining fly speed to haul prey over the abyss!" },
             { name: "Keen Sight (Passive Perception 18)", text: "The roc has Advantage on Wisdom (Perception) checks that rely on sight (Perception +8)." }
         ],
         attacks: [
             {
-                name: "Multiattack (1x Beak + 1x Snatching Talons)",
-                desc: "Makes two attacks: one Beak and one Talons. Once a creature is grappled by Talons, uses remaining movement to haul them over the abyss!",
+                name: "Giant Beak & Snatching Talons",
+                desc: "<strong>Beak (+13, reach 10 ft):</strong> 27 (4d8+9) piercing.<br><strong>Talons (+13, reach 5 ft):</strong> 23 (4d6+9) slashing + <strong>Grappled &amp; Restrained (Escape DC 19)</strong>.",
                 buttons: [
                     { label: "🎲 Beak (+13)", func: "rollAttack('Roc Piercing Beak', 13, '4d8+9', '0', 'piercing')" },
                     { label: "💥 Beak (4d8+9)", dmg: true, func: "rollDamage('Roc Piercing Beak', '4d8+9', '0', 41, 'piercing')" },
@@ -4780,13 +4756,14 @@ const MONSTER_DATA = {
             { flag: 'rawHp', label: '⚖️ RAW CoS HP (135)', notice: '⚖️ Rahadin HP mode toggled (<strong>{STATE}</strong>).' }
         ],
         traits: [
+            { name: "Multiattack", text: "Makes <strong>three Scimitar (+10)</strong> attacks in melee, OR throws <strong>two Poisoned Darts (+10, 20/60 ft)</strong> at range." },
             { name: "Deathly Choir (10-ft Aura + Bonus Action)", text: "Non-<em>mind blank</em> creatures within 10 ft hear screaming victims. <strong>Bonus Action:</strong> Force all within 10 ft to make <strong>DC 16 WIS Save</strong> or take <strong>16 (3d10) psychic</strong> (half on save)." },
             { name: "Fey Ancestry & Mask of the Wild", text: "Advantage vs Charmed, magic cannot put him to sleep. Can Hide even when only lightly obscured by fog, foliage, rain, or shadow." }
         ],
         attacks: [
             {
-                name: "Multiattack (3x Scimitar OR 2x Poisoned Darts)",
-                desc: "Attacks three times with Scimitar in melee, OR throws two Poisoned Darts at range (20/60 ft).",
+                name: "Dusk-Forged Scimitar (Melee 5 ft)",
+                desc: "Melee Weapon Attack: <strong>+10 to hit</strong>, reach 5 ft. Hit: <strong>9 (1d6+6) slashing</strong> damage (or <strong>1d6+8</strong> with +2 Whisper Scimitar).",
                 buttons: [
                     { label: "🎲 Scimitar (+10)", func: "rollAttack('Rahadin Scimitar (RAW)', 10, '1d6+6', '0', 'slashing')" },
                     { label: "💥 RAW (1d6+6)", dmg: true, func: "rollDamage('Rahadin Scimitar (RAW)', '1d6+6', '0', 12, 'slashing')" },
@@ -4907,6 +4884,7 @@ const MONSTER_DATA = {
             }
         ],
         traits: [
+            { name: "Multiattack (Vampire Form)", text: "RAW CoS p.240: Strahd makes <strong>two attacks</strong> on his turn (only one may be <strong>Bite</strong>), plus up to <strong>3 off-turn attacks or moves via Legendary Actions</strong>!" },
             { name: "Regeneration (20 HP/Turn)", text: "Regains 20 HP at start of turn if >=1 HP and not in Sunlight/Running Water. Radiant damage or Holy Water disables Regen until his next turn." },
             { name: "Shapechanger (Action)", text: "Polymorphs into a Tiny Bat (Fly 30 ft), Medium Wolf (Speed 40 ft), Medium Cloud of Mist (Fly 20 ft, immune nonmagic except sunlight), or Vampire Form (not in Sunlight/Running Water)." },
             { name: "Misty Escape & Spider Climb", text: "0 HP outside resting place -> transforms into Mist Cloud with 2 hrs to reach his crypt coffin. Climbs walls & upside-down ceilings effortlessly." }
@@ -4933,14 +4911,6 @@ const MONSTER_DATA = {
         ],
         attacks: [
             {
-                name: "Multiattack (Vampire Form: 2 Attacks Total, Max 1 Bite — CoS p.240)",
-                desc: "RAW CoS: Strahd makes <strong>two attacks</strong> on his turn (only one may be Bite), then adds up to <strong>3 off-turn attacks/moves via Legendary Actions</strong>!",
-                buttons: [
-                    { label: "💚 Regen +20 HP", func: "modHP('strahd', 20)" },
-                    { label: "☀️ Sunlight (-20 HP)", func: "modHP('strahd', -20)" }
-                ]
-            },
-            {
                 name: "Unarmed Strike (Vampire or Wolf Form • Grapple DC 18)",
                 desc: "Melee Weapon Attack: <strong>+9 to hit</strong>, reach 5 ft. Hit: <strong>8 (1d8+4) bludgeoning + 14 (4d6) necrotic</strong>. Instead of dealing damage, can <strong>Grapple</strong> (Escape DC 18).",
                 hitBtn: { label: "🎲 Unarmed (+9)", func: "rollAttack('Strahd Unarmed Strike', 9, '1d8+4', '4d6', 'bludgeon + necrotic')" },
@@ -4950,7 +4920,11 @@ const MONSTER_DATA = {
                 name: "Exsanguinating Bite (Vs Willing, Grappled, Incapacitated or Restrained)",
                 desc: "Melee Weapon Attack: <strong>+9 to hit</strong>, reach 5 ft. Hit: <strong>7 (1d6+4) piercing + 10 (3d6) necrotic</strong>. Lowers Max HP & heals Strahd by necrotic dealt.",
                 hitBtn: { label: "🎲 Bite (+9)", func: "rollAttack('Strahd Bite', 9, '1d6+4', '3d6', 'pierc + necrotic')" },
-                dmgBtn: { label: "💥 Dmg (1d6+4+3d6)", func: "rollDamage('Strahd Bite', '1d6+4', '3d6', 10, 'pierc + necrotic')" }
+                dmgBtn: { label: "💥 Dmg (1d6+4+3d6)", func: "rollDamage('Strahd Bite', '1d6+4', '3d6', 10, 'pierc + necrotic')" },
+                buttons: [
+                    { label: "💚 Regen +20 HP", func: "modHP('strahd', 20)" },
+                    { label: "☀️ Sunlight (-20 HP)", func: "modHP('strahd', -20)" }
+                ]
             },
             {
                 name: "Vampire Charm & Children of the Night (1/Day)",
