@@ -2754,6 +2754,11 @@ const MONSTER_DATA = {
         problem: "Commanded by Strahd's telepathic whistle to harry the runaway stagecoach, test the newcomers' steel, and force them past the Iron Gates without slaughtering them outside the border.",
         morals: "<strong>Pack Tactics & Normal Wolf Option:</strong> Has Advantage on attack rolls if an allied wolf is within 5 ft (Standard 5e <strong>Wolf</strong> packmates: <code>CR 1/4 • AC 13 • 11 HP (2d8+2) • Bite +4, 2d4+2 + DC 11 STR prone</code>). Obeys Strahd's silent call immediately when the coach crosses the Gates of Barovia.",
         tactics: "Gallops alongside the carriage doors, lunging inside whenever a hero leans out. Uses Crushing Bite to knock targets Prone, then follows up with Drag Down (+1d6).",
+        traits: [
+            { name: "Pack Tactics", text: "The dire wolf has <strong>Advantage</strong> on an attack roll against a creature if at least one of the wolf's allies is within 5 ft of the creature and the ally isn't incapacitated." },
+            { name: "Keen Hearing & Smell", text: "Has <strong>Advantage</strong> on Wisdom (Perception) checks that rely on hearing or smell (Passive Perception 13)." },
+            { name: "Normal Wolf Packmates (CR 1/4 Option)", text: "Lower-CR companions: <strong>AC 13, 11 HP (2d8+2), Speed 40 ft</strong>, Pack Tactics, Bite <strong>+4 (2d4+2 piercing + DC 11 STR Prone)</strong>." }
+        ],
         attacks: [
             {
                 name: "Crushing Fangs (Bite)",
@@ -2813,6 +2818,11 @@ const MONSTER_DATA = {
         problem: "Testing the martial champion (Jacomir) and marksman (Yvaine) atop the careening stagecoach before the hairpin gorge turn.",
         morals: "<strong>Roof Hazard Vulnerability:</strong> Can be shoved or blasted off the slick carriage roof (contested Athletics DC 14 or Thunderwave/Repelling Blast) to crash onto the road for 3d6 road-impact damage!",
         tactics: "Tears open a 5-ft roof breach on Round 2, raining splinters on casters below and biting downward with Pack Tactics advantage.",
+        traits: [
+            { name: "Pack Tactics & Alpha Resolve", text: "Has <strong>Advantage</strong> on attack rolls when an allied wolf is within 5 ft, plus <strong>Advantage on saving throws</strong> against being Charmed or Frightened." },
+            { name: "Keen Hearing & Smell", text: "Has <strong>Advantage</strong> on Wisdom (Perception) checks that rely on hearing or smell (Passive Perception 14)." },
+            { name: "Carriage Roof Vulnerability", text: "Can be shoved or blasted off a moving carriage roof (contested Athletics DC 14 or forced movement) to crash onto the road for <strong>3d6 bludgeoning damage</strong>." }
+        ],
         attacks: [
             {
                 name: "Multiattack (Crushing Bite + 4-Inch Roof Claws)",
@@ -3013,6 +3023,11 @@ const MONSTER_DATA = {
         desc: "A hunched, hairless corpse with split black lips, dripping yellowed fangs, and elongated shovel-like fingernails caked in cold grave dirt. Packs crawl through broken cellar floorboards at dusk following the scent of fresh sweat and warm blood.",
         morals: "<strong>Paralysis Snowball Hazard:</strong> Only CR 1, yet a single lucky Claw hit (<strong>DC 10 CON Save</strong>) paralyzes non-Elf targets—turning the next Ghoul Bite into an automatic Critical Hit! (Note: Elves & Undead are immune to Ghoul Claw paralysis).",
         tactics: "Scuttles from dark alcoves behind frontliners to ambush exposed clerics or casters. Uses Claws first to paralyze a target, then swarms with Bites (advantage + auto-crit from 5 ft against Paralyzed targets).",
+        traits: [
+            { name: "Paralyzing Claws (Non-Elves)", text: "Claw hits force a <strong>DC 10 CON Save</strong> or <strong>Paralyze</strong> the target for 1 minute (repeats save at end of each turn). <em>Elves and Undead are immune!</em>" },
+            { name: "Pack Paralysis Snowball", text: "Any attack that hits a <strong>Paralyzed</strong> creature from within 5 ft automatically counts as a <strong>Brutal Critical Hit</strong> (doubling Bite damage!)." },
+            { name: "Undead Nature", text: "Darkvision 60 ft. Immune to Poison damage and the Charmed, Exhaustion, and Poisoned conditions." }
+        ],
         attacks: [
             {
                 name: "Paralyzing Claws (Note: Elves & Undead Immune!)",
@@ -3270,13 +3285,19 @@ const MONSTER_DATA = {
         problem: "Clawing out of the waterlogged cemetery mud during Burgomaster Kolyan's dawn funeral.",
         morals: "<strong>Loathsome Limbs:</strong> Whenever the zombie takes 5+ bludgeoning or slashing damage at once, roll 1d8: a limb or head severs and acts on its own initiative! Radiant damage prevents splitting.",
         tactics: "Swarms frontliners to grapple them while severed hands crawl toward spellcasters.",
+        traits: [
+            { name: "Loathsome Limbs", text: "Whenever the zombie takes <strong>5+ bludgeoning or slashing damage</strong> at once, roll <strong>1d8</strong>: a leg (1–4), arm (5–7), or head (8) severs and acts independently on its own initiative. <em>Radiant damage prevents severing!</em>" },
+            { name: "Severed Limb Stats", text: "<strong>Severed Arm/Leg:</strong> AC 8, 5 HP, Speed 10 ft, Claw/Slam +3 (1d4+1). <strong>Severed Head:</strong> AC 8, 5 HP, Speed 0 ft (rolls 5 ft), Bite +3 (1d4+1)." },
+            { name: "Undead Nature", text: "Darkvision 60 ft. Immune to Poison damage and Exhaustion; doesn't require air, food, drink, or sleep." }
+        ],
         attacks: [
             {
                 name: "Multiattack (Bite + 2x Rotting Claws)",
-                desc: "Reach 5ft. +3 to hit. Bite deals 3 (1d4+1) piercing; each Claw deals 4 (1d6+1) slashing.",
-                hitBtn: { label: "🎲 Claw/Bite (+3)", func: "rollAttack('Strahd Zombie', 3, '1d6+1', '0', 'slashing')" },
+                desc: "Reach 5 ft, <strong>+3 to hit</strong>. Bite deals <strong>3 (1d4+1) piercing</strong>; each Claw deals <strong>4 (1d6+1) slashing</strong>.",
+                hitBtn: { label: "🎲 Claw (+3)", func: "rollAttack('Strahd Zombie Claw', 3, '1d6+1', '0', 'slashing')" },
                 dmgBtn: { label: "💥 Claw (1d6+1)", func: "rollDamage('Strahd Zombie Claw', '1d6+1', '0', 7, 'slashing')" },
                 buttons: [
+                    { label: "🎲 Bite (+3, 1d4+1)", func: "rollAttack('Strahd Zombie Bite', 3, '1d4+1', '0', 'piercing')" },
                     { label: "🧟 Sever Limb (d8)", func: "rollDie(8, 'Loathsome Limb Sever Table (1-2 Left Leg, 3-4 Right Leg, 5-6 Left Arm, 7 Right Arm, 8 Head)')" }
                 ]
             }
@@ -3317,16 +3338,34 @@ const MONSTER_DATA = {
         problem: "Starved in the church attic; in Session 1, King Jacomir began pouring his own blood into a cup to feed Doru while Piper and Yvaine demanded his execution!",
         morals: "<strong>DragnaCarta Reloaded Blood-Cup Mechanic:</strong> If fed Jacomir's cup of willing blood, Doru regains 2 minutes of weeping human lucidity—revealing he marched on Ravenloft with the Mad Mage and saw Strahd's <em>Heart of Sorrow</em> in the North Tower before begging for a clean mercy death!",
         tactics: "Clings to the church attic rafters with Spider Climb, or weeps in lucid remorse if fed Jacomir's blood cup.",
+        traits: [
+            { name: "Regeneration (10 HP/Turn)", text: "Regains 10 HP at the start of his turn if at >=1 HP and not in Sunlight/Running Water (negated until next turn by Radiant/Holy Water)." },
+            { name: "Spider Climb", text: "Climbs difficult surfaces, including upside down on church attic rafters and ceilings, without needing to make an ability check." },
+            { name: "Vampire Weaknesses", text: "Forbiddance (cannot enter residences uninvited), Running Water (20 acid dmg), Stake to the Heart (paralyzed if incapacitated in resting place), Sunlight Hypersensitivity (20 radiant/turn &amp; Disadvantage)." }
+        ],
         attacks: [
             {
-                name: "Multiattack (2x Claws + 1x Starved Bite)",
-                desc: "Reach 5ft. +6 to hit. Claws: 11 (2d6+4) slashing + Grapple (DC 14). Bite: 11 (2d6+4) piercing + 14 (4d6) necrotic (lowers Max HP & heals Doru).",
+                name: "Multiattack (2 Attacks Total — Max 1 Bite)",
+                desc: "Makes <strong>two attacks</strong>: two Claws, or one Claw and one Starved Bite. <em>(Optional Blood-Frenzy Hard Mode: 2x Claws + 1x Bite.)</em>",
+                buttons: [
+                    { label: "⚔️ Announce 2x Multiattack", func: "logRoll('🩸 Doru strikes: 2 Attacks (2x Claws, or 1x Claw Grapple + 1x Starved Bite)!')" },
+                    { label: "💚 Regen +10 HP", func: "modHP('doru', 10)" }
+                ]
+            },
+            {
+                name: "Claws (Slash or Auto-Grapple DC 14)",
+                desc: "Melee Weapon Attack: <strong>+6 to hit</strong>, reach 5 ft. Hit: <strong>11 (2d6 + 4) slashing</strong> damage. Instead of dealing damage, Doru can <strong>Grapple</strong> the target (<strong>Escape DC 14</strong>).",
                 hitBtn: { label: "🎲 Claw (+6)", func: "rollAttack('Doru Claw', 6, '2d6+4', '0', 'slashing')" },
                 dmgBtn: { label: "💥 Claw (2d6+4)", func: "rollDamage('Doru Claw', '2d6+4', '0', 16, 'slashing')" },
                 buttons: [
-                    { label: "🎲 Bite (+6)", func: "rollAttack('Doru Bite', 6, '2d6+4', '4d6', 'pierc + necrotic')" },
-                    { label: "💥 Bite (2d6+4+4d6)", dmg: true, func: "rollDamage('Doru Bite', '2d6+4', '4d6', 16, 'pierc + necrotic')" }
+                    { label: "🎲 DC 14 Escape", func: "rollDie(20, 'DC 14 Athletics/Acrobatics vs Doru Grapple')" }
                 ]
+            },
+            {
+                name: "Starved Bite (Vs Willing, Grappled, Incapacitated, or Restrained)",
+                desc: "Melee Weapon Attack: <strong>+6 to hit</strong>, reach 5 ft. Hit: <strong>11 (2d6 + 4) piercing + 14 (4d6) necrotic</strong> damage. Target's <strong>Max HP is reduced</strong> by the necrotic taken, and Doru <strong>heals that amount</strong>.",
+                hitBtn: { label: "🎲 Bite (+6)", func: "rollAttack('Doru Bite', 6, '2d6+4', '4d6', 'pierc + necrotic')" },
+                dmgBtn: { label: "💥 Bite (2d6+4+4d6)", func: "rollDamage('Doru Bite', '2d6+4', '4d6', 16, 'pierc + necrotic (Reduces Max HP & Heals)')" }
             }
         ],
         lootTable: [
@@ -3359,20 +3398,42 @@ const MONSTER_DATA = {
         desc: "A lithe vampire bride in a tattered crimson lace gown woven with human finger-bones, wearing a cracked white porcelain skull-mask. She giggles uncontrollably, treating mortal suffering as a macabre theater performance.",
         philosophy: "<strong>Sadistic Artistry & Jealous Devotion.</strong> She believes pain is the highest form of flattery to Count Strahd.",
         problem: "Desperate to prove to Strahd that she is far more amusing and lethal than Ireena Kolyana.",
-        morals: "Retreats into mist form if reduced below 25 HP in Act I–II to report the party's tactics to Ravenloft.",
-        tactics: "Skirmishes from rooftops and mist, throwing bone-spiked daggers tethered on crimson blood-strings and puppeteering undead.",
+        morals: "Retreats into mist/bats around 45–50 HP vs Level 3 parties in Act I (or below 25 HP at Level 4+), keeping players guessing when she will strike again.",
+        tactics: "Skirmishes from church roofs and cemetery fog, using Claws to grapple or Twin Bone-Daggers at range while puppeteering undead.",
+        traits: [
+            { name: "Regeneration (10 HP/Turn)", text: "Regains 10 HP at the start of her turn if at >=1 HP and not in Sunlight/Running Water (negated until next turn by Radiant/Holy Water)." },
+            { name: "Spider Climb", text: "Climbs difficult surfaces, including upside down on church eaves and ceilings, without needing to make an ability check." },
+            { name: "Vampire Weaknesses", text: "Forbiddance (cannot enter residences uninvited), Running Water (20 acid dmg), Stake to the Heart (destroyed if incapacitated in resting place), Sunlight Hypersensitivity (20 radiant/turn &amp; Disadvantage)." }
+        ],
         attacks: [
             {
+                name: "Multiattack (2 Attacks Total — Max 1 Bite)",
+                desc: "Volenta makes <strong>two attacks</strong>: 2x Claws, 2x Bone-Daggers, or 1x Claw/Dagger and 1x Crimson Kiss Bite. <em>(Optional Hard Mode for higher levels: 2x Claws/Daggers + 1x Bite.)</em>",
+                buttons: [
+                    { label: "⚔️ Announce 2x Multiattack", func: "logRoll('🎭 Bride Volenta strikes: 2 Attacks (2x Claws/Bone-Daggers, or 1x Claw Grapple + 1x Crimson Kiss Bite)!')" },
+                    { label: "💚 Regen +10 HP", func: "modHP('volenta', 10)" }
+                ]
+            },
+            {
+                name: "Claws (Slash or Auto-Grapple DC 14)",
+                desc: "Melee Weapon Attack: <strong>+7 to hit</strong>, reach 5 ft. Hit: <strong>9 (2d4 + 4) slashing</strong> damage. Instead of dealing damage, Volenta can <strong>Grapple</strong> the target (<strong>Escape DC 14</strong>) to set up her Bite.",
+                hitBtn: { label: "🎲 Claws (+7)", func: "rollAttack('Volenta Claws', 7, '2d4+4', '0', 'slashing')" },
+                dmgBtn: { label: "💥 Claws (2d4+4)", func: "rollDamage('Volenta Claws', '2d4+4', '0', 12, 'slashing')" },
+                buttons: [
+                    { label: "🎲 DC 14 Escape", func: "rollDie(20, 'DC 14 Athletics/Acrobatics vs Volenta Grapple')" }
+                ]
+            },
+            {
                 name: "Twin Bone-Spiked Daggers (Melee or Range 20/60)",
-                desc: "+7 to hit (2 attacks). Hit: 7 (1d4+4) piercing + 7 (2d6) necrotic damage (daggers snap back to her hands on crimson blood-threads).",
+                desc: "Melee or Ranged Weapon Attack: <strong>+7 to hit</strong>, reach 5 ft. or range 20/60 ft. Hit: <strong>6 (1d4 + 4) piercing + 7 (2d6) necrotic</strong> damage (daggers snap back to her hands on crimson blood-threads).",
                 hitBtn: { label: "🎲 Dagger (+7)", func: "rollAttack('Volenta Bone-Dagger', 7, '1d4+4', '2d6', 'pierc + necrotic')" },
                 dmgBtn: { label: "💥 Dmg (1d4+4 + 2d6)", func: "rollDamage('Volenta Bone-Dagger', '1d4+4', '2d6', 8, 'pierc + necrotic')" }
             },
             {
-                name: "Crimson Kiss (Bite)",
-                desc: "+7 to hit, reach 5ft. Hit: 8 (1d6+4) piercing + 10 (3d6) necrotic damage (heals Volenta).",
+                name: "Crimson Kiss (Bite — Vs Willing, Grappled, Incapacitated, or Restrained)",
+                desc: "Melee Weapon Attack: <strong>+7 to hit</strong>, reach 5 ft. Hit: <strong>7 (1d6 + 4) piercing + 10 (3d6) necrotic</strong> damage. Target's <strong>Max HP is reduced</strong> by necrotic taken, and Volenta <strong>heals that amount</strong>.",
                 hitBtn: { label: "🎲 Bite (+7)", func: "rollAttack('Volenta Bite', 7, '1d6+4', '3d6', 'pierc + necrotic')" },
-                dmgBtn: { label: "💥 Bite (1d6+4 + 3d6)", func: "rollDamage('Volenta Bite', '1d6+4', '3d6', 10, 'pierc + necrotic')" }
+                dmgBtn: { label: "💥 Bite (1d6+4 + 3d6)", func: "rollDamage('Volenta Bite', '1d6+4', '3d6', 10, 'pierc + necrotic (Reduces Max HP & Heals)')" }
             }
         ],
         battlefieldActions: [
@@ -10265,7 +10326,7 @@ const MONSTER_TABLE_ROWS = [
     { key: 'animated_armor', group: '💀 STANDARD BAROVIAN MOBS & RANDOM ENCOUNTERS (All Acts — Reusable Non-Boss Sheets)', name: `<strong class="clickable-title" onclick="openMonsterModal('animated_armor')">🛡️ Strahd's Animated Armor</strong> <span class="pill gold">CONSTRUCT SENTRY</span>`, cr: 'CR 6', init: '+1', ac: '21', hp: '112 HP', speed: '30 ft', atk: `Lightning Greatsword, Shocking Bolt` },
     { key: 'alpha_wolf', rowCls: 'row-region-boss', group: '⛪ ACT I–II: Svalich Woods Alpha, Barovian Church & Old Bonegrinder', name: `<strong class="clickable-title" onclick="openMonsterModal('alpha_wolf')">🐺 Svalich Alpha Dire Wolf</strong> <span class="pill gold">PACK ALPHA</span>`, cr: 'CR 1', init: '+2', ac: '15', hp: '37 HP', speed: '50 ft', atk: `Bite, Roof Claws, Howl` },
     { key: 'doru', rowCls: 'row-region-boss', group: '⛪ ACT I–II: Svalich Woods Alpha, Barovian Church & Old Bonegrinder', name: `<strong class="clickable-title" onclick="openMonsterModal('doru')">🩸 Doru (The Starving Son)</strong> <span class="pill purple">UNDERCROFT BOSS</span>`, cr: 'CR 5', init: '+3', ac: '15', hp: '85 HP', speed: '30 / Climb 30', atk: `Claws, Vampire Bite, Spider Climb` },
-    { key: 'volenta', rowCls: 'row-region-boss', group: '⛪ ACT I–II: Svalich Woods Alpha, Barovian Church & Old Bonegrinder', name: `<strong class="clickable-title" onclick="openMonsterModal('volenta')">🎭 Bride Volenta Popofsky</strong> <span class="pill crimson">PORCELAIN BRIDE</span>`, cr: 'CR 5', init: '+4', ac: '16', hp: '95 HP', speed: '35 / Climb 35', atk: `Twin Daggers, Bite, Mask Shriek` },
+    { key: 'volenta', rowCls: 'row-region-boss', group: '⛪ ACT I–II: Svalich Woods Alpha, Barovian Church & Old Bonegrinder', name: `<strong class="clickable-title" onclick="openMonsterModal('volenta')">🎭 Bride Volenta Popofsky</strong> <span class="pill crimson">PORCELAIN BRIDE</span>`, cr: 'CR 5', init: '+4', ac: '16', hp: '95 HP', speed: '35 / Climb 35', atk: `Claws, Twin Daggers, Bite, Shriek` },
     { key: 'morgantha', rowCls: 'row-region-boss', group: '⛪ ACT I–II: Svalich Woods Alpha, Barovian Church & Old Bonegrinder', name: `<strong class="clickable-title" onclick="openMonsterModal('morgantha')">🥧 Morgantha ('Granny') & Coven</strong> <span class="pill purple">NIGHT HAG + COVEN</span>`, cr: 'CR 5 (7)', init: '+2', ac: '17', hp: '112 HP', speed: '30 ft', atk: `Claws, Nightmare & Coven Spells` },
     { key: 'anastrasya', rowCls: 'row-region-boss', group: '⚔️ ACT II–III: Vallaki, Brides, Werewolf Pack, Yester Hill, Argynvostholt, Krezk Abbey & Berez', name: `<strong class="clickable-title" onclick="openMonsterModal('anastrasya')">🍷 Bride Anastrasya Karelova</strong> <span class="pill crimson">VALLAKI FEAST BRIDE</span>`, cr: 'CR 5', init: '+3', ac: '15', hp: '82 HP', speed: '30 / Climb 30', atk: `Claws, Bite, Razor Fan` },
     { key: 'izek', rowCls: 'row-region-boss', group: '⚔️ ACT II–III: Vallaki, Brides, Werewolf Pack, Yester Hill, Argynvostholt, Krezk Abbey & Berez', name: `<strong class="clickable-title" onclick="openMonsterModal('izek')">🔥 Izek Strazni</strong> <span class="pill gold">VALLAKI CAPTAIN</span>`, cr: 'CR 5', init: '+2', ac: '14', hp: '102 HP', speed: '30 ft', atk: `Brute Battleaxe, Fiendish Flame` },

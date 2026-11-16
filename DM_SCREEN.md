@@ -164,7 +164,7 @@ flowchart TD
 | | 🛡️ **Strahd's Animated Armor** *(Construct Sentry)* | 6 | `+1` | **`112`** | 21 | 30 ft | Lightning Greatsword, Shocking Bolt | False Appearance • Antimagic Susceptibility (`DC 15 CON` vs *Dispel*) |
 | **⛪ Act I–II: Woods Alpha, Church & Bonegrinder** | 🐺 **Svalich Alpha Dire Wolf** *(Pack Alpha)* | 1 | `+2` | **`37`** | 15 | 50 ft | Bite, Roof Claws, Howl | **Splintering Roof Breach** • **Terrifying Howl** (Recharge 5–6) |
 | | 🩸 **Doru (The Starving Son)** *(Undercroft Boss)* | 5 | `+3` | **`85`** | 15 | 30 / Climb 30 | Claws, Vampire Bite, Spider Climb | Hidden in Church Attic • Blood cup lucidity hook reveals Mad Mage & Heart |
-| | 🎭 **Bride Volenta Popofsky** *(Porcelain Bride)* | 5 | `+4` | **`95`** | 16 | 35 / Climb 35 | Twin Daggers, Bite, Mask Shriek | **2 Battlefield Actions:** *Corpse-Puppet Strings* & *Skull-Mask Shriek* |
+| | 🎭 **Bride Volenta Popofsky** *(Porcelain Bride)* | 5 | `+4` | **`95`** | 16 | 35 / Climb 35 | Claws, Twin Daggers, Bite, Shriek | **2 Battlefield Actions:** *Corpse-Puppet Strings* & *Skull-Mask Shriek* |
 | | 🥧 **Morgantha ('Granny') & Coven** *(Old Bonegrinder)* | 5 *(7 Coven)* | `+2` | **`112`** | 17 | 30 ft | Claws, Nightmare & Coven Spells | **5 Innate + 12 Coven Spells (`DC 15 / +7`)** • **2 Battlefield Actions (`4d10`)** |
 | **⚔️ Act II–III: Vallaki, Winery & Berez** | 🍷 **Bride Anastrasya Karelova** *(Vallaki Feast Bride)* | 5 | `+3` | **`82`** | 15 | 30 / Climb 30 | Claws, Bite, Razor Fan | Noble Court Ambush • **2 Battlefield Actions (`3d10`)** |
 | | 🔥 **Izek Strazni** *(Vallaki Captain)* | 5 | `+2` | **`102`** *(RAW `112`)* | 14 | 30 ft | Brute Battleaxe, Fiendish Flame | RAW HP toggle • **2 Battlefield Actions (`3d10`–`4d10`)** |
