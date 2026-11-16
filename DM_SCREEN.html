@@ -897,6 +897,35 @@
             transform: translateY(-1px);
         }
 
+        .btn-loc-map-open {
+            background: linear-gradient(135deg, #064e3b, #065f46);
+            border: 1px solid #10b981;
+            color: #d1fae5;
+            padding: 5px 11px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.74rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.18s ease;
+        }
+        .btn-loc-map-open:hover {
+            background: #059669;
+            border-color: #6ee7b7;
+            color: #ffffff;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .biome-card-media-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
         .biome-card-img-btn {
             background: rgba(14, 116, 144, 0.25);
             border: 1px solid #38bdf8;
@@ -917,6 +946,28 @@
             background: #0284c7;
             color: #ffffff;
             border-color: #e0f2fe;
+        }
+
+        .biome-card-map-btn {
+            background: rgba(6, 95, 70, 0.35);
+            border: 1px solid #10b981;
+            color: #a7f3d0;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+        }
+        .biome-card-map-btn:hover {
+            background: #059669;
+            color: #ffffff;
+            border-color: #d1fae5;
         }
         .img-pending-pill {
             font-family: 'JetBrains Mono', monospace;
@@ -978,11 +1029,31 @@
         }
         .lightbox-tabs {
             display: flex;
+            align-items: center;
             gap: 6px;
             padding: 8px 16px;
             background: #090e17;
             border-bottom: 1px solid var(--border-subtle);
             flex-wrap: wrap;
+        }
+        .lightbox-tabs-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-right: 4px;
+        }
+        .lightbox-note {
+            padding: 7px 16px;
+            background: #0b1322;
+            border-bottom: 1px solid var(--border-subtle);
+            color: #cbd5e1;
+            font-size: 0.78rem;
+            line-height: 1.4;
+        }
+        .lightbox-note strong {
+            color: #fcd34d;
         }
         .lightbox-stage {
             flex: 1;
@@ -1954,11 +2025,13 @@
                 <p id="lightbox-subtitle" style="font-size:0.76rem; color:var(--text-muted); margin:2px 0 0 0;"></p>
             </div>
             <div class="lightbox-controls">
+                <button type="button" id="lightbox-switch-btn" class="btn-img-open" style="display:none;" onclick="switchLightboxMediaMode()"></button>
                 <button type="button" id="lightbox-zoom-btn" class="btn-roll" onclick="toggleLightboxZoom()">🔍 Zoom 100%</button>
                 <button type="button" class="modal-close-btn" onclick="closeImageLightbox()" aria-label="Close image viewer" title="Close (Esc)">✕</button>
             </div>
         </div>
         <div id="lightbox-tabs" class="lightbox-tabs" style="display:none;"></div>
+        <div id="lightbox-note" class="lightbox-note" style="display:none;"></div>
         <div id="lightbox-stage" class="lightbox-stage">
             <img id="lightbox-img" class="lightbox-img" src="" alt="" onclick="toggleLightboxZoom()" title="Click image to toggle Zoom / Fit to Screen">
         </div>
@@ -7053,16 +7126,90 @@ const WORLD_MAP_IMAGE = {
     src: "IMAGES/Map of Barovia.webp"
 };
 
+// Location scene artwork registry (links IMAGES/<file> to each BIOME_DATA key)
 const LOCATION_IMAGES = {
+    gates_barovia: [
+        { src: "IMAGES/Gates of Barovia.jpg", label: "Gates of Barovia" }
+    ],
     svalich: [
         { src: "IMAGES/Svalich Woods.jpg", label: "Svalich Woods" }
     ],
+    indirovich_manor: [
+        { src: "IMAGES/Indirovich Manor.jpg", label: "Indirovich Manor" }
+    ],
+    bonegrinder: [
+        { src: "IMAGES/Old Bonegrinder Windmill.webp", label: "Old Bonegrinder Windmill" }
+    ],
+    vallaki: [
+        { src: "IMAGES/Town of Vallaki.jpg", label: "Town of Vallaki" }
+    ],
+    blue_water_inn: [
+        { src: "IMAGES/Blue Water Inn.jpg", label: "Blue Water Inn" }
+    ],
+    st_andral: [
+        { src: "IMAGES/Church of St Andral.webp", label: "Church of St. Andral" }
+    ],
+    coffin_shop: [
+        { src: "IMAGES/Henriks Coffin Shop.jpg", label: "Henrik's Coffin Shop" }
+    ],
+    van_richten_tower: [
+        { src: "IMAGES/Van Richtens Tower.webp", label: "Van Richten's Tower" }
+    ]
+};
+
+// Shared multi-section tactical map list for Castle Ravenloft (used by both Dinner & Siege cards).
+// Drop Castle Ravenloft floor/section map images into IMAGES/ and add entries here to enable instant section jump tabs:
+const RAVENLOFT_MAP_SECTIONS = [
+    // { src: "IMAGES/Ravenloft Isometric Overview.webp", label: "1. Isometric Cutaway", note: "Overview: Chapel (K15), Dining Hall (K10), Heart Spire (K20), Spiral Stairs (K21)" },
+    // { src: "IMAGES/Ravenloft Floor 1 Main Floor.webp", label: "2. Main Floor (K1-K24)", note: "Courtyard (K1), Entry (K7), Grand Staircase (K8), Audience Hall (K25), Dining Hall (K10)" },
+    // { src: "IMAGES/Ravenloft Floor 2 Court of the Count.webp", label: "3. Court of the Count (K25-K34)", note: "King's Hall, Servant Quarters & Treasury access" },
+    // { src: "IMAGES/Ravenloft Floor 3 Rooms of Weeping.webp", label: "4. Rooms of Weeping (K35-K46)", note: "Gertruda's Bedchamber (K42), Study, Library" },
+    // { src: "IMAGES/Ravenloft Floor 4 Towers & Spires.webp", label: "5. Spires & Heart of Sorrow", note: "Heart of Sorrow (K20/K59) & Belfry Overlook" },
+    // { src: "IMAGES/Ravenloft Larders & Catacombs.webp", label: "6. Larders & Catacombs (K62-K86)", note: "Dungeons (K72), Teleport Brazier (K78), Strahd's Tomb (K86)" }
+];
+
+// Tactical & multi-floor dungeon maps registry (supports Array of sections OR { defaultIdx, sections })
+const LOCATION_MAPS = {
     village: [
-        { src: "IMAGES/Barovia Village.webp", label: "Barovia Village" }
+        { src: "IMAGES/Barovia Village Map.webp", label: "Village Overview Map", note: "Blood of the Vine Tavern, Bildrath's Mercantile, Indirovich Manor (S), Barovia Church (NE)." }
+    ],
+    barovia_church: [
+        { src: "IMAGES/Barovia Church Map.jpg", label: "Church & Undercroft", note: "Main Sanctuary (Father Donavich) & boarded Undercroft trapdoor (Doru below)." }
     ],
     tser_falls: [
-        { src: "IMAGES/Tser Falls.jpg", label: "Tser Falls" }
-    ]
+        { src: "IMAGES/Tser Falls Map.jpg", label: "Tser Falls & Bridge", note: "1,000-ft gorge crossing; narrow stone bridge & slick mist ledges." }
+    ],
+    tserpool: [
+        { src: "IMAGES/Tser Pool Encampent Camp Map.jpg", label: "Tser Pool Encampment", note: "Vistani wagons ring the mist pool; Madam Eva's tent sits at camp center." }
+    ],
+    ravenloft_dinner: {
+        defaultIdx: 1,
+        sections: RAVENLOFT_MAP_SECTIONS
+    },
+    ravenloft_siege: {
+        defaultIdx: 0,
+        sections: RAVENLOFT_MAP_SECTIONS
+    }
+    // Multi-level dungeon examples (uncomment & add files in IMAGES/ when ready):
+    // bonegrinder: [
+    //     { src: "IMAGES/Bonegrinder Floor 1-2.webp", label: "1F-2F Kitchen & Millstone", note: "Morgantha & daughters; barrels of ichor, stone ovens, bone mill." },
+    //     { src: "IMAGES/Bonegrinder Floor 3-4.webp", label: "3F-4F Dorms & Attic", note: "Locked child cages on 3F; crooked roof beam rafters on 4F." }
+    // ],
+    // amber_temple: [
+    //     { src: "IMAGES/Amber Temple Upper Level.webp", label: "Upper Floor (X1-X23)", note: "Facade balcony, Arcanaloth statue trap (X5b), Library, Flame Skulls." },
+    //     { src: "IMAGES/Amber Temple Lower Level.webp", label: "Lower Vaults (X24-X42)", note: "Amber sarcophagi vaults, Exethanter's chambers (X27), Vault of Shalx (X42)." }
+    // ],
+    // argynvost: [
+    //     { src: "IMAGES/Argynvostholt Floor 1-2.webp", label: "1F-2F Chapel & Knights", note: "Dragon foyer, Chapel of Morning, Vladimir Horngaard's throne." },
+    //     { src: "IMAGES/Argynvostholt Floor 3-Beacon.webp", label: "3F Beacon Tower", note: "Sir Godfrey's wing & rooftop Beacon where dragon skull restores light." }
+    // ],
+    // abbey_markovia: [
+    //     { src: "IMAGES/Abbey Main Grounds & Wings.webp", label: "Courtyard & Wings", note: "Mongrelfolk pens, Clovin Bellview's belltower, Abbot's Sanctum." },
+    //     { src: "IMAGES/Abbey Cellar & Barracks.webp", label: "Cellar & Secret Passages", note: "Wine cellar & hidden crypts beneath the eastern wing." }
+    // ],
+    // winery: [
+    //     { src: "IMAGES/Wizard of Wines 1F-2F.webp", label: "1F Vats & 2F Catwalks", note: "Loading dock, Fermentation vats (poisoned by Druids), overhead rafters." }
+    // ]
 };
 
 const BIOME_ALIASES = {
@@ -7083,6 +7230,26 @@ function getBiomeImages(key) {
     if (b && Array.isArray(b.images)) return b.images;
     if (b && b.image) return [{ src: b.image, label: b.title }];
     return [];
+}
+
+function getBiomeMaps(key) {
+    const resolved = resolveBiomeKey(key);
+    const entry = LOCATION_MAPS[resolved];
+    if (Array.isArray(entry)) return entry;
+    if (entry && Array.isArray(entry.sections)) return entry.sections;
+    const b = BIOME_DATA[resolved];
+    if (b && Array.isArray(b.maps)) return b.maps;
+    if (b && b.map) return [{ src: b.map, label: b.title + " Map" }];
+    return [];
+}
+
+function getBiomeMapDefaultIdx(key) {
+    const resolved = resolveBiomeKey(key);
+    const entry = LOCATION_MAPS[resolved];
+    const maps = getBiomeMaps(resolved);
+    if (!maps.length) return 0;
+    const rawIdx = (entry && !Array.isArray(entry) && typeof entry.defaultIdx === 'number') ? entry.defaultIdx : 0;
+    return Math.max(0, Math.min(rawIdx, maps.length - 1));
 }
 
 const BIOME_DATA = {
@@ -9054,9 +9221,16 @@ function openBiomeModal(key, fromNav = false) {
     const modal = document.getElementById('dm-modal');
     const loreEntry = b.loreKey ? LORE_DATA[b.loreKey] : null;
     const imgs = getBiomeImages(resolvedKey);
-    const imgActionHtml = imgs.length > 0
-        ? `<button type="button" class="btn-img-open" onclick="openLocationLightbox('${resolvedKey}')">🖼️ View ${imgs.length > 1 ? `Location Images (${imgs.length})` : 'Location Image'}</button>`
-        : `<span class="img-pending-pill" title="Drop an image into CURSE OF STRAHD/IMAGES/ to link this location">🖼️ No Image Yet</span>`;
+    const maps = getBiomeMaps(resolvedKey);
+    const imgBtnHtml = imgs.length > 0
+        ? `<button type="button" class="btn-img-open" onclick="openLocationLightbox('${resolvedKey}')">🖼️ ${imgs.length > 1 ? `Location Images (${imgs.length})` : 'Location Image'}</button>`
+        : '';
+    const mapBtnHtml = maps.length > 0
+        ? `<button type="button" class="btn-loc-map-open" onclick="openLocationMapLightbox('${resolvedKey}')">📐 ${maps.length > 1 ? `Map Sections (${maps.length})` : 'Location Map'}</button>`
+        : '';
+    const mediaActionHtml = (imgBtnHtml || mapBtnHtml)
+        ? `${imgBtnHtml}${mapBtnHtml}`
+        : `<span class="img-pending-pill" title="Drop an image or map into CURSE OF STRAHD/IMAGES/ to link this location">🖼️ No Image/Map Yet</span>`;
     const loreBarHtml = `
         <div style="background:#131c2c; border-left:3.5px solid var(--accent-gold); padding:9px 14px; border-radius:0 6px 6px 0; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <div>
@@ -9064,7 +9238,7 @@ function openBiomeModal(key, fromNav = false) {
                 ${loreEntry ? `<strong style="color:#e2e8f0; font-size:0.84rem;">📜 Archive Dossier: ${loreEntry.title}</strong>` : `<strong style="color:#e2e8f0; font-size:0.84rem;">📍 ${b.title}</strong>`}
             </div>
             <div style="display:flex; align-items:center; gap:7px; flex-wrap:wrap;">
-                ${imgActionHtml}
+                ${mediaActionHtml}
                 <button type="button" class="btn-map-ref" style="padding:5px 10px; font-size:0.74rem;" onclick="openWorldMapLightbox()">🗺️ Map of Barovia</button>
                 ${b.loreKey && loreEntry ? `<button type="button" class="btn-roll" style="background:linear-gradient(135deg,#92400e,#b45309); border-color:#f59e0b; color:#fef3c7; font-weight:700; padding:6px 12px;" onclick="navigateModalFromInside('lore', '${b.loreKey}')">📜 History &amp; Deep Lore ➔</button>` : ''}
             </div>
@@ -9077,17 +9251,19 @@ function openBiomeModal(key, fromNav = false) {
 }
 
 // =========================================================
-// 5B. LOCATION & WORLD MAP LIGHTBOX ENGINE
+// 5B. LOCATION, DUNGEON MAP & WORLD MAP LIGHTBOX ENGINE
 // =========================================================
 let activeLightboxImages = [];
 let activeLightboxIdx = 0;
+let activeLightboxMeta = { biomeKey: null, mode: null };
 
 function openWorldMapLightbox() {
     openImageLightbox(
         WORLD_MAP_IMAGE.title,
         WORLD_MAP_IMAGE.subtitle,
         [{ src: WORLD_MAP_IMAGE.src, label: "Full Map of Barovia" }],
-        0
+        0,
+        { biomeKey: null, mode: 'world' }
     );
 }
 
@@ -9096,14 +9272,33 @@ function openLocationLightbox(biomeKey, startIdx = 0) {
     const b = BIOME_DATA[resolvedKey];
     const imgs = getBiomeImages(resolvedKey);
     if (!b || imgs.length === 0) return;
-    openImageLightbox(`🖼️ ${b.title}`, b.tag, imgs, startIdx);
+    openImageLightbox(`🖼️ ${b.title} — Location Image`, b.tag, imgs, startIdx, { biomeKey: resolvedKey, mode: 'image' });
 }
 
-function openImageLightbox(title, subtitle, imagesList, startIdx = 0) {
+function openLocationMapLightbox(biomeKey, startIdx = null) {
+    const resolvedKey = resolveBiomeKey(biomeKey);
+    const b = BIOME_DATA[resolvedKey];
+    const maps = getBiomeMaps(resolvedKey);
+    if (!b || maps.length === 0) return;
+    const idx = (typeof startIdx === 'number') ? startIdx : getBiomeMapDefaultIdx(resolvedKey);
+    openImageLightbox(`📐 ${b.title} — Tactical Map`, b.tag, maps, idx, { biomeKey: resolvedKey, mode: 'map' });
+}
+
+function switchLightboxMediaMode() {
+    if (!activeLightboxMeta.biomeKey) return;
+    if (activeLightboxMeta.mode === 'image') {
+        openLocationMapLightbox(activeLightboxMeta.biomeKey);
+    } else if (activeLightboxMeta.mode === 'map') {
+        openLocationLightbox(activeLightboxMeta.biomeKey);
+    }
+}
+
+function openImageLightbox(title, subtitle, imagesList, startIdx = 0, meta = null) {
     const lightbox = document.getElementById('image-lightbox');
     if (!lightbox || !Array.isArray(imagesList) || imagesList.length === 0) return;
     activeLightboxImages = imagesList;
     activeLightboxIdx = Math.max(0, Math.min(startIdx, imagesList.length - 1));
+    activeLightboxMeta = meta ? { biomeKey: meta.biomeKey || null, mode: meta.mode || null } : { biomeKey: null, mode: null };
 
     const titleEl = document.getElementById('lightbox-title');
     const subEl = document.getElementById('lightbox-subtitle');
@@ -9120,13 +9315,28 @@ function renderLightboxTabs() {
     if (!tabsEl) return;
     if (activeLightboxImages.length <= 1) {
         tabsEl.style.display = 'none';
-        tabsEl.innerHTML = '';
+        tabsEl.replaceChildren();
         return;
     }
     tabsEl.style.display = 'flex';
-    tabsEl.innerHTML = activeLightboxImages.map((img, i) => `
-        <button type="button" class="btn-loot-filter ${i === activeLightboxIdx ? 'active' : ''}" onclick="selectLightboxImage(${i})">🖼️ ${img.label || ('Image ' + (i + 1))}</button>
-    `).join('');
+    const isMapMode = activeLightboxMeta.mode === 'map';
+    const nodes = [];
+    if (isMapMode) {
+        const lbl = document.createElement('span');
+        lbl.className = 'lightbox-tabs-label';
+        lbl.textContent = '📍 Sections:';
+        nodes.push(lbl);
+    }
+    activeLightboxImages.forEach((img, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `btn-loot-filter ${i === activeLightboxIdx ? 'active' : ''}`;
+        const icon = isMapMode ? '📐' : '🖼️';
+        btn.textContent = `${icon} ${img.label || ((isMapMode ? 'Section ' : 'Image ') + (i + 1))}`;
+        btn.addEventListener('click', () => selectLightboxImage(i));
+        nodes.push(btn);
+    });
+    tabsEl.replaceChildren(...nodes);
 }
 
 function selectLightboxImage(idx) {
@@ -9140,6 +9350,8 @@ function renderLightboxActiveImage() {
     const imgEl = document.getElementById('lightbox-img');
     const stageEl = document.getElementById('lightbox-stage');
     const zoomBtn = document.getElementById('lightbox-zoom-btn');
+    const noteEl = document.getElementById('lightbox-note');
+    const switchBtn = document.getElementById('lightbox-switch-btn');
     const item = activeLightboxImages[activeLightboxIdx];
     if (!imgEl || !item) return;
 
@@ -9151,6 +9363,35 @@ function renderLightboxActiveImage() {
     if (zoomBtn) zoomBtn.textContent = '🔍 Zoom 100%';
     imgEl.src = encodeURI(item.src);
     imgEl.alt = item.label || 'Barovia Location Reference';
+
+    if (noteEl) {
+        if (item.note) {
+            noteEl.style.display = 'block';
+            const prefix = document.createElement('strong');
+            prefix.textContent = '🧭 Key Areas: ';
+            noteEl.replaceChildren(prefix, document.createTextNode(item.note));
+        } else {
+            noteEl.style.display = 'none';
+            noteEl.replaceChildren();
+        }
+    }
+
+    if (switchBtn) {
+        const bKey = activeLightboxMeta.biomeKey;
+        const imgs = bKey ? getBiomeImages(bKey) : [];
+        const maps = bKey ? getBiomeMaps(bKey) : [];
+        if (activeLightboxMeta.mode === 'image' && maps.length > 0) {
+            switchBtn.style.display = 'inline-flex';
+            switchBtn.className = 'btn-loc-map-open';
+            switchBtn.textContent = maps.length > 1 ? `📐 Map Sections (${maps.length})` : '📐 Switch to Map';
+        } else if (activeLightboxMeta.mode === 'map' && imgs.length > 0) {
+            switchBtn.style.display = 'inline-flex';
+            switchBtn.className = 'btn-img-open';
+            switchBtn.textContent = imgs.length > 1 ? `🖼️ Location Images (${imgs.length})` : '🖼️ Switch to Image';
+        } else {
+            switchBtn.style.display = 'none';
+        }
+    }
 }
 
 function toggleLightboxZoom() {
@@ -9188,21 +9429,41 @@ function decorateBiomeCardsWithImages() {
     document.querySelectorAll('.biome-card[data-biome-key]').forEach(card => {
         const key = card.getAttribute('data-biome-key');
         const imgs = getBiomeImages(key);
+        const maps = getBiomeMaps(key);
         const header = card.querySelector('.card-header');
         if (!header) return;
+        const existingGroup = header.querySelector('.biome-card-media-group');
+        if (existingGroup) existingGroup.remove();
         const existing = header.querySelector('.biome-card-img-btn');
         if (existing) existing.remove();
-        if (imgs.length > 0) {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'biome-card-img-btn';
-            btn.title = `Open ${imgs.length > 1 ? imgs.length + ' location images' : 'location image'}`;
-            btn.textContent = imgs.length > 1 ? `🖼️ ${imgs.length}` : '🖼️ View';
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openLocationLightbox(key);
-            });
-            header.appendChild(btn);
+        if (imgs.length > 0 || maps.length > 0) {
+            const group = document.createElement('div');
+            group.className = 'biome-card-media-group';
+            if (imgs.length > 0) {
+                const imgBtn = document.createElement('button');
+                imgBtn.type = 'button';
+                imgBtn.className = 'biome-card-img-btn';
+                imgBtn.title = `Open ${imgs.length > 1 ? imgs.length + ' location images' : 'location image'}`;
+                imgBtn.textContent = imgs.length > 1 ? `🖼️ ${imgs.length}` : '🖼️ View';
+                imgBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openLocationLightbox(key);
+                });
+                group.appendChild(imgBtn);
+            }
+            if (maps.length > 0) {
+                const mapBtn = document.createElement('button');
+                mapBtn.type = 'button';
+                mapBtn.className = 'biome-card-map-btn';
+                mapBtn.title = `Open ${maps.length > 1 ? maps.length + ' map sections' : 'location tactical map'}`;
+                mapBtn.textContent = maps.length > 1 ? `📐 ${maps.length}` : '📐 Map';
+                mapBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openLocationMapLightbox(key);
+                });
+                group.appendChild(mapBtn);
+            }
+            header.appendChild(group);
         }
     });
 }
@@ -9822,8 +10083,12 @@ function openLoreModal(key, fromNav = false) {
             .map(k => `<button type="button" class="btn-roll" style="font-size:0.73rem;" onclick="navigateModalFromInside('biome', '${k}')">📍 ${BIOME_DATA[k].title.replace(/^[^\w]+?\d+\.\s*/, '')} ➔</button>`).join('')
         : '';
     const biomeImgs = hasLinkedBiome ? getBiomeImages(resolvedBiomeKey) : [];
+    const biomeMaps = hasLinkedBiome ? getBiomeMaps(resolvedBiomeKey) : [];
     const loreImgBtn = biomeImgs.length > 0
-        ? `<button type="button" class="btn-img-open" onclick="openLocationLightbox('${resolvedBiomeKey}')">🖼️ View Location Image</button>`
+        ? `<button type="button" class="btn-img-open" onclick="openLocationLightbox('${resolvedBiomeKey}')">🖼️ ${biomeImgs.length > 1 ? `Location Images (${biomeImgs.length})` : 'View Location Image'}</button>`
+        : '';
+    const loreMapBtn = biomeMaps.length > 0
+        ? `<button type="button" class="btn-loc-map-open" onclick="openLocationMapLightbox('${resolvedBiomeKey}')">📐 ${biomeMaps.length > 1 ? `Map Sections (${biomeMaps.length})` : 'View Location Map'}</button>`
         : '';
     const validNpcLinks = Array.isArray(l.npcLinks) ? l.npcLinks.filter(k => NPC_DATA[k]) : [];
     const validMonsterLinks = Array.isArray(l.monsterLinks) ? l.monsterLinks.filter(k => MONSTER_DATA[k]) : [];
@@ -9841,7 +10106,7 @@ function openLoreModal(key, fromNav = false) {
             </div>
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <span class="pill gold">${l.badge}</span>
-                ${loreImgBtn}
+                ${loreImgBtn}${loreMapBtn}
                 ${hasLinkedBiome ? `<button type="button" class="btn-roll" onclick="navigateModalFromInside('biome', '${resolvedBiomeKey}')">🗺️ Location Room Keys &amp; Hazards ➔</button>` : ''}
                 ${extraBiomeBtns}
             </div>
