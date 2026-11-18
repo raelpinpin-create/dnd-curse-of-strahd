@@ -153,7 +153,9 @@
 
 ### 🎭 Rudolph van Richten / "Rictavio" (Legendary Monster Scholar)
 * **Status:** `⚪ NOT MET`
-* **Role:** Undercover Half-Elf Bard at the Blue Water Inn (Vallaki) with an armored Saber-Toothed Tiger in his carnival wagon.
+* **Role:** Undercover Half-Elf Bard at the Blue Water Inn (Vallaki) with an armored Saber-Toothed Tiger in his carnival wagon (`N5`) and a hidden sanctuary at Khazan's Antimagic Tower (`Lake Baratok V1–V7`).
+* **Previous Domain & Origins (`Darkon`):** Born a mortal physician in **Darkon** (another Domain of Dread within the same Ravenloft pocket dimension, ruled by lich-king Azalin Rex)—*not* from outside Ravenloft. After a Vistani clan kidnapped his 14-year-old son **Erasmus** and sold him to vampire **Baron Metus**, Van Richten was forced to stake his own vampiric son, slaughtered the clan with zombies (sparing young **Ezmerelda**), and was cursed by their dying elder (*"Live always among monsters, and see everyone you love die beneath their claws!"*).
+* **How a Non-Vistani Entered Barovia:** Across the Domains, rumors and Vistani whispers speak of **Domain Zero** and the oldest vampire alive. Determined to end Strahd (and keep Ezmerelda safe from his curse), Van Richten crossed from Darkon into Barovia using a **Barovian Mist Talisman** (and early Vistani trail contacts)—eagerly admitted by both the **Dark Powers** (who feast on doomed martyrs) and **Count Strahd** (whose #3 goal is hunting Van Richten down!). Now trapped behind the Mists like everyone else, he cannot leave until Strahd falls.
 * **Voice & Cue:** As Rictavio: flamboyant, eccentric ringmaster. As Van Richten: weary, calculating, ruthless old hunter. *"Monsters do not lose to heroes. Monsters lose to preparation."*
 
 ### 🪶 Urwin & Danika Martikov (Blue Water Inn • Vallaki Area N2)

@@ -123,7 +123,7 @@ flowchart TD
 | ☀️ **Baron Vargas Vallakovich**<br>`[Paranoid Mayor]` | 🟡 Unmet | Burgomaster • Vallaki | Town authority & shelter if party praises his festivals; enforcer Izek Strazni. | Manic booming forced cheer: *"ALL WILL BE WELL!"* |
 | 🕯️ **Lady Fiona Wachter**<br>`[Cult Leader]` | 🟡 Unmet | Strahd Loyalist • Wachterhaus | Shelters **The Tome of Strahd**; seeks to overthrow the Baron; cultists. | Cold calculating aristocratic poise: *"Strahd is not a monster. He is a lord."* |
 | ⚔️ **Ezmerelda d'Avenir**<br>`[Independent Hunter]` | 🟡 Unmet | Vistani Vampire Hunter • Act II–III | Swashbuckling hunter (AC 17, HP 82, Rapier +8, 4th-level Wizard spells). | Swashbuckling confidence: *"I don't need a prophecy to tell me how to kill a vampire."* |
-| 📜 **Rudolph van Richten**<br>`[Monster Scholar / "Rictavio"]` | 🟡 Unmet | Disguised Bard • Blue Water Inn | Legendary vampire hunter; Saber-Toothed Tiger; expert monster tactics. | Scholarly dry wit under a colorful bard disguise. |
+| 📜 **Rudolph van Richten**<br>`[Monster Scholar / "Rictavio"]` | 🟡 Unmet | Disguised Bard • Blue Water Inn (`N2`) / Tower (`V1`) | Native of **Darkon** (another Domain inside Ravenloft); crossed via **Mist Talisman** into Strahd's trap (now stuck!); Saber-Toothed Tiger (`N5`), *Undead Slayer (+3d6)*, Raise Dead scroll. | Scholarly dry wit under a colorful bard disguise. |
 | 🐉 **Vladimir Horngaard**<br>`[Revenant Commander]` | 🟡 Unmet | Dragon Knight Leader • Argynvostholt | Guards **The Holy Symbol of Ravenkind**; undead dragon knight order. | Hateful hollow spectral rasp: *"Strahd must suffer eternally in his cage."* |
 | 🛡️ **Sir Godfrey Gwilym**<br>`[Revenant Paladin]` | 🟡 Unmet | Order Paladin • Argynvostholt (`Q37`) | 136 HP, 16th-Lvl Paladin Smites (`L1–L4`); begs heroes to restore Argynvost's Beacon. | Sorrowful chivalry: *"Burn away the fog—let us rest in peace."* |
 | 🪽 **The Abbot & Vasilka**<br>`[Corrupted Deva]` | 🟡 Unmet | Angelic Surgeon • Krezk Abbey (`S13`) | 3x free *Raise Dead* / *Greater Restoration* if given **Lydia's Bridal Gown**; guards Abbey Treasury. | Serene celestial madness: *"I have sewn him an undying flesh bride!"* |
@@ -374,13 +374,14 @@ flowchart TD
 
 ### 🛡️ 4.5A: Barovian Factions, Secret Orders & Covens (8 Factions)
 
-1. 🔮 **The Vistani (Nomads of the Mists & Madam Eva's Secret Royal Bloodline):**
-   * **History & Strahd's Blood-Oath:** Centuries ago, a clan of wandering Vistani saved a wounded mortal Prince Strahd von Zarovich from dying in the snow. In eternal gratitude, Strahd swore a royal blood-oath: **all Vistani are forever safe from the beasts of Barovia and alone possess the power to travel freely through the border Mists**.
+1. 🔮 **The Vistani (Nomads of the Mists, Diplomatic Passport & Madam Eva's Secret Royal Bloodline):**
+   * **Pre-Curse Origins & Strahd's Blood-Oath:** Before Barovia fell in `351 BC`, the Vistani were ordinary mortal travelers—they do **not** have Dark-Power godhood. Centuries ago, a clan of wandering Vistani saved a wounded mortal Prince Strahd from dying in the snow. In eternal gratitude, Strahd swore a royal blood-oath: **all Vistani are forever safe from the beasts of Barovia and alone possess safe passage through the border Mists**.
+   * **Why the Dark Powers Allow It ('Mist Fishermen' & One-Way Lock):** Strahd's Blood-Oath acts as a diplomatic **Mist Passport** letting Vistani wagons cross between Barovia, other Domains of Dread (like **Darkon**), and Prime Material worlds—tolerated by the Dark Powers because Vistani bring fresh victims and rumors *into* the cage (e.g., mercenaries **Luvash & Arrigal** riding out to deliver Strahd's forged bait letters). **Crucially, they cannot smuggle trapped outsiders OUT of Barovia against Strahd's seal!**
    * **Madam Eva's Secret Identity (`Book p. 233`):** Madam Eva is secretly **Katarina von Zarovich**—Count Strahd's half-sister (daughter of King Barov and a Vistani woman). She forged a pact with **Mother Night** for ageless foresight to free her brother from his curse, though Strahd has no idea of her royal blood.
    * **Two Very Different Clans:**
      * **Madam Eva's Clan (`Tser Pool, Area G` — Session 2):** Honorable storytellers and silver-merchants who guide the party via the **5-Card Tarokka Reading + Piper's 6th Blank Omen Card** (*Reloaded Arc C4*).
      * **Luvash & Arrigal's Clan (`Vallaki Camp, Area N9` — Act II):** Ruthless mercenaries who actively serve Strahd as spies, couriers, and assassins (and guard the surviving Dusk Elves).
-   * **Tabletop Powers:** *Mist Navigation*, *The Evil Eye* (Action: Wisdom Save vs. Blindness/Charm/Fear), and *Vistani Blood Curses* (Reaction at 0 HP or when gravely wronged).
+   * **Tabletop Powers:** *Mist Navigation (Vistani-only exemption)*, *The Evil Eye* (Action: Wisdom Save vs. Blindness/Charm/Fear), and *Vistani Blood Curses* (Reaction at 0 HP or when gravely wronged).
 
 2. 🦅 **The Keepers of the Feather (Wereraven Intelligence Network & Martikov Clan):**
    * **Who They Are:** A clandestine society of **Lawful Good Wereravens** led by the **Martikov family**—patriarch **Davian Martikov** (*Wizard of Wines Winery, Chapter 12*) and his estranged son **Urwin Martikov** & wife **Danika** (*Blue Water Inn, Vallaki Area N2*).
