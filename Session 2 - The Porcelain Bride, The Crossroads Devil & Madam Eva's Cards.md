@@ -14,7 +14,7 @@
 | :--- | :--- | :--- |
 | **ACT I** | `0:00 – 0:45` *(45m)* | **The Unfrozen Second & The Blood Cup in the Attic (`Area E5` / *Reloaded* `Arc B5`):**<br>• **Exact Resume:** `Tap, tap, tap` fades—time snaps back! **Jacomir** holds a cup of his own royal blood beside **Ismark**; **Piper & Yvaine** demand **Doru**'s death; **Ireena** watches; **Father Donavich** weeps.<br>• **Branch A (Willing Blood Cup):** Doru drinks, regains 2 minutes of heartbreaking lucidity, reveals the **Mad Mage's siege** and **"a giant red crystal beating in the North Tower"** (*Heart of Sorrow*), and begs for mercy.<br>• **Branch B (Combat):** Tactical rafter battle vs. **Doru (`CR 5`, `85 HP`, Spider Climb)**. |
 | **ACT II** | `0:45 – 1:40` *(55m)* | **2:30 AM Burial, Strahd’s Courier & Bride Volenta’s Crash (`Churchyard Cemetery — Area E5`):**<br>• **The Burial:** Burying **Burgomaster Kolyan** at 2:30 AM in the foggy churchyard behind the church.<br>• **The Courier:** Strahd's gaunt **Vampire Spawn Emissary** arrives at the iron gate offering *"condolences"* and inviting *"Lady Tatyana"* into a *"warmer carriage"* ➔ party intercepts ➔ tension boils over!<br>• **CRASH — Bride Volenta Popofsky (`CR 5`, `95 HP`):** Drops off the church roof, **brutally maims the Spawn** to establish her unhinged jealousy, terrorizes the graveyard with *Corpse-Puppet Strings*, and vanishes in a swarm of bats around `45–50 HP` with a chilling, **unpredictable threat** (zero timetable!). |
-| **ACT III** | `1:40 – 2:20` *(40m)* | **Old Svalich Road & Count Strahd at the River Ivlis Crossroads (`Area F` / *Reloaded* `Arc C2`):**<br>• *(Optional Gallows Mirror check if skipped in S1.)*<br>• **Option B Payoff:** The **Phantom Black Carriage** awaits at the three-way stone signpost. **Count Strahd von Zarovich** steps out face-to-face for the first time—explaining Volenta's punishment & why he leaves Ireena in their care (*free bodyguards + two-bite claim*), tempting **Jacomir, Yvaine, & Piper** toward ruthless monstrosity with **promises of dark rewards** to shatter Ireena's hope & test a successor, and smiling knowingly at **Piper’s pocket watch** (*"And welcome to the road as well... Piper"*). |
+| **ACT III** | `1:40 – 2:20` *(40m)* | **Old Svalich Road & Count Strahd at the River Ivlis Crossroads (`Area F` / *Reloaded* `Arc C2`):**<br>• *(Optional Gallows Mirror check if skipped in S1.)*<br>• **Option B Payoff:** The **Phantom Black Carriage** awaits at the three-way stone signpost. **Count Strahd von Zarovich** steps out face-to-face for the first time—coldly apologizing for Volenta's lack of discipline, claiming his two-bite seal over Ireena, quietly sizing up **Jacomir**, **Yvaine**, and **Piper's pocket watch** (*keeping his secret successor & corruption motives strictly inside his own mind!*), answering tough questions with chilling aristocratic poise, and departing with a haunting farewell. |
 | **ACT IV** | `2:20 – 3:55` *(95m)* | **THE HIGHLIGHT — Tser Pool Vistani Camp, Madam Eva, Piper’s Fate & Cael’s Reveal (`Area G` / *Reloaded* `Arc C4`):**<br>• **Part 1 — The Vistani Sanctuary (`25m`):** Warm bonfire oasis, **Stanimir’s tale** of Strahd's blood-oath, **Piper welcomed without fear** for her horns & card tricks, silver gear trade, and eerie **Pool Reflection omens**.<br>• **Part 2 — Madam Eva’s Tent, Piper’s Story & Party Fate (`40m`):** Eva reads each hero’s secret grief (**Oakenshire**, **Solmere**, and **Piper’s Barnaby pocket watch / Amber frost clue!**), deals the **5 Curated Tarokka Prophecies**, and triggers **Card #6: Piper’s Blank Tarokka Card (`Stage 1` charcoal bleed)**.<br>• **Part 3 — Long Rest Camp Comedy-to-Heart Reveal (`30m`):** On night watch, a PC busts **Caelum Jude ("Cael")** in human form behind the supply packs **stuffing dried jerky & Vistani honey-rolls into his mouth**—leading into his sincere sales pitch to join as healer! |
 | **ACT V** | `3:55 – 4:30` *(35m)* | **Tser Falls Stone Bridge & Derek’s Milestone 1 Briefing (`Area H` / *Reloaded* `Arc C7`):**<br>• **The Climb (`15m`):** Hiking the mist-soaked gorge alongside human Cael; spotting lightning scars from the Mad Mage’s fall a year ago.<br>• **`Tap, Tap, Tap` — Extended Time-Freeze (`15m`):** Frozen waterfall hangs like blown glass; **Cael** collapses sweating against the stone parapet in silent terror while **Derek** walks the bridge, delivering razor-sharp personal pressure to **Jacomir**, **Yvaine**, and **Piper**.<br>• **Chills Ending (`5m`):** Time snaps back; Cael hides his panic; ahead in the dusk mist loom the creaking sails and warm pastry smoke of **Old Bonegrinder**! |
 
@@ -345,42 +345,48 @@ Read aloud as the party, **Ireena** *(and the Black Cat trailing quietly `30 ft`
    * *(Ireena whispers defiantly, trembling but refusing to blink:)* **"I will never step inside, monster. And I am not yours!"**
    * *(Strahd merely offers a sad, patient half-smile, glancing calmly from Ireena back to the heroes as if inviting them into a private joke.)*
 
-3. **Testing & Tempting the Three Strangers (`Targeted Hooks Pushing Toward Monstrosity!`):**
+3. **Sizing Up the Three Strangers (`Subtle, Striking & Unnerving — Zero Spoilers!`):**
    * **To King Jacomir:**
-     > *"An anointed sovereign without a throne. Tell me, **King Jacomir**—how many crowns have rotted in Barovia’s soil while kings swore they would never stain their hands? *(His eyes narrow knowingly.)* A pewter cup of blood in a dusty attic won't buy Oakenshire back. Let's see how quickly your noble honor cracks once this valley asks **whose blood** you are truly willing to spill to keep your oath."*
+     > *"An anointed sovereign standing ankle-deep in Barovian mud without a throne. Tell me, **King Jacomir**—how many crowns have rusted in this soil while kings swore they would never bend? Walk my roads awhile. I am curious to see what a king's word weighs once winter settles in."*
    * **To Yvaine:**
-     > *"Black powder and cold eyes. Solmere’s surviving hound, still hunting ghosts across a border you cannot cross. You know the truth already, **Eclipsa**: mercy is what left your palace gates wide open on your birthday. Do not let pity slow your trigger finger out here—this valley belongs strictly to hunters willing to finish what they aim at."*
+     > *"Black powder, silvered lead, and eyes that have already buried their dead. A rare sort of discipline, **Eclipsa**. Keep that rifle clean—though out here, the woods rarely care who a hunter swore to avenge."*
    * **To Piper *(The Cosmic Knot Spotlight — [`THE_COSMIC_KNOT_MASTER_LORE.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/THE_COSMIC_KNOT_MASTER_LORE.md#L136))*:**
      *(Strahd’s eyes linger past Jacomir and Yvaine, locking straight onto **Piper**—and dropping slowly down to **Barnaby’s tarnished brass pocket watch** on her coat/belt. For the first time, the faintest, knowing, deeply unnerving smile parts his lips.)*
      > *"And welcome to the road as well... **Piper.***
      > 
-     > *Card tricks, greasepaint, and a brass watch that no longer tells time? Oh, little tiefling... how terribly loud the storm inside your blood sounds when you think no one is listening. Why keep apologizing for those horns to sheep who would burn you at the stake if they knew what you really are? Drop the parlor mask—burn whatever stands in your way, and I am genuinely curious to see who kneels the day you stop pretending to be harmless."*
+     > *Card tricks, greasepaint, and a brass watch that no longer tells time? Oh, little tiefling... how terribly loud the storm inside your blood sounds when you think no one is listening. Enjoy your parlor illusions while the crowds still clap."*
      *(Wait a beat—let Piper feel absolute goosebumps! How does he know her name and what woke inside her?!)*
 
-4. **The Devil’s Wager (`Offering Rewards for Cruelty & Breaking Ireena's Faith`):**
-   *(Strahd steps half a pace closer—pitching his velvet baritone clearly so **Ireena** hears every single syllable!)*
-   > **Strahd:** *"Allow me to make our arrangement crystal clear, travelers. I do not want dead sheep—I have four hundred years of corpses in the valley mud already. Show me what kind of monsters survive beneath your armor when Barovia tightens the noose.*
-   > 
-   > *Execute the traitors. Take what the weak cannot guard. Break the rules your dead saints preached when survival demands ugly teeth. Every time you choose cruelty, ambition, or darkness over soft-bellied pity... **my eyes will notice. And Count Strahd rewards guests who prove worthy of inheriting a throne—even if dear Ireena has to watch you earn every drop of it.***"
+   > 🧠 **DM Private Rule (`Strahd's Unspoken Agenda — DO NOT SAY ALOUD!`):**
+   > Strahd **never** tells strangers on Day 1 that he is testing them as potential successors or hoping they become monsters—that cheapens his dignity and ruins the mystery! Keep those intentions **strictly in his own head**:
+   > * Internally, he watches whether **Jacomir, Yvaine, or Piper** have the stomach to cross ugly moral lines in Barovia—and **naturally** sends quiet rewards (*Red Dragon Crush* wine, wax-sealed compliments, tactical intel, or brief roadside nods) *after* they actually commit cold/ruthless deeds later in Acts I–III, letting Ireena witness their corruption firsthand.
 
-   > 🍷 **DM Ongoing Mechanic — Strahd’s Cruelty Rewards (`Acts I–III`):**
-   > Whenever the party commits a cold, ruthless, or dark act (torturing/executing Henrik or Milivoj, sacrificing an NPC, keeping loot stolen from desperate villagers, eating Morgantha's Dream Pastry, or accepting dark magic), **Strahd notices immediately** and rewards them *right in front of a horrified Ireena*:
-   > * **Tier 1 (First Dark Act):** A velvet-sealed bottle of **🍾 Red Dragon Crush** wine & complimentary note thanking them for *"refreshing pragmatism"* arrives cleanly beside their campfire at dawn.
-   > * **Tier 2 (Repeated Brutality):** **Rahadin** or **Strahd himself** steps out of the mist to applaud them personally—gifting tactical secrets (Baron Vargas/Wachter/Rictavio intel) or silvered gear while ignoring Ireena's disgust (*"See, my love? Even your knights have teeth"*).
-   > * **Tier 3 (Full Moral Collapse):** Opens Strahd’s direct invitation in **Session 9** to climb Mount Ghakis toward **The Amber Temple (`Area X42`)**—unknowingly pushing them straight toward **Derek’s** trap!
-
-5. **⚠️ DM Contingency: What If Players Ask *"Why Don't You Kill Us Now?"* OR Attack Strahd Here?!**
-   * **If a PC Bluntly Asks *"Why Not Just Kill Us and Take Her Right Now?"*:**
-     *(Strahd tilts his head with genuine, quiet amusement.)*
-     > **Strahd:** *"Kill my unpaid bodyguards? Come now—think with something besides steel. The mountain roads teem with hags, rabid wolves, and small-minded tyrants who lack my refined restraint. You bleed to carry Kolyan’s daughter safely to Vallaki, you amuse me while I measure whether any of you possess the spine to wear a real crown... and best of all, when this miserable valley inevitably turns your hands just as red as mine, she will see with her own eyes that no hero exists to save her."*
-   * **If Someone Attacks or Shoots Strahd Right Here:**
+4. **Crossroads Q&A Bank (`Striking Replies When Players Question or Challenge Him!`):**
+   * **If Asked: *"Why don't you just take Ireena right now / why stop at two bites?"*:**
+     > **Strahd:** *"Force? Any starving beast can drag a kicking girl into the dark—my youngest bride proved as much last night. A third bite turns a soul into a hollow puppet on a chain, and I have crypts full of puppets already. I prefer a queen who walks through my gates on the day this valley teaches her there is nowhere left to run."*
+   * **If Asked: *"Why don't you just kill us right here and leave her unprotected?"*:**
+     > **Strahd:** *"Why slaughter useful shepherds? These mountains crawl with hags, mountain wolves, and desperate fools who lack my restraint. You bleed to keep the rain off Kolyan’s daughter until she reaches Vallaki—and in return, you get to draw breath on my earth a few days longer. Consider it rent."*
+   * **If Asked: *"Why did you bring us to Barovia? What do you want from us?"*:**
+     *(He offers nothing away—only calm, predatory amusement.)*
+     > **Strahd:** *"The Mists sweep all manner of stray wolves and fallen crowns across my borders. Some entertain me for a fortnight; most feed the crows before the first frost. Walk my roads, learn whose name the wind remembers—and try not to bore me."*
+   * **If Mentioned: *"We're taking her to Vallaki / St. Andral's Church where you can't reach her!"*:**
+     *(A cold, razor-thin smile touches his marble face.)*
+     > **Strahd:** *"By all means. Place your faith in Vallaki's wooden walls, a mad burgomaster's painted smiles, and a priest's locked doors. Let us see how long your 'sanctuary' stays standing once dusk settles."*
+   * **If Challenged: *"Who are you? / Do you expect us to kneel?"*:**
+     > **Strahd:** *"I am Count Strahd von Zarovich—the Ancient, and the Land. I do not ask strangers to kneel in the mud. When Barovia finishes with you, knees tend to bend on their own."*
+   * **⚠️ If Someone Attacks or Shoots Strahd Right Here:**
      * **NEVER TPK them in Session 2**, and NEVER turn Strahd into a punching bag!
      * **Heart of Sorrow Flex (`50 HP` hidden crystal shield in Ravenloft!):** The bullet or greatsword slams straight into Strahd's chest—and **not a single drop of blood spills!** A faint ruby shimmer ripples beneath his black wool and vanishes (`"Did you see that?! He didn't even flinch!"` — connecting straight back to what **Doru** told them in the attic!!).
      * **Catch-and-Release Dominance:** Strahd calmly wipes a speck of gunpowder dust off his lapel, speaks one word—**`Sleep`** *(or `Gust of Wind` DC 18 STR / one casual Unarmed disarm pushing the attacker onto their knees)*—or locks eyes for **Vampire Charm (`DC 17 WIS Save`)** just to prove to Ireena he owns their lives, then chuckles softly:
        > *"Amusing spirit. Break your teeth on my brides and my wolves first, little strangers. Earn an invitation to my dinner table before you waste my evening."*
 
-6. **The Departure:**
-   Strahd bows once, steps smoothly back into the Black Carriage, and closes the door. Without a sound from the horses, the coach rolls smoothly through the clinging gray fog down the fork toward Castle Ravenloft—vanishing cleanly into the mist. *(Zero knowledge of Derek! Notice how completely unaware Strahd is of the Man Between Seconds.)*
+5. **Concluding Words & The Departure (`What He Says When Dialogue Ends`):**
+   *(Strahd straightens his crimson-lined collar, lets his dark crimson eyes pass once over **Jacomir**, **Yvaine**, and **Piper**, and finally rests them softly on **Ireena**.)*
+   > **Strahd:** *"Go on, then. Warm yourselves beside the Vistani fire at Tser Pool while the night is still kind to you. Bury your grief, sharpen your silver, and cling tightly to the little oaths you brought through the fog.*
+   > 
+   > *I shall be watching—and when this valley finally strips away every illusion you carry, my carriage will be waiting. Enjoy the road, travelers... and farewell for now, my dear Ireena."*
+
+   Strahd bows once with immaculate courtly grace, steps smoothly back into the Black Carriage, and pulls the silver-hinged door shut. Without a sound from the driverless horses, the obsidian coach turns silently onto the misty switchback climbing toward Castle Ravenloft—vanishing cleanly into the fog. *(Zero knowledge of Derek! Notice how completely unaware Strahd is of the Man Between Seconds.)*
 
 ---
 
