@@ -1187,8 +1187,9 @@
             border-left-color: var(--accent-gold);
         }
         .encounter-card.is-ally {
-            border-left-color: #22c55e;
-            background: linear-gradient(135deg, #0d1a20 0%, #101726 100%);
+            border-color: #21362c;
+            border-left-color: #3b7a57;
+            background: linear-gradient(135deg, #0d1615 0%, #101726 100%);
         }
         .encounter-card.is-dead {
             opacity: 0.56;
@@ -1288,11 +1289,16 @@
             gap: 8px;
             flex-wrap: wrap;
             background: #090e18;
-            border: 1px solid #1d352e;
+            border: 1px solid #1d3028;
             border-radius: 5px;
             padding: 6px 9px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.74rem;
+        }
+        .pill.ally {
+            background: rgba(59, 122, 87, 0.16);
+            color: #94c9a9;
+            border-color: #2e6b52;
         }
         .encounter-card-meta {
             display: flex;
@@ -1814,10 +1820,10 @@
                     <span class="pill crimson" id="encounter-count-badge">0 Active • 0 Alive</span>
                 </div>
                 <div class="encounter-board-controls">
-                    <button type="button" class="btn-step btn-heal" onclick="addAllyToEncounter()" title="Add a Player or Ally Initiative Card">👤 + Player / Ally</button>
+                    <button type="button" class="btn-step btn-heal" onclick="addAllyToEncounter()" title="Add an Ally Initiative Card">👤 + Ally</button>
                     <button type="button" class="btn-step" onclick="addPartyToEncounter()" title="Add Piper, Jacomir, Yvaine &amp; Cael Initiative Cards">🛡️ + Party</button>
                     <button type="button" class="btn-roll" onclick="rollAllEncounterInits()" title="Roll Initiative for Enemies and sort all combatants">🎲 Roll Enemy Inits</button>
-                    <button type="button" class="btn-step" onclick="sortEncounterBoard(true)" title="Sort all Players, Allies &amp; Enemies by Initiative">🔃 Sort Order</button>
+                    <button type="button" class="btn-step" onclick="sortEncounterBoard(true)" title="Sort all Allies &amp; Enemies by Initiative">🔃 Sort Order</button>
                     <button type="button" class="btn-step" onclick="clearDeadEncounterEntries()">🧹 Clear Dead</button>
                     <button type="button" class="btn-step btn-heal" onclick="healAllEncounterEntries()">💚 Heal All</button>
                     <button type="button" class="btn-step" onclick="clearEncounterBoard()">🗑️ Clear Board</button>
@@ -2931,7 +2937,7 @@ function getEncounterInitBonus(entry) {
 function getEncounterDisplayTitle(entry) {
     if (!entry) return '';
     if (entry.customLabel && entry.customLabel.trim()) return entry.customLabel.trim();
-    if (entry.kind === 'ally') return `👤 Player / Ally #${entry.num}`;
+    if (entry.kind === 'ally') return `👤 Ally #${entry.num}`;
     const m = MONSTER_DATA[entry.key];
     return `${m ? m.name : entry.key} #${entry.num}`;
 }
@@ -2950,7 +2956,7 @@ function addAllyToEncounter(customName = '', initBonus = null, allyKey = null, o
         key: allyKey || `ally_${num}`,
         allyKey: allyKey || null,
         num,
-        customLabel: cleanName || `👤 Player / Ally #${num}`,
+        customLabel: cleanName || `👤 Ally #${num}`,
         variantTag: '',
         init: null,
         initBonus: typeof initBonus === 'number' ? initBonus : null,
@@ -2963,9 +2969,9 @@ function addAllyToEncounter(customName = '', initBonus = null, allyKey = null, o
     } else {
         renderEncounterBoard();
     }
-    const labelStr = cleanName || `Player / Ally #${num}`;
+    const labelStr = cleanName || `Ally #${num}`;
     announceEncounterStatus(`Added ${labelStr} initiative card to Active Encounter Board.`);
-    logRoll(`👤 <strong>Added Player / Ally Card:</strong> ${escapeEncounterHtml(labelStr)} (enter Initiative directly or click 🎲)`);
+    logRoll(`👤 <strong>Added Ally Card:</strong> ${escapeEncounterHtml(labelStr)} (enter Initiative directly or click 🎲)`);
     return uid;
 }
 
@@ -3132,7 +3138,7 @@ function commitRenameEncounterEntry(uid, newVal) {
     if (entry) {
         const cleaned = String(newVal ?? '').trim().slice(0, 60);
         if (entry.kind === 'ally') {
-            entry.customLabel = cleaned || (entry.customLabel || `👤 Player / Ally #${entry.num}`);
+            entry.customLabel = cleaned || (entry.customLabel || `👤 Ally #${entry.num}`);
         } else {
             entry.customLabel = cleaned;
         }
@@ -3181,7 +3187,7 @@ function reorderEncounterNodes(container, orderedNodes) {
 
 function sortEncounterBoard(announce = true) {
     if (!encounterEntries.length) {
-        if (announce) logRoll('⚠️ Active Encounter Board is empty — add Players, Allies, or Enemies first!');
+        if (announce) logRoll('⚠️ Active Encounter Board is empty — add Allies or Enemies first!');
         return;
     }
     if (editingEncounterUid) editingEncounterUid = null;
@@ -3232,12 +3238,12 @@ function sortEncounterBoard(announce = true) {
 
 function rollAllEncounterInits() {
     if (!encounterEntries.length) {
-        logRoll('⚠️ Active Encounter Board is empty — click [👤 + Player / Ally] or [⚔️ + Add] first!');
+        logRoll('⚠️ Active Encounter Board is empty — click [👤 + Ally] or [⚔️ + Add] first!');
         return;
     }
     let rolledCount = 0;
     encounterEntries.forEach(entry => {
-        if (entry.kind === 'ally') return; // Preserve typed Player/Ally initiatives
+        if (entry.kind === 'ally') return; // Preserve typed Ally initiatives
         const mod = getEncounterInitBonus(entry);
         const d20 = Math.floor(Math.random() * 20) + 1;
         entry.init = d20 + mod;
@@ -3334,7 +3340,7 @@ function renderEncounterBoard() {
 
     if (!encounterEntries.length) {
         grid.className = '';
-        grid.innerHTML = `<div class="encounter-empty">Encounter Board is empty — click <strong style="color:#86efac;">[👤 + Player / Ally]</strong> or <strong style="color:#93c5fd;">[🛡️ + Party]</strong> to track hero initiatives, or <strong style="color:var(--accent-gold-soft);">[⚔️ + Add]</strong> on any enemy row below!</div>`;
+        grid.innerHTML = `<div class="encounter-empty">Encounter Board is empty — click <strong style="color:#94c9a9;">[👤 + Ally]</strong> or <strong style="color:#93c5fd;">[🛡️ + Party]</strong> to track hero &amp; ally initiatives, or <strong style="color:var(--accent-gold-soft);">[⚔️ + Add]</strong> on any enemy row below!</div>`;
         return;
     }
 
@@ -3361,7 +3367,7 @@ function renderEncounterBoard() {
         } else if (isAlly) {
             titleBlockHtml = `
                 <div class="enc-title-row">
-                    <button type="button" class="link-btn" style="font-size:0.88rem; color:#86efac;" onclick="startRenameEncounterEntry('${entry.uid}')" title="Click to rename Player / Ally">${safeTitle}</button>
+                    <button type="button" class="link-btn" style="font-size:0.88rem; color:#a3cbb4;" onclick="startRenameEncounterEntry('${entry.uid}')" title="Click to rename Ally">${safeTitle}</button>
                     <button type="button" class="btn-enc-edit" onclick="startRenameEncounterEntry('${entry.uid}')" aria-label="Rename ${safeTitle}" title="Edit Name">✏️</button>
                 </div>`;
         } else {
@@ -3396,7 +3402,7 @@ function renderEncounterBoard() {
                         </div>
                     </div>
                     <div class="enc-ally-body">
-                        <span class="pill green" style="font-size:0.65rem;">🛡️ PLAYER / ALLY${typeof entry.initBonus === 'number' ? ` • Init ${initModStr}` : ''}</span>
+                        <span class="pill ally" style="font-size:0.65rem;">🛡️ ALLY${typeof entry.initBonus === 'number' ? ` • Init ${initModStr}` : ''}</span>
                         <span style="color:var(--text-muted); font-size:0.68rem;">Enter Init ➔ ↵ Sort</span>
                     </div>
                 </div>
