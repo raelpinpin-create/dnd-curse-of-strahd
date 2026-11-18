@@ -1186,6 +1186,10 @@
         .encounter-card.is-boss {
             border-left-color: var(--accent-gold);
         }
+        .encounter-card.is-ally {
+            border-left-color: #22c55e;
+            background: linear-gradient(135deg, #0d1a20 0%, #101726 100%);
+        }
         .encounter-card.is-dead {
             opacity: 0.56;
             border-color: #334155;
@@ -1197,6 +1201,98 @@
             align-items: flex-start;
             justify-content: space-between;
             gap: 6px;
+        }
+        .enc-title-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+            min-width: 0;
+        }
+        .btn-enc-edit {
+            background: transparent;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            border-radius: 4px;
+            padding: 1px 5px;
+            font-size: 0.67rem;
+            line-height: 1.3;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.14s ease;
+        }
+        .btn-enc-edit:hover {
+            border-color: var(--accent-gold);
+            color: var(--accent-gold-soft);
+        }
+        .enc-sheet-link {
+            background: transparent;
+            border: none;
+            color: #93c5fd;
+            font-size: 0.69rem;
+            padding: 0;
+            margin-top: 2px;
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: left;
+        }
+        .enc-sheet-link:hover {
+            color: #e0f2fe;
+        }
+        .enc-name-input {
+            background: #090e1a;
+            border: 1.5px solid var(--accent-gold);
+            color: #f8fafc;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 3px 7px;
+            border-radius: 4px;
+            width: 100%;
+            min-width: 130px;
+        }
+        .enc-init-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: #090e1a;
+            border: 1px solid #2b3854;
+            border-radius: 4px;
+            padding: 1px 4px;
+        }
+        .enc-init-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.66rem;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+        .enc-init-input {
+            width: 38px;
+            background: transparent;
+            border: none;
+            color: #fde047;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-align: center;
+            padding: 2px 1px;
+        }
+        .enc-init-input::placeholder {
+            color: #64748b;
+        }
+        .enc-ally-body {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: #090e18;
+            border: 1px solid #1d352e;
+            border-radius: 5px;
+            padding: 6px 9px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.74rem;
         }
         .encounter-card-meta {
             display: flex;
@@ -1718,7 +1814,10 @@
                     <span class="pill crimson" id="encounter-count-badge">0 Active • 0 Alive</span>
                 </div>
                 <div class="encounter-board-controls">
-                    <button type="button" class="btn-roll" onclick="rollAllEncounterInits()">🎲 Roll All Init</button>
+                    <button type="button" class="btn-step btn-heal" onclick="addAllyToEncounter()" title="Add a Player or Ally Initiative Card">👤 + Player / Ally</button>
+                    <button type="button" class="btn-step" onclick="addPartyToEncounter()" title="Add Piper, Jacomir, Yvaine &amp; Cael Initiative Cards">🛡️ + Party</button>
+                    <button type="button" class="btn-roll" onclick="rollAllEncounterInits()" title="Roll Initiative for Enemies and sort all combatants">🎲 Roll Enemy Inits</button>
+                    <button type="button" class="btn-step" onclick="sortEncounterBoard(true)" title="Sort all Players, Allies &amp; Enemies by Initiative">🔃 Sort Order</button>
                     <button type="button" class="btn-step" onclick="clearDeadEncounterEntries()">🧹 Clear Dead</button>
                     <button type="button" class="btn-step btn-heal" onclick="healAllEncounterEntries()">💚 Heal All</button>
                     <button type="button" class="btn-step" onclick="clearEncounterBoard()">🗑️ Clear Board</button>
@@ -2762,11 +2861,22 @@ function resetMonsterState(key) {
 }
 
 // =========================================================
-// 1C. LIVE ACTIVE ENCOUNTER BOARD (MULTI-COPY HP TRACKER)
+// 1C. LIVE ACTIVE ENCOUNTER BOARD (PLAYERS, ALLIES & MULTI-COPY HP TRACKER)
 // =========================================================
 const ENCOUNTER_STORAGE_KEY = 'cos_dm_encounter_board_v1';
+const PARTY_INIT_PRESETS = [
+    { allyKey: 'piper', name: '🎭 Piper', initBonus: 2 },
+    { allyKey: 'jacomir', name: '👑 Jacomir', initBonus: 0 },
+    { allyKey: 'yvaine', name: '🎯 Yvaine', initBonus: 6 },
+    { allyKey: 'cael', name: '🌟 Cael', initBonus: 2 }
+];
 let encounterEntries = [];
 let encounterBoardCollapsed = false;
+let editingEncounterUid = null;
+
+function escapeEncounterHtml(str) {
+    return String(str ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+}
 
 function loadEncounterBoard() {
     try {
@@ -2774,7 +2884,16 @@ function loadEncounterBoard() {
         if (!raw) return;
         const parsed = JSON.parse(raw);
         if (parsed && Array.isArray(parsed.entries)) {
-            encounterEntries = parsed.entries.filter(e => e && MONSTER_DATA[e.key] && Array.isArray(e.targets));
+            encounterEntries = parsed.entries.filter(e => {
+                if (!e) return false;
+                if (e.kind === 'ally') return true;
+                return Boolean(MONSTER_DATA[e.key] && Array.isArray(e.targets));
+            }).map(e => ({
+                ...e,
+                kind: e.kind === 'ally' ? 'ally' : 'monster',
+                customLabel: typeof e.customLabel === 'string' ? e.customLabel : '',
+                initBonus: typeof e.initBonus === 'number' ? e.initBonus : null
+            }));
         }
         if (parsed && typeof parsed.collapsed === 'boolean') {
             encounterBoardCollapsed = parsed.collapsed;
@@ -2802,6 +2921,90 @@ function getEncounterHpBarColor(pct) {
     return 'linear-gradient(90deg, #9e323b, #d2535e)';
 }
 
+function getEncounterInitBonus(entry) {
+    if (!entry) return 0;
+    if (entry.kind === 'ally') return typeof entry.initBonus === 'number' ? entry.initBonus : 0;
+    const m = MONSTER_DATA[entry.key];
+    return m ? (parseInt(m.init, 10) || 0) : 0;
+}
+
+function getEncounterDisplayTitle(entry) {
+    if (!entry) return '';
+    if (entry.customLabel && entry.customLabel.trim()) return entry.customLabel.trim();
+    if (entry.kind === 'ally') return `👤 Player / Ally #${entry.num}`;
+    const m = MONSTER_DATA[entry.key];
+    return `${m ? m.name : entry.key} #${entry.num}`;
+}
+
+function addAllyToEncounter(customName = '', initBonus = null, allyKey = null, openEditor = true) {
+    let maxAllyNum = 0;
+    encounterEntries.forEach(e => {
+        if (e.kind === 'ally' && e.num > maxAllyNum) maxAllyNum = e.num;
+    });
+    const num = maxAllyNum + 1;
+    const uid = `ally_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+    const cleanName = String(customName || '').trim();
+    encounterEntries.push({
+        uid,
+        kind: 'ally',
+        key: allyKey || `ally_${num}`,
+        allyKey: allyKey || null,
+        num,
+        customLabel: cleanName || `👤 Player / Ally #${num}`,
+        variantTag: '',
+        init: null,
+        initBonus: typeof initBonus === 'number' ? initBonus : null,
+        targets: []
+    });
+    if (encounterBoardCollapsed) encounterBoardCollapsed = false;
+    saveEncounterBoard();
+    if (openEditor) {
+        startRenameEncounterEntry(uid);
+    } else {
+        renderEncounterBoard();
+    }
+    const labelStr = cleanName || `Player / Ally #${num}`;
+    announceEncounterStatus(`Added ${labelStr} initiative card to Active Encounter Board.`);
+    logRoll(`👤 <strong>Added Player / Ally Card:</strong> ${escapeEncounterHtml(labelStr)} (enter Initiative directly or click 🎲)`);
+    return uid;
+}
+
+function addPartyToEncounter() {
+    const added = [];
+    PARTY_INIT_PRESETS.forEach(p => {
+        const exists = encounterEntries.some(e => e.kind === 'ally' && e.allyKey === p.allyKey);
+        if (!exists) {
+            let maxAllyNum = 0;
+            encounterEntries.forEach(e => {
+                if (e.kind === 'ally' && e.num > maxAllyNum) maxAllyNum = e.num;
+            });
+            const num = maxAllyNum + 1;
+            encounterEntries.push({
+                uid: `ally_${p.allyKey}_${Date.now().toString(36)}_${num}`,
+                kind: 'ally',
+                key: p.allyKey,
+                allyKey: p.allyKey,
+                num,
+                customLabel: p.name,
+                variantTag: '',
+                init: null,
+                initBonus: p.initBonus,
+                targets: []
+            });
+            added.push(p.name);
+        }
+    });
+    if (!added.length) {
+        logRoll('🛡️ All 4 Party Heroes (Piper, Jacomir, Yvaine, Cael) are already on the Active Encounter Board!');
+        return;
+    }
+    if (encounterBoardCollapsed) encounterBoardCollapsed = false;
+    saveEncounterBoard();
+    renderEncounterBoard();
+    announceEncounterStatus(`Added ${added.length} party initiative cards to Encounter Board.`);
+    logRoll(`🛡️ <strong>Added Party Cards:</strong> ${added.join(', ')} (type their table rolls in Init boxes!)`);
+}
+
 function addToEncounter(key, count = 1) {
     const m = MONSTER_DATA[key];
     if (!m) return;
@@ -2809,7 +3012,7 @@ function addToEncounter(key, count = 1) {
     const variantTag = resolveActiveVariantLabel(m, st);
     let maxExistingNum = 0;
     encounterEntries.forEach(e => {
-        if (e.key === key && e.num > maxExistingNum) maxExistingNum = e.num;
+        if (e.kind !== 'ally' && e.key === key && e.num > maxExistingNum) maxExistingNum = e.num;
     });
 
     const addedLabels = [];
@@ -2832,10 +3035,13 @@ function addToEncounter(key, count = 1) {
 
         encounterEntries.push({
             uid,
+            kind: 'monster',
             key,
             num,
+            customLabel: '',
             variantTag,
             init: null,
+            initBonus: parseInt(m.init, 10) || 0,
             targets
         });
         addedLabels.push(`#${num}`);
@@ -2862,9 +3068,8 @@ function modEncounterHP(uid, targetIdx, delta) {
     if (activeModalKind === 'monster' && activeModalMonsterKey === entry.key) {
         openMonsterModal(entry.key, true);
     }
-    const m = MONSTER_DATA[entry.key];
-    const unitName = `${m ? m.name : entry.key} #${entry.num}${tgt.label ? ' (' + tgt.label + ')' : ''}`;
-    logRoll(`🩸 <strong>${unitName} HP</strong> ${delta > 0 ? '+' + delta : delta} ➔ <strong style="color:#fde047;">${tgt.cur} / ${tgt.max} HP</strong>`);
+    const unitName = `${getEncounterDisplayTitle(entry)}${tgt.label ? ' (' + tgt.label + ')' : ''}`;
+    logRoll(`🩸 <strong>${escapeEncounterHtml(unitName)} HP</strong> ${delta > 0 ? '+' + delta : delta} ➔ <strong style="color:#fde047;">${tgt.cur} / ${tgt.max} HP</strong>`);
 }
 
 function setEncounterHP(uid, targetIdx, newVal) {
@@ -2877,21 +3082,94 @@ function setEncounterHP(uid, targetIdx, newVal) {
     if (activeModalKind === 'monster' && activeModalMonsterKey === entry.key) {
         openMonsterModal(entry.key, true);
     }
-    const m = MONSTER_DATA[entry.key];
-    const unitName = `${m ? m.name : entry.key} #${entry.num}${tgt.label ? ' (' + tgt.label + ')' : ''}`;
-    logRoll(tgt.cur === 0 ? `💀 <strong>${unitName}</strong> SLAIN (0 / ${tgt.max} HP)!` : `🩸 <strong>${unitName}</strong> set to ${tgt.cur} / ${tgt.max} HP.`);
+    const unitName = `${getEncounterDisplayTitle(entry)}${tgt.label ? ' (' + tgt.label + ')' : ''}`;
+    logRoll(tgt.cur === 0 ? `💀 <strong>${escapeEncounterHtml(unitName)}</strong> SLAIN (0 / ${tgt.max} HP)!` : `🩸 <strong>${escapeEncounterHtml(unitName)}</strong> set to ${tgt.cur} / ${tgt.max} HP.`);
+}
+
+function setEncounterInit(uid, rawVal, triggerSort = false) {
+    const entry = encounterEntries.find(e => e.uid === uid);
+    if (!entry) return;
+    const trimmed = String(rawVal ?? '').trim();
+    if (trimmed === '') {
+        entry.init = null;
+    } else if (/^-?\d+$/.test(trimmed)) {
+        entry.init = Math.max(-20, Math.min(60, parseInt(trimmed, 10)));
+    } else {
+        return;
+    }
+    saveEncounterBoard();
+    if (triggerSort) {
+        sortEncounterBoard(true);
+    }
+}
+
+function handleEncounterInitKey(ev, uid, inputEl) {
+    if (ev.isComposing || ev.keyCode === 229) return;
+    if (ev.key === 'Enter') {
+        ev.preventDefault();
+        setEncounterInit(uid, inputEl.value, true);
+    }
+}
+
+function startRenameEncounterEntry(uid) {
+    editingEncounterUid = uid;
+    renderEncounterBoard();
+    const focusFn = () => {
+        const inp = document.querySelector(`.enc-name-input[data-edit-uid="${uid}"]`);
+        if (inp) {
+            inp.focus();
+            inp.select();
+        }
+    };
+    if (typeof requestAnimationFrame === 'function') requestAnimationFrame(focusFn);
+    else setTimeout(focusFn, 0);
+}
+
+function commitRenameEncounterEntry(uid, newVal) {
+    if (editingEncounterUid !== uid) return;
+    const entry = encounterEntries.find(e => e.uid === uid);
+    editingEncounterUid = null;
+    if (entry) {
+        const cleaned = String(newVal ?? '').trim().slice(0, 60);
+        if (entry.kind === 'ally') {
+            entry.customLabel = cleaned || (entry.customLabel || `👤 Player / Ally #${entry.num}`);
+        } else {
+            entry.customLabel = cleaned;
+        }
+        saveEncounterBoard();
+        if (activeModalKind === 'monster' && activeModalMonsterKey === entry.key) {
+            openMonsterModal(entry.key, true);
+        }
+        announceEncounterStatus(`Updated label to ${getEncounterDisplayTitle(entry)}.`);
+    }
+    renderEncounterBoard();
+}
+
+function cancelRenameEncounterEntry() {
+    editingEncounterUid = null;
+    renderEncounterBoard();
+}
+
+function handleEncounterNameKey(ev, uid, inputEl) {
+    if (ev.isComposing || ev.keyCode === 229) return;
+    if (ev.key === 'Enter') {
+        ev.preventDefault();
+        commitRenameEncounterEntry(uid, inputEl.value);
+    } else if (ev.key === 'Escape') {
+        ev.preventDefault();
+        cancelRenameEncounterEntry();
+    }
 }
 
 function rollEncounterUnitInit(uid) {
     const entry = encounterEntries.find(e => e.uid === uid);
     if (!entry) return;
-    const m = MONSTER_DATA[entry.key];
-    const mod = m ? (parseInt(m.init, 10) || 0) : 0;
+    const mod = getEncounterInitBonus(entry);
     const d20 = Math.floor(Math.random() * 20) + 1;
     entry.init = d20 + mod;
     saveEncounterBoard();
     renderEncounterBoard();
-    logRoll(`⚡ <strong>${m ? m.name : entry.key} #${entry.num} Initiative:</strong> d20(${d20}) ${mod >= 0 ? '+ ' + mod : '- ' + Math.abs(mod)} = <strong style="color:#fde047;">${entry.init}</strong>`);
+    logRoll(`⚡ <strong>${escapeEncounterHtml(getEncounterDisplayTitle(entry))} Initiative:</strong> d20(${d20}) ${mod >= 0 ? '+ ' + mod : '- ' + Math.abs(mod)} = <strong style="color:#fde047;">${entry.init}</strong>`);
 }
 
 function reorderEncounterNodes(container, orderedNodes) {
@@ -2901,21 +3179,21 @@ function reorderEncounterNodes(container, orderedNodes) {
     for (const node of orderedNodes) move(node);
 }
 
-function rollAllEncounterInits() {
+function sortEncounterBoard(announce = true) {
     if (!encounterEntries.length) {
-        logRoll('⚠️ Active Encounter Board is empty — click [⚔️ + Add] on any enemy row first!');
+        if (announce) logRoll('⚠️ Active Encounter Board is empty — add Players, Allies, or Enemies first!');
         return;
     }
-    encounterEntries.forEach(entry => {
-        const m = MONSTER_DATA[entry.key];
-        const mod = m ? (parseInt(m.init, 10) || 0) : 0;
-        const d20 = Math.floor(Math.random() * 20) + 1;
-        entry.init = d20 + mod;
-        entry._initBonus = mod;
-    });
+    if (editingEncounterUid) editingEncounterUid = null;
     encounterEntries.sort((a, b) => {
-        if ((b.init ?? -99) !== (a.init ?? -99)) return (b.init ?? -99) - (a.init ?? -99);
-        if ((b._initBonus ?? 0) !== (a._initBonus ?? 0)) return (b._initBonus ?? 0) - (a._initBonus ?? 0);
+        const aHas = typeof a.init === 'number';
+        const bHas = typeof b.init === 'number';
+        if (aHas !== bHas) return aHas ? -1 : 1;
+        if (aHas && bHas && b.init !== a.init) return b.init - a.init;
+        const bMod = getEncounterInitBonus(b);
+        const aMod = getEncounterInitBonus(a);
+        if (bMod !== aMod) return bMod - aMod;
+        if (a.kind !== b.kind) return a.kind === 'ally' ? -1 : 1;
         return a.num - b.num;
     });
     saveEncounterBoard();
@@ -2931,8 +3209,8 @@ function rollAllEncounterInits() {
             const update = () => {
                 reorderEncounterNodes(grid, orderedNodes);
                 encounterEntries.forEach(e => {
-                    const btn = grid.querySelector(`[data-init-btn="${e.uid}"]`);
-                    if (btn) btn.textContent = `⚡ Init ${e.init}`;
+                    const inp = grid.querySelector(`[data-init-input="${e.uid}"]`);
+                    if (inp) inp.value = typeof e.init === 'number' ? String(e.init) : '';
                 });
             };
             if (grid.startViewTransition) grid.startViewTransition(update);
@@ -2945,54 +3223,75 @@ function rollAllEncounterInits() {
         renderEncounterBoard();
     }
 
-    const orderSummary = encounterEntries.map(e => {
-        const m = MONSTER_DATA[e.key];
-        return `${m ? m.name : e.key} #${e.num} (${e.init})`;
-    }).join(' ➔ ');
-    announceEncounterStatus(`Sorted ${encounterEntries.length} encounter combatants by initiative, highest first.`);
-    logRoll(`🎲 <strong>Encounter Initiative Order:</strong> ${orderSummary}`);
+    if (announce) {
+        const orderSummary = encounterEntries.map(e => `${escapeEncounterHtml(getEncounterDisplayTitle(e))} (${typeof e.init === 'number' ? e.init : '--'})`).join(' ➔ ');
+        announceEncounterStatus(`Sorted ${encounterEntries.length} encounter combatants by initiative, highest first.`);
+        logRoll(`🔃 <strong>Sorted Turn Order:</strong> ${orderSummary}`);
+    }
+}
+
+function rollAllEncounterInits() {
+    if (!encounterEntries.length) {
+        logRoll('⚠️ Active Encounter Board is empty — click [👤 + Player / Ally] or [⚔️ + Add] first!');
+        return;
+    }
+    let rolledCount = 0;
+    encounterEntries.forEach(entry => {
+        if (entry.kind === 'ally') return; // Preserve typed Player/Ally initiatives
+        const mod = getEncounterInitBonus(entry);
+        const d20 = Math.floor(Math.random() * 20) + 1;
+        entry.init = d20 + mod;
+        rolledCount++;
+    });
+    sortEncounterBoard(false);
+
+    const orderSummary = encounterEntries.map(e => `${escapeEncounterHtml(getEncounterDisplayTitle(e))} (${typeof e.init === 'number' ? e.init : '--'})`).join(' ➔ ');
+    announceEncounterStatus(`Rolled ${rolledCount} enemy initiatives and sorted ${encounterEntries.length} total combatants.`);
+    logRoll(`🎲 <strong>Turn Order${rolledCount ? ` (${rolledCount} Enemies Rolled • Allies Kept)` : ''}:</strong> ${orderSummary}`);
 }
 
 function removeEncounterEntry(uid) {
     const idx = encounterEntries.findIndex(e => e.uid === uid);
     if (idx === -1) return;
     const removed = encounterEntries.splice(idx, 1)[0];
+    if (editingEncounterUid === uid) editingEncounterUid = null;
     saveEncounterBoard();
     renderEncounterBoard();
     if (activeModalKind === 'monster' && activeModalMonsterKey === removed.key) {
         openMonsterModal(removed.key, true);
     }
-    const m = MONSTER_DATA[removed.key];
-    announceEncounterStatus(`Removed ${m ? m.name : removed.key} #${removed.num} from encounter.`);
+    announceEncounterStatus(`Removed ${getEncounterDisplayTitle(removed)} from encounter.`);
 }
 
 function clearDeadEncounterEntries() {
     const before = encounterEntries.length;
-    encounterEntries = encounterEntries.filter(e => e.targets.some(t => t.cur > 0));
+    encounterEntries = encounterEntries.filter(e => e.kind === 'ally' || (Array.isArray(e.targets) && e.targets.some(t => t.cur > 0)));
     const removedCount = before - encounterEntries.length;
     saveEncounterBoard();
     renderEncounterBoard();
     if (activeModalKind === 'monster' && activeModalMonsterKey) {
         openMonsterModal(activeModalMonsterKey, true);
     }
-    announceEncounterStatus(`Cleared ${removedCount} slain entries from encounter.`);
-    logRoll(`🧹 Cleared <strong>${removedCount}</strong> slain (0 HP) entries from the Active Encounter Board.`);
+    announceEncounterStatus(`Cleared ${removedCount} slain enemies from encounter.`);
+    logRoll(`🧹 Cleared <strong>${removedCount}</strong> slain (0 HP) enemies from the Active Encounter Board (Players/Allies kept).`);
 }
 
 function healAllEncounterEntries() {
-    if (!encounterEntries.length) return;
-    encounterEntries.forEach(e => e.targets.forEach(t => { t.cur = t.max; }));
+    const enemies = encounterEntries.filter(e => e.kind !== 'ally');
+    if (!enemies.length) return;
+    enemies.forEach(e => e.targets.forEach(t => { t.cur = t.max; }));
     saveEncounterBoard();
     renderEncounterBoard();
     if (activeModalKind === 'monster' && activeModalMonsterKey) {
         openMonsterModal(activeModalMonsterKey, true);
     }
-    announceEncounterStatus(`Restored all ${encounterEntries.length} encounter entries to full HP.`);
-    logRoll(`💚 Restored all <strong>${encounterEntries.length}</strong> Active Encounter combatants to Full HP!`);
+    announceEncounterStatus(`Restored all ${enemies.length} encounter enemies to full HP.`);
+    logRoll(`💚 Restored all <strong>${enemies.length}</strong> Active Encounter enemies to Full HP!`);
 }
 
 function clearEncounterBoard() {
     encounterEntries = [];
+    editingEncounterUid = null;
     saveEncounterBoard();
     renderEncounterBoard();
     if (activeModalKind === 'monster' && activeModalMonsterKey) {
@@ -3023,25 +3322,89 @@ function renderEncounterBoard() {
     const badge = document.getElementById('encounter-count-badge');
     applyEncounterCollapseUi();
 
-    const aliveCount = encounterEntries.filter(e => e.targets.some(t => t.cur > 0)).length;
+    const allyCount = encounterEntries.filter(e => e.kind === 'ally').length;
+    const enemies = encounterEntries.filter(e => e.kind !== 'ally');
+    const aliveEnemies = enemies.filter(e => e.targets.some(t => t.cur > 0)).length;
     if (badge) {
-        badge.textContent = `${encounterEntries.length} Active • ${aliveCount} Alive`;
+        badge.textContent = allyCount > 0
+            ? `${allyCount} Allies • ${enemies.length} Enemies (${aliveEnemies} Alive)`
+            : `${enemies.length} Active • ${aliveEnemies} Alive`;
     }
     if (!grid) return;
 
     if (!encounterEntries.length) {
         grid.className = '';
-        grid.innerHTML = `<div class="encounter-empty">No mobs on the Encounter Board yet — click <strong style="color:var(--accent-gold-soft);">[⚔️ + Add]</strong> on any enemy row below (or inside a stat modal) to spawn &amp; track multiple HP bars!</div>`;
+        grid.innerHTML = `<div class="encounter-empty">Encounter Board is empty — click <strong style="color:#86efac;">[👤 + Player / Ally]</strong> or <strong style="color:#93c5fd;">[🛡️ + Party]</strong> to track hero initiatives, or <strong style="color:var(--accent-gold-soft);">[⚔️ + Add]</strong> on any enemy row below!</div>`;
         return;
     }
 
     grid.className = 'encounter-grid';
     grid.innerHTML = encounterEntries.map(entry => {
-        const m = MONSTER_DATA[entry.key];
+        const isAlly = entry.kind === 'ally';
+        const m = isAlly ? null : MONSTER_DATA[entry.key];
         const mName = m ? m.name : entry.key;
+        const displayTitle = getEncounterDisplayTitle(entry);
+        const safeTitle = escapeEncounterHtml(displayTitle);
+        const initValStr = typeof entry.init === 'number' ? String(entry.init) : '';
+        const initBonus = getEncounterInitBonus(entry);
+        const initModStr = initBonus >= 0 ? `+${initBonus}` : `${initBonus}`;
+        const isEditing = editingEncounterUid === entry.uid;
+
+        let titleBlockHtml = '';
+        if (isEditing) {
+            const editVal = escapeEncounterHtml(isAlly ? displayTitle : (entry.customLabel || `${mName} #${entry.num}`));
+            titleBlockHtml = `
+                <div style="display:flex; align-items:center; gap:4px; width:100%;">
+                    <input type="text" class="enc-name-input" data-edit-uid="${entry.uid}" value="${editVal}" maxlength="60" aria-label="Rename ${safeTitle}" onkeydown="handleEncounterNameKey(event, '${entry.uid}', this)" onblur="commitRenameEncounterEntry('${entry.uid}', this.value)">
+                    <button type="button" class="btn-enc-step is-heal" onmousedown="event.preventDefault()" onclick="commitRenameEncounterEntry('${entry.uid}', this.previousElementSibling.value)" aria-label="Save name" title="Save">✓</button>
+                </div>`;
+        } else if (isAlly) {
+            titleBlockHtml = `
+                <div class="enc-title-row">
+                    <button type="button" class="link-btn" style="font-size:0.88rem; color:#86efac;" onclick="startRenameEncounterEntry('${entry.uid}')" title="Click to rename Player / Ally">${safeTitle}</button>
+                    <button type="button" class="btn-enc-edit" onclick="startRenameEncounterEntry('${entry.uid}')" aria-label="Rename ${safeTitle}" title="Edit Name">✏️</button>
+                </div>`;
+        } else {
+            const hasCustom = Boolean(entry.customLabel && entry.customLabel.trim());
+            const primaryNameHtml = hasCustom
+                ? `<button type="button" class="link-btn" style="font-size:0.86rem;" onclick="openMonsterModal('${entry.key}')">${safeTitle}</button>`
+                : `<button type="button" class="link-btn" style="font-size:0.86rem;" onclick="openMonsterModal('${entry.key}')">${escapeEncounterHtml(mName)} <span style="color:var(--accent-gold);">#${entry.num}</span></button>`;
+            titleBlockHtml = `
+                <div class="enc-title-row">
+                    ${primaryNameHtml}
+                    <button type="button" class="btn-enc-edit" onclick="startRenameEncounterEntry('${entry.uid}')" aria-label="Rename or tag ${safeTitle}" title="Rename / Tag">✏️</button>
+                </div>
+                ${hasCustom ? `<div><button type="button" class="enc-sheet-link" onclick="openMonsterModal('${entry.key}')">📄 ${escapeEncounterHtml(mName)} #${entry.num}</button></div>` : ''}
+                ${entry.variantTag ? `<div><span class="pill gold" style="font-size:0.64rem; margin-top:2px;">${escapeEncounterHtml(entry.variantTag)}</span></div>` : ''}`;
+        }
+
+        const initWidgetHtml = `
+            <span class="enc-init-wrap" title="Type Initiative score and press Enter to sort, or click 🎲 to roll d20 ${initModStr}">
+                <label class="enc-init-label" for="enc-init-${entry.uid}">INIT</label>
+                <input id="enc-init-${entry.uid}" type="text" inputmode="numeric" class="enc-init-input" data-init-input="${entry.uid}" value="${initValStr}" placeholder="--" maxlength="3" aria-label="Initiative score for ${safeTitle}" oninput="setEncounterInit('${entry.uid}', this.value, false)" onkeydown="handleEncounterInitKey(event, '${entry.uid}', this)">
+                <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.68rem;" onclick="rollEncounterUnitInit('${entry.uid}')" aria-label="Roll initiative d20 ${initModStr} for ${safeTitle}" title="Roll d20 (${initModStr})">🎲</button>
+            </span>`;
+
+        if (isAlly) {
+            return `
+                <div class="encounter-card is-ally" data-uid="${entry.uid}">
+                    <div class="encounter-card-top">
+                        <div style="flex:1 1 auto; min-width:0;">${titleBlockHtml}</div>
+                        <div class="encounter-card-meta">
+                            ${initWidgetHtml}
+                            <button type="button" class="modal-close-btn" style="width:24px; height:24px; font-size:0.74rem;" onclick="removeEncounterEntry('${entry.uid}')" aria-label="Remove ${safeTitle} from encounter" title="Remove">✕</button>
+                        </div>
+                    </div>
+                    <div class="enc-ally-body">
+                        <span class="pill green" style="font-size:0.65rem;">🛡️ PLAYER / ALLY${typeof entry.initBonus === 'number' ? ` • Init ${initModStr}` : ''}</span>
+                        <span style="color:var(--text-muted); font-size:0.68rem;">Enter Init ➔ ↵ Sort</span>
+                    </div>
+                </div>
+            `;
+        }
+
         const allDead = entry.targets.every(t => t.cur <= 0);
         const isBoss = !!(m && ((m.battlefieldActions && m.battlefieldActions.length) || (m.lairActions && m.lairActions.length)));
-        const initLabel = entry.init !== null ? `⚡ Init ${entry.init}` : `🎲 Init ${m ? m.init : '+0'}`;
 
         const targetsHtml = entry.targets.map((tgt, tIdx) => {
             const pct = Math.round((tgt.cur / Math.max(1, tgt.max)) * 100);
@@ -3051,7 +3414,7 @@ function renderEncounterBoard() {
                 <div class="enc-target-block">
                     <div class="enc-target-head">
                         <span style="color:${isTgtDead ? '#94a3b8' : '#e2e8f0'}; font-weight:700;">
-                            ${tgt.label ? `${tgt.label} • ` : ''}AC ${tgt.ac}
+                            ${tgt.label ? `${escapeEncounterHtml(tgt.label)} • ` : ''}AC ${tgt.ac}
                         </span>
                         <span style="color:${isTgtDead ? '#f87171' : '#86efac'}; font-weight:700;">
                             ${isTgtDead ? `💀 0 / ${tgt.max}` : `${tgt.cur} / ${tgt.max} HP`}
@@ -3061,12 +3424,12 @@ function renderEncounterBoard() {
                         <div class="hp-bar-fill" style="width:${Math.min(100, Math.max(0, pct))}%; background:${barColor};"></div>
                     </div>
                     <div class="enc-step-row">
-                        <button type="button" class="btn-enc-step" onclick="modEncounterHP('${entry.uid}', ${tIdx}, -10)">-10</button>
-                        <button type="button" class="btn-enc-step" onclick="modEncounterHP('${entry.uid}', ${tIdx}, -5)">-5</button>
-                        <button type="button" class="btn-enc-step" onclick="modEncounterHP('${entry.uid}', ${tIdx}, -1)">-1</button>
-                        <button type="button" class="btn-enc-step is-heal" onclick="modEncounterHP('${entry.uid}', ${tIdx}, 1)">+1</button>
-                        <button type="button" class="btn-enc-step is-heal" onclick="modEncounterHP('${entry.uid}', ${tIdx}, 5)">+5</button>
-                        <button type="button" class="btn-enc-step is-kill" onclick="setEncounterHP('${entry.uid}', ${tIdx}, 0)" aria-label="Kill ${mName} #${entry.num}">💀 0</button>
+                        <button type="button" class="btn-enc-step" onclick="modEncounterHP('${entry.uid}', ${tIdx}, -10)" aria-label="Damage ${safeTitle} by 10">-10</button>
+                        <button type="button" class="btn-enc-step" onclick="modEncounterHP('${entry.uid}', ${tIdx}, -5)" aria-label="Damage ${safeTitle} by 5">-5</button>
+                        <button type="button" class="btn-enc-step" onclick="modEncounterHP('${entry.uid}', ${tIdx}, -1)" aria-label="Damage ${safeTitle} by 1">-1</button>
+                        <button type="button" class="btn-enc-step is-heal" onclick="modEncounterHP('${entry.uid}', ${tIdx}, 1)" aria-label="Heal ${safeTitle} by 1">+1</button>
+                        <button type="button" class="btn-enc-step is-heal" onclick="modEncounterHP('${entry.uid}', ${tIdx}, 5)" aria-label="Heal ${safeTitle} by 5">+5</button>
+                        <button type="button" class="btn-enc-step is-kill" onclick="setEncounterHP('${entry.uid}', ${tIdx}, 0)" aria-label="Kill ${safeTitle}">💀 0</button>
                     </div>
                 </div>
             `;
@@ -3075,13 +3438,10 @@ function renderEncounterBoard() {
         return `
             <div class="encounter-card ${isBoss ? 'is-boss' : ''} ${allDead ? 'is-dead' : ''}" data-uid="${entry.uid}">
                 <div class="encounter-card-top">
-                    <div style="min-width:0;">
-                        <button type="button" class="link-btn" style="font-size:0.86rem;" onclick="openMonsterModal('${entry.key}')">${mName} <span style="color:var(--accent-gold);">#${entry.num}</span></button>
-                        ${entry.variantTag ? `<div><span class="pill gold" style="font-size:0.64rem; margin-top:2px;">${entry.variantTag}</span></div>` : ''}
-                    </div>
+                    <div style="flex:1 1 auto; min-width:0;">${titleBlockHtml}</div>
                     <div class="encounter-card-meta">
-                        <button type="button" class="btn-modal-mini" data-init-btn="${entry.uid}" onclick="rollEncounterUnitInit('${entry.uid}')" title="Roll initiative for this unit">${initLabel}</button>
-                        <button type="button" class="modal-close-btn" style="width:24px; height:24px; font-size:0.74rem;" onclick="removeEncounterEntry('${entry.uid}')" aria-label="Remove ${mName} #${entry.num} from encounter" title="Remove">✕</button>
+                        ${initWidgetHtml}
+                        <button type="button" class="modal-close-btn" style="width:24px; height:24px; font-size:0.74rem;" onclick="removeEncounterEntry('${entry.uid}')" aria-label="Remove ${safeTitle} from encounter" title="Remove">✕</button>
                     </div>
                 </div>
                 ${targetsHtml}
@@ -11258,7 +11618,7 @@ function openMonsterModal(key, preserveUi = false, fromNav = false) {
     `;
 
     // ACTIVE ENCOUNTER BOARD BAR (ADD COPIES & CONTROL LIVE PACK HP)
-    const activeCopies = encounterEntries.filter(e => e.key === key);
+    const activeCopies = encounterEntries.filter(e => e.kind !== 'ally' && e.key === key);
     const UNIQUE_BOSS_KEYS = ['alpha_wolf', 'doru', 'volenta', 'morgantha', 'anastrasya', 'ludmilla', 'izek', 'kiril', 'wintersplinter', 'horngaard', 'abbot', 'baba_lysaga', 'roc_ghakis', 'neferon', 'exethanter', 'rahadin', 'strahd', 'imp_majesto', 'saber_tiger', 'sangzor', 'banshee'];
     const canAddPack = !UNIQUE_BOSS_KEYS.includes(key);
     html += `
@@ -11274,8 +11634,9 @@ function openMonsterModal(key, preserveUi = false, fromNav = false) {
             <div class="modal-enc-copies">
                 ${activeCopies.map(e => {
                     const isDead = e.targets.every(t => t.cur <= 0);
+                    const subTag = e.customLabel ? escapeEncounterHtml(e.customLabel) : (e.variantTag ? escapeEncounterHtml(e.variantTag) : '');
                     return `<div class="modal-enc-chip ${isDead ? 'is-dead' : ''}">
-                        <strong style="color:#fde047;">#${e.num}</strong>${e.variantTag ? `<span style="color:#93c5fd;">(${e.variantTag})</span>` : ''}
+                        <strong style="color:#fde047;">#${e.num}</strong>${subTag ? `<span style="color:#93c5fd;">(${subTag})</span>` : ''}
                         ${e.targets.map((t, tIdx) => {
                             const tag = t.label ? `<span style="color:var(--text-muted);">${t.label.split(' ')[0]}:</span>` : '';
                             return `${tag}<span style="color:${t.cur > 0 ? '#86efac' : '#f87171'}; font-weight:700;">${t.cur}/${t.max}</span>
