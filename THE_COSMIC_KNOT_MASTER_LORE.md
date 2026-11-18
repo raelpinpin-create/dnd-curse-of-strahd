@@ -115,8 +115,9 @@ Before ever setting foot back into the **Forgotten Realms** or turning his full 
 
 The Dark Powers do not pick vessels by accident. Mortals who are content with peaceful lives will never push themselves to Level 10 or risk their lives to slay Count Strahd. 
 
+* **Zero Plot Armor — Nothing Is Set in Stone:** Piper, Jacomir, and Yvaine are only the *current* Chosen Vessels carrying the circuit—**they are not irreplaceable or immortal.** Any Player Character can permanently die in Barovia; the Knot demands *three functional conduits*, not three specific souls. Whenever a Vessel falls, the Dark Powers and the Mists simply reach across infinite timelines, abduct a replacement candidate, and forge that new soul into the vacant conduit seat (often while leaving the party to bury the old one).
 * **Infinite Candidate Timelines:** The Dark Powers scour infinite timelines and universes searching for potential vessels. Barovia is the **Crucible**—a cosmic meatgrinder designed to test and forge promising mortals into apex killers capable of withstanding the Root Anchor. If a candidate dies in Barovia, the Mists simply abduct another from a different timeline.
-* **Their Powers Are 100% Genuine:** Piper's Wild Magic, Jacomir's tactical mastery, and Yvaine's marksmanship are completely their own. That innate potential is why they were targeted.
+* **Their Powers Are 100% Genuine:** Piper's Wild Magic, Jacomir's tactical mastery, and Yvaine's marksmanship (and the innate potential of any replacement Vessel drawn into the Valley) are completely their own. That innate potential is why they were targeted.
 * **Manufactured Backstories as Bait:** To give them the obsessive drive needed to slay Strahd, the Dark Powers manufactured tragedies in their pasts and laid out false hopes of resolution in Barovia.
 * **The Recurring Horror Motif (The Grim Smile):** Across their past selections and false resolutions runs the exact same terrifying signature: **a sudden ringing in the ears, distant carriage gallops echoing in the skull, creeping fog, and someone in the room staring dead at them with an unblinking, grim look... before slowly, unnervingly smiling.**
 

@@ -89,11 +89,11 @@ flowchart TD
 | **12** | **Act II • S5** | ⚰️ **Henrik's Coffin Shop** (`Ch. 5, Area N6`) • 🖼️ `Henriks Coffin Shop.jpg` | Upstairs bedroom wardrobe, **6 Ravenloft-dirt crates (Bride Anastrasya + 5 Vampire Spawn Ambush!)**, 4-block rooftop relay | 🦴 **Sacred Bones of St. Andral**, 🪭 **Anastrasya's Gilded Razor Fan `+1`** |
 | **13** | **Act II • S6** | 🕯️ **Wachterhaus** (`Ch. 5, Area N4`) | Lady Fiona Wachter, preserved dead Nikolai (`N4o`), invisible Imp Majesto, cellar devil-cult, secret iron library | 📜 **The Tome of Strahd (Tarokka #1 — Level 5!)**, 🗡️ **Baal Verzi Mirror Dagger `+1`**, `45 GP` |
 | **14** | **Act II • S7** | 🍷 **The Wizard of Wines Winery** (`Ch. 12, Areas W1–W20`) | 24 Twig Blights, 6 Needle Blights, 2 Vine Blights, 3 Poisoned Vats (`W9`), **Chief Druid (`W14`) — Snapping the Gulthias Staff kills all Blights within 300 ft!** | 🌿 **The Gulthias Staff**, 🧥 **Wereraven Cloak of Protection `+1`**, 🍷 Vintage Casks |
-| **15** | **Act II • S8** | ⛈️ **Yester Hill** (`Ch. 14, Areas Y1–Y5`) | Megalith Ring (`Y1`), Wall of Fog (`Y2` — Strahd on Bucephalus), **50-Ft Wintersplinter Ritual (`Y3`)**, **Kavan's Cairn (`Y4`)**, **Gulthias Tree (`Y5`)** | 🩸 **`+2` Blood Spear of Kavan (Jacomir!)**, 🪓 **Treebane Battleaxe**, 💚 **1st Winery Life-Gem** |
+| **15** | **Act II • S8** | ⛈️ **Yester Hill** (`Ch. 14, Areas Y1–Y5`) | Megalith Ring (`Y1`), Wall of Fog (`Y2` — Strahd on Bucephalus), **50-Ft Wintersplinter Ritual (`Y3`)**, **Kavan's Cairn (`Y4`)**, **Gulthias Tree (`Y5`)** | 🩸 **`+2` Blood Spear of Kavan (Jacomir!)**, 🪓 **Treebane Battleaxe**, 💚 **2nd Recovered Life-Gem (*Red Dragon Crush*)** |
 | **16** | **Act II • S9** | 🥂 **Castle Ravenloft (Act II Dinner)** (`Ch. 4, Areas K1, K7, K10, K49`) | **Dining Hall (`K10`)** social chess with Strahd & Brides, Consort Escher (`K49` — reveals Heart of Sorrow), midnight exit clock | 🍾 **Champagne du le Stomp**, 🎸 **Doss Lute lead**, Heart of Sorrow intel (**Level 6!**) |
 | **17** | **Act III • S10–S11** | 🐉 **Argynvostholt Mansion (The Fortress)** (`Ch. 7, Areas Q1–Q53`) | **Vladimir Horngaard (`Q36`)** vs. **Sir Godfrey (`Q37`)**, Ancient Star-Mural (`Q13` Campaign 3 Bridge), **Silver Beacon (`Q53`)** | 🕊️ **Holy Symbol of Ravenkind (Tarokka #2!)**, 🐉 **Beacon Boon (`+1 AC & Saves`)**, ⚔️ **Greatsword `+2`** (**Level 7!**) |
 | **18** | **Act III • S12** | 🏘️ **Village of Krezk** (`Ch. 8, Areas S1–S4`) | Wine-locked 20-ft gatehouse (`S1`), Burgomaster Krezkov (`S3`), **Pool of the White Sun (`S4` — Sergei's spirit & Strahd's Sky-Lightning)** | 🛡️ Safe alpine refuge & Ireena's White Sun Pool destiny resolution |
-| **19** | **Act III • S12** | ⛪ **Abbey of Saint Markovia** (`Ch. 8, Areas S12–S24`) | **The Fallen Abbot (`CR 10 Deva`)**, **Vasilka the Flesh Golem (`S13`)**, Belview Mongrelfolk Wing (`S12/S17`), Ezmerelda's Barracks (`S19`) | ⚔️ **Ezmerelda Joins!**, 🦴 **St. Markovia's Thighbone**, 💚 **Ring of Regeneration**, 📜 **Scroll of Heroes' Feast** |
+| **19** | **Act III • S12** | ⛪ **Abbey of Saint Markovia** (`Ch. 8, Areas S12–S24`) | **The Fallen Abbot (`CR 10 Deva`)**, **Vasilka the Flesh Golem (`S13` — holds 3rd Winery Life-Gem via "Vasili"!)**, Belview Mongrelfolk Wing (`S12/S17`), Ezmerelda's Barracks (`S19`) | 💚 **3rd Winery Life-Gem (*Champagne*, Inside Vasilka S13!)**, ⚔️ **Ezmerelda Joins!**, 🦴 **St. Markovia's Thighbone**, 💚 **Ring of Regeneration**, 📜 **Scroll of Heroes' Feast** |
 | **20** | **Act III • S13–S14** | 🌊 **The Drowned Ruins of Berez** (`Ch. 10, Areas U1–U7`) | Ulrich's Ghost (`U2`), Marina's Monument (`U5`), Standing Stones (`U6`), **Baba Lysaga (`CR 11` in Flying Skull) & 140-HP Creeping Hut (`U3`)** | 🗡️ **The Sunsword (Tarokka #3 — Level 8!)**, 🍀 **Luckstone (`+1`)**, 🧪 **Oil of Sharpness (`+3`)**, 📜 **Scroll of Revivify** |
 | **21** | **Act III • S11** | 🗼 **Van Richten's Tower (Lake Baratok)** (`Ch. 11, Areas V1–V7`) • 🖼️ `Van Richtens Tower.webp` | **100-ft Antimagic Field**, Ezmerelda's 100-Flask Wagon (`V1`), Stick-Figure Door (`V2`), Clay Golem (`V3`), **Mad Mage (`Mordenkainen`)** nearby | 💥 **Ezmerelda's Wagon Cache**, ⚡ **Mad Mage's Charm of Heroism**, *Staff of Power* lead |
 | **22** | **Act III • S11** | 🐺 **Werewolf Den** (`Ch. 15, Areas Z1–Z8`) | Wolf-skull cavern (`Z1`), Kiril's child-fighting pit (`Z5b`), Zuleika's rebel pack, **Shrine of Mother Night (`Z7`)** | 🏆 **Shrine of Mother Night Hoard (`Z7`)**, Silvered Shortsword, Zuleika alliance |
@@ -212,7 +212,7 @@ flowchart TD
 | | 🗡️ **Rahadin, Dusk Elf Chamberlain** | 10 | `+6` | **`142`** *(RAW `135`)* | 18 | 35 ft | Scimitars, Poison Darts, Choir | **Black Carriage Courier & Ravenloft (`K15/K72/K84`)** • Deathly Choir + 4 Innate Spells • **3 Battlefield Actions (`6d10`)** |
 | | 👑 **Count Strahd von Zarovich** *(Darklord)* | 15 | `+4` | **`144` + `50` Heart** | 16 / 15 | 30 / Spider | Claws, Bite, Wizard Spells & Lair | **Ivlis Crossroads, Vallaki ('Vasili'), Yester Hill & Siege (`K15/K85/K6`)** • Dual Heart Tracker • **3 Leg + 3 Lair + 4 Battlefield Actions** |
 
-> 💡 **Interactive Encounter Board & Monster Modals in `DM_SCREEN.html`:** Click **`[⚔️ + Add]`** on any row (or open any enemy card and click **`[➕ Add Copy]`** / **`[🐺 +3 Pack]`**) to spawn independent tracked HP bars (`Wolf #1`, `Wolf #2`, `Twig Blight #1–#6`...) inside the **⚔️ Live Active Encounter Board** with `localStorage` persistence, **`[👤 + Ally]`** & **`[🛡️ + Party]`** compact muted-green Initiative-only cards (type rolls directly without HP bar clutter), **inline `✏️` name/tag editing on ANY card** (`"Wolf (By Door)"`, etc. while retaining the clickable monster sheet link), **`[🎲 Roll Enemy Inits]`** (rolls enemies while preserving ally scores!) + **`[🔃 Sort Order]`**, single/dual target steppers, and clickable names that jump straight to that enemy's stat modal! Section filters across Sections 1.5, 2, 3, 4, and 4.5 all start **compact by default** (`Act I`, `🟢 Met & Active`, `💀 Core & Road Mobs`, `Act I Loot`, `4.5A Factions`) while **`#global-search`** automatically searches across every hidden tab.
+> 💡 **Interactive Encounter Board, Section Search Bars & Modals in `DM_SCREEN.html`:** Click **`[⚔️ + Add]`** on any row (or open any enemy card and click **`[➕ Add Copy]`** / **`[🐺 +3 Pack]`**) to spawn independent tracked HP bars (`Wolf #1`, `Wolf #2`, `Twig Blight #1–#6`...) inside the **⚔️ Live Active Encounter Board** (`#monster-table-wrap` compact `680px` scroll window) with `localStorage` persistence, **`[👤 + Ally]`** & **`[🛡️ + Party]`** compact muted-green Initiative-only cards (type rolls directly without HP bar clutter; clicking a Party Hero's name opens their live **Character Sheet Window** right inside `#dm-modal` with a `↗ Open Full Tab` option), **inline `✏️` name/tag editing on ANY card** (`"Wolf (By Door)"`, etc. while retaining the clickable monster sheet link), **`[🎲 Roll Enemy Inits]`** (rolls enemies while preserving ally scores!) + **`[🔃 Sort Order]`**, single/dual target steppers, and clickable names that jump straight to that enemy's stat modal! Section filters across Sections 1.5, 2, 3, 4, and 4.5 all start **compact by default** (`Act I`, `🟢 Met & Active`, `💀 Core & Road Mobs`, `Act I Loot`, `4.5A Factions`) with **dedicated per-section Search bars** right in each section header (Locations, NPCs, Enemies, Loot, and Lore) plus **`#global-search`** across every hidden tab.
 
 ---
 
@@ -260,7 +260,7 @@ flowchart TD
 8. 🦴 **Saint Markovia's Thighbone (Mace of Disruption)** *(Rare Holy Relic • Attunement • Book Area K84 / S13)*:
    * **Location:** Castle Ravenloft Crypt 6 (`Area K84`) or Abbey of St. Markovia (`Area S13`).
    * **Mechanics:** `+1 Mace` that sheds 20-ft bright light and deals **extra `2d6` Radiant damage** to Undead/Fiends. Any Undead/Fiend reduced to **25 HP or fewer** must pass a **DC 15 WIS Save or be instantly destroyed** (or Frightened if Strahd)!
-9. 💚 **Wizard of Wines Magic Life-Gems (x2)** *(Legendary Primal Seeds • Yester Hill `S8` & Berez Hut `S14`)*: Ripping the gem out of Wintersplinter or Baba Lysaga's Creeping Walking Hut instantly shuts down the boss construct!
+9. 💚 **Wizard of Wines Magic Life-Gems (x3 — Legacy of The Weaver)** *(Legendary Primal Seeds • Abbey S13 Vasilka, Yester Hill `Y3`, & Berez Hut `U3`)*: Three pulsing emerald seeds torn from primeval Barovian earth by **The Weaver** (*Swamp Fane of the Ladies Three*) centuries ago. **1. *Champagne du le Stomp* (Eldest Gem — FINALIZED):** Stolen by Strahd as *"Vasili von Holtz"* ten years back and gifted to Krezk's Fallen Abbot to animate Flesh Golem bride **Vasilka (`Area S13` — spotted `DC 13 Perception`, extracted `DC 14 Athletics/Medicine`)**; **2. *Red Dragon Crush*:** Embedded inside **Wintersplinter (`Y3`)**; **3. *Purple Grapemash*:** Concealed under crib floorboards inside Baba Lysaga's **Creeping Walking Hut (`U3`)**, immediately deactivating the CR 11 Construct when wrenched loose!
 10. 🐉 **Skull of Argynvost & Beacon of the Silver Dragon** *(Legendary Dragon Relic • Castle Ravenloft `K67` ➔ Argynvostholt `Q53`)*: Lighting the Silver Beacon grants the **entire party a permanent `+1 to AC and +1 to all Saving Throws`** across Barovia!
 
 ---
@@ -364,99 +364,87 @@ flowchart TD
 
 ---
 
-## 🏛️ SECTION 4.5: BAROVIAN FACTIONS, VILLAGES, SANCTUMS, HISTORY, VITAL SECRETS & COSMIC LORE CODEX (33 DOSSIERS)
+## 🏛️ SECTION 4.5: BAROVIAN FACTIONS, VILLAGES, SANCTUMS, HISTORY, VITAL SECRETS & COSMIC LORE CODEX (56 DOSSIERS)
 
-> **Bi-Directional Navigation in `DM_SCREEN.html`:** Every single one of the **17 Location guides** in Section 1.5 now embeds a **📜 History & Deep Lore** button opening its matching `4.5B` dossier (with reciprocal `🗺️ Location Room Keys & Hazards` return links & `← Back` stack!).
+> **Pure Lore & History Architecture in `DM_SCREEN.html`:** Section 4.5 is **strictly lore- and history-heavy** (historical eras, cultural myths, religious schisms, location origins, secret aliases, and Cosmic Knot laws) with **zero loot tables, featured NPC stat-block strips, or enemy clutter**. Every single one of the **25 Location guides** in Section 1.5 links to its matching `4.5B` dossier via **📜 History & Deep Lore ➔** (with reciprocal `🗺️ Location Room Keys & Hazards ➔` return links & `← Back` stack, also stripped of Featured NPC/Enemy strips and `.nbox-purple` historical walls).
 
-> **Cross-Referenced Sources:** Official *Curse of Strahd* 5e Rulebook PDF (`Chapters 1–15`), **[DragnaCarta's *Curse of Strahd: Reloaded*](https://github.com/DragnaCarta/Curse-of-Strahd-Reloaded)**, Session 1 Table Canon, and **[`THE_COSMIC_KNOT_MASTER_LORE.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/THE_COSMIC_KNOT_MASTER_LORE.md)**.
-
----
-
-### 🛡️ 4.5A: Barovian Factions, Secret Orders & Covens (8 Factions)
-
-1. 🔮 **The Vistani (Nomads of the Mists, Diplomatic Passport & Madam Eva's Secret Royal Bloodline):**
-   * **Pre-Curse Origins & Strahd's Blood-Oath:** Before Barovia fell in `351 BC`, the Vistani were ordinary mortal travelers—they do **not** have Dark-Power godhood. Centuries ago, a clan of wandering Vistani saved a wounded mortal Prince Strahd from dying in the snow. In eternal gratitude, Strahd swore a royal blood-oath: **all Vistani are forever safe from the beasts of Barovia and alone possess safe passage through the border Mists**.
-   * **Why the Dark Powers Allow It ('Mist Fishermen' & One-Way Lock):** Strahd's Blood-Oath acts as a diplomatic **Mist Passport** letting Vistani wagons cross between Barovia, other Domains of Dread (like **Darkon**), and Prime Material worlds—tolerated by the Dark Powers because Vistani bring fresh victims and rumors *into* the cage (e.g., mercenaries **Luvash & Arrigal** riding out to deliver Strahd's forged bait letters). **Crucially, they cannot smuggle trapped outsiders OUT of Barovia against Strahd's seal!**
-   * **Madam Eva's Secret Identity (`Book p. 233`):** Madam Eva is secretly **Katarina von Zarovich**—Count Strahd's half-sister (daughter of King Barov and a Vistani woman). She forged a pact with **Mother Night** for ageless foresight to free her brother from his curse, though Strahd has no idea of her royal blood.
-   * **Two Very Different Clans:**
-     * **Madam Eva's Clan (`Tser Pool, Area G` — Session 2):** Honorable storytellers and silver-merchants who guide the party via the **5-Card Tarokka Reading + Piper's 6th Blank Omen Card** (*Reloaded Arc C4*).
-     * **Luvash & Arrigal's Clan (`Vallaki Camp, Area N9` — Act II):** Ruthless mercenaries who actively serve Strahd as spies, couriers, and assassins (and guard the surviving Dusk Elves).
-   * **Tabletop Powers:** *Mist Navigation (Vistani-only exemption)*, *The Evil Eye* (Action: Wisdom Save vs. Blindness/Charm/Fear), and *Vistani Blood Curses* (Reaction at 0 HP or when gravely wronged).
-
-2. 🦅 **The Keepers of the Feather (Wereraven Intelligence Network & Martikov Clan):**
-   * **Who They Are:** A clandestine society of **Lawful Good Wereravens** led by the **Martikov family**—patriarch **Davian Martikov** (*Wizard of Wines Winery, Chapter 12*) and his estranged son **Urwin Martikov** & wife **Danika** (*Blue Water Inn, Vallaki Area N2*).
-   * **How It Plays Out in Campaign:**
-     * **Session 1 Diary Unlock:** In Session 1, **King Jacomir** looted **📖 Burgomaster Kolyan's Wizard Diary**, which explicitly names Davian Martikov and the Keepers of the Feather as trusted allies against Strahd. Presenting this diary to Urwin in Session 4 (`Vallaki`) or Davian in Session 7 (`Winery`) immediately unlocks their trust, free rooms, and secret inn loft cache!
-     * **Silent Rooftop Watch:** In raven form, they perch atop the Gates of Barovia, Old Bonegrinder (`Session 3`), and Vallaki roofs to caw warnings of traps and ambushes before revealing their lycanthropy once the Winery is saved in Session 7.
-
-3. 🐉 **The Order of the Silver Dragon (Revenants of Argynvostholt):**
-   * **History & Secret Mission (`Chapter 7`):** Centuries ago, the noble silver dragon **Lord Argynvost** disguised himself as a human nobleman and founded a knightly order in the valley. Their secret mission was to **guard the Amber Temple on Mount Ghakis** so the Dark Powers could never escape—and to protect the ancient draconic star-chart connecting to Campaign 3's **Lost Dragon Lands**.
-   * **The Revenant Paradox (`Sessions 10–11`):** Strahd's army slaughtered the knights, slew Argynvost, and mounted the dragon's skull inside Castle Ravenloft (`Area K67`). Reborn as immortal **Revenants** under **Commander Vladimir Horngaard (`Area Q36`)**, they hate Strahd so deeply that they **refuse to let anyone kill him**—believing Barovia is Strahd's eternal torture chamber!
-   * **How It Plays Out:** Vladimir's beloved husband **Sir Godfrey Gwilym** pleads with the party to restore the Order's honor. Lighting the **Beacon of Argynvost (`Area Q53`)** puts the Revenants to rest, rewards 🕊️ **The Holy Symbol of Ravenkind (Tarokka #2)**, and grants the entire party a permanent **`+1 to AC and +1 to all Saving Throws`** across Barovia!
-
-4. 🧝‍♂️ **The Dusk Elves (Rahadin's Genocide & Kasimir's Amber Pact):**
-   * **History (`Book Area N9a`):** Ancient shadow-wood elves native to Barovia. Five centuries ago, the traitor Dusk Elf **Rahadin** helped King Barov conquer his own kin. Later, the Dusk Elf archmage **Patrina Velikovna** studied at the Amber Temple and sought to become Strahd's vampire bride. To save her soul, her brother **Kasimir Velikov** led the Dusk Elves in stoning Patrina to death.
-   * **Strahd's Retaliation:** Enraged, Strahd ordered Rahadin to **slaughter every single female Dusk Elf in existence** so the race would slowly go extinct, and sliced off Kasimir's ears. The phantom screams of those slaughtered women permanently surround Rahadin as his **Deathly Choir (`3d10` psychic aura)**.
-   * **How It Plays Out:** Only a few dozen immortal male Dusk Elves survive in hovels outside Vallaki. **Kasimir Velikov** haunts the party in Act III–IV, begging to guide them to the **Amber Temple (`Session 15`)** to claim the Dark Gift of *Zhudun* and resurrect his sister Patrina.
-
-5. ⛰️ **The Mountain Folk (Yester Hill Druids, Berserkers & Kavan's Legacy):**
-   * **History & Belief (`Chapter 14`):** Mud-and-blood-painted descendants of the original Balinok Mountain tribes (once led by Chieftain **Kavan**). Rather than viewing Strahd as a monster, they worship him as a literal **Nature God of Storm, Wolf, and Winter** (*"He is the Ancient, He is the Land"*).
-   * **How It Plays Out (`Sessions 7–8`):** They poison the vats at the **Wizard of Wines** (`Session 7`) and carry a stolen Winery Life-Gem up to **Yester Hill** (`Session 8`), where the blood-drinking **Gulthias Tree** grows. Under Strahd's watchful gaze on Bucephalus, they embed the gem into a 30-foot effigy of dead roots to awaken **Wintersplinter**—while Kavan's spirit whispers from a stone cairn (`Area Y4`), offering **King Jacomir** **🩸 The Blood Spear of Kavan (`+2 Spear`)**.
-
-6. 🥧 **The Night Hag Coven of Old Bonegrinder (Morgantha, Bella & Offalia):**
-   * **The Despair Economy (`Chapter 6` & *Reloaded Arc D*):** Led by "Granny" **Morgantha** and her daughters **Bella Sunbane** and **Offalia Wormwiggle**, this fiendish coven operates out of the four-story **Old Bonegrinder Windmill**. They sell **Dream Pastries** (1 GP) that grant 8 hours of euphoric dreams of sunlit paradise. Once hopeless Barovians are addicted and out of coin, the hags demand their **children** as payment—pricking them with needles to test if they have souls, then grinding their bones into flour to bake more pies!
-   * **How It Plays Out (`Session 1 & Session 3`):** In Session 1, **Piper** cast *Charm Person* on Morgantha; her Night Hag *Magic Resistance* shrugged it off, leaving her semi-hostile toward Piper before gifting **1x Dream Pastry to King Jacomir** (currently stored **uneaten**). In **Session 3**, the party storms the windmill to rescue two caged children (**Myrtle & Lucian**), dodge the *Bone-Flour Combustion Cloud*, and shatter the coven before they slip into the Ethereal Plane to haunt the party's Long Rests.
-
-7. 🩸 **The Court of Castle Ravenloft (The Three Brides, Rahadin & Escher):**
-   * **Strahd's Inner Circle (*DragnaCarta Reloaded* & `Chapter 4`):** Rather than waiting passively in crypts (`K84`), Strahd's court actively executes his plots across Barovia:
-     * 🎭 **Volenta Popofsky (The Porcelain Sadist — Act I–II):** Youngest bride in a bone-woven gown and cracked skull-mask; stalks the party and Ireena with corpse-puppet strings in Act I–II.
-     * 🩸 **Anastrasya Karelova (The Vallaki Conspirator — Act II):** Aristocratic Vallakian noblewoman who orchestrates the theft of St. Andral's Bones and leads the **Feast of St. Andral** vampire ambush (`Session 5`).
-     * ❄️ **Ludmilla Vilisevic (The Archmage Bride — Act III–IV):** Cold, brilliant spellcaster who engineered the Werewolf Pack schism (imprisoning Emil) and guards the road to Tsolenka Pass / Amber Temple.
-     * 🎻 **Escher (The Melancholy Consort — Session 9 Dinner):** A charming vampire bard terrified that Strahd has grown bored of him and will lock him in the catacombs once Ireena arrives; secretly slips the party hints about the **Heart of Sorrow** during the Session 9 Dinner!
-     * 🗡️ **Rahadin (The Dusk Elf Chamberlain):** Strahd's fiercely loyal right hand (`CR 10`), who drives the Black Carriage in Session 9 and guards the stairs to Sergei's Crypt in the finale.
-
-8. 🐺 **The Children of Mother Night (The Werewolf Pack Schism):**
-   * **History & Civil War (`Chapter 15`):** Savage lycanthropes in the northern cliffs who serve as Strahd's long-range hunting hounds. Split between Strahd's sadistic alpha **Kiril Stoyanovich** (backed by Bride Ludmilla, who forces kidnapped children to fight to the death) and the imprisoned former alpha **Emil Toranescu** (whose mate **Zuleika** will ally with heroes who free Emil from Ravenloft's dungeons).
+> **Cross-Referenced Sources:** Official *Curse of Strahd* 5e Rulebook (`Chapters 1–15`), **[DragnaCarta's *Curse of Strahd: Reloaded*](https://github.com/DragnaCarta/Curse-of-Strahd-Reloaded)**, Session 1–2 Table Canon, and **[`THE_COSMIC_KNOT_MASTER_LORE.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/THE_COSMIC_KNOT_MASTER_LORE.md)**.
 
 ---
 
-### 🏘️ 4.5B: All 17 Barovian Locations, Dungeons & Landmarks — History & Secrets (17 Dossiers, 1-to-1 w/ Section 1.5)
+### 🛡️ 4.5A: Barovian Factions, Secret Orders & Covens (9 Factions)
 
-9. 🌲 **Old Svalich Road & The Eastern Gates (`lore_svalich_gates` • Act I, Area A):** King Barov's imperial trade highway, decapitated royal buttresses, mist-induced compass spin, and courier Dalvan Olensky's 13-notch desperate dash.
-10. 🏚️ **The Village of Barovia (`village_barovia` • Act I, Areas E1–E5):** Oldest Barovian settlement huddled beneath Ravenloft's 1,000-ft Pillarstone. Kolyan's secret wizard past, Ismark & Ireena, **Doru's church attic standoff**, Mad Mary, and Blood on the Vine.
-11. ⚖️ **River Ivlis Crossroads & Tser Falls Gorge (`lore_crossroads_falls` • Act I, Areas F & H):** Strahd's ancient execution crossroads & 11 nameless graves, first face-to-face Black Carriage greeting, and the 1,000-ft cataract where Mordenkainen fell.
-12. 🔮 **Tser Pool Vistani Encampment (`lore_tser_pool` • Act I, Area G):** Safe Long Rest glacial haven guarded by Strahd's ancient blood-oath, **Madam Eva (Katarina von Zarovich)**, Curated 5-Card Tarokka + Piper's Blank Card Stage 1.
-13. 🥧 **Old Bonegrinder & The Four Megaliths (`lore_bonegrinder` • Act I, Areas O1–O4):** Pre-Barovian Four-City Fane monoliths, Durst family Cult of Osybus ruin, and Morgantha's coven pastry economy.
-14. ⚔️ **Walled Town of Vallaki (`town_vallaki` • Act II, Chapter 5):** Barovia's timber-walled hub: Keepers of the Feather safehouse (`Blue Water Inn`), Baron Vargas's forced festivals, Izek Strazni (Ireena's lost brother!), Victor's attic, Blinsky, and Vasili von Holtz.
-15. ⚰️ **St. Andral's Church, Henrik's Shop & Wachterhaus (`lore_coffin_wachter` • Act II, Areas N1, N4, N6):** St. Andral's broken `Hallow` barrier, Lovina Wachter & Leo Dilisnya's iron chest, **Bride Anastrasya's Feast crate ambush**, & **📜 Tome of Strahd**.
-16. 🍷 **The Wizard of Wines Winery (`lore_winery` • Act II, Chapter 12):** Ancient archdruid's 3 Magic Life-Gems, Martikov wereraven viticulture heritage, Urwin & Davian's 10-year estrangement, & the Gulthias Staff hive-mind trick.
-17. ⛈️ **Yester Hill & The Gulthias Tree (`lore_yester_hill` • Act II, Chapter 14):** Pre-Zarovich cairn of Chieftain Kavan (`+2 Blood Spear`), the Western Wall of Fog sunlit mirage, the vampire-stake Gulthias Tree, & Wintersplinter (`CR 7`).
-18. 🥂 **Castle Ravenloft Crimson Dinner (`lore_ravenloft_dinner` • Act II, Session 9):** Zarovich Law of Hospitality banquet in Hall `K10`, Court Bride politics, and **Escher's secret Heart of Sorrow tip** (`Area K49`) before midnight chimes.
-19. 🐉 **Argynvostholt Sanctum (`lore_argynvostholt` • Act III, Chapter 7):** Ruined limestone keep of silver dragon **Lord Argynvost**, Strahd's desecration of his bones (`K67`), **Beacon (+1 AC/Saves)**, 🕊️ **Holy Symbol of Ravenkind**, & Lost Dragon Lands mural.
-20. ⛪ **Commune of Krezk & Saint Markovia's Abbey (`commune_krezk` • Act III, Chapter 8):** Pine commune (`White Sun Pool S4`), fallen Deva angel **The Abbot** twisted by Vasili von Holtz, flesh-golem Vasilka, & Mongrelfolk asylum.
-21. 🌊 **The Drowned Ruins of Berez (`ruins_berez` • Act III, Chapter 10):** Lazlo Ulrich's murder of **Marina**, Strahd drowning a valley town, prehistoric Standing Stones, & **Baba Lysaga's Creeping Hut** guarding 🗡️ **The Sunsword**.
-22. 🗼 **Khazan's Tower, Lake Baratok & Werewolf Den (`lore_tower_baratok` • Act III, Ch. 11 & 15):** Permanent 8th-level **Antimagic Field** safehouse, stick-figure door dance (`V2`), Mordenkainen's sanity cure, and the Werewolf Pack schism.
-23. ❄️ **Tsolenka Pass & Balinok Gatehouse (`lore_tsolenka_pass` • Act IV, Chapter 9):** Dawn Wizards' cliff pass sealed by the Wall of Green Fire (`T2`), animating Vrock statues (`T3`), Sangzor the giant goat, & the Roc of Mount Ghakis (`CR 11`).
-24. ⚡ **The Amber Temple (`lore_amber_temple` • Act IV, Chapter 13):** 2,000-year-old vault of the Dark Powers (`Areas X1–X42`), amnesiac Lich **Exethanter** (`X27`), Arcanaloth **Neferon** (`X5`), & Supreme Amber Vaults.
-25. 🏰 **Castle Ravenloft Final Siege (`lore_castle_ravenloft` • Act IV, Chapter 4):** Living spire fused to Strahd's soul, Architect Artimus's catacombs (`K84`), Heart of Sorrow (`K20`), Treasury (`K41`), Sergei's Tomb (`K85`), & Strahd's Coffin (`K86`).
+1. 🔮 **The Vistani (`vistani`):** Pre-Curse origins, `347 BC` royal Blood-Oath Mist Passport, one-way lock, **Madam Eva's secret identity as Katarina von Zarovich**, and the split between Tser Pool vs. Luvash & Arrigal's Vallaki mercenaries.
+2. 🦅 **The Keepers of the Feather (`keepers`):** Wereraven underground descended from **The Weaver's** gift, **Davian vs. Urwin Martikov's** ten-year *Champagne du le Stomp* schism, and **Kolyan's Wizard Diary** unlock.
+3. 🐉 **The Order of the Silver Dragon (`silver_dragon`):** **Lord Argynvost's** true knightly mandate guarding the Amber Temple & Lost Dragon Lands mural (`Q13`), **Vladimir Horngaard's** spiteful paradox, and **Sir Godfrey's** Silver Beacon redemption.
+4. 🧝‍♂️ **The Dusk Elves (`dusk_elves`):** Ancient shadow-wood kin conquered by **King Barov** with **Rahadin's** betrayal, **Patrina Velikovna's** Amber Temple pact & stoning by **Kasimir**, and Rahadin's curse of near-extinction.
+5. ⛰️ **The Mountain & Forest Folk (`mountain_folk`):** Pre-Zarovich *First Folk* & Balinok tribes (`Kavan`), split into **Yester Hill druids/berserkers** worshipping Strahd as storm god ("He is the Ancient, He is the Land") vs. **Berez Mire** remnants.
+6. 🥧 **The Night Hag Coven of Old Bonegrinder (`hag_coven`):** **Morgantha, Bella & Offalia's** Dream Pastry despair economy, soul-pricking vs. soulless shells, and Session 1 Svalich Road enmity with **Piper** & uneaten pastry held by **Jacomir**.
+7. 🩸 **The Court of Castle Ravenloft (`court_of_ravenloft`):** Strahd's inner circle across *Book* & *Reloaded* — **Volenta Popofsky**, **Anastrasya Karelova**, **Ludmilla Vilisevic**, discarded consort **Escher**, and Dusk Elf chamberlain **Rahadin**.
+8. 🐺 **The Children of Mother Night (`werewolves`):** Northern cliff lycanthropes fractured between **Kiril Stoyanovich** (backed by Ludmilla) and deposed **Emil Toranescu** / mate **Zuleika**.
+9. 💀 **The Priests of Osybus & The Durst Cult (`lore_osybus`):** Pre-Barovian necromantic order claiming to hold the secrets of undeath that guided Strahd toward Mt. Ghakis — plus the fallen **Durst family** of Barovia Village / Old Bonegrinder mill deed.
 
 ---
 
-### ⏳ 4.5C: Barovian History, Souls & Vital Campaign Secrets (4 Core Pillars)
+### 🏘️ 4.5B: All 25 Barovian Location & Landmark Histories (25 Pure History Dossiers)
 
-26. 📜 **The Five-Era Chronological History of Barovia (`timeline_barovia`)** *(2,000 Years from Dawn Wizards to Session 1)*.
-27. 👻 **Souls, Soulless Shells & Tatyana's Reincarnation Curse (`villagers`)** *(1-in-10 Rule, Two-Bite Tether, Free Bodyguards & Strahd's 2-Phase Monstrosity Siege)*.
-28. 💎 **Vital Campaign Secrets (`vital_secrets`)** *(Heart of Sorrow `K20`, The 3 Winery Gems, & Van Richten / Ezmerelda / Mordenkainen)*.
-29. ☀️ **The Morninglord, Mother Night & Priests of Osybus (`faiths_barovia`)** *(Religious Factions & St. Andral's Hallow)*.
+10. 🚪 **Gates of Barovia (`lore_gates_barovia` • Act I, Areas A–B):** Imperial Balinok stone colossi raised by Zarovich masons, choking Mist exhaustion lore, and Courier **Dalvan Olensky's** final sprint at Milepost 13.
+11. 🌲 **Svalich Woods & Old Svalich Road (`lore_svalich_woods` • Act I, Old Svalich Rd):** Imperial logging artery before the fall, *Reloaded* Razor-Back Gorge ambush terrain history, and Session 1 Morgantha pie-cart meeting.
+12. 🏚️ **Village of Barovia (`village_barovia` • Act I, Areas E1–E3):** First settlement beneath Pillarstone Crag, **Bildrath's Mercantile (`E1`)**, **Blood on the Vine (`E2`)** where **Piper** drew the Blank Card, and **Mad Mary (`E3`)**.
+13. 🕯️ **Indirovich Manor (`lore_indirovich_manor` • Act I, Area E4):** Three-century Burgomaster seat protected by the Sacred Law of Forbiddance, Kolyan's final stand, Ireena & Ismark's vigil, and **Kolyan's Wizard Diary**.
+14. ⛪ **Church of the Morninglord (`lore_barovia_church` • Act I, Area E5):** Broken sanctuary of four centuries of fog, **Father Donavich's** tragic vigil over **Doru**, *Reloaded* Heart of Sorrow clue, and **Derek's** first time-stop beside **Cael**.
+15. 🌊 **Tser Falls & River Ivlis Crossroads (`lore_tser_falls` • Act I, Areas H & F):** Imperial gargoyle span where **Mordenkainen** fell (`734 BC`), the Crossroads Gallows where each traveler sees their own corpse, and Strahd's first parley.
+16. 🔮 **Tser Pool Vistani Encampment (`lore_tser_pool` • Act I, Area G):** Glacial moraine protected since `347 BC`, seat of **Madam Eva (Katarina von Zarovich)**, and site of the Curated 5-Card + Blank Card Omen Reading.
+17. 🥧 **Old Bonegrinder & The Four Megaliths (`lore_bonegrinder` • Act I, Areas O1–O4):** Pre-Zarovich **Ladies Three** (*Four Cities*) megalith stones later usurped by the Durst windmill (`Osybus`) and claimed by Morgantha's coven.
+18. ⚔️ **Town of Vallaki & Lake Zarovich (`town_vallaki` • Act II, Ch. 5: N3, N5, N7, N8, N9):** Descendants of Barovian noble exiles ruled by **Baron Vargas Vallakovich's** mandatory festivals, **Izek Strazni's** lost tie to Ireena, Blinsky's workshop, & Vistani/Dusk Elf hills.
+19. 🦅 **The Blue Water Inn (`lore_blue_water_inn` • Act II, Area N2):** Centuries-old timber tavern built atop an old Ravenloft watchhouse, hearth of **Urwin & Danika Martikov's** Keepers cell, and **Rictavio's** quiet booth.
+20. ✝️ **St. Andral's Church (`lore_st_andral` • Act II, Area N1):** Four-century ward hallowed by Saint Andral's martyred remains (*Reloaded* 60-ft consecration sanctuary) tended by **Father Lucian Petrovich** before the Feast conspiracy.
+21. ⚰️ **Henrik's Coffin Shop (`lore_coffin_shop` • Act II, Area N6):** Guildhall of Vallaki's mortician turned reluctant accomplice to *"Vasili von Holtz"* and **Anastrasya Karelova's** Ravenloft soil crates.
+22. 🕯️ **Wachterhaus (`lore_wachterhaus` • Act II, Area N4):** Ancestral estate of **Lovina Wachter** (`351 BC` survivor of Sergei's wedding massacre), **Lady Fiona's** occult library, and the iron chest of **Leo Dilisnya**.
+23. 🍷 **The Wizard of Wines Winery (`lore_winery` • Act II, Areas W1–W20):** Archdruid estate forged around **The Weaver's** three Life-Gems, Martikov stewardship, and the **ten-year family rift** following Vasili's theft of *Champagne du le Stomp*.
+24. ⛈️ **Yester Hill (`lore_yester_hill` • Act II, Areas Y1–Y5):** Sacred stone circle of Chieftain **Kavan** and the *First Folk*, Strahd's misty homeland mirage gazing west from the ridge, and the blood-soaked **Gulthias Tree**.
+25. 🥂 **Castle Ravenloft — Act II Dinner (`lore_ravenloft_dinner` • Act II, Areas K1–K10, K49):** Ancient Zarovich **Law of Hospitality** protocol—a psychological court test of manners, organ music, and **Escher's** whispered warning.
+26. 🐉 **Argynvostholt (`lore_argynvostholt` • Act III, Areas Q1–Q53):** Silver dragon fortress overlooking Mt. Ghakis, the **Lost Dragon Lands** mural (`Q13`), **Horngaard's** hatred of ending Strahd's torment, and the **Beacon of Argynvost**.
+27. 🏘️ **Village of Krezk (`commune_krezk` • Act III, Areas S1–S4):** Original imperial western garrison behind 20-ft alpine walls, **Burgomaster Dmitri & Anna Krezkov**, and the blessed **Pool of the White Sun** (`S4`).
+28. ⛪ **Abbey of Saint Markovia (`lore_abbey_markovia` • Act III, Areas S12–S24):** Abbey of the dawn saint who marched on Ravenloft, now fallen under the **Abbot's (Deva)** century-long despair and **"Vasili's"** corrupted gift animating **Vasilka (`S13`)**.
+29. 🌊 **The Drowned Ruins of Berez (`ruins_berez` • Act III, Areas U1–U7):** Mud-choked ghost town Strahd drowned via the Luna River after Burgomaster **Lazlo Ulrich** slew **Marina** — home to **The Weaver's Standing Stones (`U6`)** and **Baba Lysaga**.
+30. 🗼 **Van Richten's / Khazan's Tower (`lore_tower_baratok` • Act III, Areas V1–V7):** Black-tiled lake tower raised by archmage **Khazan** beneath a 100-ft antimagic dome (attempted lichdom & shattered **Sunsword** hilt), later claimed by **Van Richten**.
+31. 🐺 **The Werewolf Den (`lore_werewolf_den` • Act III, Areas Z1–Z8):** Limestone wolf-head caverns sacred to **Mother Night** before her shrine's theft-curse triggered the brutal **Kiril vs. Emil/Zuleika** civil war.
+32. ❄️ **Tsolenka Pass (`lore_tsolenka_pass` • Act IV, Areas T1–T9):** High alpine guardroad chiselled by the **Dawn Wizards** two millennia ago to seal the Amber Temple behind green curtain-flame and ancient vrock guardians.
+33. ⚡ **The Amber Temple (`lore_amber_temple` • Act IV, Areas X1–X42):** Two-thousand-year-old obsidian glacier fortress built by secret wizards (`Exethanter` & `Khazan`), housing amber Vestiges and **West Vault `X42` (Lord Vecna's Anchor)**.
+34. 🏰 **Castle Ravenloft — Endgame Architecture (`lore_castle_ravenloft` • Act IV, Areas K6–K86):** Architect **Artimus's** greatest limestone spire (modeled after Strahd's lost homeland) fused permanently to its Darklord's soul and the Zarovich family crypts.
 
 ---
 
-### 🌌 4.5D: The Cosmic Knot, The Dark Powers & Grand Trilogy Lore (4 Dossiers)
+### ⏳ 4.5C: Eras, Fanes, Faiths, Myths & Outsiders (14 Lore & History Dossiers — Book + *Reloaded*)
 
-30. 🌑 **Domain Zero & The Dark Powers (`cosmology_knot`)** *(Ravenloft as Despair Reactor & Session 20 Root Anchor Collapse)*.
-31. 🟣 **The Unholy Covenant (`vecna_covenant`)** *(Vecna, Amber Vault `X42`, & Non-Linear Temporal Loop across Campaigns 1 & 3)*.
-32. ⏳ **The Dual Operatives (`derek_and_cael`)** *(Derek Outside of Time vs. Caelum Jude in Real Time)*.
-33. 🃏 **The Three Chosen Vessels & Piper's 3-Stage Blank Card (`three_vessels`)** *(The Grim Smile & Vessels 1–3 Endgame Arc)*.
+35. 📜 **The Five-Era Chronological History of Barovia (`timeline_barovia`)** *(4,000+ Years: Ladies Three & First Folk ➔ Dawn Wizards & Argynvost ➔ `347 BC` Conquest ➔ `351 BC` Wedding Massacre & Mists ➔ `734–735 BC` Mad Mage, Doru & Vessels)*.
+36. 🌿 **The Ladies Three & The Three Fanes (`lore_ladies_three` • *Reloaded Core Mythos*)** *(Primal Archfey Sisters — **The Weaver** [Swamp/Winery Gems], **The Huntress** [Mountain], **The Seeker** [Forest] — betrayed into Stonehenges of Bonegrinder, Yester Hill & Berez)*.
+37. 👑 **House von Zarovich & Count Strahd's Mortal Fall (`lore_zarovich_strahd`)** *(King Barov I & Queen Ravenovia, Terg War, General Strahd vs. Beloved Brother Sergei, & the Mount Ghakis Amber Bargain of `351 BC`)*.
+38. 🌫️ **The Mists, The March of the Dead & Sacred Laws (`lore_mists_barovia`)** *(Domain Border Exhaustion, Eternal Midnight Spirit Procession `E5 ➔ K10`, Forbiddance, Running Water & Overcast Sun)*.
+39. 👻 **The Soulless Shells (`villagers`)** *(Closed 1-in-10 Reincarnation Pool, Hollow Eye/Colorless Tears & Morgantha's Needle Test)*.
+40. 🌹 **Tatyana Federovna's Reincarnation Curse (`lore_tatyana`)** *(`351 BC` K6 Suicide ➔ Marina of Berez ➔ Foundling Ireena & Brother Izek Secret ➔ Two-Bite Tether ➔ Free Bodyguards & Krezk Pool S4)*.
+41. ☀️ **The Morninglord (`lore_morninglord`)** *(Faerûn's **Lathander** Remembered Through Four Centuries of Fog — Prophet Lugdana, St. Andral, St. Markovia & True Sunlight vs. Overcast Mist)*.
+42. 🌙 **Mother Night (`lore_mother_night`)** *(Ancient Goddess of Dusk, Winter, Dreams & Vengeance — Patron of **Madam Eva**, **Baba Lysaga** & the Cursed Werewolf Shrine)*.
+43. 💎 **The Heart of Sorrow (`lore_heart_of_sorrow`)** *(Tower `K20` Crimson Halberd-Crystal Forged by **Strahd & Khazan** [Distinct from the Winery Gems!], Doru S2 & Escher S9 Clues)*.
+44. 💚 **The Three Magic Life-Gems — Legacy of The Weaver (`lore_life_gems`)** *(Swamp Fane Origins: 1. **Champagne du le Stomp** inside **Vasilka at Abbey S13**, 2. **Red Dragon Crush** in **Wintersplinter Y3**, 3. **Purple Grapemash** in **Lysaga's Hut U3**)*.
+45. 🎭 **"Vasili von Holtz" — Strahd's Mortal Mask (`lore_vasili_von_holtz`)** *(Centuries-old human alias used to court Tatyana incarnations, deceive Vallaki nobles, bribe **Henrik van der Voort**, & deliver the *Champagne du le Stomp* Gem to **The Abbot**)*.
+46. 🏹 **Dr. Rudolph van Richten ('Rictavio' — From Darkon) (`lore_van_richten`)** *(Scholar from **Darkon**, Son Erasmus & the Radaga Vistani Tragedy, Dying Seer's Blood Curse, **Mist Talisman**, & Secret Journal)*.
+47. ⚔️ **Ezmerelda d'Avenir (`lore_ezmerelda`)** *(Radaga Vistani Witness Who Returned Erasmus's Ring, Silver Prosthetic, Tarokka Apprentice & Trapped Wagon `V1`)*.
+48. 🧙 **Mordenkainen — The Mad Mage (`lore_mordenkainen`)** *(Greyhawk Circle of Eight Archmage, `734 BC` Peasant Rebellion With Doru, Tser Falls Plunge & Permanent Mind Blank Amnesia)*.
+
+---
+
+### 🌌 4.5D: The Cosmic Knot, The Dark Powers & Grand Trilogy Lore (8 Separate Dossiers)
+
+49. 🌑 **The Dark Powers (`lore_dark_powers`)** *(Primordial Dawn-Entities Decoupled from Shadowfell, False-Hope Despair Reactor & Amber Vestiges)*.
+50. 🏰 **Domain Zero & The Barovian Root Anchor (`cosmic_reactor`)** *(Why Strahd Is the Literal Load-Bearing Keystone & Session 20's "Pin From the Grenade" Implosion)*.
+51. 🟣 **Lord Vecna's Unholy Covenant (`vecna_pact`)** *(Amber Vault `X42` Parasite Treaty, Why Gods Cannot Touch Ravenloft Directly, 3 Mortal Surge Protectors & Campaign 3 Interstate)*.
+52. 🌀 **The Non-Linear Temporal Loop (`lore_time_loop`)** *(Decoupled Causality Closing Backward Into Campaign 1 **Stormwreck Isle**: Moros, Obsidian Monoliths & **The Asflumph** Sailing Into Campaign 3)*.
+53. ⏳ **Derek ('The Man Between Seconds') (`lore_derek`)** *(Cold Corporate Avatar Operating Inside `Tap, Tap, Tap` Frozen Seconds — 100% Blind Spot to Strahd Under Sacred Law #5 & 3 Strict Milestones)*.
+54. 🌟 **Caelum Jude ('Cael' — The Scion) (`lore_cael`)** *(Genuine 19-Yr Stars Druid Healer, 1-HP Dark Powers Vow, Terror of Derek, **Tarokka #4 Marionette**, & Session 20 Barnaby-Voice Gut Punch)*.
+55. 👑 **The Three Chosen Vessels & The Crucible Replacement Rule (`three_vessels`)** *(**Zero Plot Armor / NOT Set in Stone — PCs Can Permanently Die & Replacement Vessels Are Chosen From Infinite Timelines**, The Grim Smile Motif, **Jacomir**, **Yvaine**, & **Piper** + Barnaby)*.
+56. 🃏 **Piper's Blank Tarokka Card (`lore_blank_card`)** *(Session 1 Blood on the Vine Tavern Anomaly, Madam Eva's Cold Recoil & **Option 2 Progressive 3-Stage Charcoal/Mist Ink Bleed**)*.
 
 ---
 
