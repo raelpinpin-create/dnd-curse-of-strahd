@@ -345,16 +345,17 @@ Read aloud as the party, **Ireena** *(and the Black Cat trailing quietly `30 ft`
    * *(Ireena whispers defiantly, trembling but refusing to blink:)* **"I will never step inside, monster. And I am not yours!"**
    * *(Strahd merely offers a sad, patient half-smile, glancing calmly from Ireena back to the heroes as if inviting them into a private joke.)*
 
-3. **Sizing Up the Three Strangers (`Subtle, Striking & Unnerving — Zero Spoilers!`):**
-   * **To King Jacomir:**
-     > *"An anointed sovereign standing ankle-deep in Barovian mud without a throne. Tell me, **King Jacomir**—how many crowns have rusted in this soil while kings swore they would never bend? Walk my roads awhile. I am curious to see what a king's word weighs once winter settles in."*
+3. **Sizing Up the Three Strangers (`Subtle, Striking & Unnerving — Zero Secrets Leaked!`):**
+   *(Remember: Strahd did NOT summon the party and does NOT know their homelands, Oakenshire, Solmere, or secret backstories yet—only their **names** from stalking them through Barovia Village in Session 1, plus what he observes right in front of him!)*
+   * **To Jacomir:**
+     > *"Heavy steel and an unbent chin, **Jacomir**. Tell me—wherever the Mists pulled you from, did they teach you how quickly pride cracks once winter settles over this valley? Walk my roads awhile. Let us see what that posture weighs after a week in Barovian mud."*
    * **To Yvaine:**
-     > *"Black powder, silvered lead, and eyes that have already buried their dead. A rare sort of discipline, **Eclipsa**. Keep that rifle clean—though out here, the woods rarely care who a hunter swore to avenge."*
+     > *"Black powder, silvered lead, and eyes that do not flinch—a rare discipline on my roads, **Eclipsa**. Keep that rifle oiled. Out here, beasts rarely wait for a hunter to finish aiming."*
    * **To Piper *(The Cosmic Knot Spotlight — [`THE_COSMIC_KNOT_MASTER_LORE.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/THE_COSMIC_KNOT_MASTER_LORE.md#L136))*:**
      *(Strahd’s eyes linger past Jacomir and Yvaine, locking straight onto **Piper**—and dropping slowly down to **Barnaby’s tarnished brass pocket watch** on her coat/belt. For the first time, the faintest, knowing, deeply unnerving smile parts his lips.)*
      > *"And welcome to the road as well... **Piper.***
      > 
-     > *Card tricks, greasepaint, and a brass watch that no longer tells time? Oh, little tiefling... how terribly loud the storm inside your blood sounds when you think no one is listening. Enjoy your parlor illusions while the crowds still clap."*
+     > *Card tricks, greasepaint, and a tarnished brass watch? Oh, little tiefling... how terribly loud the storm beneath your ribs hums when you think no one is listening. Enjoy your parlor illusions while the crowds still clap."*
      *(Wait a beat—let Piper feel absolute goosebumps! How does he know her name and what woke inside her?!)*
 
    > 🧠 **DM Private Rule (`Strahd's Unspoken Agenda — DO NOT SAY ALOUD!`):**
@@ -367,8 +368,8 @@ Read aloud as the party, **Ireena** *(and the Black Cat trailing quietly `30 ft`
    * **If Asked: *"Why don't you just kill us right here and leave her unprotected?"*:**
      > **Strahd:** *"Why slaughter useful shepherds? These mountains crawl with hags, mountain wolves, and desperate fools who lack my restraint. You bleed to keep the rain off Kolyan’s daughter until she reaches Vallaki—and in return, you get to draw breath on my earth a few days longer. Consider it rent."*
    * **If Asked: *"Why did you bring us to Barovia? What do you want from us?"*:**
-     *(He offers nothing away—only calm, predatory amusement.)*
-     > **Strahd:** *"The Mists sweep all manner of stray wolves and fallen crowns across my borders. Some entertain me for a fortnight; most feed the crows before the first frost. Walk my roads, learn whose name the wind remembers—and try not to bore me."*
+     *(He offers nothing away—calmly brushing off the Mists without revealing he didn't choose them.)*
+     > **Strahd:** *"I did not open the gates for you—the Mists sweep all manner of stray blades and loud fools across my borders. Some entertain me for a fortnight; most feed the crows before the first frost. Walk my roads, remember whose soil you tread—and try not to bore me."*
    * **If Mentioned: *"We're taking her to Vallaki / St. Andral's Church where you can't reach her!"*:**
      *(A cold, razor-thin smile touches his marble face.)*
      > **Strahd:** *"By all means. Place your faith in Vallaki's wooden walls, a mad burgomaster's painted smiles, and a priest's locked doors. Let us see how long your 'sanctuary' stays standing once dusk settles."*
