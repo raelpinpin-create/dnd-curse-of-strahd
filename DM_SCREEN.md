@@ -379,6 +379,34 @@ flowchart TD
 105. ⚔️ **Silvered Longsword (`Sap Mastery`)** *(Uncommon Silvered Martial Weapon • Claimed by Jacomir in S1)*: Versatile (`1d8 + STR` 1H / `1d10 + STR` 2H Silvered Slashing); **bypasses nonmagical resistances/immunities of Undead, Vampire Spawn, Werewolves, & Night Hags**, and applies **Sap** (target has Disadvantage on its next attack roll before start of your next turn!).
 106. 🪵 **Barovian Wooden Smoking Pipe** *(Personal Keepsake • Claimed by Jacomir in S1)*: Carved dark-briar pipe carried by King Jacomir while studying Barovia's fog & Dragonchess. *(Also carries `1x Flask of Morninglord Spring Water [Holy Water]` — #53 — & `1x Dirty Dream Pastry` — #58).*
 
+### 🌿 4.9 Barovian Crafting Materials, Wilderness Forage & DM-Only Secret Recipes (Separate `🌿 Crafting Materials & Forage` Filter)
+> Separated from main treasure loot in `DM_SCREEN.html` via the dedicated **`🌿 Crafting Materials & Forage`** pill (while still searchable via `#loot-search` & `#global-search`). Players only see unlocked recipes on their Crafting Workbench; locked formulas show as `🔒 ???` until you reveal the recipe or share its Unlock Code!
+
+| Material | Source & Forage DC / Shop Price | Secret Recipes Using This Material |
+| :--- | :--- | :--- |
+| 🌿 **Barovian Medicinal Herbs** | **Act I–IV** • Svalich Woods / Village Yards (`DC 10 Nature/Survival` = `1d3` bundles; `5 SP` shop) | Potion of Healing (`2x`, **Unlocked**), Field Bandages (`1x`, **Unlocked**), Greater Healing, Antitoxin, Smoke Bomb, Superior Healing |
+| 💧 **Pure Mountain Spring Water** | **Act I–IV** • Tser Falls / Luna River / Krezk Spring (`DC 10 Survival`; `2 SP` vial) | Morninglord Holy Water (`MORNINGLORD`), Sun-Ash Repellent Balm (`SUN-ASH`) |
+| ✨ **Powdered Silver Dust** | **Act I–II** • Tser Pool Vistani (`15 GP`), Vallaki Arasek (`20 GP`), Bildrath's (`25 GP`), or file `25 SP` | Morninglord Holy Water (`MORNINGLORD`), Liquid Silver Coating (`SILVER-COAT`), Sun-Ash Balm (`SUN-ASH`) |
+| 🌱 **Svalich Wolfbane Root** | **Act I–II** • Svalich Woods pine ridges / wolf trails (`DC 12 Nature`; `2 GP` Vistani) | Barovian Antitoxin Tonic (`WOLFBANE`) |
+| 🪨 **Brimstone & Pitch Sulfur** | **Act I–II** • Old Bonegrinder chimney, Vallaki smithy, Blinsky's (`3–5 GP`) | Alchemist's Fire (`BRIMSTONE`), Ash-Cloud Smoke Bomb (`ASH-CLOUD`), Yvaine emergency powder |
+| 🛢️ **Pine Pitch & Lamp Oil** | **Act I–II** • General stores (`5 SP–1 GP`) or tapped evergreens (`DC 11 Survival`) | Alchemist's Fire (`BRIMSTONE`), Liquid Silver Coating (`SILVER-COAT`) |
+| 🧻 **Clean Linen Wraps & Salve Jar** | **Act I–II** • Village cottages / Blue Water Inn (`2 SP`) | Camp medical supply (`DC 14 Medicine` doubles Field Bandage yield) |
+| ⚗️ **Alchemical Catalyst** | **Act II–III** • Bonegrinder lab, Wachterhaus cellar, Vallaki apothecary, Krezk Abbey (`25–40 GP`) | Potion of Greater Healing (`GREATER-HEAL`), Potion of Superior Healing (`MOONPETAL`) |
+| 🌸 **Svalich Moonpetal Blossom** | **Act III** • Berez ruins, Yester Hill, Lake Baratok at dusk (`DC 15 Nature`) | Potion of Superior Healing (`MOONPETAL`), Sun-Ash Repellent Balm (`SUN-ASH`) |
+| 🦇 **Harvested Monster Trophy** | **Act I–IV** • Spawn Ash / Dire Wolf Fang (`DC 13 Survival/Medicine`; Yvaine Journal Adv) | Barter (`10–25 GP`) or swap to Vistani / Ezmerelda for Catalysts or Recipe Unlocks |
+
+**🔒 DM-Only Secret Recipe Unlock Codes (Player Sheet Workbench):**
+- **Unlocked (Session 1):** `🧪 Potion of Healing (2d6+1 HP)` (`2x Herbs`) • `🩹 Field Bandages (1d6+1 HP)` (`1x Herb`)
+- **Locked (`🔒 ???` on Player Sheets):**
+  - `GREATER-HEAL` → **🧪 Potion of Greater Healing (`4d4+4 HP`)** = `4x Medicinal Herbs + 1x Alchemical Catalyst`
+  - `MORNINGLORD` → **💧 Flask of Morninglord Holy Water (`2d6 Radiant`)** = `1x Pure Spring Water + 1x Powdered Silver Dust`
+  - `WOLFBANE` → **🧪 Barovian Antitoxin Tonic (`Adv vs Poison 1 hr`)** = `2x Medicinal Herbs + 1x Wolfbane Root`
+  - `SILVER-COAT` → **✨ Vial of Liquid Silver Coating (`Silvered 1 hr`)** = `1x Powdered Silver Dust + 1x Pine Pitch Oil`
+  - `BRIMSTONE` → **🔥 Alchemist's Fire Flask (`1d4 Fire/turn`)** = `1x Brimstone Sulfur + 1x Pine Pitch Oil`
+  - `ASH-CLOUD` → **💨 Ash-Cloud Smoke Bomb (`15-ft Obscured`)** = `1x Brimstone Sulfur + 1x Medicinal Herbs`
+  - `MOONPETAL` → **🧪 Potion of Superior Healing (`8d4+8 HP`)** = `4x Herbs + 2x Catalyst + 1x Svalich Moonpetal`
+  - `SUN-ASH` → **☀️ Sun-Ash Repellent Balm (`+1d4 Radiant Coat 10m`)** = `1x Moonpetal + 1x Silver Dust + 1x Spring Water`
+
 ---
 
 ## 🏛️ SECTION 4.5: BAROVIAN FACTIONS, VILLAGES, SANCTUMS, HISTORY, VITAL SECRETS & COSMIC LORE CODEX (56 DOSSIERS)

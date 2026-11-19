@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    const SLOTS = [
+    const BASE_SLOTS = [
         { id: 'head',     label: 'Head',       icon: '🪖', group: 'body' },
         { id: 'cape',     label: 'Cape',       icon: '🧥', group: 'body' },
         { id: 'body',     label: 'Body',       icon: '🛡️', group: 'body' },
@@ -17,6 +17,23 @@
         { id: 'offHand',  label: 'Off-Hand',   icon: '🛡️', group: 'hand' },
         { id: 'ranged',   label: 'Ranged',     icon: '🏹', group: 'hand' }
     ];
+
+    function getActiveSlots() {
+        const list = [...BASE_SLOTS];
+        if (adapter && Array.isArray(adapter.extraSlots) && adapter.extraSlots.length > 0) {
+            adapter.extraSlots.forEach(es => {
+                if (list.some(s => s.id === es.id)) return;
+                if (es.group === 'hand') {
+                    const rIdx = list.findIndex(s => s.id === 'ranged');
+                    if (rIdx !== -1) list.splice(rIdx, 0, es);
+                    else list.push(es);
+                } else {
+                    list.push(es);
+                }
+            });
+        }
+        return list;
+    }
 
     const PARTY_MEMBERS = [
         { id: 'piper',   name: 'Piper',   emoji: '🎩', label: '🎩 Piper' },
@@ -347,25 +364,36 @@
         {
             match: ['kolyan\'s silvered heirloom dagger', 'silvered heirloom dagger'],
             category: 'weapon',
-            slots: ['mainHand', 'offHand'],
+            slots: ['mainHand', 'offHand', 'legSheath'],
             hands: 1,
             weaponTag: 'kolyan_dagger',
+            isLegDagger: true,
             summary: '1H Silvered 1d4+DEX • 3 Red Gems'
+        },
+        {
+            match: ['baal verzi', 'mirror dagger'],
+            category: 'weapon',
+            slots: ['mainHand', 'offHand', 'legSheath'],
+            hands: 1,
+            isLegDagger: true,
+            summary: '+1 Finesse Light Dagger • 1d4+1'
         },
         {
             match: ['trench knife', 'stiletto'],
             category: 'weapon',
-            slots: ['mainHand', 'offHand'],
+            slots: ['legSheath', 'offHand', 'mainHand'],
             hands: 1,
             weaponTag: 'knife',
-            summary: '1H Finesse Light 1d4+DEX'
+            isLegDagger: true,
+            summary: '1H Finesse Light 1d4+DEX • Nick'
         },
         {
             match: ['dagger'],
             category: 'weapon',
-            slots: ['mainHand', 'offHand'],
+            slots: ['mainHand', 'offHand', 'legSheath'],
             hands: 1,
             weaponTag: 'dagger',
+            isLegDagger: true,
             summary: '1H Finesse Light / Thrown 20/60'
         },
         {
@@ -401,34 +429,34 @@
         {
             match: ['lament'],
             category: 'weapon',
-            slots: ['mainHand', 'ranged'],
+            slots: ['ranged'],
             hands: 2,
             weaponTag: 'lament',
             stance: 'lament',
-            summary: '2H Heavy Rifle • 1d12+4 • 80/240ft'
+            summary: '2H Heavy Rifle • 1d12+4 • 80/240ft (Ranged)'
         },
         {
             match: ['"mercy"', 'mercy (main', 'mercy revolver'],
             category: 'weapon',
-            slots: ['mainHand', 'ranged'],
+            slots: ['mainHand', 'offHand'],
             hands: 1,
             weaponTag: 'mercy',
             stance: 'revolvers',
-            summary: '1H Main Revolver • 1d6+4 • 6-Cyl'
+            summary: '1H Six-Shooter • 1d6+4 • 6-Cyl'
         },
         {
             match: ['"less"', 'less (off', 'less revolver'],
             category: 'weapon',
-            slots: ['offHand', 'ranged'],
+            slots: ['offHand', 'mainHand'],
             hands: 1,
             weaponTag: 'less',
             stance: 'revolvers',
-            summary: '1H Off-Hand Revolver • 1d6 • 6-Cyl'
+            summary: '1H Six-Shooter • 1d6 • 6-Cyl'
         },
         {
             match: ['twin revolvers'],
             category: 'weapon',
-            slots: ['mainHand', 'ranged'],
+            slots: ['mainHand'],
             hands: 2,
             weaponTag: 'revolvers',
             stance: 'revolvers',
@@ -437,7 +465,7 @@
         {
             match: ['longbow', 'shortbow', 'crossbow', 'musket', 'pistol', 'rifle', /\bbow\b/, /\bsling\b/],
             category: 'weapon',
-            slots: ['ranged', 'mainHand'],
+            slots: ['ranged'],
             hands: 2,
             summary: 'Ranged Weapon'
         },
@@ -464,10 +492,10 @@
             summary: 'Crafting Reagent (2x = Potion, 1x = Bandage)'
         },
         {
-            match: ['alchemical catalyst', 'catalyst', 'silver dust'],
+            match: ['alchemical catalyst', 'catalyst', 'silver dust', 'wolfbane', 'sulfur', 'brimstone', 'pitch oil', 'lamp oil', 'moonpetal', 'charcoal', 'vampire ash', 'wolf fang', 'linen wrap'],
             category: 'crafting',
             slots: [],
-            summary: 'Advanced Crafting Reagent'
+            summary: 'Foraged / Shop Crafting Reagent'
         },
         {
             match: ['potion of greater healing'],
@@ -510,12 +538,24 @@
             summary: 'Heal 1d4 HP (Action)'
         },
         {
-            match: ['spring water', 'holy water'],
+            match: ['holy water', 'blessed by the morninglord', 'morninglord'],
             category: 'consumable',
             slots: [],
             quickBelt: true,
             useAction: { type: 'holyWater', label: 'Holy Water (2d6 Rad)' },
             summary: '2d6 Radiant & Halts Vampire Regen'
+        },
+        {
+            match: ['pure spring water', 'mountain spring water'],
+            category: 'crafting',
+            slots: [],
+            summary: 'Foraged Crafting Reagent (Spring Water)'
+        },
+        {
+            match: ['antitoxin', 'liquid silver', 'alchemist\'s fire', 'smoke bomb', 'sun-ash'],
+            category: 'consumable',
+            slots: [],
+            summary: 'Tactical Crafted Consumable'
         },
         {
             match: ['dream pastry'],
@@ -539,10 +579,11 @@
         }
     ];
 
-    // Unified Extensible Crafting Recipes (Shared Across All Heroes!)
+    // Unified Extensible Crafting Recipes (Unlocked vs Hidden & Locked until discovered!)
     const CRAFTING_RECIPES = [
         {
             id: 'craft_healing_potion',
+            unlocked: true,
             name: '🧪 Potion of Healing',
             badge: '2d6 + 1 HP',
             desc: 'Steep 2 bundles of Barovian Medicinal Herbs into a restorative ruby draught (Bonus Action self / Action ally).',
@@ -552,6 +593,7 @@
         },
         {
             id: 'craft_field_bandages',
+            unlocked: true,
             name: '🩹 Field Bandages',
             badge: '1d6 + 1 HP',
             desc: 'Infuse clean linen strips with crushed medicinal herbs to bind wounds quickly in the field.',
@@ -561,9 +603,12 @@
         },
         {
             id: 'craft_greater_healing',
+            unlocked: false,
+            unlockCode: 'GREATER-HEAL',
+            tierHint: 'Apothecary Formula',
             name: '🧪 Potion of Greater Healing',
             badge: '4d4 + 4 HP',
-            desc: 'Distill 4 bundles of Medicinal Herbs with 1 Alchemical Catalyst (found in Vallaki / Bonegrinder / Abbey) for potent recovery.',
+            desc: 'Distill 4 bundles of Medicinal Herbs with 1 Alchemical Catalyst for potent mid-battle recovery.',
             ingredients: [
                 { keyword: 'medicinal herb', label: 'Medicinal Herbs', qty: 4 },
                 { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 1 }
@@ -573,15 +618,110 @@
         },
         {
             id: 'craft_holy_water',
+            unlocked: false,
+            unlockCode: 'MORNINGLORD',
+            tierHint: 'Sacred Rite Formula',
             name: '💧 Flask of Morninglord Holy Water',
             badge: '2d6 Radiant',
-            desc: 'Consecrate pure spring water with powdered silver (25 GP value) to burn Undead & halt Vampire Regeneration.',
+            desc: 'Consecrate Pure Mountain Spring Water with Powdered Silver Dust to burn Undead & halt Vampire Regeneration.',
             ingredients: [
-                { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 },
-                { keyword: 'medicinal herb', label: 'Purifying Herb', qty: 1 }
+                { keyword: 'spring water', label: 'Pure Spring Water', qty: 1 },
+                { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 }
             ],
             outputRaw: '💧 1x Flask of Morninglord Holy Water (2d6 Radiant)',
             outputMatch: 'holy water'
+        },
+        {
+            id: 'craft_antitoxin',
+            unlocked: false,
+            unlockCode: 'WOLFBANE',
+            tierHint: 'Wilderness Herbalism',
+            name: '🧪 Barovian Antitoxin Tonic',
+            badge: 'Adv vs Poison (1 hr)',
+            desc: 'Boil Medicinal Herbs with bitter Svalich Wolfbane Root for 1 hour of Advantage on saving throws against poison.',
+            ingredients: [
+                { keyword: 'medicinal herb', label: 'Medicinal Herbs', qty: 2 },
+                { keyword: 'wolfbane', label: 'Svalich Wolfbane Root', qty: 1 }
+            ],
+            outputRaw: '🧪 1x Barovian Antitoxin Tonic (Adv vs Poison 1 hr)',
+            outputMatch: 'antitoxin'
+        },
+        {
+            id: 'craft_silver_oil',
+            unlocked: false,
+            unlockCode: 'SILVER-COAT',
+            tierHint: 'Monster-Hunter Alchemy',
+            name: '✨ Vial of Liquid Silver Coating',
+            badge: 'Silvered Weapon (1 hr)',
+            desc: 'Suspend Powdered Silver Dust in Pine Pitch Oil; coats 1 blade or 10 bullets/slugs as Silvered for 1 hour.',
+            ingredients: [
+                { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 },
+                { keyword: 'pitch oil', label: 'Pine Pitch & Lamp Oil', qty: 1 }
+            ],
+            outputRaw: '✨ 1x Vial of Liquid Silver Coating (1 hr)',
+            outputMatch: 'liquid silver'
+        },
+        {
+            id: 'craft_fire_flask',
+            unlocked: false,
+            unlockCode: 'BRIMSTONE',
+            tierHint: 'Volatile Concoction',
+            name: '🔥 Alchemist\'s Fire Flask',
+            badge: '1d4 Fire / Turn',
+            desc: 'Volatile flask of Brimstone Sulfur suspended in Pine Pitch Oil; ignites on impact (DC 10 DEX to extinguish).',
+            ingredients: [
+                { keyword: 'sulfur', label: 'Brimstone & Pitch Sulfur', qty: 1 },
+                { keyword: 'pitch oil', label: 'Pine Pitch & Lamp Oil', qty: 1 }
+            ],
+            outputRaw: '🔥 1x Alchemist\'s Fire Flask (1d4/turn Fire)',
+            outputMatch: 'alchemist\'s fire'
+        },
+        {
+            id: 'craft_smoke_bomb',
+            unlocked: false,
+            unlockCode: 'ASH-CLOUD',
+            tierHint: 'Tactical Gadget',
+            name: '💨 Ash-Cloud Smoke Bomb',
+            badge: '15-ft Obscured',
+            desc: 'Compact sulfur-charcoal sphere that bursts into a 15-ft radius cloud of choking fog for 1 minute.',
+            ingredients: [
+                { keyword: 'sulfur', label: 'Brimstone & Pitch Sulfur', qty: 1 },
+                { keyword: 'medicinal herb', label: 'Dried Herbs / Tinder', qty: 1 }
+            ],
+            outputRaw: '💨 1x Ash-Cloud Smoke Bomb (15-ft Heavily Obscured)',
+            outputMatch: 'smoke bomb'
+        },
+        {
+            id: 'craft_superior_healing',
+            unlocked: false,
+            unlockCode: 'MOONPETAL',
+            tierHint: 'Master Alchemy',
+            name: '🧪 Potion of Superior Healing',
+            badge: '8d4 + 8 HP',
+            desc: 'Rare master-grade Barovian elixir brewed with Svalich Moonpetal and double Alchemical Catalyst.',
+            ingredients: [
+                { keyword: 'medicinal herb', label: 'Medicinal Herbs', qty: 4 },
+                { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 2 },
+                { keyword: 'moonpetal', label: 'Svalich Moonpetal Blossom', qty: 1 }
+            ],
+            outputRaw: '🧪 1x Potion of Superior Healing (8d4+8 HP)',
+            outputMatch: 'potion of superior healing'
+        },
+        {
+            id: 'craft_vampire_ward',
+            unlocked: false,
+            unlockCode: 'SUN-ASH',
+            tierHint: 'Sacred Relic Alchemy',
+            name: '☀️ Sun-Ash Repellent Balm',
+            badge: '+1d4 Radiant Coat (10m)',
+            desc: 'Luminous consecrated unguent of Moonpetal, Silver Dust, and Spring Water; coats 1 weapon or 6 rounds for +1d4 Radiant.',
+            ingredients: [
+                { keyword: 'moonpetal', label: 'Svalich Moonpetal Blossom', qty: 1 },
+                { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 },
+                { keyword: 'spring water', label: 'Pure Spring Water', qty: 1 }
+            ],
+            outputRaw: '☀️ 1x Sun-Ash Repellent Balm (+1d4 Radiant Coat 10m)',
+            outputMatch: 'sun-ash'
         }
     ];
 
@@ -596,6 +736,8 @@
     let tradeRecipient = null;
     let tradeMode = 'item'; // 'item' | 'gold'
     let showCustomTagger = false;
+    let showPresetForm = false;
+    let lastAppliedPresetName = null;
 
     // Live Firebase State
     let firestoreDb = null;
@@ -647,10 +789,63 @@
     // =========================================================================
     // STORAGE: EQUIPPED SLOTS & CUSTOM GEAR TAGS
     // =========================================================================
-    function getEquipStorageKey() { return `cos_equip_${adapter.heroId}_v1`; }
+    function getEquipStorageKey() { return `cos_equip_${adapter.heroId}_${adapter.equipStorageVersion || 'v1'}`; }
     function getCustomGearKey() { return `cos_custom_gear_${adapter.heroId}_v1`; }
     function getClaimedCodesKey() { return `cos_claimed_codes_${adapter.heroId}_v1`; }
     function getCustomPresetsKey() { return `cos_presets_${adapter.heroId}_v1`; }
+    function getUnlockedRecipesKey() { return `cos_unlocked_recipes_v1`; }
+
+    function getCustomPresets() {
+        try {
+            const raw = localStorage.getItem(getCustomPresetsKey());
+            const arr = raw ? JSON.parse(raw) : [];
+            return Array.isArray(arr) ? arr : [];
+        } catch (e) { return []; }
+    }
+
+    function saveCustomPresets(list) {
+        localStorage.setItem(getCustomPresetsKey(), JSON.stringify(list));
+    }
+
+    function getAllPresets() {
+        const builtIn = (adapter.presets || []).map(p => ({ ...p, isCustom: false }));
+        const custom = getCustomPresets().map((p, i) => ({ ...p, isCustom: true, customIdx: i }));
+        return [...builtIn, ...custom];
+    }
+
+    function getUnlockedRecipeIds() {
+        try {
+            const raw = localStorage.getItem(getUnlockedRecipesKey());
+            const arr = raw ? JSON.parse(raw) : [];
+            return Array.isArray(arr) ? arr : [];
+        } catch (e) { return []; }
+    }
+
+    function isRecipeUnlocked(recipe) {
+        if (!recipe) return false;
+        if (recipe.unlocked) return true;
+        return getUnlockedRecipeIds().includes(recipe.id);
+    }
+
+    function unlockRecipeByCode(rawCode) {
+        const inp = document.getElementById('rpg-unlock-recipe-input');
+        const code = String(rawCode !== undefined ? rawCode : (inp ? inp.value : '')).trim().toUpperCase();
+        if (!code) return;
+        const match = CRAFTING_RECIPES.find(r => r.unlockCode && r.unlockCode.toUpperCase() === code);
+        if (!match) {
+            adapter.log(`⚠️ <strong>Unknown Recipe Code:</strong> "${esc(code)}". Check the formula code given by the DM.`);
+            return;
+        }
+        const unlocked = getUnlockedRecipeIds();
+        if (!unlocked.includes(match.id)) {
+            unlocked.push(match.id);
+            localStorage.setItem(getUnlockedRecipesKey(), JSON.stringify(unlocked));
+        }
+        if (inp) inp.value = '';
+        adapter.log(`🔓 <strong>Recipe Unlocked: ${esc(match.name)} (${esc(match.badge)})!</strong> Added permanently to your Crafting Workbench.`);
+        applyEquipmentToSheet(true);
+        renderCraftModal();
+    }
 
     function getCustomGearMap() {
         try {
@@ -719,7 +914,15 @@
 
         let changed = false;
         const usedCounts = new Map();
-        for (const s of SLOTS) {
+        const activeSlots = getActiveSlots();
+        const activeIds = new Set(activeSlots.map(s => s.id));
+        Object.keys(eq).forEach(k => {
+            if (k !== '_grip' && !activeIds.has(k)) {
+                delete eq[k];
+                changed = true;
+            }
+        });
+        for (const s of activeSlots) {
             const k = eq[s.id];
             if (!k) continue;
             const raw = findInventoryRawByKey(k);
@@ -787,7 +990,8 @@
         };
 
         const countedKeys = new Set();
-        for (const s of SLOTS) {
+        const activeSlots = getActiveSlots();
+        for (const s of activeSlots) {
             const k = eq[s.id];
             if (!k) continue;
             const raw = findInventoryRawByKey(k);
@@ -823,7 +1027,7 @@
             if (Array.isArray(meta.skillAdv)) {
                 meta.skillAdv.forEach(sk => { if (!bonuses.skillAdv.includes(sk)) bonuses.skillAdv.push(sk); });
             }
-            if (meta.weaponTag) bonuses.equippedWeaponTags.push({ tag: meta.weaponTag, slot: s.id, grip: s.id === 'mainHand' && bonuses.mainHand2H ? '2h' : '1h' });
+            if (meta.weaponTag) bonuses.equippedWeaponTags.push({ tag: meta.weaponTag, slot: s.id, grip: s.id === 'mainHand' && bonuses.mainHand2H ? '2h' : '1h', raw, meta });
             if (meta.grantsAbility) bonuses.equippedAbilities.push(meta.grantsAbility);
             if (meta.summary) bonuses.activePerks.push(`<strong>${esc(shortLabel(raw))}:</strong> ${esc(meta.summary)}`);
         }
@@ -839,6 +1043,7 @@
 
         const nativeTags = new Set(adapter.nativeWeaponTags || []);
         const eq = bonuses.equippedMap || {};
+        const activeSlots = getActiveSlots();
         ['mainHand', 'offHand', 'ranged'].forEach(slotId => {
             const key = eq[slotId];
             if (!key) return;
@@ -848,7 +1053,9 @@
             const meta = getItemMeta(raw);
             if (meta.isShield) return;
             if (meta.weaponTag && nativeTags.has(meta.weaponTag)) return;
-            const slotObj = SLOTS.find(s => s.id === slotId);
+            if (adapter.heroId === 'yvaine' && slotId === 'offHand' && meta.isLegDagger) return;
+            const slotObj = activeSlots.find(s => s.id === slotId);
+            if (!slotObj) return;
             const card = document.createElement('div');
             card.className = 'action-card rpg-dyn-weapon-card';
             card.style.borderLeft = '3px solid #f59e0b';
@@ -890,12 +1097,14 @@
         if (!raw) return;
         const meta = getItemMeta(raw);
 
+        const activeSlots = getActiveSlots();
+
         // Check Attunement limit (max 3)
         if (meta.attune) {
             const currentBonuses = getGearBonuses();
             const replacingRaw = eq[slotId] ? findInventoryRawByKey(eq[slotId]) : null;
             const replacingAttuned = replacingRaw ? !!getItemMeta(replacingRaw).attune : false;
-            const alreadyEquippedSame = SLOTS.some(s => eq[s.id] === itemKey);
+            const alreadyEquippedSame = activeSlots.some(s => eq[s.id] === itemKey);
             if (!alreadyEquippedSame && !replacingAttuned && currentBonuses.attunedCount >= 3) {
                 adapter.log(`⚠️ <strong>Attunement Full (3/3)!</strong> Unequip an attuned magic item before attuning to <strong>${esc(shortLabel(raw))}</strong>.`);
                 return;
@@ -904,7 +1113,7 @@
 
         // If quantity is 1, remove from any other slot first
         const totalQty = adapter.getItems().reduce((acc, r) => normKey(r) === itemKey ? acc + parseItem(r).qty : acc, 0);
-        const alreadyInSlots = SLOTS.filter(s => eq[s.id] === itemKey && s.id !== slotId);
+        const alreadyInSlots = activeSlots.filter(s => eq[s.id] === itemKey && s.id !== slotId);
         if (alreadyInSlots.length >= totalQty) {
             delete eq[alreadyInSlots[0].id];
         }
@@ -937,7 +1146,7 @@
         }
 
         saveEquippedState(eq);
-        const slotObj = SLOTS.find(s => s.id === slotId);
+        const slotObj = activeSlots.find(s => s.id === slotId) || { icon: '🛡️', label: slotId };
         const gripTag = (slotId === 'mainHand' && isMainHandTwoHanded(eq)) ? ' (2-Handed)' : '';
         adapter.log(`🛡️ <strong>Equipped ${esc(shortLabel(raw))}</strong> into <strong>${slotObj.icon} ${slotObj.label}${gripTag}</strong> — sheet stats updated!`);
         applyEquipmentToSheet();
@@ -967,29 +1176,127 @@
         applyEquipmentToSheet();
     }
 
-    function applyLoadoutPreset(presetIdx) {
-        const presets = adapter.presets || [];
-        const p = presets[presetIdx];
-        if (!p) return;
-        const eq = reconcileEquippedWithInventory();
-        for (const [slotId, keyword] of Object.entries(p.slots)) {
+    function matchesPresetSlots(preset, eq) {
+        if (!preset || !preset.slots) return false;
+        const activeSlots = getActiveSlots();
+        if (preset.isCustom) {
+            for (const s of activeSlots) {
+                const want = preset.slots[s.id] || '';
+                const have = eq[s.id] || '';
+                if (want !== have) return false;
+            }
+            if (preset.slots._grip && eq.mainHand && (eq._grip || '1h') !== preset.slots._grip) return false;
+            return true;
+        }
+        const items = adapter.getItems();
+        for (const [slotId, keyword] of Object.entries(preset.slots)) {
             if (slotId === '_grip') {
-                eq._grip = keyword;
+                if (eq.mainHand && (eq._grip || '1h') !== keyword) return false;
                 continue;
             }
             if (!keyword) {
-                delete eq[slotId];
+                if (eq[slotId]) return false;
                 continue;
             }
-            const found = adapter.getItems().find(r => r.toLowerCase().includes(keyword.toLowerCase()));
-            if (found) {
-                eq[slotId] = normKey(found);
+            const curKey = eq[slotId];
+            if (!curKey) return false;
+            const curRaw = items.find(r => normKey(r) === curKey) || curKey;
+            if (!curRaw.toLowerCase().includes(keyword.toLowerCase())) return false;
+        }
+        return true;
+    }
+
+    function getActivePresetInfo(eqOverride) {
+        const eq = eqOverride || reconcileEquippedWithInventory();
+        const all = getAllPresets();
+        if (lastAppliedPresetName) {
+            const preferred = all.find(p => p.label === lastAppliedPresetName && matchesPresetSlots(p, eq));
+            if (preferred) return { label: preferred.label, isCustom: !!preferred.isCustom, preset: preferred };
+        }
+        // Prefer exact custom preset matches first, then built-in presets
+        const customMatch = all.find(p => p.isCustom && matchesPresetSlots(p, eq));
+        if (customMatch) return { label: customMatch.label, isCustom: true, preset: customMatch };
+        const builtMatch = all.find(p => !p.isCustom && matchesPresetSlots(p, eq));
+        if (builtMatch) return { label: builtMatch.label, isCustom: false, preset: builtMatch };
+        return { label: 'Custom Loadout', isCustom: false, preset: null };
+    }
+
+    function applyLoadoutPreset(presetIdx) {
+        const presets = getAllPresets();
+        const p = presets[presetIdx];
+        if (!p) return;
+        const eq = reconcileEquippedWithInventory();
+        const activeSlots = getActiveSlots();
+        if (p.isCustom) {
+            activeSlots.forEach(s => { delete eq[s.id]; });
+            for (const [slotId, val] of Object.entries(p.slots)) {
+                if (slotId === '_grip') {
+                    eq._grip = val;
+                    continue;
+                }
+                if (val && findInventoryRawByKey(val)) {
+                    eq[slotId] = val;
+                }
+            }
+        } else {
+            for (const [slotId, keyword] of Object.entries(p.slots)) {
+                if (slotId === '_grip') {
+                    eq._grip = keyword;
+                    continue;
+                }
+                if (!keyword) {
+                    delete eq[slotId];
+                    continue;
+                }
+                const found = adapter.getItems().find(r => r.toLowerCase().includes(keyword.toLowerCase()));
+                if (found) {
+                    eq[slotId] = normKey(found);
+                }
             }
         }
         if (isMainHandTwoHanded(eq)) delete eq.offHand;
+        lastAppliedPresetName = p.label;
         saveEquippedState(eq);
         adapter.log(`⚡ <strong>Loadout Swapped:</strong> ${esc(p.label)}!`);
         applyEquipmentToSheet();
+    }
+
+    function saveCurrentAsPreset() {
+        const inp = document.getElementById('rpg-new-preset-name');
+        const label = (inp ? inp.value : '').trim().slice(0, 36);
+        if (!label) {
+            adapter.log('⚠️ Enter a short name for your new equipment preset.');
+            return;
+        }
+        const eq = reconcileEquippedWithInventory();
+        const activeSlots = getActiveSlots();
+        const snapshotSlots = { _grip: eq._grip || '1h' };
+        const slotLabels = {};
+        for (const s of activeSlots) {
+            if (!eq[s.id]) continue;
+            const raw = findInventoryRawByKey(eq[s.id]);
+            if (raw) {
+                snapshotSlots[s.id] = eq[s.id];
+                slotLabels[s.label] = shortLabel(raw) + (s.id === 'mainHand' && isMainHandTwoHanded(eq) ? ' (2H)' : '');
+            }
+        }
+        const list = getCustomPresets().filter(p => p.label.toLowerCase() !== label.toLowerCase());
+        list.push({ label, slots: snapshotSlots, slotLabels });
+        saveCustomPresets(list);
+        lastAppliedPresetName = label;
+        showPresetForm = false;
+        adapter.log(`💾 <strong>Saved Equipment Preset:</strong> "${esc(label)}" (${Object.keys(slotLabels).length} slots) — included in Export Data!`);
+        renderEquipModal();
+    }
+
+    function deleteCustomPreset(customIdx) {
+        const list = getCustomPresets();
+        if (customIdx < 0 || customIdx >= list.length) return;
+        const removed = list.splice(customIdx, 1);
+        saveCustomPresets(list);
+        if (lastAppliedPresetName === removed[0]?.label) lastAppliedPresetName = null;
+        adapter.log(`🗑️ Removed custom preset "${esc(removed[0]?.label || '')}".`);
+        renderEquipModal();
     }
 
     // Quick equip from Backpack (picks best natural slot automatically)
@@ -999,21 +1306,24 @@
         if (!raw) return;
         const key = normKey(raw);
         const eq = reconcileEquippedWithInventory();
-        const existingSlot = SLOTS.find(s => eq[s.id] === key);
+        const activeSlots = getActiveSlots();
+        const activeIds = new Set(activeSlots.map(s => s.id));
+        const existingSlot = activeSlots.find(s => eq[s.id] === key);
         if (existingSlot) {
             unequipSlot(existingSlot.id);
             return;
         }
         const meta = getItemMeta(raw);
-        if (!meta.slots || meta.slots.length === 0) {
+        const validSlots = (meta.slots || []).filter(sid => activeIds.has(sid));
+        if (validSlots.length === 0) {
             openEquipModal('body');
             showCustomTagger = true;
             renderEquipModal();
             return;
         }
-        // For rings, pick first open ring slot
-        let targetSlot = meta.slots[0];
-        if (meta.slots.includes('ring1') && eq.ring1 && !eq.ring2) targetSlot = 'ring2';
+        // Pick first open valid slot, or fall back to primary valid slot
+        let targetSlot = validSlots.find(sid => !eq[sid]) || validSlots[0];
+        if (validSlots.includes('ring1') && eq.ring1 && !eq.ring2) targetSlot = 'ring2';
         equipItemToSlot(targetSlot, key);
     }
 
@@ -1032,25 +1342,8 @@
     }
 
     function syncExternalWeaponStance(stance) {
-        const eq = reconcileEquippedWithInventory();
-        const items = adapter.getItems();
-        if (stance === 'lament') {
-            const lament = items.find(r => r.toLowerCase().includes('lament'));
-            if (lament) {
-                eq.mainHand = normKey(lament);
-                eq._grip = '2h';
-                delete eq.offHand;
-            }
-        } else if (stance === 'revolvers') {
-            const mercy = items.find(r => r.toLowerCase().includes('"mercy"') || r.toLowerCase().includes('mercy (main'));
-            const less = items.find(r => r.toLowerCase().includes('"less"') || r.toLowerCase().includes('less (off'));
-            const twin = items.find(r => r.toLowerCase().includes('twin revolvers'));
-            if (mercy) eq.mainHand = normKey(mercy);
-            else if (twin) eq.mainHand = normKey(twin);
-            if (less) eq.offHand = normKey(less);
-            eq._grip = '1h';
-        }
-        saveEquippedState(eq);
+        // Lament lives permanently in the Ranged slot while Mercy & Less occupy Main Hand & Off-Hand;
+        // swapping firearm stance should not overwrite equipped hand slots.
         applyEquipmentToSheet(true);
     }
 
@@ -1105,12 +1398,12 @@
     }
 
     function countReadyRecipes() {
-        return CRAFTING_RECIPES.filter(r => r.ingredients.every(ing => countIngredientQty(ing.keyword) >= ing.qty)).length;
+        return CRAFTING_RECIPES.filter(r => isRecipeUnlocked(r) && r.ingredients.every(ing => countIngredientQty(ing.keyword) >= ing.qty)).length;
     }
 
     function craftRecipe(recipeId) {
         const recipe = CRAFTING_RECIPES.find(r => r.id === recipeId);
-        if (!recipe) return;
+        if (!recipe || !isRecipeUnlocked(recipe)) return;
         for (const ing of recipe.ingredients) {
             if (countIngredientQty(ing.keyword) < ing.qty) {
                 adapter.log(`⚠️ <strong>Not enough ${esc(ing.label)}</strong> to craft ${esc(recipe.name)}!`);
@@ -1557,7 +1850,10 @@
                         </div>
                         <div class="rpg-modal-body" id="rpg-equip-body"></div>
                         <div class="rpg-modal-foot">
-                            <button type="button" class="rpg-mini-btn" onclick="COS_RPG.openBackpackModal()">🎒 Open Full Backpack</button>
+                            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                                <button type="button" class="rpg-mini-btn" onclick="COS_RPG.openBackpackModal()">Open Full Backpack</button>
+                                <button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.exportEquippedGear()">Export Gear &amp; Presets</button>
+                            </div>
                             <button type="button" class="rpg-mini-btn" onclick="COS_RPG.closeModal('rpg-equip-modal')">Close</button>
                         </div>
                     </div>
@@ -1694,8 +1990,9 @@
         const pendingCnt = incomingTrades.length;
 
         // Build compact equipped chips
+        const activeSlots = getActiveSlots();
         const chips = [];
-        for (const s of SLOTS) {
+        for (const s of activeSlots) {
             if (!eq[s.id]) continue;
             const raw = findInventoryRawByKey(eq[s.id]);
             if (!raw) continue;
@@ -1741,7 +2038,7 @@
                 <button type="button" class="rpg-hub-tile tile-equip" onclick="COS_RPG.openEquipModal()">
                     <div class="rpg-hub-tile-top">
                         <span>🛡️ Equipment</span>
-                        <span class="rpg-badge-count">${bonuses.equippedCount}/11</span>
+                        <span class="rpg-badge-count">${bonuses.equippedCount}/${activeSlots.length}</span>
                     </div>
                     <span class="rpg-hub-tile-sub">Paper-doll slots &amp; live stats</span>
                 </button>
@@ -1817,13 +2114,28 @@
         const bonuses = getGearBonuses();
         const eq = bonuses.equippedMap;
         const items = adapter.getItems();
-        const curSlotObj = SLOTS.find(s => s.id === selectedSlot) || SLOTS[2];
+        const activeSlots = getActiveSlots();
+        const curSlotObj = activeSlots.find(s => s.id === selectedSlot) || activeSlots[2];
 
-        // Live Stat Pills
+        // Live Stat Pills + Active Preset + Custom Preset Builder
         const acTxt = document.getElementById('ac-disp')?.innerText || '--';
-        const presetsHtml = (adapter.presets || []).map((p, idx) =>
-            `<button type="button" class="rpg-preset-btn" onclick="COS_RPG.applyLoadoutPreset(${idx})">${esc(p.label)}</button>`
-        ).join('');
+        const allPresets = getAllPresets();
+        const activePreset = getActivePresetInfo(eq);
+        const presetsHtml = allPresets.map((p, idx) => {
+            const isAct = activePreset.preset && activePreset.label === p.label && !!activePreset.isCustom === !!p.isCustom;
+            if (p.isCustom) {
+                return `<span class="rpg-preset-wrap"><button type="button" class="rpg-preset-btn ${isAct ? 'preset-active' : ''}" onclick="COS_RPG.applyLoadoutPreset(${idx})">${esc(p.label)}</button><button type="button" class="rpg-preset-del" onclick="COS_RPG.deleteCustomPreset(${p.customIdx})" aria-label="Delete preset ${esc(p.label)}" title="Delete custom preset">✕</button></span>`;
+            }
+            return `<button type="button" class="rpg-preset-btn ${isAct ? 'preset-active' : ''}" onclick="COS_RPG.applyLoadoutPreset(${idx})">${esc(p.label)}</button>`;
+        }).join('');
+
+        const presetFormHtml = showPresetForm ? `
+            <div class="rpg-preset-form">
+                <input type="text" id="rpg-new-preset-name" class="rpg-input" style="flex:1; min-width:170px;" maxlength="36" placeholder="New preset name (e.g. Boss Fight, Stealth)...">
+                <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.saveCurrentAsPreset()">Save Preset</button>
+                <button type="button" class="rpg-mini-btn" onclick="COS_RPG.togglePresetForm()">Cancel</button>
+            </div>
+        ` : '';
 
         // Filter inventory items that fit selectedSlot
         const compatible = [];
@@ -1843,7 +2155,7 @@
             pickerItemsHtml = `
                 <div style="font-size:0.75rem; color:#94a3b8; padding:12px 6px; text-align:center;">
                     No items in your Backpack are tagged for <strong>${curSlotObj.icon} ${curSlotObj.label}</strong> yet.<br>
-                    <small style="color:#64748b;">Found custom DM loot? Click <strong>[🛠️ Tag Custom Gear]</strong> below to assign any item to this slot!</small>
+                    <small style="color:#64748b;">Found custom DM loot? Click <strong>[Tag Custom]</strong> above to assign any item to this slot!</small>
                 </div>
             `;
         } else {
@@ -1881,14 +2193,14 @@
         const untaggedOptions = items.map(r => `<option value="${esc(normKey(r))}">${esc(shortLabel(r))}</option>`).join('');
         const customTaggerHtml = showCustomTagger ? `
             <div class="rpg-custom-tagger">
-                <div style="font-size:0.72rem; font-weight:800; color:#fde68a;">🛠️ Tag Any Backpack Item as Equippable Gear</div>
+                <div style="font-size:0.72rem; font-weight:800; color:#fde68a;">Tag Any Backpack Item as Equippable Gear</div>
                 <label class="rpg-field-lbl">Item from Backpack
                     <select id="rpg-tag-item" class="rpg-select">${untaggedOptions}</select>
                 </label>
                 <div class="rpg-form-grid">
                     <label class="rpg-field-lbl">Slot
                         <select id="rpg-tag-slot" class="rpg-select">
-                            ${SLOTS.map(s => `<option value="${s.id}" ${s.id === selectedSlot ? 'selected' : ''}>${s.icon} ${s.label}</option>`).join('')}
+                            ${activeSlots.map(s => `<option value="${s.id}" ${s.id === selectedSlot ? 'selected' : ''}>${s.icon} ${s.label}</option>`).join('')}
                         </select>
                     </label>
                     <label class="rpg-field-lbl">Hands / Grip
@@ -1919,45 +2231,51 @@
                 </label>
                 <div style="display:flex; gap:6px; justify-content:flex-end;">
                     <button type="button" class="rpg-mini-btn" onclick="COS_RPG.toggleCustomTagger()">Cancel</button>
-                    <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.saveCustomGearTag()">💾 Save &amp; Equip</button>
+                    <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.saveCustomGearTag()">Save &amp; Equip</button>
                 </div>
             </div>
         ` : '';
 
+        const bodySlots = activeSlots.filter(s => s.group === 'body');
+        const accSlot = activeSlots.find(s => s.id === 'amulet');
+        const ringSlots = activeSlots.filter(s => s.group === 'ring');
+        const handSlots = activeSlots.filter(s => s.group === 'hand');
+
         body.innerHTML = `
             <div class="rpg-equip-topstats">
                 <div class="rpg-stat-pills">
-                    <span class="rpg-stat-pill gold">🛡️ Live AC: ${esc(acTxt)}</span>
-                    ${bonuses.saveBonus ? `<span class="rpg-stat-pill blue">✨ Saves: +${bonuses.saveBonus}</span>` : ''}
-                    ${bonuses.spellDcBonus ? `<span class="rpg-stat-pill purple">🔮 Spell DC/Hit: +${bonuses.spellDcBonus}</span>` : ''}
-                    ${bonuses.spellFireBonus ? `<span class="rpg-stat-pill" style="border-color:#ef4444; color:#fca5a5;">🔥 Spell Fire: +${esc(bonuses.spellFireBonus)}</span>` : ''}
-                    ${bonuses.skillAdv.length ? `<span class="rpg-stat-pill green">🎯 Adv: ${esc(bonuses.skillAdv.join(', '))}</span>` : ''}
-                    <span class="rpg-stat-pill purple">✨ Attuned: ${bonuses.attunedCount} / 3</span>
+                    <span class="rpg-stat-pill gold">Live AC: ${esc(acTxt)}</span>
+                    <span class="rpg-stat-pill" style="border-color:#60a5fa; color:#bfdbfe;">Preset: ${esc(activePreset.label)}${activePreset.isCustom ? ' (Custom)' : ''}</span>
+                    ${bonuses.saveBonus ? `<span class="rpg-stat-pill blue">Saves: +${bonuses.saveBonus}</span>` : ''}
+                    ${bonuses.spellDcBonus ? `<span class="rpg-stat-pill purple">Spell DC/Hit: +${bonuses.spellDcBonus}</span>` : ''}
+                    ${bonuses.spellFireBonus ? `<span class="rpg-stat-pill" style="border-color:#ef4444; color:#fca5a5;">Spell Fire: +${esc(bonuses.spellFireBonus)}</span>` : ''}
+                    ${bonuses.skillAdv.length ? `<span class="rpg-stat-pill green">Adv: ${esc(bonuses.skillAdv.join(', '))}</span>` : ''}
+                    <span class="rpg-stat-pill purple">Attuned: ${bonuses.attunedCount} / 3</span>
                 </div>
-                ${presetsHtml ? `<div class="rpg-presets-bar"><span style="font-size:0.66rem; font-weight:800; color:#94a3b8;">⚡ PRESETS:</span>${presetsHtml}</div>` : ''}
+                <div class="rpg-presets-bar">
+                    <span style="font-size:0.66rem; font-weight:800; color:#94a3b8;">PRESETS:</span>
+                    ${presetsHtml}
+                    <button type="button" class="rpg-mini-btn btn-use" style="min-block-size:28px;" onclick="COS_RPG.togglePresetForm()">+ Save Preset</button>
+                </div>
+                ${presetFormHtml}
             </div>
 
             <div class="rpg-equip-split">
-                <!-- LEFT: 11-SLOT PAPER-DOLL -->
+                <!-- LEFT: PAPER-DOLL -->
                 <div class="rpg-paperdoll-board">
                     <div class="rpg-doll-upper">
                         <div class="rpg-doll-col">
                             <div class="rpg-doll-col-title">Armor &amp; Attire (Head ➔ Feet)</div>
-                            ${renderSlotBox(SLOTS[0], eq, bonuses)}
-                            ${renderSlotBox(SLOTS[1], eq, bonuses)}
-                            ${renderSlotBox(SLOTS[2], eq, bonuses)}
-                            ${renderSlotBox(SLOTS[3], eq, bonuses)}
-                            ${renderSlotBox(SLOTS[4], eq, bonuses)}
+                            ${bodySlots.map(s => renderSlotBox(s, eq, bonuses)).join('')}
                         </div>
                         <div class="rpg-doll-col">
                             <div class="rpg-doll-col-title">Relics &amp; Jewelry</div>
-                            ${renderSlotBox(SLOTS[5], eq, bonuses)}
+                            ${accSlot ? renderSlotBox(accSlot, eq, bonuses) : ''}
                             <div class="rpg-rings-row">
-                                ${renderSlotBox(SLOTS[6], eq, bonuses)}
-                                ${renderSlotBox(SLOTS[7], eq, bonuses)}
+                                ${ringSlots.map(s => renderSlotBox(s, eq, bonuses)).join('')}
                             </div>
                             <div class="rpg-active-bonuses-box" style="margin-top:auto;">
-                                <div style="font-size:0.66rem; font-weight:800; color:#6ee7b7; text-transform:uppercase; margin-bottom:4px;">⚡ Active Equipped Perks</div>
+                                <div style="font-size:0.66rem; font-weight:800; color:#6ee7b7; text-transform:uppercase; margin-bottom:4px;">Active Equipped Perks</div>
                                 ${bonuses.activePerks.length > 0
                                     ? bonuses.activePerks.map(p => `<div>• ${p}</div>`).join('')
                                     : '<div style="color:#64748b; font-style:italic;">Equip gear to activate passive bonuses!</div>'}
@@ -1967,13 +2285,11 @@
 
                     <div>
                         <div class="rpg-doll-col-title" style="margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
-                            <span>Combat Hands &amp; Ranged Holster</span>
-                            ${mhVersatile ? `<button type="button" class="rpg-mini-btn" style="padding:1px 7px; min-block-size:22px; font-size:0.65rem;" onclick="COS_RPG.toggleMainHandGrip()">🔄 Grip: ${bonuses.mainHand2H ? '2-Handed' : '1-Handed'}</button>` : ''}
+                            <span>Combat Hands &amp; ${handSlots.length > 3 ? 'Holsters / Leg Sheath' : 'Ranged Holster'}</span>
+                            ${mhVersatile ? `<button type="button" class="rpg-mini-btn" style="padding:1px 7px; min-block-size:22px; font-size:0.65rem;" onclick="COS_RPG.toggleMainHandGrip()">Grip: ${bonuses.mainHand2H ? '2-Handed' : '1-Handed'}</button>` : ''}
                         </div>
-                        <div class="rpg-hands-row">
-                            ${renderSlotBox(SLOTS[8], eq, bonuses)}
-                            ${renderSlotBox(SLOTS[9], eq, bonuses)}
-                            ${renderSlotBox(SLOTS[10], eq, bonuses)}
+                        <div class="rpg-hands-row ${handSlots.length >= 4 ? 'hands-4' : ''}">
+                            ${handSlots.map(s => renderSlotBox(s, eq, bonuses)).join('')}
                         </div>
                     </div>
                 </div>
@@ -1994,6 +2310,15 @@
                 </div>
             </div>
         `;
+        if (showPresetForm) {
+            const pInp = document.getElementById('rpg-new-preset-name');
+            if (pInp) {
+                pInp.focus();
+                pInp.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' && !e.isComposing) saveCurrentAsPreset();
+                });
+            }
+        }
     }
 
     function saveCustomGearTag() {
@@ -2016,7 +2341,7 @@
 
         const slots = (slot === 'ring1' || slot === 'ring2') ? ['ring1', 'ring2'] : [slot];
         const meta = {
-            category: ['mainHand', 'offHand', 'ranged'].includes(slot) ? 'weapon' : (['amulet', 'ring1', 'ring2'].includes(slot) ? 'accessory' : 'armor'),
+            category: ['mainHand', 'offHand', 'legSheath', 'ranged'].includes(slot) ? 'weapon' : (['amulet', 'ring1', 'ring2'].includes(slot) ? 'accessory' : 'armor'),
             slots,
             hands: handsVal === '2' ? 2 : 1,
             versatile: handsVal === 'versatile',
@@ -2026,6 +2351,7 @@
             spellAtkBonus: spellBonus,
             attune,
             isShield: slot === 'offHand' && acBonus > 0,
+            isLegDagger: slot === 'legSheath',
             summary: parts.join(' • ') || 'Custom Equippable Gear'
         };
         const map = getCustomGearMap();
@@ -2099,18 +2425,20 @@
         const q = bpSearchQuery.trim().toLowerCase();
 
         const rows = [];
+        const activeSlots = getActiveSlots();
+        const activeIds = new Set(activeSlots.map(s => s.id));
         items.forEach((raw, idx) => {
             const p = parseItem(raw);
             const meta = getItemMeta(raw);
             const key = normKey(raw);
-            const eqSlot = SLOTS.find(s => eq[s.id] === key);
+            const eqSlot = activeSlots.find(s => eq[s.id] === key);
             const isEquipped = !!eqSlot;
 
             if (q && !raw.toLowerCase().includes(q) && !(meta.summary || '').toLowerCase().includes(q)) return;
             if (bpCategoryFilter === 'equipped' && !isEquipped) return;
             if (bpCategoryFilter !== 'all' && bpCategoryFilter !== 'equipped' && meta.category !== bpCategoryFilter) return;
 
-            const canEquip = meta.slots && meta.slots.length > 0;
+            const canEquip = meta.slots && meta.slots.some(sid => activeIds.has(sid));
             const catLbl = BP_CATS.find(c => c.id === meta.category)?.label || '📦 Gear';
 
             rows.push(`
@@ -2191,21 +2519,39 @@
     }
 
     // =========================================================================
-    // ⚗️ RENDER CRAFTING MODAL
+    // ⚗️ RENDER CRAFTING MODAL (UNLOCKED FORMULAS + LOCKED MYSTERY RECIPES)
     // =========================================================================
     function renderCraftModal() {
         const body = document.getElementById('rpg-craft-body');
         if (!body) return;
+        const items = adapter.getItems();
         const herbs = countIngredientQty('medicinal herb');
-        const cats = countIngredientQty('alchemical catalyst');
-        const silver = countIngredientQty('silver dust');
+
+        // Only show reagents the player actually carries (+ Medicinal Herbs baseline) — zero spoilers!
+        const carriedReagents = [`🌿 Medicinal Herbs: <strong>${herbs}x</strong>`];
+        const seenReagentKeys = new Set(['medicinal herb']);
+        items.forEach(raw => {
+            const meta = getItemMeta(raw);
+            if (meta.category !== 'crafting') return;
+            const p = parseItem(raw);
+            const low = p.name.toLowerCase();
+            if (low.includes('medicinal herb')) return;
+            const rk = low.trim();
+            if (seenReagentKeys.has(rk)) return;
+            seenReagentKeys.add(rk);
+            carriedReagents.push(`${p.emoji || '🧪 '}${esc(shortLabel(raw).replace(/^[^\w"]+/, '').trim())}: <strong>${p.qty}x</strong>`);
+        });
+
+        const unlockedRecipes = CRAFTING_RECIPES.filter(r => isRecipeUnlocked(r));
+        const lockedRecipes = CRAFTING_RECIPES.filter(r => !isRecipeUnlocked(r));
 
         body.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:7px 10px;">
-                <span style="font-size:0.74rem; color:#6ee7b7; font-weight:700;">🌿 Medicinal Herbs: <strong>${herbs}x</strong> • ⚗️ Catalysts: <strong>${cats}x</strong> • ✨ Silver Dust: <strong>${silver}x</strong></span>
-                <span style="font-size:0.68rem; color:#94a3b8;">Extensible Campaign Recipes</span>
+                <span style="font-size:0.74rem; color:#6ee7b7; font-weight:700;">${carriedReagents.join(' &nbsp;•&nbsp; ')}</span>
+                <span style="font-size:0.68rem; color:#94a3b8;">Known: ${unlockedRecipes.length} / ${CRAFTING_RECIPES.length}</span>
             </div>
-            ${CRAFTING_RECIPES.map(r => {
+
+            ${unlockedRecipes.map(r => {
                 const canCraft = r.ingredients.every(ing => countIngredientQty(ing.keyword) >= ing.qty);
                 const reqs = r.ingredients.map(ing => {
                     const have = countIngredientQty(ing.keyword);
@@ -2226,6 +2572,30 @@
                     </div>
                 `;
             }).join('')}
+
+            ${lockedRecipes.length > 0 ? `
+                <div style="margin-top:4px; display:flex; flex-direction:column; gap:6px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-size:0.7rem; font-weight:800; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px;">Locked &amp; Undiscovered Recipes (${lockedRecipes.length})</span>
+                        <span style="font-size:0.66rem; color:#64748b;">Discover in Barovia to unlock</span>
+                    </div>
+                    <div class="rpg-craft-mystery-grid">
+                        ${lockedRecipes.map((r, i) => `
+                            <div class="rpg-craft-mystery">
+                                <div class="rpg-craft-mystery-title">🔒 ??? — Unknown Formula #${i + 1}</div>
+                                <div class="rpg-craft-mystery-sub">Locked • Ingredients &amp; recipe unknown</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <details style="background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:6px 9px; margin-top:2px;">
+                        <summary style="cursor:pointer; font-size:0.7rem; font-weight:700; color:#93c5fd;">Learned a new recipe from the DM? Enter Recipe Code</summary>
+                        <div style="display:flex; gap:6px; margin-top:6px;">
+                            <input type="text" id="rpg-unlock-recipe-input" class="rpg-input" style="flex:1;" placeholder="Enter DM Recipe Code...">
+                            <button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.unlockRecipeByCode()">Unlock</button>
+                        </div>
+                    </details>
+                </div>
+            ` : ''}
         `;
     }
 
@@ -2418,16 +2788,53 @@
     function getExportEquippedSummary() {
         const bonuses = getGearBonuses();
         const eq = bonuses.equippedMap;
+        const activeSlots = getActiveSlots();
+        const activePreset = getActivePresetInfo(eq);
         const parts = [];
-        for (const s of SLOTS) {
+        for (const s of activeSlots) {
             if (!eq[s.id]) continue;
             const raw = findInventoryRawByKey(eq[s.id]);
             if (raw) {
                 const grip = (s.id === 'mainHand' && bonuses.mainHand2H) ? ' (2H)' : '';
-                parts.push(`${s.label}: ${shortLabel(raw)}${grip}`);
+                parts.push(`${s.label}=${shortLabel(raw)}${grip}`);
             }
         }
-        return parts.length > 0 ? `Equipped: ${parts.join(', ')}` : 'Equipped: None';
+        const presetStr = `Preset: ${activePreset.label}${activePreset.isCustom ? ' [Custom]' : ''}`;
+        const eqStr = parts.length > 0 ? `Equipped: ${parts.join(', ')}` : 'Equipped: None';
+
+        // Include any newly saved Custom Presets with their full equipped gear breakdown!
+        const customPresets = getCustomPresets();
+        let customStr = '';
+        if (customPresets.length > 0) {
+            const pSummaries = customPresets.map(cp => {
+                let pairs = [];
+                if (cp.slotLabels && Object.keys(cp.slotLabels).length > 0) {
+                    pairs = Object.entries(cp.slotLabels).map(([k, v]) => `${k}=${v}`);
+                } else if (cp.slots) {
+                    for (const s of activeSlots) {
+                        if (!cp.slots[s.id]) continue;
+                        const r = findInventoryRawByKey(cp.slots[s.id]);
+                        pairs.push(`${s.label}=${r ? shortLabel(r) : cp.slots[s.id]}`);
+                    }
+                }
+                return `{${cp.label}: ${pairs.length ? pairs.join(', ') : 'Empty'}}`;
+            });
+            customStr = ` | Saved Presets: ${pSummaries.join(' ; ')}`;
+        }
+        return `${presetStr} | ${eqStr}${customStr}`;
+    }
+
+    function exportEquippedGear() {
+        const exportStr = `${adapter.heroEmoji || '🛡️'} ${String(adapter.heroName || 'Hero').toUpperCase()} GEAR EXPORT | ${getExportEquippedSummary()}`;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(exportStr).then(() => {
+                adapter.log(`📋 <strong>Equipped Gear &amp; Presets Exported!</strong><br><small style="color:#cbd5e1;">${esc(exportStr)}</small>`);
+            }).catch(() => {
+                prompt('Copy Equipped Gear & Presets export:', exportStr);
+            });
+        } else {
+            prompt('Copy Equipped Gear & Presets export:', exportStr);
+        }
     }
 
     function checkUrlClaimParam() {
@@ -2454,13 +2861,17 @@
     // Export public API
     window.COS_RPG = {
         init,
-        SLOTS,
+        SLOTS: BASE_SLOTS,
+        getActiveSlots,
         getGearBonuses,
         getEquippedState,
+        findInventoryRawByKey,
+        shortLabel,
         applyEquipmentToSheet,
         syncExternalBodySlot,
         syncExternalWeaponStance,
         getExportEquippedSummary,
+        exportEquippedGear,
         openEquipModal,
         openBackpackModal,
         openCraftModal,
@@ -2472,6 +2883,9 @@
         unequipSlot,
         toggleMainHandGrip,
         applyLoadoutPreset,
+        togglePresetForm: () => { showPresetForm = !showPresetForm; renderEquipModal(); },
+        saveCurrentAsPreset,
+        deleteCustomPreset,
         quickToggleEquipByIndex,
         toggleCustomTagger: () => { showCustomTagger = !showCustomTagger; renderEquipModal(); },
         saveCustomGearTag,
@@ -2502,6 +2916,7 @@
             }
         },
         craftRecipe,
+        unlockRecipeByCode,
         setTradeTab: (tab) => { tradeActiveTab = tab; renderTradeModal(); },
         setTradeRecipient: (id) => { tradeRecipient = id; renderTradeModal(); },
         setTradeMode: (mode) => { tradeMode = mode; renderTradeModal(); },

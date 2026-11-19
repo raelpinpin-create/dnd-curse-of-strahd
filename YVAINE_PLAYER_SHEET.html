@@ -1285,7 +1285,7 @@
                                 </div>
                             </div>
 
-                            <!-- Less -->
+                            <!-- Less (Off-Hand Revolver — Swappable On the Fly to Strapped Leg Dagger!) -->
                             <div class="action-card" id="card-less">
                                 <div class="action-header">
                                     <div>
@@ -1310,9 +1310,34 @@
                                     </div>
                                 </div>
 
-                                <div class="action-btn-row">
-                                    <button class="btn-roll-action" style="background:#0284c7;" onclick="fireLessShot()">🔵 Attack (+8)</button>
-                                    <button class="btn-roll-action btn-roll-dmg" onclick="rollLessDamage()">💥 Damage (1d6)</button>
+                                <div class="action-btn-row" style="flex-wrap:wrap;">
+                                    <button type="button" class="btn-roll-action" style="background:#0284c7;" onclick="fireLessShot()">🔵 Attack (+8)</button>
+                                    <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollLessDamage()">💥 Damage (1d6)</button>
+                                    <button type="button" id="btn-swap-to-leg-dagger" class="btn-act btn-act-pre" style="font-size:0.68rem; color:#fde68a; border-color:rgba(245,158,11,0.45);" onclick="toggleYvaineOffhandDagger()">Swap to Leg Dagger</button>
+                                </div>
+                            </div>
+
+                            <!-- Strapped Leg Dagger (On-the-Fly Off-Hand Swap Target!) -->
+                            <div class="action-card" id="card-leg-dagger" style="display:none; border-left:3px solid #cbd5e1;">
+                                <div class="action-header">
+                                    <div>
+                                        <div onclick="openStrappedDaggerInfo()" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                            <span id="leg-dagger-title">🗡️ Solmere Royal Trench Knife</span> <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                        </div>
+                                        <div id="leg-dagger-sub" style="font-size:0.66rem; font-weight:700; color:#cbd5e1;">Leg Sheath Quick-Draw • Light • Finesse • Nick</div>
+                                    </div>
+                                    <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;" id="leg-dagger-badge">LEG SHEATH</span>
+                                </div>
+                                <div class="action-desc" id="leg-dagger-desc">
+                                    <strong>+6 to Hit</strong>, <strong>1d4 Piercing</strong> (Off-Hand BA / Nick) or <strong>1d4 + 4 Piercing</strong> (Action). Quick-drawn on the fly in place of Less!
+                                </div>
+
+                                <div class="action-btn-row" style="flex-wrap:wrap;">
+                                    <button type="button" id="btn-leg-dagger-atk" class="btn-roll-action" onclick="rollStrappedDaggerAttack()">🗡️ Attack (+6)</button>
+                                    <button type="button" id="btn-leg-dagger-off" class="btn-roll-action btn-roll-dmg" onclick="rollStrappedDaggerDamage(true)">💥 Off-Hand (1d4)</button>
+                                    <button type="button" id="btn-leg-dagger-main" class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="rollStrappedDaggerDamage(false)">Full (1d4+4)</button>
+                                    <button type="button" id="btn-swap-back-less" class="btn-act btn-act-pre" style="font-size:0.68rem; color:#7dd3fc; border-color:rgba(56,189,248,0.45);" onclick="toggleYvaineOffhandDagger()">Swap to Less</button>
+                                    <button type="button" class="btn-act btn-act-pre" style="font-size:0.68rem; color:#cbd5e1;" onclick="COS_RPG && COS_RPG.openEquipModal('legSheath')">Change Leg Dagger</button>
                                 </div>
                             </div>
                         </div>
@@ -2160,8 +2185,161 @@
     }
 
     // ==========================================
-    // 🗡️ TRENCH KNIFE ACTIONS
+    // 🗡️ TRENCH KNIFE & ON-THE-FLY LEG SHEATH DAGGER SWAP ENGINE
     // ==========================================
+    let yvaineOffhandMode = 'less'; // 'less' | 'legDagger'
+
+    function getStrappedDaggerInfo() {
+        const eq = window.COS_RPG ? COS_RPG.getEquippedState() : {};
+        const items = getStoredItems();
+        // Prefer directly equipped off-hand dagger when Less is not in offHand, otherwise Leg Sheath dagger
+        const offRaw = eq.offHand && window.COS_RPG ? COS_RPG.findInventoryRawByKey(eq.offHand) : null;
+        const offIsDagger = offRaw && /(dagger|knife|stiletto|baal verzi)/i.test(offRaw);
+        const legRaw = eq.legSheath && window.COS_RPG ? COS_RPG.findInventoryRawByKey(eq.legSheath) : null;
+        const chosenRaw = offIsDagger ? offRaw : legRaw;
+        if (!chosenRaw) return null;
+
+        const cleanName = window.COS_RPG ? COS_RPG.shortLabel(chosenRaw) : chosenRaw;
+        const low = chosenRaw.toLowerCase();
+        let magicBonus = 0;
+        const mPlus = low.match(/\+(\d+)/);
+        if (mPlus) magicBonus = parseInt(mPlus[1]) || 0;
+        const isSilvered = low.includes('silver');
+        const invIndex = items.findIndex(r => r === chosenRaw);
+        return {
+            raw: chosenRaw,
+            name: cleanName,
+            source: offIsDagger ? 'OFF-HAND' : 'LEG SHEATH',
+            magicBonus,
+            isSilvered,
+            atkBonus: 4 + 2 + magicBonus, // DEX (+4) + PB (+2) + Magic
+            dmgType: isSilvered ? 'Silvered Piercing' : 'Piercing',
+            invIndex
+        };
+    }
+
+    function openStrappedDaggerInfo() {
+        const info = getStrappedDaggerInfo();
+        if (info && info.invIndex !== -1) {
+            openItemDetailsModal(info.invIndex);
+        } else {
+            openSpellDetailsModal('knife');
+        }
+    }
+
+    function toggleYvaineOffhandDagger() {
+        const info = getStrappedDaggerInfo();
+        if (yvaineOffhandMode === 'less') {
+            if (!info) {
+                logRoll(`🗡️ <strong>Leg Sheath Empty!</strong> Opening Equipment so you can strap a dagger to Yvaine's leg.`);
+                if (window.COS_RPG) COS_RPG.openEquipModal('legSheath');
+                return;
+            }
+            yvaineOffhandMode = 'legDagger';
+            logRoll(`🗡️ <strong>Quick-Draw Off-Hand Swap:</strong> Yvaine holsters Less and flashes <strong>${info.name}</strong> from her Leg Sheath (ready alongside Mercy)!`);
+        } else {
+            yvaineOffhandMode = 'less';
+            logRoll(`🔵 <strong>Off-Hand Swap:</strong> Yvaine slides her leg dagger home and draws <strong>"Less"</strong> (${lessChamber}/6 loaded).`);
+        }
+        syncYvaineWeaponsUI(window.__yvaineGearCache || (window.COS_RPG ? COS_RPG.getGearBonuses() : null));
+    }
+
+    function rollStrappedDaggerAttack() {
+        const info = getStrappedDaggerInfo();
+        const label = info ? `${info.name} Attack (+${info.atkBonus})` : 'Trench Knife Attack (+6)';
+        rollD20(label, info ? info.atkBonus : 6);
+    }
+
+    function rollStrappedDaggerDamage(isOffhand = true) {
+        const info = getStrappedDaggerInfo();
+        const name = info ? info.name : 'Solmere Trench Knife';
+        const mb = info ? info.magicBonus : 0;
+        const dmgType = info ? info.dmgType : 'Piercing';
+        const d4 = Math.floor(Math.random() * 4) + 1;
+        let total = d4 + mb + (isOffhand ? 0 : 4);
+        let breakdown = `[1d4: ${d4}]` + (isOffhand ? '' : ' + 4 DEX') + (mb ? ` + ${mb} Magic` : '');
+        if (slayersPreyActive) {
+            const spD6 = Math.floor(Math.random() * 6) + 1;
+            total += spD6;
+            breakdown += ` + <span style="color:#f87171;">Slayer's Prey (+${spD6})</span>`;
+        }
+        if (isTracerActive) {
+            const trD6 = Math.floor(Math.random() * 6) + 1;
+            total += trD6;
+            breakdown += ` + <span style="color:#ef4444;">Hunter's Mark (+${trD6})</span>`;
+        }
+        logRoll(`🗡️ <strong>${name} Damage (${isOffhand ? 'Off-Hand / Nick' : 'Main-Hand'}):</strong> ${breakdown} = <span style="font-size:1.15rem; color:#cbd5e1; font-weight:800;">${total} ${dmgType} Damage</span>!`);
+    }
+
+    function syncYvaineWeaponsUI(bonuses) {
+        if (!bonuses) return;
+        const eq = bonuses.equippedMap || {};
+        const hasMercy = bonuses.equippedWeaponTags.some(w => w.tag === 'mercy' || w.tag === 'revolvers');
+        const hasLess = bonuses.equippedWeaponTags.some(w => w.tag === 'less' || w.tag === 'revolvers');
+        const hasLament = bonuses.equippedWeaponTags.some(w => w.tag === 'lament');
+        const mainIsKnife = bonuses.equippedWeaponTags.some(w => w.tag === 'knife' && w.slot === 'mainHand');
+        const daggerInfo = getStrappedDaggerInfo();
+
+        // Mercy card visibility
+        const mercyCard = document.getElementById('card-mercy');
+        if (mercyCard) mercyCard.style.display = hasMercy ? '' : 'none';
+
+        // Off-hand right card: show either Less OR Strapped Leg Dagger
+        const lessCard = document.getElementById('card-less');
+        const legCard = document.getElementById('card-leg-dagger');
+        const btnToLeg = document.getElementById('btn-swap-to-leg-dagger');
+        const btnToLess = document.getElementById('btn-swap-back-less');
+
+        const forceDagger = !hasLess && !!daggerInfo;
+        const showDagger = forceDagger || (yvaineOffhandMode === 'legDagger' && !!daggerInfo);
+
+        if (lessCard) lessCard.style.display = (!showDagger && hasLess) ? '' : 'none';
+        if (legCard) legCard.style.display = showDagger ? '' : 'none';
+        if (btnToLeg) {
+            btnToLeg.innerText = daggerInfo
+                ? `Swap to ${daggerInfo.name.replace(/^[^\w"]+/, '').split(' ').slice(0, 3).join(' ')}`
+                : 'Strap Leg Dagger';
+        }
+        if (btnToLess) btnToLess.style.display = hasLess ? '' : 'none';
+
+        if (daggerInfo) {
+            const tEl = document.getElementById('leg-dagger-title');
+            const sEl = document.getElementById('leg-dagger-sub');
+            const bEl = document.getElementById('leg-dagger-badge');
+            const dEl = document.getElementById('leg-dagger-desc');
+            const aBtn = document.getElementById('btn-leg-dagger-atk');
+            const oBtn = document.getElementById('btn-leg-dagger-off');
+            const mBtn = document.getElementById('btn-leg-dagger-main');
+            const offFormula = daggerInfo.magicBonus ? `1d4+${daggerInfo.magicBonus}` : '1d4';
+            const mainFormula = `1d4+${4 + daggerInfo.magicBonus}`;
+            if (tEl) tEl.innerText = daggerInfo.name;
+            if (sEl) sEl.innerText = `${daggerInfo.source === 'LEG SHEATH' ? 'Leg Sheath Quick-Draw' : 'Equipped Off-Hand'} • Finesse • Light • Nick${daggerInfo.isSilvered ? ' • Silvered' : ''}`;
+            if (bEl) bEl.innerText = daggerInfo.source;
+            if (dEl) dEl.innerHTML = `<strong>+${daggerInfo.atkBonus} to Hit</strong>, <strong>${offFormula} ${daggerInfo.dmgType}</strong> (Off-Hand BA / Nick) or <strong>${mainFormula}</strong> (Action).${daggerInfo.isSilvered ? ' Bypasses Vampire/Werewolf resistance!' : ' Quick-drawn on the fly in place of Less!'}`;
+            if (aBtn) aBtn.innerText = `🗡️ Attack (+${daggerInfo.atkBonus})`;
+            if (oBtn) oBtn.innerText = `💥 Off-Hand (${offFormula})`;
+            if (mBtn) mBtn.innerText = `Full (${mainFormula})`;
+        }
+
+        // Main-hand Trench Knife card only shows if she explicitly puts Trench Knife in Main Hand
+        const knifeCard = document.getElementById('card-knife');
+        if (knifeCard) knifeCard.style.display = mainIsKnife ? '' : 'none';
+
+        // Lament badge status if unequipped from Ranged slot
+        const lamBadge = document.getElementById('lament-mag-badge');
+        if (lamBadge && !hasLament) {
+            lamBadge.className = 'pill-badge pill-neutral';
+            lamBadge.innerText = 'UNEQUIPPED';
+        } else if (hasLament) {
+            updateLamentAmmoUI();
+        }
+
+        // Show Amulet of the Whispering Grave card ONLY when equipped in Amulet slot
+        const amCard = document.getElementById('card-speak-with-dead');
+        const isAmWorn = bonuses.equippedAbilities.includes('speak_with_dead');
+        if (amCard) amCard.style.display = isAmWorn ? '' : 'none';
+    }
+
     function rollKnifeAttack() {
         rollD20('Trench Knife Attack (+6)', 4 + 2); // DEX (+4) + PB (+2) = +6
     }
@@ -3142,7 +3320,8 @@
         "🥐 3x Fresh Croissants (Heals 1d4 HP)",
         "🩹 2x Field Bandages (Heals 1d6 + 1 HP)",
         "🎯 \"Lament\" (Royal Heavy Long Rifle)",
-        "💥 Twin Revolvers (\"Mercy & Less\")",
+        "🔴 \"Mercy\" (Main-Hand Six-Shooter Revolver)",
+        "🔵 \"Less\" (Off-Hand Six-Shooter Revolver)",
         "🗡️ Solmere Royal Trench Knife",
         "🧥 Studded Leather Coat (AC 16)",
         "🎖️ Cross-Body Tactical Gunslinger Bandolier",
@@ -3212,6 +3391,22 @@
             desc: "A 4-foot long rifle of blued cold steel and carved walnut wood, bearing the white-stag crest of Solmere. Engraved with the word 'Lament' across the receiver.",
             effect: "• <strong>Attack:</strong> +8 to Hit (DEX +4, PB +2, Archery +2), <strong>1d12 + 4 Piercing damage</strong>.<br>• <strong>Properties:</strong> Range 80/240 ft, Ammunition (10-round chamber), Two-Handed, Heavy.<br>• <strong>Gunner Mastery:</strong> Ignores the loading property; no disadvantage within 5 ft of enemies.<br>• <strong>Reload:</strong> 1 Bonus Action. 2 Reserve Clips per Long Rest (10 slugs each; expands to 3 at Level 5).<br>• <strong>Short Rest:</strong> Hand-feeds loose rounds to top off chamber to 10/10.",
             wikiUrl: "https://5e.tools/items.html#musket_xdmg"
+        },
+        "mercy": {
+            name: "🔴 \"Mercy\" (Main-Hand Six-Shooter Revolver)",
+            category: "MARTIAL RANGED FIREARM • Light, One-Handed (3 lb • Custom)",
+            origin: "Crafted in the Undercity of Solmere during Yvaine's Exile",
+            desc: "A matte-black break-action six-shooter revolver worn on Yvaine's right hip with a polished hair trigger and ebony grip.",
+            effect: "• <strong>Attack (Main-Hand Action):</strong> +8 to Hit, <strong>1d6 + 4 Piercing damage</strong> (6-round cylinder, Range 5/90 ft).<br>• Pairs with <strong>\"Less\"</strong> OR quick-drawn <strong>Leg Sheath Dagger</strong> in her off-hand!<br>• <strong>Twin Speedloaders:</strong> 1 Bonus Action reloads both Mercy &amp; Less simultaneously.",
+            wikiUrl: "https://5e.tools/items.html#pistol_xdmg"
+        },
+        "less": {
+            name: "🔵 \"Less\" (Off-Hand Six-Shooter Revolver)",
+            category: "MARTIAL RANGED FIREARM • Light, One-Handed (3 lb • Custom)",
+            origin: "Crafted in the Undercity of Solmere during Yvaine's Exile",
+            desc: "The matched left-hand twin to Mercy—balanced for lightning-fast cross-draws and seamless on-the-fly swaps with Yvaine's strapped leg dagger.",
+            effect: "• <strong>Attack (Off-Hand Bonus Action):</strong> +8 to Hit, <strong>1d6 Piercing damage</strong> (6-round cylinder, Range 5/90 ft).<br>• <strong>On-the-Fly Swap:</strong> Yvaine can swap off-hand strikes between Less and whatever dagger is strapped in her <strong>Leg Sheath</strong>!",
+            wikiUrl: "https://5e.tools/items.html#pistol_xdmg"
         },
         "revolver": {
             name: "💥 Twin Revolvers (\"Mercy & Less\")",
@@ -3346,9 +3541,9 @@
     }
 
     function getStoredItems() {
-        const stored = localStorage.getItem('cos_inv_yvaine_v8');
+        const stored = localStorage.getItem('cos_inv_yvaine_v9');
         if (!stored) {
-            localStorage.setItem('cos_inv_yvaine_v8', JSON.stringify(defaultItems));
+            localStorage.setItem('cos_inv_yvaine_v9', JSON.stringify(defaultItems));
             return [...defaultItems];
         }
         try {
@@ -3358,7 +3553,7 @@
     }
 
     function saveItems(items) {
-        localStorage.setItem('cos_inv_yvaine_v8', JSON.stringify(items));
+        localStorage.setItem('cos_inv_yvaine_v9', JSON.stringify(items));
     }
 
     function consumeAndHealItem(index, dice, sides, bonus, verb, itemName) {
@@ -4394,6 +4589,10 @@
                 heroId: 'yvaine',
                 heroName: 'Yvaine',
                 heroEmoji: '🔫',
+                equipStorageVersion: 'v2',
+                extraSlots: [
+                    { id: 'legSheath', label: 'Leg Sheath', icon: '🗡️', group: 'hand' }
+                ],
                 getItems: getStoredItems,
                 saveItems: saveItems,
                 resetItems: () => saveItems([...defaultItems]),
@@ -4425,38 +4624,23 @@
                 defaultEquipped: {
                     body: "studded leather coat (ac 16)",
                     amulet: "amulet of the whispering grave (speak with dead • 1/lr)",
-                    mainHand: "twin revolvers (\"mercy & less\")",
+                    mainHand: "\"mercy\" (main-hand six-shooter revolver)",
+                    offHand: "\"less\" (off-hand six-shooter revolver)",
+                    legSheath: "solmere royal trench knife",
                     ranged: "\"lament\" (royal heavy long rifle)",
-                    _grip: '2h'
+                    _grip: '1h'
                 },
                 weaponsGridSelector: '#weapons-dyn-yvaine',
                 nativeWeaponTags: ['lament', 'mercy', 'less', 'revolvers', 'knife'],
                 presets: [
-                    { label: 'Gunslinger (Mercy & Less)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'twin revolvers', ranged: 'lament', _grip: '2h' } },
-                    { label: 'Sniper (Lament 2H)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'lament', ranged: 'twin revolvers', _grip: '2h' } },
-                    { label: 'Trench Knife (1H Melee)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'trench knife', ranged: 'lament', _grip: '1h' } }
+                    { label: 'Mercy & Less (Dual Sidearms)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: '"mercy"', offHand: '"less"', legSheath: 'trench knife', ranged: 'lament', _grip: '1h' } },
+                    { label: 'Mercy + Boot Knife (Close Quarters)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: '"mercy"', offHand: 'trench knife', legSheath: null, ranged: 'lament', _grip: '1h' } }
                 ],
                 onEquipmentChange: (bonuses, eq) => {
                     window.__yvaineGearCache = bonuses;
                     updateACDisplay();
                     updateSavesUI();
-                    // Sync active firearm stance when mainHand holds Lament or Twin Revolvers
-                    // Exception: Yvaine keeps both Mercy & Less and Lament equipped and BA-swaps between them!
-                    const mh = (eq.mainHand || '').toLowerCase();
-                    window.__yvaineSyncingStance = true;
-                    if (mh.includes('lament') && activeStance !== 'lament') switchWeaponStance('lament', true);
-                    else if ((mh.includes('mercy') || mh.includes('revolver')) && activeStance !== 'revolvers') switchWeaponStance('revolvers', true);
-                    window.__yvaineSyncingStance = false;
-
-                    // Show Trench Knife card ONLY when equipped in Main Hand or Off-Hand!
-                    const hasKnife = bonuses.equippedWeaponTags.some(w => w.tag === 'knife');
-                    const knifeCard = document.getElementById('card-knife');
-                    if (knifeCard) knifeCard.style.display = hasKnife ? '' : 'none';
-
-                    // Show Amulet of the Whispering Grave card ONLY when equipped in Amulet slot!
-                    const amCard = document.getElementById('card-speak-with-dead');
-                    const isAmWorn = bonuses.equippedAbilities.includes('speak_with_dead');
-                    if (amCard) amCard.style.display = isAmWorn ? '' : 'none';
+                    syncYvaineWeaponsUI(bonuses);
                 }
             });
         }
