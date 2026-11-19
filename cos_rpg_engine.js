@@ -1003,8 +1003,8 @@
     let tradeMode = 'item'; // 'item' | 'gold'
     let showCustomTagger = false;
     let customTagKind = 'weapon'; // 'weapon' | 'armor' | 'caster' | 'accessory' | 'consumable'
-    let showPresetForm = false;
-    let lastAppliedPresetName = null;
+    let presetEditor = null; // null | { mode: 'save' | 'edit', targetId: '__new__' | string, draftName: string, slotDrafts: Object, errorMsg: string }
+    let lastAppliedPresetId = null;
 
     // Live Firebase State (Realtime Database primary + Firestore fallback)
     let rtdb = null;
@@ -1063,25 +1063,130 @@
     function getCustomGearKey() { return `cos_custom_gear_${adapter.heroId}_v1`; }
     function getClaimedCodesKey() { return `cos_claimed_codes_${adapter.heroId}_v1`; }
     function getCustomPresetsKey() { return `cos_presets_${adapter.heroId}_v1`; }
+    function getUnifiedPresetsKey() { return `cos_presets_${adapter.heroId}_v2`; }
     function getUnlockedRecipesKey() { return `cos_unlocked_recipes_v1`; }
     function getFbUnlockedRecipesKey() { return `cos_fb_unlocked_recipes_v1`; }
 
-    function getCustomPresets() {
-        try {
-            const raw = localStorage.getItem(getCustomPresetsKey());
-            const arr = raw ? JSON.parse(raw) : [];
-            return Array.isArray(arr) ? arr : [];
-        } catch (e) { return []; }
+    function makeStarterPresetId(p, idx) {
+        const slug = String(p?.label || 'preset').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').slice(0, 24) || 'preset';
+        return `starter_${idx}_${slug}`;
     }
 
-    function saveCustomPresets(list) {
-        localStorage.setItem(getCustomPresetsKey(), JSON.stringify(list));
+    function findInventoryRawByPresetSpec(spec, itemsOverride) {
+        if (!spec) return null;
+        const items = itemsOverride || (adapter ? adapter.getItems() : []);
+        const lower = String(spec).toLowerCase().trim();
+        if (!lower) return null;
+        return items.find(r => normKey(r) === lower)
+            || items.find(r => r.toLowerCase().includes(lower))
+            || null;
+    }
+
+    function computePresetSlotLabels(slots, itemsOverride) {
+        const out = {};
+        if (!slots || !adapter) return out;
+        const items = itemsOverride || adapter.getItems();
+        for (const s of getActiveSlots()) {
+            if (!Object.prototype.hasOwnProperty.call(slots, s.id)) continue;
+            const spec = slots[s.id];
+            if (spec === null || spec === '') {
+                out[s.label] = 'Cleared (Empty)';
+            } else {
+                const raw = findInventoryRawByPresetSpec(spec, items);
+                const grip = (s.id === 'mainHand' && slots._grip === '2h') ? ' (2H)' : '';
+                out[s.label] = (raw ? shortLabel(raw) : String(spec)) + grip;
+            }
+        }
+        return out;
     }
 
     function getAllPresets() {
-        const builtIn = (adapter.presets || []).map(p => ({ ...p, isCustom: false }));
-        const custom = getCustomPresets().map((p, i) => ({ ...p, isCustom: true, customIdx: i }));
-        return [...builtIn, ...custom];
+        if (!adapter) return [];
+        try {
+            const rawV2 = localStorage.getItem(getUnifiedPresetsKey());
+            if (rawV2) {
+                const parsed = JSON.parse(rawV2);
+                if (parsed && parsed.initialized && Array.isArray(parsed.presets)) {
+                    return parsed.presets.map((p, i) => ({
+                        id: p.id || `preset_${i}`,
+                        label: String(p.label || `Preset ${i + 1}`),
+                        slots: p.slots && typeof p.slots === 'object' ? { ...p.slots } : {},
+                        slotLabels: p.slotLabels || computePresetSlotLabels(p.slots),
+                        isStarter: !!p.isStarter,
+                        modified: !!p.modified,
+                        isCustom: !p.isStarter || !!p.modified,
+                        presetIdx: i
+                    }));
+                }
+            }
+        } catch (e) {}
+
+        // First-time seed: convert starter presets + migrate any legacy v1 custom presets into editable v2 store
+        const activeSlots = getActiveSlots();
+        const items = adapter.getItems();
+        const seeded = (adapter.presets || []).map((p, i) => ({
+            id: makeStarterPresetId(p, i),
+            label: p.label,
+            slots: { ...(p.slots || {}) },
+            slotLabels: computePresetSlotLabels(p.slots || {}, items),
+            isStarter: true,
+            modified: false
+        }));
+
+        try {
+            const rawV1 = localStorage.getItem(getCustomPresetsKey());
+            const v1Arr = rawV1 ? JSON.parse(rawV1) : [];
+            if (Array.isArray(v1Arr)) {
+                v1Arr.forEach((cp, i) => {
+                    if (!cp || !cp.label) return;
+                    const normalizedSlots = { ...(cp.slots || {}) };
+                    // Legacy v1 snapshots matched empty slots too; preserve explicit clears for unset slots
+                    activeSlots.forEach(s => {
+                        if (!Object.prototype.hasOwnProperty.call(normalizedSlots, s.id)) {
+                            normalizedSlots[s.id] = null;
+                        }
+                    });
+                    const nextObj = {
+                        id: `custom_v1_${i}_${Date.now()}`,
+                        label: cp.label,
+                        slots: normalizedSlots,
+                        slotLabels: computePresetSlotLabels(normalizedSlots, items),
+                        isStarter: false,
+                        modified: true
+                    };
+                    const dupIdx = seeded.findIndex(sp => sp.label.toLowerCase() === cp.label.toLowerCase());
+                    if (dupIdx !== -1) seeded[dupIdx] = nextObj;
+                    else seeded.push(nextObj);
+                });
+            }
+        } catch (e) {}
+
+        saveAllPresets(seeded);
+        return seeded.map((p, i) => ({ ...p, isCustom: !p.isStarter || !!p.modified, presetIdx: i }));
+    }
+
+    function saveAllPresets(list) {
+        if (!adapter) return;
+        const clean = (Array.isArray(list) ? list : []).map((p, i) => ({
+            id: p.id || `preset_${Date.now()}_${i}`,
+            label: String(p.label || `Preset ${i + 1}`),
+            slots: p.slots && typeof p.slots === 'object' ? p.slots : {},
+            slotLabels: p.slotLabels || computePresetSlotLabels(p.slots),
+            isStarter: !!p.isStarter,
+            modified: !!p.modified
+        }));
+        localStorage.setItem(getUnifiedPresetsKey(), JSON.stringify({ initialized: true, presets: clean }));
+    }
+
+    function getCustomPresets() {
+        return getAllPresets().filter(p => !p.isStarter || p.modified);
+    }
+
+    function hasMissingOrModifiedStarters() {
+        const starters = adapter?.presets || [];
+        if (starters.length === 0) return false;
+        const cur = getAllPresets();
+        return starters.some((sp, i) => !cur.some(cp => cp.id === makeStarterPresetId(sp, i) || cp.label.toLowerCase() === sp.label.toLowerCase()));
     }
 
     function getUnlockedRecipeIds() {
@@ -1551,49 +1656,56 @@
         applyEquipmentToSheet();
     }
 
-    function matchesPresetSlots(preset, eq) {
-        if (!preset || !preset.slots) return false;
-        const activeSlots = getActiveSlots();
-        if (preset.isCustom) {
-            for (const s of activeSlots) {
-                const want = preset.slots[s.id] || '';
-                const have = eq[s.id] || '';
-                if (want !== have) return false;
-            }
-            if (preset.slots._grip && eq.mainHand && (eq._grip || '1h') !== preset.slots._grip) return false;
-            return true;
-        }
+    function getSlotMatchScore(preset, eq) {
+        if (!preset || !preset.slots) return -1;
+        const entries = Object.entries(preset.slots);
+        let slotCount = 0;
         const items = adapter.getItems();
-        for (const [slotId, keyword] of Object.entries(preset.slots)) {
+        for (const [slotId, spec] of entries) {
             if (slotId === '_grip') {
-                if (eq.mainHand && (eq._grip || '1h') !== keyword) return false;
+                if ((preset.slots.mainHand || eq.mainHand) && (eq._grip || '1h') !== spec) return -1;
                 continue;
             }
-            if (!keyword) {
-                if (eq[slotId]) return false;
+            if (spec === null || spec === '') {
+                if (eq[slotId]) return -1;
+                slotCount += 1;
                 continue;
             }
             const curKey = eq[slotId];
-            if (!curKey) return false;
+            if (!curKey) return -1;
+            const lowerSpec = String(spec).toLowerCase().trim();
             const curRaw = items.find(r => normKey(r) === curKey) || curKey;
-            if (!curRaw.toLowerCase().includes(keyword.toLowerCase())) return false;
+            if (curKey !== lowerSpec && !curRaw.toLowerCase().includes(lowerSpec)) return -1;
+            slotCount += 1;
         }
-        return true;
+        return slotCount > 0 ? slotCount : -1;
+    }
+
+    function matchesPresetSlots(preset, eq) {
+        return getSlotMatchScore(preset, eq) > 0;
     }
 
     function getActivePresetInfo(eqOverride) {
         const eq = eqOverride || reconcileEquippedWithInventory();
         const all = getAllPresets();
-        if (lastAppliedPresetName) {
-            const preferred = all.find(p => p.label === lastAppliedPresetName && matchesPresetSlots(p, eq));
-            if (preferred) return { label: preferred.label, isCustom: !!preferred.isCustom, preset: preferred };
+        const contextPreset = lastAppliedPresetId ? all.find(p => p.id === lastAppliedPresetId) || null : null;
+        if (contextPreset && matchesPresetSlots(contextPreset, eq)) {
+            return { label: contextPreset.label, isCustom: !!contextPreset.isCustom, isMatch: true, preset: contextPreset, contextPreset };
         }
-        // Prefer exact custom preset matches first, then built-in presets
-        const customMatch = all.find(p => p.isCustom && matchesPresetSlots(p, eq));
-        if (customMatch) return { label: customMatch.label, isCustom: true, preset: customMatch };
-        const builtMatch = all.find(p => !p.isCustom && matchesPresetSlots(p, eq));
-        if (builtMatch) return { label: builtMatch.label, isCustom: false, preset: builtMatch };
-        return { label: 'Custom Loadout', isCustom: false, preset: null };
+        // Pick most specific matching preset (highest matched slot count, preferring user-edited presets on ties)
+        let best = null;
+        let bestScore = -1;
+        for (const p of all) {
+            const sc = getSlotMatchScore(p, eq);
+            if (sc > bestScore || (sc === bestScore && p.modified && best && !best.modified)) {
+                best = p;
+                bestScore = sc;
+            }
+        }
+        if (best) {
+            return { label: best.label, isCustom: !!best.isCustom, isMatch: true, preset: best, contextPreset: contextPreset || best };
+        }
+        return { label: 'Custom Loadout', isCustom: false, isMatch: false, preset: null, contextPreset };
     }
 
     function applyLoadoutPreset(presetIdx) {
@@ -1601,76 +1713,363 @@
         const p = presets[presetIdx];
         if (!p) return;
         const eq = reconcileEquippedWithInventory();
-        const activeSlots = getActiveSlots();
-        if (p.isCustom) {
-            activeSlots.forEach(s => { delete eq[s.id]; });
-            for (const [slotId, val] of Object.entries(p.slots)) {
-                if (slotId === '_grip') {
-                    eq._grip = val;
-                    continue;
-                }
-                if (val && findInventoryRawByKey(val)) {
-                    eq[slotId] = val;
-                }
+        const items = adapter.getItems();
+        for (const [slotId, spec] of Object.entries(p.slots || {})) {
+            if (slotId === '_grip') {
+                eq._grip = spec;
+                continue;
             }
-        } else {
-            for (const [slotId, keyword] of Object.entries(p.slots)) {
-                if (slotId === '_grip') {
-                    eq._grip = keyword;
-                    continue;
-                }
-                if (!keyword) {
-                    delete eq[slotId];
-                    continue;
-                }
-                const found = adapter.getItems().find(r => r.toLowerCase().includes(keyword.toLowerCase()));
-                if (found) {
-                    eq[slotId] = normKey(found);
-                }
+            if (spec === null || spec === '') {
+                delete eq[slotId];
+                continue;
+            }
+            const found = findInventoryRawByPresetSpec(spec, items);
+            if (found) {
+                eq[slotId] = normKey(found);
             }
         }
         if (isMainHandTwoHanded(eq)) delete eq.offHand;
-        lastAppliedPresetName = p.label;
+        lastAppliedPresetId = p.id;
         saveEquippedState(eq);
+        announceStatus(`Swapped loadout preset to ${p.label}.`);
         adapter.log(`⚡ <strong>Loadout Swapped:</strong> ${esc(p.label)}!`);
         applyEquipmentToSheet();
     }
 
-    function saveCurrentAsPreset() {
-        const inp = document.getElementById('rpg-new-preset-name');
-        const label = (inp ? inp.value : '').trim().slice(0, 36);
-        if (!label) {
-            adapter.log('⚠️ Enter a short name for your new equipment preset.');
-            return;
-        }
+    let presetFocusTargetId = null;
+
+    function buildSlotDrafts(sourceMode, targetPreset) {
         const eq = reconcileEquippedWithInventory();
+        const items = adapter.getItems();
         const activeSlots = getActiveSlots();
-        const snapshotSlots = { _grip: eq._grip || '1h' };
-        const slotLabels = {};
+        const slotDrafts = {};
+        const presetSlots = (targetPreset && targetPreset.slots) ? targetPreset.slots : {};
+
         for (const s of activeSlots) {
-            if (!eq[s.id]) continue;
-            const raw = findInventoryRawByKey(eq[s.id]);
-            if (raw) {
-                snapshotSlots[s.id] = eq[s.id];
-                slotLabels[s.label] = shortLabel(raw) + (s.id === 'mainHand' && isMainHandTwoHanded(eq) ? ' (2H)' : '');
+            const hasSavedSpec = Object.prototype.hasOwnProperty.call(presetSlots, s.id);
+            const savedSpec = presetSlots[s.id];
+            const eqKey = eq[s.id] || '';
+            const compatible = items.filter(r => (getItemMeta(r).slots || []).includes(s.id));
+
+            if (sourceMode === 'preset' && targetPreset) {
+                let resolvedVal = eqKey || (compatible[0] ? normKey(compatible[0]) : '__clear__');
+                let checked = false;
+                if (hasSavedSpec) {
+                    checked = true;
+                    if (savedSpec === null || savedSpec === '') {
+                        resolvedVal = '__clear__';
+                    } else {
+                        const rawFound = findInventoryRawByPresetSpec(savedSpec, items);
+                        resolvedVal = rawFound ? normKey(rawFound) : ('__raw__:' + String(savedSpec));
+                    }
+                }
+                slotDrafts[s.id] = {
+                    checked,
+                    val: resolvedVal,
+                    grip: (s.id === 'mainHand') ? (presetSlots._grip || eq._grip || '1h') : undefined
+                };
+            } else {
+                const checked = Boolean(eqKey && findInventoryRawByKey(eqKey));
+                let val = checked ? eqKey : (compatible[0] ? normKey(compatible[0]) : '__clear__');
+                if (!checked && hasSavedSpec && (savedSpec === null || savedSpec === '')) {
+                    val = '__clear__';
+                }
+                slotDrafts[s.id] = {
+                    checked,
+                    val,
+                    grip: (s.id === 'mainHand') ? (eq._grip || '1h') : undefined
+                };
             }
         }
-        const list = getCustomPresets().filter(p => p.label.toLowerCase() !== label.toLowerCase());
-        list.push({ label, slots: snapshotSlots, slotLabels });
-        saveCustomPresets(list);
-        lastAppliedPresetName = label;
-        showPresetForm = false;
-        adapter.log(`💾 <strong>Saved Equipment Preset:</strong> "${esc(label)}" (${Object.keys(slotLabels).length} slots) — included in Export Data!`);
+        return slotDrafts;
+    }
+
+    function syncPresetDraftsFromDom() {
+        if (!presetEditor) return;
+        const nameInp = document.getElementById('rpg-new-preset-name');
+        if (nameInp) presetEditor.draftName = nameInp.value;
+        const container = document.getElementById('rpg-preset-slots-container');
+        if (!container) return;
+        for (const s of getActiveSlots()) {
+            const chk = document.getElementById(`rpg-pslot-chk-${s.id}`);
+            const sel = document.getElementById(`rpg-pslot-sel-${s.id}`);
+            if (!presetEditor.slotDrafts[s.id]) continue;
+            if (chk) presetEditor.slotDrafts[s.id].checked = !!chk.checked;
+            if (sel) presetEditor.slotDrafts[s.id].val = sel.value;
+            if (s.id === 'mainHand') {
+                const gripSel = document.getElementById('rpg-preset-grip-sel');
+                if (gripSel) presetEditor.slotDrafts[s.id].grip = gripSel.value;
+            }
+        }
+    }
+
+    function openSavePresetForm(targetPresetId = '__new__') {
+        const all = getAllPresets();
+        const tp = (targetPresetId && targetPresetId !== '__new__')
+            ? all.find(p => p.id === targetPresetId)
+            : null;
+        presetEditor = {
+            mode: 'save',
+            targetId: tp ? tp.id : '__new__',
+            draftName: tp ? tp.label : '',
+            slotDrafts: buildSlotDrafts('equipped', tp),
+            errorMsg: ''
+        };
+        presetFocusTargetId = 'rpg-new-preset-name';
         renderEquipModal();
     }
 
-    function deleteCustomPreset(customIdx) {
-        const list = getCustomPresets();
-        if (customIdx < 0 || customIdx >= list.length) return;
-        const removed = list.splice(customIdx, 1);
-        saveCustomPresets(list);
-        if (lastAppliedPresetName === removed[0]?.label) lastAppliedPresetName = null;
-        adapter.log(`🗑️ Removed custom preset "${esc(removed[0]?.label || '')}".`);
+    function openEditPresetForm(presetIdx) {
+        const all = getAllPresets();
+        const p = all[presetIdx];
+        if (!p) return;
+        presetEditor = {
+            mode: 'edit',
+            targetId: p.id,
+            draftName: p.label,
+            slotDrafts: buildSlotDrafts('preset', p),
+            errorMsg: ''
+        };
+        presetFocusTargetId = 'rpg-new-preset-name';
+        renderEquipModal();
+    }
+
+    function closePresetForm() {
+        presetEditor = null;
+        presetFocusTargetId = null;
+        renderEquipModal();
+    }
+
+    function onPresetTargetChange(newTargetId) {
+        if (!presetEditor) return;
+        syncPresetDraftsFromDom();
+        const all = getAllPresets();
+        const prevTp = all.find(p => p.id === presetEditor.targetId);
+        const nextTp = (newTargetId && newTargetId !== '__new__') ? all.find(p => p.id === newTargetId) : null;
+        presetEditor.targetId = nextTp ? nextTp.id : '__new__';
+        if (nextTp) {
+            presetEditor.draftName = nextTp.label;
+        } else if (prevTp && presetEditor.draftName.trim() === prevTp.label) {
+            presetEditor.draftName = '';
+        }
+        presetEditor.errorMsg = '';
+        presetFocusTargetId = 'rpg-preset-target';
+        renderEquipModal();
+    }
+
+    function pullEquippedIntoPresetEditor() {
+        if (!presetEditor) return;
+        const nameInp = document.getElementById('rpg-new-preset-name');
+        if (nameInp) presetEditor.draftName = nameInp.value;
+        presetEditor.slotDrafts = buildSlotDrafts('equipped', null);
+        presetEditor.errorMsg = '';
+        announceStatus('Loaded currently equipped gear into preset slots.');
+        presetFocusTargetId = 'rpg-preset-pull-btn';
+        renderEquipModal();
+    }
+
+    function togglePresetSlotScope(scope) {
+        if (!presetEditor) return;
+        syncPresetDraftsFromDom();
+        const combatSet = new Set(['body', 'cape', 'amulet', 'mainHand', 'offHand', 'legSheath', 'ranged']);
+        for (const s of getActiveSlots()) {
+            const draft = presetEditor.slotDrafts[s.id];
+            if (!draft) continue;
+            if (scope === 'all') {
+                draft.checked = Boolean(draft.val && draft.val !== '__clear__');
+            } else if (scope === 'combat') {
+                draft.checked = combatSet.has(s.id) && Boolean(draft.val && draft.val !== '__clear__');
+            } else if (scope === 'none') {
+                draft.checked = false;
+            }
+        }
+        presetEditor.errorMsg = '';
+        const grid = document.getElementById('rpg-preset-slots-container');
+        if (grid) {
+            for (const s of getActiveSlots()) {
+                const draft = presetEditor.slotDrafts[s.id];
+                const chk = document.getElementById(`rpg-pslot-chk-${s.id}`);
+                const row = document.querySelector(`[data-slot-row="${s.id}"]`);
+                if (chk && draft) chk.checked = !!draft.checked;
+                if (row && draft) row.classList.toggle('is-checked', !!draft.checked);
+            }
+        }
+    }
+
+    function submitPresetEditorForm() {
+        if (!presetEditor) return;
+        syncPresetDraftsFromDom();
+        const inp = document.getElementById('rpg-new-preset-name');
+        const errEl = document.getElementById('rpg-preset-error');
+        const label = (presetEditor.draftName || '').trim().slice(0, 36);
+        if (!label) {
+            presetEditor.errorMsg = 'Enter a short name for this equipment preset.';
+            if (inp) {
+                inp.setAttribute('aria-invalid', 'true');
+                inp.focus();
+            }
+            if (errEl) errEl.textContent = presetEditor.errorMsg;
+            return;
+        }
+
+        const items = adapter.getItems();
+        const newSlots = {};
+        let selectedCount = 0;
+
+        for (const s of getActiveSlots()) {
+            const draft = presetEditor.slotDrafts[s.id];
+            if (!draft || !draft.checked) continue;
+            selectedCount += 1;
+            if (!draft.val || draft.val === '__clear__') {
+                newSlots[s.id] = null;
+            } else if (String(draft.val).startsWith('__raw__:')) {
+                newSlots[s.id] = String(draft.val).slice(8);
+            } else {
+                newSlots[s.id] = draft.val;
+            }
+        }
+
+        if (selectedCount === 0) {
+            presetEditor.errorMsg = 'Select at least 1 gear slot to save into this preset.';
+            if (errEl) errEl.textContent = presetEditor.errorMsg;
+            const firstChk = document.querySelector('#rpg-preset-slots-container input[type="checkbox"]');
+            if (firstChk) firstChk.focus();
+            return;
+        }
+
+        if (newSlots.mainHand) {
+            const mhRaw = findInventoryRawByPresetSpec(newSlots.mainHand, items);
+            const mhMeta = mhRaw ? getItemMeta(mhRaw) : null;
+            let grip = presetEditor.slotDrafts.mainHand?.grip || '1h';
+            if (mhMeta && mhMeta.hands === 2) grip = '2h';
+            else if (mhMeta && !mhMeta.versatile && mhMeta.hands === 1) grip = '1h';
+            newSlots._grip = grip;
+            if (grip === '2h' && newSlots.offHand) {
+                delete newSlots.offHand;
+            }
+        }
+
+        const list = getAllPresets().map(p => ({
+            id: p.id,
+            label: p.label,
+            slots: p.slots,
+            slotLabels: p.slotLabels,
+            isStarter: p.isStarter,
+            modified: p.modified
+        }));
+        const slotLabels = computePresetSlotLabels(newSlots, items);
+        let savedObj = null;
+        let actionWord = 'Saved New';
+
+        if (presetEditor.targetId && presetEditor.targetId !== '__new__') {
+            const tIdx = list.findIndex(p => p.id === presetEditor.targetId);
+            if (tIdx !== -1) {
+                const prev = list[tIdx];
+                actionWord = presetEditor.mode === 'edit' ? 'Updated' : 'Saved Gear to';
+                savedObj = {
+                    id: prev.id,
+                    label,
+                    slots: newSlots,
+                    slotLabels,
+                    isStarter: !!prev.isStarter,
+                    modified: true
+                };
+                list[tIdx] = savedObj;
+            }
+        }
+
+        if (!savedObj) {
+            const existingSameName = list.findIndex(p => p.label.toLowerCase() === label.toLowerCase());
+            const newId = existingSameName !== -1 ? list[existingSameName].id : `custom_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
+            savedObj = {
+                id: newId,
+                label,
+                slots: newSlots,
+                slotLabels,
+                isStarter: existingSameName !== -1 ? !!list[existingSameName].isStarter : false,
+                modified: true
+            };
+            if (existingSameName !== -1) {
+                list[existingSameName] = savedObj;
+                actionWord = 'Updated';
+            } else {
+                list.push(savedObj);
+            }
+        }
+
+        saveAllPresets(list);
+        lastAppliedPresetId = savedObj.id;
+        presetEditor = null;
+        presetFocusTargetId = null;
+        const slotCount = Object.keys(slotLabels).length;
+        announceStatus(`${actionWord} preset ${label} with ${slotCount} slots.`);
+        adapter.log(`💾 <strong>${actionWord} Equipment Preset:</strong> "${esc(label)}" (${slotCount} slot${slotCount === 1 ? '' : 's'})!`);
+        syncHeroStateToFirebase(false);
+        renderEquipModal();
+    }
+
+    function saveCurrentAsPreset() {
+        if (!presetEditor) {
+            openSavePresetForm(lastAppliedPresetId || '__new__');
+            return;
+        }
+        submitPresetEditorForm();
+    }
+
+    function deletePreset(idx) {
+        const list = getAllPresets().map(p => ({
+            id: p.id,
+            label: p.label,
+            slots: p.slots,
+            slotLabels: p.slotLabels,
+            isStarter: p.isStarter,
+            modified: p.modified
+        }));
+        if (idx < 0 || idx >= list.length) return;
+        const [removed] = list.splice(idx, 1);
+        saveAllPresets(list);
+        if (lastAppliedPresetId === removed.id) lastAppliedPresetId = null;
+        if (presetEditor && presetEditor.targetId === removed.id) presetEditor = null;
+        announceStatus(`Deleted preset ${removed.label}.`);
+        adapter.log(`🗑️ Deleted preset "${esc(removed.label)}".`);
+        syncHeroStateToFirebase(false);
+        renderEquipModal();
+    }
+
+    function restoreStarterPresets() {
+        const starters = adapter?.presets || [];
+        if (starters.length === 0) return;
+        const items = adapter.getItems();
+        const list = getAllPresets().map(p => ({
+            id: p.id,
+            label: p.label,
+            slots: p.slots,
+            slotLabels: p.slotLabels,
+            isStarter: p.isStarter,
+            modified: p.modified
+        }));
+        let restored = 0;
+        starters.forEach((sp, i) => {
+            const sid = makeStarterPresetId(sp, i);
+            if (!list.some(p => p.id === sid || p.label.toLowerCase() === sp.label.toLowerCase())) {
+                list.unshift({
+                    id: sid,
+                    label: sp.label,
+                    slots: { ...(sp.slots || {}) },
+                    slotLabels: computePresetSlotLabels(sp.slots || {}, items),
+                    isStarter: true,
+                    modified: false
+                });
+                restored += 1;
+            }
+        });
+        saveAllPresets(list);
+        if (presetEditor && presetEditor.mode === 'save' && presetEditor.targetId === '__new__') {
+            // keep editor open
+        }
+        announceStatus(`Restored ${restored} starter presets.`);
+        adapter.log(`↺ <strong>Restored Starter Presets:</strong> ${restored > 0 ? restored + ' default preset(s) added back!' : 'All starter presets are already present.'}`);
+        syncHeroStateToFirebase(false);
         renderEquipModal();
     }
 
@@ -2195,7 +2594,9 @@
             localStorage.removeItem(getEquipStorageKey());
             localStorage.removeItem(getCustomGearKey());
             localStorage.removeItem(getCustomPresetsKey());
-            lastAppliedPresetName = null;
+            localStorage.removeItem(getUnifiedPresetsKey());
+            lastAppliedPresetId = null;
+            presetEditor = null;
             applyEquipmentToSheet(true);
             pushSyncedCheckpoint(true);
             adapter.log(`🔄 <strong>Sheet Reset to Official Session 1 Baseline!</strong> All HP, Resources, Gold Purse, Backpack Inventory, Equipped Gear, Presets &amp; Player Notes restored and synced to Firebase.`);
@@ -2964,25 +3365,144 @@
         const activeSlots = getActiveSlots();
         const curSlotObj = activeSlots.find(s => s.id === selectedSlot) || activeSlots[2];
 
-        // Live Stat Pills + Active Preset + Custom Preset Builder
+        // Live Stat Pills + Active Preset + Unified Preset Builder/Editor
         const acTxt = document.getElementById('ac-disp')?.innerText || '--';
         const allPresets = getAllPresets();
         const activePreset = getActivePresetInfo(eq);
-        const presetsHtml = allPresets.map((p, idx) => {
-            const isAct = activePreset.preset && activePreset.label === p.label && !!activePreset.isCustom === !!p.isCustom;
-            if (p.isCustom) {
-                return `<span class="rpg-preset-wrap"><button type="button" class="rpg-preset-btn ${isAct ? 'preset-active' : ''}" onclick="COS_RPG.applyLoadoutPreset(${idx})">${esc(p.label)}</button><button type="button" class="rpg-preset-del" onclick="COS_RPG.deleteCustomPreset(${p.customIdx})" aria-label="Delete preset ${esc(p.label)}" title="Delete custom preset">✕</button></span>`;
-            }
-            return `<button type="button" class="rpg-preset-btn ${isAct ? 'preset-active' : ''}" onclick="COS_RPG.applyLoadoutPreset(${idx})">${esc(p.label)}</button>`;
-        }).join('');
+        const currentTargetPreset = activePreset.preset || activePreset.contextPreset || null;
 
-        const presetFormHtml = showPresetForm ? `
-            <div class="rpg-preset-form">
-                <input type="text" id="rpg-new-preset-name" class="rpg-input" style="flex:1; min-width:170px;" maxlength="36" placeholder="New preset name (e.g. Boss Fight, Stealth)...">
-                <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.saveCurrentAsPreset()">Save Preset</button>
-                <button type="button" class="rpg-mini-btn" onclick="COS_RPG.togglePresetForm()">Cancel</button>
-            </div>
-        ` : '';
+        const presetsHtml = allPresets.length > 0
+            ? allPresets.map((p, idx) => {
+                const isAct = activePreset.isMatch && activePreset.preset && activePreset.preset.id === p.id;
+                const isCtx = !isAct && currentTargetPreset && currentTargetPreset.id === p.id;
+                return `<span class="rpg-preset-wrap"><button type="button" class="rpg-preset-btn ${isAct ? 'preset-active' : ''}" onclick="COS_RPG.applyLoadoutPreset(${idx})">${esc(p.label)}${isCtx ? ' •' : ''}</button><button type="button" class="rpg-preset-edit" onclick="COS_RPG.openEditPresetForm(${idx})" aria-label="Edit preset ${esc(p.label)}" title="Edit preset name &amp; gear">✏️</button><button type="button" class="rpg-preset-del" onclick="COS_RPG.deletePreset(${idx})" aria-label="Delete preset ${esc(p.label)}" title="Delete preset">✕</button></span>`;
+            }).join('')
+            : `<button type="button" class="rpg-mini-btn" style="min-block-size:28px;" onclick="COS_RPG.restoreStarterPresets()">↺ Restore Starter Presets</button>`;
+
+        const contextSaveBtnHtml = currentTargetPreset
+            ? `<button type="button" class="rpg-mini-btn btn-equip" style="min-block-size:28px;" onclick="COS_RPG.openSavePresetForm('${esc(currentTargetPreset.id).replace(/'/g, "\\'")}')">💾 Save to &ldquo;${esc(currentTargetPreset.label)}&rdquo;</button>`
+            : '';
+
+        let presetFormHtml = '';
+        if (presetEditor) {
+            const isEditMode = presetEditor.mode === 'edit';
+            const editingTargetObj = (presetEditor.targetId && presetEditor.targetId !== '__new__')
+                ? allPresets.find(p => p.id === presetEditor.targetId)
+                : null;
+            const formTitle = isEditMode && editingTargetObj
+                ? `✏️ Edit Preset: ${editingTargetObj.label}`
+                : (editingTargetObj ? `💾 Update Existing Preset: ${editingTargetObj.label}` : '💾 Save New Equipment Preset');
+            const submitLabel = editingTargetObj ? '💾 Save Changes' : '💾 Save Preset';
+
+            const targetSelectHtml = !isEditMode ? `
+                <div class="rpg-preset-field-grp" style="flex:0.9 1 190px;">
+                    <label for="rpg-preset-target" class="rpg-preset-field-lbl">Save Target</label>
+                    <select id="rpg-preset-target" name="presetTarget" class="rpg-select" onchange="COS_RPG.onPresetTargetChange(this.value)">
+                        <option value="__new__" ${presetEditor.targetId === '__new__' ? 'selected' : ''}>➕ Create New Preset</option>
+                        ${allPresets.map(p => `<option value="${esc(p.id)}" ${presetEditor.targetId === p.id ? 'selected' : ''}>💾 Update: ${esc(p.label)}</option>`).join('')}
+                    </select>
+                </div>
+            ` : '';
+
+            const slotRowsHtml = activeSlots.map(s => {
+                const draft = presetEditor.slotDrafts[s.id];
+                if (!draft) return '';
+                const compatible = items.filter(r => (getItemMeta(r).slots || []).includes(s.id));
+                const eqKey = eq[s.id] || '';
+                const hasPreservedRaw = String(draft.val || '').startsWith('__raw__:');
+                if (compatible.length === 0 && !eqKey && !draft.checked) return '';
+
+                const seenKeys = new Set();
+                const optionItems = [];
+                compatible.forEach(raw => {
+                    const k = normKey(raw);
+                    if (seenKeys.has(k)) return;
+                    seenKeys.add(k);
+                    const suffix = eqKey === k ? ' (Equipped)' : '';
+                    optionItems.push(`<option value="${esc(k)}" ${draft.val === k ? 'selected' : ''}>${esc(shortLabel(raw))}${suffix}</option>`);
+                });
+                if (eqKey && !seenKeys.has(eqKey)) {
+                    const eqRaw = findInventoryRawByKey(eqKey);
+                    if (eqRaw) {
+                        seenKeys.add(eqKey);
+                        optionItems.push(`<option value="${esc(eqKey)}" ${draft.val === eqKey ? 'selected' : ''}>${esc(shortLabel(eqRaw))} (Equipped)</option>`);
+                    }
+                }
+                if (hasPreservedRaw) {
+                    const rawSpec = String(draft.val).slice(8);
+                    optionItems.push(`<option value="${esc(draft.val)}" selected>Saved: ${esc(rawSpec)}</option>`);
+                }
+                optionItems.push(`<option value="__clear__" ${draft.val === '__clear__' ? 'selected' : ''}>— Clear / Unequip Slot —</option>`);
+
+                let gripHtml = '';
+                if (s.id === 'mainHand') {
+                    const selRaw = (draft.val && draft.val !== '__clear__' && !hasPreservedRaw)
+                        ? findInventoryRawByKey(draft.val)
+                        : (hasPreservedRaw ? findInventoryRawByPresetSpec(String(draft.val).slice(8), items) : null);
+                    const selMeta = selRaw ? getItemMeta(selRaw) : null;
+                    if (selMeta && selMeta.versatile) {
+                        gripHtml = `
+                            <select id="rpg-preset-grip-sel" class="rpg-preset-grip-sel" aria-label="Main Hand grip mode">
+                                <option value="1h" ${(draft.grip || '1h') === '1h' ? 'selected' : ''}>1H</option>
+                                <option value="2h" ${draft.grip === '2h' ? 'selected' : ''}>2H</option>
+                            </select>
+                        `;
+                    } else if (selMeta && selMeta.hands === 2) {
+                        gripHtml = `<span style="font-size:0.65rem; color:#c4b5fd; font-weight:800;">2H</span>`;
+                    }
+                }
+
+                return `
+                    <div class="rpg-preset-slot-row ${draft.checked ? 'is-checked' : ''}" data-slot-row="${s.id}">
+                        <input type="checkbox" id="rpg-pslot-chk-${s.id}" class="rpg-preset-slot-chk" data-slot-id="${s.id}" ${draft.checked ? 'checked' : ''}>
+                        <label for="rpg-pslot-chk-${s.id}" class="rpg-preset-slot-chk-lbl">${s.icon} ${esc(s.label)}</label>
+                        <select id="rpg-pslot-sel-${s.id}" class="rpg-preset-slot-sel" data-slot-id="${s.id}" aria-label="${esc(s.label)} item for preset">
+                            ${optionItems.join('')}
+                        </select>
+                        ${gripHtml}
+                    </div>
+                `;
+            }).join('');
+
+            presetFormHtml = `
+                <form id="rpg-preset-form" class="rpg-preset-form" aria-labelledby="rpg-preset-form-title" novalidate>
+                    <div class="rpg-preset-form-head">
+                        <span id="rpg-preset-form-title" style="font-size:0.78rem; font-weight:800; color:#fde68a;">${esc(formTitle)}</span>
+                        <button type="button" class="rpg-mini-btn" onclick="COS_RPG.closePresetForm()" aria-label="Cancel preset editor">✕ Cancel</button>
+                    </div>
+                    <div class="rpg-preset-form-fields">
+                        ${targetSelectHtml}
+                        <div class="rpg-preset-field-grp" style="flex:1.4 1 220px;">
+                            <label for="rpg-new-preset-name" class="rpg-preset-field-lbl">Preset Name <span aria-hidden="true" style="color:#f87171;">*</span></label>
+                            <input type="text" id="rpg-new-preset-name" name="presetName" class="rpg-input rpg-preset-name-input" maxlength="36" required enterkeyhint="done" placeholder="e.g. Boss Fight, Stealth, Vampire Raid" value="${esc(presetEditor.draftName)}" aria-describedby="rpg-preset-error" ${presetEditor.errorMsg ? 'aria-invalid="true"' : ''}>
+                        </div>
+                    </div>
+                    <fieldset class="rpg-preset-fieldset">
+                        <legend>Certain Gear Slots to Save (uncheck any slot to leave untouched)</legend>
+                        <div class="rpg-preset-scope-bar">
+                            <span style="font-size:0.66rem; color:#94a3b8;">Checked slots are saved when you apply this preset.</span>
+                            <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                                <button type="button" id="rpg-preset-pull-btn" class="rpg-mini-btn btn-equip" style="min-block-size:24px; padding:2px 6px; font-size:0.65rem;" onclick="COS_RPG.pullEquippedIntoPresetEditor()">⚡ Pull Equipped Gear</button>
+                                <button type="button" class="rpg-mini-btn" style="min-block-size:24px; padding:2px 6px; font-size:0.65rem;" onclick="COS_RPG.togglePresetSlotScope('all')">All Gear</button>
+                                <button type="button" class="rpg-mini-btn" style="min-block-size:24px; padding:2px 6px; font-size:0.65rem;" onclick="COS_RPG.togglePresetSlotScope('combat')">Combat Only</button>
+                                <button type="button" class="rpg-mini-btn" style="min-block-size:24px; padding:2px 6px; font-size:0.65rem;" onclick="COS_RPG.togglePresetSlotScope('none')">Clear</button>
+                            </div>
+                        </div>
+                        <div id="rpg-preset-slots-container" class="rpg-preset-slots-grid">
+                            ${slotRowsHtml || '<span style="font-size:0.72rem; color:#94a3b8;">No equippable gear found in Backpack yet.</span>'}
+                        </div>
+                    </fieldset>
+                    <div class="rpg-preset-form-foot">
+                        <div id="rpg-preset-error" class="rpg-preset-form-error" role="status" aria-live="polite">${esc(presetEditor.errorMsg || '')}</div>
+                        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-left:auto;">
+                            ${hasMissingOrModifiedStarters() ? `<button type="button" class="rpg-mini-btn" onclick="COS_RPG.restoreStarterPresets()">↺ Restore Starters</button>` : ''}
+                            <button type="button" class="rpg-mini-btn" onclick="COS_RPG.closePresetForm()">Cancel</button>
+                            <button type="submit" class="rpg-mini-btn btn-use">${submitLabel}</button>
+                        </div>
+                    </div>
+                </form>
+            `;
+        }
 
         // Filter inventory items that fit selectedSlot
         const compatible = [];
@@ -3305,7 +3825,7 @@
             <div class="rpg-equip-topstats">
                 <div class="rpg-stat-pills">
                     <span class="rpg-stat-pill gold">Live AC: ${esc(acTxt)}</span>
-                    <span class="rpg-stat-pill" style="border-color:#60a5fa; color:#bfdbfe;">Preset: ${esc(activePreset.label)}${activePreset.isCustom ? ' (Custom)' : ''}</span>
+                    <span class="rpg-stat-pill" style="border-color:#60a5fa; color:#bfdbfe;">Preset: ${esc(activePreset.label)}${!activePreset.isMatch && activePreset.contextPreset ? ` (from ${esc(activePreset.contextPreset.label)})` : ''}</span>
                     ${bonuses.saveBonus ? `<span class="rpg-stat-pill blue">Saves: +${bonuses.saveBonus}</span>` : ''}
                     ${bonuses.spellDcBonus ? `<span class="rpg-stat-pill purple">Spell DC/Hit: +${bonuses.spellDcBonus}</span>` : ''}
                     ${bonuses.spellFireBonus ? `<span class="rpg-stat-pill" style="border-color:#ef4444; color:#fca5a5;">Spell Fire: +${esc(bonuses.spellFireBonus)}</span>` : ''}
@@ -3315,7 +3835,8 @@
                 <div class="rpg-presets-bar">
                     <span style="font-size:0.66rem; font-weight:800; color:#94a3b8;">PRESETS:</span>
                     ${presetsHtml}
-                    <button type="button" class="rpg-mini-btn btn-use" style="min-block-size:28px;" onclick="COS_RPG.togglePresetForm()">+ Save Preset</button>
+                    ${contextSaveBtnHtml}
+                    <button type="button" class="rpg-mini-btn btn-use" style="min-block-size:28px;" onclick="COS_RPG.openSavePresetForm('__new__')">+ New Preset</button>
                 </div>
                 ${presetFormHtml}
             </div>
@@ -3370,12 +3891,74 @@
                 </div>
             </div>
         `;
-        if (showPresetForm) {
+        if (presetEditor) {
+            const pForm = document.getElementById('rpg-preset-form');
             const pInp = document.getElementById('rpg-new-preset-name');
+            const pErr = document.getElementById('rpg-preset-error');
+            if (pForm) {
+                pForm.addEventListener('submit', e => {
+                    e.preventDefault();
+                    submitPresetEditorForm();
+                });
+            }
             if (pInp) {
-                pInp.focus();
+                if (presetFocusTargetId === 'rpg-new-preset-name') {
+                    pInp.focus();
+                    if (presetEditor.mode === 'edit' && typeof pInp.select === 'function') pInp.select();
+                }
+                pInp.addEventListener('input', () => {
+                    if (presetEditor) presetEditor.draftName = pInp.value;
+                    if (pInp.value.trim()) {
+                        pInp.removeAttribute('aria-invalid');
+                        if (presetEditor) presetEditor.errorMsg = '';
+                        if (pErr) pErr.textContent = '';
+                    }
+                });
                 pInp.addEventListener('keydown', e => {
-                    if (e.key === 'Enter' && !e.isComposing) saveCurrentAsPreset();
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (e.isComposing || e.keyCode === 229) return;
+                        if (pForm && typeof pForm.requestSubmit === 'function') pForm.requestSubmit();
+                        else submitPresetEditorForm();
+                    }
+                });
+            }
+            if (presetFocusTargetId && presetFocusTargetId !== 'rpg-new-preset-name') {
+                const focusEl = document.getElementById(presetFocusTargetId);
+                if (focusEl && typeof focusEl.focus === 'function') focusEl.focus();
+            }
+            presetFocusTargetId = null;
+
+            const slotsContainer = document.getElementById('rpg-preset-slots-container');
+            if (slotsContainer) {
+                slotsContainer.addEventListener('change', e => {
+                    if (!presetEditor) return;
+                    const t = e.target;
+                    const slotId = t?.getAttribute?.('data-slot-id');
+                    if (slotId && presetEditor.slotDrafts[slotId]) {
+                        const row = slotsContainer.querySelector(`[data-slot-row="${slotId}"]`);
+                        const chk = document.getElementById(`rpg-pslot-chk-${slotId}`);
+                        if (t.classList.contains('rpg-preset-slot-chk')) {
+                            presetEditor.slotDrafts[slotId].checked = !!t.checked;
+                            if (row) row.classList.toggle('is-checked', !!t.checked);
+                        } else if (t.classList.contains('rpg-preset-slot-sel')) {
+                            presetEditor.slotDrafts[slotId].val = t.value;
+                            if (chk && !chk.checked) {
+                                chk.checked = true;
+                                presetEditor.slotDrafts[slotId].checked = true;
+                                if (row) row.classList.toggle('is-checked', true);
+                            }
+                            if (slotId === 'mainHand') {
+                                syncPresetDraftsFromDom();
+                                presetFocusTargetId = `rpg-pslot-sel-mainHand`;
+                                renderEquipModal();
+                                return;
+                            }
+                        }
+                        if (pErr) pErr.textContent = '';
+                    } else if (t && t.id === 'rpg-preset-grip-sel' && presetEditor.slotDrafts.mainHand) {
+                        presetEditor.slotDrafts.mainHand.grip = t.value;
+                    }
                 });
             }
         }
@@ -4004,6 +4587,7 @@
     function openEquipModal(slotId) {
         if (slotId) selectedSlot = slotId;
         showCustomTagger = false;
+        presetEditor = null;
         renderEquipModal();
         const m = document.getElementById('rpg-equip-modal');
         if (m && !m.open) m.showModal();
@@ -4188,9 +4772,21 @@
         unequipSlot,
         toggleMainHandGrip,
         applyLoadoutPreset,
-        togglePresetForm: () => { showPresetForm = !showPresetForm; renderEquipModal(); },
+        openSavePresetForm,
+        openEditPresetForm,
+        closePresetForm,
+        onPresetTargetChange,
+        pullEquippedIntoPresetEditor,
+        togglePresetSlotScope,
+        submitPresetEditorForm,
+        togglePresetForm: () => {
+            if (presetEditor) closePresetForm();
+            else openSavePresetForm(lastAppliedPresetId || '__new__');
+        },
         saveCurrentAsPreset,
-        deleteCustomPreset,
+        deletePreset,
+        deleteCustomPreset: deletePreset,
+        restoreStarterPresets,
         quickToggleEquipByIndex,
         toggleCustomTagger: () => { showCustomTagger = !showCustomTagger; renderEquipModal(); },
         saveCustomGearTag,
