@@ -3235,9 +3235,9 @@
                         </div>
                         <div class="rpg-modal-body" id="rpg-equip-body"></div>
                         <div class="rpg-modal-foot">
-                            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                            <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
                                 <button type="button" class="rpg-mini-btn" onclick="COS_RPG.openBackpackModal()">Open Full Backpack</button>
-                                <button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.exportEquippedGear()">Export Gear &amp; Presets</button>
+                                <span id="rpg-equip-foot-save-mount" style="display:inline-flex; gap:6px; flex-wrap:wrap; align-items:center;"></span>
                             </div>
                             <button type="button" class="rpg-mini-btn" onclick="COS_RPG.closeModal('rpg-equip-modal')">Close</button>
                         </div>
@@ -3524,8 +3524,10 @@
             : `<button type="button" class="rpg-mini-btn" style="min-block-size:28px;" onclick="COS_RPG.restoreStarterPresets()">↺ Restore Starter Presets</button>`;
 
         const contextSaveBtnHtml = currentTargetPreset
-            ? `<button type="button" class="rpg-mini-btn btn-equip" style="min-block-size:28px;" onclick="COS_RPG.openSavePresetForm('${esc(currentTargetPreset.id).replace(/'/g, "\\'")}')">💾 Save to &ldquo;${esc(currentTargetPreset.label)}&rdquo;</button>`
-            : '';
+            ? `<button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.openSavePresetForm('${esc(currentTargetPreset.id).replace(/'/g, "\\'")}')">💾 Save to: &ldquo;${esc(currentTargetPreset.label)}&rdquo;</button>`
+            : (allPresets.length > 0
+                ? `<button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.openSavePresetForm('${esc(allPresets[0].id).replace(/'/g, "\\'")}')">💾 Save to: Preset...</button>`
+                : '');
 
         let presetFormHtml = '';
         if (presetEditor) {
@@ -3979,7 +3981,6 @@
                 <div class="rpg-presets-bar">
                     <span style="font-size:0.66rem; font-weight:800; color:#94a3b8;">PRESETS:</span>
                     ${presetsHtml}
-                    ${contextSaveBtnHtml}
                     <button type="button" class="rpg-mini-btn btn-use" style="min-block-size:28px;" onclick="COS_RPG.openSavePresetForm('__new__')">+ New Preset</button>
                 </div>
                 ${presetFormHtml}
@@ -4035,7 +4036,10 @@
                 </div>
             </div>
         `;
+        const footSaveMount = document.getElementById('rpg-equip-foot-save-mount');
+        if (footSaveMount) footSaveMount.innerHTML = contextSaveBtnHtml;
         if (presetEditor) {
+            if (presetFocusTargetId === 'rpg-new-preset-name') body.scrollTop = 0;
             const pForm = document.getElementById('rpg-preset-form');
             const pInp = document.getElementById('rpg-new-preset-name');
             const pErr = document.getElementById('rpg-preset-error');
