@@ -1511,7 +1511,7 @@
     <button type="button" class="btn-map-ref" onclick="openWorldMapLightbox()">🗺️ Map of Barovia</button>
     <a href="#npc-directory" id="nav-npc-link" class="nav-btn">👥 2. NPC Directory (37)</a>
     <a href="#monsters-section" id="nav-monster-link" class="nav-btn">💀 3. Enemies &amp; Bosses (57)</a>
-    <a href="#loot-vault" id="nav-loot-link" class="nav-btn">🎒 4. World Loot (104)</a>
+    <a href="#loot-vault" id="nav-loot-link" class="nav-btn">🎒 4. World Loot (106)</a>
     <a href="#factions-lore" class="nav-btn">🏛️ 4.5 Factions &amp; Lore (56)</a>
     <a href="#dm-rules-guide" class="nav-btn">⚖️ 5. Barovian Laws &amp; Rules</a>
 </nav>
@@ -1535,11 +1535,11 @@
                 </div>
             </div>
             <div class="card clickable" onclick="openAllyCharacterWindow('jacomir')">
-                <div class="card-header"><span class="card-title">👑 Jacomir Yulle ("King")</span><span class="pill crimson">HP 31/31 • AC 17</span></div>
+                <div class="card-header"><span class="card-title">👑 Jacomir Yulle ("King")</span><span class="pill crimson">HP 23/31 • AC 17</span></div>
                 <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Human Battle Master Fighter (Noble).</strong> Holds <strong>📖 Kolyan's Wizard Diary</strong> (Martikov/Keepers lead) & <strong>🥧 1x Uneaten Dream Pastry</strong>. Pouring his blood into a cup for Doru in the church attic!</p>
+                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Battle Master Fighter (0 GP).</strong> Holds <strong>⚔️ Silvered Longsword (Sap)</strong>, <strong>💧 Morninglord Spring Water (Holy Water)</strong>, <strong>📖 Kolyan's Diary</strong>, <strong>🥧 Dirty Dream Pastry</strong>, &amp; 🪵 Pipe. Pouring blood cup for Doru!</p>
                     <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--accent-gold-soft); margin-top:auto;">
-                        ⚔️ 4/4 d8 • ☕ 3/3 SW • 📖 Kolyan Diary • 🥧 Dream Pie (Uneaten)
+                        ⚔️ 2/4 d8 • ☕ 3/3 SW • ⚡ Surge 1/1 • 🌟 Insp READY • 💛 2/2 Help
                     </div>
                 </div>
             </div>
@@ -1972,7 +1972,7 @@
     <!-- SECTION 4: WORLD LOOT VAULT -->
     <section id="loot-vault">
         <div class="section-header">
-            <span id="loot-sec-title">🎒 SECTION 4: COMPLETE BAROVIAN WORLD LOOT VAULT, OFFICIAL MODULE TREASURES &amp; SESSION 1 LOOTS (104 ITEMS)</span>
+            <span id="loot-sec-title">🎒 SECTION 4: COMPLETE BAROVIAN WORLD LOOT VAULT, OFFICIAL MODULE TREASURES &amp; SESSION 1 LOOTS (106 ITEMS)</span>
             <search class="section-search-wrap" aria-label="Search World Loot Vault">
                 <label class="visually-hidden" for="loot-search">Search Section 4 Loot</label>
                 <input type="search" id="loot-search" class="section-search-input" placeholder="🔍 Search items, rarities, heroes, acts..." autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" oninput="filterSectionSearch('loot', this.value)">
@@ -1981,7 +1981,7 @@
         </div>
         <div class="loot-filter-bar" id="loot-filter-bar">
             <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Quick Loot Filter:</span>
-            <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Loot (104)</button>
+            <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Loot (106)</button>
             <button type="button" class="btn-loot-filter active" data-loottag="Act I" onclick="filterLootVault('Act I', this)">🩸 Act I (Svalich / Village / Bonegrinder)</button>
             <button type="button" class="btn-loot-filter" data-loottag="Act II" onclick="filterLootVault('Act II', this)">⚔️ Act II (Vallaki / Winery / Yester Hill)</button>
             <button type="button" class="btn-loot-filter" data-loottag="Act III" onclick="filterLootVault('Act III', this)">🐉 Act III (Argynvost / Krezk / Berez)</button>
@@ -10172,6 +10172,7 @@ const BIOME_DATA = {
         loreKey: "lore_indirovich_manor",
         lootLinks: [
             { key: "kolyan_diary", note: "S1 Study Loot (Jacomir)" },
+            { key: "jacomir_silvered_longsword", note: "S1 Claimed (Jacomir)" },
             { key: "kolyan_heirloom_dagger", note: "S1 Claimed (Piper)" },
             { key: "kolyan_black_robe", note: "S1 Equipped (Piper)" },
             { key: "kolyan_red_robe", note: "S1 Claimed (Piper)" },
@@ -11147,8 +11148,8 @@ const LOOT_DATA = {
         lore: "Kept by the Martikov family for emergencies against hag poisons and vampire curses."
     },
     holy_water: {
-        cat: "heal", name: "💧 Flask of St. Andral's Holy Water", rarity: "Uncommon Consumable • 2 GP 5 SP",
-        location: "Act I–IV • Ismark's Cache, Father Donavich, Father Lucian & Ezmerelda",
+        cat: "heal", name: "💧 Flask of Morninglord Spring Water (St. Andral's Holy Water)", rarity: "Uncommon Consumable • 2 GP 5 SP • 1x Held by Jacomir",
+        location: "Act I–IV • Ismark's Cache (1x Jacomir S1), Father Donavich, Father Lucian & Ezmerelda",
         mechanics: "Throw (20 ft) or splash on a weapon/target: deals <strong>2d6 Radiant damage</strong> to Undead/Fiends and <strong>immediately halts Vampire Regeneration for 1 full round</strong>!",
         lore: "Pure spring water consecrated beneath the altar of the Morninglord."
     },
@@ -11465,6 +11466,18 @@ const LOOT_DATA = {
         location: "Act I • Session 1 Salvage • Best for Yvaine",
         mechanics: "• <strong>Permanent Thieves' Tools Access:</strong> Grants Yvaine permanent use of <strong>Thieves' Tools</strong> to pick padlocks, strongboxes, and bolted doors, or disarm mechanical traps (like Ezmerelda's V1 wagon or Vallaki manor locks!).",
         lore: "Slender dark-steel tension wrenches and picks tucked neatly inside Yvaine's coat sleeve."
+    },
+    jacomir_silvered_longsword: {
+        cat: "weapon", name: "⚔️ Silvered Longsword (Undead & Werewolf Bane)", rarity: "Uncommon Silvered Martial Weapon • Claimed S1 (Jacomir)",
+        location: "Act I • Village of Barovia / Indirovich Armory (Session 1) • Best for Jacomir",
+        mechanics: "• <strong>Bypasses Undead &amp; Lycanthrope Resistance:</strong> Cuts cleanly through nonmagical damage resistances/immunities of <strong>Vampire Spawn, Werewolves, Wights, and Night Hags</strong>!<br>• <strong>Versatile &amp; Sap Mastery (5.5e):</strong> <code>1d8 + STR (1H)</code> or <code>1d10 + STR (2H)</code> Silvered Slashing; on hit, the target has <strong>Disadvantage on its next attack roll</strong> before the start of your next turn!",
+        lore: "Tempered Barovian steel plated in pure silver—claimed by King Jacomir to match the immortal hide of Strahd's undead."
+    },
+    barovian_smoking_pipe: {
+        cat: "quest", name: "🪵 Barovian Wooden Smoking Pipe", rarity: "Personal Keepsake • Claimed S1 (Jacomir)",
+        location: "Act I • Village of Barovia (Session 1) • Jacomir",
+        mechanics: "• Carved dark-briar smoking pipe claimed by King Jacomir during Session 1—roleplay keepsake &amp; fireside companion while mapping Barovia over Dragonchess.",
+        lore: "Stained with ash and cold mountain resin, smelling faintly of pine smoke."
     }
 };
 

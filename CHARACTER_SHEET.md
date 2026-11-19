@@ -1,6 +1,6 @@
 # 🧙‍♂️ Master Party Character Sheets — Curse of Strahd
 
-> **Status:** Live Campaign Roster — Session 1 Post-Session State Synced for **Piper** & **Yvaine** *(Awaiting Jacomir S1 Export)*  
+> **Status:** Live Campaign Roster — Session 1 Post-Session State Synced for **ALL 3 HEROES** (**Piper**, **Jacomir**, & **Yvaine**)!  
 > **Starting Level:** **Level 3** (Subclasses Unlocked • Starting *In Media Res* inside the Mist-Merged Phantom Black Coach!)  
 > **Live GitHub Pages Portal:** `https://raelpinpin-create.github.io/dnd-curse-of-strahd/`  
 > **Trilogy Destiny Note:** By the end of *Curse of Strahd* (Sessions 15–20 at the Amber Temple & Castle Ravenloft), the survivors of this party will be tempted/bound by the **Dark Powers & Vecna's Monoliths**—ultimately becoming the formidable Level 10+ rival champions whom **Eflein** and **Sylvar Link** must confront in **Campaign 3**!
@@ -49,31 +49,34 @@
 * **Species & Class:** **Level 3 Human Battle Master Fighter (5.5e / 2024 Rules)**
 * **Background & Alignment:** **Noble (Former King of Oakenshire)** • **Lawful Neutral** *(Height: 5'11" • Age: 32)*
 * **Interactive HTML Sheet:** [`JACOMIR_PLAYER_SHEET.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/JACOMIR_PLAYER_SHEET.html)
-* **Vitals:** **HP:** `31 / 31` *(3d10 + CON — Fixed Average)* | **AC:** `17` *(Chain Mail 16 + Defense Fighting Style +1)* | **Init:** `+0` | **Speed:** `30 ft` | **PB:** `+2` | **Passive Perception:** `13`
+* **Vitals *(Pre-Long Rest S1 State)*:** **HP:** `23 / 31` *(3d10 + CON — Fixed Average)* | **AC:** `17` *(Chain Mail 16 + Defense Fighting Style +1)* | **Init:** `+0` | **Speed:** `30 ft` | **PB:** `+2` | **Passive Perception:** `13`
 * **Ability Scores (Noble Background +2 STR / +1 CON):** `STR 17 (+3) ★ | DEX 10 (+0) | CON 16 (+3) ★ | INT 10 (+0) | WIS 12 (+1) | CHA 12 (+1)`
 * **Saving Throws:** **STR ★ `+5`**, **CON ★ `+5`**, WIS `+1`, CHA `+1`, DEX `+0`, INT `+0`
 * **Proficient Skills:** **Athletics (STR) ★ `+5`**, **Insight (WIS) ★ `+3`**, **Perception (WIS) ★ `+3`** *(Human: Skillful)*, **Survival (WIS) ★ `+3`** *(Skilled)*, **Persuasion (CHA) ★ `+3`** *(Noble)*, **Intimidation (CHA) ★ `+3`** *(Skilled)*, **History (INT) ★ `+2`** *(Noble)* • **Tool Proficiency:** *Dragonchess Set*
 * **Weapons & 5.5e Weapon Masteries:**
   - 🗡️ **Ancestral Greatsword:** `+5 to hit`, `2d6 + 3` Slashing *(Savage Attacker: rolls 2d6 twice 1/turn and uses higher total)* • **Graze Mastery:** Deals **3 Slashing damage** (STR mod) even on a missed attack roll!
+  - ⚔️ **Silvered Longsword *(Claimed S1)*:** `+5 to hit`, `1d8 + 3` (1H) or `1d10 + 3` (2H) **Silvered Slashing** *(bypasses nonmagical resistances/immunities of Undead, Vampire Spawn, Werewolves, & Night Hags!)* • **Sap Mastery:** Target hit has **Disadvantage on its next attack roll** before the start of your next turn!
   - 🪓 **2x Handaxes (Melee or Thrown 20/60 ft):** `+5 to hit`, `1d6 + 3` Slashing • **Vex Mastery:** Hitting grants **Advantage** on the next attack roll against that target before the end of your next turn!
 * **Battle Master Combat Superiority (`Maneuver Save DC 13`):**
-  - ⚔️ **Superiority Dice:** `4 / 4 (d8s)` *(Recharges on Short or Long Rest)*
+  - ⚔️ **Superiority Dice:** `2 / 4 (d8s)` remaining pre-Short/Long Rest *(Recharges to 4/4 on Short or Long Rest)*
   - 🛡️ **Parry (Reaction):** When damaged by a melee attack, expend 1 Superiority Die to reduce damage by `1d8 + 3` (STR).
   - ⚔️ **Riposte (Reaction):** When a creature misses you with a melee attack, expend 1 Superiority Die to make an immediate melee weapon attack (`+5 hit`, adds `+1d8` to damage on hit).
   - 👹 **Menacing Attack (On Hit):** Expend 1 Superiority Die on a weapon hit to add `+1d8` damage and force a **DC 13 WIS Save** or the target is **Frightened** of you until the end of your next turn.
 * **Core Fighter Features & 5.5e Human Origin Feats:**
   - 💨 **Second Wind (`3 / 3` uses per Long Rest, `+1` on Short Rest):** Bonus Action to heal `1d10 + 3 HP`.
   - 🧠 **Tactical Mind:** When you fail an ability check, expend 1 use of Second Wind to add `+1d10` to the check *(if it still fails, the use is NOT expended!)*.
-  - ⚡ **Action Surge (`1 / 1` per Short or Long Rest):** Take 1 additional Action on your turn.
-  - 🌟 **Heroic Inspiration (`Human: Resourceful`):** Regained on every Long Rest; reroll any die immediately after rolling it.
+  - ⚡ **Action Surge (`1 / 1` Ready per Short or Long Rest):** Take 1 additional Action on your turn.
+  - 🌟 **Heroic Inspiration (`Human: Resourceful`):** `1 / 1 Ready` — Regained on every Long Rest; reroll any die immediately after rolling it.
   - 🩸 **Origin Feats:** **Savage Attacker** *(Human Versatile)* & **Skilled** *(Noble Background)*.
   - 🤝 **Help Tokens:** `2 / 2`
-* **Equipment & Royal Regalia (`25 GP, 0 SP`):**
+* **Equipment, Session 1 Loot & Royal Regalia (`0 GP, 0 SP`):**
   - 📖 ***Burgomaster Kolyan's Wizard Diary (Davian Martikov & Keepers of the Feather Lead):*** Found by looting Indirovich Manor in Session 1. Reveals that late Burgomaster Kolyan Indirovich was a wizard who knew **Davian Martikov** and the **Keepers of the Feather**, naming them as trusted allies who can help against Strahd!
-  - 🥧 ***1x Morgantha's Dream Pastry (Uneaten — Gifted by Granny):*** Given to King Jacomir by Morgantha in Session 1 after she resisted Piper's *Charm Person*. Stored **uneaten** (Action to eat: `1d6 Temp HP`, removes 1 Exhaustion, triggers 8-hr dream trance; secretly baked with bone-flour from Old Bonegrinder).
-  - 🗡️ *Ancestral Greatsword*, 🪓 *2x Handaxes*, ⛓️ *Chain Mail (AC 16)*
-  - 💍 *Signet Ring bearing the Lost Crest of Oakenshire*, 🧥 *Tattered Royal Traveling Cloak with Fur Mantle*, 📜 *Empty Scroll Case*
-  - ♟️ *Dragonchess Gaming Set*, 👔 *Fine Traveler's Garments*, 🎒 *Explorer's Pack*
+  - ⚔️ ***Silvered Longsword (Claimed S1):*** Bypasses undead/werewolf/vampire resistance (`1d8/1d10 + 3` Silvered Slashing, **Sap Mastery**).
+  - 💧 ***1x Flask of Morninglord Spring Water (Holy Water — Claimed S1):*** Consecrated spring water blessed by the Morninglord; splashes `20 ft` for `2d6 Radiant` vs Undead/Fiends and **halts Vampire Regeneration for 1 round**!
+  - 🥧 ***1x Dirty Dream Pastry (Morgantha's Pie — Uneaten):*** Given to King Jacomir by Morgantha in Session 1 after she resisted Piper's *Charm Person*. Stored **uneaten** (Action to eat: `1d6 Temp HP`, removes 1 Exhaustion, triggers 8-hr dream trance; DC 13 CON Save at dawn).
+  - 🪵 ***Wooden Smoking Pipe*** *(Claimed S1 keepsake)*
+  - 🗡️ *Ancestral Greatsword*, 🪓 *2x Handaxes*, ⛓️ *Chain Mail (AC 16 + 1 Defense = 17)*
+  - 💍 *Signet Ring bearing the Lost Crest of Oakenshire*, 🧥 *Tattered Royal Traveling Cloak with Fur Mantle*, ♟️ *Dragonchess Gaming Set* *(Dropped/stripped excess starting pack clutter: scroll case, fine garments, explorer's pack, torches, rations, waterskin/rope)*.
 * **Origin Lore & Roleplay Traits:** Former King of **Oakenshire** whose realm and vanguard were swallowed overnight by the creeping Mists. At the peak of his victory—delivering a speech to his prosperous people in his throneroom—his ears began to ring, a piercing migraine struck his temple, cold fog rolled across the marble floor, and figures in the crowd stared at him with an unblinking, **grim look... before slowly, unnervingly smiling**. Jacomir blinked and snapped awake inside the runaway black carriage across from Yvaine. He carries himself as an anointed sovereign who will bleed for his companions as his royal vanguard, sworn to tear Barovia apart stone by stone to free Oakenshire. *(Secret Destiny: Jacomir's sacred oath to bring his people home is the bait; when Strahd falls, the Scion Companion channels the Root Anchor into Jacomir, binding him as the vanguard general for Vecna's multiversal horde).*
 
 ---

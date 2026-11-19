@@ -711,6 +711,10 @@
             font-size: 0.8rem;
             font-family: 'JetBrains Mono', monospace;
         }
+        :where(a:any-link, button, input, select, textarea):focus-visible {
+            outline: 2px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
 
     </style>
 </head>
@@ -774,7 +778,7 @@
                 <div class="vitals-4box">
                     <div class="vital-mini-box">
                         <span class="vital-mini-lbl">HIT POINTS</span>
-                        <span class="vital-mini-val" id="hp-disp" style="color:var(--accent-green);">31/31</span>
+                        <span class="vital-mini-val" id="hp-disp" style="color:var(--accent-green);">23/31</span>
                     </div>
                     <div class="vital-mini-box">
                         <span class="vital-mini-lbl">ARMOR CLASS</span>
@@ -794,17 +798,17 @@
                 <div class="hp-ctrl-container">
                     <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.7rem; font-weight:700; margin-bottom:2px;">
                         <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.3px;">HIT POINTS STATUS</span>
-                        <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">31 / 31 (+0 Temp)</span>
+                        <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">23 / 31 (+0 Temp)</span>
                     </div>
                     <div class="hp-health-bar-bg">
-                        <div class="hp-health-bar-fill" id="hp-bar" style="width: 100%;"></div>
+                        <div class="hp-health-bar-fill" id="hp-bar" style="width: 74%;"></div>
                         <div class="hp-health-bar-temp" id="hp-temp-bar" style="width: 0%;"></div>
                     </div>
                     
                     <div style="display:flex; flex-direction:column; gap:5px; margin-top:2px;">
                         <div style="display:flex; align-items:center; gap:4px; width:100%;">
                             <button class="btn-act btn-act-dmg" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
-                            <input type="number" id="hp-input" class="hp-input-num" value="31" min="1" max="999" style="width:46px; height:26px; font-size:0.9rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage or healing amount">
+                            <input type="number" id="hp-input" class="hp-input-num" value="23" min="1" max="999" style="width:46px; height:26px; font-size:0.9rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage or healing amount">
                             <button class="btn-act btn-act-heal" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(1)">+1</button>
                             <button class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">⚔️ Dmg</button>
                             <button class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">💚 Heal</button>
@@ -1036,7 +1040,7 @@
                             <button class="btn-act btn-act-pre" onclick="openGoldHistoryModal()" style="font-size:0.68rem; padding:2px 6px; color:var(--accent-gold); border:1px solid rgba(245,158,11,0.4);">📜 Ledger</button>
                             <button class="btn-act btn-act-pre" onclick="resetGoldPurse()" style="font-size:0.68rem; padding:2px 5px; color:#cbd5e1;">🔄 Reset</button>
                             <div style="display:flex; align-items:baseline; gap:4px; margin-left:3px;">
-                                <span id="gold-disp" style="font-size:1.12rem; font-weight:800; color:#facc15;">25</span>
+                                <span id="gold-disp" style="font-size:1.12rem; font-weight:800; color:#facc15;">0</span>
                                 <span style="font-size:0.7rem; font-weight:700; color:#fbbf24;">GP</span>
                                 <span style="color:var(--text-dim); font-size:0.75rem;">•</span>
                                 <span id="silver-disp" style="font-size:0.95rem; font-weight:700; color:#cbd5e1;">0</span>
@@ -1075,7 +1079,7 @@
                     <div class="panel-title" style="margin-bottom:4px; cursor:pointer;" onclick="openPlayerNotesModal()" title="Click to open Player Notes">
                         <div style="display:flex; align-items:center; gap:6px;">
                             <span onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--accent-gold)'" style="transition:color 0.15s;">📓 Player Notes</span>
-                            <span id="player-notes-count-badge" style="font-size:0.64rem; padding:1px 6px; border-radius:999px; background:rgba(167,139,250,0.16); color:#c4b5fd; border:1px solid rgba(167,139,250,0.35);">2</span>
+                            <span id="player-notes-count-badge" style="font-size:0.64rem; padding:1px 6px; border-radius:999px; background:rgba(167,139,250,0.16); color:#c4b5fd; border:1px solid rgba(167,139,250,0.35);">7</span>
                         </div>
                     </div>
                     <div id="player-notes-mini-list" style="display:flex; flex-direction:column; gap:4px; max-height:110px; overflow-y:auto;"></div>
@@ -1110,6 +1114,26 @@
                                 <button class="btn-roll-action" onclick="rollWeaponAttack('Ancestral Greatsword (+5 • Graze: 3 Dmg on Miss)', 5)">🗡️ Attack (+5)</button>
                                 <button class="btn-roll-action btn-roll-dmg" onclick="rollSavageGreatswordDamage()">💥 2d6+3 (Savage)</button>
                                 <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#fde68a; border-color:#b45309;" onclick="applyGrazeDamage()" title="Weapon Mastery — Graze: On a missed attack roll, deal 3 Slashing damage (STR mod)">⚡ Graze (3 Dmg)</button>
+                            </div>
+                        </div>
+
+                        <!-- Silvered Longsword (Sap Mastery • Versatile • Bypasses Undead Resist) -->
+                        <div class="action-card" style="border-left:3px solid #e2e8f0;">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('silvered_longsword_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#f8fafc'">
+                                        ⚔️ Silvered Longsword <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.67rem; font-weight:700; color:#e2e8f0;">Versatile (1H/2H) • Silvered • Bypasses Undead Resist</div>
+                                </div>
+                                <span class="pill-badge" style="background:rgba(226,232,240,0.16); color:#f8fafc; border:1px solid #cbd5e1; font-size:0.62rem; padding:1px 6px;">SAP • SILVER</span>
+                            </div>
+                            <div class="action-desc"><strong>+5 to Hit</strong>, <strong>1d8+3 (1H)</strong> or <strong>1d10+3 (2H) Silvered Slashing</strong>. Bypasses vampire/werewolf/undead resistance! <em>Sap:</em> target has <strong>Disadvantage</strong> on its next attack!</div>
+                            <div class="action-btn-row">
+                                <button type="button" class="btn-roll-action" style="background:#475569; border:1px solid #cbd5e1;" onclick="rollWeaponAttack('Silvered Longsword (+5 • Sap • Bypasses Undead Resist)', 5)">⚔️ Silver (+5)</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollSavageLongswordDamage(true)">💥 2H 1d10+3</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg" style="background:#991b1b;" onclick="rollSavageLongswordDamage(false)">💥 1H 1d8+3</button>
+                                <button type="button" class="btn-act btn-act-pre" style="font-size:0.68rem; color:#e2e8f0; border-color:#94a3b8;" onclick="applySapDebuff()" title="5.5e Weapon Mastery — Sap: Target has Disadvantage on its next attack roll!">🛡️ Sap</button>
                             </div>
                         </div>
 
@@ -1170,7 +1194,7 @@
                         <div style="background:#090e1a; border:1px solid var(--card-border); border-radius:4px; padding:4px 8px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
                             <div style="display:flex; align-items:center; gap:6px;">
                                 <span style="font-size:0.72rem; font-weight:700; color:var(--accent-gold);">Superiority Dice (d8):</span>
-                                <span id="sup-dice-pips-disp" style="font-size:0.8rem; cursor:pointer;" onclick="modSuperiorityDice(-1)" title="Click to spend 1 Superiority Die">🟧 🟧 🟧 🟧 <strong>(4/4 d8s)</strong></span>
+                                <span id="sup-dice-pips-disp" style="font-size:0.8rem; cursor:pointer;" onclick="modSuperiorityDice(-1)" title="Click to spend 1 Superiority Die">🟧 🟧 ⬛ ⬛ <strong>(2/4 d8s)</strong></span>
                             </div>
                             <div style="display:flex; gap:4px; align-items:center;">
                                 <button class="btn-act btn-act-pre" onclick="modSuperiorityDice(-1)" style="padding:1px 6px; font-size:0.68rem;">-</button>
@@ -1301,7 +1325,7 @@
                     <div>
                         <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim); text-transform:uppercase;">Current Available Balance</div>
                         <div style="font-size:1.15rem; font-weight:800; color:#facc15;">
-                            <span id="modal-gold-disp">25</span> GP • <span id="modal-silver-disp" style="color:#cbd5e1;">0</span> SP
+                            <span id="modal-gold-disp">0</span> GP • <span id="modal-silver-disp" style="color:#cbd5e1;">0</span> SP
                         </div>
                     </div>
                     <button class="btn-act btn-act-pre" onclick="resetGoldPurse()" style="color:var(--accent-gold); border:1px solid rgba(245,158,11,0.3); padding:4px 8px; font-size:0.7rem;">🔄 Reset Balance</button>
@@ -1427,7 +1451,7 @@
     // 👑 JACOMIR YULLE MASTER STATE VARIABLES
     // ==========================================
     let characterLevel = 3;
-    let curHP = 31;
+    let curHP = 23;
     let maxHP = 31;
     let tempHP = 0;
     let isChainMailActive = true; // Chain Mail (16) + Defense Fighting Style (+1) = 17 AC
@@ -1439,7 +1463,7 @@
     let rollMode = 'norm';
 
     // Battle Master Fighter & 5.5e Human Resources
-    let curSupDice = 4;
+    let curSupDice = 2;
     const maxSupDice = 4; // 4d8 per Short or Long Rest
     let curSecondWind = 3;
     const maxSecondWind = 3; // 3/Long Rest (+1 regained on Short Rest)
@@ -1629,6 +1653,20 @@
         logRoll(`⚡ <strong>Weapon Mastery — Graze (Ancestral Greatsword):</strong> Even on a missed attack roll, Jacomir's heavy blade scrapes through the enemy's guard for <strong><span style="color:#fbbf24; font-size:1.05rem;">3 Slashing Damage</span></strong> (STR modifier)!`);
     }
 
+    function rollSavageLongswordDamage(twoHanded = true) {
+        const sides = twoHanded ? 10 : 8;
+        const grip = twoHanded ? '2H Versatile (1d10+3)' : '1H (1d8+3)';
+        const d1 = Math.floor(Math.random() * sides) + 1;
+        const d2 = Math.floor(Math.random() * sides) + 1;
+        const chosen = Math.max(d1, d2);
+        const total = chosen + 3;
+        logRoll(`⚔️ <strong>Silvered Longsword Damage (${grip} • Savage Attacker):</strong> Roll 1 [${d1}] vs Roll 2 [${d2}] ➔ Kept <strong>${chosen}</strong> + 3 STR = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} Silvered Slashing Damage</span>! <small style="color:#cbd5e1;">(Bypasses Undead/Werewolf Resistance • 🛡️ Sap: target has Disadvantage on next attack!)</small>`);
+    }
+
+    function applySapDebuff() {
+        logRoll(`🛡️ <strong>Weapon Mastery — Sap (Silvered Longsword):</strong> On hit, the creature has <strong>Disadvantage on its next attack roll</strong> before the start of your next turn!`);
+    }
+
     function rollSavageHandaxeDamage() {
         const d1 = Math.floor(Math.random() * 6) + 1;
         const d2 = Math.floor(Math.random() * 6) + 1;
@@ -1684,7 +1722,8 @@
             flavor: "As the enemy's claw whistles past his chain mail, Jacomir pivots on his heel and drives two feet of Oakenshire steel through their ribs.",
             buttons: [
                 { label: "⚔️ Riposte Attack (-1 d8 • +5 Hit)", class: "btn-roll-action btn-roll-martial", costDie: true, onClick: () => execRiposteAttack() },
-                { label: "💥 Riposte Greatsword Dmg (2d6+1d8+3)", class: "btn-roll-action btn-roll-dmg", costDie: false, onClick: () => execRiposteDamage() }
+                { label: "💥 Greatsword (2d6+1d8+3)", class: "btn-roll-action btn-roll-dmg", costDie: false, onClick: () => execRiposteDamage() },
+                { label: "⚔️ Silvered LS (1d10+1d8+3)", class: "btn-roll-action btn-roll-dmg", costDie: false, onClick: () => execRiposteSilverLongswordDamage() }
             ]
         },
         {
@@ -1767,7 +1806,7 @@
         const d20 = Math.floor(Math.random() * 20) + 1;
         const atkTotal = d20 + 5;
         let critNote = d20 === 20 ? " 🔥 <span style='color:#facc15; font-weight:800;'>NAT 20 BRUTAL CRIT!</span>" : (d20 === 1 ? " 💀 <span style='color:#ef4444; font-weight:800;'>NAT 1!</span>" : "");
-        logRoll(`⚔️ <strong>Maneuver — Riposte Counter-Attack (Reaction • ${curSupDice}/4 d8s left):</strong> d20(${d20}) + 5 = <span style="color:var(--accent-gold); font-size:1.08rem; font-weight:800;">${atkTotal} to Hit</span>!${critNote} <button class="btn-roll-action btn-roll-dmg" style="margin-left:6px;" onclick="execRiposteDamage()">💥 Roll Riposte Greatsword Dmg (2d6+1d8+3)</button>`);
+        logRoll(`⚔️ <strong>Maneuver — Riposte Counter-Attack (Reaction • ${curSupDice}/4 d8s left):</strong> d20(${d20}) + 5 = <span style="color:var(--accent-gold); font-size:1.08rem; font-weight:800;">${atkTotal} to Hit</span>!${critNote} <button class="btn-roll-action btn-roll-dmg" style="margin-left:6px;" onclick="execRiposteDamage()">💥 Greatsword (2d6+1d8+3)</button> <button class="btn-roll-action btn-roll-dmg" style="margin-left:4px; background:#475569;" onclick="execRiposteSilverLongswordDamage()">⚔️ Silver LS (1d10+1d8+3)</button>`);
     }
 
     function execRiposteDamage() {
@@ -1776,6 +1815,13 @@
         const sup = Math.floor(Math.random() * 8) + 1;
         const total = g1 + g2 + sup + 3;
         logRoll(`💥 <strong>Riposte Greatsword Damage:</strong> 2d6[${g1}+${g2}] + Superiority d8[${sup}] + 3 STR = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">${total} Slashing Damage</span>!`);
+    }
+
+    function execRiposteSilverLongswordDamage() {
+        const ls = Math.floor(Math.random() * 10) + 1;
+        const sup = Math.floor(Math.random() * 8) + 1;
+        const total = ls + sup + 3;
+        logRoll(`⚔️ <strong>Riposte Silvered Longsword Damage (2H):</strong> 1d10[${ls}] + Superiority d8[${sup}] + 3 STR = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">${total} Silvered Slashing Damage</span>! <small style="color:#cbd5e1;">(Bypasses Undead/Werewolf Resist + 🛡️ Sap!)</small>`);
     }
 
     function execMenacingAttack() {
@@ -1804,6 +1850,26 @@
                 { label: "🗡️ Attack (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Ancestral Greatsword (+5)', 5); } },
                 { label: "💥 Roll Savage 2d6+3", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageGreatswordDamage(); } },
                 { label: "⚡ Graze (3 Dmg on Miss)", class: "btn-act btn-act-pre", onClick: () => { closeSpellModal(); applyGrazeDamage(); } }
+            ]
+        },
+        "silvered_longsword_jacomir": {
+            id: "silvered_longsword_jacomir",
+            name: "⚔️ Silvered Longsword (Sap Mastery • Undead & Lycanthrope Bane)",
+            school: "Martial Melee Weapon (Versatile • Silvered)",
+            castingTime: "1 Action",
+            range: "5 ft Melee Reach",
+            components: "STR +3, PB +2 (+5 to Hit)",
+            duration: "Instantaneous",
+            wikiUrl: "https://5e.tools/items.html#longsword_xphb",
+            attackMod: "+5 to Hit (STR +3, PB +2)",
+            damage: "1d8 + 3 (1H) or 1d10 + 3 (2H) Silvered Slashing • Sap: Disadvantage on Enemy's Next Attack!",
+            fullRules: "• <strong>Silvered Blade (Bypasses Resistance):</strong> Deals <strong>Silvered Slashing damage</strong>, completely bypassing nonmagical bludgeoning, piercing, and slashing resistances and immunities of <strong>Vampire Spawn, Werewolves, Wights, and Night Hags</strong>.<br>• <strong>Versatile:</strong> Wield one-handed for <strong>1d8 + 3</strong> or two-handed for <strong>1d10 + 3</strong> (both auto-roll twice via <em>Savage Attacker</em>!).<br>• <strong>5.5e Weapon Mastery — Sap:</strong> If you hit a creature with this Longsword, that creature has <strong>Disadvantage on its next attack roll</strong> before the start of your next turn!",
+            flavor: "Moon-bright Barovian silver bonded cleanly over tempered steel—claimed in Session 1 to cut through the immortal hide of Strahd's undead.",
+            modalButtons: [
+                { label: "⚔️ Silver Attack (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Silvered Longsword (+5 • Sap)', 5); } },
+                { label: "💥 Savage 2H (1d10+3)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageLongswordDamage(true); } },
+                { label: "💥 Savage 1H (1d8+3)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageLongswordDamage(false); } },
+                { label: "🛡️ Sap (Disadv)", class: "btn-act btn-act-pre", onClick: () => { closeSpellModal(); applySapDebuff(); } }
             ]
         },
         "handaxe_jacomir": {
@@ -2382,11 +2448,16 @@
 
     function updateHPUI() {
         const hpDisp = document.getElementById('hp-disp');
+        const hpStatusHeader = document.getElementById('hp-status-header');
         const hpBar = document.getElementById('hp-bar');
         const hpTempBar = document.getElementById('hp-temp-bar');
 
         const basePct = Math.max(0, Math.min(100, (curHP / maxHP) * 100));
         hpBar.style.width = `${basePct}%`;
+        if (hpStatusHeader) {
+            hpStatusHeader.innerText = `${curHP} / ${maxHP} (+${tempHP} Temp)`;
+            hpStatusHeader.style.color = tempHP > 0 ? 'var(--accent-blue)' : (basePct > 50 ? 'var(--accent-green)' : (basePct > 25 ? 'var(--accent-gold)' : 'var(--accent-red)'));
+        }
 
         if (tempHP > 0) {
             hpDisp.innerText = `${curHP} (+${tempHP}T)/${maxHP}`;
@@ -2688,7 +2759,7 @@
     // ==========================================
     // 💰 GOLD PURSE & CURRENCY LEDGER (10 SP = 1 GP)
     // ==========================================
-    const DEFAULT_START_GP = 25;
+    const DEFAULT_START_GP = 0;
     const DEFAULT_START_SP = 0;
 
     function getStoredGold(key, defaultVal) {
@@ -2700,27 +2771,27 @@
         return parseInt(val);
     }
 
-    let curGP = getStoredGold('cos_gold_jacomir_v1', DEFAULT_START_GP);
-    let curSilver = getStoredGold('cos_silver_jacomir_v1', DEFAULT_START_SP);
+    let curGP = getStoredGold('cos_gold_jacomir_v2', DEFAULT_START_GP);
+    let curSilver = getStoredGold('cos_silver_jacomir_v2', DEFAULT_START_SP);
 
     function getGoldHistory() {
-        const stored = localStorage.getItem('cos_gold_tx_jacomir_v1');
+        const stored = localStorage.getItem('cos_gold_tx_jacomir_v2');
         if (!stored) {
             const init = [{
                 type: 'initial',
-                label: 'Noble Sovereign Starting Purse',
+                label: 'Session 1 End-of-Session Balance',
                 delta: `${DEFAULT_START_GP} GP, ${DEFAULT_START_SP} SP`,
                 total: `${DEFAULT_START_GP} GP, ${DEFAULT_START_SP} SP`,
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             }];
-            localStorage.setItem('cos_gold_tx_jacomir_v1', JSON.stringify(init));
+            localStorage.setItem('cos_gold_tx_jacomir_v2', JSON.stringify(init));
             return init;
         }
         try { return JSON.parse(stored); } catch(e) { return []; }
     }
 
     function saveGoldHistory(history) {
-        localStorage.setItem('cos_gold_tx_jacomir_v1', JSON.stringify(history.slice(0, 50)));
+        localStorage.setItem('cos_gold_tx_jacomir_v2', JSON.stringify(history.slice(0, 50)));
     }
 
     function logGoldTx(type, label, deltaStr, totalStr) {
@@ -2751,8 +2822,8 @@
         const ms = document.getElementById('modal-silver-disp');
         if (mg) mg.innerText = curGP;
         if (ms) ms.innerText = curSilver;
-        localStorage.setItem('cos_gold_jacomir_v1', curGP);
-        localStorage.setItem('cos_silver_jacomir_v1', curSilver);
+        localStorage.setItem('cos_gold_jacomir_v2', curGP);
+        localStorage.setItem('cos_silver_jacomir_v2', curSilver);
     }
 
     function stepGold(delta) {
@@ -2844,7 +2915,7 @@
     }
 
     function clearGoldHistory() {
-        localStorage.removeItem('cos_gold_tx_jacomir_v1');
+        localStorage.removeItem('cos_gold_tx_jacomir_v2');
         renderGoldHistory();
     }
 
@@ -2853,19 +2924,16 @@
     // ==========================================
     const defaultItems = [
         "📖 Burgomaster Kolyan's Wizard Diary (Davian Martikov & Keepers of the Feather Lead)",
-        "🥧 1x Morgantha's Dream Pastry (Uneaten — Gifted by Granny)",
+        "⚔️ Silvered Longsword (Sap Mastery • Bypasses Undead/Werewolf Resist)",
+        "💧 1x Flask of Morninglord Spring Water (Holy Water — 2d6 Radiant & Halts Vampire Regen)",
+        "🥧 1x Dirty Dream Pastry (Morgantha's Pie — Uneaten)",
+        "🪵 Wooden Smoking Pipe",
         "🗡️ Ancestral Greatsword (Graze Mastery)",
         "🪓 2x Handaxes (Vex Mastery)",
         "⛓️ Chain Mail Armor (AC 16 + 1 Defense Style)",
         "💍 Signet Ring Bearing the Lost Crest of Oakenshire",
         "🧥 Tattered Royal Traveling Cloak with Fur Mantle",
-        "📜 Empty Scroll Case (Royal Decree Container)",
-        "♟️ Dragonchess Gaming Set (Carved Oakenshire Ivory)",
-        "👔 Fine Traveler's Garments",
-        "🎒 Explorer's Pack (Bedroll, Mess Kit, Tinderbox)",
-        "🔥 10x Torches",
-        "🥩 10x Days of Rations",
-        "💧 Waterskin & 50ft Hempen Rope"
+        "♟️ Dragonchess Gaming Set (Carved Oakenshire Ivory)"
     ];
 
     const worldLootVault = {
@@ -2883,12 +2951,44 @@
             desc: "A leather-bound arcane journal written by Ismark and Ireena's late father, Burgomaster Kolyan Indirovich, revealing that he practiced wizardry in his youth and quietly researched ways to resist Count Strahd's grip on the valley.",
             effect: "• <strong>Keepers of the Feather Lead:</strong> Kolyan explicitly writes that he knows <strong>Davian Martikov</strong> (master of the <em>Wizard of Wines</em>) and a secret fellowship called <strong>the Keepers of the Feather</strong>, noting that if his children or their champions ever need aid against Strahd, they should present this diary to the Martikov family (at the <em>Blue Water Inn</em> in Vallaki or the Winery).<br>• <strong>Social Key:</strong> Showing this diary to Urwin or Davian Martikov grants immediate trust and faction assistance!"
         },
+        "silvered longsword": {
+            name: "⚔️ Silvered Longsword (Undead & Werewolf Bane)",
+            category: "SILVERED MARTIAL WEAPON • Versatile (1d8 / 1d10) • Sap Mastery",
+            origin: "Claimed in Session 1 — Barovia Village / Indirovich Armory",
+            desc: "A finely balanced Barovian steel longsword plated cleanly in pure silver, gleaming coldly beneath the storm clouds.",
+            effect: "• <strong>Bypasses Undead & Lycanthrope Resistance:</strong> Cuts cleanly through nonmagical damage resistance/immunity of <strong>Vampire Spawn, Werewolves, Wights, and Night Hags</strong>!<br>• <strong>Attack &amp; Damage:</strong> <strong>+5 to Hit</strong>, <strong>1d8 + 3 (1H)</strong> or <strong>1d10 + 3 (2H)</strong> Silvered Slashing (rolls twice via <em>Savage Attacker</em>).<br>• <strong>5.5e Weapon Mastery — Sap:</strong> On hit, the target has <strong>Disadvantage on its next attack roll</strong> before the start of your next turn!",
+            isSilverLongsword: true
+        },
+        "spring water": {
+            name: "💧 Flask of Morninglord Spring Water (Holy Water)",
+            category: "ANTI-UNDEAD • Consecrated Consumable (Session 1)",
+            origin: "Pure Spring Water Blessed by the Morninglord",
+            desc: "A stoppered glass flask of pure, crystal-clear spring water consecrated in the name of the Morninglord.",
+            effect: "• <strong>Action (Splash / Throw up to 20 ft):</strong> Ranged attack against a creature within 20 ft (or splash within 5 ft); deals <strong>2d6 Radiant Damage</strong> to Undead and Fiends.<br>• <strong>Halts Vampire Regeneration:</strong> Any Vampire or Vampire Spawn struck by this consecrated water <strong>cannot regenerate Hit Points on its next turn</strong>!",
+            isHolyWater: true
+        },
+        "holy water": {
+            name: "💧 Flask of Morninglord Spring Water (Holy Water)",
+            category: "ANTI-UNDEAD • Consecrated Consumable (Session 1)",
+            origin: "Pure Spring Water Blessed by the Morninglord",
+            desc: "A stoppered glass flask of pure, crystal-clear spring water consecrated in the name of the Morninglord.",
+            effect: "• <strong>Action (Splash / Throw up to 20 ft):</strong> Deals <strong>2d6 Radiant Damage</strong> to Undead and Fiends, and <strong>halts Vampire Regeneration</strong> for 1 round!",
+            isHolyWater: true
+        },
         "dream pastry": {
-            name: "🥧 Morgantha's Dream Pastry (Uneaten)",
+            name: "🥧 Morgantha's Dirty Dream Pastry (Uneaten)",
             category: "SUSPICIOUS CONSUMABLE • Gifted by 'Granny' Morgantha in Session 1",
             origin: "Old Bonegrinder Windmill Peddler Cart",
-            desc: "A warm, golden-crusted minced-meat hand pie dusted with sweet spices, handed to King Jacomir by old Morgantha after she shrugged off Piper's enchantment and grew wary of the party.",
-            effect: "• <strong>Currently Uneaten:</strong> Stored safely in Jacomir's pack.<br>• <strong>If Eaten (Action):</strong> Grants <strong>1d6 Temporary HP</strong>, removes 1 level of Exhaustion, and plunges the eater into 8 hours of vivid, blissful dreams of home—followed by a <strong>DC 13 CON Save</strong> at dawn against withdrawal cravings!"
+            desc: "A slightly mud-smudged minced-meat hand pie dusted with sweet spices, handed to King Jacomir by old Morgantha after she shrugged off Piper's enchantment and grew wary of the party.",
+            effect: "• <strong>Currently Uneaten:</strong> Stored safely in Jacomir's pack.<br>• <strong>If Eaten (Action):</strong> Grants <strong>1d6 Temporary HP</strong>, removes 1 level of Exhaustion, and plunges the eater into 8 hours of vivid, blissful dreams of home—followed by a <strong>DC 13 CON Save</strong> at dawn against withdrawal cravings!",
+            isDreamPastry: true
+        },
+        "pipe": {
+            name: "🪵 Barovian Wooden Smoking Pipe",
+            category: "PERSONAL KEEPSAKE • Session 1 Village Find",
+            origin: "Village of Barovia (Session 1)",
+            desc: "A carved dark-briar wooden smoking pipe claimed in Barovia—a quiet, regal comfort while keeping watch beside damp campfires in the Mists.",
+            effect: "• Pure roleplay &amp; sovereign ambiance: puffing pipe-smoke across Barovia's fog while plotting strategy over Dragonchess or sizing up Count Strahd."
         },
         "greatsword": {
             name: "🗡️ Ancestral Greatsword of Oakenshire",
@@ -2925,13 +3025,6 @@
             desc: "A heavy wool-and-wolfskin royal mantle, frayed at the hem from riding through the freezing border fog.",
             effect: "• Keeps off Barovia's incessant mountain rain and marks Jacomir's silhouette with unmistakable regal bearing."
         },
-        "scroll case": {
-            name: "📜 Empty Royal Scroll Case",
-            category: "PERSONAL KEEPSAKE • Noble Gear",
-            origin: "Oakenshire War Tent",
-            desc: "A brass-capped leather scroll tube that once held the royal decrees and muster rolls of Oakenshire—now hollow, waiting to record the names of the rescued.",
-            effect: "• Watertight case ideal for protecting Barovian maps, Kolyan's letter, or sacred scrolls from the rain."
-        },
         "dragonchess": {
             name: "♟️ Carved Dragonchess Gaming Set",
             category: "TOOL PROFICIENCY • Strategic Gaming Set",
@@ -2944,45 +3037,64 @@
             category: "HEAL • Common Consumable (5 GP)",
             origin: "Barovian Apothecary / Ismark's Cache",
             desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
-            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong>.<br>• <strong>Action (Ally):</strong> Administer to a downed companion."
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong>.<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
+            healFormula: { dice: 2, sides: 6, bonus: 1, verb: 'Drank' }
         },
-        "holy water": {
-            name: "💧 Flask of St. Andral's Holy Water",
-            category: "ANTI-UNDEAD • Uncommon Consumable",
-            origin: "Father Donavich / St. Andral's Church",
-            desc: "A crystal vial of water blessed in the name of the Morninglord.",
-            effect: "• <strong>Action (Splash / Throw 20 ft):</strong> Deals <strong>2d6 Radiant Damage</strong> to Undead and Fiends, and <strong>halts Vampire Regeneration</strong> for 1 round!"
+        "bandage": {
+            name: "🩹 Field Bandages (1d6 + 1 HP)",
+            category: "HEAL • Common Consumable (5 SP)",
+            origin: "Village of Barovia / Crafted from Medicinal Herbs",
+            desc: "Clean linen wraps soaked in mild herbal salve.",
+            effect: "• <strong>Action:</strong> Bind wounds on yourself or an adjacent ally to restore <strong>1d6 + 1 Hit Points</strong> (can also stabilize a dying ally at 0 HP).",
+            healFormula: { dice: 1, sides: 6, bonus: 1, verb: 'Applied' }
         }
     };
 
     function getStoredItems() {
-        const stored = localStorage.getItem('cos_inv_jacomir_v2');
+        const stored = localStorage.getItem('cos_inv_jacomir_v3');
         if (!stored) {
-            localStorage.setItem('cos_inv_jacomir_v2', JSON.stringify(defaultItems));
+            localStorage.setItem('cos_inv_jacomir_v3', JSON.stringify(defaultItems));
             return [...defaultItems];
         }
         try {
             const parsed = JSON.parse(stored);
-            const diaryStr = "📖 Burgomaster Kolyan's Wizard Diary (Davian Martikov & Keepers of the Feather Lead)";
-            const pieStr = "🥧 1x Morgantha's Dream Pastry (Uneaten — Gifted by Granny)";
-            let changed = false;
-            if (Array.isArray(parsed)) {
-                if (!parsed.some(i => i.toLowerCase().includes('dream pastry'))) {
-                    parsed.unshift(pieStr);
-                    changed = true;
-                }
-                if (!parsed.some(i => i.toLowerCase().includes('wizard diary') || i.toLowerCase().includes('kolyan'))) {
-                    parsed.unshift(diaryStr);
-                    changed = true;
-                }
-                if (changed) localStorage.setItem('cos_inv_jacomir_v2', JSON.stringify(parsed));
-            }
-            return parsed;
+            return Array.isArray(parsed) ? parsed : [...defaultItems];
         } catch(e) { return [...defaultItems]; }
     }
 
     function saveStoredItems(items) {
-        localStorage.setItem('cos_inv_jacomir_v2', JSON.stringify(items));
+        localStorage.setItem('cos_inv_jacomir_v3', JSON.stringify(items));
+    }
+
+    function consumeAndHealItem(index, dice, sides, bonus, verb, itemName) {
+        let rolls = [], sum = 0;
+        for (let i = 0; i < dice; i++) {
+            const r = Math.floor(Math.random() * sides) + 1;
+            rolls.push(r); sum += r;
+        }
+        const healAmt = sum + bonus;
+        stepItemQty(index, -1);
+        const space = maxHP - curHP;
+        if (healAmt <= space) curHP += healAmt;
+        else { curHP = maxHP; tempHP += (healAmt - space); }
+        updateHPUI();
+        logRoll(`💚 <strong>${verb} ${itemName}:</strong> [${rolls.join('+')}]${bonus ? ' + ' + bonus : ''} = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${healAmt} HP</span> (Current HP: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ' +' + tempHP + ' Temp' : ''})!`);
+    }
+
+    function throwHolyWaterFlask(index) {
+        const d1 = Math.floor(Math.random() * 6) + 1;
+        const d2 = Math.floor(Math.random() * 6) + 1;
+        const total = d1 + d2;
+        stepItemQty(index, -1);
+        logRoll(`💧 <strong>Splashed Morninglord Spring Water (Holy Water):</strong> 2d6[${d1}+${d2}] = <span style="color:#fde68a; font-size:1.08rem; font-weight:800;">${total} Radiant Damage</span> to Undead/Fiends — <strong>VAMPIRE REGENERATION HALTED FOR 1 ROUND!</strong>`);
+    }
+
+    function eatDreamPastry(index) {
+        const d6 = Math.floor(Math.random() * 6) + 1;
+        stepItemQty(index, -1);
+        tempHP = Math.max(tempHP, d6);
+        updateHPUI();
+        logRoll(`🥧 <strong>Ate Morgantha's Dirty Dream Pastry:</strong> Gained <span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${d6} Temp HP</span> &amp; removed 1 Exhaustion! <small style="color:#f87171;">(⚠️ Blissful 8-hr dream trance — roll DC 13 CON Save at dawn!)</small>`);
     }
 
     function parseItemInfo(itemStr) {
@@ -3062,7 +3174,23 @@
             </div>
         `;
         const act = document.getElementById('item-modal-actions');
-        act.innerHTML = parsed.hasQty ? `<button class="btn-act btn-act-pre" style="color:var(--accent-gold);" onclick="stepItemQty(${index}, -1); closeItemModal();">🧪 Consume 1 (${parsed.qty} left)</button>` : '';
+        let btns = [];
+        if (match && match.isSilverLongsword) {
+            btns.push(`<button type="button" class="btn-roll-action" style="background:#475569; border:1px solid #cbd5e1;" onclick="closeItemModal(); rollWeaponAttack('Silvered Longsword (+5 • Sap)', 5);">⚔️ Attack (+5)</button>`);
+            btns.push(`<button type="button" class="btn-roll-action btn-roll-dmg" onclick="closeItemModal(); rollSavageLongswordDamage(true);">💥 2H 1d10+3</button>`);
+        } else if (match && match.isHolyWater) {
+            btns.push(`<button type="button" class="btn-act btn-act-heal" style="background:linear-gradient(135deg,#0369a1,#0284c7); color:#fff;" onclick="throwHolyWaterFlask(${index}); closeItemModal();">💧 Splash / Throw (2d6 Radiant)</button>`);
+        } else if (match && match.isDreamPastry) {
+            btns.push(`<button type="button" class="btn-act btn-act-pre" style="color:#fde68a; border-color:#f59e0b;" onclick="eatDreamPastry(${index}); closeItemModal();">🥧 Eat Pastry (+1d6 Temp HP)</button>`);
+        } else if (match && match.healFormula) {
+            const hf = match.healFormula;
+            const formulaStr = `${hf.dice}d${hf.sides}${hf.bonus ? '+' + hf.bonus : ''}`;
+            const safeName = match.name.replace(/'/g, "\\'");
+            btns.push(`<button type="button" class="btn-act btn-act-heal" onclick="consumeAndHealItem(${index}, ${hf.dice}, ${hf.sides}, ${hf.bonus}, '${hf.verb}', '${safeName}'); closeItemModal();">💚 ${hf.verb === 'Drank' ? 'Drink' : 'Apply'} 1 (${formulaStr} HP)</button>`);
+        } else if (parsed.hasQty) {
+            btns.push(`<button type="button" class="btn-act btn-act-pre" style="color:var(--accent-gold);" onclick="stepItemQty(${index}, -1); closeItemModal();">🧪 Consume 1 (${parsed.qty} left)</button>`);
+        }
+        act.innerHTML = btns.join(' ');
         const modal = document.getElementById('item-modal');
         if (modal) modal.showModal();
     }
@@ -3166,14 +3294,29 @@
             id: 's1_derek_doru',
             title: "S1: Doru & Derek's Promise",
             text: "As I poured my blood into a cup for Father Donavich's vampire son Doru in the church attic, 3 knocks froze time. Derek promised Yvaine and me a way home if we kill Strahd."
+        },
+        {
+            id: 's1_strahd',
+            title: "Strahd",
+            text: "Strahd calls Ireena 'Tatyana'."
+        },
+        {
+            id: 's1_ireena',
+            title: "Ireena Kolyana",
+            text: "Kolyan Indirovich asking assistance — his daughter is hurt and afflicted by an evil. A request to Dalvan Olensky (Derevski)."
+        },
+        {
+            id: 's1_barovia',
+            title: "Barovia",
+            text: "Ruled by another sovereign."
         }
     ];
     let editingNoteId = null;
 
     function getStoredNotes() {
-        const stored = localStorage.getItem('cos_notes_jacomir_v2');
+        const stored = localStorage.getItem('cos_notes_jacomir_v3');
         if (!stored) {
-            localStorage.setItem('cos_notes_jacomir_v2', JSON.stringify(defaultPlayerNotes));
+            localStorage.setItem('cos_notes_jacomir_v3', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
         try {
@@ -3186,23 +3329,23 @@
                     changed = true;
                 }
             });
-            if (changed) localStorage.setItem('cos_notes_jacomir_v2', JSON.stringify(notes));
+            if (changed) localStorage.setItem('cos_notes_jacomir_v3', JSON.stringify(notes));
             return notes;
         } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {
-        localStorage.setItem('cos_notes_jacomir_v2', JSON.stringify(notes));
+        localStorage.setItem('cos_notes_jacomir_v3', JSON.stringify(notes));
     }
 
     function getRemovedNoteTitles() {
-        const stored = localStorage.getItem('cos_notes_removed_jacomir_v1');
+        const stored = localStorage.getItem('cos_notes_removed_jacomir_v2');
         if (!stored) return [];
         try { return JSON.parse(stored); } catch(e) { return []; }
     }
 
     function saveRemovedNoteTitles(titles) {
-        localStorage.setItem('cos_notes_removed_jacomir_v1', JSON.stringify(titles));
+        localStorage.setItem('cos_notes_removed_jacomir_v2', JSON.stringify(titles));
     }
 
     function escapeNoteHtml(str) {
@@ -3497,19 +3640,14 @@
 
     // Modern Web Guidance Fallback for <dialog closedby="any">
     if (!('closedBy' in HTMLDialogElement.prototype)) {
+        const outside = (e, dialog) => {
+            const r = dialog.getBoundingClientRect();
+            return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+        };
         for (const dialog of document.querySelectorAll('dialog[closedby="any"]')) {
-            dialog.addEventListener('click', (event) => {
-                if (event.target !== dialog) return;
-                const rect = dialog.getBoundingClientRect();
-                const isDialogContent = (
-                    rect.top <= event.clientY &&
-                    event.clientY <= rect.top + rect.height &&
-                    rect.left <= event.clientX &&
-                    event.clientX <= rect.left + rect.width
-                );
-                if (isDialogContent) return;
-                dialog.close();
-            });
+            let pressedOutside = false;
+            dialog.addEventListener('pointerdown', (e) => { pressedOutside = outside(e, dialog); });
+            dialog.addEventListener('pointerup', (e) => { if (pressedOutside && outside(e, dialog)) dialog.close(); });
         }
     }
 
