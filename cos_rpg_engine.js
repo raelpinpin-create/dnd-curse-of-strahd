@@ -739,11 +739,14 @@
     let showPresetForm = false;
     let lastAppliedPresetName = null;
 
-    // Live Firebase State
+    // Live Firebase State (Realtime Database primary + Firestore fallback)
+    let rtdb = null;
     let firestoreDb = null;
     let firebaseReady = false;
     let incomingTrades = [];
     let outgoingTrades = [];
+    let unsubRtdbRef = null;
+    let unsubRtdbHandler = null;
     let unsubIncoming = null;
     let unsubOutgoing = null;
     let unsubDeclined = null;
@@ -1451,9 +1454,11 @@
     }
 
     // =========================================================================
-    // 🔥 FIREBASE CLOUD FIRESTORE LIVE TRANSFERS + OFFLINE TRADE CODES
+    // 🔥 FIREBASE REALTIME DATABASE / FIRESTORE LIVE TRANSFERS + OFFLINE CODES
     // =========================================================================
     function getEffectiveFirebaseConfig() {
+        const base = window.COS_FIREBASE_CONFIG || null;
+        if (base && base.apiKey && base.projectId) return base;
         try {
             const override = localStorage.getItem('cos_firebase_override_v1');
             if (override) {
@@ -1461,7 +1466,7 @@
                 if (parsed && parsed.apiKey && parsed.projectId) return parsed;
             }
         } catch (e) {}
-        return window.COS_FIREBASE_CONFIG || null;
+        return base;
     }
 
     function initFirebaseSync() {
@@ -1474,8 +1479,16 @@
             if (!window.firebase.apps.length) {
                 window.firebase.initializeApp(cfg);
             }
-            firestoreDb = window.firebase.firestore();
-            firebaseReady = true;
+            if (cfg.databaseURL && typeof window.firebase.database === 'function') {
+                rtdb = window.firebase.database();
+                firebaseReady = true;
+            } else if (typeof window.firebase.firestore === 'function') {
+                firestoreDb = window.firebase.firestore();
+                firebaseReady = true;
+            } else {
+                firebaseReady = false;
+                return;
+            }
             startTransferListeners();
         } catch (err) {
             console.warn('[COS_RPG] Firebase init skipped:', err);
@@ -1483,41 +1496,88 @@
         }
     }
 
+    function transfersRtdbRef() {
+        const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+        return rtdb.ref(`campaigns/${room}/transfers`);
+    }
+
     function transfersCol() {
         const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
         return firestoreDb.collection('campaigns').doc(room).collection('transfers');
     }
 
+    function handleIncomingOutgoingUpdate(nextIncoming, nextOutgoing) {
+        const brandNew = nextIncoming.filter(t => !lastKnownIncomingIds.has(t.id));
+        incomingTrades = nextIncoming;
+        outgoingTrades = nextOutgoing;
+        lastKnownIncomingIds = new Set(nextIncoming.map(t => t.id));
+        renderIncomingBanner();
+        renderHubPanel();
+        renderHeaderBadges();
+        if (document.getElementById('rpg-trade-modal')?.open) renderTradeModal();
+        if (brandNew.length > 0) {
+            const first = brandNew[0];
+            const desc = first.kind === 'gold'
+                ? `${first.gp || 0} GP ${first.sp || 0} SP`
+                : `${first.qty > 1 ? first.qty + 'x ' : ''}${shortLabel(first.itemRaw)}`;
+            announceStatus(`Incoming transfer from ${first.fromName}: ${desc}. Actions available.`);
+        }
+    }
+
     function startTransferListeners() {
-        if (!firebaseReady || !firestoreDb || !adapter) return;
+        if (!firebaseReady || !adapter) return;
+        if (unsubRtdbRef && unsubRtdbHandler) {
+            unsubRtdbRef.off('value', unsubRtdbHandler);
+            unsubRtdbRef = null;
+            unsubRtdbHandler = null;
+        }
         if (unsubIncoming) unsubIncoming();
         if (unsubOutgoing) unsubOutgoing();
         if (unsubDeclined) unsubDeclined();
 
-        // 1. Incoming pending transfers addressed to this hero
+        // Primary: Firebase Realtime Database (dnd-curse-of-strahd-467ea-default-rtdb)
+        if (rtdb) {
+            const ref = transfersRtdbRef();
+            const handler = snap => {
+                const val = snap.val() || {};
+                const nextIncoming = [];
+                const nextOutgoing = [];
+                Object.entries(val).forEach(([id, d]) => {
+                    if (!d || typeof d !== 'object') return;
+                    const rec = { id, ...d };
+                    if (d.toId === adapter.heroId && d.status === 'pending') {
+                        nextIncoming.push(rec);
+                    }
+                    if (d.fromId === adapter.heroId && d.status === 'pending') {
+                        nextOutgoing.push(rec);
+                    }
+                    if (d.fromId === adapter.heroId && d.status === 'declined' && !d.refunded) {
+                        ref.child(id).child('refunded').transaction(cur => cur ? undefined : true, (err, committed) => {
+                            if (!err && committed) {
+                                refundTransferPayload(d, `↩️ ${d.toName} declined your transfer — returned safely!`);
+                            }
+                        });
+                    }
+                });
+                handleIncomingOutgoingUpdate(nextIncoming, nextOutgoing);
+            };
+            ref.on('value', handler, err => console.warn('[COS_RPG] RTDB listener error:', err));
+            unsubRtdbRef = ref;
+            unsubRtdbHandler = handler;
+            return;
+        }
+
+        if (!firestoreDb) return;
+        // Fallback: Cloud Firestore
         unsubIncoming = transfersCol()
             .where('toId', '==', adapter.heroId)
             .where('status', '==', 'pending')
             .onSnapshot(snap => {
                 const nextList = [];
                 snap.forEach(doc => nextList.push({ id: doc.id, ...doc.data() }));
-                const brandNew = nextList.filter(t => !lastKnownIncomingIds.has(t.id));
-                incomingTrades = nextList;
-                lastKnownIncomingIds = new Set(nextList.map(t => t.id));
-                renderIncomingBanner();
-                renderHubPanel();
-                renderHeaderBadges();
-                if (document.getElementById('rpg-trade-modal')?.open) renderTradeModal();
-                if (brandNew.length > 0) {
-                    const first = brandNew[0];
-                    const desc = first.kind === 'gold'
-                        ? `${first.gp || 0} GP ${first.sp || 0} SP`
-                        : `${first.qty > 1 ? first.qty + 'x ' : ''}${shortLabel(first.itemRaw)}`;
-                    announceStatus(`Incoming transfer from ${first.fromName}: ${desc}. Actions available.`);
-                }
+                handleIncomingOutgoingUpdate(nextList, outgoingTrades);
             }, err => console.warn('[COS_RPG] Incoming listener error:', err));
 
-        // 2. Outgoing pending transfers sent by this hero
         unsubOutgoing = transfersCol()
             .where('fromId', '==', adapter.heroId)
             .where('status', '==', 'pending')
@@ -1528,7 +1588,6 @@
                 if (document.getElementById('rpg-trade-modal')?.open) renderTradeModal();
             }, err => console.warn('[COS_RPG] Outgoing listener error:', err));
 
-        // 3. Auto-refund declined outgoing transfers safely (atomic refunded flag)
         unsubDeclined = transfersCol()
             .where('fromId', '==', adapter.heroId)
             .where('status', '==', 'declined')
@@ -1568,12 +1627,22 @@
         adapter.log(`${logPrefix}`);
     }
 
+    function updateTransferDoc(tradeId, fields) {
+        if (rtdb) {
+            return transfersRtdbRef().child(tradeId).update(fields);
+        }
+        if (firestoreDb) {
+            return transfersCol().doc(tradeId).update(fields);
+        }
+        return Promise.reject(new Error('No live database connected'));
+    }
+
     function acceptLiveTransfer(tradeId) {
         const tr = incomingTrades.find(t => t.id === tradeId);
-        if (!tr || !firestoreDb) return;
-        transfersCol().doc(tradeId).update({
+        if (!tr) return;
+        updateTransferDoc(tradeId, {
             status: 'accepted',
-            resolvedAt: window.firebase.firestore.FieldValue.serverTimestamp()
+            resolvedAt: Date.now()
         }).then(() => {
             if (tr.kind === 'gold') {
                 adapter.addGold(tr.gp || 0, tr.sp || 0, `From ${tr.fromName}`);
@@ -1597,11 +1666,11 @@
 
     function declineLiveTransfer(tradeId) {
         const tr = incomingTrades.find(t => t.id === tradeId);
-        if (!tr || !firestoreDb) return;
-        transfersCol().doc(tradeId).update({
+        if (!tr) return;
+        updateTransferDoc(tradeId, {
             status: 'declined',
-            refunded: tr.fromId === 'dm', // DM drops don't need sender refund
-            resolvedAt: window.firebase.firestore.FieldValue.serverTimestamp()
+            refunded: tr.fromId === 'dm',
+            resolvedAt: Date.now()
         }).then(() => {
             adapter.log(`❌ <strong>Declined transfer</strong> from ${esc(tr.fromName)}.`);
         }).catch(() => {});
@@ -1609,8 +1678,8 @@
 
     function cancelOutgoingTransfer(tradeId) {
         const tr = outgoingTrades.find(t => t.id === tradeId);
-        if (!tr || !firestoreDb) return;
-        transfersCol().doc(tradeId).update({
+        if (!tr) return;
+        updateTransferDoc(tradeId, {
             status: 'cancelled',
             refunded: true
         }).then(() => {
@@ -1628,6 +1697,16 @@
         const clean = (codeStr || '').trim().replace(/^COSTRADE:/i, '');
         const json = decodeURIComponent(escape(atob(clean)));
         return JSON.parse(json);
+    }
+
+    function pushLiveTransferRecord(record) {
+        if (rtdb) {
+            return transfersRtdbRef().push(record);
+        }
+        if (firestoreDb) {
+            return transfersCol().add(record);
+        }
+        return Promise.reject(new Error('No live database'));
     }
 
     function sendTransfer(forceOfflineCode = false) {
@@ -1687,11 +1766,11 @@
         }
 
         if (firebaseReady && !forceOfflineCode) {
-            transfersCol().add({
+            pushLiveTransferRecord({
                 ...payload,
                 status: 'pending',
                 refunded: false,
-                createdAt: window.firebase.firestore.FieldValue.serverTimestamp()
+                createdAt: Date.now()
             }).then(() => {
                 const desc = payload.kind === 'gold'
                     ? `${payload.gp} GP, ${payload.sp} SP`

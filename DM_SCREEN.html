@@ -2526,6 +2526,7 @@
     </div>
 </dialog>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
 <script>
@@ -12602,6 +12603,8 @@ function decorateBiomeCardsWithImages() {
 }
 
 function dmGetFirebaseConfig() {
+    const base = window.COS_FIREBASE_CONFIG || null;
+    if (base && base.apiKey && base.projectId) return base;
     try {
         const ov = localStorage.getItem('cos_firebase_override_v1');
         if (ov) {
@@ -12609,7 +12612,16 @@ function dmGetFirebaseConfig() {
             if (p && p.apiKey && p.projectId) return p;
         }
     } catch (e) {}
-    return window.COS_FIREBASE_CONFIG || null;
+    return base;
+}
+
+function dmGetRtdb() {
+    const cfg = dmGetFirebaseConfig();
+    if (!cfg || !cfg.apiKey || !cfg.databaseURL || typeof window.firebase === 'undefined') return null;
+    try {
+        if (!window.firebase.apps.length) window.firebase.initializeApp(cfg);
+        return typeof window.firebase.database === 'function' ? window.firebase.database() : null;
+    } catch (e) { return null; }
 }
 
 function dmGetFirestore() {
@@ -12617,7 +12629,7 @@ function dmGetFirestore() {
     if (!cfg || !cfg.apiKey || !cfg.projectId || typeof window.firebase === 'undefined') return null;
     try {
         if (!window.firebase.apps.length) window.firebase.initializeApp(cfg);
-        return window.firebase.firestore();
+        return typeof window.firebase.firestore === 'function' ? window.firebase.firestore() : null;
     } catch (e) { return null; }
 }
 
@@ -12644,14 +12656,31 @@ function dmSendLootDrop(toId, toName, itemRaw, qty = 1, gp = 0, sp = 0, note = '
         ? `💰 ${payload.gp} GP${payload.sp ? ', ' + payload.sp + ' SP' : ''}`
         : `${payload.qty > 1 ? payload.qty + 'x ' : ''}${payload.itemRaw}`;
 
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    const rtdb = dmGetRtdb();
+    if (rtdb) {
+        rtdb.ref(`campaigns/${room}/transfers`).push({
+            ...payload,
+            status: 'pending',
+            refunded: true,
+            createdAt: Date.now()
+        }).then(() => {
+            setModalLogsHtml(`🚀 <strong>LIVE LOOT DROP SENT to ${toName}:</strong> ${desc}! It popped up on their sheet immediately.`);
+        }).catch(err => {
+            const code = dmEncodeTradeCode(payload);
+            navigator.clipboard?.writeText(code).catch(() => {});
+            setModalLogsHtml(`⚠️ Live DB blocked (${err.code || 'rules'}) — <strong>Offline Claim Code copied!</strong> Send to ${toName}: <code style="user-select:all;">${code}</code>`);
+        });
+        return;
+    }
+
     const db = dmGetFirestore();
     if (db) {
-        const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
         db.collection('campaigns').doc(room).collection('transfers').add({
             ...payload,
             status: 'pending',
             refunded: true,
-            createdAt: window.firebase.firestore.FieldValue.serverTimestamp()
+            createdAt: Date.now()
         }).then(() => {
             setModalLogsHtml(`🚀 <strong>LIVE LOOT DROP SENT to ${toName}:</strong> ${desc}! It popped up on their sheet immediately.`);
         }).catch(err => {
@@ -12669,13 +12698,13 @@ function dmSendLootDrop(toId, toName, itemRaw, qty = 1, gp = 0, sp = 0, note = '
 function openDmCustomDropModal() {
     const modal = resetDmModalChrome();
     modalNavStack = [];
-    const fbLive = !!dmGetFirestore();
+    const fbLive = !!(dmGetRtdb() || dmGetFirestore());
     document.getElementById('modal-title').innerHTML = `🎁 DM Live Loot &amp; Gold Drop`;
     document.getElementById('modal-content').innerHTML = `
         <div class="nbox ${fbLive ? 'nbox-emerald' : 'nbox-amber'}" style="margin-bottom:10px;">
             ${fbLive
-                ? '🟢 <strong>Live Cloud Firestore Connected!</strong> Clicking Send drops loot or gold straight into the player\'s sheet in real time.'
-                : '🟡 <strong>Offline Trade Code Mode:</strong> Clicking Send copies an instant <code>COSTRADE:...</code> claim code (add your Firebase Web <code>apiKey</code> in <code>cos_firebase_config.js</code> for live cross-device push!).'}
+                ? '🟢 <strong>Live Firebase Connected (dnd-curse-of-strahd-467ea)!</strong> Clicking Send drops loot or gold straight into the player\'s sheet in real time.'
+                : '🟡 <strong>Offline Trade Code Mode:</strong> Clicking Send copies an instant <code>COSTRADE:...</code> claim code.'}
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; background:#0b1120; border:1px solid #334155; border-radius:8px; padding:12px;">
             <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#fde68a; font-weight:700; grid-column:span 2;">
