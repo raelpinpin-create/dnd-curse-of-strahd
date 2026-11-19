@@ -1903,8 +1903,20 @@
                 const val = snap.val() || {};
                 const nextIncoming = [];
                 const nextOutgoing = [];
+                const nowMs = Date.now();
+                const STALE_MS = 24 * 60 * 60 * 1000; // 24 hours
                 Object.entries(val).forEach(([id, d]) => {
                     if (!d || typeof d !== 'object') return;
+                    // Auto-prune completed/cancelled/refunded transfers or 24h-expired DM drops
+                    if (
+                        d.status === 'accepted' ||
+                        d.status === 'cancelled' ||
+                        (d.status === 'declined' && (d.refunded || d.fromId === 'dm')) ||
+                        (d.status === 'pending' && d.fromId === 'dm' && d.createdAt && (nowMs - d.createdAt > STALE_MS))
+                    ) {
+                        ref.child(id).remove().catch(() => {});
+                        return;
+                    }
                     const rec = { id, ...d };
                     if (d.toId === adapter.heroId && d.status === 'pending') {
                         nextIncoming.push(rec);
@@ -1916,6 +1928,7 @@
                         ref.child(id).child('refunded').transaction(cur => cur ? undefined : true, (err, committed) => {
                             if (!err && committed) {
                                 refundTransferPayload(d, `↩️ ${d.toName} declined your transfer — returned safely!`);
+                                ref.child(id).remove().catch(() => {});
                             }
                         });
                     }
@@ -1957,9 +1970,13 @@
             .onSnapshot(snap => {
                 snap.forEach(doc => {
                     const d = doc.data();
-                    if (d.refunded) return;
+                    if (d.refunded) {
+                        doc.ref.delete().catch(() => {});
+                        return;
+                    }
                     doc.ref.update({ refunded: true }).then(() => {
                         refundTransferPayload(d, `↩️ ${d.toName} declined your transfer — returned safely!`);
+                        doc.ref.delete().catch(() => {});
                     }).catch(() => {});
                 });
             }, () => {});
@@ -2000,13 +2017,20 @@
         return Promise.reject(new Error('No live database connected'));
     }
 
+    function removeTransferDoc(tradeId) {
+        if (rtdb) {
+            return transfersRtdbRef().child(tradeId).remove();
+        }
+        if (firestoreDb) {
+            return transfersCol().doc(tradeId).delete();
+        }
+        return Promise.reject(new Error('No live database connected'));
+    }
+
     function acceptLiveTransfer(tradeId) {
         const tr = incomingTrades.find(t => t.id === tradeId);
         if (!tr) return;
-        updateTransferDoc(tradeId, {
-            status: 'accepted',
-            resolvedAt: Date.now()
-        }).then(() => {
+        removeTransferDoc(tradeId).then(() => {
             if (tr.kind === 'gold') {
                 adapter.addGold(tr.gp || 0, tr.sp || 0, `From ${tr.fromName}`);
                 adapter.log(`✅ <strong>Accepted ${tr.gp || 0} GP, ${tr.sp || 0} SP</strong> from <strong>${esc(tr.fromName)}</strong>!`);
@@ -2030,9 +2054,15 @@
     function declineLiveTransfer(tradeId) {
         const tr = incomingTrades.find(t => t.id === tradeId);
         if (!tr) return;
+        if (tr.fromId === 'dm') {
+            removeTransferDoc(tradeId).then(() => {
+                adapter.log(`❌ <strong>Declined transfer</strong> from ${esc(tr.fromName)}.`);
+            }).catch(() => {});
+            return;
+        }
         updateTransferDoc(tradeId, {
             status: 'declined',
-            refunded: tr.fromId === 'dm',
+            refunded: false,
             resolvedAt: Date.now()
         }).then(() => {
             adapter.log(`❌ <strong>Declined transfer</strong> from ${esc(tr.fromName)}.`);
@@ -2042,10 +2072,7 @@
     function cancelOutgoingTransfer(tradeId) {
         const tr = outgoingTrades.find(t => t.id === tradeId);
         if (!tr) return;
-        updateTransferDoc(tradeId, {
-            status: 'cancelled',
-            refunded: true
-        }).then(() => {
+        removeTransferDoc(tradeId).then(() => {
             refundTransferPayload(tr, `↩️ <strong>Cancelled transfer</strong> to ${esc(tr.toName)} — returned to your Backpack/Purse!`);
         }).catch(() => {});
     }
