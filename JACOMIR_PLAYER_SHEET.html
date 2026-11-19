@@ -1098,9 +1098,9 @@
                         <span style="font-size:0.7rem; color:var(--accent-blue);">Savage Attacker Auto-Rolls Twice &amp; Picks Highest!</span>
                     </div>
 
-                    <div class="action-grid-2col">
-                        <!-- Ancestral Greatsword (Graze + Savage Attacker) -->
-                        <div class="action-card">
+                    <div class="action-grid-2col" id="weapons-grid-jacomir">
+                        <!-- Ancestral Greatsword (Visible ONLY when Equipped) -->
+                        <div class="action-card" id="card-wpn-greatsword">
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('greatsword_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
@@ -1118,8 +1118,8 @@
                             </div>
                         </div>
 
-                        <!-- Silvered Longsword (Sap Mastery • Versatile • Bypasses Undead Resist) -->
-                        <div class="action-card" style="border-left:3px solid #e2e8f0;">
+                        <!-- Silvered Longsword (Visible ONLY when Equipped) -->
+                        <div class="action-card" id="card-wpn-silver-ls" style="display:none; border-left:3px solid #e2e8f0;">
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('silvered_longsword_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#f8fafc'">
@@ -1138,8 +1138,8 @@
                             </div>
                         </div>
 
-                        <!-- Handaxe x2 (Vex + Thrown) -->
-                        <div class="action-card">
+                        <!-- Handaxe x2 (Visible ONLY when Equipped) -->
+                        <div class="action-card" id="card-wpn-handaxe" style="display:none;">
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('handaxe_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
@@ -3305,24 +3305,24 @@
     }
 
     // ==========================================
-    // 📓 PLAYER NOTES LEDGER & DELTA EXPORT ENGINE
+    // 📓 PLAYER NOTES LEDGER & DELTA EXPORT ENGINE (LATEST ON TOP — EXACT PLAYER TEXT)
     // ==========================================
     const MAX_NOTE_CHARS = 220;
     const defaultPlayerNotes = [
         {
-            id: 'base_oakenshire',
-            title: "The Fall of Oakenshire",
-            text: "Unnatural freezing gray fog swallowed my kingdom and royal vanguard overnight. I carry the Signet Ring of Oakenshire and will tear Barovia apart to find my people."
+            id: 's1_strahd',
+            title: "Strahd",
+            text: "Strahd calls irina tattiana"
         },
         {
-            id: 'base_vanguard',
-            title: "The Sovereign's Oath",
-            text: "A crown is an unbreakable debt owed to every soul under my banner. Until my realm is found, these fellow strangers in the Mists are my vanguard."
+            id: 's1_ireena',
+            title: "Irina Koliana",
+            text: "Kolian indirovich asking assistance the daughter is hurt and afflicted by an evil. A request to dalvan derevski"
         },
         {
-            id: 's1_diary',
-            title: "S1: Kolyan's Wizard Diary",
-            text: "Burgomaster Kolyan's diary reveals he was a wizard and names Davian Martikov & the Keepers of the Feather as secret allies who can help us against Strahd."
+            id: 's1_barovia',
+            title: "Barovia",
+            text: "Ruled by another sovereign."
         },
         {
             id: 's1_derek_doru',
@@ -3330,27 +3330,27 @@
             text: "As I poured my blood into a cup for Father Donavich's vampire son Doru in the church attic, 3 knocks froze time. Derek promised Yvaine and me a way home if we kill Strahd."
         },
         {
-            id: 's1_strahd',
-            title: "Strahd",
-            text: "Strahd calls Ireena 'Tatyana'."
+            id: 's1_diary',
+            title: "S1: Kolyan's Wizard Diary",
+            text: "Burgomaster Kolyan's diary reveals he was a wizard and names Davian Martikov & the Keepers of the Feather as secret allies who can help us against Strahd."
         },
         {
-            id: 's1_ireena',
-            title: "Ireena Kolyana",
-            text: "Kolyan Indirovich asking assistance — his daughter is hurt and afflicted by an evil. A request to Dalvan Olensky (Derevski)."
+            id: 'base_vanguard',
+            title: "The Sovereign's Oath",
+            text: "A crown is an unbreakable debt owed to every soul under my banner. Until my realm is found, these fellow strangers in the Mists are my vanguard."
         },
         {
-            id: 's1_barovia',
-            title: "Barovia",
-            text: "Ruled by another sovereign."
+            id: 'base_oakenshire',
+            title: "The Fall of Oakenshire",
+            text: "Unnatural freezing gray fog swallowed my kingdom and royal vanguard overnight. I carry the Signet Ring of Oakenshire and will tear Barovia apart to find my people."
         }
     ];
     let editingNoteId = null;
 
     function getStoredNotes() {
-        const stored = localStorage.getItem('cos_notes_jacomir_v3');
+        const stored = localStorage.getItem('cos_notes_jacomir_v4');
         if (!stored) {
-            localStorage.setItem('cos_notes_jacomir_v3', JSON.stringify(defaultPlayerNotes));
+            localStorage.setItem('cos_notes_jacomir_v4', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
         try {
@@ -3363,23 +3363,23 @@
                     changed = true;
                 }
             });
-            if (changed) localStorage.setItem('cos_notes_jacomir_v3', JSON.stringify(notes));
+            if (changed) localStorage.setItem('cos_notes_jacomir_v4', JSON.stringify(notes));
             return notes;
         } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {
-        localStorage.setItem('cos_notes_jacomir_v3', JSON.stringify(notes));
+        localStorage.setItem('cos_notes_jacomir_v4', JSON.stringify(notes));
     }
 
     function getRemovedNoteTitles() {
-        const stored = localStorage.getItem('cos_notes_removed_jacomir_v2');
+        const stored = localStorage.getItem('cos_notes_removed_jacomir_v3');
         if (!stored) return [];
         try { return JSON.parse(stored); } catch(e) { return []; }
     }
 
     function saveRemovedNoteTitles(titles) {
-        localStorage.setItem('cos_notes_removed_jacomir_v2', JSON.stringify(titles));
+        localStorage.setItem('cos_notes_removed_jacomir_v3', JSON.stringify(titles));
     }
 
     function escapeNoteHtml(str) {
@@ -3744,6 +3744,8 @@
                 mainHand: "ancestral greatsword (graze mastery)",
                 _grip: '2h'
             },
+            weaponsGridSelector: '#weapons-grid-jacomir',
+            nativeWeaponTags: ['greatsword', 'silvered_longsword', 'handaxe'],
             presets: [
                 { label: 'Royal Cleave (Greatsword 2H)', slots: { body: 'chain mail', mainHand: 'ancestral greatsword', _grip: '2h' } },
                 { label: 'Undead Hunter (Silver LS 2H)', slots: { body: 'chain mail', mainHand: 'silvered longsword', _grip: '2h' } },
@@ -3755,17 +3757,20 @@
                 updateSavesUI();
                 const stealthTag = document.getElementById('stealth-disadv-tag');
                 if (stealthTag) stealthTag.style.display = bonuses.stealthDisadv ? 'inline' : 'none';
-                const setWpnBadge = (elId, tag) => {
-                    const el = document.getElementById(elId);
-                    if (!el) return;
+                const syncWpnCard = (cardId, badgeId, tag) => {
+                    const card = document.getElementById(cardId);
+                    const badge = document.getElementById(badgeId);
                     const hit = bonuses.equippedWeaponTags.find(w => w.tag === tag);
-                    el.innerHTML = hit
-                        ? `<span class="rpg-card-equipped-pill">✓ ${hit.slot === 'ranged' ? 'HOLSTERED' : (hit.grip === '2h' ? '2H WORN' : 'EQUIPPED')}</span>`
-                        : '';
+                    if (card) card.style.display = hit ? '' : 'none';
+                    if (badge) {
+                        badge.innerHTML = hit
+                            ? `<span class="rpg-card-equipped-pill">${hit.grip === '2h' ? '2H' : 'EQUIPPED'}</span>`
+                            : '';
+                    }
                 };
-                setWpnBadge('eq-badge-greatsword', 'greatsword');
-                setWpnBadge('eq-badge-silver_ls', 'silvered_longsword');
-                setWpnBadge('eq-badge-handaxe', 'handaxe');
+                syncWpnCard('card-wpn-greatsword', 'eq-badge-greatsword', 'greatsword');
+                syncWpnCard('card-wpn-silver-ls', 'eq-badge-silver_ls', 'silvered_longsword');
+                syncWpnCard('card-wpn-handaxe', 'eq-badge-handaxe', 'handaxe');
             }
         });
     }

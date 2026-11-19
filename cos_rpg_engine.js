@@ -831,11 +831,53 @@
         return bonuses;
     }
 
+    function renderDynamicWeaponCards(bonuses) {
+        if (!adapter || !adapter.weaponsGridSelector) return;
+        const grid = document.querySelector(adapter.weaponsGridSelector);
+        if (!grid) return;
+        grid.querySelectorAll('.rpg-dyn-weapon-card').forEach(el => el.remove());
+
+        const nativeTags = new Set(adapter.nativeWeaponTags || []);
+        const eq = bonuses.equippedMap || {};
+        ['mainHand', 'offHand', 'ranged'].forEach(slotId => {
+            const key = eq[slotId];
+            if (!key) return;
+            const idx = findInventoryIndexByKey(key);
+            if (idx === -1) return;
+            const raw = adapter.getItems()[idx];
+            const meta = getItemMeta(raw);
+            if (meta.isShield) return;
+            if (meta.weaponTag && nativeTags.has(meta.weaponTag)) return;
+            const slotObj = SLOTS.find(s => s.id === slotId);
+            const card = document.createElement('div');
+            card.className = 'action-card rpg-dyn-weapon-card';
+            card.style.borderLeft = '3px solid #f59e0b';
+            card.innerHTML = `
+                <div class="action-header">
+                    <div>
+                        <div onclick="COS_RPG.openItemDetails(${idx})" style="cursor:pointer; color:#f8fafc;">
+                            ${esc(shortLabel(raw))} <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                        </div>
+                        <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Equipped in ${slotObj.label}${slotId === 'mainHand' && bonuses.mainHand2H ? ' (2-Handed)' : ''}</div>
+                    </div>
+                    <span class="rpg-card-equipped-pill">WORN</span>
+                </div>
+                <div class="action-desc">${esc(meta.summary || 'Equipped weapon from Backpack.')}</div>
+                <div class="action-btn-row">
+                    <button type="button" class="btn-roll-action" onclick="COS_RPG.openItemDetails(${idx})">Details</button>
+                    <button type="button" class="btn-act btn-act-pre" onclick="COS_RPG.unequipSlot('${slotId}')">Unequip</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
     function applyEquipmentToSheet(silent = false) {
         const bonuses = getGearBonuses();
         if (adapter && typeof adapter.onEquipmentChange === 'function') {
             adapter.onEquipmentChange(bonuses, bonuses.equippedMap);
         }
+        renderDynamicWeaponCards(bonuses);
         renderHubPanel();
         renderHeaderBadges();
         if (document.getElementById('rpg-equip-modal')?.open) renderEquipModal();

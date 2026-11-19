@@ -1200,7 +1200,7 @@
                     <div class="panel-title" style="margin-bottom:4px; cursor:pointer;" onclick="openPlayerNotesModal()" title="Click to open Player Notes">
                         <div style="display:flex; align-items:center; gap:6px;">
                             <span onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--accent-gold)'" style="transition:color 0.15s;">📓 Player Notes</span>
-                            <span id="player-notes-count-badge" style="font-size:0.64rem; padding:1px 6px; border-radius:999px; background:rgba(167,139,250,0.16); color:#c4b5fd; border:1px solid rgba(167,139,250,0.35);">2</span>
+                            <span id="player-notes-count-badge" style="font-size:0.64rem; padding:1px 6px; border-radius:999px; background:rgba(167,139,250,0.16); color:#c4b5fd; border:1px solid rgba(167,139,250,0.35);">9</span>
                         </div>
                     </div>
                     <div id="player-notes-mini-list" style="display:flex; flex-direction:column; gap:4px; max-height:110px; overflow-y:auto;"></div>
@@ -1272,7 +1272,7 @@
                         <span style="font-size:0.7rem; color:var(--accent-blue);">Click any title ℹ️ for 5.5e Rules &amp; Wiki</span>
                     </div>
 
-                    <div class="action-grid-2col">
+                    <div class="action-grid-2col" id="weapons-grid-piper">
                         <!-- Fire Bolt -->
                         <div class="action-card">
                             <div class="action-header">
@@ -1359,23 +1359,59 @@
                             </div>
                         </div>
 
-                        <!-- Kolyan's Silvered Heirloom Dagger & Magician's Staff -->
-                        <div class="action-card" style="border-left:3px solid #cbd5e1;">
+                        <!-- Kolyan's Silvered Heirloom Dagger (Visible ONLY when Equipped) -->
+                        <div class="action-card" id="card-wpn-kolyan-dagger" style="border-left:3px solid #cbd5e1;">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('weapons_piper')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#86efac'" onmouseout="this.style.color='#f8fafc'">
-                                        🗡️ Kolyan's Silvered Dagger &amp; 🪄 Staff <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    <div onclick="openSpellDetailsModal('kolyan_dagger_piper')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#86efac'" onmouseout="this.style.color='#f8fafc'">
+                                        🗡️ Kolyan's Silvered Heirloom Dagger <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#e2e8f0;">Silvered Heirloom (Curved • 3 Red Gems) &amp; Focus</div>
+                                    <div style="font-size:0.67rem; font-weight:700; color:#e2e8f0;">Finesse • Light • Thrown (20/60ft) • Curved w/ 3 Red Gems</div>
                                 </div>
                                 <span style="font-size:0.64rem; color:#fca5a5; font-weight:700;">SILVERED</span>
                             </div>
-                            <div class="action-desc"><strong>Silvered Heirloom Dagger (20/60ft):</strong> +4 Hit, 1d4+2 <strong>Silvered</strong> Pierc (bypasses vampire/werewolf resist!). <strong>Staff:</strong> +2 Hit, 1d6/1d8.</div>
+                            <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong>. Bypasses nonmagical resistance/immunity of Vampire Spawn, Werewolves &amp; Night Hags!</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#475569; border:1px solid #94a3b8;" onclick="rollWeaponAttack('Kolyan\'s Silvered Heirloom Dagger', 2)">🗡️ Silver (+4)</button>
-                                <button class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Kolyan\'s Silvered Heirloom Dagger', 4, 2, 'Silvered Piercing')">💥 1d4+2 Silver</button>
-                                <button class="btn-roll-action" style="background:#334155;" onclick="rollWeaponAttack('Quarterstaff (2H)', 0)">🪄 Staff (+2)</button>
-                                <button class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning')">💥 1d8</button>
+                                <button type="button" class="btn-roll-action" style="background:#475569; border:1px solid #94a3b8;" onclick="rollWeaponAttack('Kolyan\'s Silvered Heirloom Dagger', 2)">🗡️ Attack (+4)</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Kolyan\'s Silvered Heirloom Dagger', 4, 2, 'Silvered Piercing')">💥 1d4+2 Silver</button>
+                            </div>
+                        </div>
+
+                        <!-- Quarterstaff (Visible ONLY when Equipped) -->
+                        <div class="action-card" id="card-wpn-quarterstaff" style="display:none; border-left:3px solid #a78bfa;">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('quarterstaff_piper')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#c4b5fd'" onmouseout="this.style.color='#f8fafc'">
+                                        🪄 Quarterstaff (Magician's Cane) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.67rem; font-weight:700; color:#c4b5fd;">Versatile (1H/2H) • Arcane Spellcasting Focus</div>
+                                </div>
+                                <span style="font-size:0.64rem; color:#c4b5fd; font-weight:700;">VERSATILE</span>
+                            </div>
+                            <div class="action-desc"><strong>+2 to Hit</strong>, <strong>1d6 Bludgeoning (1H)</strong> or <strong>1d8 Bludgeoning (2H)</strong>. Doubles as Piper's theatrical cane &amp; arcane focus.</div>
+                            <div class="action-btn-row">
+                                <button type="button" class="btn-roll-action" style="background:#334155;" onclick="rollWeaponAttack('Quarterstaff (Magician\'s Cane)', 0)">🪄 Attack (+2)</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning')">💥 2H (1d8)</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg" style="background:#991b1b;" onclick="rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning')">💥 1H (1d6)</button>
+                            </div>
+                        </div>
+
+                        <!-- Standard Dagger (Visible ONLY when Equipped) -->
+                        <div class="action-card" id="card-wpn-dagger" style="display:none; border-left:3px solid #64748b;">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('dagger_piper')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#fde68a'" onmouseout="this.style.color='#f8fafc'">
+                                        🗡️ Standard Dagger <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.67rem; font-weight:700; color:#94a3b8;">Finesse • Light • Thrown (20/60ft)</div>
+                                </div>
+                                <span style="font-size:0.64rem; color:#94a3b8; font-weight:700;">LIGHT</span>
+                            </div>
+                            <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Piercing</strong> (Main-Hand) or <strong>1d4 Piercing</strong> (Off-Hand Bonus Action).</div>
+                            <div class="action-btn-row">
+                                <button type="button" class="btn-roll-action" style="background:#334155;" onclick="rollWeaponAttack('Standard Dagger', 2)">🗡️ Attack (+4)</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Standard Dagger', 4, 2, 'Piercing')">💥 1d4+2</button>
+                                <button type="button" class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="rollFormulaDamage('Off-Hand Dagger', 4, 0, 'Piercing')">Off-Hand 1d4</button>
                             </div>
                         </div>
                     </div>
@@ -2413,6 +2449,61 @@
                 { label: "🗡️ Silver Dagger Atk (+4)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack("Kolyan's Silvered Heirloom Dagger", 2); } },
                 { label: "💥 Silver Dmg (1d4+2)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage("Kolyan's Silvered Heirloom Dagger", 4, 2, 'Silvered Piercing'); } },
                 { label: "🪄 Staff Attack (+2)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Quarterstaff Attack', 0); } }
+            ]
+        },
+        "kolyan_dagger_piper": {
+            id: "kolyan_dagger_piper",
+            name: "🗡️ Kolyan's Silvered Heirloom Dagger",
+            school: "Simple Melee Weapon (Finesse, Light, Thrown 20/60 ft • Silvered)",
+            castingTime: "1 Action",
+            range: "5 ft Melee or Thrown 20/60 ft",
+            components: "DEX +2, PB +2 (+4 to Hit)",
+            duration: "Instantaneous",
+            wikiUrl: "https://5e.tools/items.html#dagger_xphb",
+            attackMod: "+4 to Hit (DEX +2, PB +2)",
+            damage: "1d4 + 2 Silvered Piercing (Bypasses Vampire/Werewolf/Hag Resist!)",
+            fullRules: "• <strong>Silvered Heirloom (Curved Blade • 3 Red Gems):</strong> A breathtaking curved <strong>Silvered Dagger</strong> with three blood-red gemstones set into the filigree handle (worth a high price to collectors!).<br>• <strong>Silvered Property:</strong> Bypasses nonmagical B/P/S resistances &amp; immunities of <strong>Vampire Spawn, Werewolves, Wights, and Night Hags</strong>.<br>• <strong>5.5e Weapon Mastery — Nick:</strong> When making the extra attack of the Light property, you can make it as part of the Attack action instead of a Bonus Action.",
+            flavor: "Curved silver flashes crimson in the candlelight—an heirloom of House Indirovich now carried by Piper.",
+            modalButtons: [
+                { label: "🗡️ Silver Dagger Atk (+4)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack("Kolyan's Silvered Heirloom Dagger", 2); } },
+                { label: "💥 Silver Dmg (1d4+2)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage("Kolyan's Silvered Heirloom Dagger", 4, 2, 'Silvered Piercing'); } }
+            ]
+        },
+        "quarterstaff_piper": {
+            id: "quarterstaff_piper",
+            name: "🪄 Quarterstaff (Magician's Cane & Focus)",
+            school: "Simple Melee Weapon (Versatile • Arcane Focus)",
+            castingTime: "1 Action",
+            range: "5 ft Melee Reach",
+            components: "STR +0, PB +2 (+2 to Hit)",
+            duration: "Instantaneous",
+            wikiUrl: "https://5e.tools/items.html#quarterstaff_xphb",
+            attackMod: "+2 to Hit (STR +0, PB +2)",
+            damage: "1d6 Bludgeoning (1H) or 1d8 Bludgeoning (2H)",
+            fullRules: "• <strong>Versatile:</strong> Wield one-handed for <strong>1d6 Bludgeoning</strong> or two-handed for <strong>1d8 Bludgeoning</strong>.<br>• <strong>Arcane Focus:</strong> Doubles as Piper's theatrical stage cane and Sorcerer spellcasting focus.<br>• <strong>5.5e Weapon Mastery — Topple:</strong> Forces a CON Save or knocks target Prone (if mastered).",
+            flavor: "A polished black stage cane capped with tarnished brass—just a harmless prop, Piper insists.",
+            modalButtons: [
+                { label: "🪄 Staff Attack (+2)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Quarterstaff', 0); } },
+                { label: "💥 2H Dmg (1d8)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning'); } },
+                { label: "💥 1H Dmg (1d6)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning'); } }
+            ]
+        },
+        "dagger_piper": {
+            id: "dagger_piper",
+            name: "🗡️ Standard Stage Dagger",
+            school: "Simple Melee Weapon (Finesse, Light, Thrown 20/60 ft)",
+            castingTime: "1 Action (or Bonus Action Off-Hand)",
+            range: "5 ft Melee or Thrown 20/60 ft",
+            components: "DEX +2, PB +2 (+4 to Hit)",
+            duration: "Instantaneous",
+            wikiUrl: "https://5e.tools/items.html#dagger_xphb",
+            attackMod: "+4 to Hit (DEX +2, PB +2)",
+            damage: "1d4 + 2 Piercing (Main-Hand) or 1d4 Piercing (Off-Hand)",
+            fullRules: "• <strong>Finesse &amp; Light:</strong> Uses Dexterity (+2) for attack and damage; pairs seamlessly in the Off-Hand for two-weapon fighting.<br>• <strong>Thrown (20/60 ft):</strong> Can be thrown up to 20 ft normally or 60 ft with disadvantage.",
+            flavor: "Balanced throwing steel tucked up Piper's sleeve from her travelling stage act.",
+            modalButtons: [
+                { label: "🗡️ Dagger Atk (+4)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Standard Dagger', 2); } },
+                { label: "💥 Dmg (1d4+2)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage('Standard Dagger', 4, 2, 'Piercing'); } }
             ]
         },
         "tides_of_chaos": {
@@ -4404,10 +4495,40 @@
     }
 
     // ==========================================
-    // 📓 PLAYER NOTES LEDGER & DELTA EXPORT ENGINE
+    // 📓 PLAYER NOTES LEDGER & DELTA EXPORT ENGINE (LATEST ON TOP — EXACT PLAYER TEXT)
     // ==========================================
     const MAX_NOTE_CHARS = 220;
     const defaultPlayerNotes = [
+        {
+            id: 's1_keepers',
+            title: "Keepers of the Feather",
+            text: "Located in Wizard of Wines Winery. They are mage spies that shapeshift into ravens. They are against Strahd. Some of them reside in Vallaki. Davian Martikov is one of the friends of the past borgormaster."
+        },
+        {
+            id: 's1_heirloom',
+            title: "Silver Heirloom Weapon",
+            text: "From the fam"
+        },
+        {
+            id: 's1_blank_card',
+            title: "Blank Tarot Card",
+            text: "Given by one of the vistanis."
+        },
+        {
+            id: 's1_ireena',
+            title: "Irina Colyana",
+            text: "Daughter of Colyon Indirovich. Has been hurt by an unknown evil. Colyon is seeking Dalvan for help for the manor. Strahd wants her and keeps on calling her Tatiana."
+        },
+        {
+            id: 's1_madam_eva',
+            title: "Madam Eva (The legendary Seer)",
+            text: "Located at Tser Pool. Can reveal lost souls."
+        },
+        {
+            id: 's1_barovia',
+            title: "Barovia",
+            text: "Ran by count strahd, been endangered w many wars and deaths, hard to trust anybody here"
+        },
         {
             id: 'base_watch',
             title: "Barnaby's Pocket Watch",
@@ -4419,41 +4540,6 @@
             text: "Fell asleep after being enveloped by the choking silver fog of Barovia with no memory of crossing the border, only the memory of how she awakened her powers."
         },
         {
-            id: 's1_keepers',
-            title: "Keepers of the Feather",
-            text: "Located in Wizard of Wines Winery. They are mage spies that shapeshift into ravens. They are against Strahd. Some of them reside in Vallaki. Davian Martikov is a friend of the past burgomaster."
-        },
-        {
-            id: 's1_robes',
-            title: "Robes",
-            text: "Black: +1 AC and saving throws | Red: +1d4 + 1 fire dmg on any spells | Green: advantage on Arcana checks."
-        },
-        {
-            id: 's1_heirloom',
-            title: "Silver Heirloom Weapon",
-            text: "From the Indirovich family. Curved silvered dagger with 3 red gems on the handle — beautiful and worth a lot."
-        },
-        {
-            id: 's1_blank_card',
-            title: "Blank Tarot Card",
-            text: "Given by one of the Vistani at Blood on the Vine after the ink faded off the card. Bring to Madam Eva at Tser Pool."
-        },
-        {
-            id: 's1_ireena',
-            title: "Ireena Kolyana",
-            text: "Daughter of Kolyan Indirovich. Has been hurt by an unknown evil. Kolyan sought Dalvan for help for the manor. Strahd wants her and keeps calling her Tatyana."
-        },
-        {
-            id: 's1_madam_eva',
-            title: "Madam Eva (The Legendary Seer)",
-            text: "Located at Tser Pool. Can reveal lost souls."
-        },
-        {
-            id: 's1_barovia',
-            title: "Barovia",
-            text: "Run by Count Strahd, endangered with many wars and deaths. Hard to trust anybody here."
-        },
-        {
             id: 's1_derek',
             title: "S1: Derek & The Frozen Church",
             text: "While arguing over killing Doru in the church attic, 3 knocks froze time. A tall man named Derek knew what I am, told me to 'take care of myself', and said to kill Strahd."
@@ -4462,9 +4548,9 @@
     let editingNoteId = null;
 
     function getStoredNotes() {
-        const stored = localStorage.getItem('cos_notes_piper_v2');
+        const stored = localStorage.getItem('cos_notes_piper_v3');
         if (!stored) {
-            localStorage.setItem('cos_notes_piper_v2', JSON.stringify(defaultPlayerNotes));
+            localStorage.setItem('cos_notes_piper_v3', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
         try {
@@ -4477,23 +4563,23 @@
                     changed = true;
                 }
             });
-            if (changed) localStorage.setItem('cos_notes_piper_v2', JSON.stringify(notes));
+            if (changed) localStorage.setItem('cos_notes_piper_v3', JSON.stringify(notes));
             return notes;
         } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {
-        localStorage.setItem('cos_notes_piper_v2', JSON.stringify(notes));
+        localStorage.setItem('cos_notes_piper_v3', JSON.stringify(notes));
     }
 
     function getRemovedNoteTitles() {
-        const stored = localStorage.getItem('cos_notes_removed_piper_v2');
+        const stored = localStorage.getItem('cos_notes_removed_piper_v3');
         if (!stored) return [];
         try { return JSON.parse(stored); } catch(e) { return []; }
     }
 
     function saveRemovedNoteTitles(titles) {
-        localStorage.setItem('cos_notes_removed_piper_v2', JSON.stringify(titles));
+        localStorage.setItem('cos_notes_removed_piper_v3', JSON.stringify(titles));
     }
 
     function escapeNoteHtml(str) {
@@ -4887,10 +4973,12 @@
                 mainHand: "kolyan's silvered heirloom dagger (curved blade • 3 red gems)",
                 _grip: '1h'
             },
+            weaponsGridSelector: '#weapons-grid-piper',
+            nativeWeaponTags: ['kolyan_dagger', 'staff', 'dagger'],
             presets: [
-                { label: '🛡️ Warding (Black Robe)', slots: { body: 'black robe', mainHand: 'silvered heirloom dagger', _grip: '1h' } },
-                { label: '🔥 Ember Burn (Red Robe)', slots: { body: 'red robe', mainHand: 'quarterstaff', _grip: '2h' } },
-                { label: '📚 Arcane Study (Green Robe)', slots: { body: 'green robe', mainHand: 'quarterstaff', _grip: '2h' } }
+                { label: 'Warding (Black Robe)', slots: { body: 'black robe', mainHand: 'silvered heirloom dagger', _grip: '1h' } },
+                { label: 'Ember Burn (Red Robe)', slots: { body: 'red robe', mainHand: 'quarterstaff', _grip: '2h' } },
+                { label: 'Arcane Study (Green Robe)', slots: { body: 'green robe', mainHand: 'quarterstaff', _grip: '2h' } }
             ],
             onEquipmentChange: (bonuses) => {
                 window.__piperGearCache = bonuses;
@@ -4903,6 +4991,15 @@
                 if (fbAtk) fbAtk.innerText = `🔥 Attack (+${getSpellAttackMod()})`;
                 const fbTxt = document.getElementById('firebolt-hit-txt');
                 if (fbTxt) fbTxt.innerText = `+${getSpellAttackMod()} to Hit`;
+
+                // Show weapon cards ONLY when equipped!
+                const hasTag = tag => bonuses.equippedWeaponTags.some(w => w.tag === tag);
+                const cKolyan = document.getElementById('card-wpn-kolyan-dagger');
+                const cStaff = document.getElementById('card-wpn-quarterstaff');
+                const cDagger = document.getElementById('card-wpn-dagger');
+                if (cKolyan) cKolyan.style.display = hasTag('kolyan_dagger') ? '' : 'none';
+                if (cStaff) cStaff.style.display = hasTag('staff') ? '' : 'none';
+                if (cDagger) cDagger.style.display = hasTag('dagger') ? '' : 'none';
             }
         });
     }

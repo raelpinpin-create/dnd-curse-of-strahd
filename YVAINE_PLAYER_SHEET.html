@@ -1329,8 +1329,8 @@
                         </div>
                     </div>
 
-                    <!-- PERMANENT TRENCH KNIFE CARD (BELOW ACTIVE FIREARM) -->
-                    <div class="action-card" id="card-knife" style="margin-top:7px; border-left:3px solid #cbd5e1;">
+                    <!-- TRENCH KNIFE CARD (SHOWN ONLY WHEN EQUIPPED IN PAPER-DOLL) -->
+                    <div class="action-card" id="card-knife" style="display:none; margin-top:7px; border-left:3px solid #cbd5e1;">
                         <div class="action-header">
                             <div>
                                 <div onclick="openSpellDetailsModal('knife')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
@@ -1350,6 +1350,7 @@
                         </div>
                     </div>
 
+                    <div id="weapons-dyn-yvaine" style="display:flex; flex-direction:column; gap:6px; margin-top:6px;"></div>
                 </div>
 
                 <!-- 2. 🔍 MONSTER SLAYER FEATURES (SECOND PANEL) -->
@@ -3589,10 +3590,30 @@
     }
 
     // ==========================================
-    // 📓 PLAYER NOTES LEDGER & DELTA EXPORT ENGINE (POST-SESSION 1)
+    // 📓 PLAYER NOTES LEDGER & DELTA EXPORT ENGINE (LATEST ON TOP — EXACT PLAYER TEXT)
     // ==========================================
     const MAX_NOTE_CHARS = 220;
     const defaultPlayerNotes = [
+        {
+            id: 's1_arik_letter',
+            title: "Arik's Letter - Tavern owner",
+            text: "The tavern owner says \"before you go I wanna say how much I love you.\" Portrait of his wife and daughter. Why would he say before I go if he's alive and well in the bar? This paper was made years ago."
+        },
+        {
+            id: 's1_clues',
+            title: "Clues",
+            text: "Vistani are people of the mist. Madam Eeva, a seer, could tell me my fortune."
+        },
+        {
+            id: 's1_kolyan',
+            title: "Kalyan indirovitch",
+            text: "evil and destruction happening for 6 nights"
+        },
+        {
+            id: 's1_derek_church',
+            title: "S1: Derek & The Church Standoff",
+            text: "Found Doru (vampire spawn) in the church attic. Piper & I wanted him dead while Jacomir poured blood in a cup. 3 knocks froze time—Derek promised we'd go home if we kill Strahd."
+        },
         {
             id: 'note_1',
             title: "Traitor in Solmere Palace",
@@ -3602,34 +3623,14 @@
             id: 'note_2',
             title: "Vesper & Liora Clues",
             text: "No bodies found at Solmere. The traitor took them or they escaped through the river sluice. Tracking the sign of raven and mist."
-        },
-        {
-            id: 's1_arik_letter',
-            title: "Arik's Letter - Tavern Owner",
-            text: "The tavern owner says \"before you go I wanna say how much I love you.\" Portrait of his wife and daughter. Why would he say before I go if he's alive and well in the bar? This paper was made years ago."
-        },
-        {
-            id: 's1_clues',
-            title: "Clues",
-            text: "Vistani are people of the mist. Madam Eva, a seer, could tell me my fortune."
-        },
-        {
-            id: 's1_kolyan',
-            title: "Kolyan Indirovich",
-            text: "Evil and destruction happening for 6 nights."
-        },
-        {
-            id: 's1_derek_church',
-            title: "S1: Derek & The Church Standoff",
-            text: "Found Doru (vampire spawn) in the church attic. Piper & I wanted him dead while Jacomir poured blood in a cup. 3 knocks froze time—Derek promised we'd go home if we kill Strahd."
         }
     ];
     let editingNoteId = null;
 
     function getStoredNotes() {
-        const stored = localStorage.getItem('cos_notes_yvaine_v6');
+        const stored = localStorage.getItem('cos_notes_yvaine_v7');
         if (!stored) {
-            localStorage.setItem('cos_notes_yvaine_v6', JSON.stringify(defaultPlayerNotes));
+            localStorage.setItem('cos_notes_yvaine_v7', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
         try {
@@ -3642,23 +3643,23 @@
                     changed = true;
                 }
             });
-            if (changed) localStorage.setItem('cos_notes_yvaine_v6', JSON.stringify(notes));
+            if (changed) localStorage.setItem('cos_notes_yvaine_v7', JSON.stringify(notes));
             return notes;
         } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {
-        localStorage.setItem('cos_notes_yvaine_v6', JSON.stringify(notes));
+        localStorage.setItem('cos_notes_yvaine_v7', JSON.stringify(notes));
     }
 
     function getRemovedNoteTitles() {
-        const stored = localStorage.getItem('cos_notes_removed_yvaine_v6');
+        const stored = localStorage.getItem('cos_notes_removed_yvaine_v7');
         if (!stored) return [];
         try { return JSON.parse(stored); } catch(e) { return []; }
     }
 
     function saveRemovedNoteTitles(titles) {
-        localStorage.setItem('cos_notes_removed_yvaine_v6', JSON.stringify(titles));
+        localStorage.setItem('cos_notes_removed_yvaine_v7', JSON.stringify(titles));
     }
 
     function escapeNoteHtml(str) {
@@ -4428,32 +4429,34 @@
                     ranged: "\"lament\" (royal heavy long rifle)",
                     _grip: '2h'
                 },
+                weaponsGridSelector: '#weapons-dyn-yvaine',
+                nativeWeaponTags: ['lament', 'mercy', 'less', 'revolvers', 'knife'],
                 presets: [
-                    { label: '💥 Gunslinger (Mercy & Less)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'twin revolvers', ranged: 'lament', _grip: '2h' } },
-                    { label: '🎯 Sniper (Lament 2H)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'lament', ranged: 'twin revolvers', _grip: '2h' } },
-                    { label: '🗡️ Trench Knife (1H Stealth)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'trench knife', ranged: 'lament', _grip: '1h' } }
+                    { label: 'Gunslinger (Mercy & Less)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'twin revolvers', ranged: 'lament', _grip: '2h' } },
+                    { label: 'Sniper (Lament 2H)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'lament', ranged: 'twin revolvers', _grip: '2h' } },
+                    { label: 'Trench Knife (1H Melee)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'trench knife', ranged: 'lament', _grip: '1h' } }
                 ],
                 onEquipmentChange: (bonuses, eq) => {
                     window.__yvaineGearCache = bonuses;
                     updateACDisplay();
                     updateSavesUI();
                     // Sync active firearm stance when mainHand holds Lament or Twin Revolvers
+                    // Exception: Yvaine keeps both Mercy & Less and Lament equipped and BA-swaps between them!
                     const mh = (eq.mainHand || '').toLowerCase();
                     window.__yvaineSyncingStance = true;
                     if (mh.includes('lament') && activeStance !== 'lament') switchWeaponStance('lament', true);
                     else if ((mh.includes('mercy') || mh.includes('revolver')) && activeStance !== 'revolvers') switchWeaponStance('revolvers', true);
                     window.__yvaineSyncingStance = false;
 
-                    // Reflect Amulet of the Whispering Grave equipped state on spell card
+                    // Show Trench Knife card ONLY when equipped in Main Hand or Off-Hand!
+                    const hasKnife = bonuses.equippedWeaponTags.some(w => w.tag === 'knife');
+                    const knifeCard = document.getElementById('card-knife');
+                    if (knifeCard) knifeCard.style.display = hasKnife ? '' : 'none';
+
+                    // Show Amulet of the Whispering Grave card ONLY when equipped in Amulet slot!
                     const amCard = document.getElementById('card-speak-with-dead');
-                    const amBadge = document.getElementById('eq-badge-amulet');
                     const isAmWorn = bonuses.equippedAbilities.includes('speak_with_dead');
-                    if (amCard) amCard.style.opacity = isAmWorn ? '1' : '0.68';
-                    if (amBadge) {
-                        amBadge.innerHTML = isAmWorn
-                            ? `<span class="rpg-card-equipped-pill">✓ WORN</span>`
-                            : `<span class="rpg-card-unequipped-pill">⚠️ Unequipped</span>`;
-                    }
+                    if (amCard) amCard.style.display = isAmWorn ? '' : 'none';
                 }
             });
         }
