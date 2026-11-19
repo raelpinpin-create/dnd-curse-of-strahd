@@ -9,8 +9,12 @@
           ".indexOn": ["toId", "fromId", "status", "createdAt"],
           "$transferId": {
             ".write": true,
-            ".validate": "newData.hasChildren(['fromId', 'toId', 'kind', 'status']) && (newData.child('kind').val() === 'item' || newData.child('kind').val() === 'gold') && (newData.child('status').val() === 'pending' || newData.child('status').val() === 'accepted' || newData.child('status').val() === 'declined' || newData.child('status').val() === 'cancelled')"
+            ".validate": "!newData.exists() || (newData.hasChildren(['fromId', 'toId', 'kind', 'status']) && (newData.child('kind').val() === 'item' || newData.child('kind').val() === 'gold') && (newData.child('status').val() === 'pending' || newData.child('status').val() === 'accepted' || newData.child('status').val() === 'declined' || newData.child('status').val() === 'cancelled'))"
           }
+        },
+        "dm_state": {
+          ".read": true,
+          ".write": true
         },
         "custom_loot": {
           ".read": true,

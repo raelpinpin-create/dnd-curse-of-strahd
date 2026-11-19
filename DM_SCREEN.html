@@ -2803,6 +2803,10 @@ function modHP(id, delta) {
 // 1B. STATEFUL BOSS, NPC, SPELL SLOT & TACTICAL ENGINE
 // =========================================================
 const BOSS_STORAGE_KEY = 'cos_dm_boss_state_v1';
+const DM_CLIENT_ID = 'dm_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 6);
+let isApplyingRemoteDmState = false;
+let dmBossSyncTimer = null;
+let dmEncounterSyncTimer = null;
 let monsterStates = {};
 let activeModalMonsterKey = null;
 let activeModalKind = 'monster'; // 'monster' | 'npc' | 'item' | 'biome' | 'lore'
@@ -2888,10 +2892,23 @@ function loadBossEngineState() {
     } catch (_) { /* ignore storage parse failures */ }
 }
 
-function saveBossEngineState() {
+function saveBossEngineState(skipCloud = false) {
     try {
         localStorage.setItem(BOSS_STORAGE_KEY, JSON.stringify({ states: monsterStates, hps: monsterHPs }));
     } catch (_) { /* ignore quota failures */ }
+    if (skipCloud || isApplyingRemoteDmState) return;
+    clearTimeout(dmBossSyncTimer);
+    dmBossSyncTimer = setTimeout(() => {
+        const rtdb = typeof dmGetRtdb === 'function' ? dmGetRtdb() : null;
+        if (!rtdb) return;
+        const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+        rtdb.ref(`campaigns/${room}/heroes/_dm_state/boss_engine`).set({
+            states: monsterStates,
+            hps: monsterHPs,
+            clientId: DM_CLIENT_ID,
+            updatedAt: Date.now()
+        }).catch(() => {});
+    }, 120);
 }
 
 function getMonsterState(key) {
@@ -3024,14 +3041,102 @@ function resetMonsterState(key) {
 // =========================================================
 const ENCOUNTER_STORAGE_KEY = 'cos_dm_encounter_board_v1';
 const PARTY_INIT_PRESETS = [
-    { allyKey: 'piper', name: '🎭 Piper', initBonus: 2, sheetUrl: 'PIPER_PLAYER_SHEET.html', fullTitle: '🎭 Piper ("The Incomparable") — Level 3 Sorcerer' },
-    { allyKey: 'jacomir', name: '👑 Jacomir', initBonus: 0, sheetUrl: 'JACOMIR_PLAYER_SHEET.html', fullTitle: '👑 Jacomir Yulle ("King of Oakenshire") — Level 3 Fighter' },
-    { allyKey: 'yvaine', name: '🎯 Yvaine', initBonus: 6, sheetUrl: 'YVAINE_PLAYER_SHEET.html', fullTitle: '🎯 Eclipsa "Yvaine" — Level 3 Monster Slayer Ranger' },
-    { allyKey: 'cael', name: '🌟 Cael', initBonus: 2, npcKey: 'cael', fullTitle: '🌟 Caelum Jude ("Cael") — Level 3 Circle of the Stars Druid' }
+    { allyKey: 'piper', name: '🎭 Piper', initBonus: 2, defaultCurHp: 17, defaultMaxHp: 17, defaultAc: '13', sheetUrl: 'PIPER_PLAYER_SHEET.html', fullTitle: '🎭 Piper ("The Incomparable") — Level 3 Sorcerer' },
+    { allyKey: 'jacomir', name: '👑 Jacomir', initBonus: 0, defaultCurHp: 23, defaultMaxHp: 31, defaultAc: '17', sheetUrl: 'JACOMIR_PLAYER_SHEET.html', fullTitle: '👑 Jacomir Yulle ("King of Oakenshire") — Level 3 Fighter' },
+    { allyKey: 'yvaine', name: '🎯 Yvaine', initBonus: 6, defaultCurHp: 28, defaultMaxHp: 28, defaultAc: '16', sheetUrl: 'YVAINE_PLAYER_SHEET.html', fullTitle: '🎯 Eclipsa "Yvaine" — Level 3 Monster Slayer Ranger' },
+    { allyKey: 'cael', name: '🌟 Cael', initBonus: 2, defaultCurHp: 38, defaultMaxHp: 38, defaultAc: '14', npcKey: 'cael', fullTitle: '🌟 Caelum Jude ("Cael") — Level 3 Circle of the Stars Druid' }
 ];
 let encounterEntries = [];
 let encounterBoardCollapsed = false;
 let editingEncounterUid = null;
+
+function resolveAllyEncounterVitals(entry) {
+    const preset = entry && entry.allyKey ? PARTY_INIT_PRESETS.find(p => p.allyKey === entry.allyKey) : null;
+    const isHero = Boolean(entry && (entry.allyKey === 'piper' || entry.allyKey === 'jacomir' || entry.allyKey === 'yvaine'));
+    if (isHero) {
+        const st = (typeof dmLiveHeroes !== 'undefined' && dmLiveHeroes[entry.allyKey]) ||
+                   (typeof dmSyncedCheckpoints !== 'undefined' && dmSyncedCheckpoints[entry.allyKey]) || null;
+        let cur = preset ? preset.defaultCurHp : 20;
+        let max = preset ? preset.defaultMaxHp : 20;
+        let temp = 0;
+        if (st) {
+            if (typeof st.curHp === 'number' && typeof st.maxHp === 'number') {
+                cur = st.curHp;
+                max = st.maxHp;
+                temp = st.tempHp || 0;
+            } else if (st.hpDisplay) {
+                const m = String(st.hpDisplay).match(/(\d+)\s*(?:\(\+(\d+)T?\))?\s*\/\s*(\d+)/i);
+                if (m) {
+                    cur = parseInt(m[1], 10) || 0;
+                    temp = parseInt(m[2], 10) || 0;
+                    max = parseInt(m[3], 10) || max;
+                }
+            }
+        }
+        const ac = (st && st.acDisplay) ? String(st.acDisplay) : (preset ? preset.defaultAc : '15');
+        return { isLiveHero: true, heroId: entry.allyKey, cur, max, temp, ac };
+    }
+    const defMax = preset ? preset.defaultMaxHp : 28;
+    const defCur = preset ? preset.defaultCurHp : 28;
+    const max = typeof entry.maxHp === 'number' ? entry.maxHp : defMax;
+    const cur = typeof entry.curHp === 'number' ? entry.curHp : defCur;
+    const ac = entry.ac || (preset ? preset.defaultAc : '15');
+    return { isLiveHero: false, heroId: null, cur, max, temp: 0, ac };
+}
+
+function modAllyEncounterHP(uid, delta) {
+    const entry = encounterEntries.find(e => e.uid === uid);
+    if (!entry) return;
+    const v = resolveAllyEncounterVitals(entry);
+    const displayTitle = getEncounterDisplayTitle(entry);
+    if (v.isLiveHero && v.heroId && typeof dmRemoteAdjustHeroHp === 'function') {
+        dmRemoteAdjustHeroHp(v.heroId, displayTitle, delta);
+        return;
+    }
+    entry.maxHp = v.max;
+    entry.curHp = Math.max(0, Math.min(v.max + 20, v.cur + delta));
+    saveEncounterBoard();
+    renderEncounterBoard();
+    logRoll(`🩸 <strong>${escapeEncounterHtml(displayTitle)} HP</strong> ${delta > 0 ? '+' + delta : delta} ➔ <strong style="color:#fde047;">${entry.curHp} / ${entry.maxHp} HP</strong>`);
+}
+
+function updateEncounterBoardLivePartyVitals() {
+    const grid = document.getElementById('encounter-board-grid');
+    if (!grid) return;
+    let updatedAny = false;
+    encounterEntries.forEach(entry => {
+        if (entry.kind !== 'ally') return;
+        const v = resolveAllyEncounterVitals(entry);
+        const card = grid.querySelector(`.encounter-card[data-uid="${entry.uid}"]`);
+        if (!card) return;
+        const hpTxtEl = card.querySelector(`[data-ally-hp-text="${entry.uid}"]`);
+        const hpBarEl = card.querySelector(`[data-ally-hp-bar="${entry.uid}"]`);
+        const acTxtEl = card.querySelector(`[data-ally-ac-text="${entry.uid}"]`);
+        const pct = Math.round((v.cur / Math.max(1, v.max)) * 100);
+        const barColor = getEncounterHpBarColor(pct);
+        const isDown = v.cur <= 0;
+        if (hpTxtEl) {
+            hpTxtEl.textContent = isDown
+                ? `💀 0 / ${v.max} DOWN`
+                : `${v.cur}${v.temp > 0 ? ` (+${v.temp}T)` : ''} / ${v.max} HP`;
+            hpTxtEl.style.color = isDown ? '#f87171' : (v.temp > 0 ? '#38bdf8' : '#86efac');
+            updatedAny = true;
+        }
+        if (hpBarEl) {
+            hpBarEl.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+            hpBarEl.style.background = barColor;
+            updatedAny = true;
+        }
+        if (acTxtEl) {
+            acTxtEl.textContent = `${v.isLiveHero ? '📡 LIVE • ' : '🛡️ ALLY • '}AC ${v.ac}`;
+            updatedAny = true;
+        }
+        card.classList.toggle('is-dead', isDown);
+    });
+    if (!updatedAny && encounterEntries.some(e => e.kind === 'ally')) {
+        renderEncounterBoard();
+    }
+}
 
 function escapeEncounterHtml(str) {
     return String(str ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
@@ -3072,13 +3177,26 @@ function loadEncounterBoard() {
     } catch (_) { /* ignore */ }
 }
 
-function saveEncounterBoard() {
+function saveEncounterBoard(skipCloud = false) {
     try {
         localStorage.setItem(ENCOUNTER_STORAGE_KEY, JSON.stringify({
             entries: encounterEntries,
             collapsed: encounterBoardCollapsed
         }));
     } catch (_) { /* ignore */ }
+    if (skipCloud || isApplyingRemoteDmState) return;
+    clearTimeout(dmEncounterSyncTimer);
+    dmEncounterSyncTimer = setTimeout(() => {
+        const rtdb = typeof dmGetRtdb === 'function' ? dmGetRtdb() : null;
+        if (!rtdb) return;
+        const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+        rtdb.ref(`campaigns/${room}/heroes/_dm_state/encounter_board`).set({
+            entries: encounterEntries,
+            collapsed: encounterBoardCollapsed,
+            clientId: DM_CLIENT_ID,
+            updatedAt: Date.now()
+        }).catch(() => {});
+    }, 100);
 }
 
 function announceEncounterStatus(msg) {
@@ -3561,8 +3679,12 @@ function renderEncounterBoard() {
             </span>`;
 
         if (isAlly) {
+            const v = resolveAllyEncounterVitals(entry);
+            const pct = Math.round((v.cur / Math.max(1, v.max)) * 100);
+            const barColor = getEncounterHpBarColor(pct);
+            const isDown = v.cur <= 0;
             return `
-                <div class="encounter-card is-ally" data-uid="${entry.uid}">
+                <div class="encounter-card is-ally ${isDown ? 'is-dead' : ''}" data-uid="${entry.uid}">
                     <div class="encounter-card-top">
                         <div style="flex:1 1 auto; min-width:0;">${titleBlockHtml}</div>
                         <div class="encounter-card-meta">
@@ -3570,9 +3692,24 @@ function renderEncounterBoard() {
                             <button type="button" class="modal-close-btn" style="width:24px; height:24px; font-size:0.74rem;" onclick="removeEncounterEntry('${entry.uid}')" aria-label="Remove ${safeTitle} from encounter" title="Remove">✕</button>
                         </div>
                     </div>
-                    <div class="enc-ally-body">
-                        <span class="pill ally" style="font-size:0.65rem;">🛡️ ALLY${typeof entry.initBonus === 'number' ? ` • Init ${initModStr}` : ''}</span>
-                        <span style="color:var(--text-muted); font-size:0.68rem;">Enter Init ➔ ↵ Sort</span>
+                    <div class="enc-target-block">
+                        <div class="enc-target-head">
+                            <span data-ally-ac-text="${entry.uid}" style="color:#a7f3d0; font-weight:700; font-size:0.74rem;">
+                                ${v.isLiveHero ? '📡 LIVE • ' : '🛡️ ALLY • '}AC ${escapeEncounterHtml(v.ac)}
+                            </span>
+                            <span data-ally-hp-text="${entry.uid}" style="color:${isDown ? '#f87171' : (v.temp > 0 ? '#38bdf8' : '#86efac')}; font-weight:800; font-family:'JetBrains Mono',monospace; font-size:0.76rem;">
+                                ${isDown ? `💀 0 / ${v.max} DOWN` : `${v.cur}${v.temp > 0 ? ` (+${v.temp}T)` : ''} / ${v.max} HP`}
+                            </span>
+                        </div>
+                        <div class="hp-bar-bg" style="height:8px;">
+                            <div class="hp-bar-fill" data-ally-hp-bar="${entry.uid}" style="width:${Math.min(100, Math.max(0, pct))}%; background:${barColor}; transition:width 0.2s ease;"></div>
+                        </div>
+                        <div class="enc-step-row">
+                            <button type="button" class="btn-enc-step" onclick="modAllyEncounterHP('${entry.uid}', -5)" title="Damage ${safeTitle} by 5 (syncs to player sheet)">-5</button>
+                            <button type="button" class="btn-enc-step" onclick="modAllyEncounterHP('${entry.uid}', -1)" title="Damage ${safeTitle} by 1 (syncs to player sheet)">-1</button>
+                            <button type="button" class="btn-enc-step is-heal" onclick="modAllyEncounterHP('${entry.uid}', 1)" title="Heal ${safeTitle} by 1 (syncs to player sheet)">+1</button>
+                            <button type="button" class="btn-enc-step is-heal" onclick="modAllyEncounterHP('${entry.uid}', 5)" title="Heal ${safeTitle} by 5 (syncs to player sheet)">+5</button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -12792,13 +12929,97 @@ function dmRemoteAdjustHeroHp(heroId, heroName, delta) {
     const rtdb = dmGetRtdb();
     if (!rtdb) return;
     const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    // Also update dmLiveHeroes / Firebase state directly so the Encounter Board & Section 0 reflect the change immediately even if the player's tab is closed!
+    const preset = PARTY_INIT_PRESETS.find(p => p.allyKey === heroId);
+    const curState = dmLiveHeroes[heroId] || dmSyncedCheckpoints[heroId] || {};
+    let cur = typeof curState.curHp === 'number' ? curState.curHp : (preset ? preset.defaultCurHp : 20);
+    let max = typeof curState.maxHp === 'number' ? curState.maxHp : (preset ? preset.defaultMaxHp : 20);
+    let temp = typeof curState.tempHp === 'number' ? curState.tempHp : 0;
+    if (typeof curState.curHp !== 'number' && curState.hpDisplay) {
+        const m = String(curState.hpDisplay).match(/(\d+)\s*(?:\(\+(\d+)T?\))?\s*\/\s*(\d+)/i);
+        if (m) {
+            cur = parseInt(m[1], 10) || 0;
+            temp = parseInt(m[2], 10) || 0;
+            max = parseInt(m[3], 10) || max;
+        }
+    }
+    if (delta < 0) {
+        let dmg = Math.abs(delta);
+        if (temp > 0) {
+            const abs = Math.min(temp, dmg);
+            temp -= abs;
+            dmg -= abs;
+        }
+        cur = Math.max(0, cur - dmg);
+    } else if (delta > 0) {
+        cur = Math.min(max, cur + delta);
+    }
+    const newHpDisplay = temp > 0 ? `${cur} (+${temp}T)/${max}` : `${cur}/${max}`;
+    if (dmLiveHeroes[heroId]) {
+        dmLiveHeroes[heroId].curHp = cur;
+        dmLiveHeroes[heroId].maxHp = max;
+        dmLiveHeroes[heroId].tempHp = temp;
+        dmLiveHeroes[heroId].hpDisplay = newHpDisplay;
+    }
+    dmUpdateSection0LiveVitals();
+    updateEncounterBoardLivePartyVitals();
+    rtdb.ref(`campaigns/${room}/heroes/${heroId}/state`).update({
+        curHp: cur,
+        maxHp: max,
+        tempHp: temp,
+        hpDisplay: newHpDisplay,
+        updatedAt: Date.now()
+    }).catch(() => {});
     rtdb.ref(`campaigns/${room}/heroes/${heroId}/dm_commands`).push({
         action: 'adjust_hp',
         delta,
         createdAt: Date.now()
     }).then(() => {
-        dmShowQuickToast(`${delta >= 0 ? '💚' : '⚔️'} <strong>Remote HP Update Sent to ${heroName}:</strong> ${delta >= 0 ? '+' + delta : delta} HP`);
+        dmShowQuickToast(`${delta >= 0 ? '💚' : '⚔️'} <strong>Remote HP Update Sent to ${heroName}:</strong> ${delta >= 0 ? '+' + delta : delta} HP ➔ <strong>${newHpDisplay}</strong>`);
     });
+}
+
+function dmRemoteResetHeroToBaseline(heroId, heroName, skipConfirm = false) {
+    if (!skipConfirm && typeof window.confirm === 'function') {
+        const ok = window.confirm(`Reset ${heroName}'s sheet (HP, Slots/Ammo, Gold Purse, Backpack Inventory, Equipped Gear, Presets & Notes) back to the official Session 1 baseline?`);
+        if (!ok) return;
+    }
+    const rtdb = dmGetRtdb();
+    if (!rtdb) return;
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    const preset = PARTY_INIT_PRESETS.find(p => p.allyKey === heroId);
+    if (preset && dmLiveHeroes[heroId]) {
+        dmLiveHeroes[heroId].curHp = preset.defaultCurHp;
+        dmLiveHeroes[heroId].maxHp = preset.defaultMaxHp;
+        dmLiveHeroes[heroId].tempHp = 0;
+        dmLiveHeroes[heroId].hpDisplay = `${preset.defaultCurHp}/${preset.defaultMaxHp}`;
+        dmLiveHeroes[heroId].acDisplay = preset.defaultAc;
+        rtdb.ref(`campaigns/${room}/heroes/${heroId}/state`).update({
+            curHp: preset.defaultCurHp,
+            maxHp: preset.defaultMaxHp,
+            tempHp: 0,
+            hpDisplay: `${preset.defaultCurHp}/${preset.defaultMaxHp}`,
+            acDisplay: preset.defaultAc,
+            updatedAt: Date.now()
+        }).catch(() => {});
+    }
+    rtdb.ref(`campaigns/${room}/heroes/${heroId}/dm_commands`).push({
+        action: 'reset_sheet_baseline',
+        createdAt: Date.now()
+    }).then(() => {
+        dmUpdateSection0LiveVitals();
+        updateEncounterBoardLivePartyVitals();
+        dmShowQuickToast(`🔄 <strong>Sent Full Baseline Reset to ${heroName}!</strong>`);
+    });
+}
+
+function dmResetAllPartyToBaseline() {
+    if (typeof window.confirm === 'function') {
+        const ok = window.confirm('Reset ALL 3 Player Sheets (Piper, Jacomir & Yvaine) back to their official Session 1 baseline?');
+        if (!ok) return;
+    }
+    DM_PARTY_TARGETS.forEach(t => dmRemoteResetHeroToBaseline(t.id, t.label, true));
+    dmShowQuickToast(`🔄 <strong>Reset All 3 Heroes (Piper, Jacomir &amp; Yvaine)</strong> to Official Session 1 Baseline!`);
 }
 
 function dmRemoteAdjustHeroGold(heroId, heroName, gpDelta) {
@@ -12914,18 +13135,76 @@ function initDmFirebaseSync() {
         if (activeLootTag === 'Materials') renderLootVault('Materials', true);
     });
 
-    // 3. Live sync party hero states AND explicit Synced Checkpoints
+    // 3. Live sync party hero states, Synced Checkpoints, AND DM Encounter Board / Enemy HPs
     rtdb.ref(`campaigns/${room}/heroes`).on('value', snap => {
         const val = snap.val() || {};
         dmLiveHeroes = {};
         dmSyncedCheckpoints = {};
         Object.entries(val).forEach(([hid, hObj]) => {
+            if (hid === '_dm_state') return;
             if (hObj && hObj.state) dmLiveHeroes[hid] = hObj.state;
             if (hObj && hObj.synced_checkpoint) dmSyncedCheckpoints[hid] = hObj.synced_checkpoint;
         });
         dmUpdateSection0LiveVitals();
+        updateEncounterBoardLivePartyVitals();
         if (activeModalKind === 'dm_drop' && dmDropActiveTab === 'party') {
             renderDmDropModalBody();
+        }
+    });
+
+    // 4. Cross-device live sync for DM Active Encounter Board (Allies + Enemies + Initiatives + Combat HP)
+    rtdb.ref(`campaigns/${room}/heroes/_dm_state/encounter_board`).on('value', snap => {
+        const val = snap.val();
+        if (!val) {
+            if (encounterEntries.length > 0) saveEncounterBoard(false);
+            return;
+        }
+        if (val.clientId === DM_CLIENT_ID) return;
+        isApplyingRemoteDmState = true;
+        try {
+            const incomingEntries = Array.isArray(val.entries) ? val.entries : [];
+            encounterEntries = incomingEntries.filter(e => {
+                if (!e) return false;
+                if (e.kind === 'ally') return true;
+                return Boolean(MONSTER_DATA[e.key] && Array.isArray(e.targets));
+            });
+            if (typeof val.collapsed === 'boolean') {
+                encounterBoardCollapsed = val.collapsed;
+            }
+            saveEncounterBoard(true);
+            renderEncounterBoard();
+        } finally {
+            isApplyingRemoteDmState = false;
+        }
+    });
+
+    // 5. Cross-device live sync for Section 3 Monster/Boss HP, Spell Slots & Tactical State Toggles
+    rtdb.ref(`campaigns/${room}/heroes/_dm_state/boss_engine`).on('value', snap => {
+        const val = snap.val();
+        if (!val) {
+            saveBossEngineState(false);
+            return;
+        }
+        if (val.clientId === DM_CLIENT_ID) return;
+        isApplyingRemoteDmState = true;
+        try {
+            if (val.states && typeof val.states === 'object') {
+                monsterStates = val.states;
+            }
+            if (val.hps && typeof val.hps === 'object') {
+                Object.entries(val.hps).forEach(([k, v]) => {
+                    if (monsterHPs[k] && v && typeof v.cur === 'number' && typeof v.max === 'number') {
+                        monsterHPs[k] = { cur: v.cur, max: v.max };
+                    }
+                });
+            }
+            saveBossEngineState(true);
+            renderMonsterTable(activeMonsterLocation, true);
+            if ((activeModalKind === 'monster' && activeModalMonsterKey) || (activeModalKind === 'npc' && activeModalNpcKey)) {
+                rerenderActiveEntityModal(activeModalMonsterKey || activeModalNpcKey);
+            }
+        } finally {
+            isApplyingRemoteDmState = false;
         }
     });
 }
@@ -13376,6 +13655,7 @@ function renderDmDropModalBody() {
                             HP: <strong>${escapeEncounterHtml(st.hpDisplay || '--')}</strong> • AC: <strong>${escapeEncounterHtml(st.acDisplay || '--')}</strong> • 💰 <strong>${st.gp || 0} GP, ${st.sp || 0} SP</strong>
                         </span>
                         <button type="button" class="btn-modal-mini" style="padding:2px 8px; font-size:0.68rem; border-color:#34d399; color:#a7f3d0;" onclick="dmCopySingleHeroCheckpoint('${t.id}')">📋 Copy Hero Sync</button>
+                        <button type="button" class="btn-modal-mini" style="padding:2px 8px; font-size:0.68rem; border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteResetHeroToBaseline('${t.id}', '${t.label}')" title="Undo test changes &amp; reset ${t.label}'s sheet back to Session 1 baseline">🔄 Reset Hero</button>
                     </div>
                 </div>
 
@@ -13439,6 +13719,7 @@ function renderDmDropModalBody() {
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
                 <button type="button" class="btn-modal-mini" style="border-color:#38bdf8; color:#bae6fd; padding:4px 10px;" onclick="dmRequestAllCheckpoints()">📡 Request Sync from Open Sheets</button>
                 <button type="button" class="btn-modal-mini" style="border-color:#34d399; color:#a7f3d0; padding:4px 10px;" onclick="dmCopyAllSyncedCheckpoints()">📋 Copy All 3 Heroes' Synced Data &amp; Notes</button>
+                <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5; padding:4px 10px;" onclick="dmResetAllPartyToBaseline()" title="Reset Piper, Jacomir &amp; Yvaine back to official Session 1 baseline">🔄 Reset All 3 Sheets to Baseline</button>
             </div>
         </div>
         <div style="display:flex; flex-direction:column; gap:10px;">

@@ -1660,6 +1660,13 @@
         const wallet = adapter.getGold ? adapter.getGold() : { gp: 0, sp: 0 };
         const hpTxt = (document.getElementById('hp-disp')?.innerText || document.getElementById('cur-hp')?.innerText || '').replace(/\s+/g, ' ').trim();
         const acTxt = (document.getElementById('ac-disp')?.innerText || '').replace(/\s+/g, ' ').trim();
+        let curHp = 10, maxHp = 10, tempHp = 0;
+        const hpMatch = hpTxt.match(/(\d+)\s*(?:\(\+(\d+)T?\))?\s*\/\s*(\d+)/i);
+        if (hpMatch) {
+            curHp = parseInt(hpMatch[1]) || 0;
+            tempHp = parseInt(hpMatch[2]) || 0;
+            maxHp = parseInt(hpMatch[3]) || 10;
+        }
         const activePreset = getActivePresetInfo(eq);
         const notesList = typeof window.getStoredNotes === 'function' ? window.getStoredNotes() : [];
         const { sheetStr, notesStr } = captureNativeExportStrings();
@@ -1670,6 +1677,9 @@
             heroName: adapter.heroName,
             heroEmoji: adapter.heroEmoji || '🛡️',
             hpDisplay: hpTxt,
+            curHp,
+            maxHp,
+            tempHp,
             acDisplay: acTxt,
             gp: wallet.gp || 0,
             sp: wallet.sp || 0,
@@ -1856,10 +1866,44 @@
                         }
                     } else if (cmd.action === 'request_checkpoint') {
                         pushSyncedCheckpoint(true);
+                    } else if (cmd.action === 'reset_sheet_baseline') {
+                        resetSheetToOfficialBaseline(true);
                     }
                 }).catch(() => {});
             });
         });
+    }
+
+    function resetSheetToOfficialBaseline(skipConfirm = false) {
+        if (!skipConfirm && typeof window.confirm === 'function') {
+            const ok = window.confirm(`Reset ${adapter.heroName}'s sheet (HP, Slots/Ammo, Gold Purse, Backpack Inventory, Equipped Gear, Custom Presets & Player Notes) back to the official Session 1 baseline?`);
+            if (!ok) return;
+        }
+        try {
+            if (typeof window.resetHP === 'function') window.resetHP();
+            // Jacomir's Session 1 end baseline is 23/31 HP
+            if (adapter.heroId === 'jacomir') {
+                const hpInp = document.getElementById('hp-input');
+                if (hpInp && typeof window.applyDamage === 'function') {
+                    hpInp.value = '8';
+                    window.applyDamage();
+                    hpInp.value = '';
+                }
+            }
+            if (typeof window.resetGoldPurse === 'function') window.resetGoldPurse();
+            if (typeof window.clearGoldHistory === 'function') window.clearGoldHistory();
+            if (typeof window.resetPlayerNotes === 'function') window.resetPlayerNotes();
+            adapter.resetItems();
+            localStorage.removeItem(getEquipStorageKey());
+            localStorage.removeItem(getCustomGearKey());
+            localStorage.removeItem(getCustomPresetsKey());
+            lastAppliedPresetName = null;
+            applyEquipmentToSheet(true);
+            pushSyncedCheckpoint(true);
+            adapter.log(`🔄 <strong>Sheet Reset to Official Session 1 Baseline!</strong> All HP, Resources, Gold Purse, Backpack Inventory, Equipped Gear, Presets &amp; Player Notes restored and synced to Firebase.`);
+        } catch (e) {
+            console.warn('[COS_RPG] Reset error:', e);
+        }
     }
 
     function transfersCol() {
@@ -2277,7 +2321,7 @@
             header.insertAdjacentElement('afterend', banner);
         }
 
-        // Inject Header Quick Gear, Backpack & 1-Click Cloud Sync to DM buttons into top-right badge bar
+        // Inject Header Quick Gear, Backpack, 1-Click Cloud Sync to DM & Reset buttons into top-right badge bar
         const badgeGroup = document.querySelector('.pill-badge-group');
         if (badgeGroup && !document.getElementById('rpg-hdr-equip-btn')) {
             const syncBtn = document.createElement('button');
@@ -2288,6 +2332,15 @@
             syncBtn.title = 'Save official Session Checkpoint (Vitals, Slots, Gear, Presets & Player Notes) directly to the DM Screen via Firebase';
             syncBtn.onclick = () => pushSyncedCheckpoint(false);
             syncBtn.innerHTML = `☁️ Sync to DM`;
+
+            const resetBtn = document.createElement('button');
+            resetBtn.type = 'button';
+            resetBtn.id = 'rpg-hdr-reset-btn';
+            resetBtn.className = 'rpg-header-btn';
+            resetBtn.style.cssText = 'background:#1e293b; border-color:rgba(248,113,113,0.45); color:#fca5a5;';
+            resetBtn.title = 'Undo test changes & reset sheet (HP, Gold, Backpack, Equipped Gear, Presets & Notes) to official Session 1 baseline';
+            resetBtn.onclick = () => resetSheetToOfficialBaseline(false);
+            resetBtn.innerHTML = `🔄 Reset`;
 
             const equipBtn = document.createElement('button');
             equipBtn.type = 'button';
@@ -2303,6 +2356,7 @@
             bpBtn.onclick = () => openBackpackModal();
             bpBtn.innerHTML = `🎒 Bag <span class="rpg-badge-count" id="rpg-hdr-bp-cnt">0</span>`;
 
+            badgeGroup.insertBefore(resetBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(bpBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(equipBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(syncBtn, badgeGroup.firstChild);
@@ -3746,6 +3800,14 @@
     }
 
     function startLiveSheetWatcher() {
+        // Wrap updateHPUI so any HP decrease/increase immediately streams to Firebase for the DM's Active Encounter Board!
+        if (typeof window.updateHPUI === 'function' && !window.__origUpdateHPUI) {
+            window.__origUpdateHPUI = window.updateHPUI;
+            window.updateHPUI = function () {
+                window.__origUpdateHPUI();
+                if (!isCapturingExports) syncHeroStateToFirebase(true);
+            };
+        }
         // Wrap native exportSheetState / exportPlayerNotes so clicking them ALSO pushes a Firebase checkpoint!
         if (typeof window.exportSheetState === 'function' && !window.__origExportSheetState) {
             window.__origExportSheetState = window.exportSheetState;
@@ -3797,6 +3859,7 @@
         getExportEquippedSummary,
         exportEquippedGear,
         pushSyncedCheckpoint,
+        resetSheetToOfficialBaseline,
         openEquipModal,
         openBackpackModal,
         openCraftModal,
