@@ -777,6 +777,65 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        /* 🧥 KOLYAN ENCHANTED ROBE SELECTOR & ⚗️ CRAFT WORKBENCH */
+        .robe-selector-card {
+            grid-column: span 2;
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 6px;
+            padding: 6px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .robe-selector-card.robe-black { border-color: #60a5fa; background: rgba(30, 41, 59, 0.72); }
+        .robe-selector-card.robe-red { border-color: #ef4444; background: rgba(127, 29, 29, 0.24); }
+        .robe-selector-card.robe-green { border-color: #22c55e; background: rgba(20, 83, 45, 0.24); }
+        .robe-pills-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+        .robe-pill-btn {
+            background: #090e1a;
+            border: 1px solid #334155;
+            color: var(--text-dim);
+            border-radius: 4px;
+            padding: 4px 4px;
+            min-block-size: 26px;
+            font-size: 0.67rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.15s ease;
+        }
+        .robe-pill-btn:hover { border-color: var(--accent-gold); color: var(--text-light); }
+        .robe-pill-btn[aria-pressed="true"] { color: #f8fafc; box-shadow: 0 0 8px rgba(0, 0, 0, 0.45); }
+        .robe-pill-btn[data-robe="black"][aria-pressed="true"] { background: #1e293b; border-color: #60a5fa; color: #dbeafe; }
+        .robe-pill-btn[data-robe="red"][aria-pressed="true"] { background: #7f1d1d; border-color: #f87171; color: #fee2e2; }
+        .robe-pill-btn[data-robe="green"][aria-pressed="true"] { background: #14532d; border-color: #4ade80; color: #dcfce7; }
+        .robe-pill-btn[data-robe="none"][aria-pressed="true"] { background: #334155; border-color: #94a3b8; color: #f1f5f9; }
+
+        .craft-recipe-card {
+            background: var(--panel-sub);
+            border: 1px solid var(--card-border);
+            border-radius: 7px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .craft-recipe-card.craft-ready { border-left: 3.5px solid var(--accent-green); }
+        .craft-recipe-card.craft-locked { border-left: 3.5px solid #475569; opacity: 0.85; }
+        .craft-btn-disabled {
+            opacity: 0.48;
+            cursor: not-allowed;
+        }
+        :where(a:any-link, button, input, select, textarea):focus-visible {
+            outline: 2px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
+
     </style>
 </head>
 <body>
@@ -843,7 +902,7 @@
                     </div>
                     <div class="vital-mini-box">
                         <span class="vital-mini-lbl">ARMOR CLASS</span>
-                        <span class="vital-mini-val" id="ac-disp" style="color:var(--accent-gold);">12</span>
+                        <span class="vital-mini-val" id="ac-disp" style="color:var(--accent-gold);">13</span>
                     </div>
                     <div class="vital-mini-box" onclick="rollD20('Initiative Roll (DEX +2)', 2)" style="cursor:pointer;" title="Click to roll Initiative (+2)">
                         <span class="vital-mini-lbl">INIT 🎲</span>
@@ -892,9 +951,9 @@
                     <div class="toggle-btn-card" id="card-mage-armor-toggle" onclick="toggleMageArmorBuff()">
                         <div>
                             <div style="font-size:0.74rem; font-weight:700;">🔮 Mage Armor</div>
-                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-mage-armor">Base AC: 12 (10+DEX)</div>
+                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-mage-armor">Base AC: 13 (10+DEX+Black Robe)</div>
                         </div>
-                        <span class="toggle-badge off" id="badge-mage-armor">OFF (12)</span>
+                        <span class="toggle-badge off" id="badge-mage-armor">OFF (13)</span>
                     </div>
 
                     <div class="toggle-btn-card" id="card-surge-ac-toggle" onclick="toggleSurgeACBuff()">
@@ -904,12 +963,25 @@
                         </div>
                         <span class="toggle-badge off" id="badge-surge-ac">+2 AC</span>
                     </div>
+
+                    <div class="robe-selector-card robe-black" id="card-robe-selector">
+                        <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                            <span style="font-size:0.74rem; font-weight:700; color:#f8fafc;">🧥 Kolyan's Enchanted Robe</span>
+                            <span id="robe-active-desc" style="font-size:0.65rem; font-weight:700; color:#93c5fd;">Black: +1 AC &amp; All Saves</span>
+                        </div>
+                        <div class="robe-pills-row" role="group" aria-label="Equip Enchanted Robe">
+                            <button type="button" class="robe-pill-btn" data-robe="black" aria-pressed="true" onclick="equipRobe('black')">⬛ Black</button>
+                            <button type="button" class="robe-pill-btn" data-robe="red" aria-pressed="false" onclick="equipRobe('red')">🟥 Red</button>
+                            <button type="button" class="robe-pill-btn" data-robe="green" aria-pressed="false" onclick="equipRobe('green')">🟩 Green</button>
+                            <button type="button" class="robe-pill-btn" data-robe="none" aria-pressed="false" onclick="equipRobe('none')">Off</button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 4. HELP TOKENS TRACKER -->
                 <div class="panel" style="padding: 7px 10px;">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.76rem; font-weight:700; color:#fbbf24;">💛 Help Tokens: <span id="help-tokens-disp" style="color:#fbbf24; font-size:0.88rem; font-weight:800; font-family:'JetBrains Mono',monospace;">2 / 2</span></span>
+                        <span style="font-size:0.76rem; font-weight:700; color:#fbbf24;">💛 Help Tokens: <span id="help-tokens-disp" style="color:#fbbf24; font-size:0.88rem; font-weight:800; font-family:'JetBrains Mono',monospace;">1 / 2</span></span>
                         <div style="display:flex; align-items:center; gap:4px;">
                             <button class="btn-act btn-act-temp" onclick="rollHelpToken()" style="padding:2px 7px; font-size:0.7rem; background:#4338ca; border-color:#6366f1;">🎲 Grant +1d6</button>
                             <button class="btn-act btn-act-pre" onclick="modHelpToken(-1)" style="padding:2px 6px; font-size:0.68rem; color:#cbd5e1;">-</button>
@@ -940,10 +1012,10 @@
                             </div>
                             <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
                         </li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Arcana (INT) ★', 1, true)">
+                        <li class="stat-row-item prof-item" id="skill-row-arcana" onclick="rollSkill('Arcana (INT) ★', 1, true)">
                             <div class="check-left-wrap">
                                 <button type="button" class="btn-info-tiny" onclick="openSkillModal('Arcana', event)" title="View Arcana rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Arcana (INT) ★</span>
+                                <span style="font-weight:700; color:#fde68a;">Arcana (INT) ★ <small id="arcana-robe-badge" style="color:#4ade80; display:none;">(Green Robe Adv)</small></span>
                             </div>
                             <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+3 🎲</span>
                         </li>
@@ -1059,32 +1131,32 @@
                 <div class="panel">
                     <div class="panel-title">
                         <span style="font-size:0.78rem; font-weight:800;">🛡️ Saving Throws</span>
-                        <span style="font-size:0.68rem; color:var(--text-dim);">Proficiency: +2</span>
+                        <span id="saves-robe-tag" style="font-size:0.68rem; color:#93c5fd;">Prof: +2 • Black Robe +1</span>
                     </div>
                     <div class="saves-grid-2x3">
-                        <div class="save-box" onclick="rollSave('Strength Saving Throw', 0, false)" title="Strength Saving Throw (+0)">
+                        <div class="save-box" onclick="rollSave('Strength Saving Throw', 0, false)" title="Strength Saving Throw">
                             <span class="save-lbl">STR</span>
-                            <span class="save-val" style="color:var(--text-dim);">+0</span>
+                            <span class="save-val" id="save-val-str" style="color:#93c5fd;">+1</span>
                         </div>
-                        <div class="save-box" onclick="rollSave('Dexterity Saving Throw', 2, false)" title="Dexterity Saving Throw (+2)">
+                        <div class="save-box" onclick="rollSave('Dexterity Saving Throw', 2, false)" title="Dexterity Saving Throw">
                             <span class="save-lbl">DEX</span>
-                            <span class="save-val" style="color:#38bdf8;">+2</span>
+                            <span class="save-val" id="save-val-dex" style="color:#38bdf8;">+3</span>
                         </div>
-                        <div class="save-box prof" onclick="rollSave('Constitution Saving Throw ★', 1, true)" title="Constitution Saving Throw (Proficient: +3)">
+                        <div class="save-box prof" onclick="rollSave('Constitution Saving Throw ★', 1, true)" title="Constitution Saving Throw (Proficient)">
                             <span class="save-lbl">CON ★</span>
-                            <span class="save-val" style="color:var(--accent-gold);">+3</span>
+                            <span class="save-val" id="save-val-con" style="color:var(--accent-gold);">+4</span>
                         </div>
-                        <div class="save-box" onclick="rollSave('Intelligence Saving Throw', 1, false)" title="Intelligence Saving Throw (+1)">
+                        <div class="save-box" onclick="rollSave('Intelligence Saving Throw', 1, false)" title="Intelligence Saving Throw">
                             <span class="save-lbl">INT</span>
-                            <span class="save-val" style="color:var(--text-dim);">+1</span>
+                            <span class="save-val" id="save-val-int" style="color:#93c5fd;">+2</span>
                         </div>
-                        <div class="save-box" onclick="rollSave('Wisdom Saving Throw', 0, false)" title="Wisdom Saving Throw (+0)">
+                        <div class="save-box" onclick="rollSave('Wisdom Saving Throw', 0, false)" title="Wisdom Saving Throw">
                             <span class="save-lbl">WIS</span>
-                            <span class="save-val" style="color:var(--text-dim);">+0</span>
+                            <span class="save-val" id="save-val-wis" style="color:#93c5fd;">+1</span>
                         </div>
-                        <div class="save-box prof" onclick="rollSave('Charisma Saving Throw ★', 4, true)" title="Charisma Saving Throw (Proficient: +6)">
+                        <div class="save-box prof" onclick="rollSave('Charisma Saving Throw ★', 4, true)" title="Charisma Saving Throw (Proficient)">
                             <span class="save-lbl">CHA ★</span>
-                            <span class="save-val" style="color:var(--accent-gold);">+6</span>
+                            <span class="save-val" id="save-val-cha" style="color:var(--accent-gold);">+7</span>
                         </div>
                     </div>
                 </div>
@@ -1299,21 +1371,21 @@
                             </div>
                         </div>
 
-                        <!-- Quarterstaff & Daggers -->
-                        <div class="action-card">
+                        <!-- Kolyan's Silvered Heirloom Dagger & Magician's Staff -->
+                        <div class="action-card" style="border-left:3px solid #cbd5e1;">
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('weapons_piper')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#86efac'" onmouseout="this.style.color='#f8fafc'">
-                                        🪄 Magician's Staff &amp; 🗡️ 2x Daggers <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                        🗡️ Kolyan's Silvered Dagger &amp; 🪄 Staff <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#86efac;">Melee / Thrown Weapons • 1 Action</div>
+                                    <div style="font-size:0.67rem; font-weight:700; color:#e2e8f0;">Silvered Heirloom (Curved • 3 Red Gems) &amp; Focus</div>
                                 </div>
-                                <span style="font-size:0.64rem; color:#86efac; font-weight:700;">FOCUS / FINESSE</span>
+                                <span style="font-size:0.64rem; color:#fca5a5; font-weight:700;">SILVERED</span>
                             </div>
-                            <div class="action-desc"><strong>Dagger (20/60ft):</strong> +4 Hit, 1d4+2 Pierc. <strong>Quarterstaff (Focus):</strong> +2 Hit, 1d6/1d8 Bludgeon.</div>
+                            <div class="action-desc"><strong>Silvered Heirloom Dagger (20/60ft):</strong> +4 Hit, 1d4+2 <strong>Silvered</strong> Pierc (bypasses vampire/werewolf resist!). <strong>Staff:</strong> +2 Hit, 1d6/1d8.</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" onclick="rollWeaponAttack('Dagger (Finesse/Thrown)', 2)">🗡️ Dagger (+4)</button>
-                                <button class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Dagger Damage', 4, 2, 'Piercing')">💥 1d4+2</button>
+                                <button class="btn-roll-action" style="background:#475569; border:1px solid #94a3b8;" onclick="rollWeaponAttack('Kolyan\'s Silvered Heirloom Dagger', 2)">🗡️ Silver (+4)</button>
+                                <button class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Kolyan\'s Silvered Heirloom Dagger', 4, 2, 'Silvered Piercing')">💥 1d4+2 Silver</button>
                                 <button class="btn-roll-action" style="background:#334155;" onclick="rollWeaponAttack('Quarterstaff (2H)', 0)">🪄 Staff (+2)</button>
                                 <button class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning')">💥 1d8</button>
                             </div>
@@ -1340,7 +1412,7 @@
                             <div style="background:#090e1a; border:1px solid var(--card-border); border-radius:4px; padding:3px 6px; display:flex; justify-content:space-between; align-items:center;">
                                 <div>
                                     <span style="font-size:0.68rem; font-weight:700; color:var(--accent-blue);">1st:</span>
-                                    <span id="slot-pips-1" style="font-size:0.74rem; cursor:pointer; margin-left:2px;" onclick="toggleSlotTier(1)">🟦 🟦 🟦 🟦 (4/4)</span>
+                                    <span id="slot-pips-1" style="font-size:0.74rem; cursor:pointer; margin-left:2px;" onclick="toggleSlotTier(1)">🟦 🟦 🟦 ⬜ (3/4)</span>
                                 </div>
                                 <div style="display:flex; gap:2px;">
                                     <button class="btn-act btn-act-pre" onclick="modSlotTier(1, -1)" style="padding:0px 4px; font-size:0.65rem;">-</button>
@@ -1466,7 +1538,10 @@
                 <div class="panel">
                     <div class="panel-title">
                         <span>🎒 Tracked Inventory, Stage Props &amp; Keepsakes</span>
-                        <span style="font-size:0.68rem; color:var(--text-dim);">Click any item for full details</span>
+                        <div style="display:flex; align-items:center; gap:6px;">
+                            <button type="button" id="btn-open-craft" class="btn-act btn-act-heal" onclick="openCraftModal()" style="padding:2px 8px; font-size:0.7rem; background:linear-gradient(135deg, #065f46 0%, #047857 100%); border:1px solid #34d399; color:#ecfdf5; display:inline-flex; align-items:center; gap:4px;" title="Open Barovian Field Crafting &amp; Alchemy Workbench">⚗️ Craft <span id="craft-ready-badge" style="background:rgba(0,0,0,0.35); padding:0 5px; border-radius:999px; font-family:'JetBrains Mono',monospace; font-size:0.65rem;">2</span></button>
+                            <span style="font-size:0.68rem; color:var(--text-dim);">Click item for details</span>
+                        </div>
                     </div>
 
                     <div class="inv-list-compact" id="inventory-list"></div>
@@ -1519,9 +1594,30 @@
                 <button class="modal-close-btn" onclick="closeItemModal()" aria-label="Close">✕</button>
             </div>
             <div class="modal-body" id="item-modal-body"></div>
-            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
-                <div id="item-modal-actions"></div>
+            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                <div id="item-modal-actions" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;"></div>
                 <button class="btn-act btn-act-pre" onclick="closeItemModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- ⚗️ BAROVIAN CRAFTABLES & ALCHEMY WORKBENCH MODAL -->
+    <dialog class="sheet-dialog wide-dialog" id="craft-modal" closedby="any" aria-labelledby="craft-modal-title">
+        <div class="modal-card" style="border-color:#34d399;">
+            <div class="modal-header" style="background:linear-gradient(180deg, #0d2b24 0%, #0f172a 100%);">
+                <h3 id="craft-modal-title" style="color:#6ee7b7;">⚗️ Barovian Field Crafting &amp; Alchemy Workbench</h3>
+                <button type="button" class="modal-close-btn" onclick="closeCraftModal()" aria-label="Close crafting workbench">✕</button>
+            </div>
+            <div class="modal-body">
+                <div style="background:rgba(16, 185, 129, 0.08); border:1px solid rgba(52, 211, 153, 0.3); border-radius:6px; padding:8px 11px; font-size:0.76rem; color:#d1fae5; line-height:1.45;">
+                    🌲 <strong>Barovian Native Herbalism (Nature +3 ★ / Survival +2 ★):</strong> During a <strong>Short or Long Rest</strong>, Piper automatically brews healing remedies from Barovian reagents with zero check required! Ingredients deduct straight from your inventory and finished items stack automatically.
+                </div>
+                <div id="craft-status-banner" role="status" aria-live="polite" style="display:none; background:rgba(34, 197, 94, 0.14); border:1px solid #22c55e; border-radius:6px; padding:7px 10px; font-size:0.76rem; color:#bbf7d0; font-weight:600;"></div>
+                <div id="craft-recipes-list" style="display:flex; flex-direction:column; gap:8px; max-height:54vh; overflow-y:auto;"></div>
+            </div>
+            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                <span id="craft-reagent-summary" style="font-size:0.72rem; color:var(--text-dim); font-family:'JetBrains Mono',monospace;"></span>
+                <button type="button" class="btn-act btn-act-pre" onclick="closeCraftModal()" autofocus style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
             </div>
         </div>
     </dialog>
@@ -1640,7 +1736,7 @@
     </div>
 <script>
     // ==========================================
-    // 🎩 PIPER MASTER STATE VARIABLES
+    // 🎩 PIPER MASTER STATE VARIABLES (POST-SESSION 1)
     // ==========================================
     let characterLevel = 3;
     let curHP = 17;
@@ -1649,22 +1745,23 @@
     let baseAC = 12;
     let isMageArmorActive = false;
     let isSurgeACActive = false;
-    let helpTokens = 2;
+    let activeRobe = localStorage.getItem('cos_robe_piper_v2') || 'black'; // 'black' (+1 AC & Saves) | 'red' (+1d4+1 Fire on spells) | 'green' (Adv on Arcana) | 'none'
+    let helpTokens = 1;
     const maxHelpTokens = 2;
     let shortRestsRemaining = 2;
     const maxShortRests = 2;
     let rollMode = 'norm';
 
-    // Sorcerer & Fierna Lineage Resources
+    // Sorcerer & Fierna Lineage Resources (Session 1 Cliffhanger State)
     let curSP = 3;
     let maxSP = 3;
-    let tidesOfChaosReady = true; // true = Ready to grant Adv; false = Primed for Auto-Surge on next leveled spell!
-    let fiernaCharmReady = true;  // Legacy of Phlegethos: 1/LR Free 2nd-Lvl Charm Person
-    let lastWildSurgeText = "None";
+    let tidesOfChaosReady = true;  // true = Ready to grant Adv; false = Primed for Auto-Surge on next leveled spell!
+    let fiernaCharmReady = false;  // Legacy of Phlegethos: 0/1 Used (cast on Morgantha in S1; restores on Long Rest)
+    let lastWildSurgeText = "d100=87 (Aerial Stage Wire (Fly))";
 
-    // Multi-Tier Spell Slots (Level 1 to 3)
+    // Multi-Tier Spell Slots (Level 1 to 3 — S1 state: 3/4 L1, 2/2 L2)
     let spellSlots = {
-        1: { current: 4, max: 4, reqLevel: 1 },
+        1: { current: 3, max: 4, reqLevel: 1 },
         2: { current: 2, max: 2, reqLevel: 3 },
         3: { current: 0, max: 0, reqLevel: 5 }
     };
@@ -2307,21 +2404,21 @@
         },
         "weapons_piper": {
             id: "weapons_piper",
-            name: "🪄 Quarterstaff (Focus) & 🗡️ Two Daggers",
-            school: "Simple Melee & Ranged Weapons",
+            name: "🗡️ Kolyan's Silvered Heirloom Dagger & 🪄 Magician's Staff",
+            school: "Silvered Heirloom & Arcane Focus Weapons",
             castingTime: "1 Action",
             range: "Melee 5 ft (Dagger Thrown: 20/60 ft)",
-            components: "Physical Weapons",
+            components: "Physical & Silvered Weapons",
             duration: "Instantaneous",
             wikiUrl: "https://5e.tools/items.html#dagger_phb",
-            attackMod: "Dagger: +4 to Hit (DEX +2, PB +2) | Staff: +2 to Hit (STR +0, PB +2)",
-            damage: "Dagger: 1d4 + 2 Piercing | Quarterstaff: 1d6 (1H) / 1d8 (2H) Bludgeoning",
-            fullRules: "• <strong>Quarterstaff (Arcane Focus & Stage Prop):</strong> Versatile simple melee weapon (`1d6` one-handed, `1d8` two-handed bludgeoning). Doubles as Piper's spellcasting focus!<br>• <strong>Two Daggers (Finesse, Light, Thrown 20/60 ft):</strong> Uses Piper's +2 DEX modifier (`+4 to hit`, `1d4+2` piercing damage). Ideal for knife-throwing acts or close scrapes.",
-            flavor: "Piper spins her trick cane and palms a pair of balanced throwing daggers.",
+            attackMod: "Silvered Heirloom Dagger: +4 to Hit (DEX +2, PB +2) | Staff: +2 to Hit (STR +0, PB +2)",
+            damage: "Silvered Dagger: 1d4 + 2 Silvered Piercing | Staff: 1d6 (1H) / 1d8 (2H) Bludgeoning",
+            fullRules: "• <strong>🗡️ Kolyan's Silvered Heirloom Dagger (Session 1 Family Relic):</strong> A breathtaking curved <strong>Silvered Dagger</strong> with <strong>three deep red gemstones</strong> set into the filigree hilt (worth a high sum to collectors!). Finesse, Light, Thrown (20/60 ft), <code>+4 to hit</code>, <code>1d4 + 2</code> Piercing — <strong>bypasses nonmagical B/P/S resistances &amp; immunities of Vampire Spawn, Werewolves, and Night Hags!</strong><br>• <strong>🪄 Quarterstaff (Arcane Focus &amp; Stage Prop):</strong> Versatile simple melee weapon (<code>1d6</code> 1H / <code>1d8</code> 2H bludgeoning). Doubles as Piper's arcane spellcasting focus!<br>• <strong>🗡️ 2x Backup Stage Daggers:</strong> Standard steel throwing daggers (<code>+4 to hit, 1d4+2 piercing</code>).",
+            flavor: "Curved silver flashes crimson in the candlelight—an heirloom of House Indirovich now tucked inside Piper's velvet cloak.",
             modalButtons: [
-                { label: "🗡️ Dagger Attack (+4)", class: "btn-roll-action", onClick: () => rollWeaponAttack('Dagger Attack', 2) },
-                { label: "💥 Dagger Dmg (1d4+2)", class: "btn-roll-action btn-roll-dmg", onClick: () => rollFormulaDamage('Dagger Damage', 4, 2, 'Piercing') },
-                { label: "🪄 Staff Attack (+2)", class: "btn-roll-action", onClick: () => rollWeaponAttack('Quarterstaff Attack', 0) }
+                { label: "🗡️ Silver Dagger Atk (+4)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack("Kolyan's Silvered Heirloom Dagger", 2); } },
+                { label: "💥 Silver Dmg (1d4+2)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage("Kolyan's Silvered Heirloom Dagger", 4, 2, 'Silvered Piercing'); } },
+                { label: "🪄 Staff Attack (+2)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Quarterstaff Attack', 0); } }
             ]
         },
         "tides_of_chaos": {
@@ -2458,7 +2555,16 @@
             leapAlert = `<br>🎉 <span style="color:#facc15; font-weight:800; background:rgba(250,204,21,0.15); border:1px solid #facc15; padding:2px 7px; border-radius:4px;">⚡ CHAOS LEAP TRIGGERED! Both d8s rolled [${d8_1}]! The bolt leaps to a 2nd target within 30 ft—roll another Attack &amp; Damage!</span>`;
         }
 
-        logRoll(`🌈 <strong>Chaos Bolt (Level ${lvl} Slot):</strong> d8s [${d8_1}, ${d8_2}] + ${extraD6Count}d6 [${d6Rolls.join('+')}] = <span style="font-size:1.1rem; color:#f472b6; font-weight:800;">${totalDmg}</span> Damage (Type: <strong>${typeChoiceStr}</strong>)!${leapAlert}`);
+        let redRobeStr = '';
+        let grandTotal = totalDmg;
+        if (activeRobe === 'red') {
+            const robeD4 = Math.floor(Math.random() * 4) + 1;
+            const robeFire = robeD4 + 1;
+            grandTotal += robeFire;
+            redRobeStr = ` + 🔥 Red Robe [1d4(${robeD4})+1 = <strong>+${robeFire} Fire</strong>] ➔ Total: <span style="font-size:1.12rem; color:#fb923c; font-weight:800;">${grandTotal}</span>`;
+        }
+
+        logRoll(`🌈 <strong>Chaos Bolt (Level ${lvl} Slot):</strong> d8s [${d8_1}, ${d8_2}] + ${extraD6Count}d6 [${d6Rolls.join('+')}] = <span style="font-size:1.1rem; color:#f472b6; font-weight:800;">${totalDmg}</span> Damage (Type: <strong>${typeChoiceStr}</strong>)${redRobeStr}!${leapAlert}`);
     }
 
     function activateMageArmorSpell(slotLevel) {
@@ -2497,6 +2603,20 @@
 
     function rollFireBoltDamage() {
         const diceCount = characterLevel >= 5 ? 2 : 1;
+        if (activeRobe === 'red') {
+            let rolls = [];
+            let baseSum = 0;
+            for (let i = 0; i < diceCount; i++) {
+                const r = Math.floor(Math.random() * 10) + 1;
+                rolls.push(r);
+                baseSum += r;
+            }
+            const robeD4 = Math.floor(Math.random() * 4) + 1;
+            const robeFire = robeD4 + 1;
+            const grandTotal = baseSum + robeFire;
+            logRoll(`💥 <strong>Fire Bolt (${diceCount}d10) + 🟥 Red Robe (+1d4+1 Fire):</strong> [${rolls.join('+')}] + [1d4(${robeD4})+1] = <span style="font-size:1.08rem; color:#fb923c; font-weight:800;">${grandTotal}</span> Fire Damage`);
+            return;
+        }
         rollFormulaDamage(`Fire Bolt (${diceCount}d10)`, 10, 0, 'Fire', diceCount);
     }
 
@@ -2938,19 +3058,20 @@
         const surgeBadge = document.getElementById('badge-surge-ac');
 
         const base = isMageArmorActive ? 15 : 12;
-        const total = base + (isSurgeACActive ? 2 : 0);
+        const robeAC = (activeRobe === 'black') ? 1 : 0;
+        const total = base + robeAC + (isSurgeACActive ? 2 : 0);
         acDisp.innerText = total;
 
         if (isMageArmorActive) {
             mageCard.classList.add('active-buff');
             mageBadge.className = 'toggle-badge on';
-            mageBadge.innerText = 'ON (15)';
-            mageSub.innerText = 'Base AC: 15 (Active)';
+            mageBadge.innerText = `ON (${15 + robeAC})`;
+            mageSub.innerText = robeAC ? 'Base 15 + 1 Black Robe' : 'Base AC: 15 (Active)';
         } else {
             mageCard.classList.remove('active-buff');
             mageBadge.className = 'toggle-badge off';
-            mageBadge.innerText = 'OFF (12)';
-            mageSub.innerText = 'Base AC: 12 (10+DEX)';
+            mageBadge.innerText = `OFF (${12 + robeAC})`;
+            mageSub.innerText = robeAC ? 'Base 12 + 1 Black Robe' : 'Base AC: 12 (10+DEX)';
         }
 
         if (isSurgeACActive) {
@@ -2962,6 +3083,81 @@
             surgeBadge.className = 'toggle-badge off';
             surgeBadge.innerText = '+2 AC';
         }
+    }
+
+    function updateSavesUI() {
+        const pb = getProfBonus();
+        const robeBonus = (activeRobe === 'black') ? 1 : 0;
+        const fmt = (n) => (n >= 0 ? `+${n}` : `${n}`);
+        const map = {
+            str: 0 + robeBonus,
+            dex: 2 + robeBonus,
+            con: 1 + pb + robeBonus,
+            int: 1 + robeBonus,
+            wis: 0 + robeBonus,
+            cha: 4 + pb + robeBonus
+        };
+        Object.entries(map).forEach(([k, v]) => {
+            const el = document.getElementById(`save-val-${k}`);
+            if (el) el.innerText = fmt(v);
+        });
+        const tag = document.getElementById('saves-robe-tag');
+        if (tag) {
+            tag.innerText = robeBonus ? `Prof: +${pb} • Black Robe +1` : `Proficiency: +${pb}`;
+            tag.style.color = robeBonus ? '#93c5fd' : 'var(--text-dim)';
+        }
+    }
+
+    function updateRobeUI() {
+        const card = document.getElementById('card-robe-selector');
+        const desc = document.getElementById('robe-active-desc');
+        const arcBadge = document.getElementById('arcana-robe-badge');
+        const fbDmgBtn = document.getElementById('btn-firebolt-dmg');
+        const fbDice = characterLevel >= 5 ? '2d10' : '1d10';
+
+        if (card) {
+            card.className = 'robe-selector-card' + (activeRobe !== 'none' ? ` robe-${activeRobe}` : '');
+        }
+        document.querySelectorAll('.robe-pill-btn').forEach(btn => {
+            const isSelected = btn.getAttribute('data-robe') === activeRobe;
+            btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+        });
+        if (desc) {
+            if (activeRobe === 'black') {
+                desc.innerText = 'Black: +1 AC & All Saves';
+                desc.style.color = '#93c5fd';
+            } else if (activeRobe === 'red') {
+                desc.innerText = 'Red: +1d4+1 Fire on Spells';
+                desc.style.color = '#fca5a5';
+            } else if (activeRobe === 'green') {
+                desc.innerText = 'Green: Advantage on Arcana';
+                desc.style.color = '#86efac';
+            } else {
+                desc.innerText = 'No Robe Equipped';
+                desc.style.color = 'var(--text-dim)';
+            }
+        }
+        if (arcBadge) {
+            arcBadge.style.display = (activeRobe === 'green') ? 'inline' : 'none';
+        }
+        if (fbDmgBtn) {
+            fbDmgBtn.innerText = (activeRobe === 'red') ? `💥 ${fbDice}+1d4+1 Fire` : `💥 ${fbDice} Fire`;
+        }
+        updateACDisplay();
+        updateSavesUI();
+    }
+
+    function equipRobe(robeKey) {
+        activeRobe = robeKey || 'none';
+        localStorage.setItem('cos_robe_piper_v2', activeRobe);
+        updateRobeUI();
+        const labels = {
+            black: '⬛ <strong>Kolyan\'s Black Robe of Warding Equipped:</strong> +1 AC (Total AC: ' + document.getElementById('ac-disp').innerText + ') and +1 to ALL Saving Throws!',
+            red: '🟥 <strong>Kolyan\'s Red Robe of Embers Equipped:</strong> +1d4 + 1 bonus Fire damage auto-added to Fire Bolt &amp; Chaos Bolt!',
+            green: '🟩 <strong>Kolyan\'s Green Robe of Arcana Equipped:</strong> Automatic <strong>Advantage</strong> on all Intelligence (Arcana) checks!',
+            none: '🧥 <strong>Enchanted Robe Unequipped:</strong> Base AC (' + document.getElementById('ac-disp').innerText + ') and standard saves restored.'
+        };
+        logRoll(labels[activeRobe] || labels.none);
     }
 
     function toggleMageArmorBuff() {
@@ -3447,12 +3643,27 @@
     }
 
     function rollSave(label, baseStatMod, isProf) {
-        const bonus = baseStatMod + (isProf ? getProfBonus() : 0);
-        rollD20(label, bonus);
+        const robeBonus = (activeRobe === 'black') ? 1 : 0;
+        const bonus = baseStatMod + (isProf ? getProfBonus() : 0) + robeBonus;
+        const finalLabel = robeBonus ? `${label} [⬛ Black Robe +1]` : label;
+        rollD20(finalLabel, bonus);
     }
 
     function rollSkill(label, baseStatMod, isProf) {
         const bonus = baseStatMod + (isProf ? getProfBonus() : 0);
+        if (activeRobe === 'green' && label.toLowerCase().startsWith('arcana')) {
+            const modInput = parseInt(document.getElementById('dice-mod').value) || 0;
+            const totalMod = bonus + modInput;
+            const r1 = Math.floor(Math.random() * 20) + 1;
+            const r2 = Math.floor(Math.random() * 20) + 1;
+            const chosen = Math.max(r1, r2);
+            const total = chosen + totalMod;
+            const modStr = totalMod >= 0 ? `+${totalMod}` : `${totalMod}`;
+            let msg = `🟩 <strong>${label} [Green Robe Adv]:</strong> [${r1}, ${r2}] ➔ d20(${chosen}) ${modStr} = <span style="font-size:1.05rem; color:#4ade80; font-weight:800;">${total}</span>`;
+            if (chosen === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20!</span>";
+            logRoll(msg);
+            return;
+        }
         rollD20(label, bonus);
     }
 
@@ -3637,10 +3848,16 @@
     }
 
     // ==========================================
-    // 🎒 INVENTORY & BAROVIAN LOOT VAULT ENGINE
+    // 🎒 INVENTORY, BAROVIAN LOOT VAULT & ⚗️ CRAFTING ENGINE
     // ==========================================
     const defaultItems = [
         "🃏 The Blank Tarokka Card (Unwritten Vistani Omen — Give to Madam Eva)",
+        "🗡️ Kolyan's Silvered Heirloom Dagger (Curved Blade • 3 Red Gems)",
+        "🧥 Kolyan's Black Robe of Warding (+1 AC & All Saves)",
+        "🧥 Kolyan's Red Robe of Embers (+1d4+1 Fire on Spells)",
+        "🧥 Kolyan's Green Robe of Arcana (Adv on Arcana Checks)",
+        "🧪 2x Potion of Healing",
+        "🌿 4x Medicinal Herbs (Craftable ➔ Healing Potions)",
         "🕰️ Barnaby's Brass Pocket Watch (Blurred Portrait of Tiefling Parents)",
         "🎩 False-Bottom Stage Props & Rigged Card Deck",
         "🪄 Quarterstaff (Magician's Cane & Spellcasting Focus)",
@@ -3666,14 +3883,85 @@
             category: "MYSTERIOUS OMEN RELIC • Session 1 Vistani Gift",
             origin: "Given by a Deeply Concerned Vistani at Blood on the Vine Tavern",
             desc: "A heavy, velvet-backed Vistani Tarokka card whose painted ink literally bled and faded into nothingness the moment the fortune-teller tried to read Piper's future. Its parchment surface is currently stark, cold, and unwritten.",
-            effect: "• <strong>Vistani Warning:</strong> The Vistani in the tavern stared into Piper's eyes with deep concern, warning her to stay safe because they saw gathering misfortune and darkness around her.<br>• <strong>Quest Hook:</strong> Deliver this Blank Tarokka Card directly to the ancient seer <strong>Madam Eva</strong> at the <strong>Tser Pool Encampment</strong>.<br>• <strong>Living Omen:</strong> Sometimes the edges of the blank parchment feel icy to the touch, as if waiting for dark charcoal ink to bleed back into the card as Piper approaches the truth of her awakened magic."
+            effect: "• <strong>Vistani Warning:</strong> The Vistani in the tavern stared into Piper's eyes with deep concern, warning her to stay safe because they saw gathering misfortune and darkness around her.<br>• <strong>Quest Hook:</strong> Deliver this Blank Tarokka Card directly to the ancient seer <strong>Madam Eva</strong> at the <strong>Tser Pool Encampment</strong>."
+        },
+        "heirloom dagger": {
+            name: "🗡️ Kolyan's Silvered Heirloom Dagger (Curved • 3 Red Gems)",
+            category: "SILVERED HEIRLOOM WEAPON • High Value (150–250 GP)",
+            origin: "House Indirovich Vault (Session 1 Claimed by Piper)",
+            desc: "An exquisite curved silvered blade forged generations ago for House Indirovich. Its silver filigree hilt is inlaid with three gleaming blood-red gemstones—both a priceless family treasure and a lethal vampire-slaying sidearm.",
+            effect: "• <strong>Silvered Attack (Melee or Thrown 20/60 ft):</strong> <strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong> (Finesse, Light).<br>• <strong>Silvered Edge:</strong> Bypasses nonmagical B/P/S damage resistances and immunities of <strong>Vampire Spawn, Werewolves, and Night Hags</strong>!<br>• <strong>High Value:</strong> Could fetch a fortune from nobles or collectors (<strong>150–250 GP</strong>)."
+        },
+        "black robe": {
+            name: "🧥 Kolyan's Black Robe of Warding",
+            category: "ENCHANTED ROBE • Session 1 Indirovich Manor",
+            origin: "Burgomaster Kolyan Indirovich's Hidden Wizard Wardrobe",
+            desc: "A finely tailored raven-black arcane robe hemmed with faint silver sigils of abjuration—currently worn by Piper over her stage magician coat.",
+            effect: "• <strong>Warding Weave:</strong> Grants a permanent <strong>+1 bonus to Armor Class</strong> (Base AC 13, or 16 with Mage Armor) and <strong>+1 to ALL Saving Throws</strong> while worn!",
+            robeKey: "black"
+        },
+        "red robe": {
+            name: "🧥 Kolyan's Red Robe of Embers",
+            category: "ENCHANTED ROBE • Session 1 Indirovich Manor",
+            origin: "Burgomaster Kolyan Indirovich's Hidden Wizard Wardrobe",
+            desc: "A crimson velvet wizard's mantle stitched with gold ember threads that crackle softly whenever arcane power passes through the wearer's palms.",
+            effect: "• <strong>Ember-Woven Casting:</strong> Adds <strong>+1d4 + 1 bonus Fire damage</strong> to any damaging spell you cast while wearing it (automatically rolled on Fire Bolt &amp; Chaos Bolt when equipped!).",
+            robeKey: "red"
+        },
+        "green robe": {
+            name: "🧥 Kolyan's Green Robe of Arcana",
+            category: "ENCHANTED ROBE • Session 1 Indirovich Manor",
+            origin: "Burgomaster Kolyan Indirovich's Hidden Wizard Wardrobe",
+            desc: "An emerald-green scholar's robe embroidered with silver constellations and arcane runes that sharpen the wearer's magical perception.",
+            effect: "• <strong>Arcane Clarity:</strong> Grants <strong>Advantage on all Intelligence (Arcana) checks</strong> while worn (automatically rolls 2d20 Advantage on your Arcana row when equipped!).",
+            robeKey: "green"
+        },
+        "medicinal herb": {
+            name: "🌿 Barovian Medicinal Herbs",
+            category: "CRAFTING REAGENT • Field Alchemy",
+            origin: "Foraged / Looted in Session 1 (Barovia)",
+            desc: "A fragrant bundle of pale silver-leaf thyme, wild mountain comfrey, and frost-bloom roots native to Barovia's sheltered ravines.",
+            effect: "• <strong>Potion Crafting (Short or Long Rest):</strong> Combine <strong>2x Medicinal Herbs ➔ 1x Potion of Healing (2d6 + 1 HP)</strong>!<br>• <strong>Field Bandage Crafting:</strong> Combine <strong>1x Medicinal Herb ➔ 1x Field Bandage (1d6 + 1 HP)</strong>.<br>• <strong>Barovian Native Boon:</strong> Piper automatically succeeds with zero check required thanks to her Native Nature (+3 ★) &amp; Survival (+2 ★) acumen!",
+            isCraftableReagent: true
+        },
+        "potion of healing": {
+            name: "🧪 Potion of Healing",
+            category: "HEAL • Common Consumable (5 GP)",
+            origin: "Barovian Apothecary / Crafted from Medicinal Herbs",
+            desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong> (any healing over Max HP channels into Temporary HP!).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
+            healFormula: { dice: 2, sides: 6, bonus: 1, verb: "Drank" }
+        },
+        "health potion": {
+            name: "🧪 Potion of Healing",
+            category: "HEAL • Common Consumable (5 GP)",
+            origin: "Barovian Apothecary / Crafted from Medicinal Herbs",
+            desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong> (any healing over Max HP channels into Temporary HP!).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
+            healFormula: { dice: 2, sides: 6, bonus: 1, verb: "Drank" }
+        },
+        "greater healing": {
+            name: "🧪 Potion of Greater Healing",
+            category: "HEAL • Uncommon Consumable (15 GP)",
+            origin: "Barovian Alchemy / Dungeon Cache",
+            desc: "A concentrated crimson restorative gleaming with warm amber flecks.",
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>4d4 + 4 Hit Points</strong> (overflow converts into Temporary HP!).<br>• <strong>Action (Ally):</strong> Administer to an ally.",
+            healFormula: { dice: 4, sides: 4, bonus: 4, verb: "Drank" }
+        },
+        "bandage": {
+            name: "🩹 Field Healing Bandages",
+            category: "HEAL • Common Consumable",
+            origin: "Barovian Field First-Aid / Crafted from Herbs",
+            desc: "Clean linen strips steeped in soothing Barovian herbal salve to stanch bleeding wounds quickly.",
+            effect: "• <strong>1 Action (Self or Adjacent Ally):</strong> Bind wounds to restore <strong>1d6 + 1 Hit Points</strong> (overflow above Max HP channels into Temporary HP).",
+            healFormula: { dice: 1, sides: 6, bonus: 1, verb: "Applied" }
         },
         "pocket watch": {
             name: "🕰️ Barnaby's Brass Pocket Watch",
             category: "PRICELESS PERSONAL RELIC • Prophecy Keepsake",
-            origin: "Gifted by Old Barnaby at the Ravenloft Orphanage",
-            desc: "A tarnished brass pocket watch containing a blurred, faded portrait of a loving tiefling couple with the same purple-tinted horns as Piper.",
-            effect: "• <strong>Barnaby's Final Words:</strong> <em>\"Only you can find them, O prophesied one.\"</em><br>• <strong>Svalich Nightmare Clue:</strong> In Piper's dream, she saw this exact couple fending off a horror deep within the Svalich Woods of Barovia."
+            origin: "Gifted by Old Barnaby before he passed away",
+            desc: "A tarnished brass pocket watch stopped at 11:47 PM containing a blurred, faded portrait of a loving tiefling couple with the same purple-tinted horns as Piper.",
+            effect: "• <strong>Barnaby's Final Words:</strong> <em>\"Only you can find them, O prophesied one.\"</em><br>• <strong>Barovian Anomaly:</strong> Warm to the touch and occasionally ticks backward inside Barovia."
         },
         "stage props": {
             name: "🎩 False-Bottom Stage Props & Rigged Card Deck",
@@ -3696,13 +3984,6 @@
             desc: "Balanced steel stage-throwing daggers concealed in Piper's green cape.",
             effect: "• <strong>Melee or Thrown (20/60 ft):</strong> +4 to Hit, 1d4 + 2 Piercing damage."
         },
-        "potion of healing": {
-            name: "🧪 Potion of Healing",
-            category: "HEAL • Common Consumable (5 GP)",
-            origin: "Barovian Apothecary / Ismark's Cache",
-            desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
-            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong>.<br>• <strong>Action (Ally):</strong> Administer to a downed companion."
-        },
         "holy water": {
             name: "💧 Flask of St. Andral's Holy Water",
             category: "ANTI-UNDEAD • Uncommon Consumable",
@@ -3719,25 +4000,229 @@
         }
     };
 
+    // Extensible Craftables Registry — easily add any future Barovian recipes here!
+    const CRAFTING_RECIPES = [
+        {
+            id: "craft_healing_potion",
+            name: "🧪 Potion of Healing",
+            badge: "HEALS 2d6 + 1 HP • BONUS ACTION",
+            time: "Short or Long Rest (Auto-Success via Native Nature +3 ★)",
+            desc: "Simmer crushed Barovian Medicinal Herbs over campfire embers with clean well-water to distill a ruby-red healing draught.",
+            ingredients: [
+                { keyword: "medicinal herb", label: "🌿 Medicinal Herbs", qty: 2 }
+            ],
+            outputMatchKeyword: "potion of healing",
+            outputEmoji: "🧪 ",
+            outputName: "Potion of Healing",
+            outputQty: 1
+        },
+        {
+            id: "craft_field_bandages",
+            name: "🩹 Field Healing Bandages",
+            badge: "HEALS 1d6 + 1 HP • 1 ACTION",
+            time: "10 Minutes / Short Rest",
+            desc: "Steep clean linen strips in crushed Medicinal Herb salve to craft quick trauma dressings for bleeding wounds.",
+            ingredients: [
+                { keyword: "medicinal herb", label: "🌿 Medicinal Herbs", qty: 1 }
+            ],
+            outputMatchKeyword: "field bandages",
+            outputEmoji: "🩹 ",
+            outputName: "Field Bandages (1d6+1 HP)",
+            outputQty: 1
+        },
+        {
+            id: "craft_greater_healing",
+            name: "🧪 Potion of Greater Healing",
+            badge: "HEALS 4d4 + 4 HP • UNCOMMON ALCHEMY",
+            time: "Long Rest (Requires Rare Barovian Catalyst)",
+            desc: "Distill potent Medicinal Herbs with an alchemical catalyst (such as Bonegrinder Bloom, Krezk Spring Water, or Blood-Moss) into a concentrated ruby restorative.",
+            ingredients: [
+                { keyword: "medicinal herb", label: "🌿 Medicinal Herbs", qty: 4 },
+                { keyword: "catalyst", label: "✨ Alchemical Catalyst", qty: 1 }
+            ],
+            outputMatchKeyword: "potion of greater healing",
+            outputEmoji: "🧪 ",
+            outputName: "Potion of Greater Healing",
+            outputQty: 1
+        }
+    ];
+
     function getStoredItems() {
-        const stored = localStorage.getItem('cos_inv_piper_v1');
+        const stored = localStorage.getItem('cos_inv_piper_v2');
         if (!stored) {
-            localStorage.setItem('cos_inv_piper_v1', JSON.stringify(defaultItems));
+            localStorage.setItem('cos_inv_piper_v2', JSON.stringify(defaultItems));
             return [...defaultItems];
         }
         try {
             const parsed = JSON.parse(stored);
-            const blankCardStr = "🃏 The Blank Tarokka Card (Unwritten Vistani Omen — Give to Madam Eva)";
-            if (Array.isArray(parsed) && !parsed.some(i => i.toLowerCase().includes('blank tarokka'))) {
-                parsed.unshift(blankCardStr);
-                localStorage.setItem('cos_inv_piper_v1', JSON.stringify(parsed));
-            }
-            return parsed;
+            return Array.isArray(parsed) ? parsed : [...defaultItems];
         } catch(e) { return [...defaultItems]; }
     }
 
     function saveStoredItems(items) {
-        localStorage.setItem('cos_inv_piper_v1', JSON.stringify(items));
+        localStorage.setItem('cos_inv_piper_v2', JSON.stringify(items));
+    }
+
+    function getItemQtyByKeyword(keyword) {
+        const kw = keyword.toLowerCase();
+        return getStoredItems().reduce((sum, raw) => {
+            const p = parseItemInfo(raw);
+            return p.name.toLowerCase().includes(kw) ? sum + p.qty : sum;
+        }, 0);
+    }
+
+    function consumeItemsByKeyword(items, keyword, amountNeeded) {
+        const kw = keyword.toLowerCase();
+        let rem = amountNeeded;
+        for (let i = items.length - 1; i >= 0 && rem > 0; i--) {
+            const p = parseItemInfo(items[i]);
+            if (!p.name.toLowerCase().includes(kw)) continue;
+            if (p.qty <= rem) {
+                rem -= p.qty;
+                items.splice(i, 1);
+            } else {
+                const left = p.qty - rem;
+                rem = 0;
+                items[i] = `${p.emoji}${left}x ${p.name}`.trim();
+            }
+        }
+        return rem === 0;
+    }
+
+    function addCraftedItemToList(items, matchKeyword, emoji, displayName, qtyToAdd) {
+        const kw = matchKeyword.toLowerCase();
+        const idx = items.findIndex(raw => parseItemInfo(raw).name.toLowerCase().includes(kw));
+        if (idx !== -1) {
+            const p = parseItemInfo(items[idx]);
+            const newQty = p.qty + qtyToAdd;
+            items[idx] = `${p.emoji || emoji}${newQty}x ${p.name}`.trim();
+        } else {
+            items.unshift(`${emoji}${qtyToAdd}x ${displayName}`.trim());
+        }
+    }
+
+    function getCraftableTotalCount() {
+        const herbQty = getItemQtyByKeyword('medicinal herb');
+        return Math.floor(herbQty / 2);
+    }
+
+    function updateCraftReadyBadge() {
+        const badge = document.getElementById('craft-ready-badge');
+        if (!badge) return;
+        const maxPotions = getCraftableTotalCount();
+        const readyRecipes = CRAFTING_RECIPES.filter(r => r.ingredients.every(ing => getItemQtyByKeyword(ing.keyword) >= ing.qty)).length;
+        badge.innerText = maxPotions > 0 ? `${maxPotions} ready` : (readyRecipes > 0 ? `${readyRecipes}` : '0');
+    }
+
+    function renderCraftModal() {
+        const listEl = document.getElementById('craft-recipes-list');
+        const summaryEl = document.getElementById('craft-reagent-summary');
+        if (!listEl) return;
+
+        const herbCount = getItemQtyByKeyword('medicinal herb');
+        const potionCount = getItemQtyByKeyword('potion of healing');
+        if (summaryEl) {
+            summaryEl.innerText = `🌿 Medicinal Herbs: ${herbCount}x • 🧪 Potions of Healing: ${potionCount}x`;
+        }
+
+        listEl.innerHTML = CRAFTING_RECIPES.map(recipe => {
+            const ingStatus = recipe.ingredients.map(ing => {
+                const have = getItemQtyByKeyword(ing.keyword);
+                return { ...ing, have, met: have >= ing.qty };
+            });
+            const canCraft = ingStatus.every(i => i.met);
+            const ingPillsHtml = ingStatus.map(i => `
+                <span class="pill-badge" style="font-size:0.66rem; padding:2px 7px; background:${i.met ? 'rgba(34,197,94,0.16)' : 'rgba(148,163,184,0.12)'}; color:${i.met ? '#86efac' : '#94a3b8'}; border:1px solid ${i.met ? '#22c55e' : '#475569'}; text-transform:none;">
+                    ${i.label}: ${i.have} / ${i.qty}
+                </span>
+            `).join('');
+
+            return `
+                <div class="craft-recipe-card ${canCraft ? 'craft-ready' : 'craft-locked'}">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:6px;">
+                        <div>
+                            <div style="font-size:0.86rem; font-weight:800; color:#f8fafc;">${recipe.name}</div>
+                            <div style="font-size:0.68rem; color:#93c5fd; font-weight:600; margin-top:1px;">⏱️ ${recipe.time}</div>
+                        </div>
+                        <span class="pill-badge pill-gold" style="font-size:0.64rem;">${recipe.badge}</span>
+                    </div>
+                    <div style="font-size:0.75rem; color:var(--text-dim); line-height:1.4;">${recipe.desc}</div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:2px;">
+                        <div style="display:flex; gap:5px; flex-wrap:wrap; align-items:center;">${ingPillsHtml}</div>
+                        <button type="button" class="btn-act ${canCraft ? 'btn-act-heal' : 'btn-act-pre craft-btn-disabled'}" aria-disabled="${canCraft ? 'false' : 'true'}" onclick="craftRecipe('${recipe.id}')" style="padding:5px 11px; font-size:0.73rem; font-weight:700;">
+                            ${canCraft ? `⚗️ Craft ${recipe.outputQty}x ${recipe.outputName}` : '🔒 Missing Reagents'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function openCraftModal() {
+        const banner = document.getElementById('craft-status-banner');
+        if (banner) { banner.style.display = 'none'; banner.textContent = ''; }
+        renderCraftModal();
+        const modal = document.getElementById('craft-modal');
+        if (modal && !modal.open) modal.showModal();
+    }
+
+    function closeCraftModal() {
+        const modal = document.getElementById('craft-modal');
+        if (modal && modal.open) modal.close();
+    }
+
+    function craftRecipe(recipeId) {
+        const recipe = CRAFTING_RECIPES.find(r => r.id === recipeId);
+        if (!recipe) return;
+
+        const missing = recipe.ingredients.filter(ing => getItemQtyByKeyword(ing.keyword) < ing.qty);
+        const banner = document.getElementById('craft-status-banner');
+        if (missing.length > 0) {
+            const msg = `⚠️ Need ${missing.map(m => `${m.qty}x ${m.label}`).join(' + ')} to craft ${recipe.outputName}.`;
+            if (banner) {
+                banner.style.display = 'block';
+                banner.style.background = 'rgba(239, 68, 68, 0.14)';
+                banner.style.borderColor = '#ef4444';
+                banner.style.color = '#fecaca';
+                banner.textContent = msg;
+            }
+            return;
+        }
+
+        const items = getStoredItems();
+        recipe.ingredients.forEach(ing => consumeItemsByKeyword(items, ing.keyword, ing.qty));
+        addCraftedItemToList(items, recipe.outputMatchKeyword, recipe.outputEmoji, recipe.outputName, recipe.outputQty);
+        saveStoredItems(items);
+        renderInventory();
+        renderCraftModal();
+
+        const usedText = recipe.ingredients.map(i => `${i.qty}x ${i.label}`).join(' + ');
+        if (banner) {
+            banner.style.display = 'block';
+            banner.style.background = 'rgba(34, 197, 94, 0.14)';
+            banner.style.borderColor = '#22c55e';
+            banner.style.color = '#bbf7d0';
+            banner.textContent = `✅ Crafted ${recipe.outputQty}x ${recipe.name}! Consumed ${usedText} and added to inventory.`;
+        }
+        logRoll(`⚗️ <strong>Crafted ${recipe.outputQty}x ${recipe.name}:</strong> Used ${usedText} ➔ Added to Piper's inventory!`);
+    }
+
+    function consumeAndHealItem(index, dice, sides, bonus, verb, itemName) {
+        let rolls = [];
+        let sum = 0;
+        for (let i = 0; i < dice; i++) {
+            const r = Math.floor(Math.random() * sides) + 1;
+            rolls.push(r);
+            sum += r;
+        }
+        const healAmt = sum + bonus;
+        stepItemQty(index, -1);
+        const space = maxHP - curHP;
+        if (healAmt <= space) curHP += healAmt;
+        else { curHP = maxHP; tempHP += (healAmt - space); }
+        updateHPUI();
+        const bonusStr = bonus > 0 ? ` + ${bonus}` : '';
+        logRoll(`💚 <strong>${verb} ${itemName}:</strong> [${rolls.join('+')}]${bonusStr} = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${healAmt} HP</span> (Current HP: ${curHP}/${maxHP}${tempHP > 0 ? ' +' + tempHP + ' Temp' : ''})!`);
     }
 
     function parseItemInfo(itemStr) {
@@ -3793,6 +4278,7 @@
             `;
             list.appendChild(div);
         });
+        updateCraftReadyBadge();
     }
 
     function openItemDetailsModal(index) {
@@ -3817,7 +4303,23 @@
             </div>
         `;
         const act = document.getElementById('item-modal-actions');
-        act.innerHTML = parsed.hasQty ? `<button class="btn-act btn-act-pre" style="color:var(--accent-gold);" onclick="stepItemQty(${index}, -1); closeItemModal();">🧪 Consume 1 (${parsed.qty} left)</button>` : '';
+        let btns = [];
+        if (match && match.robeKey) {
+            const isEquipped = activeRobe === match.robeKey;
+            btns.push(`<button type="button" class="btn-act ${isEquipped ? 'btn-act-pre' : 'btn-act-heal'}" onclick="equipRobe('${isEquipped ? 'none' : match.robeKey}'); closeItemModal();">${isEquipped ? '🧥 Unequip Robe' : '🧥 Equip This Robe'}</button>`);
+        }
+        if (match && match.isCraftableReagent) {
+            btns.push(`<button type="button" class="btn-act btn-act-heal" onclick="closeItemModal(); openCraftModal();" style="background:linear-gradient(135deg,#065f46,#047857); border:1px solid #34d399; color:#ecfdf5;">⚗️ Open Potion Crafting</button>`);
+        }
+        if (match && match.healFormula) {
+            const hf = match.healFormula;
+            const formulaStr = `${hf.dice}d${hf.sides}${hf.bonus ? '+' + hf.bonus : ''}`;
+            const safeName = match.name.replace(/'/g, "\\'");
+            btns.push(`<button type="button" class="btn-act btn-act-heal" onclick="consumeAndHealItem(${index}, ${hf.dice}, ${hf.sides}, ${hf.bonus}, '${hf.verb}', '${safeName}'); closeItemModal();">💚 ${hf.verb === 'Drank' ? 'Drink' : 'Use'} 1 (${formulaStr} HP)</button>`);
+        } else if (parsed.hasQty) {
+            btns.push(`<button type="button" class="btn-act btn-act-pre" style="color:var(--accent-gold);" onclick="stepItemQty(${index}, -1); closeItemModal();">🧪 Consume 1 (${parsed.qty} left)</button>`);
+        }
+        act.innerHTML = btns.join('');
         const modal = document.getElementById('item-modal');
         if (modal) modal.showModal();
     }
@@ -3905,17 +4407,47 @@
         {
             id: 'base_watch',
             title: "Barnaby's Pocket Watch",
-            text: "Stopped at 11:47 PM the night Barnaby vanished in Daggerford. Warm to the touch and occasionally ticks backward inside Barovia."
+            text: "Stopped at 11:47 PM the night Barnaby passed away in Daggerford. Warm to the touch and occasionally ticks backward inside Barovia."
         },
         {
             id: 'base_fog',
             title: "Awakening in Svalich Woods",
-            text: "Fell asleep after a tavern card act in Daggerford and woke up in the choking silver fog of Barovia with no memory of crossing the border."
+            text: "Fell asleep after being enveloped by the choking silver fog of Barovia with no memory of crossing the border, only the memory of how she awakened her powers."
+        },
+        {
+            id: 's1_keepers',
+            title: "Keepers of the Feather",
+            text: "Located in Wizard of Wines Winery. They are mage spies that shapeshift into ravens. They are against Strahd. Some of them reside in Vallaki. Davian Martikov is a friend of the past burgomaster."
+        },
+        {
+            id: 's1_robes',
+            title: "Robes",
+            text: "Black: +1 AC and saving throws | Red: +1d4 + 1 fire dmg on any spells | Green: advantage on Arcana checks."
+        },
+        {
+            id: 's1_heirloom',
+            title: "Silver Heirloom Weapon",
+            text: "From the Indirovich family. Curved silvered dagger with 3 red gems on the handle — beautiful and worth a lot."
         },
         {
             id: 's1_blank_card',
-            title: "S1: The Blank Tarokka Card",
-            text: "A concerned Vistani at the tavern saw darkness and misfortune in my eyes. The ink faded off her Tarokka card—she told me to bring the Blank Card to Madam Eva!"
+            title: "Blank Tarot Card",
+            text: "Given by one of the Vistani at Blood on the Vine after the ink faded off the card. Bring to Madam Eva at Tser Pool."
+        },
+        {
+            id: 's1_ireena',
+            title: "Ireena Kolyana",
+            text: "Daughter of Kolyan Indirovich. Has been hurt by an unknown evil. Kolyan sought Dalvan for help for the manor. Strahd wants her and keeps calling her Tatyana."
+        },
+        {
+            id: 's1_madam_eva',
+            title: "Madam Eva (The Legendary Seer)",
+            text: "Located at Tser Pool. Can reveal lost souls."
+        },
+        {
+            id: 's1_barovia',
+            title: "Barovia",
+            text: "Run by Count Strahd, endangered with many wars and deaths. Hard to trust anybody here."
         },
         {
             id: 's1_derek',
@@ -3926,9 +4458,9 @@
     let editingNoteId = null;
 
     function getStoredNotes() {
-        const stored = localStorage.getItem('cos_notes_piper_v1');
+        const stored = localStorage.getItem('cos_notes_piper_v2');
         if (!stored) {
-            localStorage.setItem('cos_notes_piper_v1', JSON.stringify(defaultPlayerNotes));
+            localStorage.setItem('cos_notes_piper_v2', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
         try {
@@ -3941,23 +4473,23 @@
                     changed = true;
                 }
             });
-            if (changed) localStorage.setItem('cos_notes_piper_v1', JSON.stringify(notes));
+            if (changed) localStorage.setItem('cos_notes_piper_v2', JSON.stringify(notes));
             return notes;
         } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {
-        localStorage.setItem('cos_notes_piper_v1', JSON.stringify(notes));
+        localStorage.setItem('cos_notes_piper_v2', JSON.stringify(notes));
     }
 
     function getRemovedNoteTitles() {
-        const stored = localStorage.getItem('cos_notes_removed_piper_v1');
+        const stored = localStorage.getItem('cos_notes_removed_piper_v2');
         if (!stored) return [];
         try { return JSON.parse(stored); } catch(e) { return []; }
     }
 
     function saveRemovedNoteTitles(titles) {
-        localStorage.setItem('cos_notes_removed_piper_v1', JSON.stringify(titles));
+        localStorage.setItem('cos_notes_removed_piper_v2', JSON.stringify(titles));
     }
 
     function escapeNoteHtml(str) {
@@ -4245,7 +4777,8 @@
 
         const slotsStr = `L1(${spellSlots[1].current}/${spellSlots[1].max}) L2(${spellSlots[2].current}/${spellSlots[2].max})${spellSlots[3].max > 0 ? ' L3(' + spellSlots[3].current + '/' + spellSlots[3].max + ')' : ''}`;
         const knownStr = fullSpellbook.map(s => s.name).join(', ');
-        const stateStr = `🎩 PIPER (Lvl ${characterLevel} Wild Magic Sorcerer) [HP: ${curHP}/${maxHP}${tempHP > 0 ? ' (+' + tempHP + ' Temp)' : ''} | Sorcery Points: ${curSP}/${maxSP} | Tides of Chaos: ${tidesOfChaosReady ? 'READY' : 'SURGE PRIMED'} | Fierna Charm: ${fiernaCharmReady ? '1/1 Ready' : '0/1 Used'} | Slots: ${slotsStr} | Last Surge: ${lastWildSurgeText} | Help: ${helpTokens}/2 | AC: ${document.getElementById('ac-disp').innerText} | Wealth: ${curGP} GP, ${curSilver} SP | Known: ${knownStr}] • ${invSummary}`;
+        const robeNameMap = { black: 'Black (+1 AC/Saves)', red: 'Red (+1d4+1 Fire)', green: 'Green (Arcana Adv)', none: 'None' };
+        const stateStr = `🎩 PIPER (Lvl ${characterLevel} Wild Magic Sorcerer) [HP: ${curHP}/${maxHP}${tempHP > 0 ? ' (+' + tempHP + ' Temp)' : ''} | Robe: ${robeNameMap[activeRobe] || 'None'} | Sorcery Points: ${curSP}/${maxSP} | Tides of Chaos: ${tidesOfChaosReady ? 'READY' : 'SURGE PRIMED'} | Fierna Charm: ${fiernaCharmReady ? '1/1 Ready' : '0/1 Used'} | Slots: ${slotsStr} | Last Surge: ${lastWildSurgeText} | Help: ${helpTokens}/2 | AC: ${document.getElementById('ac-disp').innerText} | Wealth: ${curGP} GP, ${curSilver} SP | Known: ${knownStr}] • ${invSummary}`;
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(stateStr).then(() => {
@@ -4276,9 +4809,23 @@
     document.getElementById('gold-input').addEventListener('keydown', e => { if (e.key === 'Enter') applyGoldAdd(); });
     document.getElementById('manual-d100-input').addEventListener('keydown', e => { if (e.key === 'Enter') lookupSpecificSurge(); });
 
+    // Pre-populate Session 1 Last Surge display quietly (without popping HUD on load)
+    function initLastSurgeDisplay() {
+        const entry = getSurgeEntryByD100(87);
+        if (!entry) return;
+        const h = document.getElementById('surge-box-header');
+        const t = document.getElementById('surge-box-roll-tag');
+        const e = document.getElementById('surge-box-effect');
+        const f = document.getElementById('surge-box-flavor');
+        if (h) h.innerHTML = `💥 LAST SURGE (S1): ${entry.title}`;
+        if (t) t.innerHTML = `🎲 d100 = 87 (Table ${entry.range})`;
+        if (e) e.innerHTML = `<strong>Official Effect:</strong> ${entry.effect}`;
+        if (f) f.innerHTML = `🎩 <em>"All Part of the Act!": ${entry.flavor}</em>`;
+    }
+
     // Initialize Sheet
     updateHPUI();
-    updateACDisplay();
+    updateRobeUI();
     updateHelpDisplay();
     updateSorceryPointsUI();
     updateTidesUI();
@@ -4288,6 +4835,7 @@
     renderSpellbook();
     renderInventory();
     renderPlayerNotes();
+    initLastSurgeDisplay();
 </script>
 </body>
 </html>

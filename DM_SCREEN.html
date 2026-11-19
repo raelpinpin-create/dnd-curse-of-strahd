@@ -1511,7 +1511,7 @@
     <button type="button" class="btn-map-ref" onclick="openWorldMapLightbox()">🗺️ Map of Barovia</button>
     <a href="#npc-directory" id="nav-npc-link" class="nav-btn">👥 2. NPC Directory (37)</a>
     <a href="#monsters-section" id="nav-monster-link" class="nav-btn">💀 3. Enemies &amp; Bosses (57)</a>
-    <a href="#loot-vault" id="nav-loot-link" class="nav-btn">🎒 4. World Loot (91)</a>
+    <a href="#loot-vault" id="nav-loot-link" class="nav-btn">🎒 4. World Loot (104)</a>
     <a href="#factions-lore" class="nav-btn">🏛️ 4.5 Factions &amp; Lore (56)</a>
     <a href="#dm-rules-guide" class="nav-btn">⚖️ 5. Barovian Laws &amp; Rules</a>
 </nav>
@@ -1526,11 +1526,11 @@
         </div>
         <div class="grid-4">
             <div class="card clickable" onclick="openAllyCharacterWindow('piper')">
-                <div class="card-header"><span class="card-title">🎭 Piper ("The Incomparable")</span><span class="pill purple">HP 17/17 • AC 12 (15)</span></div>
+                <div class="card-header"><span class="card-title">🎭 Piper ("The Incomparable")</span><span class="pill purple">HP 17/17 • AC 13 (16)</span></div>
                 <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Fierna Tiefling Wild Magic Sorcerer.</strong> Given <strong>🃏 The Blank Tarokka Card</strong> by a concerned Vistani at the tavern (ink faded!). Warned by <strong>Derek</strong> in frozen time to <em>"take care of herself."</em></p>
+                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Wild Magic Sorcerer.</strong> Wears <strong>⬛ Black Robe (+1 AC/Saves)</strong>; holds 🟥/🟩 Robes, <strong>🗡️ Kolyan's Silvered Dagger (3 Red Gems)</strong>, <strong>🃏 Blank Card</strong>, 🧪 2x Potions, &amp; 🌿 4x Herbs (craftable).</p>
                     <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#d8b4fe; margin-top:auto;">
-                        ✨ 3/3 SP • 🎲 Tides • 💖 Fierna Charm 0/1 • 🃏 Blank Card • 💛 2/2 Help
+                        ✨ 3/3 SP • L1 3/4 L2 2/2 • 💖 Charm 0/1 • 💛 1/2 Help • Surge #87
                     </div>
                 </div>
             </div>
@@ -1546,9 +1546,9 @@
             <div class="card clickable" onclick="openAllyCharacterWindow('yvaine')">
                 <div class="card-header"><span class="card-title">🎯 Eclipsa "Yvaine"</span><span class="pill crimson">HP 28/28 • AC 16</span></div>
                 <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Human Monster Slayer Ranger (Gunner).</strong> Fallen Princess of Solmere hunting the royal traitor. Rifle <em>Lament</em>, twin revolvers <em>Mercy & Less</em>, Phosphor Grenades.</p>
+                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Monster Slayer Ranger (17 GP 5 SP).</strong> Holds <strong>🩸 Amulet of the Whispering Grave (Speak w/ Dead 1/LR)</strong>, 🗝️ Lockpicks, 🍷 Wine, 🥐 3x Croissants (1d4), 🩹 2x Bandages (1d6+1), &amp; ✉️ Arik's Letter clue.</p>
                     <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#fca5a5; margin-top:auto;">
-                        🔫 Lament (+8, 1d12+4) • 💥 Mercy/Less (+8, 1d6+4) • 🎯 Prey (+1d6)
+                        💥 Mercy 5/6 Less 5/6 • 🎯 Lament 8/10 • L1 2/3 • 🔍 Sense 1/2
                     </div>
                 </div>
             </div>
@@ -1727,7 +1727,7 @@
             <div class="card clickable searchable-row biome-card" data-biome-key="indirovich_manor" data-biome-act="act1" onclick="openBiomeModal('indirovich_manor')">
                 <div class="card-header"><span class="card-title">🕯️ 4. Indirovich Manor</span><span class="pill crimson">Session 1 • Area E4</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Claw-gouged Burgomaster hall, trampled salt perimeter, Kolyan's parlor coffin vigil, secret wizard study, &amp; cellar armory.<br><strong>⚠️ Hazards:</strong> Law of Forbiddance perimeter siege (wolves/spawn probing shuttered windows).<br><strong>🎁 Loot:</strong> <strong>📖 Kolyan's Wizard Diary</strong> (Keepers lead), Ismark's Silver &amp; Holy Water cache.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Claw-gouged Burgomaster hall, trampled salt perimeter, Kolyan's parlor coffin vigil, secret wizard study, &amp; cellar armory.<br><strong>⚠️ Hazards:</strong> Law of Forbiddance perimeter siege (wolves/spawn probing shuttered windows).<br><strong>🎁 Loot:</strong> <strong>📖 Kolyan's Wizard Diary</strong> (Jacomir), <strong>🧥 3 Enchanted Robes &amp; 🗡️ Silvered Heirloom Dagger</strong> (Piper), Silver &amp; Holy Water cache.</p>
                 </div>
             </div>
             <div class="card clickable searchable-row biome-card" data-biome-key="barovia_church" data-biome-act="act1" onclick="openBiomeModal('barovia_church')">
@@ -1972,7 +1972,7 @@
     <!-- SECTION 4: WORLD LOOT VAULT -->
     <section id="loot-vault">
         <div class="section-header">
-            <span>🎒 SECTION 4: COMPLETE BAROVIAN WORLD LOOT VAULT, OFFICIAL MODULE TREASURES & POSSIBLE LOOTS (94 ITEMS)</span>
+            <span id="loot-sec-title">🎒 SECTION 4: COMPLETE BAROVIAN WORLD LOOT VAULT, OFFICIAL MODULE TREASURES &amp; SESSION 1 LOOTS (104 ITEMS)</span>
             <search class="section-search-wrap" aria-label="Search World Loot Vault">
                 <label class="visually-hidden" for="loot-search">Search Section 4 Loot</label>
                 <input type="search" id="loot-search" class="section-search-input" placeholder="🔍 Search items, rarities, heroes, acts..." autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" oninput="filterSectionSearch('loot', this.value)">
@@ -1981,7 +1981,7 @@
         </div>
         <div class="loot-filter-bar" id="loot-filter-bar">
             <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Quick Loot Filter:</span>
-            <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Loot (94)</button>
+            <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Loot (104)</button>
             <button type="button" class="btn-loot-filter active" data-loottag="Act I" onclick="filterLootVault('Act I', this)">🩸 Act I (Svalich / Village / Bonegrinder)</button>
             <button type="button" class="btn-loot-filter" data-loottag="Act II" onclick="filterLootVault('Act II', this)">⚔️ Act II (Vallaki / Winery / Yester Hill)</button>
             <button type="button" class="btn-loot-filter" data-loottag="Act III" onclick="filterLootVault('Act III', this)">🐉 Act III (Argynvost / Krezk / Berez)</button>
@@ -10139,6 +10139,12 @@ const BIOME_DATA = {
         loreKey: "village_barovia",
         lootLinks: [
             { key: "blank_tarokka", note: "S1 Tavern E2" },
+            { key: "amulet_whispering_grave", note: "Claimed S1 (Yvaine)" },
+            { key: "yvaine_lockpicks", note: "Claimed S1 (Yvaine)" },
+            { key: "expensive_wine", note: "Claimed S1 (Yvaine)" },
+            { key: "bandages_field", note: "2x Claimed S1 (1d6+1)" },
+            { key: "fresh_croissants", note: "3x Claimed S1 (1d4)" },
+            { key: "medicinal_herbs", note: "4x Claimed S1 (Piper)" },
             { key: "blinsky_toys", note: "Mad Mary Tag E3" },
             { key: "healing_potion", note: "Bildrath Shelf (500 GP E1)" },
             { key: "purple_grapemash", note: "Blood on the Vine E2" }
@@ -10165,7 +10171,11 @@ const BIOME_DATA = {
         tag: "SESSION 1 SIEGED BURGOMASTER ESTATE (BOOK CHAPTER 3 AREA E4 & RELOADED ARC B2)",
         loreKey: "lore_indirovich_manor",
         lootLinks: [
-            { key: "kolyan_diary", note: "S1 Study Loot E4" },
+            { key: "kolyan_diary", note: "S1 Study Loot (Jacomir)" },
+            { key: "kolyan_heirloom_dagger", note: "S1 Claimed (Piper)" },
+            { key: "kolyan_black_robe", note: "S1 Equipped (Piper)" },
+            { key: "kolyan_red_robe", note: "S1 Claimed (Piper)" },
+            { key: "kolyan_green_robe", note: "S1 Claimed (Piper)" },
             { key: "holy_water", note: "Ismark Cache E4" },
             { key: "healing_potion", note: "Ismark Cache E4" },
             { key: "silver_weapon", note: "Ismark Cache E4" }
@@ -10182,6 +10192,7 @@ const BIOME_DATA = {
             • <strong>Coffin Transport Vulnerability (Dawn Exodus):</strong> Hauling Kolyan's heavy coffin down toward Barovia Church briefly breaks threshold protection, exposing Ireena to street ambush unless guarded tightly.</div>
             <div class="nbox nbox-emerald"><strong>🎁 Area-by-Area Treasures &amp; Claimed Manor Haul:</strong><br>
             • <strong>Study Desk (E4 — Claimed in S1 by King Jacomir):</strong> 📖 <em>Burgomaster Kolyan's Wizard Diary</em> (<code>1st-level arcane notes</code> + crucial Vallaki/Winery trust passport with Urwin &amp; Davian Martikov!).<br>
+            • <strong>Kolyan's Wardrobe &amp; Family Vault (E4 — Claimed in S1 by Piper):</strong> 🧥 <em>Kolyan's 3 Enchanted Robes</em> (<strong>Black</strong> <code>+1 AC &amp; All Saves</code> [Equipped], <strong>Red</strong> <code>+1d4+1 Fire on Spells</code>, <strong>Green</strong> <code>Arcana Advantage</code>) &amp; 🗡️ <em>Kolyan's Silvered Heirloom Dagger</em> (curved silvered blade w/ 3 red handle gems, 150–250 GP resale).<br>
             • <strong>Cellar Flagstone Armory (Escort Pledge Reward):</strong> ⚔️ <em>2x Silvered Shortswords or 10x Silvered Firearm Bullets</em>, 💧 <em>2x Flasks of Morninglord Holy Water</em>, 🧪 <em>2x Potions of Healing</em>, and 💰 <em>Kolyan's Tax Pouch (5 GP, 40 SP)</em>.</div>
         `
     },
@@ -11391,6 +11402,69 @@ const LOOT_DATA = {
         location: "Act IV • Balinok Mountain Guard Tower Upper Loft (Area T6)",
         mechanics: "• <strong>Silver-Plated Mountain Guard Spear:</strong> Fine cold-iron and silver-plated spear (bypasses werewolf & vampire spawn resistance; taking it animates the twin Vrock demon statues in Area <code>T3</code>!).<br>• <strong>Frozen Guard Captain's Chest:</strong> Ironbound mountain kit containing <strong>30 GP</strong> in tarnished Barovian silver, heavy winter furs, and etched guard tallies tracking the Amber Temple's Wall of Green Fire.",
         lore: "Locked for two thousand years inside an ice-packed watchtower between Mount Ghakis's green flames and the 500-foot Roc chasm."
+    },
+    // =========================================================================
+    // SESSION 1 TABLE CANON LOOTS (CLAIMED BY PIPER & YVAINE)
+    // =========================================================================
+    kolyan_heirloom_dagger: {
+        cat: "weapon", name: "🗡️ Kolyan's Silvered Heirloom Dagger (Curved Blade • 3 Red Gems)", rarity: "Unique Silvered Heirloom (150–250 GP) • Claimed S1 (Piper)",
+        location: "Act I • Indirovich Manor Family Vault (Session 1) • Piper",
+        mechanics: "• <strong>Silvered Heirloom Dagger (Finesse, Light, Thrown 20/60 ft):</strong> Deals <code>1d4 + DEX/STR</code> <strong>Silvered Piercing</strong> damage—<strong>bypasses the nonmagical B/P/S resistances &amp; immunities of Vampire Spawn, Werewolves, and Night Hags!</strong><br>• <strong>Ornate Value:</strong> Curved silver blade set with <strong>3 deep red gemstones</strong> on the hilt; extraordinarily beautiful and worth a hefty sum (<code>150–250 GP</code>) to collectors or Vallaki nobles.",
+        lore: "A treasured heirloom of House Indirovich—curved like a crescent moon and gleaming with three crimson gems along the grip, now carried by Piper."
+    },
+    kolyan_black_robe: {
+        cat: "armor", name: "🧥 Kolyan's Black Robe of Warding (+1 AC & All Saves)", rarity: "Rare Enchanted Robe • Claimed & Equipped S1 (Piper)",
+        location: "Act I • Indirovich Manor Wizard Study (Session 1) • Best for Piper",
+        mechanics: "• <strong>Warding Weave (Equipped by Piper):</strong> Grants a permanent <strong>+1 bonus to Armor Class</strong> (Piper: <code>AC 13</code> base / <code>16</code> w/ Mage Armor) and <strong>+1 to ALL Saving Throws</strong> while worn!",
+        lore: "One of three enchanted wizard robes kept by late Burgomaster Kolyan Indirovich in his hidden manor study; stitched in raven-black velvet with silver abjuration threads."
+    },
+    kolyan_red_robe: {
+        cat: "caster", name: "🧥 Kolyan's Red Robe of Embers (+1d4+1 Fire on Any Spells)", rarity: "Rare Enchanted Robe • Claimed S1 (Piper)",
+        location: "Act I • Indirovich Manor Wizard Study (Session 1) • Best for Piper",
+        mechanics: "• <strong>Ember-Woven Casting:</strong> While worn, any damaging spell cast by the wearer deals an extra <strong>+1d4 + 1 Fire damage</strong> (automatically rolled on Piper's sheet for <em>Fire Bolt</em> &amp; <em>Chaos Bolt</em> when equipped!).",
+        lore: "A crimson velvet wizard robe warm to the touch, hemmed with faint amber runes from Kolyan Indirovich's old arcane collection."
+    },
+    kolyan_green_robe: {
+        cat: "caster", name: "🧥 Kolyan's Green Robe of Arcana (Advantage on Arcana)", rarity: "Uncommon Enchanted Robe • Claimed S1 (Piper)",
+        location: "Act I • Indirovich Manor Wizard Study (Session 1) • Best for Piper",
+        mechanics: "• <strong>Arcane Clarity:</strong> Grants <strong>Advantage on all Intelligence (Arcana) checks</strong> while worn (ideal for deciphering Barovian glyphs, Amber Temple wards, and magical traps!).",
+        lore: "An emerald scholar's robe embroidered with silver constellations from Kolyan Indirovich's study wardrobe."
+    },
+    medicinal_herbs: {
+        cat: "heal", name: "🌿 Barovian Medicinal Herbs (Craftable ➔ Potions & Bandages)", rarity: "Common Crafting Reagent • 4x Claimed S1 (Piper)",
+        location: "Act I • Barovia Village & Svalich Woods (Session 1) • Piper",
+        mechanics: "• <strong>Field Alchemy Workbench (Short or Long Rest):</strong><br>&nbsp;&nbsp;• <strong>2x Medicinal Herbs ➔ 1x Potion of Healing (<code>2d6 + 1 HP</code>, Bonus Action self)</strong><br>&nbsp;&nbsp;• <strong>1x Medicinal Herb ➔ 1x Field Bandages (<code>1d6 + 1 HP</code>, 1 Action)</strong><br>&nbsp;&nbsp;• <strong>4x Medicinal Herbs + 1x Catalyst ➔ 1x Potion of Greater Healing (<code>4d4 + 4 HP</code>)</strong><br>• <strong>Barovian Native Boon:</strong> Piper succeeds automatically via her native Nature (+3 ★) &amp; Survival (+2 ★) knowledge (DC 10 Nature for non-natives).",
+        lore: "Silver-leaf thyme, mountain comfrey, and frost-bloom roots bundled fresh in oiled cloth—Barovia's rarest wholesome medicine."
+    },
+    amulet_whispering_grave: {
+        cat: "caster", name: "🩸 Amulet of the Whispering Grave (Speak with Dead • 1/LR)", rarity: "Rare Appraised Relic • Claimed S1 (Yvaine)",
+        location: "Act I • Barovia Village Loot — Appraised (Session 1) • Best for Yvaine",
+        mechanics: "• <strong>Appraised Property (Formerly 'Unknown Red Amulet'):</strong> Grants the wearer <strong>1 free casting of <em>Speak with Dead</em> per Long Rest</strong> (no spell slot required!).<br>• <strong>Spell Rules (1 Action, 10 ft, 10 min):</strong> Target a non-undead corpse with a mouth; ask up to <strong>5 questions</strong> (knows only what it knew in life; brief/cryptic answers; can't target same corpse again for 10 days).",
+        lore: "A blood-red crystal pendant suspended on tarnished silver chain—warm as a dying breath and perfectly suited to Princess Yvaine's relentless detective hunt."
+    },
+    bandages_field: {
+        cat: "heal", name: "🩹 Field Healing Bandages (1d6 + 1 HP)", rarity: "Common Consumable • 2x Claimed S1 (Yvaine)",
+        location: "Act I • Barovia Village Supplies / Craftable from Herbs (Session 1) • Yvaine & Party",
+        mechanics: "• <strong>1 Action (Self or Adjacent Ally):</strong> Bind bleeding wounds to restore <strong>1d6 + 1 Hit Points</strong> (any healing above Max HP channels into Temporary HP per table rules).<br>• Can also be field-crafted by Piper from <code>1x Medicinal Herb</code>!",
+        lore: "Clean rolled linen strips steeped in bitter Barovian astringent salve."
+    },
+    fresh_croissants: {
+        cat: "heal", name: "🥐 Fresh Barovian Croissants (1d4 HP)", rarity: "Common Food Consumable • 3x Claimed S1 (Yvaine)",
+        location: "Act I • Village of Barovia Provisions (Session 1) • Yvaine",
+        mechanics: "• <strong>Bonus Action / Action to Eat:</strong> Restores <strong>1d4 Hit Points</strong> (safe, wholesome pastry with zero hag bone-flour curse!).",
+        lore: "Buttered golden crescents wrapped in parchment—a rare warm comfort beneath Barovia's gray skies."
+    },
+    expensive_wine: {
+        cat: "quest", name: "🍷 Bottle of Expensive Vintage Wine (High Resale Value)", rarity: "Valuable Trade Treasure (15–30 GP) • Claimed S1 (Yvaine)",
+        location: "Act I • Village of Barovia / Manor Salvage (Session 1) • Yvaine",
+        mechanics: "• <strong>High Trade / Resale Value:</strong> Wax-sealed pre-crisis vintage that can be <strong>sold for a strong gold price</strong> (suggested <strong>15–30 GP</strong> to Vallaki nobles, Baron Vargas, Lady Wachter, or Blue Water Inn) or gifted to buy noble goodwill!",
+        lore: "An unbroken dark-glass bottle bearing an intact crimson crest—far richer than everyday Purple Grapemash."
+    },
+    yvaine_lockpicks: {
+        cat: "quest", name: "🗝️ Masterwork Lockpicks (Permanent Thieves' Tools)", rarity: "Permanent Utility Gear • Claimed S1 (Yvaine)",
+        location: "Act I • Session 1 Salvage • Best for Yvaine",
+        mechanics: "• <strong>Permanent Thieves' Tools Access:</strong> Grants Yvaine permanent use of <strong>Thieves' Tools</strong> to pick padlocks, strongboxes, and bolted doors, or disarm mechanical traps (like Ezmerelda's V1 wagon or Vallaki manor locks!).",
+        lore: "Slender dark-steel tension wrenches and picks tucked neatly inside Yvaine's coat sleeve."
     }
 };
 

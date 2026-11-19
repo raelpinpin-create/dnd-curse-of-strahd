@@ -794,6 +794,10 @@
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        :where(a:any-link, button, input, select, textarea):focus-visible {
+            outline: 2px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body>
@@ -1128,10 +1132,10 @@
                             <button class="btn-act btn-act-pre" onclick="openGoldHistoryModal()" style="font-size:0.68rem; padding:2px 6px; color:var(--accent-gold); border:1px solid rgba(245,158,11,0.4);">📜 Ledger</button>
                             <button class="btn-act btn-act-pre" onclick="resetGoldPurse()" style="font-size:0.68rem; padding:2px 5px; color:#cbd5e1;">🔄 Reset</button>
                             <div style="display:flex; align-items:baseline; gap:4px; margin-left:3px;">
-                                <span id="gold-disp" style="font-size:1.12rem; font-weight:800; color:#facc15;">15</span>
+                                <span id="gold-disp" style="font-size:1.12rem; font-weight:800; color:#facc15;">17</span>
                                 <span style="font-size:0.7rem; font-weight:700; color:#fbbf24;">GP</span>
                                 <span style="color:var(--text-dim); font-size:0.75rem;">•</span>
-                                <span id="silver-disp" style="font-size:0.95rem; font-weight:700; color:#cbd5e1;">0</span>
+                                <span id="silver-disp" style="font-size:0.95rem; font-weight:700; color:#cbd5e1;">5</span>
                                 <span style="font-size:0.68rem; font-weight:600; color:#94a3b8;">SP</span>
                             </div>
                         </div>
@@ -1364,7 +1368,7 @@
                                     </div>
                                     <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Bonus Action • 60 ft • 2 Uses / Long Rest</div>
                                 </div>
-                                <span id="badge-hunters-sense" class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;">2/2 USES</span>
+                                <span id="badge-hunters-sense" class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;">1/2 USES</span>
                             </div>
                             <div class="action-desc">
                                 Inspect a creature within 60 ft. Learn its <strong>damage immunities, resistances, and vulnerabilities</strong>!
@@ -1526,7 +1530,7 @@
                         </div>
 
                         <!-- Smokescreen -->
-                        <div class="action-card" style="border-left:3px solid #94a3b8; grid-column: span 2;">
+                        <div class="action-card" style="border-left:3px solid #94a3b8;">
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('spell_smokescreen')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
@@ -1541,6 +1545,26 @@
                             </div>
                             <div class="action-btn-row">
                                 <button class="btn-roll-action" style="background:#475569;" onclick="castSmokescreen()">🌫️ Cast Smokescreen</button>
+                            </div>
+                        </div>
+
+                        <!-- Amulet of the Whispering Grave (Speak with Dead 1/LR) -->
+                        <div class="action-card" style="border-left:3px solid #dc2626;">
+                            <div class="action-header">
+                                <div>
+                                    <div onclick="openSpellDetailsModal('spell_speak_with_dead')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        🩸 Amulet of the Whispering Grave <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                    </div>
+                                    <div style="font-size:0.66rem; font-weight:700; color:#fca5a5;">Appraised Relic • Speak with Dead • 1/Long Rest</div>
+                                </div>
+                                <span id="badge-speak-dead" class="pill-badge pill-crimson" style="font-size:0.62rem; padding:1px 6px;">1/1 READY</span>
+                            </div>
+                            <div class="action-desc">
+                                Cast <strong><em>Speak with Dead</em></strong> (1 Action, 10 ft, 10 min, no slot) to question a corpse (up to <strong>5 questions</strong>). Recharges on Long Rest.
+                            </div>
+                            <div class="action-btn-row">
+                                <button class="btn-roll-action btn-roll-dmg" onclick="castSpeakWithDeadAmulet()">💀 Cast Speak with Dead</button>
+                                <button class="btn-act btn-act-pre" onclick="toggleSpeakWithDeadManual()" style="font-size:0.68rem;">🔄 Toggle</button>
                             </div>
                         </div>
 
@@ -1601,7 +1625,7 @@
                     <div>
                         <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim); text-transform:uppercase;">Current Available Balance</div>
                         <div style="font-size:1.15rem; font-weight:800; color:#facc15;">
-                            <span id="modal-gold-disp">15</span> GP • <span id="modal-silver-disp" style="color:#cbd5e1;">0</span> SP
+                            <span id="modal-gold-disp">17</span> GP • <span id="modal-silver-disp" style="color:#cbd5e1;">5</span> SP
                         </div>
                     </div>
                     <button class="btn-act btn-act-pre" onclick="resetGoldPurse()" style="color:var(--accent-gold); border:1px solid rgba(245,158,11,0.3); padding:4px 8px; font-size:0.7rem;">🔄 Reset Balance</button>
@@ -1626,8 +1650,8 @@
                 <button class="modal-close-btn" onclick="closeItemModal()" aria-label="Close">✕</button>
             </div>
             <div class="modal-body" id="item-modal-body"></div>
-            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
-                <div id="item-modal-actions"></div>
+            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                <div id="item-modal-actions" style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;"></div>
                 <button class="btn-act btn-act-pre" onclick="closeItemModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
             </div>
         </div>
@@ -1723,37 +1747,38 @@
     let maxHelpTokens = 2;
     let helpTokens = 2;
 
-    // Active Firearm Stance: 'lament' or 'revolvers'
-    let activeStance = 'lament';
+    // Active Firearm Stance: 'lament' or 'revolvers' (Session 1 end: Mercy & Less)
+    let activeStance = 'revolvers';
 
-    // Firearms & Reload Engine State
+    // Firearms & Reload Engine State (Session 1 State)
     const maxLamentChamber = 10;
-    let lamentChamber = 10;
+    let lamentChamber = 8;
     const maxLamentReloadReserves = 2;
     let lamentReloadReserves = 2;
 
     const maxMercyChamber = 6;
-    let mercyChamber = 6;
+    let mercyChamber = 5;
     const maxLessChamber = 6;
-    let lessChamber = 6;
+    let lessChamber = 5;
     const maxRevolverReloadReserves = 2;
     let revolverReloadReserves = 2;
 
-    // Monster Slayer Features
+    // Monster Slayer Features (Session 1 State)
     const maxHuntersSenseUses = 2; // Wis mod (+2)
-    let huntersSenseUses = 2;
+    let huntersSenseUses = 1;
     let slayersPreyActive = false;
 
-    // Spells & Slots
+    // Spells, Slots & Appraised Relic (Session 1 State)
     const maxSpellSlots = 3;
-    let curSpellSlots = 3;
+    let curSpellSlots = 2;
     const maxFavoredEnemyCasts = 2;
     let favoredEnemyCasts = 2;
     let isTracerActive = false;
+    let speakWithDeadReady = true; // 🩸 Amulet of the Whispering Grave (1/Long Rest)
 
-    // Currency
-    const DEFAULT_START_GP = 15;
-    const DEFAULT_START_SP = 0;
+    // Currency (Session 1 State: 17 GP, 5 SP)
+    const DEFAULT_START_GP = 17;
+    const DEFAULT_START_SP = 5;
     let curGP = getStoredGold('gp', DEFAULT_START_GP);
     let curSilver = getStoredGold('sp', DEFAULT_START_SP);
 
@@ -1804,10 +1829,6 @@
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             dismissFloatingHud();
-            closeSpellDetailsModal();
-            closeGoldHistoryModal();
-            closeItemModal();
-            closePlayerNotesModal();
         }
     });
 
@@ -1873,7 +1894,7 @@
     // ==========================================
     // ⚔️ WEAPON STANCE SWITCHER & GAUGE UPDATE
     // ==========================================
-    function switchWeaponStance(stance) {
+    function switchWeaponStance(stance, silent = false) {
         activeStance = stance;
         const btnLament = document.getElementById('btn-stance-lament');
         const btnRevolvers = document.getElementById('btn-stance-revolvers');
@@ -1885,13 +1906,13 @@
             if (btnRevolvers) btnRevolvers.classList.remove('active');
             if (viewLament) viewLament.style.display = 'block';
             if (viewRevolvers) viewRevolvers.style.display = 'none';
-            logRoll(`🎯 <strong>Firearm Stance Swapped:</strong> Yvaine shoulders <strong>"Lament" (Heavy Long Rifle)</strong>. Chamber: <strong>${lamentChamber}/10</strong> slugs ready.`);
+            if (!silent) logRoll(`🎯 <strong>Firearm Stance Swapped:</strong> Yvaine shoulders <strong>"Lament" (Heavy Long Rifle)</strong>. Chamber: <strong>${lamentChamber}/10</strong> slugs ready.`);
         } else {
             if (btnLament) btnLament.classList.remove('active');
             if (btnRevolvers) btnRevolvers.classList.add('active');
             if (viewLament) viewLament.style.display = 'none';
             if (viewRevolvers) viewRevolvers.style.display = 'block';
-            logRoll(`💥 <strong>Firearm Stance Swapped:</strong> Yvaine draws twin revolvers <strong>"Mercy &amp; Less"</strong>! Mercy: <strong>${mercyChamber}/6</strong> • Less: <strong>${lessChamber}/6</strong>.`);
+            if (!silent) logRoll(`💥 <strong>Firearm Stance Swapped:</strong> Yvaine draws twin revolvers <strong>"Mercy &amp; Less"</strong>! Mercy: <strong>${mercyChamber}/6</strong> • Less: <strong>${lessChamber}/6</strong>.`);
         }
     }
 
@@ -2326,6 +2347,34 @@
         logRoll(`🌫️ <strong>Smokescreen Cast (1st-Level Slot Spent):</strong> Sulfur canister cracked! Creates a 20-ft-radius sphere of heavy obscuration centered within 120 ft. Completely blocks line of sight. Conc 1 hr. <em>(${curSpellSlots}/3 slots remaining).</em>`);
     }
 
+    function updateSpeakWithDeadUI() {
+        const badge = document.getElementById('badge-speak-dead');
+        if (!badge) return;
+        if (speakWithDeadReady) {
+            badge.className = 'pill-badge pill-crimson';
+            badge.innerText = '1/1 READY';
+        } else {
+            badge.className = 'pill-badge pill-neutral';
+            badge.innerText = '0/1 USED';
+        }
+    }
+
+    function castSpeakWithDeadAmulet() {
+        if (!speakWithDeadReady) {
+            logRoll(`⚠️ <strong style="color:#f87171;">Amulet of the Whispering Grave (0/1 Used)!</strong> Speak with Dead recharges after a <strong>Long Rest</strong>.`);
+            return;
+        }
+        speakWithDeadReady = false;
+        updateSpeakWithDeadUI();
+        logRoll(`🩸 <strong>Amulet of the Whispering Grave — Speak with Dead Cast (1/LR • 10 ft • 10 min):</strong> The blood-red crystal pulses cold against Yvaine's palm! A non-undead corpse with a mouth answers up to <strong>5 questions</strong> (brief, cryptic, or repetitive; knows only what it knew in life; can't be targeted again for 10 days).`);
+    }
+
+    function toggleSpeakWithDeadManual() {
+        speakWithDeadReady = !speakWithDeadReady;
+        updateSpeakWithDeadUI();
+        logRoll(`🩸 <strong>Amulet of the Whispering Grave:</strong> Manually set to <strong>${speakWithDeadReady ? '1/1 READY' : '0/1 USED'}</strong>.`);
+    }
+
     // ==========================================
     // 🌟 HEROIC INSPIRATION & HELP TOKENS
     // ==========================================
@@ -2565,6 +2614,7 @@
         slayersPreyActive = false;
         isTracerActive = false;
         isLongstriderActive = false;
+        speakWithDeadReady = true;
 
         lamentChamber = maxLamentChamber;
         lamentReloadReserves = maxLamentReloadReserves;
@@ -2579,13 +2629,14 @@
         updateHeroicUI();
         updateSpeedUI();
         updateTracerUI();
+        updateSpeakWithDeadUI();
         if (slayersPreyActive) toggleSlayersPreyManual();
 
         document.getElementById('help-tokens-disp').innerText = `${helpTokens} / ${maxHelpTokens}`;
         document.getElementById('badge-hunters-sense').innerText = `${huntersSenseUses}/${maxHuntersSenseUses} USES`;
         document.getElementById('favored-enemy-pips').innerText = `Hunters Mark: ${favoredEnemyCasts}/${maxFavoredEnemyCasts} Free Casts`;
 
-        logRoll(`🌙 <strong>Long Rest Completed:</strong> HP fully restored (<strong>${maxHP}/${maxHP}</strong>), all 3 Spell Slots &amp; 2 Hunters Mark free casts ready, Hunter's Sense restocked, Heroic Inspiration READY, and <strong>all 2/2 Lament clips and 2/2 Revolver Speedloaders repacked at camp!</strong>`);
+        logRoll(`🌙 <strong>Long Rest Completed:</strong> HP fully restored (<strong>${maxHP}/${maxHP}</strong>), all 3 Spell Slots, 2 Hunter's Mark free casts, 🩸 <strong>Amulet of the Whispering Grave (Speak with Dead 1/1)</strong>, Hunter's Sense (2/2), Heroic Inspiration READY, and <strong>all 2/2 Lament clips and 2/2 Revolver Speedloaders repacked at camp!</strong>`);
     }
 
     // ==========================================
@@ -2881,28 +2932,28 @@
     // 💰 GOLD PURSE ENGINE (10 SP = 1 GP)
     // ==========================================
     function getStoredGold(key, defaultVal) {
-        const stored = localStorage.getItem(`cos_gold_${key}_yvaine_v2`);
+        const stored = localStorage.getItem(`cos_gold_${key}_yvaine_v3`);
         return stored !== null ? parseInt(stored) : defaultVal;
     }
 
     function getGoldHistory() {
-        const stored = localStorage.getItem('cos_gold_tx_yvaine_v2');
+        const stored = localStorage.getItem('cos_gold_tx_yvaine_v3');
         if (!stored) {
             const init = [{
                 type: 'initial',
-                label: 'Fallen Royal Traveling Purse',
+                label: 'Post-Session 1 Royal Purse',
                 delta: `${DEFAULT_START_GP} GP, ${DEFAULT_START_SP} SP`,
                 total: `${DEFAULT_START_GP} GP, ${DEFAULT_START_SP} SP`,
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             }];
-            localStorage.setItem('cos_gold_tx_yvaine_v2', JSON.stringify(init));
+            localStorage.setItem('cos_gold_tx_yvaine_v3', JSON.stringify(init));
             return init;
         }
         try { return JSON.parse(stored); } catch(e) { return []; }
     }
 
     function saveGoldHistory(history) {
-        localStorage.setItem('cos_gold_tx_yvaine_v2', JSON.stringify(history));
+        localStorage.setItem('cos_gold_tx_yvaine_v3', JSON.stringify(history));
     }
 
     function logGoldTx(type, label, deltaStr, totalStr) {
@@ -2933,8 +2984,8 @@
                 curSilver = 0;
             }
         }
-        localStorage.setItem('cos_gold_gp_yvaine_v2', curGP);
-        localStorage.setItem('cos_gold_sp_yvaine_v2', curSilver);
+        localStorage.setItem('cos_gold_gp_yvaine_v3', curGP);
+        localStorage.setItem('cos_gold_sp_yvaine_v3', curSilver);
     }
 
     function updateGoldUI() {
@@ -3031,14 +3082,19 @@
         if (modal) modal.close();
     }
     function clearGoldHistory() {
-        localStorage.removeItem('cos_gold_tx_yvaine_v2');
+        localStorage.removeItem('cos_gold_tx_yvaine_v3');
         renderGoldHistory();
     }
 
     // ==========================================
-    // 🎒 TRACKED INVENTORY ENGINE
+    // 🎒 TRACKED INVENTORY ENGINE (POST-SESSION 1)
     // ==========================================
     const defaultItems = [
+        "🩸 Amulet of the Whispering Grave (Speak with Dead • 1/LR)",
+        "🗝️ Lockpicks (Permanent Thieves' Tools)",
+        "🍷 Bottle of Expensive Barovian Wine (High Resale Value)",
+        "🥐 3x Fresh Croissants (Heals 1d4 HP)",
+        "🩹 2x Field Bandages (Heals 1d6 + 1 HP)",
         "🎯 \"Lament\" (Royal Heavy Long Rifle)",
         "💥 Twin Revolvers (\"Mercy & Less\")",
         "🗡️ Solmere Royal Trench Knife",
@@ -3054,6 +3110,55 @@
     ];
 
     const worldLootVault = {
+        "whispering grave": {
+            name: "🩸 Amulet of the Whispering Grave",
+            category: "APPRAISED NECROMANTIC RELIC • 1/Long Rest",
+            origin: "Appraised Red Amulet (Session 1 Loot)",
+            desc: "Formerly an unknown crimson crystal pendant—now appraised as an ancient Barovian grave-speaker relic suspended on tarnished silver chain. The red stone feels faintly warm against the palm, humming quietly whenever blood or fresh corpses lie nearby.",
+            effect: "• <strong>Speak with Dead (1/Long Rest — No Spell Slot):</strong> As <strong>1 Action</strong>, target a corpse within <strong>10 feet</strong> that still has a mouth and isn't Undead. For <strong>10 minutes</strong>, ask up to <strong>5 questions</strong>! The corpse knows only what it knew in life (answers are brief, cryptic, or repetitive; can't be targeted again for 10 days).<br>• Ideal for Yvaine's detective investigations in Barovia!",
+            wikiUrl: "https://5e.tools/spells.html#speak%20with%20dead_xphb",
+            customAction: "speak_dead"
+        },
+        "lockpick": {
+            name: "🗝️ Masterwork Lockpicks (Permanent Thieves' Tools)",
+            category: "PERMANENT UTILITY TOOLSET • Thieves' Tools",
+            origin: "Session 1 Salvage (Permanent Toolset for Yvaine)",
+            desc: "A rolled black-leather slip containing slender tension wrenches, diamond picks, rakes, and slender spring-probes.",
+            effect: "• <strong>Permanent Thieves' Tools Access:</strong> Allows Yvaine to pick padlocks, strongboxes, bolted doors, and disarm mechanical traps (uses <strong>DEX +4</strong>, or <strong>Sleight of Hand +6</strong> at DM discretion).<br>• Permanent gear — never breaks on ordinary attempts!",
+            wikiUrl: "https://5e.tools/items.html#thieves'%20tools_xphb",
+            customAction: "lockpick"
+        },
+        "expensive wine": {
+            name: "🍷 Bottle of Expensive Barovian Wine",
+            category: "VALUABLE TRADE TREASURE • High Resale Price",
+            origin: "Session 1 Salvage",
+            desc: "A dusty, wax-sealed bottle of rare pre-crisis vintage wine—remarkably preserved and far finer than the thin tavern swill poured across the village.",
+            effect: "• <strong>High Resale Value:</strong> Can be <strong>sold for a strong gold price</strong> (suggested <strong>15–30 GP</strong>) to Vallaki merchants, nobles (Baron Vargas / Lady Wachter), or the Blue Water Inn—or offered as a high-status diplomatic gift!"
+        },
+        "croissant": {
+            name: "🥐 Fresh Croissants",
+            category: "FOOD CONSUMABLE • Heals 1d4 HP",
+            origin: "Session 1 Provisions",
+            desc: "Flaky, buttered golden crescents wrapped in clean parchment—safe, wholesome rations with none of Morgantha's dark bone-flour taint.",
+            effect: "• <strong>Consume (Bonus Action / Action):</strong> Restores <strong>1d4 Hit Points</strong> (any overflow above Max HP converts into Temp HP per table rules).",
+            healFormula: { dice: 1, sides: 4, bonus: 0, verb: "Ate" }
+        },
+        "bandage": {
+            name: "🩹 Field Healing Bandages",
+            category: "HEALING CONSUMABLE • Heals 1d6 + 1 HP",
+            origin: "Session 1 First-Aid Loot",
+            desc: "Clean sterile linen bandages steeped in soothing Barovian herbal salve for rapid battlefield trauma care.",
+            effect: "• <strong>1 Action (Self or Adjacent Ally):</strong> Bind wounds tightly to restore <strong>1d6 + 1 Hit Points</strong> (any overflow above Max HP converts into Temp HP per table rules).",
+            healFormula: { dice: 1, sides: 6, bonus: 1, verb: "Applied" }
+        },
+        "potion of healing": {
+            name: "🧪 Potion of Healing",
+            category: "HEAL • Common Consumable (5 GP)",
+            origin: "Barovian Apothecary",
+            desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong> (overflow converts into Temp HP).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
+            healFormula: { dice: 2, sides: 6, bonus: 1, verb: "Drank" }
+        },
         "lament": {
             name: "🎯 \"Lament\" (Royal Heavy Long Rifle)",
             category: "MARTIAL RANGED FIREARM • Two-Handed, Heavy (10 lb • Heirloom)",
@@ -3176,34 +3281,87 @@
         }
     };
 
-    function parseItemInfo(str) {
-        const match = str.match(/^(\d+)x?\s+(.+)$/);
-        if (match) {
-            return { hasQty: true, qty: parseInt(match[1]), name: match[2], emoji: '' };
-        }
-        return { hasQty: false, qty: 1, name: str, emoji: '' };
+    function parseItemInfo(itemStr) {
+        if (!itemStr) return { hasQty: false, qty: 1, emoji: '', name: '', raw: '' };
+        const emojiMatch = itemStr.match(/^([\p{Extended_Pictographic}\u{FE00}-\u{FE0F}\u{200D}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F300}-\u{1FAFF}\s]+)/u);
+        const emoji = emojiMatch ? emojiMatch[1].trim() + ' ' : '';
+        let rest = (emojiMatch ? itemStr.slice(emojiMatch[0].length) : itemStr).trim();
+
+        let qty = 1, hasQty = false, name = rest;
+        const prefixMatch = rest.match(/^(?:(\d+)\s*[xX]|[xX]\s*(\d+))\s+(.+)$/);
+        const suffixMatch = rest.match(/^(.+?)\s+(?:[xX]\s*(\d+)|(\d+)\s*[xX])$/);
+        const parenMatch = rest.match(/^(.+?)\s*\(\s*(?:[xX]\s*(\d+)|(\d+)\s*[xX]?)\s*\)$/);
+
+        if (prefixMatch) { hasQty = true; qty = parseInt(prefixMatch[1] || prefixMatch[2]) || 1; name = prefixMatch[3].trim(); }
+        else if (suffixMatch) { hasQty = true; qty = parseInt(suffixMatch[2] || suffixMatch[3]) || 1; name = suffixMatch[1].trim(); }
+        else if (parenMatch) { hasQty = true; qty = parseInt(parenMatch[2] || parenMatch[3]) || 1; name = parenMatch[1].trim(); }
+
+        return { hasQty, qty, emoji, name, raw: itemStr };
     }
 
     function getStoredItems() {
-        const stored = localStorage.getItem('cos_inv_yvaine_v7');
+        const stored = localStorage.getItem('cos_inv_yvaine_v8');
         if (!stored) {
-            localStorage.setItem('cos_inv_yvaine_v7', JSON.stringify(defaultItems));
+            localStorage.setItem('cos_inv_yvaine_v8', JSON.stringify(defaultItems));
             return [...defaultItems];
         }
         try {
-            let items = JSON.parse(stored);
-            items = items.filter(i => !i.toLowerCase().includes('bullet') && !i.toLowerCase().includes('slug') && !i.toLowerCase().includes('cartridge') && !i.toLowerCase().includes('speedloader'));
-            return items;
+            const items = JSON.parse(stored);
+            return Array.isArray(items) ? items : [...defaultItems];
         } catch(e) { return [...defaultItems]; }
-        if (!stored) {
-            localStorage.setItem('cos_inv_yvaine_v2', JSON.stringify(defaultItems));
-            return [...defaultItems];
-        }
-        try { return JSON.parse(stored); } catch(e) { return [...defaultItems]; }
     }
 
     function saveItems(items) {
-        localStorage.setItem('cos_inv_yvaine_v7', JSON.stringify(items));
+        localStorage.setItem('cos_inv_yvaine_v8', JSON.stringify(items));
+    }
+
+    function consumeAndHealItem(index, dice, sides, bonus, verb, itemName) {
+        let rolls = [];
+        let sum = 0;
+        for (let i = 0; i < dice; i++) {
+            const r = Math.floor(Math.random() * sides) + 1;
+            rolls.push(r);
+            sum += r;
+        }
+        const healAmt = sum + bonus;
+        stepItemQty(index, -1);
+        if (curHP + healAmt > maxHP) {
+            const overflow = (curHP + healAmt) - maxHP;
+            curHP = maxHP;
+            tempHP += overflow;
+        } else {
+            curHP += healAmt;
+        }
+        updateHPUI();
+        const bonusStr = bonus > 0 ? ` + ${bonus}` : '';
+        logRoll(`💚 <strong>${verb} ${itemName}:</strong> [${rolls.join('+')}]${bonusStr} = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${healAmt} HP</span> (Current HP: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ` (+${tempHP} Temp)` : ''})!`);
+    }
+
+    function getAggregatedInventory(itemStrings) {
+        const map = new Map();
+        itemStrings.forEach(str => {
+            const p = parseItemInfo(str);
+            const key = p.name.toLowerCase().trim();
+            if (!key) return;
+            if (map.has(key)) map.get(key).qty += p.qty;
+            else map.set(key, { displayName: p.name, qty: p.qty });
+        });
+        return map;
+    }
+
+    function getSessionDelta() {
+        const baseMap = getAggregatedInventory(defaultItems);
+        const currMap = getAggregatedInventory(getStoredItems());
+        const added = [], removed = [];
+        currMap.forEach((cur, key) => {
+            const baseQty = baseMap.has(key) ? baseMap.get(key).qty : 0;
+            if (cur.qty > baseQty) added.push((cur.qty - baseQty) > 1 ? `${cur.qty - baseQty}x ${cur.displayName}` : cur.displayName);
+        });
+        baseMap.forEach((base, key) => {
+            const curQty = currMap.has(key) ? currMap.get(key).qty : 0;
+            if (curQty < base.qty) removed.push((base.qty - curQty) > 1 ? `${base.qty - curQty}x ${base.displayName}` : base.displayName);
+        });
+        return { added, removed };
     }
 
     function renderInventory() {
@@ -3234,7 +3392,7 @@
             div.innerHTML = `
                 <div class="inv-item-info">
                     <span onclick="openItemDetailsModal(${index})" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
-                        ${item}
+                        ${parsed.hasQty ? parsed.emoji + parsed.name : item}
                     </span>
                 </div>
                 <div class="inv-controls">
@@ -3252,7 +3410,13 @@
 
         let vaultKey = null;
         const low = raw.toLowerCase();
-        if (low.includes('lament')) vaultKey = 'lament';
+        if (low.includes('whispering grave') || low.includes('amulet')) vaultKey = 'whispering grave';
+        else if (low.includes('lockpick') || low.includes('lock pick') || low.includes('thieves')) vaultKey = 'lockpick';
+        else if (low.includes('expensive wine') || low.includes('barovian wine')) vaultKey = 'expensive wine';
+        else if (low.includes('croissant')) vaultKey = 'croissant';
+        else if (low.includes('bandage')) vaultKey = 'bandage';
+        else if (low.includes('potion of healing') || low.includes('health potion')) vaultKey = 'potion of healing';
+        else if (low.includes('lament')) vaultKey = 'lament';
         else if (low.includes('revolver') || low.includes('mercy')) vaultKey = 'revolver';
         else if (low.includes('knife') || low.includes('stiletto')) vaultKey = 'knife';
         else if (low.includes('studded leather')) vaultKey = 'studded leather';
@@ -3299,15 +3463,23 @@
 
         const parsed = parseItemInfo(raw);
         const actions = document.getElementById('item-modal-actions');
-        if (parsed.hasQty) {
-            actions.innerHTML = `
-                <button class="btn-act btn-act-heal" onclick="stepItemQty(${index}, -1); closeItemModal();" style="font-size:0.74rem;">🧪 Use / Consume 1 (${parsed.qty - 1} left)</button>
-            `;
+        let btns = [];
+        if (itemData.customAction === 'speak_dead') {
+            btns.push(`<button type="button" class="btn-act btn-act-dmg" onclick="castSpeakWithDeadAmulet(); closeItemModal();" style="font-size:0.74rem;">💀 Cast Speak with Dead (${speakWithDeadReady ? '1/1 Ready' : '0/1 Used'})</button>`);
+        } else if (itemData.customAction === 'lockpick') {
+            btns.push(`<button type="button" class="btn-act btn-act-temp" onclick="rollD20('Thieves\' Tools / Lockpick Check (DEX +4)', 4); closeItemModal();" style="font-size:0.74rem;">🗝️ Pick Lock (DEX +4)</button>`);
+            btns.push(`<button type="button" class="btn-act btn-act-pre" onclick="rollD20('Thieves\' Tools w/ Prof (+6)', 6); closeItemModal();" style="font-size:0.74rem; color:#fde68a;">🗝️ Pick Lock (+6 Prof)</button>`);
+        } else if (itemData.healFormula) {
+            const hf = itemData.healFormula;
+            const formulaStr = `${hf.dice}d${hf.sides}${hf.bonus ? '+' + hf.bonus : ''}`;
+            const safeName = itemData.name.replace(/'/g, "\\'");
+            btns.push(`<button type="button" class="btn-act btn-act-heal" onclick="consumeAndHealItem(${index}, ${hf.dice}, ${hf.sides}, ${hf.bonus}, '${hf.verb}', '${safeName}'); closeItemModal();" style="font-size:0.74rem;">💚 ${hf.verb === 'Ate' ? 'Eat' : (hf.verb === 'Applied' ? 'Apply' : 'Drink')} 1 (${formulaStr} HP • ${parsed.qty} left)</button>`);
+        } else if (parsed.hasQty) {
+            btns.push(`<button type="button" class="btn-act btn-act-heal" onclick="stepItemQty(${index}, -1); closeItemModal();" style="font-size:0.74rem;">🧪 Use / Consume 1 (${parsed.qty - 1} left)</button>`);
         } else {
-            actions.innerHTML = `
-                <button class="btn-act btn-act-dmg" onclick="deleteItem(${index}); closeItemModal();" style="font-size:0.74rem;">🗑️ Discard Item</button>
-            `;
+            btns.push(`<button type="button" class="btn-act btn-act-dmg" onclick="deleteItem(${index}); closeItemModal();" style="font-size:0.74rem;">🗑️ Discard Item</button>`);
         }
+        actions.innerHTML = btns.join('');
 
         const modal = document.getElementById('item-modal');
         if (modal) modal.showModal();
@@ -3330,13 +3502,13 @@
                 items.splice(index, 1);
                 logRoll(`🗑️ <strong>Consumed Stack:</strong> Expended all of <em>${parsed.name}</em>.`);
             } else {
-                items[index] = `${parsed.qty}x ${parsed.name}`;
+                items[index] = `${parsed.emoji}${parsed.qty}x ${parsed.name}`.trim();
                 logRoll(`📦 <strong>Item Adjusted:</strong> ${parsed.name} (${parsed.qty} remaining).`);
             }
         } else {
             if (delta > 0) {
-                items[index] = `2x ${raw}`;
-                logRoll(`📦 <strong>Item Stacked:</strong> 2x ${raw}.`);
+                items[index] = `${parsed.emoji}2x ${parsed.name}`.trim();
+                logRoll(`📦 <strong>Item Stacked:</strong> 2x ${parsed.name}.`);
             }
         }
         saveItems(items);
@@ -3372,7 +3544,7 @@
     }
 
     // ==========================================
-    // 📓 PLAYER NOTES LEDGER & DELTA EXPORT ENGINE (PIPER STANDARD)
+    // 📓 PLAYER NOTES LEDGER & DELTA EXPORT ENGINE (POST-SESSION 1)
     // ==========================================
     const MAX_NOTE_CHARS = 220;
     const defaultPlayerNotes = [
@@ -3387,9 +3559,19 @@
             text: "No bodies found at Solmere. The traitor took them or they escaped through the river sluice. Tracking the sign of raven and mist."
         },
         {
-            id: 'note_3',
-            title: "Barovian Silver Ratios",
-            text: "Ghouls and wolves roam the mist. Slugs crimped with silver ash stagger them. Maintain firearms daily with tinker kit."
+            id: 's1_arik_letter',
+            title: "Arik's Letter - Tavern Owner",
+            text: "The tavern owner says \"before you go I wanna say how much I love you.\" Portrait of his wife and daughter. Why would he say before I go if he's alive and well in the bar? This paper was made years ago."
+        },
+        {
+            id: 's1_clues',
+            title: "Clues",
+            text: "Vistani are people of the mist. Madam Eva, a seer, could tell me my fortune."
+        },
+        {
+            id: 's1_kolyan',
+            title: "Kolyan Indirovich",
+            text: "Evil and destruction happening for 6 nights."
         },
         {
             id: 's1_derek_church',
@@ -3400,9 +3582,9 @@
     let editingNoteId = null;
 
     function getStoredNotes() {
-        const stored = localStorage.getItem('cos_notes_yvaine_v5');
+        const stored = localStorage.getItem('cos_notes_yvaine_v6');
         if (!stored) {
-            localStorage.setItem('cos_notes_yvaine_v5', JSON.stringify(defaultPlayerNotes));
+            localStorage.setItem('cos_notes_yvaine_v6', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
         try {
@@ -3415,23 +3597,23 @@
                     changed = true;
                 }
             });
-            if (changed) localStorage.setItem('cos_notes_yvaine_v5', JSON.stringify(notes));
+            if (changed) localStorage.setItem('cos_notes_yvaine_v6', JSON.stringify(notes));
             return notes;
         } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {
-        localStorage.setItem('cos_notes_yvaine_v5', JSON.stringify(notes));
+        localStorage.setItem('cos_notes_yvaine_v6', JSON.stringify(notes));
     }
 
     function getRemovedNoteTitles() {
-        const stored = localStorage.getItem('cos_notes_removed_yvaine_v5');
+        const stored = localStorage.getItem('cos_notes_removed_yvaine_v6');
         if (!stored) return [];
         try { return JSON.parse(stored); } catch(e) { return []; }
     }
 
     function saveRemovedNoteTitles(titles) {
-        localStorage.setItem('cos_notes_removed_yvaine_v5', JSON.stringify(titles));
+        localStorage.setItem('cos_notes_removed_yvaine_v6', JSON.stringify(titles));
     }
 
     function escapeNoteHtml(str) {
@@ -3704,7 +3886,13 @@
     }
 
     function exportSheetState() {
-        const dataStr = `⚔️ YVAINE DATA EXPORT | HP: ${curHP}/${maxHP}${tempHP > 0 ? ` (+${tempHP} Temp)` : ''} | AC: ${isArmorActive ? 16 : 14} | Init: +6 | Stance: ${activeStance === 'lament' ? 'Lament Heavy Rifle' : 'Mercy & Less Revolvers'} | Speed: ${isLongstriderActive ? '40 ft' : '30 ft'} | Help: ${helpTokens}/${maxHelpTokens} | Lament: ${lamentChamber}/10 (Clips: ${lamentReloadReserves}/2) | Revolvers: Mercy ${mercyChamber}/6, Less ${lessChamber}/6 (Speedloaders: ${revolverReloadReserves}/2) | Spell Slots: ${curSpellSlots}/3 (1st) | Favored Enemy: ${favoredEnemyCasts}/2 Free | Hunter's Sense: ${huntersSenseUses}/2 | Heroic Inspiration: ${heroicInspirationReady ? 'READY' : 'USED'} | Wealth: ${curGP} GP, ${curSilver} SP | Active: Slayer (${slayersPreyActive ? 'ON' : 'OFF'}), Hunter's Mark (${isTracerActive ? 'ON' : 'OFF'}) | 📦 Inventory: Synced`;
+        const delta = getSessionDelta();
+        let deltaParts = [];
+        if (delta.added.length > 0) deltaParts.push(`➕ Added: ${delta.added.join(', ')}`);
+        if (delta.removed.length > 0) deltaParts.push(`➖ Consumed/Removed: ${delta.removed.join(', ')}`);
+        const invSummary = deltaParts.length > 0 ? deltaParts.join(' | ') : '📦 Inventory: (No session changes)';
+
+        const dataStr = `⚔️ YVAINE DATA EXPORT | HP: ${curHP}/${maxHP}${tempHP > 0 ? ` (+${tempHP} Temp)` : ''} | AC: ${isArmorActive ? 16 : 14} | Init: +6 | Stance: ${activeStance === 'lament' ? 'Lament Heavy Rifle' : 'Mercy & Less Revolvers'} | Speed: ${isLongstriderActive ? '40 ft' : '30 ft'} | Help: ${helpTokens}/${maxHelpTokens} | Lament: ${lamentChamber}/10 (Clips: ${lamentReloadReserves}/2) | Revolvers: Mercy ${mercyChamber}/6, Less ${lessChamber}/6 (Speedloaders: ${revolverReloadReserves}/2) | Spell Slots: ${curSpellSlots}/3 (1st) | Favored Enemy: ${favoredEnemyCasts}/2 Free | Hunter's Sense: ${huntersSenseUses}/2 | Whispering Grave Amulet: ${speakWithDeadReady ? '1/1 READY' : '0/1 USED'} | Heroic Inspiration: ${heroicInspirationReady ? 'READY' : 'USED'} | Wealth: ${curGP} GP, ${curSilver} SP | Active: Slayer (${slayersPreyActive ? 'ON' : 'OFF'}), Hunter's Mark (${isTracerActive ? 'ON' : 'OFF'}) • ${invSummary}`;
 
         navigator.clipboard.writeText(dataStr).then(() => {
             logRoll(`📋 <strong>Export Data Copied to Clipboard!</strong><br><span style="font-size:0.75rem; color:#cbd5e1; font-family:'JetBrains Mono',monospace;">${dataStr}</span>`);
@@ -3909,6 +4097,23 @@
             modalButtons: [
                 { label: "🌫️ Deploy Smokescreen", class: "btn-roll-action", onClick: () => { closeSpellDetailsModal(); castSmokescreen(); } }
             ]
+        },
+        "spell_speak_with_dead": {
+            name: "🩸 Amulet of the Whispering Grave (Speak with Dead)",
+            school: "3rd-Level Necromancy (Relic Property • 1/Long Rest)",
+            castingTime: "1 Action",
+            range: "10 feet",
+            components: "Relic Activation (No Spell Slot Required)",
+            duration: "10 minutes",
+            attackMod: "Non-Undead Corpse with a Mouth",
+            damage: "Up to 5 Questions Answered (Recharges on Long Rest)",
+            upcastNotes: "Appraised from the Unknown Red Amulet found in Session 1. Grants 1 free casting of Speak with Dead per Long Rest without expending a Ranger spell slot!",
+            fullRules: "You grant the semblance of life and intelligence to a corpse of your choice within 10 feet, allowing it to answer the questions you pose. The corpse must still have a mouth and can't be Undead. The spell fails if the corpse was the target of this spell within the last 10 days.<br><br>Until the spell ends, you can ask the corpse up to <strong>five questions</strong>. The corpse knows only what it knew in life, including the languages it knew. Answers are usually brief, cryptic, or repetitive, and the corpse is under no compulsion to offer a truthful answer if you are hostile to it or it recognizes you as an enemy. This spell doesn't return the creature's soul to its body, only its animating spirit—so the corpse can't learn new information or speculate about future events.",
+            flavor: "The crimson glass warms in Yvaine's glove as dead lips part in the fog—giving a detective five questions straight from the grave.",
+            wikiUrl: "https://5e.tools/spells.html#speak%20with%20dead_xphb",
+            modalButtons: [
+                { label: "💀 Cast Speak with Dead (1/LR)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellDetailsModal(); castSpeakWithDeadAmulet(); } }
+            ]
         }
     };
 
@@ -3993,8 +4198,8 @@
                                 <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Permanent <strong>+2 bonus to attack rolls</strong> made with ranged weapons (already factored into +8 firearms attack bonus).</div>
                             </div>
                             <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px; grid-column: span 2;">
-                                <div style="font-weight:700; color:#facc15;">🌟 Human: Resourceful &amp; Tactical Bandolier Upgrade</div>
-                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;"><strong>Resourceful:</strong> Regain Heroic Inspiration every Long Rest.<br><strong>Level 5 Bandolier Upgrade:</strong> When Yvaine reaches Level 5 (Extra Attack), her bandolier capacity expands from <strong>2 to 3 Emergency Speedloader reserves</strong> per Long Rest!</div>
+                                <div style="font-weight:700; color:#facc15;">🌟 Human: Resourceful, Permanent Lockpicks &amp; Tactical Bandolier Upgrade</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;"><strong>Resourceful:</strong> Regain Heroic Inspiration every Long Rest.<br><strong>🗝️ Permanent Thieves' Tools (Session 1):</strong> Carries a permanent set of Lockpicks for picking locks &amp; disarming mechanical traps.<br><strong>Level 5 Bandolier Upgrade:</strong> When Yvaine reaches Level 5 (Extra Attack), her bandolier capacity expands from <strong>2 to 3 Emergency Speedloader reserves</strong> per Long Rest!</div>
                             </div>
                         </div>
                     </div>
@@ -4106,18 +4311,14 @@
 
     // Modern Web Guidance Fallback for <dialog closedby="any">
     if (!('closedBy' in HTMLDialogElement.prototype)) {
+        const outside = (e, dialog) => {
+            const r = dialog.getBoundingClientRect();
+            return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+        };
         for (const dialog of document.querySelectorAll('dialog[closedby="any"]')) {
-            dialog.addEventListener('click', (event) => {
-                if (event.target !== dialog) return;
-                const rect = dialog.getBoundingClientRect();
-                const clickedInDialog = (
-                    rect.top <= event.clientY &&
-                    event.clientY <= rect.top + rect.height &&
-                    rect.left <= event.clientX &&
-                    event.clientX <= rect.left + rect.width
-                );
-                if (!clickedInDialog) dialog.close();
-            });
+            let pressedOutside = false;
+            dialog.addEventListener('pointerdown', (e) => { pressedOutside = outside(e, dialog); });
+            dialog.addEventListener('pointerup', (e) => { if (pressedOutside && outside(e, dialog)) dialog.close(); });
         }
     }
 
@@ -4129,6 +4330,7 @@
         updateLamentAmmoUI();
         updateRevolversAmmoUI();
         updateSpellSlotsUI();
+        updateSpeakWithDeadUI();
         updateGoldUI();
         renderInventory();
         renderPlayerNotes();
@@ -4136,8 +4338,8 @@
         updateSpeedUI();
         updateTracerUI();
 
-        // Default to Lament rifle stance
-        switchWeaponStance('lament');
+        // Session 1 end stance: Mercy & Less Revolvers (silent init)
+        switchWeaponStance(activeStance, true);
     });
 </script>
 </body>
