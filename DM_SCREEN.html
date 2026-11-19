@@ -1524,34 +1524,35 @@
         <div class="section-header">
             <span>🛡️ SECTION 0: PARTY VITALS &amp; CORE COMPANION / ALLY ROSTER (LEVEL 3 START)</span>
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                <button type="button" class="btn-map-ref" style="background:linear-gradient(135deg,#78350f,#451a03); border-color:#f59e0b; color:#fef08a;" onclick="openDmCustomDropModal()">🎁 Send Loot / Gold to Player</button>
+                <button type="button" class="btn-map-ref" style="background:linear-gradient(135deg,#064e3b,#022c22); border-color:#34d399; color:#a7f3d0;" onclick="openDmCustomDropModal('party')">📡 Live Party Monitor &amp; Checkpoints</button>
+                <button type="button" class="btn-map-ref" style="background:linear-gradient(135deg,#78350f,#451a03); border-color:#f59e0b; color:#fef08a;" onclick="openDmCustomDropModal('handout')">🎁 Send Loot / Gold to Player</button>
                 <span class="section-tag">3 LEVEL 3 PCs + COMPANION &amp; ESCORT</span>
             </div>
         </div>
         <div class="grid-4">
             <div class="card clickable" onclick="openAllyCharacterWindow('piper')">
-                <div class="card-header"><span class="card-title">🎭 Piper ("The Incomparable")</span><span class="pill purple">HP 17/17 • AC 13 (16)</span></div>
+                <div class="card-header"><span class="card-title">🎭 Piper ("The Incomparable")</span><span class="pill purple" id="dm-sec0-vitals-piper">HP 17/17 • AC 13 (16)</span></div>
                 <div class="card-body">
                     <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Wild Magic Sorcerer.</strong> Wears <strong>⬛ Black Robe (+1 AC/Saves)</strong>; holds 🟥/🟩 Robes, <strong>🗡️ Kolyan's Silvered Dagger (3 Red Gems)</strong>, <strong>🃏 Blank Card</strong>, 🧪 2x Potions, &amp; 🌿 4x Herbs (craftable).</p>
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#d8b4fe; margin-top:auto;">
+                    <div id="dm-sec0-res-piper" style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#d8b4fe; margin-top:auto;">
                         ✨ 3/3 SP • L1 3/4 L2 2/2 • 💖 Charm 0/1 • 💛 1/2 Help • Surge #87
                     </div>
                 </div>
             </div>
             <div class="card clickable" onclick="openAllyCharacterWindow('jacomir')">
-                <div class="card-header"><span class="card-title">👑 Jacomir Yulle ("King")</span><span class="pill crimson">HP 23/31 • AC 17</span></div>
+                <div class="card-header"><span class="card-title">👑 Jacomir Yulle ("King")</span><span class="pill crimson" id="dm-sec0-vitals-jacomir">HP 23/31 • AC 17</span></div>
                 <div class="card-body">
                     <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Battle Master Fighter (0 GP).</strong> Holds <strong>⚔️ Silvered Longsword (Sap)</strong>, <strong>💧 Morninglord Spring Water (Holy Water)</strong>, <strong>📖 Kolyan's Diary</strong>, <strong>🥧 Dirty Dream Pastry</strong>, &amp; 🪵 Pipe. Pouring blood cup for Doru!</p>
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--accent-gold-soft); margin-top:auto;">
+                    <div id="dm-sec0-res-jacomir" style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--accent-gold-soft); margin-top:auto;">
                         ⚔️ 2/4 d8 • ☕ 3/3 SW • ⚡ Surge 1/1 • 🌟 Insp READY • 💛 2/2 Help
                     </div>
                 </div>
             </div>
             <div class="card clickable" onclick="openAllyCharacterWindow('yvaine')">
-                <div class="card-header"><span class="card-title">🎯 Eclipsa "Yvaine"</span><span class="pill crimson">HP 28/28 • AC 16</span></div>
+                <div class="card-header"><span class="card-title">🎯 Eclipsa "Yvaine"</span><span class="pill crimson" id="dm-sec0-vitals-yvaine">HP 28/28 • AC 16</span></div>
                 <div class="card-body">
                     <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Monster Slayer Ranger (17 GP 5 SP).</strong> Holds <strong>🩸 Amulet of the Whispering Grave (Speak w/ Dead 1/LR)</strong>, 🗝️ Lockpicks, 🍷 Wine, 🥐 3x Croissants (1d4), 🩹 2x Bandages (1d6+1), &amp; ✉️ Arik's Letter clue.</p>
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#fca5a5; margin-top:auto;">
+                    <div id="dm-sec0-res-yvaine" style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#fca5a5; margin-top:auto;">
                         💥 Mercy 5/6 Less 5/6 • 🎯 Lament 8/10 • L1 2/3 • 🔍 Sense 1/2
                     </div>
                 </div>
@@ -12645,6 +12646,7 @@ const DM_PARTY_TARGETS = [
 let dmDropActiveTab = 'handout'; // 'handout' | 'forge' | 'party'
 let dmForgeKind = 'weapon'; // 'weapon' | 'armor' | 'caster' | 'accessory' | 'consumable' | 'material'
 let dmLiveHeroes = {};
+let dmSyncedCheckpoints = {};
 let dmUnlockedRecipes = {};
 
 function dmShowQuickToast(htmlMsg) {
@@ -12786,6 +12788,95 @@ function dmRemoteRemoveHeroItem(heroId, heroName, invIndex, itemLabel) {
     });
 }
 
+function dmRemoteAdjustHeroHp(heroId, heroName, delta) {
+    const rtdb = dmGetRtdb();
+    if (!rtdb) return;
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    rtdb.ref(`campaigns/${room}/heroes/${heroId}/dm_commands`).push({
+        action: 'adjust_hp',
+        delta,
+        createdAt: Date.now()
+    }).then(() => {
+        dmShowQuickToast(`${delta >= 0 ? '💚' : '⚔️'} <strong>Remote HP Update Sent to ${heroName}:</strong> ${delta >= 0 ? '+' + delta : delta} HP`);
+    });
+}
+
+function dmRemoteAdjustHeroGold(heroId, heroName, gpDelta) {
+    const rtdb = dmGetRtdb();
+    if (!rtdb) return;
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    const cmd = gpDelta >= 0
+        ? { action: 'inject_gold', gp: gpDelta, sp: 0, note: 'DM Remote Adjustment', createdAt: Date.now() }
+        : { action: 'spend_gold', gp: Math.abs(gpDelta), sp: 0, note: 'DM Remote Deduction', createdAt: Date.now() };
+    rtdb.ref(`campaigns/${room}/heroes/${heroId}/dm_commands`).push(cmd).then(() => {
+        dmShowQuickToast(`💰 <strong>Remote Gold Update Sent to ${heroName}:</strong> ${gpDelta >= 0 ? '+' + gpDelta : gpDelta} GP`);
+    });
+}
+
+function dmRequestAllCheckpoints() {
+    const rtdb = dmGetRtdb();
+    if (!rtdb) return;
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    DM_PARTY_TARGETS.forEach(t => {
+        rtdb.ref(`campaigns/${room}/heroes/${t.id}/dm_commands`).push({
+            action: 'request_checkpoint',
+            createdAt: Date.now()
+        });
+    });
+    dmShowQuickToast(`📡 <strong>Requested Live Checkpoint Sync</strong> from all open Player Sheets!`);
+}
+
+function dmCopySingleHeroCheckpoint(heroId) {
+    const cp = dmSyncedCheckpoints[heroId] || dmLiveHeroes[heroId];
+    if (!cp) {
+        dmShowQuickToast(`⚠️ No Firebase data found yet for ${heroId}.`);
+        return;
+    }
+    const block = [
+        cp.sheetExportStr || `[${cp.heroName || heroId}] HP: ${cp.hpDisplay} | AC: ${cp.acDisplay} | Gold: ${cp.gp} GP, ${cp.sp} SP`,
+        cp.notesExportStr || ''
+    ].filter(Boolean).join('\n\n');
+    navigator.clipboard?.writeText(block).then(() => {
+        dmShowQuickToast(`📋 <strong>Copied ${cp.heroName || heroId}'s Synced Sheet &amp; Notes</strong> to clipboard!`);
+    }).catch(() => {});
+}
+
+function dmCopyAllSyncedCheckpoints() {
+    const blocks = [];
+    DM_PARTY_TARGETS.forEach(t => {
+        const cp = dmSyncedCheckpoints[t.id] || dmLiveHeroes[t.id];
+        if (!cp) return;
+        const header = `========================================\n${t.label} (${cp.syncedTimeStr ? 'Synced Checkpoint: ' + cp.syncedTimeStr : 'Live Stream State'})\n========================================`;
+        const body = [
+            cp.sheetExportStr || `[${cp.heroName || t.label}] HP: ${cp.hpDisplay} | AC: ${cp.acDisplay} | Gold: ${cp.gp} GP, ${cp.sp} SP`,
+            cp.notesExportStr || ''
+        ].filter(Boolean).join('\n\n');
+        blocks.push(header + '\n' + body);
+    });
+    if (!blocks.length) {
+        dmShowQuickToast(`⚠️ No synced checkpoints or live hero states available yet.`);
+        return;
+    }
+    navigator.clipboard?.writeText(blocks.join('\n\n\n')).then(() => {
+        dmShowQuickToast(`📋 <strong>Copied All 3 Heroes' Synced Checkpoints &amp; Verbatim Notes</strong> to clipboard!`);
+    }).catch(() => {});
+}
+
+function dmUpdateSection0LiveVitals() {
+    DM_PARTY_TARGETS.forEach(t => {
+        const st = dmLiveHeroes[t.id] || dmSyncedCheckpoints[t.id];
+        if (!st) return;
+        const vitEl = document.getElementById(`dm-sec0-vitals-${t.id}`);
+        if (vitEl && st.hpDisplay) {
+            vitEl.textContent = `HP ${st.hpDisplay} • AC ${st.acDisplay || '--'}`;
+        }
+        const resEl = document.getElementById(`dm-sec0-res-${t.id}`);
+        if (resEl && st.resourcesSummary) {
+            resEl.textContent = st.resourcesSummary;
+        }
+    });
+}
+
 function dmDeleteCustomLoot(lootKey) {
     const rtdb = dmGetRtdb();
     const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
@@ -12823,13 +12914,16 @@ function initDmFirebaseSync() {
         if (activeLootTag === 'Materials') renderLootVault('Materials', true);
     });
 
-    // 3. Live sync party hero states (Backpacks, Equipped Gear, Gold, HP)
+    // 3. Live sync party hero states AND explicit Synced Checkpoints
     rtdb.ref(`campaigns/${room}/heroes`).on('value', snap => {
         const val = snap.val() || {};
         dmLiveHeroes = {};
+        dmSyncedCheckpoints = {};
         Object.entries(val).forEach(([hid, hObj]) => {
             if (hObj && hObj.state) dmLiveHeroes[hid] = hObj.state;
+            if (hObj && hObj.synced_checkpoint) dmSyncedCheckpoints[hid] = hObj.synced_checkpoint;
         });
+        dmUpdateSection0LiveVitals();
         if (activeModalKind === 'dm_drop' && dmDropActiveTab === 'party') {
             renderDmDropModalBody();
         }
@@ -12841,7 +12935,7 @@ function openDmCustomDropModal(initialTab) {
     modalNavStack = [];
     activeModalKind = 'dm_drop';
     if (initialTab) dmDropActiveTab = initialTab;
-    document.getElementById('modal-title').innerHTML = `🎁 DM Firebase Loot Command, Custom Item Forge &amp; Live Party Gear`;
+    document.getElementById('modal-title').innerHTML = `🎁 DM Firebase Loot Command, Custom Item Forge &amp; Live Party Monitor`;
     renderDmDropModalBody();
     setModalLogsHtml('Connected to Firebase Realtime Database (dnd-curse-of-strahd-467ea).');
     if (!modal.open) modal.showModal();
@@ -12866,7 +12960,7 @@ function renderDmDropModalBody() {
         <div class="modal-tabs" style="margin-bottom:10px;">
             <button type="button" class="modal-tab-btn ${dmDropActiveTab === 'handout' ? 'active' : ''}" onclick="switchDmDropTab('handout')">⚡ 1. Quick Handout &amp; Gold</button>
             <button type="button" class="modal-tab-btn ${dmDropActiveTab === 'forge' ? 'active' : ''}" onclick="switchDmDropTab('forge')">🛠️ 2. Custom Item Forge</button>
-            <button type="button" class="modal-tab-btn ${dmDropActiveTab === 'party' ? 'active' : ''}" onclick="switchDmDropTab('party')">🎒 3. Live Party Backpacks &amp; Gear</button>
+            <button type="button" class="modal-tab-btn ${dmDropActiveTab === 'party' ? 'active' : ''}" onclick="switchDmDropTab('party')">📡 3. Live Party Monitor, Notes &amp; Checkpoints</button>
         </div>
     `;
 
@@ -13207,14 +13301,15 @@ function renderDmDropModalBody() {
         return;
     }
 
-    // Tab 3: Live Party Backpacks & Equipped Gear (Mirrored from Firebase)
+    // Tab 3: Live Party Monitor, Remote DM Management, Verbatim Player Notes & Synced Checkpoints
     const heroCards = DM_PARTY_TARGETS.map(t => {
-        const st = dmLiveHeroes[t.id];
+        const st = dmLiveHeroes[t.id] || dmSyncedCheckpoints[t.id];
+        const cp = dmSyncedCheckpoints[t.id];
         if (!st) {
             return `
                 <div style="background:#0b1120; border:1px solid #334155; border-radius:8px; padding:12px;">
                     <div style="font-weight:800; color:#fde68a; font-size:0.88rem;">${t.label}</div>
-                    <div style="font-size:0.75rem; color:#64748b; margin-top:4px; font-style:italic;">Waiting for ${t.label}'s sheet to open once so it mirrors its live Backpack &amp; Equipment to Firebase...</div>
+                    <div style="font-size:0.75rem; color:#64748b; margin-top:4px; font-style:italic;">Waiting for ${t.label}'s sheet to open once so it mirrors its live Backpack, Notes &amp; Equipment to Firebase...</div>
                 </div>
             `;
         }
@@ -13237,32 +13332,106 @@ function renderDmDropModalBody() {
             `;
         }).join('');
 
+        const notesList = Array.isArray(st.notes) ? st.notes : (cp && Array.isArray(cp.notes) ? cp.notes : []);
+        const notesHtml = notesList.length > 0
+            ? notesList.map((n, nIdx) => {
+                const titlePart = (n && n.title) ? `<strong style="color:#fde68a;">[${escapeEncounterHtml(n.title)}]</strong> ` : '';
+                const bodyPart = escapeEncounterHtml((n && n.text) ? n.text : String(n));
+                return `
+                <div style="background:#0f172a; border-left:2.5px solid #a855f7; border-radius:4px; padding:4px 8px; font-size:0.73rem; color:#e2e8f0; line-height:1.35;">
+                    <span style="color:#c084fc; font-weight:700; margin-right:4px;">#${nIdx + 1}</span>${titlePart}${bodyPart}
+                </div>
+            `;
+            }).join('')
+            : '<div style="font-size:0.72rem; color:#64748b; font-style:italic;">No player notes recorded.</div>';
+
+        const cpBadgeHtml = cp && cp.syncedTimeStr
+            ? `<span class="pill green" style="font-size:0.66rem;" title="Player clicked ☁️ Sync to DM at this time">☁️ Synced Checkpoint: ${escapeEncounterHtml(cp.syncedTimeStr)}</span>`
+            : `<span class="pill" style="font-size:0.66rem; background:#1e293b; color:#94a3b8;">📡 Live Stream (No manual ☁️ Sync clicked yet)</span>`;
+
+        const cpText = [
+            (cp && cp.sheetExportStr) || st.sheetExportStr || '',
+            (cp && cp.notesExportStr) || st.notesExportStr || ''
+        ].filter(Boolean).join('\n\n');
+
         return `
-            <div style="background:#0b1120; border:1px solid #334155; border-radius:8px; padding:11px 12px; display:flex; flex-direction:column; gap:7px;">
+            <div style="background:#0b1120; border:1px solid #334155; border-radius:8px; padding:11px 12px; display:flex; flex-direction:column; gap:8px;">
                 <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; border-bottom:1px solid #1e293b; padding-bottom:6px;">
-                    <div>
-                        <strong style="color:#fde68a; font-size:0.9rem;">${t.label}</strong>
-                        <span class="pill purple" style="margin-left:6px; font-size:0.68rem;">Preset: ${escapeEncounterHtml(st.preset || 'Default')}</span>
+                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                        <strong style="color:#fde68a; font-size:0.92rem;">${t.label}</strong>
+                        <span class="pill purple" style="font-size:0.68rem;">Preset: ${escapeEncounterHtml(st.preset || 'Default')}</span>
+                        ${cpBadgeHtml}
                     </div>
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:#86efac;">
-                        HP: <strong>${escapeEncounterHtml(st.hpDisplay || '--')}</strong> • AC: <strong>${escapeEncounterHtml(st.acDisplay || '--')}</strong> • 💰 <strong>${st.gp || 0} GP, ${st.sp || 0} SP</strong>
+                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                        <span style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:#86efac;">
+                            HP: <strong>${escapeEncounterHtml(st.hpDisplay || '--')}</strong> • AC: <strong>${escapeEncounterHtml(st.acDisplay || '--')}</strong> • 💰 <strong>${st.gp || 0} GP, ${st.sp || 0} SP</strong>
+                        </span>
+                        <button type="button" class="btn-modal-mini" style="padding:2px 8px; font-size:0.68rem; border-color:#34d399; color:#a7f3d0;" onclick="dmCopySingleHeroCheckpoint('${t.id}')">📋 Copy Hero Sync</button>
                     </div>
                 </div>
+
+                ${st.resourcesSummary ? `
+                <div style="font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:#d8b4fe; background:#111827; border:1px solid #1e293b; border-radius:5px; padding:4px 8px;">
+                    <strong>Live Class Resources:</strong> ${escapeEncounterHtml(st.resourcesSummary)}
+                </div>` : ''}
+
+                <!-- Remote DM Vitals & Purse Controls -->
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; background:#111827; border:1px solid #1e293b; border-radius:6px; padding:5px 8px;">
+                    <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;">
+                        <span style="font-size:0.68rem; font-weight:800; color:#fca5a5; text-transform:uppercase; margin-right:2px;">⚔️ Remote HP:</span>
+                        <button type="button" class="btn-modal-mini" style="padding:1px 7px; font-size:0.68rem; border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteAdjustHeroHp('${t.id}', '${t.label}', -5)">-5 HP</button>
+                        <button type="button" class="btn-modal-mini" style="padding:1px 7px; font-size:0.68rem; border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteAdjustHeroHp('${t.id}', '${t.label}', -1)">-1 HP</button>
+                        <button type="button" class="btn-modal-mini" style="padding:1px 7px; font-size:0.68rem; border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroHp('${t.id}', '${t.label}', 1)">+1 HP</button>
+                        <button type="button" class="btn-modal-mini" style="padding:1px 7px; font-size:0.68rem; border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroHp('${t.id}', '${t.label}', 5)">+5 HP</button>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:4px; flex-wrap:wrap;">
+                        <span style="font-size:0.68rem; font-weight:800; color:#fde68a; text-transform:uppercase; margin-right:2px;">💰 Remote Gold:</span>
+                        <button type="button" class="btn-modal-mini" style="padding:1px 7px; font-size:0.68rem; border-color:#f59e0b; color:#fde68a;" onclick="dmRemoteAdjustHeroGold('${t.id}', '${t.label}', -5)">-5 GP</button>
+                        <button type="button" class="btn-modal-mini" style="padding:1px 7px; font-size:0.68rem; border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroGold('${t.id}', '${t.label}', 5)">+5 GP</button>
+                        <button type="button" class="btn-modal-mini" style="padding:1px 7px; font-size:0.68rem; border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroGold('${t.id}', '${t.label}', 10)">+10 GP</button>
+                    </div>
+                </div>
+
                 <div>
                     <div style="font-size:0.66rem; font-weight:800; color:#93c5fd; text-transform:uppercase; margin-bottom:4px;">🛡️ Live Equipped Paper-Doll (${eqEntries.length})</div>
                     <div style="display:flex; flex-wrap:wrap; gap:4px;">${eqHtml}</div>
                 </div>
+
                 <div>
                     <div style="font-size:0.66rem; font-weight:800; color:#6ee7b7; text-transform:uppercase; margin-bottom:4px;">🎒 Live Backpack Inventory (${items.length} items)</div>
-                    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:4px; max-height:190px; overflow-y:auto;">
+                    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:4px; max-height:155px; overflow-y:auto;">
                         ${itemsHtml}
                     </div>
                 </div>
+
+                <div>
+                    <div style="font-size:0.66rem; font-weight:800; color:#c084fc; text-transform:uppercase; margin-bottom:4px;">📓 Live Verbatim Player Notes (${notesList.length} notes — Newest on Top)</div>
+                    <div style="display:flex; flex-direction:column; gap:4px; max-height:130px; overflow-y:auto;">
+                        ${notesHtml}
+                    </div>
+                </div>
+
+                ${cpText ? `
+                <details style="background:#080d19; border:1px solid #1e293b; border-radius:6px; padding:6px 9px;">
+                    <summary style="cursor:pointer; font-size:0.72rem; font-weight:800; color:#6ee7b7; user-select:none;">
+                        ☁️ View Full Synced Checkpoint Export String (${cp && cp.syncedTimeStr ? 'Synced ' + escapeEncounterHtml(cp.syncedTimeStr) : 'Live Capture'})
+                    </summary>
+                    <pre style="margin:6px 0 0; font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:#cbd5e1; white-space:pre-wrap; word-break:break-word; max-height:170px; overflow-y:auto;">${escapeEncounterHtml(cpText)}</pre>
+                </details>` : ''}
             </div>
         `;
     }).join('');
 
     contentEl.innerHTML = tabsHtml + `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; background:#0b1120; border:1px solid #1e293b; border-radius:8px; padding:8px 12px; margin-bottom:10px;">
+            <div style="font-size:0.75rem; color:#cbd5e1;">
+                <strong>2-Tier Cloud System:</strong> Sheets stream live below as players play, and players click <strong>☁️ Sync to DM</strong> on their header to save an official Checkpoint without overwriting GitHub files.
+            </div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" class="btn-modal-mini" style="border-color:#38bdf8; color:#bae6fd; padding:4px 10px;" onclick="dmRequestAllCheckpoints()">📡 Request Sync from Open Sheets</button>
+                <button type="button" class="btn-modal-mini" style="border-color:#34d399; color:#a7f3d0; padding:4px 10px;" onclick="dmCopyAllSyncedCheckpoints()">📋 Copy All 3 Heroes' Synced Data &amp; Notes</button>
+            </div>
+        </div>
         <div style="display:flex; flex-direction:column; gap:10px;">
             ${heroCards}
         </div>

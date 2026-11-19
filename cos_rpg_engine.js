@@ -1604,42 +1604,175 @@
     }
 
     let heroSyncTimer = null;
-    function syncHeroStateToFirebase() {
+    let lastSyncedFingerprint = '';
+    let isCapturingExports = false;
+
+    function captureNativeExportStrings() {
+        let sheetStr = '', notesStr = '';
+        if (isCapturingExports || typeof navigator === 'undefined' || !navigator.clipboard) return { sheetStr, notesStr };
+        isCapturingExports = true;
+        const origWrite = navigator.clipboard.writeText;
+        const origLog = window.logRoll;
+        const origPrompt = window.prompt;
+        try {
+            window.logRoll = () => {};
+            window.prompt = () => null;
+            navigator.clipboard.writeText = (txt) => {
+                const s = String(txt || '');
+                if (s.includes('Notes Export')) notesStr = s;
+                else if (s) sheetStr = s;
+                return { then: () => ({ catch: () => {} }), catch: () => {} };
+            };
+            if (typeof window.__origExportSheetState === 'function') window.__origExportSheetState();
+            else if (typeof window.exportSheetState === 'function') window.exportSheetState();
+            if (typeof window.__origExportPlayerNotes === 'function') window.__origExportPlayerNotes();
+            else if (typeof window.exportPlayerNotes === 'function') window.exportPlayerNotes();
+        } catch (e) {} finally {
+            navigator.clipboard.writeText = origWrite;
+            if (origLog) window.logRoll = origLog;
+            if (origPrompt) window.prompt = origPrompt;
+            isCapturingExports = false;
+        }
+        return { sheetStr, notesStr };
+    }
+
+    function extractResourcesSummary(sheetExportStr) {
+        if (!sheetExportStr) return '';
+        const parts = sheetExportStr.split('|').map(s => s.trim());
+        const keep = parts.filter(p =>
+            /^(Sorcery Points|Tides of Chaos|Fierna Charm|Slots|Last Surge|Help|Superiority Dice|Second Wind|Action Surge|Heroic Inspiration|Stance|Lament|Revolvers|Spell Slots|Favored Enemy|Hunter's Sense|Whispering Grave|Active):/i.test(p)
+        );
+        return keep.join(' • ');
+    }
+
+    function buildHeroSnapshot() {
+        const bonuses = getGearBonuses();
+        const eq = bonuses.equippedMap || {};
+        const activeSlots = getActiveSlots();
+        const equippedLabels = {};
+        activeSlots.forEach(s => {
+            if (!eq[s.id]) return;
+            const raw = findInventoryRawByKey(eq[s.id]);
+            if (raw) {
+                equippedLabels[s.label] = shortLabel(raw) + (s.id === 'mainHand' && bonuses.mainHand2H ? ' (2H)' : '');
+            }
+        });
+        const wallet = adapter.getGold ? adapter.getGold() : { gp: 0, sp: 0 };
+        const hpTxt = (document.getElementById('hp-disp')?.innerText || document.getElementById('cur-hp')?.innerText || '').replace(/\s+/g, ' ').trim();
+        const acTxt = (document.getElementById('ac-disp')?.innerText || '').replace(/\s+/g, ' ').trim();
+        const activePreset = getActivePresetInfo(eq);
+        const notesList = typeof window.getStoredNotes === 'function' ? window.getStoredNotes() : [];
+        const { sheetStr, notesStr } = captureNativeExportStrings();
+        const resSummary = extractResourcesSummary(sheetStr);
+
+        return {
+            heroId: adapter.heroId,
+            heroName: adapter.heroName,
+            heroEmoji: adapter.heroEmoji || '🛡️',
+            hpDisplay: hpTxt,
+            acDisplay: acTxt,
+            gp: wallet.gp || 0,
+            sp: wallet.sp || 0,
+            preset: activePreset.label + (activePreset.isCustom ? ' [Custom]' : ''),
+            equippedSlots: equippedLabels,
+            customPresets: getCustomPresets().map(cp => ({ label: cp.label, slotLabels: cp.slotLabels || {} })),
+            items: adapter.getItems(),
+            notes: notesList,
+            resourcesSummary: resSummary,
+            sheetExportStr: sheetStr,
+            notesExportStr: notesStr,
+            updatedAt: Date.now()
+        };
+    }
+
+    function syncHeroStateToFirebase(forceNow = false) {
         if (!firebaseReady || !rtdb || !adapter) return;
         if (heroSyncTimer) clearTimeout(heroSyncTimer);
         heroSyncTimer = setTimeout(() => {
             try {
-                const bonuses = getGearBonuses();
-                const eq = bonuses.equippedMap || {};
-                const activeSlots = getActiveSlots();
-                const equippedLabels = {};
-                activeSlots.forEach(s => {
-                    if (!eq[s.id]) return;
-                    const raw = findInventoryRawByKey(eq[s.id]);
-                    if (raw) {
-                        equippedLabels[s.label] = shortLabel(raw) + (s.id === 'mainHand' && bonuses.mainHand2H ? ' (2H)' : '');
-                    }
+                const snap = buildHeroSnapshot();
+                const fp = JSON.stringify({
+                    hp: snap.hpDisplay,
+                    ac: snap.acDisplay,
+                    gp: snap.gp,
+                    sp: snap.sp,
+                    pr: snap.preset,
+                    eq: snap.equippedSlots,
+                    it: snap.items,
+                    nt: snap.notes,
+                    rs: snap.resourcesSummary
                 });
-                const wallet = adapter.getGold ? adapter.getGold() : { gp: 0, sp: 0 };
-                const hpTxt = document.getElementById('hp-disp')?.innerText || document.getElementById('cur-hp')?.innerText || '';
-                const acTxt = document.getElementById('ac-disp')?.innerText || '';
-                const activePreset = getActivePresetInfo(eq);
-                campaignRtdbRef(`heroes/${adapter.heroId}/state`).set({
-                    heroId: adapter.heroId,
-                    heroName: adapter.heroName,
-                    heroEmoji: adapter.heroEmoji || '🛡️',
-                    hpDisplay: hpTxt,
-                    acDisplay: acTxt,
-                    gp: wallet.gp || 0,
-                    sp: wallet.sp || 0,
-                    preset: activePreset.label + (activePreset.isCustom ? ' [Custom]' : ''),
-                    equippedSlots: equippedLabels,
-                    customPresets: getCustomPresets().map(cp => ({ label: cp.label, slotLabels: cp.slotLabels || {} })),
-                    items: adapter.getItems(),
-                    updatedAt: Date.now()
-                }).catch(() => {});
+                if (!forceNow && fp === lastSyncedFingerprint) return;
+                lastSyncedFingerprint = fp;
+                campaignRtdbRef(`heroes/${adapter.heroId}/state`).set(snap).catch(() => {});
             } catch (e) {}
-        }, 120);
+        }, forceNow ? 20 : 140);
+    }
+
+    function pushSyncedCheckpoint(silentToast = false) {
+        if (!adapter) return;
+        const snap = buildHeroSnapshot();
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const checkpointPayload = {
+            ...snap,
+            syncedAt: Date.now(),
+            syncedTimeStr: timeStr
+        };
+
+        if (firebaseReady && rtdb) {
+            campaignRtdbRef(`heroes/${adapter.heroId}/state`).set(snap).catch(() => {});
+            campaignRtdbRef(`heroes/${adapter.heroId}/synced_checkpoint`).set(checkpointPayload).then(() => {
+                const btn = document.getElementById('rpg-hdr-sync-btn');
+                if (btn) {
+                    btn.innerHTML = `✅ Synced (${timeStr})`;
+                    btn.style.borderColor = '#22c55e';
+                    btn.style.color = '#86efac';
+                    setTimeout(() => {
+                        if (btn) {
+                            btn.innerHTML = `☁️ Sync to DM`;
+                            btn.style.borderColor = 'rgba(52, 211, 153, 0.55)';
+                            btn.style.color = '#6ee7b7';
+                        }
+                    }, 4000);
+                }
+                if (!silentToast) {
+                    const combined = [snap.sheetExportStr, snap.notesExportStr].filter(Boolean).join('\n');
+                    if (combined && navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(combined).catch(() => {});
+                    }
+                    adapter.log(`☁️ <strong>Synced Official Checkpoint to DM via Firebase (${esc(timeStr)})!</strong><br><small style="color:#86efac;">Your live Sheet State, Equipped Gear, Saved Presets &amp; Player Notes are now saved directly on the DM Screen (no copy-paste required!).</small>`);
+                }
+            }).catch(err => {
+                if (!silentToast) adapter.log(`⚠️ Cloud Sync failed: ${esc(err.message)}`);
+            });
+        } else if (!silentToast) {
+            const combined = [snap.sheetExportStr, snap.notesExportStr].filter(Boolean).join('\n');
+            if (combined && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(combined).then(() => {
+                    adapter.log(`📋 <strong>Copied Sheet State &amp; Player Notes to Clipboard!</strong>`);
+                });
+            }
+        }
+    }
+
+    function applyRemoteHpDelta(delta) {
+        if (!delta) return;
+        if (delta > 0) {
+            adapter.healHP(delta, false);
+            adapter.log(`💚 <strong>DM Healed You:</strong> <span style="color:#4ade80; font-weight:800;">+${delta} HP</span>!`);
+        } else {
+            const dmg = Math.abs(delta);
+            const hpInp = document.getElementById('hp-input');
+            if (hpInp && typeof window.applyDamage === 'function') {
+                const prev = hpInp.value;
+                hpInp.value = String(dmg);
+                window.applyDamage();
+                hpInp.value = prev;
+            }
+            adapter.log(`⚔️ <strong>DM Applied Damage:</strong> <span style="color:#f87171; font-weight:800;">-${dmg} HP</span>!`);
+        }
+        syncHeroStateToFirebase(true);
     }
 
     function startCloudVaultAndCommandListeners() {
@@ -1684,7 +1817,7 @@
             }
         });
 
-        // 3. Live DM Direct-Inject / Remote Item Removal commands
+        // 3. Live DM Direct-Inject / Remote HP & Gold & Item Management commands
         const cmdRef = campaignRtdbRef(`heroes/${adapter.heroId}/dm_commands`);
         cmdRef.on('value', snap => {
             const val = snap.val();
@@ -1705,8 +1838,14 @@
                         adapter.log(`🎁 <strong>DM Added to Your Backpack:</strong> <strong>${cmd.qty > 1 ? cmd.qty + 'x ' : ''}${esc(shortLabel(cmd.itemRaw))}</strong>${cmd.note ? ` <em>("${esc(cmd.note)}")</em>` : ''}!`);
                     } else if (cmd.action === 'inject_gold') {
                         adapter.addGold(cmd.gp || 0, cmd.sp || 0, cmd.note || 'DM Grant');
-                        syncHeroStateToFirebase();
+                        syncHeroStateToFirebase(true);
                         adapter.log(`💰 <strong>DM Granted Gold:</strong> <strong>+${cmd.gp || 0} GP${cmd.sp ? ', +' + cmd.sp + ' SP' : ''}</strong>!`);
+                    } else if (cmd.action === 'spend_gold') {
+                        adapter.spendGold(cmd.gp || 0, cmd.sp || 0, cmd.note || 'DM Deduct');
+                        syncHeroStateToFirebase(true);
+                        adapter.log(`💸 <strong>DM Deducted Gold:</strong> <strong>-${cmd.gp || 0} GP${cmd.sp ? ', -' + cmd.sp + ' SP' : ''}</strong>!`);
+                    } else if (cmd.action === 'adjust_hp') {
+                        applyRemoteHpDelta(parseInt(cmd.delta) || 0);
                     } else if (cmd.action === 'remove_item' && typeof cmd.invIndex === 'number') {
                         const items = adapter.getItems();
                         if (items[cmd.invIndex]) {
@@ -1715,6 +1854,8 @@
                             applyEquipmentToSheet(true);
                             adapter.log(`🛡️ <strong>DM Removed Item:</strong> ${esc(shortLabel(removed[0]))}`);
                         }
+                    } else if (cmd.action === 'request_checkpoint') {
+                        pushSyncedCheckpoint(true);
                     }
                 }).catch(() => {});
             });
@@ -2108,9 +2249,18 @@
             header.insertAdjacentElement('afterend', banner);
         }
 
-        // Inject Header Quick Gear & Backpack buttons into top-right badge bar
+        // Inject Header Quick Gear, Backpack & 1-Click Cloud Sync to DM buttons into top-right badge bar
         const badgeGroup = document.querySelector('.pill-badge-group');
         if (badgeGroup && !document.getElementById('rpg-hdr-equip-btn')) {
+            const syncBtn = document.createElement('button');
+            syncBtn.type = 'button';
+            syncBtn.id = 'rpg-hdr-sync-btn';
+            syncBtn.className = 'rpg-header-btn';
+            syncBtn.style.cssText = 'background:linear-gradient(135deg,#064e3b,#0f172a); border-color:rgba(52,211,153,0.55); color:#6ee7b7;';
+            syncBtn.title = 'Save official Session Checkpoint (Vitals, Slots, Gear, Presets & Player Notes) directly to the DM Screen via Firebase';
+            syncBtn.onclick = () => pushSyncedCheckpoint(false);
+            syncBtn.innerHTML = `☁️ Sync to DM`;
+
             const equipBtn = document.createElement('button');
             equipBtn.type = 'button';
             equipBtn.id = 'rpg-hdr-equip-btn';
@@ -2127,6 +2277,7 @@
 
             badgeGroup.insertBefore(bpBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(equipBtn, badgeGroup.firstChild);
+            badgeGroup.insertBefore(syncBtn, badgeGroup.firstChild);
         }
 
         // Replace bloated inventory panel contents with compact Adventure Gear Hub!
@@ -3490,9 +3641,38 @@
         } catch (e) {}
     }
 
+    function startLiveSheetWatcher() {
+        // Wrap native exportSheetState / exportPlayerNotes so clicking them ALSO pushes a Firebase checkpoint!
+        if (typeof window.exportSheetState === 'function' && !window.__origExportSheetState) {
+            window.__origExportSheetState = window.exportSheetState;
+            window.exportSheetState = function () {
+                window.__origExportSheetState();
+                pushSyncedCheckpoint(true);
+            };
+        }
+        if (typeof window.exportPlayerNotes === 'function' && !window.__origExportPlayerNotes) {
+            window.__origExportPlayerNotes = window.exportPlayerNotes;
+            window.exportPlayerNotes = function () {
+                window.__origExportPlayerNotes();
+                pushSyncedCheckpoint(true);
+            };
+        }
+        // Stream live changes (HP, slots, ammo, notes, buffs) to Firebase for DM live monitoring
+        document.addEventListener('click', () => {
+            if (!isCapturingExports) syncHeroStateToFirebase(false);
+        });
+        document.addEventListener('change', () => {
+            if (!isCapturingExports) syncHeroStateToFirebase(false);
+        });
+        setInterval(() => {
+            if (!isCapturingExports) syncHeroStateToFirebase(false);
+        }, 2500);
+    }
+
     function init(sheetAdapter) {
         adapter = sheetAdapter;
         injectDialogsAndBanner();
+        startLiveSheetWatcher();
         initFirebaseSync();
         applyEquipmentToSheet(true);
         checkUrlClaimParam();
@@ -3512,6 +3692,7 @@
         syncExternalWeaponStance,
         getExportEquippedSummary,
         exportEquippedGear,
+        pushSyncedCheckpoint,
         openEquipModal,
         openBackpackModal,
         openCraftModal,
