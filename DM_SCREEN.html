@@ -13272,18 +13272,27 @@ function renderDmDropModalBody() {
                         Item Name (with optional Emoji)
                         <input type="text" id="dm-forge-name" placeholder="e.g. 🗡️ Crimson Fang Stiletto +1, 🧥 Cloak of the Mist-Walker..." style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
                     </label>
-                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700;">
-                        Act &amp; Where Found
-                        <input type="text" id="dm-forge-loc" value="Act I • Custom DM Reward" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fca5a5; font-weight:700;">
+                        Act Filter Placement
+                        <select id="dm-forge-act" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                            <option value="Act I" ${activeLootTag === 'Act I' ? 'selected' : ''}>🩸 Act I (Svalich / Village / Bonegrinder)</option>
+                            <option value="Act II" ${activeLootTag === 'Act II' ? 'selected' : ''}>⚔️ Act II (Vallaki / Winery / Yester Hill)</option>
+                            <option value="Act III" ${activeLootTag === 'Act III' ? 'selected' : ''}>🐉 Act III (Argynvost / Krezk / Berez)</option>
+                            <option value="Act IV" ${activeLootTag === 'Act IV' ? 'selected' : ''}>🏰 Act IV (Amber Temple / Ravenloft)</option>
+                        </select>
                     </label>
                     <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fde68a; font-weight:700;">
-                        Send To Hero (if dropping now)
+                        Best Fit Hero Filter &amp; Drop Target
                         <select id="dm-forge-target" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
-                            <option value="piper|🎩 Piper">🎩 Piper</option>
-                            <option value="jacomir|👑 Jacomir">👑 Jacomir</option>
-                            <option value="yvaine|🔫 Yvaine">🔫 Yvaine</option>
-                            <option value="all|👥 Entire Party">👥 Entire Party (All 3)</option>
+                            <option value="piper|🎩 Piper">🎭 Best for Piper (🎩 Piper)</option>
+                            <option value="jacomir|👑 Jacomir">👑 Best for Jacomir (👑 Jacomir)</option>
+                            <option value="yvaine|🔫 Yvaine">🎯 Best for Yvaine (🔫 Yvaine)</option>
+                            <option value="all|👥 Entire Party">👥 Best for All Heroes (Entire Party)</option>
                         </select>
+                    </label>
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700; grid-column:span 2;">
+                        Where Found / Source Location
+                        <input type="text" id="dm-forge-loc" value="Custom DM Reward" placeholder="e.g. Blood on the Vine Tavern, Tser Pool Chest, Wilderness..." style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
                     </label>
                     ${dynamicFieldsHtml}
                     <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700; grid-column:span 2;">
@@ -13459,9 +13468,17 @@ function submitDmForgeItem(andSendToHero = true) {
         setModalLogsHtml('⚠️ Enter a name for your custom item first!');
         return;
     }
-    const loc = (document.getElementById('dm-forge-loc')?.value || 'Act I • Custom DM Reward').trim();
+    const actVal = (document.getElementById('dm-forge-act')?.value || 'Act I').trim();
+    const rawWhere = (document.getElementById('dm-forge-loc')?.value || 'Custom DM Reward').trim().replace(/^Act\s+[I|V]+\s*•\s*/i, '');
     const note = (document.getElementById('dm-forge-note')?.value || '').trim();
     const targetVal = (document.getElementById('dm-forge-target')?.value || 'piper|🎩 Piper').split('|');
+    const heroId = targetVal[0] || 'piper';
+    const bestFitLabel = heroId === 'piper'
+        ? 'Best for Piper'
+        : (heroId === 'jacomir'
+            ? 'Best for Jacomir'
+            : (heroId === 'yvaine' ? 'Best for Yvaine' : 'Best for Piper, Jacomir & Yvaine'));
+    const loc = `${actVal} • ${rawWhere || 'Custom DM Reward'} (${bestFitLabel} • Possible / Homebrew)`;
     const attune = document.getElementById('dm-forge-attune')?.value === 'yes';
 
     let vaultCat = 'quest';
@@ -13615,11 +13632,40 @@ function submitDmForgeItem(andSendToHero = true) {
         mechanics: mechanicsHtml,
         lore: note || `Forged by the Lead DM in Curse of Strahd (${loc}).`,
         customMeta,
+        actTag: actVal,
+        bestHeroId: heroId,
+        createdAt: Date.now(),
         isCustomForged: true
     };
 
     LOOT_DATA[lootKey] = lootRecord;
-    renderLootVault(activeLootTag, true);
+
+    // Auto-switch Section 4 to the matching filter tab if the current tab wouldn't display this item
+    let targetFilterTag = activeLootTag;
+    if (vaultCat === 'material') {
+        targetFilterTag = 'Materials';
+    } else if (activeLootTag === 'Materials' || !matchesLootFilter(lootRecord, activeLootTag)) {
+        targetFilterTag = actVal;
+    }
+    if (targetFilterTag !== activeLootTag) {
+        filterLootVault(targetFilterTag);
+    } else {
+        renderLootVault(activeLootTag, true);
+    }
+
+    const catTableLabels = {
+        quest: '4.1 Story & Quest Relics',
+        weapon: '4.2 Magic Weapons & Arms',
+        caster: '4.3 Caster Staves & Relics',
+        armor: '4.4 Armor, Rings & Cloaks',
+        heal: '4.5 Potions & Consumables',
+        buff: '4.6 Boons & Delicacies',
+        material: '4.7 Crafting Materials & Forage'
+    };
+    const placedTableLabel = catTableLabels[vaultCat] || 'Section 4 Loot Vault';
+    const placedFilterLabel = vaultCat === 'material'
+        ? '🌿 Crafting Materials & Forage'
+        : `${actVal}, ${bestFitLabel} & ✨ Possible / Homebrew`;
 
     const rtdb = dmGetRtdb();
     const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
@@ -13629,8 +13675,9 @@ function submitDmForgeItem(andSendToHero = true) {
 
     if (andSendToHero) {
         dmSendLootDrop(targetVal[0], targetVal[1], name, 1, 0, 0, note, customMeta, false);
+        dmShowQuickToast(`🎁 <strong>Forged "${name}" &amp; Sent to ${targetVal[1]}!</strong><br><small style="color:#a7f3d0;">Auto-placed in <strong>${placedTableLabel}</strong> under <strong>${placedFilterLabel}</strong>.</small>`);
     } else {
-        dmShowQuickToast(`💾 <strong>Saved "${name}" to Firebase World Loot Vault!</strong> (${customMeta.summary})`);
+        dmShowQuickToast(`💾 <strong>Saved "${name}" to Section 4 Loot Table!</strong><br><small style="color:#a7f3d0;">Placed in <strong>${placedTableLabel}</strong> under <strong>${placedFilterLabel}</strong>.</small>`);
     }
 }
 
@@ -14856,12 +14903,13 @@ function renderMonsterTable(locTag = activeMonsterLocation, preserveActive = fal
     }).join('');
 }
 
-function getPrimaryAct(locationStr) {
+function getPrimaryAct(locationStr, itObj) {
+    if (itObj && itObj.actTag && /^Act\s+(I|II|III|IV)$/i.test(itObj.actTag)) return itObj.actTag;
     const loc = String(locationStr || '');
-    if (/^Act I\b(?!I|V)/i.test(loc)) return 'Act I';
-    if (/^Act II\b(?!I)/i.test(loc)) return 'Act II';
-    if (/^Act III\b/i.test(loc)) return 'Act III';
-    if (/^Act IV\b/i.test(loc)) return 'Act IV';
+    if (/\bAct I\b(?!I|V)/i.test(loc)) return 'Act I';
+    if (/\bAct II\b(?!I)/i.test(loc)) return 'Act II';
+    if (/\bAct III\b/i.test(loc)) return 'Act III';
+    if (/\bAct IV\b/i.test(loc)) return 'Act IV';
     return 'Act I';
 }
 
@@ -14872,9 +14920,13 @@ function matchesLootFilter(it, filterTag) {
     if (it.cat === 'material') return false;
     if (!filterTag || filterTag === 'all') return true;
     if (filterTag === 'Act I' || filterTag === 'Act II' || filterTag === 'Act III' || filterTag === 'Act IV') {
-        return getPrimaryAct(it.location) === filterTag;
+        return getPrimaryAct(it.location, it) === filterTag;
     }
+    if (filterTag === 'Possible' && it.isCustomForged) return true;
     const q = filterTag.toLowerCase();
+    if ((q === 'piper' || q === 'jacomir' || q === 'yvaine') && (it.bestHeroId === q || it.bestHeroId === 'all')) {
+        return true;
+    }
     const blob = `${it.name} ${it.rarity} ${it.location} ${it.mechanics}`.toLowerCase();
     return blob.includes(q);
 }
@@ -14916,15 +14968,20 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         // Group items strictly by Act I -> Act II -> Act III -> Act IV with visual divider rows
         let rowsHtml = '';
         actOrder.forEach(actKey => {
-            const actItems = items.filter(([_, it]) => getPrimaryAct(it.location) === actKey);
+            const actItems = items
+                .filter(([_, it]) => getPrimaryAct(it.location, it) === actKey)
+                .sort((a, b) => (b[1].isCustomForged ? 1 : 0) - (a[1].isCustomForged ? 1 : 0));
             if (actItems.length === 0) return;
             rowsHtml += `<tr class="biome-row-header"><td colspan="3">${actLabels[actKey]} (${actItems.length})</td></tr>`;
             actItems.forEach(([k, it]) => {
+                const customBadge = it.isCustomForged
+                    ? ` <span class="pill purple" style="font-size:0.62rem; padding:1px 6px; vertical-align:middle;">✨ CUSTOM</span>`
+                    : '';
                 rowsHtml += `
-                    <tr class="searchable-row">
+                    <tr class="searchable-row" ${it.isCustomForged ? 'style="background:rgba(168,85,247,0.06);"' : ''}>
                         <td>
                             <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
-                                <button class="link-btn" onclick="openItemModal('${k}')">${it.name}</button>
+                                <span><button class="link-btn" onclick="openItemModal('${k}')">${it.name}</button>${customBadge}</span>
                                 <span style="display:inline-flex; gap:3px; flex-shrink:0;" title="1-Click Live Drop to Hero">
                                     <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'piper', '🎩 Piper', event)" title="Drop 1x to Piper">🎩</button>
                                     <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'jacomir', '👑 Jacomir', event)" title="Drop 1x to Jacomir">👑</button>
