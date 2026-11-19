@@ -322,7 +322,7 @@
         {
             match: ['blood spear of kavan', 'blood spear'],
             category: 'weapon',
-            slots: ['mainHand', 'ranged'],
+            slots: ['mainHand'],
             hands: 1,
             versatile: true,
             attune: true,
@@ -339,7 +339,7 @@
         {
             match: ['handaxe'],
             category: 'weapon',
-            slots: ['mainHand', 'offHand', 'ranged'],
+            slots: ['mainHand', 'offHand'],
             hands: 1,
             weaponTag: 'handaxe',
             summary: '1H Light / Thrown 20/60 • Vex'
@@ -347,7 +347,7 @@
         {
             match: ['kolyan\'s silvered heirloom dagger', 'silvered heirloom dagger'],
             category: 'weapon',
-            slots: ['mainHand', 'offHand', 'ranged'],
+            slots: ['mainHand', 'offHand'],
             hands: 1,
             weaponTag: 'kolyan_dagger',
             summary: '1H Silvered 1d4+DEX • 3 Red Gems'
@@ -363,7 +363,7 @@
         {
             match: ['dagger'],
             category: 'weapon',
-            slots: ['mainHand', 'offHand', 'ranged'],
+            slots: ['mainHand', 'offHand'],
             hands: 1,
             weaponTag: 'dagger',
             summary: '1H Finesse Light / Thrown 20/60'
@@ -435,7 +435,7 @@
             summary: 'Twin Six-Shooters • 1d6+4 / 1d6'
         },
         {
-            match: ['longbow', 'shortbow', 'crossbow', /\bsling\b/],
+            match: ['longbow', 'shortbow', 'crossbow', 'musket', 'pistol', 'rifle', /\bbow\b/, /\bsling\b/],
             category: 'weapon',
             slots: ['ranged', 'mainHand'],
             hands: 2,
@@ -722,9 +722,12 @@
         for (const s of SLOTS) {
             const k = eq[s.id];
             if (!k) continue;
+            const raw = findInventoryRawByKey(k);
+            const meta = raw ? getItemMeta(raw) : null;
+            const slotValid = meta && Array.isArray(meta.slots) && meta.slots.includes(s.id);
             const avail = counts.get(k) || 0;
             const used = usedCounts.get(k) || 0;
-            if (avail <= used) {
+            if (!slotValid || avail <= used) {
                 delete eq[s.id];
                 changed = true;
             } else {
@@ -1631,8 +1634,8 @@
                         ${tr.note ? `<span style="color:#cbd5e1; font-style:italic; margin-left:4px;">"${esc(tr.note)}"</span>` : ''}
                     </div>
                     <div style="display:flex; gap:6px;">
-                        <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.acceptLiveTransfer('${tr.id}')">✅ Accept</button>
-                        <button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.declineLiveTransfer('${tr.id}')">❌ Decline</button>
+                        <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.acceptLiveTransfer('${tr.id}')">Accept</button>
+                        <button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.declineLiveTransfer('${tr.id}')">Decline</button>
                     </div>
                 </div>
             `;
@@ -1807,25 +1810,25 @@
                 const gripToggleHtml = (selectedSlot === 'mainHand' && item.meta.versatile)
                     ? `<button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('mainHand', '${esc(item.key).replace(/'/g, "\\'")}', '1h')">Equip 1H</button>
                        <button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('mainHand', '${esc(item.key).replace(/'/g, "\\'")}', '2h')">Equip 2H</button>`
-                    : `<button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('${selectedSlot}', '${esc(item.key).replace(/'/g, "\\'")}')">🛡️ Equip${item.meta.hands === 2 && selectedSlot === 'mainHand' ? ' (2H)' : ''}</button>`;
+                    : `<button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('${selectedSlot}', '${esc(item.key).replace(/'/g, "\\'")}')">Equip${item.meta.hands === 2 && selectedSlot === 'mainHand' ? ' (2H)' : ''}</button>`;
 
                 return `
                     <div class="rpg-picker-item ${isEqHere ? 'is-equipped' : ''}">
                         <div class="rpg-picker-item-top">
                             <div>
                                 <div class="rpg-picker-item-name">${esc(shortLabel(item.raw))}</div>
-                                <div class="rpg-picker-item-meta">${esc(item.meta.summary || 'Equippable Gear')}${item.meta.attune ? ' • ✨ Attune' : ''}</div>
+                                <div class="rpg-picker-item-meta">${esc(item.meta.summary || 'Equippable Gear')}${item.meta.attune ? ' • Attune' : ''}</div>
                             </div>
-                            ${isEqHere ? '<span class="rpg-card-equipped-pill">✓ WORN</span>' : ''}
+                            ${isEqHere ? '<span class="rpg-card-equipped-pill">WORN</span>' : ''}
                         </div>
                         <div class="rpg-picker-actions">
                             ${isEqHere
-                                ? `<button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.unequipSlot('${selectedSlot}')">🚫 Unequip</button>`
+                                ? `<button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.unequipSlot('${selectedSlot}')">Unequip</button>`
                                 : gripToggleHtml}
                             ${isEqHere && selectedSlot === 'mainHand' && item.meta.versatile
-                                ? `<button type="button" class="rpg-mini-btn" onclick="COS_RPG.toggleMainHandGrip()">🔄 Switch to ${bonuses.mainHand2H ? '1H' : '2H'} Grip</button>`
+                                ? `<button type="button" class="rpg-mini-btn" onclick="COS_RPG.toggleMainHandGrip()">Switch to ${bonuses.mainHand2H ? '1H' : '2H'}</button>`
                                 : ''}
-                            <button type="button" class="rpg-mini-btn" onclick="COS_RPG.openItemDetails(${item.idx})">ℹ️ Info</button>
+                            <button type="button" class="rpg-mini-btn" onclick="COS_RPG.openItemDetails(${item.idx})">Info</button>
                         </div>
                     </div>
                 `;
@@ -1938,8 +1941,8 @@
                     <div class="rpg-picker-head">
                         <span style="font-size:0.82rem; font-weight:800; color:#fde68a;">${curSlotObj.icon} ${curSlotObj.label} Slot</span>
                         <div style="display:flex; gap:4px;">
-                            ${equippedKeyInSlot ? `<button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.unequipSlot('${selectedSlot}')">🚫 Unequip</button>` : ''}
-                            <button type="button" class="rpg-mini-btn" onclick="COS_RPG.toggleCustomTagger()">🛠️ Tag Custom</button>
+                            ${equippedKeyInSlot ? `<button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.unequipSlot('${selectedSlot}')">Unequip</button>` : ''}
+                            <button type="button" class="rpg-mini-btn" onclick="COS_RPG.toggleCustomTagger()">Tag Custom</button>
                         </div>
                     </div>
                     ${customTaggerHtml}
@@ -2083,9 +2086,9 @@
                         </div>
                     </div>
                     <div class="rpg-bp-actions">
-                        ${canEquip ? `<button type="button" class="rpg-mini-btn ${isEquipped ? 'btn-equipped' : 'btn-equip'}" onclick="COS_RPG.quickToggleEquipByIndex(${idx})">${isEquipped ? '✓ Unequip' : '🛡️ Equip'}</button>` : ''}
-                        ${meta.useAction ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.useConsumableByIndex(${idx})">💚 Use</button>` : ''}
-                        <button type="button" class="rpg-mini-btn btn-send" onclick="COS_RPG.openSendForItem(${idx})" title="Send to party member">🤝 Send</button>
+                        ${canEquip ? `<button type="button" class="rpg-mini-btn ${isEquipped ? 'btn-equipped' : 'btn-equip'}" onclick="COS_RPG.quickToggleEquipByIndex(${idx})">${isEquipped ? 'Unequip' : 'Equip'}</button>` : ''}
+                        ${meta.useAction ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.useConsumableByIndex(${idx})">Use</button>` : ''}
+                        <button type="button" class="rpg-mini-btn btn-send" onclick="COS_RPG.openSendForItem(${idx})" title="Send to party member">Send</button>
                         <div class="inv-stepper" style="display:inline-flex; align-items:center; gap:3px; background:#090e1a; border:1px solid #334155; border-radius:5px; padding:1px 4px;">
                             ${p.hasQty ? `<button type="button" class="rpg-mini-btn" style="min-block-size:22px; padding:0 5px; border:none;" onclick="COS_RPG.stepBackpackQty(${idx}, -1)" aria-label="Decrease quantity">−</button><span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:800; color:#fde68a; min-width:22px; text-align:center;">${p.qty}x</span>` : ''}
                             <button type="button" class="rpg-mini-btn" style="min-block-size:22px; padding:0 5px; border:none;" onclick="COS_RPG.stepBackpackQty(${idx}, 1)" aria-label="Increase quantity">+</button>
@@ -2176,7 +2179,7 @@
                         <div style="font-size:0.73rem; color:#cbd5e1; line-height:1.4;">${esc(r.desc)}</div>
                         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:2px;">
                             <div>${reqs}</div>
-                            <button type="button" class="rpg-mini-btn btn-use ${canCraft ? '' : 'rpg-craft-disabled'}" aria-disabled="${canCraft ? 'false' : 'true'}" onclick="COS_RPG.craftRecipe('${r.id}')">⚗️ Craft 1x</button>
+                            <button type="button" class="rpg-mini-btn btn-use ${canCraft ? '' : 'rpg-craft-disabled'}" aria-disabled="${canCraft ? 'false' : 'true'}" onclick="COS_RPG.craftRecipe('${r.id}')">Craft 1x</button>
                         </div>
                     </div>
                 `;
@@ -2217,8 +2220,8 @@
                 </div>
 
                 <div style="display:flex; gap:6px;">
-                    <button type="button" class="rpg-tab-btn" aria-pressed="${tradeMode === 'item' ? 'true' : 'false'}" onclick="COS_RPG.setTradeMode('item')">🎒 Send Item</button>
-                    <button type="button" class="rpg-tab-btn" aria-pressed="${tradeMode === 'gold' ? 'true' : 'false'}" onclick="COS_RPG.setTradeMode('gold')">💰 Send Gold / Silver</button>
+                    <button type="button" class="rpg-tab-btn" aria-pressed="${tradeMode === 'item' ? 'true' : 'false'}" onclick="COS_RPG.setTradeMode('item')">Send Item</button>
+                    <button type="button" class="rpg-tab-btn" aria-pressed="${tradeMode === 'gold' ? 'true' : 'false'}" onclick="COS_RPG.setTradeMode('gold')">Send Gold / Silver</button>
                 </div>
 
                 ${tradeMode === 'item' ? `
@@ -2251,26 +2254,26 @@
 
                 <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
                     ${firebaseReady
-                        ? `<button type="button" class="rpg-mini-btn btn-use" style="padding:7px 14px; font-size:0.78rem;" onclick="COS_RPG.sendTransfer(false)">🚀 Send Live to Party Member</button>`
+                        ? `<button type="button" class="rpg-mini-btn btn-use" style="padding:7px 14px; font-size:0.78rem;" onclick="COS_RPG.sendTransfer(false)">Send Live</button>`
                         : ''}
-                    <button type="button" class="rpg-mini-btn btn-send" style="padding:7px 14px; font-size:0.78rem;" onclick="COS_RPG.sendTransfer(true)">📲 Generate Offline Trade Code</button>
+                    <button type="button" class="rpg-mini-btn btn-send" style="padding:7px 14px; font-size:0.78rem;" onclick="COS_RPG.sendTransfer(true)">Generate Trade Code</button>
                 </div>
 
                 ${lastGeneratedCode ? `
                     <div style="display:flex; flex-direction:column; gap:5px; background:#0b1120; border:1px solid #38bdf8; border-radius:7px; padding:8px 10px;">
                         <div style="font-size:0.72rem; color:#bae6fd;">${lastGeneratedMsg}</div>
                         <div class="rpg-code-box">${esc(lastGeneratedCode)}</div>
-                        <button type="button" class="rpg-mini-btn btn-equip" style="align-self:flex-start;" onclick="navigator.clipboard?.writeText('${esc(lastGeneratedCode)}')">📋 Copy Code Again</button>
+                        <button type="button" class="rpg-mini-btn btn-equip" style="align-self:flex-start;" onclick="navigator.clipboard?.writeText('${esc(lastGeneratedCode)}')">Copy Code</button>
                     </div>
                 ` : ''}
 
                 ${outgoingTrades.length > 0 ? `
                     <div style="display:flex; flex-direction:column; gap:5px; margin-top:4px;">
-                        <div style="font-size:0.7rem; font-weight:800; color:#fde68a; text-transform:uppercase;">⏳ Outgoing Pending Transfers (${outgoingTrades.length})</div>
+                        <div style="font-size:0.7rem; font-weight:800; color:#fde68a; text-transform:uppercase;">Outgoing Pending Transfers (${outgoingTrades.length})</div>
                         ${outgoingTrades.map(t => `
                             <div class="rpg-bp-row">
                                 <span style="font-size:0.75rem; color:#f8fafc;">To <strong>${esc(t.toName)}</strong>: ${t.kind === 'gold' ? `${t.gp} GP ${t.sp} SP` : esc(t.itemRaw)}</span>
-                                <button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.cancelOutgoingTransfer('${t.id}')">↩️ Cancel &amp; Reclaim</button>
+                                <button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.cancelOutgoingTransfer('${t.id}')">Cancel &amp; Reclaim</button>
                             </div>
                         `).join('')}
                     </div>
@@ -2281,38 +2284,38 @@
         const inboxTabHtml = `
             <div style="display:flex; flex-direction:column; gap:10px;">
                 <div>
-                    <div style="font-size:0.7rem; font-weight:800; color:#86efac; text-transform:uppercase; margin-bottom:5px;">📬 Live Incoming Transfers (${incomingTrades.length})</div>
+                    <div style="font-size:0.7rem; font-weight:800; color:#86efac; text-transform:uppercase; margin-bottom:5px;">Live Incoming Transfers (${incomingTrades.length})</div>
                     ${incomingTrades.length === 0
                         ? `<div style="font-size:0.76rem; color:#64748b; background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:12px; text-align:center;">No pending live transfers right now.${!firebaseReady ? ' Paste your Firebase config below to enable instant cross-device push!' : ''}</div>`
                         : incomingTrades.map(tr => `
                             <div class="rpg-bp-row row-equipped">
                                 <div style="font-size:0.78rem; color:#f8fafc;">
-                                    <strong>${esc(tr.fromName)}</strong> sent: <strong>${tr.kind === 'gold' ? `💰 ${tr.gp || 0} GP, ${tr.sp || 0} SP` : `${tr.qty > 1 ? tr.qty + 'x ' : ''}${esc(tr.itemRaw)}`}</strong>
+                                    <strong>${esc(tr.fromName)}</strong> sent: <strong>${tr.kind === 'gold' ? `${tr.gp || 0} GP, ${tr.sp || 0} SP` : `${tr.qty > 1 ? tr.qty + 'x ' : ''}${esc(tr.itemRaw)}`}</strong>
                                     ${tr.note ? `<div style="font-size:0.7rem; color:#cbd5e1; font-style:italic;">"${esc(tr.note)}"</div>` : ''}
                                 </div>
                                 <div style="display:flex; gap:5px;">
-                                    <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.acceptLiveTransfer('${tr.id}')">✅ Accept</button>
-                                    <button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.declineLiveTransfer('${tr.id}')">❌ Decline</button>
+                                    <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.acceptLiveTransfer('${tr.id}')">Accept</button>
+                                    <button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.declineLiveTransfer('${tr.id}')">Decline</button>
                                 </div>
                             </div>
                         `).join('')}
                 </div>
 
                 <div style="background:#090e1a; border:1px solid #334155; border-radius:7px; padding:9px 10px; display:flex; flex-direction:column; gap:6px;">
-                    <div style="font-size:0.72rem; font-weight:800; color:#93c5fd;">📲 Claim Offline Trade Code (COSTRADE:...)</div>
+                    <div style="font-size:0.72rem; font-weight:800; color:#93c5fd;">Claim Offline Trade Code (COSTRADE:...)</div>
                     <div style="display:flex; gap:6px;">
                         <input type="text" id="rpg-claim-code-input" class="rpg-input" style="flex:1;" placeholder="Paste COSTRADE:... code from another player or DM">
-                        <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.claimOfflineTradeCode()">📥 Claim</button>
+                        <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.claimOfflineTradeCode()">Claim</button>
                     </div>
                 </div>
 
                 ${!firebaseReady ? `
                     <details style="background:#0b1120; border:1px solid #334155; border-radius:7px; padding:8px 10px;">
-                        <summary style="cursor:pointer; font-size:0.72rem; font-weight:700; color:#fde68a;">🔥 Connect Firebase Live Sync (Project: project-9c271700-748f-41b4-bfb)</summary>
+                        <summary style="cursor:pointer; font-size:0.72rem; font-weight:700; color:#fde68a;">Connect Firebase Live Sync (Project: project-9c271700-748f-41b4-bfb)</summary>
                         <div style="margin-top:6px; display:flex; flex-direction:column; gap:6px;">
                             <div style="font-size:0.7rem; color:#94a3b8; line-height:1.4;">Paste your <code>firebaseConfig</code> object from Firebase Console (or put it inside <code>cos_firebase_config.js</code> for the whole table):</div>
                             <textarea id="rpg-fb-json-input" class="rpg-input" rows="4" placeholder='{ "apiKey": "...", "projectId": "project-9c271700-748f-41b4-bfb", "appId": "..." }'></textarea>
-                            <button type="button" class="rpg-mini-btn btn-equip" style="align-self:flex-start;" onclick="COS_RPG.saveBrowserFirebaseConfig()">🔥 Connect Live Sync</button>
+                            <button type="button" class="rpg-mini-btn btn-equip" style="align-self:flex-start;" onclick="COS_RPG.saveBrowserFirebaseConfig()">Connect Live Sync</button>
                         </div>
                     </details>
                 ` : ''}
@@ -2321,8 +2324,8 @@
 
         body.innerHTML = `
             <div class="rpg-tab-bar">
-                <button type="button" class="rpg-tab-btn" aria-pressed="${tradeActiveTab === 'send' ? 'true' : 'false'}" onclick="COS_RPG.setTradeTab('send')">📤 Send Item / Gold</button>
-                <button type="button" class="rpg-tab-btn" aria-pressed="${tradeActiveTab === 'inbox' ? 'true' : 'false'}" onclick="COS_RPG.setTradeTab('inbox')">📬 Inbox &amp; Claim Code ${incomingTrades.length > 0 ? `(${incomingTrades.length})` : ''}</button>
+                <button type="button" class="rpg-tab-btn" aria-pressed="${tradeActiveTab === 'send' ? 'true' : 'false'}" onclick="COS_RPG.setTradeTab('send')">Send Item / Gold</button>
+                <button type="button" class="rpg-tab-btn" aria-pressed="${tradeActiveTab === 'inbox' ? 'true' : 'false'}" onclick="COS_RPG.setTradeTab('inbox')">Inbox &amp; Claim Code ${incomingTrades.length > 0 ? `(${incomingTrades.length})` : ''}</button>
             </div>
             ${tradeActiveTab === 'send' ? sendTabHtml : inboxTabHtml}
         `;
@@ -2362,7 +2365,6 @@
     function openSendForItem(invIdx) {
         preselectedSendIdx = invIdx;
         tradeMode = 'item';
-        closeModal('rpg-backpack-modal');
         openTradeModal('send');
     }
 
@@ -2445,8 +2447,15 @@
         useConsumableByIndex,
         openItemDetails: (idx) => {
             if (adapter && typeof adapter.openItemModal === 'function') {
-                closeModal('rpg-equip-modal');
-                closeModal('rpg-backpack-modal');
+                // Keep Backpack / Equipment modal open underneath in the Top Layer!
+                const itemDlg = document.getElementById('item-modal');
+                if (itemDlg) {
+                    const onItemClose = () => {
+                        itemDlg.removeEventListener('close', onItemClose);
+                        applyEquipmentToSheet(true);
+                    };
+                    itemDlg.addEventListener('close', onItemClose);
+                }
                 adapter.openItemModal(idx);
             }
         },

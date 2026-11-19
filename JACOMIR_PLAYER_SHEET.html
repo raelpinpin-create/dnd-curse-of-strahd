@@ -3742,13 +3742,12 @@
                 body: "chain mail armor (ac 16 + 1 defense style)",
                 ring1: "signet ring bearing the lost crest of oakenshire",
                 mainHand: "ancestral greatsword (graze mastery)",
-                ranged: "handaxes (vex mastery)",
                 _grip: '2h'
             },
             presets: [
-                { label: '🗡️ Royal Cleave (Greatsword 2H)', slots: { body: 'chain mail', mainHand: 'ancestral greatsword', ranged: 'handaxe', _grip: '2h' } },
-                { label: '⚔️ Undead Hunter (Silver LS 2H)', slots: { body: 'chain mail', mainHand: 'silvered longsword', ranged: 'handaxe', _grip: '2h' } },
-                { label: '🪓 Dual Vanguard (Silver LS 1H + Axe)', slots: { body: 'chain mail', mainHand: 'silvered longsword', offHand: 'handaxe', _grip: '1h' } }
+                { label: 'Royal Cleave (Greatsword 2H)', slots: { body: 'chain mail', mainHand: 'ancestral greatsword', _grip: '2h' } },
+                { label: 'Undead Hunter (Silver LS 2H)', slots: { body: 'chain mail', mainHand: 'silvered longsword', _grip: '2h' } },
+                { label: 'Dual Vanguard (Silver LS 1H + Axe)', slots: { body: 'chain mail', mainHand: 'silvered longsword', offHand: 'handaxe', _grip: '1h' } }
             ],
             onEquipmentChange: (bonuses) => {
                 window.__jacomirGearCache = bonuses;
