@@ -288,7 +288,11 @@ flowchart TD
 20. 🗡️ **Baal Verzi Assassin's Mirror Dagger `+1`** *(Rare Magic Dagger • Book Area N3p/N4 in Vallaki)*: `+1 Dagger` that deals an extra **`2d6` Necrotic damage** on a surprise hit or Critical Hit.
 21. 🔨 **Gustav Herrenghast's Mace of Terror** *(Rare Magic Mace • Attunement • Book Area K15 Chapel)*: 3 Charges; Action (1 Charge) unleashes a 30-ft wave of terror (**DC 15 WIS Save or Frightened for 1 minute**).
 22. 🎯 **Baba Lysaga's `+1` Magical Sling / Firearm Bullets (x10)** *(Uncommon Ammo • Book Area U3 in Berez • **Yvaine**)*: 10 bullets granting `+1 to hit and damage`.
-23. 💣 **Alchemical Phosphor & Smoke Flash-Bombs (x3)** *(Uncommon Tactical Gear • Ezmerelda's Wagon `V1` / Blinsky's)*: Throw 30 ft (10-ft radius); **DC 13 DEX Save or `2d6` Fire/Radiant damage + Blinded for 1 round** (dispels blood-mist!).
+23. 💣 **Alchemical Phosphor & Smoke Flash-Bomb** *(Uncommon Tactical Gear • Ezmerelda's Wagon `V1` [3x] or Craftable `PHOSPHOR`)*: Throw 30 ft (10-ft radius); **DC 13 DEX/CON Save or `2d6` Fire/Radiant damage + Blinded for 1 round** (illuminates blood-mist & invisible foes!).
+23a. ✨ **Vial of Liquid Silver Coating** *(Uncommon Coating • Craftable `SILVER-COAT` / `10 GP`)*: Coats 1 melee weapon or 10 firearm rounds/arrows as **Silvered for 1 hour** (bypasses Vampire Spawn, Werewolf & Hag resistances!).
+23b. 🔥 **Alchemist's Fire Flask** *(Common Flask • Craftable `BRIMSTONE` / `5 GP` / Wagon `V1`)*: Throw 20 ft; deals **`1d4` Fire damage at the start of each turn** until extinguished (`DC 10 DEX Check`).
+23c. 💨 **Ash-Cloud Smoke Bomb** *(Common Gadget • Craftable `ASH-CLOUD` / `3 GP`)*: Throw 30 ft; erupts into a **15-ft-radius Heavily Obscured smoke sphere** for 1 minute.
+23d. ☀️ **Sun-Ash Repellent Balm** *(Rare Sacred Unguent • Craftable `SUN-ASH`)*: Coats 1 weapon or 6 rounds for **`+1d4` Radiant damage** for 10 minutes!
 
 ---
 
@@ -332,6 +336,7 @@ flowchart TD
 45. 🧿 **Morgantha's Cracked Night Hag Heartstone** *(Rare Boss Drop • Old Bonegrinder Session 3)*: 1/day Action touch to **cure any 1 disease, poison, or curse**, and grants the carrier **Advantage on Death Saving Throws**!
 46. 🐾 **Martikov Gray Bag of Tricks** *(Uncommon Wondrous Item • Book Area N2q Blue Water Inn Loft)*: Up to 3/day Action toss a fuzzy ball to summon a friendly beast companion (*Dire Wolf, Panther, Giant Elk, Boar*, etc.) until dawn!
 47. 🏰 **Daern's Instant Fortress & Alchemy Jug** *(Rare Wondrous Vault Relics • Book Area K41 Ravenloft Treasury)*: Expands into a 30-ft adamantine tower; Jug pours wine, oil, acid, or fresh water on command.
+47a. ⛺ **Mist-Ward Traveler's Camp Kit (Wilderness True Long Rest)** *(Uncommon Permanent Survival Gear • `25–50 GP` in Selected Shops or Challenging Craft `MIST-CAMP`)*: 10-min setup shelters 4–6 travelers for a **full uninterrupted True Long Rest** in the wilderness (restores 100% HP, Spell Slots, Sorcery Points, Superiority Dice, Help Tokens, & clears 1 Exhaustion); silver-salt & wolfbane perimeter grants **`+5` Group Stealth / Passive Perception** & 30-ft beast/undead chime alert, plus Advantage on cold-weather CON saves. **Sold at:** *Bildrath's Mercantile (`E1`: `45–50 GP` / `30 GP` haggled)*, *Petru's Tser Pool Outfitters (`G`: `25–30 GP`)*, *Arasek Stockyard (`N5`: `25 GP`)*, & *Krezk Commune Supply (`S3`: `25 GP`)*.
 
 ---
 
@@ -340,7 +345,8 @@ flowchart TD
 49. 🧪 **Potion of Greater Healing** *(Uncommon • 15 GP • Book Area N2q)*: Restores **`4d4 + 4 HP`**.
 50. 🧪 **Potion of Superior Healing** *(Rare • 45 GP • Book Area S13 Abbey)*: Restores **`8d4 + 8 HP (Avg 28 HP)`**.
 51. 🛡️ **Potion of Invulnerability (x4)** *(Rare Consumable • Book Area Q28 Knights' Quarters)*: For **1 minute**, grants **Resistance to ALL damage types**! *(Note: Reloaded swaps these for Potions of Greater Healing).*
-52. ✨ **Elixir of Health** *(Rare Consumable • Book Area N2q Blue Water Inn)*: Cures all diseases and removes *Blinded, Deafened, Paralyzed,* and *Poisoned* conditions.
+52. ✨ **Elixir of Health** *(Rare Consumable • Book Area N2q Blue Water Inn or Craftable `PURIFY-ELIXIR`)*: Cures all diseases and removes *Blinded, Deafened, Paralyzed,* and *Poisoned* conditions.
+52a. 🧪 **Barovian Antitoxin Tonic** *(Common/Uncommon Consumable • Craftable `WOLFBANE` / `5 GP`)*: Grants **Advantage on Saving Throws vs. Poison** for 1 full hour.
 53. 💧 **Flask of St. Andral's Holy Water** *(Uncommon • 2 GP 5 SP)*: Ranged splash (20 ft); deals **`2d6` Radiant damage** to Undead/Fiends and **halts Vampire Regeneration for 1 round**!
 54. 🍷 **Wizard of Wines — Purple Grapemash No. 3** *(Common Table Wine • 5 SP)*: Restores `+1` extra HP during a Short Rest.
 55. 🍷 **Wizard of Wines — Red Dragon Crush** *(Fine Ruby Vintage • 1 GP)*: Drinking during a Short Rest grants **`+1d4` Temp HP** and **Advantage on next save vs Frightened** for 2 hours.
@@ -384,18 +390,19 @@ flowchart TD
 
 | Material | Source & Forage DC / Shop Price | Secret Recipes Using This Material |
 | :--- | :--- | :--- |
-| 🌿 **Barovian Medicinal Herbs** | **Act I–IV** • Svalich Woods / Village Yards (`DC 10 Nature/Survival` = `1d3` bundles; `5 SP` shop) | Potion of Healing (`2x`, **Unlocked**), Field Bandages (`1x`, **Unlocked**), Greater Healing, Antitoxin, Smoke Bomb, Superior Healing |
-| 💧 **Pure Mountain Spring Water** | **Act I–IV** • Tser Falls / Luna River / Krezk Spring (`DC 10 Survival`; `2 SP` vial) | Morninglord Holy Water (`MORNINGLORD`), Sun-Ash Repellent Balm (`SUN-ASH`) |
-| ✨ **Powdered Silver Dust** | **Act I–II** • Tser Pool Vistani (`15 GP`), Vallaki Arasek (`20 GP`), Bildrath's (`25 GP`), or file `25 SP` | Morninglord Holy Water (`MORNINGLORD`), Liquid Silver Coating (`SILVER-COAT`), Sun-Ash Balm (`SUN-ASH`) |
-| 🌱 **Svalich Wolfbane Root** | **Act I–II** • Svalich Woods pine ridges / wolf trails (`DC 12 Nature`; `2 GP` Vistani) | Barovian Antitoxin Tonic (`WOLFBANE`) |
-| 🪨 **Brimstone & Pitch Sulfur** | **Act I–II** • Old Bonegrinder chimney, Vallaki smithy, Blinsky's (`3–5 GP`) | Alchemist's Fire (`BRIMSTONE`), Ash-Cloud Smoke Bomb (`ASH-CLOUD`), Yvaine emergency powder |
-| 🛢️ **Pine Pitch & Lamp Oil** | **Act I–II** • General stores (`5 SP–1 GP`) or tapped evergreens (`DC 11 Survival`) | Alchemist's Fire (`BRIMSTONE`), Liquid Silver Coating (`SILVER-COAT`) |
+| 🌿 **Barovian Medicinal Herbs** | **Act I–IV** • Svalich Woods / Village Yards (`DC 10 Nature/Survival` = `1d3` bundles; `5 SP` shop) | Potion of Healing (`2x`, **Unlocked**), Field Bandages (`1x`, **Unlocked**), Greater Healing, Antitoxin, Smoke Bomb, Elixir of Health, Superior Healing |
+| 💧 **Pure Mountain Spring Water** | **Act I–IV** • Tser Falls / Luna River / Krezk Spring (`DC 10 Survival`; `2 SP` vial) | Morninglord Holy Water (`MORNINGLORD`), Elixir of Health (`PURIFY-ELIXIR`), Sun-Ash Repellent Balm (`SUN-ASH`) |
+| ✨ **Powdered Silver Dust** | **Act I–II** • Tser Pool Vistani (`15 GP`), Vallaki Arasek (`20 GP`), Bildrath's (`25 GP`), or file `25 SP` | Morninglord Holy Water (`MORNINGLORD`), Liquid Silver Coating (`SILVER-COAT`), Phosphor Flash-Bomb (`PHOSPHOR`), Mist-Ward Camp Kit (`MIST-CAMP`), Sun-Ash Balm (`SUN-ASH`) |
+| 🌱 **Svalich Wolfbane Root** | **Act I–II** • Svalich Woods pine ridges / wolf trails (`DC 12 Nature`; `2 GP` Vistani) | Barovian Antitoxin Tonic (`WOLFBANE`), Elixir of Health (`PURIFY-ELIXIR`), Mist-Ward Camp Kit (`MIST-CAMP`) |
+| 🪨 **Brimstone & Pitch Sulfur** | **Act I–II** • Old Bonegrinder chimney, Vallaki smithy, Blinsky's (`3–5 GP`) | Alchemist's Fire (`BRIMSTONE`), Ash-Cloud Smoke Bomb (`ASH-CLOUD`), Phosphor Flash-Bomb (`PHOSPHOR`), Yvaine emergency powder |
+| 🛢️ **Pine Pitch & Lamp Oil** | **Act I–II** • General stores (`5 SP–1 GP`) or tapped evergreens (`DC 11 Survival`) | Alchemist's Fire (`BRIMSTONE`), Liquid Silver Coating (`SILVER-COAT`), Mist-Ward Camp Kit (`MIST-CAMP`) |
+| 🐺 **Treated Dire-Pelt & Waxed Canvas** | **Act I–IV** • Dire Wolf skinning (`DC 13 Survival`), wrecked coach tarps, Bildrath's (`6 GP`), Tser Pool / Arasek (`4 GP`) | Mist-Ward Traveler's Camp Kit (`2x` bundles — `MIST-CAMP`) |
 | 🧻 **Clean Linen Wraps & Salve Jar** | **Act I–II** • Village cottages / Blue Water Inn (`2 SP`) | Camp medical supply (`DC 14 Medicine` doubles Field Bandage yield) |
-| ⚗️ **Alchemical Catalyst** | **Act II–III** • Bonegrinder lab, Wachterhaus cellar, Vallaki apothecary, Krezk Abbey (`25–40 GP`) | Potion of Greater Healing (`GREATER-HEAL`), Potion of Superior Healing (`MOONPETAL`) |
+| ⚗️ **Alchemical Catalyst** | **Act II–III** • Bonegrinder lab, Wachterhaus cellar, Vallaki apothecary, Krezk Abbey (`25–40 GP`) | Potion of Greater Healing (`GREATER-HEAL`), Phosphor Flash-Bomb (`PHOSPHOR`), Elixir of Health (`PURIFY-ELIXIR`), Potion of Superior Healing (`MOONPETAL`) |
 | 🌸 **Svalich Moonpetal Blossom** | **Act III** • Berez ruins, Yester Hill, Lake Baratok at dusk (`DC 15 Nature`) | Potion of Superior Healing (`MOONPETAL`), Sun-Ash Repellent Balm (`SUN-ASH`) |
 | 🦇 **Harvested Monster Trophy** | **Act I–IV** • Spawn Ash / Dire Wolf Fang (`DC 13 Survival/Medicine`; Yvaine Journal Adv) | Barter (`10–25 GP`) or swap to Vistani / Ezmerelda for Catalysts or Recipe Unlocks |
 
-**🔒 DM-Only Secret Recipe Unlock Codes (Player Sheet Workbench):**
+**🔒 DM-Only Secret Recipe Unlock Codes (Player Sheet Workbench — 13 Curated Craftables):**
 - **Unlocked (Session 1):** `🧪 Potion of Healing (2d6+1 HP)` (`2x Herbs`) • `🩹 Field Bandages (1d6+1 HP)` (`1x Herb`)
 - **Locked (`🔒 ???` on Player Sheets):**
   - `GREATER-HEAL` → **🧪 Potion of Greater Healing (`4d4+4 HP`)** = `4x Medicinal Herbs + 1x Alchemical Catalyst`
@@ -404,6 +411,9 @@ flowchart TD
   - `SILVER-COAT` → **✨ Vial of Liquid Silver Coating (`Silvered 1 hr`)** = `1x Powdered Silver Dust + 1x Pine Pitch Oil`
   - `BRIMSTONE` → **🔥 Alchemist's Fire Flask (`1d4 Fire/turn`)** = `1x Brimstone Sulfur + 1x Pine Pitch Oil`
   - `ASH-CLOUD` → **💨 Ash-Cloud Smoke Bomb (`15-ft Obscured`)** = `1x Brimstone Sulfur + 1x Medicinal Herbs`
+  - `PHOSPHOR` → **💣 Alchemical Phosphor Flash-Bomb (`2d6 Fire/Rad + Blind`)** = `1x Brimstone Sulfur + 1x Powdered Silver Dust + 1x Alchemical Catalyst`
+  - `PURIFY-ELIXIR` → **✨ Elixir of Health (`Cure Disease & Conditions`)** = `3x Medicinal Herbs + 1x Wolfbane Root + 1x Alchemical Catalyst + 1x Pure Spring Water`
+  - `MIST-CAMP` → **⛺ Mist-Ward Traveler's Camp Kit (`Wilderness True Long Rest • DC 14 Survival`)** = `2x Treated Dire-Pelt & Waxed Canvas + 2x Pine Pitch & Lamp Oil + 1x Wolfbane Root + 1x Powdered Silver Dust`
   - `MOONPETAL` → **🧪 Potion of Superior Healing (`8d4+8 HP`)** = `4x Herbs + 2x Catalyst + 1x Svalich Moonpetal`
   - `SUN-ASH` → **☀️ Sun-Ash Repellent Balm (`+1d4 Radiant Coat 10m`)** = `1x Moonpetal + 1x Silver Dust + 1x Spring Water`
 
@@ -504,6 +514,7 @@ flowchart TD
 
 ### 🎲 5.2 Standard Table House Rules
 * **Brutal Critical Hits:** `Max Base Die + 1 Rolled Die + Modifier`.
+* **Wilderness Long Rests (`⛺ Mist-Ward Traveler's Camp Kit`):** Exposed sleeping in Barovia's woods/roads yields only Short Rest recovery or risks Exhaustion (`DC 12–15 CON`). Pitching a **Mist-Ward Traveler's Camp Kit** (bought in select shops or crafted) lets the party take a **True Long Rest** outdoors!
 * **Combat Ability Checks:** Perception, Insight, Investigation, or Arcana checks in combat require **1 Action**.
 * **Cover:** Partial Cover = **`+2 AC`** | Total Cover = Untargetable.
 * **2-Coin Economy:** `10 Silver Pieces (SP) = 1 Gold Piece (GP)`.

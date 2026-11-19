@@ -492,7 +492,7 @@
             summary: 'Crafting Reagent (2x = Potion, 1x = Bandage)'
         },
         {
-            match: ['alchemical catalyst', 'catalyst', 'silver dust', 'wolfbane', 'sulfur', 'brimstone', 'pitch oil', 'lamp oil', 'moonpetal', 'charcoal', 'vampire ash', 'wolf fang', 'linen wrap'],
+            match: ['alchemical catalyst', 'catalyst', 'silver dust', 'wolfbane', 'sulfur', 'brimstone', 'pine pitch', 'pitch oil', 'lamp oil', 'moonpetal', 'charcoal', 'vampire ash', 'wolf fang', 'linen wrap', 'treated pelt', 'dire-pelt', 'waxed canvas'],
             category: 'crafting',
             slots: [],
             summary: 'Foraged / Shop Crafting Reagent'
@@ -552,10 +552,66 @@
             summary: 'Foraged Crafting Reagent (Spring Water)'
         },
         {
-            match: ['antitoxin', 'liquid silver', 'alchemist\'s fire', 'smoke bomb', 'sun-ash'],
+            match: ['elixir of health'],
             category: 'consumable',
             slots: [],
-            summary: 'Tactical Crafted Consumable'
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Drank', label: 'Elixir of Health', effect: 'Cured all diseases and removed Blinded, Deafened, Paralyzed, & Poisoned conditions!' },
+            summary: 'Cures Disease & Poison/Blind/Paralyze'
+        },
+        {
+            match: ['antitoxin'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Drank', label: 'Antitoxin (1 hr)', effect: 'Advantage on Saving Throws against Poison for 1 full hour!' },
+            summary: 'Adv vs Poison Saves (1 hr)'
+        },
+        {
+            match: ['liquid silver'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Silver Coat (1 hr)', effect: 'Coated 1 weapon or 10 rounds as Silvered for 1 hour (bypasses Vampire/Werewolf/Hag resistance)!' },
+            summary: 'Coats Weapon/10 Ammo Silvered (1 hr)'
+        },
+        {
+            match: ['alchemist\'s fire'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'alchemistsFire', label: 'Alchemist\'s Fire (1d4/turn)' },
+            summary: '20 ft Throw • 1d4 Fire/turn (DC 10 DEX)'
+        },
+        {
+            match: ['phosphor'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'phosphorBomb', label: 'Phosphor Bomb (2d6+Blind)' },
+            summary: '30 ft Throw • 2d6 Fire/Rad + Blind'
+        },
+        {
+            match: ['smoke bomb'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Threw', label: 'Smoke Bomb (15 ft)', effect: '15-ft radius cloud is Heavily Obscured for 1 minute (blocks sightlines & covers Stealth/Disengage)!' },
+            summary: '30 ft Throw • 15-ft Heavily Obscured'
+        },
+        {
+            match: ['sun-ash'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Sun-Ash (+1d4 Rad)', effect: 'Coated 1 weapon or 6 rounds for +1d4 Radiant damage for 10 minutes!' },
+            summary: '+1d4 Radiant Coating (10 min)'
+        },
+        {
+            match: ['mist-ward', 'camp kit', 'traveler\'s camp'],
+            category: 'gear',
+            slots: [],
+            summary: 'Wilderness True Long Rest & Camp Shelter'
         },
         {
             match: ['dream pastry'],
@@ -656,7 +712,7 @@
             desc: 'Suspend Powdered Silver Dust in Pine Pitch Oil; coats 1 blade or 10 bullets/slugs as Silvered for 1 hour.',
             ingredients: [
                 { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 },
-                { keyword: 'pitch oil', label: 'Pine Pitch & Lamp Oil', qty: 1 }
+                { keyword: ['pine pitch', 'pitch oil', 'lamp oil'], label: 'Pine Pitch & Lamp Oil', qty: 1 }
             ],
             outputRaw: '✨ 1x Vial of Liquid Silver Coating (1 hr)',
             outputMatch: 'liquid silver'
@@ -671,7 +727,7 @@
             desc: 'Volatile flask of Brimstone Sulfur suspended in Pine Pitch Oil; ignites on impact (DC 10 DEX to extinguish).',
             ingredients: [
                 { keyword: 'sulfur', label: 'Brimstone & Pitch Sulfur', qty: 1 },
-                { keyword: 'pitch oil', label: 'Pine Pitch & Lamp Oil', qty: 1 }
+                { keyword: ['pine pitch', 'pitch oil', 'lamp oil'], label: 'Pine Pitch & Lamp Oil', qty: 1 }
             ],
             outputRaw: '🔥 1x Alchemist\'s Fire Flask (1d4/turn Fire)',
             outputMatch: 'alchemist\'s fire'
@@ -690,6 +746,56 @@
             ],
             outputRaw: '💨 1x Ash-Cloud Smoke Bomb (15-ft Heavily Obscured)',
             outputMatch: 'smoke bomb'
+        },
+        {
+            id: 'craft_phosphor_bomb',
+            unlocked: false,
+            unlockCode: 'PHOSPHOR',
+            tierHint: 'Monster-Hunter Gadget',
+            name: '💣 Alchemical Phosphor & Smoke Flash-Bomb',
+            badge: '2d6 Fire/Rad + Blind',
+            desc: 'Alchemical flash sphere packed with sulfur, silver filings, and alembic salt (30 ft, 10-ft radius, DC 13 DEX/CON or 2d6 Fire/Radiant + Blind 1 turn).',
+            ingredients: [
+                { keyword: 'sulfur', label: 'Brimstone & Pitch Sulfur', qty: 1 },
+                { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 },
+                { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 1 }
+            ],
+            outputRaw: '💣 1x Alchemical Phosphor & Smoke Flash-Bomb',
+            outputMatch: 'phosphor'
+        },
+        {
+            id: 'craft_elixir_of_health',
+            unlocked: false,
+            unlockCode: 'PURIFY-ELIXIR',
+            tierHint: 'Master Apothecary',
+            name: '✨ Elixir of Health',
+            badge: 'Cure Disease & Conditions',
+            desc: 'Purifying sapphire-green restorative that cures any disease and removes Blinded, Deafened, Paralyzed, and Poisoned.',
+            ingredients: [
+                { keyword: 'medicinal herb', label: 'Medicinal Herbs', qty: 3 },
+                { keyword: 'wolfbane', label: 'Svalich Wolfbane Root', qty: 1 },
+                { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 1 },
+                { keyword: 'spring water', label: 'Pure Spring Water', qty: 1 }
+            ],
+            outputRaw: '✨ 1x Elixir of Health',
+            outputMatch: 'elixir of health'
+        },
+        {
+            id: 'craft_camp_kit',
+            unlocked: false,
+            unlockCode: 'MIST-CAMP',
+            tierHint: 'Challenging Field Craft (DC 14 Survival)',
+            name: '⛺ Mist-Ward Traveler\'s Camp Kit',
+            badge: 'Wilderness True Long Rest',
+            desc: 'Challenging heavy survival build (DC 14 Survival at table): pitch-sealed dire-pelt canvas tent & silver-salt perimeter ward enabling a True Long Rest in the wilderness.',
+            ingredients: [
+                { keyword: ['dire-pelt', 'treated pelt', 'waxed canvas'], label: 'Treated Dire-Pelt & Waxed Canvas', qty: 2 },
+                { keyword: ['pine pitch', 'pitch oil', 'lamp oil'], label: 'Pine Pitch & Lamp Oil', qty: 2 },
+                { keyword: 'wolfbane', label: 'Svalich Wolfbane Root', qty: 1 },
+                { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 }
+            ],
+            outputRaw: '⛺ Mist-Ward Traveler\'s Camp Kit (Wilderness True Long Rest)',
+            outputMatch: 'mist-ward'
         },
         {
             id: 'craft_superior_healing',
@@ -724,6 +830,183 @@
             outputMatch: 'sun-ash'
         }
     ];
+
+    // Shared 5e Item & Crafting Material Lore Dictionary (fallback across all 3 Player Sheets!)
+    const SHARED_ITEM_LORE = [
+        {
+            match: ['mist-ward', 'camp kit', 'traveler\'s camp'],
+            name: "⛺ Mist-Ward Traveler's Camp Kit (Wilderness True Long Rest)",
+            category: "PERMANENT SURVIVAL GEAR • Wilderness Long Rest Shelter",
+            origin: "Selected Barovian Outfitters (25–50 GP) or Challenging Craft (MIST-CAMP)",
+            desc: "A rugged expedition shelter woven from pitch-sealed Dire Wolf hides, heavy waxed canvas, cedar perimeter stakes, a smokeless trench brazier, and silver-salt wolfbane cord.",
+            effect: "• <strong>True Wilderness Long Rest (10 Min Setup • 4–6 Travelers):</strong> Allows the party to complete a <strong>full uninterrupted True Long Rest</strong> outdoors in the Svalich Woods or on the road (restoring 100% HP, Spell Slots, Sorcery Points, Superiority Dice, Help Tokens, &amp; clearing 1 Exhaustion level).<br>• <strong>Perimeter Ward &amp; Storm Cover:</strong> Grants <strong>+5 Group Stealth / Passive Perception</strong> against road patrols, chimes softly if beasts/undead cross within 30 ft, and grants <strong>Advantage on CON Saves</strong> vs freezing mountain weather.<br>• <em>Reusable permanent gear (must pitch on dry ground outside active dungeon rooms).</em>"
+        },
+        {
+            match: ['elixir of health'],
+            name: "✨ Elixir of Health",
+            category: "RARE RESTORATIVE CONSUMABLE • Craftable (PURIFY-ELIXIR) / Blue Water Loft",
+            origin: "Martikov Secret Stash / Master Apothecary Craft",
+            desc: "A clear, luminous blue-green elixir smelling cleanly of mountain spring melt and crushed comfrey.",
+            effect: "• <strong>Action / Bonus Action to Drink:</strong> Immediately <strong>cures any disease</strong> afflicting you and removes the <strong>Blinded, Deafened, Paralyzed, and Poisoned</strong> conditions!"
+        },
+        {
+            match: ['antitoxin'],
+            name: "🧪 Barovian Antitoxin Tonic",
+            category: "CRAFTED CONSUMABLE • Unlock Code: WOLFBANE",
+            origin: "Crafted (2x Medicinal Herbs + 1x Svalich Wolfbane Root) or Apothecary (5 GP)",
+            desc: "A sharp, pine-bitter purple draught brewed to neutralize swamp serpents, spider venom, and hag toxins.",
+            effect: "• <strong>Action to Drink (1-Hour Duration):</strong> Grants <strong>Advantage on Saving Throws against Poison</strong> (and against the Poisoned condition) for <strong>1 full hour</strong>."
+        },
+        {
+            match: ['liquid silver'],
+            name: "✨ Vial of Liquid Silver Coating",
+            category: "CRAFTED TACTICAL COATING • Unlock Code: SILVER-COAT",
+            origin: "Crafted (1x Powdered Silver Dust + 1x Pine Pitch & Lamp Oil)",
+            desc: "A swirling glass phial of pure silver filings suspended in amber pine resin oil.",
+            effect: "• <strong>Bonus Action / Prep (1-Hour Duration):</strong> Coat <strong>1 melee weapon</strong> or up to <strong>10 firearm rounds/arrows</strong>. Coated strikes count as <strong>Silvered for 1 hour</strong>, bypassing the nonmagical B/P/S resistances &amp; immunities of Vampire Spawn, Werewolves, Wights, and Night Hags!"
+        },
+        {
+            match: ['alchemist\'s fire'],
+            name: "🔥 Alchemist's Fire Flask",
+            category: "CRAFTED TACTICAL WEAPON • Unlock Code: BRIMSTONE",
+            origin: "Crafted (1x Brimstone Sulfur + 1x Pine Pitch & Lamp Oil) / Area V1",
+            desc: "A wax-sealed clay flask packed with volatile sulfur pitch that bursts into clinging flame on impact.",
+            effect: "• <strong>Action (Ranged Attack, 20 ft):</strong> On a hit, the target takes <strong>1d4 Fire damage at the start of each of its turns</strong> until a creature uses an Action to pass a <strong>DC 10 DEX Check</strong> to extinguish the flames."
+        },
+        {
+            match: ['phosphor'],
+            name: "💣 Alchemical Phosphor & Smoke Flash-Bomb",
+            category: "CRAFTED TACTICAL GADGET • Unlock Code: PHOSPHOR / Area V1",
+            origin: "Crafted (1x Brimstone + 1x Silver Dust + 1x Catalyst) / Ezmerelda's Wagon V1",
+            desc: "A brass-seamed glass sphere packed with white phosphorus, magnesium flakes, and powdered silver.",
+            effect: "• <strong>Action (Throw 30 ft, 10-ft Radius):</strong> Targets make a <strong>DC 13 DEX or CON Save</strong> or take <strong>2d6 Fire/Radiant damage</strong> and are <strong>Blinded until the end of their next turn</strong> (also illuminates magical blood-mist &amp; invisible foes!)."
+        },
+        {
+            match: ['smoke bomb'],
+            name: "💨 Ash-Cloud Smoke Bomb",
+            category: "CRAFTED TACTICAL GADGET • Unlock Code: ASH-CLOUD",
+            origin: "Crafted (1x Brimstone Sulfur + 1x Medicinal Herbs)",
+            desc: "A tight gray clay sphere filled with dry herbs and sulfur dust.",
+            effect: "• <strong>Action (Throw up to 30 ft):</strong> Bursts into a <strong>15-foot-radius cloud of thick smoke</strong> lasting <strong>1 minute</strong> (or 1 round in strong wind). The area is <strong>Heavily Obscured</strong>, breaking enemy sightlines and covering Stealth or retreats."
+        },
+        {
+            match: ['sun-ash'],
+            name: "☀️ Sun-Ash Repellent Balm",
+            category: "CRAFTED SACRED UNGUENT • Unlock Code: SUN-ASH",
+            origin: "Crafted (1x Moonpetal + 1x Silver Dust + 1x Pure Spring Water)",
+            desc: "A luminous pale-gold salve infused with dawn-remembering Moonpetal and consecrated silver.",
+            effect: "• <strong>Bonus Action / Prep (10-Minute Duration):</strong> Coat <strong>1 weapon</strong> or <strong>6 firearm rounds</strong>. Hits deal an extra <strong>+1d4 Radiant damage</strong> for 10 minutes!"
+        },
+        {
+            match: ['potion of superior healing'],
+            name: "🧪 Potion of Superior Healing",
+            category: "RARE HEAL CONSUMABLE • Unlock Code: MOONPETAL",
+            origin: "Crafted (4x Herbs + 2x Catalyst + 1x Moonpetal) or Abbey S13 (45 GP)",
+            desc: "A glowing scarlet elixir distilled from rare Moonpetal petals and concentrated alembic salts.",
+            effect: "• <strong>Bonus Action (Self) / Action (Ally):</strong> Restores <strong>8d4 + 8 Hit Points (Avg 28 HP)</strong>—any overflow above Max HP channels into Temporary HP!"
+        },
+        {
+            match: ['treated pelt', 'dire-pelt', 'waxed canvas'],
+            name: "🐺 Treated Dire-Pelt & Waxed Canvas Bundle",
+            category: "CRAFTING MATERIAL • Hunt (DC 13 Survival) / Shop (4–6 GP)",
+            origin: "Dire Wolf Skinning, Ruined Coach Tarps, Bildrath's E1, Tser Pool G & Arasek N5",
+            desc: "Heavy double-stitched waxed sailcloth layered with thick gray Dire Wolf hide.",
+            effect: "• <strong>Crafting Ingredient:</strong> Requires <code>2x</code> bundles (plus Pine Pitch, Wolfbane &amp; Silver Dust) to craft a <strong>⛺ Mist-Ward Traveler's Camp Kit</strong> (<code>MIST-CAMP</code>).",
+            isCraftableReagent: true
+        },
+        {
+            match: ['alchemical catalyst', 'catalyst'],
+            name: "⚗️ Alchemical Catalyst (Distilled Alembic Salt)",
+            category: "RARE CRAFTING MATERIAL • 25–40 GP / Arcane Labs",
+            origin: "Old Bonegrinder Lab, Wachterhaus Cellar, Vallaki Apothecary & Abbey S13",
+            desc: "Crystalline crimson alembic salts that violently concentrate ordinary herbal infusions.",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🧪 Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>).",
+            isCraftableReagent: true
+        },
+        {
+            match: ['silver dust'],
+            name: "✨ Powdered Silver Dust (Pouch)",
+            category: "UNCOMMON CRAFTING MATERIAL • 15–25 GP (or 25 SP Filed)",
+            origin: "Tser Pool Vistani (15 GP), Arasek Stockyard (20 GP), Bildrath's (25+ GP)",
+            desc: "Fine moon-bright silver filings sealed inside waxed vellum.",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>💧 Holy Water</strong> (<code>MORNINGLORD</code>), <strong>✨ Liquid Silver Coating</strong> (<code>SILVER-COAT</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>⛺ Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>), and <strong>☀️ Sun-Ash Balm</strong> (<code>SUN-ASH</code>).",
+            isCraftableReagent: true
+        },
+        {
+            match: ['wolfbane'],
+            name: "🌱 Svalich Wolfbane Root",
+            category: "COMMON FORAGE MATERIAL • DC 12 Nature / 2 GP",
+            origin: "Svalich Woods Pine Ridges & Werewolf Trails",
+            desc: "Pungent purple-hooded wildflower root hung over Barovian barn doors against wolves.",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🧪 Barovian Antitoxin Tonic</strong> (<code>WOLFBANE</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and <strong>⛺ Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>).",
+            isCraftableReagent: true
+        },
+        {
+            match: ['sulfur', 'brimstone'],
+            name: "🪨 Brimstone & Pitch Sulfur",
+            category: "COMMON SHOP / SALVAGE MATERIAL • 3–5 GP",
+            origin: "Vallaki Smithy, Blinsky's Workshop & Old Bonegrinder Kilns",
+            desc: "Sharp yellow brimstone chunks smelling of struck flint and alchemical smoke.",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🔥 Alchemist's Fire Flask</strong> (<code>BRIMSTONE</code>), <strong>💨 Ash-Cloud Smoke Bomb</strong> (<code>ASH-CLOUD</code>), and <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>).",
+            isCraftableReagent: true
+        },
+        {
+            match: ['pitch oil', 'lamp oil'],
+            name: "🛢️ Pine Pitch & Lamp Oil Flask",
+            category: "COMMON SHOP / FORAGE MATERIAL • 5 SP–1 GP / DC 11 Survival",
+            origin: "General Stores & Scarred Svalich Evergreens",
+            desc: "Thick amber pine resin blended with lantern oil.",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🔥 Alchemist's Fire</strong> (<code>BRIMSTONE</code>), <strong>✨ Liquid Silver Coating</strong> (<code>SILVER-COAT</code>), and waterproofing <strong>⛺ Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>).",
+            isCraftableReagent: true
+        },
+        {
+            match: ['moonpetal'],
+            name: "🌸 Svalich Moonpetal Blossom",
+            category: "VERY RARE DUSK FORAGE • DC 15 Nature",
+            origin: "Drowned Ruins of Berez, Yester Hill & Lake Baratok at Dusk",
+            desc: "Ghost-white luminescent petals that open only in misty twilight.",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>) and <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>).",
+            isCraftableReagent: true
+        },
+        {
+            match: ['spring water', 'mountain spring water'],
+            name: "💧 Pure Mountain Spring Water (Unblessed Reagent)",
+            category: "COMMON FORAGE MATERIAL • DC 10 Survival / 2 SP",
+            origin: "Tser Falls, Luna River & White Sun Spring",
+            desc: "Crystal-clear glacier melt free of Barovia's bog rot.",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>💧 Morninglord Holy Water</strong> (<code>MORNINGLORD</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and <strong>☀️ Sun-Ash Balm</strong> (<code>SUN-ASH</code>).",
+            isCraftableReagent: true
+        },
+        {
+            match: ['linen wrap', 'salve jar'],
+            name: "🧻 Clean Linen Wraps & Salve Jar",
+            category: "CAMP MEDICAL SUPPLY • 2 SP",
+            origin: "Village Homes, Blue Water Inn & Krezk Cottages",
+            desc: "Freshly boiled white cloth strips sealed in beeswax salve.",
+            effect: "• <strong>Camp Medical Utility:</strong> Lets any ally assist with crafting <strong>🩹 Field Bandages</strong> during a Short Rest, or double bandage yield on a <code>DC 14 Medicine</code> check.",
+            isCraftableReagent: true
+        },
+        {
+            match: ['monster trophy', 'spawn ash', 'wolf fang'],
+            name: "🦇 Harvested Monster Trophy (Spawn Ash / Dire Wolf Fang)",
+            category: "HUNTER HARVEST • DC 13 Survival / 10–25 GP Barter",
+            origin: "Slain Vampire Spawn, Dire Wolves, Blights & Night Hags",
+            desc: "Dark ichor vials, obsidian wolf fangs, and silver-charred vampire cinders.",
+            effect: "• <strong>Barter Value:</strong> Trade to Vistani, Van Richten/Ezmerelda, or Vallaki occultists for <strong>10–25 GP</strong>, silvered ammo, or <strong>⚗️ Alchemical Catalysts</strong>.",
+            isCraftableReagent: true
+        }
+    ];
+
+    function lookupSharedItemLore(rawName) {
+        if (!rawName) return null;
+        const low = String(rawName).toLowerCase();
+        for (const entry of SHARED_ITEM_LORE) {
+            if (entry.match.some(m => low.includes(m))) {
+                return entry;
+            }
+        }
+        return null;
+    }
 
     // =========================================================================
     // ENGINE INTERNAL STATE
@@ -798,6 +1081,7 @@
     function getClaimedCodesKey() { return `cos_claimed_codes_${adapter.heroId}_v1`; }
     function getCustomPresetsKey() { return `cos_presets_${adapter.heroId}_v1`; }
     function getUnlockedRecipesKey() { return `cos_unlocked_recipes_v1`; }
+    function getFbUnlockedRecipesKey() { return `cos_fb_unlocked_recipes_v1`; }
 
     function getCustomPresets() {
         try {
@@ -825,10 +1109,18 @@
         } catch (e) { return []; }
     }
 
+    function getFbUnlockedRecipeIds() {
+        try {
+            const raw = localStorage.getItem(getFbUnlockedRecipesKey());
+            const arr = raw ? JSON.parse(raw) : [];
+            return Array.isArray(arr) ? arr : [];
+        } catch (e) { return []; }
+    }
+
     function isRecipeUnlocked(recipe) {
         if (!recipe) return false;
         if (recipe.unlocked) return true;
-        return getUnlockedRecipeIds().includes(recipe.id);
+        return getUnlockedRecipeIds().includes(recipe.id) || getFbUnlockedRecipeIds().includes(recipe.id);
     }
 
     function unlockRecipeByCode(rawCode) {
@@ -1482,6 +1774,15 @@
             const d6 = Math.floor(Math.random() * 6) + 1;
             adapter.healHP(d6, true);
             adapter.log(`🥧 <strong>Ate Morgantha's Dream Pastry:</strong> Gained <span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${d6} Temp HP</span> &amp; cured 1 Exhaustion! <small style="color:#f87171;">(⚠️ 8-hr blissful dream trance — DC 13 CON Save at dawn!)</small>`);
+        } else if (act.type === 'alchemistsFire') {
+            const d4 = Math.floor(Math.random() * 4) + 1;
+            adapter.log(`🔥 <strong>Threw ${esc(shortLabel(raw))} (20 ft):</strong> Target takes <span style="color:#fb923c; font-size:1.08rem; font-weight:800;">${d4} Fire Damage</span> at the start of each of its turns until doused (<code>DC 10 DEX Check</code>)!`);
+        } else if (act.type === 'phosphorBomb') {
+            const d1 = Math.floor(Math.random() * 6) + 1;
+            const d2 = Math.floor(Math.random() * 6) + 1;
+            adapter.log(`💣 <strong>Threw ${esc(shortLabel(raw))} (30 ft, 10-ft radius):</strong> 2d6[${d1}+${d2}] = <span style="color:#fde68a; font-size:1.08rem; font-weight:800;">${d1 + d2} Fire/Radiant Damage</span> + <strong>Blinded 1 turn</strong> (<code>DC 13 DEX/CON Save</code>; lights up blood-mist &amp; invisible foes!).`);
+        } else if (act.type === 'utilityLog') {
+            adapter.log(`⚗️ <strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${esc(act.effect || act.label)}`);
         }
         applyEquipmentToSheet(true);
     }
@@ -1489,11 +1790,18 @@
     // =========================================================================
     // UNIFIED CRAFTING ENGINE
     // =========================================================================
+    function matchesIngredient(itemName, keyword) {
+        const low = String(itemName || '').toLowerCase();
+        if (Array.isArray(keyword)) {
+            return keyword.some(k => low.includes(String(k).toLowerCase()));
+        }
+        return low.includes(String(keyword || '').toLowerCase());
+    }
+
     function countIngredientQty(keyword) {
-        const kw = keyword.toLowerCase();
         return adapter.getItems().reduce((sum, raw) => {
             const p = parseItem(raw);
-            return p.name.toLowerCase().includes(kw) ? sum + p.qty : sum;
+            return matchesIngredient(p.name, keyword) ? sum + p.qty : sum;
         }, 0);
     }
 
@@ -1513,10 +1821,9 @@
         let items = adapter.getItems();
         for (const ing of recipe.ingredients) {
             let need = ing.qty;
-            const kw = ing.keyword.toLowerCase();
             for (let i = items.length - 1; i >= 0 && need > 0; i--) {
                 const p = parseItem(items[i]);
-                if (p.name.toLowerCase().includes(kw)) {
+                if (matchesIngredient(p.name, ing.keyword)) {
                     if (p.qty <= need) {
                         need -= p.qty;
                         items.splice(i, 1);
@@ -1807,21 +2114,29 @@
             }
         });
 
-        // 2. Live sync DM remote recipe unlocks
+        // 2. Live sync DM remote recipe unlocks (supports both Unlock Live & Re-Lock!)
         campaignRtdbRef('unlocked_recipes').on('value', snap => {
             const val = snap.val() || {};
-            const cur = getUnlockedRecipeIds();
+            const prevFb = getFbUnlockedRecipeIds();
+            const nextFb = Object.keys(val).filter(k => !!val[k]);
+            const curCode = getUnlockedRecipeIds();
             let addedTitle = null;
-            Object.keys(val).forEach(recId => {
-                if (val[recId] && !cur.includes(recId)) {
-                    cur.push(recId);
+            nextFb.forEach(recId => {
+                if (!prevFb.includes(recId) && !curCode.includes(recId)) {
                     const rObj = CRAFTING_RECIPES.find(r => r.id === recId);
                     if (rObj) addedTitle = `${rObj.name} (${rObj.badge})`;
                 }
             });
+            const removedIds = prevFb.filter(k => !nextFb.includes(k));
+            if (removedIds.length > 0) {
+                const prunedCode = curCode.filter(k => !removedIds.includes(k));
+                localStorage.setItem(getUnlockedRecipesKey(), JSON.stringify(prunedCode));
+            }
+            localStorage.setItem(getFbUnlockedRecipesKey(), JSON.stringify(nextFb));
             if (addedTitle) {
-                localStorage.setItem(getUnlockedRecipesKey(), JSON.stringify(cur));
                 adapter.log(`🔓 <strong>DM Unlocked Crafting Recipe:</strong> <strong>${esc(addedTitle)}</strong> is now available in your Crafting Workbench!`);
+            }
+            if (addedTitle || removedIds.length > 0) {
                 renderHubPanel();
                 if (document.getElementById('rpg-craft-modal')?.open) renderCraftModal();
             }
@@ -3939,6 +4254,7 @@
         cancelOutgoingTransfer,
         claimOfflineTradeCode,
         saveBrowserFirebaseConfig,
-        encodeTradeCode
+        encodeTradeCode,
+        lookupSharedItemLore
     };
 })();

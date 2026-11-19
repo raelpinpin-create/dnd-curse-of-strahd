@@ -3672,14 +3672,17 @@
         else if (low.includes('lantern')) vaultKey = 'lantern';
         else if (low.includes('crowbar') || low.includes('dungeoneer')) vaultKey = 'crowbar';
 
-        const itemData = vaultKey && worldLootVault[vaultKey] ? worldLootVault[vaultKey] : {
+        const sharedFallback = (!vaultKey && window.COS_RPG && typeof window.COS_RPG.lookupSharedItemLore === 'function')
+            ? window.COS_RPG.lookupSharedItemLore(raw)
+            : null;
+        const itemData = vaultKey && worldLootVault[vaultKey] ? worldLootVault[vaultKey] : (sharedFallback || {
             name: raw,
             category: "ADVENTURING GEAR",
             origin: "Tactical Equipment",
             desc: "Tactical gear carried in Yvaine's gunslinger pack.",
             effect: "Standard D&D 5e equipment functionality.",
             wikiUrl: "https://5e.tools/items.html"
-        };
+        });
 
         document.getElementById('item-modal-title').innerHTML = `${itemData.name}`;
         const body = document.getElementById('item-modal-body');

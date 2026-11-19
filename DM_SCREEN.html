@@ -1986,7 +1986,7 @@
         </div>
         <div class="loot-filter-bar" id="loot-filter-bar">
             <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Quick Loot Filter:</span>
-            <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Loot (105)</button>
+            <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Loot (111)</button>
             <button type="button" class="btn-loot-filter active" data-loottag="Act I" onclick="filterLootVault('Act I', this)">🩸 Act I (Svalich / Village / Bonegrinder)</button>
             <button type="button" class="btn-loot-filter" data-loottag="Act II" onclick="filterLootVault('Act II', this)">⚔️ Act II (Vallaki / Winery / Yester Hill)</button>
             <button type="button" class="btn-loot-filter" data-loottag="Act III" onclick="filterLootVault('Act III', this)">🐉 Act III (Argynvost / Krezk / Berez)</button>
@@ -1995,7 +1995,7 @@
             <button type="button" class="btn-loot-filter" data-loottag="Jacomir" onclick="filterLootVault('Jacomir', this)">👑 Best for Jacomir</button>
             <button type="button" class="btn-loot-filter" data-loottag="Yvaine" onclick="filterLootVault('Yvaine', this)">🎯 Best for Yvaine</button>
             <button type="button" class="btn-loot-filter" data-loottag="Possible" onclick="filterLootVault('Possible', this)">✨ Possible / Homebrew Upgrades</button>
-            <button type="button" id="btn-loot-materials" class="btn-loot-filter" style="border-color:rgba(52,211,153,0.55); color:#6ee7b7;" data-loottag="Materials" onclick="filterLootVault('Materials', this)">🌿 Crafting Materials &amp; Forage (10)</button>
+            <button type="button" id="btn-loot-materials" class="btn-loot-filter" style="border-color:rgba(52,211,153,0.55); color:#6ee7b7;" data-loottag="Materials" onclick="filterLootVault('Materials', this)">🌿 Crafting Materials &amp; Forage (11)</button>
         </div>
         <div class="grid-2" id="loot-containers"></div>
     </section>
@@ -2440,6 +2440,7 @@
                     <p><strong>2-Strike Death Saves:</strong> <strong>1 Success</strong> stabilizes at 1 HP (prone). <strong>2 Failures</strong> = Death (or Dark Power Bargain).</p>
                     <p><strong>Drinking Potions:</strong> <strong>Bonus Action</strong> for self (<code>2d6 + 1 HP</code>); <strong>Action</strong> to feed a downed ally.</p>
                     <p><strong>Short Rest Healing:</strong> Restores <strong>25% of Max HP</strong> (up to 2/day) and regains <strong>+1 Help Token</strong> (max 2/2).</p>
+                    <p><strong>Wilderness Long Rests:</strong> Sleeping exposed on bare muddy roads grants only Short Rest recovery or risks Exhaustion (<code>DC 12–15 CON</code>). Pitching a <strong>⛺ Mist-Ward Traveler's Camp Kit</strong> (bought in select shops or crafted) enables a <strong>True Long Rest</strong> in the wild.</p>
                     <p><strong>2-Coin Economy:</strong> <code>10 Silver Pieces (SP) = 1 Gold Piece (GP)</code>.</p>
                 </div>
             </div>
@@ -10292,6 +10293,7 @@ const BIOME_DATA = {
             { key: "bandages_field", note: "2x Claimed S1 (1d6+1)" },
             { key: "fresh_croissants", note: "3x Claimed S1 (1d4)" },
             { key: "medicinal_herbs", note: "4x Claimed S1 (Piper)" },
+            { key: "mist_ward_camp_kit", note: "Bildrath Shop E1 (45 GP)" },
             { key: "blinsky_toys", note: "Mad Mary Tag E3" },
             { key: "healing_potion", note: "Bildrath Shelf (500 GP E1)" },
             { key: "purple_grapemash", note: "Blood on the Vine E2" }
@@ -10299,7 +10301,7 @@ const BIOME_DATA = {
         body: `
             <div class="modal-read-aloud">"Sharp timber palisades and overturned ale carts barricade the muddy square directly beneath the thousand-foot black fang of Pillarstone Crag. Every clapboard shutter is spiked shut with coffin nails, peat smoke hangs low between crooked eaves, and pale eyes peer cautiously from behind torn linen curtains."</div>
             <div class="nbox nbox-cyan"><strong>📍 Village Streets, Shops &amp; Tavern (Book Chapter 3 Areas E1–E3):</strong><br>
-            • <strong>Area E1 — Bildrath's Mercantile:</strong> Tallow-scented general store where cynical <strong>Bildrath Cantemir</strong> charges an absurd <strong>10x PHB markup</strong> (1 GP crowbars, 20 GP climbing gear!) backed by his childlike, gentle-giant nephew <strong>Parriwimple</strong> (<code>Gladiator stat block, AC 16, 112 HP, STR 18</code>), who refuses theft yet quietly grieves for Kolyan.<br>
+            • <strong>Area E1 — Bildrath's Mercantile:</strong> Tallow-scented general store where cynical <strong>Bildrath Cantemir</strong> charges an absurd <strong>10x PHB markup</strong> (1 GP crowbars, 20 GP climbing gear, <strong>45–50 GP</strong> for a <strong>⛺ Mist-Ward Traveler's Camp Kit</strong> — or 30 GP if haggled/impressed!) backed by his childlike, gentle-giant nephew <strong>Parriwimple</strong> (<code>Gladiator stat block, AC 16, 112 HP, STR 18</code>), who refuses theft yet quietly grieves for Kolyan.<br>
             • <strong>Area E2 — Blood on the Vine Tavern:</strong> Formerly <em>Blood of the Vine</em> until rebels scratched the sign. Quietly managed by three Vistani sisters (<code>Alenka, Mirabel, Sorvia</code>) pouring thin wine as <strong>Ismark "The Lesser"</strong> drinks beside the hearth. Here in Session 1, a horrified Vistana stared into <strong>Piper's</strong> eyes and pressed <strong>🃏 Piper's Blank Tarokka Card</strong> into her palm after its painted ink bled away!<br>
             • <strong>Area E3 — Mad Mary's Townhouse:</strong> Spiked shutters muffled by endless weeping; fragile <strong>Mary</strong> cradles a crooked Blinsky doll named <em>"Maloriga"</em> beside an open attic window—begging heroes to bring back her naive 17-year-old daughter <strong>Gertruda</strong>, who slipped away toward Castle Ravenloft (<code>Area K42</code>).<br>
             • <strong>Outer Collapsed Cottages &amp; Durst Townhouse (Death House Hook):</strong> Crumbling slate homes infested with hiding Strahd Zombies &amp; Ghoul packs crawling out of flooded cellars.</div>
@@ -10309,7 +10311,7 @@ const BIOME_DATA = {
             • <strong>Soulless Villagers (9 in 10):</strong> Monochrome gray townsfolk hide silently indoors at dusk and yield little information unless paid or shown genuine Ensouled courage.</div>
             <div class="nbox nbox-emerald"><strong>🎁 Area-by-Area Treasures &amp; Session 1 Village Claims:</strong><br>
             • <strong>Blood on the Vine Tavern (E2 — Claimed in S1):</strong> 🃏 <em>Piper's Blank Tarokka Card</em> (Dormant until Madam Eva's touch awakens Stage 1 Charcoal Ink!) + warm wolf-free tavern tips.<br>
-            • <strong>Bildrath's Mercantile (E1 — Back Room / Bought):</strong> Expensive survival tools, hemp rope, iron pitons, hooded lanterns, and wooden stakes (<code>10x PHB</code> price unless bartered).<br>
+            • <strong>Bildrath's Mercantile (E1 — Back Room / Bought):</strong> Expensive survival tools, hemp rope, iron pitons, hooded lanterns, wooden stakes, <strong>⛺ Mist-Ward Traveler's Camp Kit (45 GP)</strong>, and <strong>🐺 Treated Canvas &amp; Pine Pitch</strong> (<code>10x PHB</code> unless bartered).<br>
             • <strong>Mad Mary's Loft (E3) &amp; Guard Ruins:</strong> 🧸 <em>"Is No Fun, Is No Blinsky!"</em> stitched doll tag (<code>Maloriga</code>) pointing straight to Vallaki (<code>N7</code>) &amp; Gertruda, plus <code>12 CP / 3 SP</code> inside abandoned cellar chests (<code>DC 13 Investigation</code>).</div>
         `
     },
@@ -10401,6 +10403,7 @@ const BIOME_DATA = {
             { key: "potion_clairvoyance", note: "Madam Eva Tent G" },
             { key: "bloodwell_vial", note: "Treasure Wagon G" },
             { key: "blank_tarokka", note: "Stage 1 Ink Bleed" },
+            { key: "mist_ward_camp_kit", note: "Petru Wagon Trade (25–30 GP)" },
             { key: "healing_potion", note: "Vistani Apothecary" },
             { key: "silver_weapon", note: "Camp Forge (5 GP)" }
         ],
@@ -10410,13 +10413,13 @@ const BIOME_DATA = {
             • <strong>The Driftwood Bonfire Ring:</strong> Eight colorful barrel wagons housing 12 hospitable Vistani pouring free spiced plum wine, playing haunted fiddles, and sharing tales of the Mad Mage's rebellion.<br>
             • <strong>Madam Eva's Silk Pavilion (Center-North Tent):</strong> Draped in emerald velvet &amp; copper censers. Here Eva performs the <strong>Curated 5-Card Tarokka Reading</strong>: <em>1. Tome of Strahd</em> (<code>Wachterhaus</code>), <em>2. Holy Symbol</em> (<code>Argynvostholt</code>), <em>3. Sunsword</em> (<code>Berez</code>), <em>4. <strong>The Marionette</strong></em> (<code>Cael foreshadowing disguised behind Vallaki decoys!</code>), and <em>5. Sergei's Tomb</em>.<br>
             • <strong>🃏 Card #6 — Piper's Blank Tarokka Awakening (Option 2):</strong> Touching Piper's tavern card makes Eva jerk backward in freezing dread (<code>"Four hundred years I have read these cards..."</code>)—triggering <strong>Stage 1 Charcoal Ink</strong> (<code>dead Barovian pines & upturned hands rising from black water</code>).<br>
-            • <strong>Vistani Smithing Hearth &amp; Locked Treasure Vardo (East Side):</strong> Blacksmith tinkers silver-plate steel blades or cast <strong>10 silver firearm bullets for 5 GP flat</strong>; the east end vardo stores the clan hoard (<code>DC 15 Thieves' Tools / DC 13 Sleight of Hand</code> to disarm bell-wire, or awarded fairly for noble stories/favors!).</div>
+            • <strong>Vistani Smithing Hearth (Petru's Forge) &amp; Locked Treasure Vardo (East Side):</strong> Blacksmith tinkers silver-plate steel blades or cast <strong>10 silver firearm bullets for 5 GP flat</strong>, and sells weathered <strong>⛺ Mist-Ward Traveler's Camp Kits (25–30 GP)</strong> plus crafting silver/canvas supplies; the east end vardo stores the clan hoard (<code>DC 15 Thieves' Tools / DC 13 Sleight of Hand</code> to disarm bell-wire, or awarded fairly for noble stories/favors!).</div>
             <div class="nbox nbox-amber"><strong>⚠️ Hazards, Sacred Laws &amp; Camp DCs:</strong><br>
             • <strong>100% Unbreakable Long Rest Zone:</strong> Strahd's ancient Blood-Oath forbids undead and wolves from setting paw across the driftwood border.<br>
             • <strong>Wrath of Breaking Guest-Right:</strong> Attacking or brazenly robbing Eva's clan triggers coordinated Vistani <strong>Evil Eyes (DC 13 WIS Save)</strong> + <strong>Blood Curses</strong> (<code>permanent Vulnerability or Blindness until Remove Curse</code>) + permanent exile from Mist refuges!</div>
             <div class="nbox nbox-emerald"><strong>🎁 Area-by-Area Treasures &amp; Treasure Wagon Vault (Book Area G):</strong><br>
             • <strong>Madam Eva's Tent:</strong> 🃏 <em>Madam Eva's Tarokka Prophecies</em> &amp; 🃏 <em>Stage 1 Activated Blank Tarokka Card</em> (<code>Piper</code>).<br>
-            • <strong>Camp Smithy (<code>5 GP</code>):</strong> ⚔️ <em>Silver-Plated Weapons &amp; 10x Silvered Revolver Rounds</em> (<code>Yvaine / Jacomir</code>).<br>
+            • <strong>Camp Smithy &amp; Caravan Outfitters (<code>5–30 GP</code>):</strong> ⚔️ <em>Silver-Plated Weapons &amp; 10x Silvered Revolver Rounds (5 GP)</em>, ⛺ <em>Mist-Ward Traveler's Camp Kit (25–30 GP)</em>, &amp; crafting reagents (<code>Wolfbane, Silver Dust, Treated Canvas</code>).<br>
             • <strong>Treasure Vardo (<code>Story Favor / Theft</code>):</strong> 🩸 <em>Vistani Bloodwell Vial (+1 Sorcerer Focus — tailored for Piper!)</em>, 🧪 <em>2x Potions of Healing</em>, 🧪 <em>Potion of Climbing</em>, 💍 <em>Jeweled Caravan Trinkets (25 GP total)</em>, and spiced wine flasks.</div>
         `
     },
@@ -10462,6 +10465,7 @@ const BIOME_DATA = {
             { key: "hat_of_disguise", note: "Rictavio's Disguise" },
             { key: "ring_mind_shielding", note: "Van Richten's Ring" },
             { key: "silvered_hand_crossbow", note: "Rictavio Wagon N5" },
+            { key: "mist_ward_camp_kit", note: "Arasek Stockyard N5 (25 GP)" },
             { key: "spell_scroll_cache", note: "Wagon N5 Prot. Scrolls" },
             { key: "victor_wand", note: "Baron Attic N3t" },
             { key: "barovian_spellbooks", note: "Victor N3t &amp; Kasimir N9a" },
@@ -10477,7 +10481,7 @@ const BIOME_DATA = {
             <div class="modal-read-aloud">"Sharp timber palisades crowned with wolf skulls ring a sprawling cobblestone market choked with mud and rain-soaked yellow banners shouting 'ALL WILL BE WELL!' Behind shuttered casements, gaunt shopkeepers force stiff, trembling smiles as red-cloaked guards drag a whistling baker toward the town stocks."</div>
             <div class="nbox nbox-cyan"><strong>📍 Vallaki Districts, Mansion, Lake &amp; Vistani Camp (Book Ch. 5 Areas N3, N5, N7, N8, N9):</strong><br>
             • <strong>Area N3 — Burgomaster's Mansion, Doll Bedroom (<code>N3j</code>), Mirror Room (<code>N3p</code>) &amp; Victor's Attic (<code>N3t</code>):</strong> Stone manor housing Vargas, trembling <strong>Baroness Lydia</strong>, Izek's locked attic full of custom red-haired <strong>Ireena Blinsky Dolls</strong> (<code>N3j</code>), a secret <strong>Baal Verzi Assassin Mirror (<code>N3p</code>)</strong>, and scarred prodigy Victor's booby-trapped attic teleportation lab (<code>N3t</code>) where poor <strong>Stella Wachter</strong> was broken!<br>
-            • <strong>Area N5 — Arasek Stockyard &amp; Rictavio's Carnival Wagon:</strong> Padlocked red carnival wagon hiding Dr. van Richten's armored <strong>Saber-Toothed Tiger</strong> (trained to hunt Vistani!) and a false floorboard arsenal.<br>
+            • <strong>Area N5 — Arasek Stockyard &amp; Rictavio's Carnival Wagon:</strong> Gunther &amp; Yelena Arasek's general outfitter yard stocking travel gear, <strong>⛺ Mist-Ward Traveler's Camp Kits (25 GP)</strong>, and crafting supplies—alongside the padlocked red carnival wagon hiding Dr. van Richten's armored <strong>Saber-Toothed Tiger</strong> and false floorboard arsenal.<br>
             • <strong>Area N7 — "Is No Fun, Is No Blinsky!" Toyshop:</strong> Cluttered shelves crammed with wind-up guillotines, vampire puppets, Van Richten tiger toys, Rictavio's capuchin monkey <strong>Piccolo</strong>, and an exact porcelain likeness of <strong>Ireena</strong> commissioned under threat by Izek!<br>
             • <strong>Area N8 &amp; Lake Zarovich:</strong> Rain-slick donkey stocks in Town Square (<code>N8</code>), plus icy northern shores where drunkard <strong>Bluto Krogarov</strong> prepares to drown 7-year-old Vistani seer <strong>Arabelle</strong> in a sack for luck.<br>
             • <strong>Area N9 — Southwest Vistani &amp; Dusk Elf Camp (<code>N9a–N9i</code>):</strong> <strong>Arrigal</strong> &amp; <strong>Luvash's</strong> boisterous wagon ring (holding <strong>Treasure Wagon N9i</strong>!) overlooking the mutilated male <strong>Dusk Elf</strong> hovels led by <strong>Kasimir Velikov</strong>.</div>
@@ -10700,6 +10704,7 @@ const BIOME_DATA = {
         loreKey: "commune_krezk",
         lootLinks: [
             { key: "purple_grapemash", note: "Entry Wine Trade S1" },
+            { key: "mist_ward_camp_kit", note: "Commune Outfitter S3 (25 GP)" },
             { key: "healing_potion", note: "Krezkov Supplies S3" },
             { key: "holy_water", note: "White Sun Spring S4" }
         ],
@@ -10707,7 +10712,7 @@ const BIOME_DATA = {
             <div class="modal-read-aloud">"Twenty-foot stone ramparts rimmed in pine frost ring a quiet alpine logging commune beneath Mount Baratok. Along the northern slope above the timber cottages, a crystal mountain spring reflects the only scrap of clean blue sky inside Barovia—shimmering softly around an ivory stone gazebo."</div>
             <div class="nbox nbox-cyan"><strong>📍 Village Gates, Burgomaster &amp; Blessed Spring (Book Chapter 8 Areas S1–S4):</strong><br>
             • <strong>Areas S1–S2 — Timber Gatehouse &amp; 20-ft Stone Ramparts:</strong> Suspicious crossbowmen turn away ALL armed visitors unless carrying fresh barrels of <strong>Wizard of Wines</strong> vintages (<code>or Martikov/Davian voucher!</code>).<br>
-            • <strong>Area S3 — Burgomaster Dmitri Krezkov's Cottage:</strong> Warm pine hearth shrouded in recent funeral grief; Dmitri whispers reluctantly about how <strong>The Abbot</strong> at the hillside Abbey raised a dead cousin once before growing cold, winged, and obsessed with wedding gowns (<code>and later fears how Anna might trade anything for young Ilya!</code>).<br>
+            • <strong>Area S3 — Burgomaster Dmitri Krezkov's Cottage:</strong> Warm pine hearth shrouded in recent funeral grief; Dmitri whispers reluctantly about how <strong>The Abbot</strong> at the hillside Abbey raised a dead cousin once before growing cold, winged, and obsessed with wedding gowns (<code>and later fears how Anna might trade anything for young Ilya!</code>). Village woodsmen also barter fur-lined <strong>⛺ Mist-Ward Traveler's Camp Kits (25 GP)</strong> for mountain travel.<br>
             • <strong>Area S4 — Pool &amp; Shrine of the White Sun:</strong> Sunlit stone gazebo framing sacred clear alpine water reflecting blue sky! If <strong>Ireena Kolyana</strong> steps near the water's rim, Prince Sergei's golden spirit reaches outward whispering <em>"Tatyana—take my hand and rest from this shadow!"</em></div>
             <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Gate Barriers &amp; Strahd's Sky-Lightning (<code>Area S4</code>):</strong><br>
             • <strong>Wine-Locked Entry (<code>Area S1</code>):</strong> Arriving empty-handed forces tedious barter, winter camp, or risky night climbing (<code>DC 15 Athletics</code>) across watchtowers.<br>
@@ -10783,6 +10788,7 @@ const BIOME_DATA = {
         lootLinks: [
             { key: "ezmerelda_arsenal", note: "V1 Painted Wagon" },
             { key: "phosphor_grenades", note: "Ezmerelda Bombs V1" },
+            { key: "alchemists_fire", note: "Wagon Flasks V1" },
             { key: "spell_scroll_cache", note: "Major Image &amp; Remove Curse (V1)" },
             { key: "mordenkainen_boon", note: "Mt Baratok Shore" },
             { key: "greater_healing", note: "Wagon Cabinet V1" }
@@ -11103,10 +11109,34 @@ const LOOT_DATA = {
         lore: "Recovered from the rotting iron strongbox inside Baba Lysaga's walking hut."
     },
     phosphor_grenades: {
-        cat: "weapon", name: "💣 Alchemical Phosphor & Smoke Flash-Bombs (x3)", rarity: "Uncommon Tactical Gear • Possible Loot",
-        location: "Act II/III • Possible Gear in Ezmerelda's Wagon (Area V1) • Yvaine & Party",
-        mechanics: "• <strong>Action (Throw 30 ft, 10-ft radius):</strong> Targets make a <strong>DC 13 DEX/CON Save</strong> or take <strong>2d6 Fire/Radiant damage</strong> and are <strong>Blinded until the end of their next turn</strong> (also illuminates magical blood-mist!).",
-        lore: "Glass spheres packed with white phosphorus, magnesium shavings, and silver dust."
+        cat: "weapon", name: "💣 Alchemical Phosphor & Smoke Flash-Bomb", rarity: "Uncommon Tactical Gear • Craftable / 3x in Area V1",
+        location: "Act II/III • Ezmerelda's Wagon (Area V1) or Craftable (PHOSPHOR) • Yvaine & Party",
+        mechanics: "• <strong>Action (Throw 30 ft, 10-ft radius):</strong> Targets make a <strong>DC 13 DEX or CON Save</strong> or take <strong>2d6 Fire/Radiant damage</strong> and are <strong>Blinded until the end of their next turn</strong> (illuminates magical blood-mist and reveals invisible foes!).<br>• <strong>Craftable Formula (Unlock Code <code>PHOSPHOR</code>):</strong> <code>1x Brimstone Sulfur + 1x Powdered Silver Dust + 1x Alchemical Catalyst</code>.",
+        lore: "Glass spheres packed with white phosphorus, magnesium shavings, and silver filings—crafted by monster hunters to break vampire ambushes."
+    },
+    liquid_silver_coating: {
+        cat: "weapon", name: "✨ Vial of Liquid Silver Coating (Silvered 1 hr)", rarity: "Uncommon Tactical Coating • Craftable / 10 GP",
+        location: "Act I–IV • Craftable (SILVER-COAT) or Vistani / Ezmerelda Supply • Jacomir & Yvaine",
+        mechanics: "• <strong>Bonus Action / Prep (1 Hour Duration):</strong> Brush this shimmering alchemical oil onto <strong>1 melee weapon</strong> or up to <strong>10 bullets/arrows</strong>. For <strong>1 full hour</strong>, coated strikes count as <strong>Silvered</strong>—bypassing the nonmagical B/P/S resistances and immunities of <strong>Vampire Spawn, Werewolves, Wights, and Night Hags</strong>!<br>• <strong>Craftable Formula (Unlock Code <code>SILVER-COAT</code>):</strong> <code>1x Powdered Silver Dust + 1x Pine Pitch &amp; Lamp Oil</code>.",
+        lore: "Suspended silver powder bound in refined pine oil, keeping blades gleaming like frost against Barovia's beasts."
+    },
+    alchemists_fire: {
+        cat: "weapon", name: "🔥 Alchemist's Fire Flask (1d4/Turn Fire)", rarity: "Common Tactical Flask • 5 GP / Craftable",
+        location: "Act I–IV • Craftable (BRIMSTONE), Ezmerelda's Wagon (V1) & Selected Shops • Party",
+        mechanics: "• <strong>Action (Ranged Weapon Attack, 20 ft):</strong> Treat as an improvised ranged weapon (proficiency if proficient with improvised weapons or Alchemy/Tinker tools). On a hit, the target takes <strong>1d4 Fire damage at the start of each of its turns</strong> until a creature uses its Action to pass a <strong>DC 10 DEX Check</strong> to douse the flames!<br>• <strong>Tactical Barovia Use:</strong> Ignites Blights, Brown Mold hazards, or web/oil choke points.<br>• <strong>Craftable Formula (Unlock Code <code>BRIMSTONE</code>):</strong> <code>1x Brimstone &amp; Pitch Sulfur + 1x Pine Pitch &amp; Lamp Oil</code>.",
+        lore: "A stoppered clay flask of sticky, self-igniting brimstone oil that bursts into clinging flame the instant glass meets air."
+    },
+    ash_smoke_bomb: {
+        cat: "weapon", name: "💨 Ash-Cloud Smoke Bomb (15-ft Heavily Obscured)", rarity: "Common Tactical Gadget • Craftable / 3 GP",
+        location: "Act I–IV • Craftable (ASH-CLOUD) or Blinsky / Arasek Salvage • Yvaine & Piper",
+        mechanics: "• <strong>Action (Throw up to 30 ft):</strong> Shatters on impact into a billowing <strong>15-foot-radius sphere of thick choking gray smoke</strong> lasting for <strong>1 minute</strong> (or 1 round in strong wind).<br>• The area is <strong>Heavily Obscured</strong> (blocks line of sight for targeted spells and grants Stealth/Disengage cover to break ambush sightlines!).<br>• <strong>Craftable Formula (Unlock Code <code>ASH-CLOUD</code>):</strong> <code>1x Brimstone &amp; Pitch Sulfur + 1x Barovian Medicinal Herbs</code>.",
+        lore: "A tightly bound sulfur-and-herb clay pellet favored by Vistani scouts and thieves to vanish into Barovia's fog."
+    },
+    sun_ash_balm: {
+        cat: "weapon", name: "☀️ Sun-Ash Repellent Balm (+1d4 Radiant Coat 10m)", rarity: "Rare Sacred Unguent • Craftable (Act III)",
+        location: "Act III–IV • Craftable (SUN-ASH) • Jacomir, Yvaine & Party",
+        mechanics: "• <strong>Bonus Action / Prep (10-Minute Duration):</strong> Rub this luminous pale-gold paste across <strong>1 melee weapon</strong> or <strong>6 firearm rounds</strong>. For <strong>10 minutes</strong>, hits deal an extra <strong>+1d4 Radiant damage</strong> and briefly sear Undead flesh (disrupts regeneration until the start of your next turn on a Critical Hit or DM discretion!).<br>• <strong>Craftable Formula (Unlock Code <code>SUN-ASH</code>):</strong> <code>1x Svalich Moonpetal Blossom + 1x Powdered Silver Dust + 1x Pure Mountain Spring Water</code>.",
+        lore: "Consecrated dawn-petal unguent mixed with silver ash—shining like ember-gold in dark crypts when the Sun itself cannot breach the clouds."
     },
 
     // =========================================================================
@@ -11260,6 +11290,12 @@ const LOOT_DATA = {
         mechanics: "• <strong>Daern's Instant Fortress:</strong> 1-inch adamantine cube that expands on command into a 20×20-ft, 30-ft-tall adamantine tower (each wall has 100 HP, immune to nonmagical weapons!).<br>• <strong>Alchemy Jug:</strong> Ceramic jug that pours up to 2 gallons of wine, beer, fresh water, oil, acid (2 vials/day), or basic poison (1/2 ounce/day) on command!",
         lore: "Locked inside the iron vault of Count Strahd's treasury."
     },
+    mist_ward_camp_kit: {
+        cat: "armor", name: "⛺ Mist-Ward Traveler's Camp Kit (Wilderness True Long Rest)", rarity: "Uncommon Permanent Survival Gear • 25–50 GP (Selected Shops) or Craftable",
+        location: "Act I–IV • Selected Shops (Bildrath's E1, Tser Pool G, Arasek N5, Krezk S3) or Craftable (MIST-CAMP) • Party",
+        mechanics: "• <strong>Wilderness True Long Rest (10 Min Setup • Covers 4–6 Travelers):</strong> Pitching the waxed dire-pelt canvas tent, insulated groundsheet, low-smoke brazier, and silver-salt perimeter cord allows the party to complete a <strong>full, uninterrupted True Long Rest</strong> in the Barovian wilderness or during multi-day travel (restoring <strong>100% Max HP, all Spell Slots, Sorcery Points, Superiority Dice, Help Tokens, &amp; clearing 1 level of Exhaustion</strong> instead of suffering damp mud/exhaustion checks!).<br>• <strong>Silver-Salt &amp; Wolfbane Perimeter Ward:</strong> Masks campfire scent/smoke (<strong>+5 Group Stealth / Passive Perception</strong> against road patrols) and chimes a soft copper bell if beasts or undead step within 30 ft of camp.<br>• <strong>Alpine Storm Shelter:</strong> Grants <strong>Advantage on CON Saves</strong> against freezing mountain sleet (Tsolenka Pass / Mt. Ghakis). <em>(Reusable permanent utility gear; must pitch on dry ground outside active dungeon rooms).</em><br>• <strong>Where Bought (Selected Shops):</strong> Bildrath's Mercantile (<code>E1</code>: <code>45–50 GP</code> gouged / <code>30 GP</code> haggled), Petru's Tser Pool Outfitters (<code>G</code>: <code>25–30 GP</code>), Arasek Stockyard in Vallaki (<code>N5</code>: <code>25 GP</code>), &amp; Krezk Commune Supply (<code>S3</code>: <code>25 GP</code>).<br>• <strong>Challenging Craft Formula (Unlock Code <code>MIST-CAMP</code> • <code>DC 14 Survival</code>):</strong> <code>2x Treated Dire-Pelt &amp; Waxed Canvas + 2x Pine Pitch &amp; Lamp Oil + 1x Svalich Wolfbane Root + 1x Powdered Silver Dust</code>.",
+        lore: "Stitched from heavy pitch-sealed wolf hides, cedar stakes, and silvered alarm wire—the difference between freezing to death under Svalich pines and waking with unbroken steel."
+    },
 
     // =========================================================================
     // CATEGORY 5: HEAL — POTIONS, ELIXIRS, HOLY WATER & BAROVIAN VINTAGES
@@ -11289,10 +11325,16 @@ const LOOT_DATA = {
         lore: "Four dust-covered vials inside a hidden coffer beneath wreckage in Knights' Quarters (Official CoS Q28; DragnaCarta's Reloaded tones them down to Potions of Greater Healing)."
     },
     elixir_of_health: {
-        cat: "heal", name: "✨ Elixir of Health", rarity: "Rare Consumable • Book Area N2q",
-        location: "Act II • Blue Water Inn Secret Stash in Vallaki (Book Area N2q)",
-        mechanics: "When you drink this clear blue-green liquid, it <strong>cures any disease</strong> afflicting you and immediately removes the <strong>Blinded, Deafened, Paralyzed, and Poisoned</strong> conditions!",
+        cat: "heal", name: "✨ Elixir of Health", rarity: "Rare Consumable • Craftable / Book Area N2q",
+        location: "Act II–III • Blue Water Inn Secret Stash (N2q) or Craftable (PURIFY-ELIXIR) • Party",
+        mechanics: "• <strong>Action / Bonus Action to Drink:</strong> When you drink this clear blue-green liquid, it <strong>cures any disease</strong> afflicting you and immediately removes the <strong>Blinded, Deafened, Paralyzed, and Poisoned</strong> conditions!<br>• <strong>Craftable Formula (Unlock Code <code>PURIFY-ELIXIR</code>):</strong> <code>3x Barovian Medicinal Herbs + 1x Svalich Wolfbane Root + 1x Alchemical Catalyst + 1x Pure Mountain Spring Water</code>.",
         lore: "Kept by the Martikov family for emergencies against hag poisons and vampire curses."
+    },
+    barovian_antitoxin: {
+        cat: "heal", name: "🧪 Barovian Antitoxin Tonic (Adv vs Poison 1 hr)", rarity: "Common/Uncommon Consumable • Craftable / 5 GP",
+        location: "Act I–IV • Craftable (WOLFBANE), Vistani Apothecaries & Arasek Stockyard • Party",
+        mechanics: "• <strong>Action to Drink (1-Hour Duration):</strong> Grants <strong>Advantage on all Saving Throws against Poison</strong> (and against the Poisoned condition from Giant Poisonous Snakes, Arrigal's Wyvern Venom, or Hag brews!) for <strong>1 full hour</strong>.<br>• <strong>Craftable Formula (Unlock Code <code>WOLFBANE</code>):</strong> <code>2x Barovian Medicinal Herbs + 1x Svalich Wolfbane Root</code>.",
+        lore: "Bitter, pine-sharp purple infusion brewed by Svalich rangers to purge serpent venom and marsh miasma."
     },
     holy_water: {
         cat: "heal", name: "💧 Flask of Morninglord Spring Water (St. Andral's Holy Water)", rarity: "Uncommon Consumable • 2 GP 5 SP • 1x Held by Jacomir",
@@ -11581,38 +11623,44 @@ const LOOT_DATA = {
     medicinal_herbs: {
         cat: "material", name: "🌿 Barovian Medicinal Herbs (Forage Reagent)", rarity: "Common Forage • 5 SP / DC 10 Nature",
         location: "Act I • Svalich Woods, Village Yards & Crossroads • Wilderness Forage / Shops",
-        mechanics: "• <strong>Where Found:</strong> Foraged in the Svalich Woods, overgrown Barovian gardens, or bought from herbalists/Vistani (<code>DC 10 Nature or Survival</code> yields <code>1d3</code> bundles; Piper carries 4x from Session 1).<br>• <strong>Known Recipes (Unlocked):</strong><br>&nbsp;&nbsp;• <code>2x Medicinal Herbs</code> ➔ <strong>🧪 Potion of Healing (2d6 + 1 HP)</strong><br>&nbsp;&nbsp;• <code>1x Medicinal Herb</code> ➔ <strong>🩹 Field Bandages (1d6 + 1 HP)</strong><br>• <strong>Locked Recipes (DM Secret):</strong> Used in <em>Potion of Greater Healing</em> (<code>GREATER-HEAL</code>), <em>Barovian Antitoxin</em> (<code>WOLFBANE</code>), <em>Ash-Cloud Smoke Bomb</em> (<code>ASH-CLOUD</code>), and <em>Potion of Superior Healing</em> (<code>MOONPETAL</code>).",
+        mechanics: "• <strong>Where Found:</strong> Foraged in the Svalich Woods, overgrown Barovian gardens, or bought from herbalists/Vistani (<code>DC 10 Nature or Survival</code> yields <code>1d3</code> bundles; Piper carries 4x from Session 1).<br>• <strong>Known Recipes (Unlocked):</strong> <strong>🧪 Potion of Healing</strong> (<code>2x</code>) &amp; <strong>🩹 Field Bandages</strong> (<code>1x</code>).<br>• <strong>Locked Recipes (DM Secret):</strong> Used in <em>Greater Healing</em> (<code>GREATER-HEAL</code>), <em>Barovian Antitoxin</em> (<code>WOLFBANE</code>), <em>Ash-Cloud Smoke Bomb</em> (<code>ASH-CLOUD</code>), <em>Elixir of Health</em> (<code>PURIFY-ELIXIR</code>), and <em>Superior Healing</em> (<code>MOONPETAL</code>).",
         lore: "Silver-leaf thyme, mountain comfrey, and frost-bloom roots bundled fresh in oiled cloth—Barovia's rarest wholesome medicine."
     },
     pure_spring_water: {
         cat: "material", name: "💧 Pure Mountain Spring Water (Unblessed Reagent)", rarity: "Common Forage • 2 SP / DC 10 Survival",
         location: "Act I • Tser Falls, Luna River & Village Springs • Wilderness Forage",
-        mechanics: "• <strong>Where Found:</strong> Collected cleanly in stoppered glass vials from Tser Falls mist-basins, clear mountain streams, or Krezk's White Sun Spring (<code>DC 10 Survival</code> to avoid bog rot).<br>• <strong>DM Secret Recipes (Locked):</strong><br>&nbsp;&nbsp;• <code>1x Pure Spring Water + 1x Powdered Silver Dust</code> ➔ <strong>💧 Flask of Morninglord Holy Water (2d6 Radiant)</strong> — Unlock Code: <code>MORNINGLORD</code><br>&nbsp;&nbsp;• Also used in <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>).",
+        mechanics: "• <strong>Where Found:</strong> Collected cleanly in stoppered glass vials from Tser Falls mist-basins, clear mountain streams, or Krezk's White Sun Spring (<code>DC 10 Survival</code> to avoid bog rot).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>💧 Morninglord Holy Water</strong> (<code>MORNINGLORD</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>).",
         lore: "Crystal-clear glacier melt free of Barovia's swamp miasma—the pure vessel required before sacred silver can be consecrated."
     },
     powdered_silver_dust: {
         cat: "material", name: "✨ Powdered Silver Dust (Pouch)", rarity: "Uncommon Shop Material • 15–25 GP (or 25 SP Filed)",
         location: "Act I • Bildrath's Mercantile, Tser Pool Vistani & Vallaki Arasek Stockyard • Shops",
-        mechanics: "• <strong>Where Found:</strong> Sold by Tser Pool Vistani smiths (15 GP), Arasek Stockyard in Vallaki (20 GP), Bildrath's (inflated 25+ GP), or filed down from <code>25 SP</code> worth of silver coins during a Short Rest with Tinker's/Smith's tools.<br>• <strong>DM Secret Recipes (Locked):</strong><br>&nbsp;&nbsp;• <strong>💧 Morninglord Holy Water</strong> (<code>MORNINGLORD</code>)<br>&nbsp;&nbsp;• <strong>✨ Vial of Liquid Silver Coating</strong> (+1 hr silvered weapon/10 rounds — Unlock Code: <code>SILVER-COAT</code>)<br>&nbsp;&nbsp;• <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>).",
+        mechanics: "• <strong>Where Found:</strong> Sold by Tser Pool Vistani smiths (15 GP), Arasek Stockyard in Vallaki (20 GP), Bildrath's (inflated 25+ GP), or filed down from <code>25 SP</code> worth of silver coins during a Short Rest with Tinker's/Smith's tools.<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>💧 Morninglord Holy Water</strong> (<code>MORNINGLORD</code>), <strong>✨ Liquid Silver Coating</strong> (<code>SILVER-COAT</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>⛺ Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>), and <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>).",
         lore: "Fine moon-bright silver filings wrapped in waxed vellum—lethal to Barovia's vampires, werewolves, and night hags."
     },
     wolfbane_root: {
         cat: "material", name: "🌱 Svalich Wolfbane Root", rarity: "Common Forage • 2 GP / DC 12 Nature",
         location: "Act I • Svalich Woods Pine Ridges & Werewolf Trails • Wilderness Forage",
-        mechanics: "• <strong>Where Found:</strong> Purple-hooded wildflower roots growing near mossy pine stumps and wolf dens across the Svalich Woods (<code>DC 12 Nature/Survival</code> yields <code>1d2</code> roots; Vistani apothecaries sell for 2 GP).<br>• <strong>DM Secret Recipe (Locked):</strong><br>&nbsp;&nbsp;• <code>2x Medicinal Herbs + 1x Wolfbane Root</code> ➔ <strong>🧪 Barovian Antitoxin Tonic</strong> (Advantage on Poison saves for 1 hour) — Unlock Code: <code>WOLFBANE</code>.",
+        mechanics: "• <strong>Where Found:</strong> Purple-hooded wildflower roots growing near mossy pine stumps and wolf dens across the Svalich Woods (<code>DC 12 Nature/Survival</code> yields <code>1d2</code> roots; Vistani apothecaries sell for 2 GP).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🧪 Barovian Antitoxin Tonic</strong> (<code>WOLFBANE</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and as wolf-repellent cord for <strong>⛺ Mist-Ward Traveler's Camp Kit</strong> (<code>MIST-CAMP</code>).",
         lore: "Pungent purple root hung over Barovian barn doors to sour the air against wolves and venomous swamp serpents."
     },
     charcoal_sulfur: {
         cat: "material", name: "🪨 Brimstone & Pitch Sulfur", rarity: "Common Shop / Salvage • 3–5 GP",
         location: "Act I • Old Bonegrinder Chimney, Vallaki Smithy & Blinsky's Workshop • Shops / Salvage",
-        mechanics: "• <strong>Where Found:</strong> Purchased at Vallaki's smithy or Blinsky's toy workshop (3–5 GP), or scraped from volcanic vents, kiln chimneys (Old Bonegrinder), and alchemical labs.<br>• <strong>DM Secret Recipes (Locked):</strong><br>&nbsp;&nbsp;• <code>1x Brimstone Sulfur + 1x Pine Pitch Oil</code> ➔ <strong>🔥 Alchemist's Fire Flask</strong> (1d4 Fire/turn) — Unlock Code: <code>BRIMSTONE</code><br>&nbsp;&nbsp;• <code>1x Brimstone Sulfur + 1x Medicinal Herbs</code> ➔ <strong>💨 Ash-Cloud Smoke Bomb</strong> (15-ft Obscured) — Unlock Code: <code>ASH-CLOUD</code><br>• <strong>Yvaine Bonus:</strong> Can also be crimped with Yvaine's Tinker's Kit during a Short Rest to craft emergency firearm powder!",
+        mechanics: "• <strong>Where Found:</strong> Purchased at Vallaki's smithy or Blinsky's toy workshop (3–5 GP), or scraped from volcanic vents, kiln chimneys (Old Bonegrinder), and alchemical labs.<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🔥 Alchemist's Fire Flask</strong> (<code>BRIMSTONE</code>), <strong>💨 Ash-Cloud Smoke Bomb</strong> (<code>ASH-CLOUD</code>), and <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>).<br>• <strong>Yvaine Bonus:</strong> Can also be crimped with Yvaine's Tinker's Kit during a Short Rest to craft emergency firearm powder!",
         lore: "Sharp yellow brimstone chunks smelling of struck flint and alchemical smoke."
     },
     pitch_oil: {
         cat: "material", name: "🛢️ Pine Pitch & Lamp Oil Flask", rarity: "Common Shop / Forage • 5 SP–1 GP",
         location: "Act I • Bildrath's Mercantile, Arasek Stockyard & Svalich Logging Camps • Shops / Forage",
-        mechanics: "• <strong>Where Found:</strong> Stocked in every general store (5 SP–1 GP) or tapped directly from scarred Svalich evergreens (<code>DC 11 Survival</code>).<br>• <strong>DM Secret Recipes (Locked):</strong><br>&nbsp;&nbsp;• <strong>🔥 Alchemist's Fire Flask</strong> (<code>BRIMSTONE</code>)<br>&nbsp;&nbsp;• <strong>✨ Vial of Liquid Silver Coating</strong> (<code>SILVER-COAT</code> — suspends silver dust onto blades or bullets for 1 hour!).",
+        mechanics: "• <strong>Where Found:</strong> Stocked in every general store (5 SP–1 GP) or tapped directly from scarred Svalich evergreens (<code>DC 11 Survival</code>).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🔥 Alchemist's Fire Flask</strong> (<code>BRIMSTONE</code>), <strong>✨ Liquid Silver Coating</strong> (<code>SILVER-COAT</code>), and waterproofing seams on <strong>⛺ Mist-Ward Traveler's Camp Kit</strong> (<code>MIST-CAMP</code>).",
         lore: "Thick amber pine resin blended with lantern oil—burns fiercely in damp Barovian rain and binds fine alchemical powders."
+    },
+    treated_pelt_canvas: {
+        cat: "material", name: "🐺 Treated Dire-Pelt & Waxed Canvas Bundle", rarity: "Common/Uncommon Hunt & Shop • DC 13 Survival / 4–6 GP",
+        location: "Act I–IV • Dire Wolf Skinning, Ruined Coach Tarps, Bildrath's E1, Tser Pool G & Arasek N5 • Hunt / Shops",
+        mechanics: "• <strong>Where Found:</strong> Skinned cleanly from defeated Dire Wolves/mountain beasts during travel (<code>DC 13 Survival</code> yields 1–2 hides), salvaged from wrecked Svalich stagecoach tarps, or bought at Bildrath's (<code>6 GP</code>), Tser Pool Vistani (<code>4 GP</code>), and Vallaki's Arasek Stockyard (<code>4 GP</code>).<br>• <strong>DM Secret Recipe (Locked):</strong> Core weatherproof shelter frame for <strong>⛺ Mist-Ward Traveler's Camp Kit</strong> (<code>2x</code> bundles needed • Unlock Code: <code>MIST-CAMP</code>).",
+        lore: "Heavy double-stitched sailcloth layered with dense gray wolf-hide—keeps Barovia's freezing nocturnal sleet off sleeping travelers."
     },
     clean_linen_cloth: {
         cat: "material", name: "🧻 Clean Linen Wraps & Salve Jar", rarity: "Common Shop Supply • 2 SP",
@@ -11623,13 +11671,13 @@ const LOOT_DATA = {
     alchemical_catalyst: {
         cat: "material", name: "⚗️ Alchemical Catalyst (Distilled Alembic Salt)", rarity: "Rare Alchemy Material • 25–40 GP / Salvage",
         location: "Act II • Old Bonegrinder Lab, Wachterhaus Cellar, Vallaki Apothecary & Abbey of St. Markovia • Labs / Shops",
-        mechanics: "• <strong>Where Found:</strong> Found strictly in arcane/alchemical workspaces—Old Bonegrinder's upper mill, Wachterhaus occult library, Rictavio's/Ezmerelda's wagons, or the Abbey of St. Markovia surgical wing (25–40 GP if bartered from secret apothecaries).<br>• <strong>DM Secret Recipes (Locked):</strong><br>&nbsp;&nbsp;• <code>4x Medicinal Herbs + 1x Alchemical Catalyst</code> ➔ <strong>🧪 Potion of Greater Healing (4d4 + 4 HP)</strong> — Unlock Code: <code>GREATER-HEAL</code><br>&nbsp;&nbsp;• Also required (2x) for <strong>🧪 Potion of Superior Healing (8d4 + 8 HP)</strong> (<code>MOONPETAL</code>).",
+        mechanics: "• <strong>Where Found:</strong> Found strictly in arcane/alchemical workspaces—Old Bonegrinder's upper mill, Wachterhaus occult library, Rictavio's/Ezmerelda's wagons, or the Abbey of St. Markovia surgical wing (25–40 GP if bartered from secret apothecaries).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🧪 Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>).",
         lore: "Crystalline crimson alembic salts that violently concentrate ordinary herbal infusions into high-grade restorative elixirs."
     },
     svalich_moonpetal: {
         cat: "material", name: "🌸 Svalich Moonpetal Blossom", rarity: "Very Rare Dusk Forage • DC 15 Nature",
         location: "Act III • Drowned Ruins of Berez, Yester Hill Ridge & Lake Baratok Shore • Rare Wilderness Forage",
-        mechanics: "• <strong>Where Found:</strong> Ghost-white blossoms that open ONLY in the misty twilight near ancient Fane stones, Lake Baratok, or Berez marsh ruins (<code>DC 15 Nature/Survival</code> at dusk yields 1 intact bloom).<br>• <strong>DM Secret Recipes (Locked):</strong><br>&nbsp;&nbsp;• <code>4x Herbs + 2x Catalyst + 1x Moonpetal</code> ➔ <strong>🧪 Potion of Superior Healing (8d4 + 8 HP)</strong> — Unlock Code: <code>MOONPETAL</code><br>&nbsp;&nbsp;• <code>1x Moonpetal + 1x Silver Dust + 1x Spring Water</code> ➔ <strong>☀️ Sun-Ash Repellent Balm (+1d4 Radiant Coat 10m)</strong> — Unlock Code: <code>SUN-ASH</code>.",
+        mechanics: "• <strong>Where Found:</strong> Ghost-white blossoms that open ONLY in the misty twilight near ancient Fane stones, Lake Baratok, or Berez marsh ruins (<code>DC 15 Nature/Survival</code> at dusk yields 1 intact bloom).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>) and <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>).",
         lore: "Pale luminescent petals said to remember the last true sunrise before Strahd's curse sealed the valley."
     },
     vampire_ash_fang: {
@@ -12901,7 +12949,18 @@ function dmQuickDropByKey(lootKey, toId, toName, ev) {
 function dmToggleRecipeUnlock(recipeId, recipeTitle, unlockNow = true) {
     const rtdb = dmGetRtdb();
     if (!rtdb) {
-        dmShowQuickToast('⚠️ Firebase Realtime Database not connected.');
+        if (unlockNow) dmUnlockedRecipes[recipeId] = true;
+        else delete dmUnlockedRecipes[recipeId];
+        if (activeLootTag === 'Materials' || hasActiveQueryFor('loot')) {
+            renderLootVault(activeLootTag === 'Materials' ? 'Materials' : 'search_all', true);
+            if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
+        }
+        if (activeModalKind === 'item' && activeModalItemKey) {
+            openItemModal(activeModalItemKey, true);
+        }
+        dmShowQuickToast(unlockNow
+            ? `⚠️ Offline preview: <strong>${recipeTitle}</strong> marked Unlocked locally (share code or connect Firebase to push live).`
+            : `🔒 Offline preview: <strong>${recipeTitle}</strong> marked Locked locally.`);
         return;
     }
     const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
@@ -13132,7 +13191,13 @@ function initDmFirebaseSync() {
     // 2. Live sync unlocked recipes status
     rtdb.ref(`campaigns/${room}/unlocked_recipes`).on('value', snap => {
         dmUnlockedRecipes = snap.val() || {};
-        if (activeLootTag === 'Materials') renderLootVault('Materials', true);
+        if (activeLootTag === 'Materials' || hasActiveQueryFor('loot')) {
+            renderLootVault(activeLootTag === 'Materials' ? 'Materials' : 'search_all', true);
+            if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
+        }
+        if (activeModalKind === 'item' && activeModalItemKey) {
+            openItemModal(activeModalItemKey, true);
+        }
     });
 
     // 3. Live sync party hero states, Synced Checkpoints, AND DM Encounter Board / Enemy HPs
@@ -13974,6 +14039,50 @@ function openItemModal(key, fromNav = false) {
     if (!fromNav) modalNavStack = [];
     const modal = resetDmModalChrome();
     const safeName = it.name.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    const craftRec = DM_CRAFTING_BY_LOOT[key] || null;
+    let craftSectionHtml = '';
+    if (craftRec) {
+        const isUnlocked = craftRec.unlockedDefault || !!dmUnlockedRecipes[craftRec.id];
+        const statusHtml = craftRec.unlockedDefault
+            ? `<span class="pill green">UNLOCKED (Session 1)</span>`
+            : `<span><span class="pill ${isUnlocked ? 'green' : 'crimson'}">${isUnlocked ? 'UNLOCKED LIVE' : 'LOCKED'}</span> • Code: <code>${craftRec.code}</code></span>`;
+        const toggleBtnHtml = craftRec.unlockedDefault
+            ? ''
+            : `<button type="button" class="btn-modal-mini" style="padding:3px 9px; font-size:0.7rem; border-color:${isUnlocked ? '#ef4444' : '#34d399'}; color:${isUnlocked ? '#fca5a5' : '#6ee7b7'};" onclick="dmToggleRecipeUnlock('${craftRec.id}', '${safeName}', ${!isUnlocked})">${isUnlocked ? '🔒 Re-Lock' : '🔓 Unlock Live'}</button>`;
+        const ingPills = craftRec.ingredients.map(ing => {
+            const mat = LOOT_DATA[ing.key];
+            const matLabel = mat ? mat.name.replace(/\s*\([^)]*\)\s*/g, '').trim() : ing.key;
+            return `<button type="button" class="loot-link-pill" onclick="navigateModalFromInside('item', '${ing.key}')">${ing.qty}x ${matLabel}</button>`;
+        }).join('');
+        craftSectionHtml = `
+            <h4>⚗️ Crafting Workbench Formula</h4>
+            <div style="background:#0c1424; border:1px solid rgba(52,211,153,0.4); border-radius:7px; padding:10px 12px; margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                    ${statusHtml}
+                    ${toggleBtnHtml}
+                </div>
+                <div style="font-size:0.76rem; color:var(--text-muted); margin-bottom:6px;">Required Materials (click any reagent to inspect Forage DC &amp; Shop Price):</div>
+                <div style="display:flex; flex-wrap:wrap; gap:4px;">${ingPills}</div>
+                ${craftRec.note ? `<div style="font-size:0.74rem; color:#fde68a; margin-top:7px;">${craftRec.note}</div>` : ''}
+            </div>
+        `;
+    } else if (it.cat === 'material') {
+        const usedIn = DM_CRAFTING_RECIPES.filter(r => r.ingredients.some(ing => ing.key === key));
+        if (usedIn.length > 0) {
+            const usedPills = usedIn.map(r => {
+                const targetItem = LOOT_DATA[r.lootKey];
+                const ingObj = r.ingredients.find(ing => ing.key === key);
+                const lbl = targetItem ? targetItem.name : r.summary;
+                return `<button type="button" class="loot-link-pill" onclick="navigateModalFromInside('item', '${r.lootKey}')">${lbl} <small style="color:#94a3b8;">(Needs ${ingObj.qty}x • ${r.unlockedDefault ? 'Unlocked' : r.code})</small></button>`;
+            }).join('');
+            craftSectionHtml = `
+                <h4>⚒️ Craftable Items Using This Reagent (Click to View)</h4>
+                <div style="background:#0c1424; border:1px solid rgba(52,211,153,0.35); border-radius:7px; padding:10px 12px; margin-bottom:12px; display:flex; flex-wrap:wrap; gap:4px;">
+                    ${usedPills}
+                </div>
+            `;
+        }
+    }
     document.getElementById('modal-title').innerHTML = `${renderModalBackBtnHtml()}🎒 ${it.name}`;
     document.getElementById('modal-content').innerHTML = `
         <div style="background:#131c2c; border-left:3.5px solid var(--accent-gold); padding:9px 14px; border-radius:0 6px 6px 0; margin-bottom:12px;">
@@ -13992,6 +14101,7 @@ function openItemModal(key, fromNav = false) {
         </div>
         <h4>⚔️ D&D 5e Mechanics & Effects</h4>
         <div class="nbox nbox-emerald">${it.mechanics}</div>
+        ${craftSectionHtml}
         <h4>📜 Lore & Verbatim Manuscript</h4>
         <div class="nbox nbox-cyan" style="white-space:pre-line; font-style:italic;">${it.lore}</div>
     `;
@@ -15212,6 +15322,145 @@ function matchesLootFilter(it, filterTag) {
     return blob.includes(q);
 }
 
+const DM_CRAFTING_RECIPES = [
+    {
+        id: 'craft_healing_potion',
+        lootKey: 'healing_potion',
+        summary: '🧪 Potion of Healing (2d6+1 HP)',
+        code: 'UNLOCKED',
+        unlockedDefault: true,
+        ingredients: [{ key: 'medicinal_herbs', qty: 2 }]
+    },
+    {
+        id: 'craft_field_bandages',
+        lootKey: 'bandages_field',
+        summary: '🩹 Field Healing Bandages (1d6+1 HP)',
+        code: 'UNLOCKED',
+        unlockedDefault: true,
+        ingredients: [{ key: 'medicinal_herbs', qty: 1 }],
+        note: '💡 Tip: Having 🧻 Clean Linen Wraps & Salve Jar in camp lets allies assist or double yield on a DC 14 Medicine check.'
+    },
+    {
+        id: 'craft_greater_healing',
+        lootKey: 'greater_healing',
+        summary: '🧪 Potion of Greater Healing (4d4+4 HP)',
+        code: 'GREATER-HEAL',
+        ingredients: [
+            { key: 'medicinal_herbs', qty: 4 },
+            { key: 'alchemical_catalyst', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_holy_water',
+        lootKey: 'holy_water',
+        summary: '💧 Morninglord Holy Water (2d6 Radiant)',
+        code: 'MORNINGLORD',
+        ingredients: [
+            { key: 'pure_spring_water', qty: 1 },
+            { key: 'powdered_silver_dust', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_antitoxin',
+        lootKey: 'barovian_antitoxin',
+        summary: '🧪 Barovian Antitoxin Tonic (Adv vs Poison 1h)',
+        code: 'WOLFBANE',
+        ingredients: [
+            { key: 'medicinal_herbs', qty: 2 },
+            { key: 'wolfbane_root', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_silver_oil',
+        lootKey: 'liquid_silver_coating',
+        summary: '✨ Vial of Liquid Silver Coating (Silvered 1h)',
+        code: 'SILVER-COAT',
+        ingredients: [
+            { key: 'powdered_silver_dust', qty: 1 },
+            { key: 'pitch_oil', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_fire_flask',
+        lootKey: 'alchemists_fire',
+        summary: "🔥 Alchemist's Fire Flask (1d4/turn Fire)",
+        code: 'BRIMSTONE',
+        ingredients: [
+            { key: 'charcoal_sulfur', qty: 1 },
+            { key: 'pitch_oil', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_smoke_bomb',
+        lootKey: 'ash_smoke_bomb',
+        summary: '💨 Ash-Cloud Smoke Bomb (15-ft Obscured)',
+        code: 'ASH-CLOUD',
+        ingredients: [
+            { key: 'charcoal_sulfur', qty: 1 },
+            { key: 'medicinal_herbs', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_phosphor_bomb',
+        lootKey: 'phosphor_grenades',
+        summary: '💣 Alchemical Phosphor Flash-Bomb (2d6 Fire/Rad + Blind)',
+        code: 'PHOSPHOR',
+        ingredients: [
+            { key: 'charcoal_sulfur', qty: 1 },
+            { key: 'powdered_silver_dust', qty: 1 },
+            { key: 'alchemical_catalyst', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_elixir_of_health',
+        lootKey: 'elixir_of_health',
+        summary: '✨ Elixir of Health (Cure Disease & Conditions)',
+        code: 'PURIFY-ELIXIR',
+        ingredients: [
+            { key: 'medicinal_herbs', qty: 3 },
+            { key: 'wolfbane_root', qty: 1 },
+            { key: 'alchemical_catalyst', qty: 1 },
+            { key: 'pure_spring_water', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_camp_kit',
+        lootKey: 'mist_ward_camp_kit',
+        summary: "⛺ Mist-Ward Traveler's Camp Kit (Wilderness True Long Rest)",
+        code: 'MIST-CAMP',
+        ingredients: [
+            { key: 'treated_pelt_canvas', qty: 2 },
+            { key: 'pitch_oil', qty: 2 },
+            { key: 'wolfbane_root', qty: 1 },
+            { key: 'powdered_silver_dust', qty: 1 }
+        ],
+        note: "⚒️ Challenging Field Craft: Suggest requiring 1 Short Rest + DC 14 Survival or Leatherworker's/Tinker's Check at the table!"
+    },
+    {
+        id: 'craft_superior_healing',
+        lootKey: 'superior_healing',
+        summary: '🧪 Potion of Superior Healing (8d4+8 HP)',
+        code: 'MOONPETAL',
+        ingredients: [
+            { key: 'medicinal_herbs', qty: 4 },
+            { key: 'alchemical_catalyst', qty: 2 },
+            { key: 'svalich_moonpetal', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_vampire_ward',
+        lootKey: 'sun_ash_balm',
+        summary: '☀️ Sun-Ash Repellent Balm (+1d4 Radiant Coat 10m)',
+        code: 'SUN-ASH',
+        ingredients: [
+            { key: 'svalich_moonpetal', qty: 1 },
+            { key: 'powdered_silver_dust', qty: 1 },
+            { key: 'pure_spring_water', qty: 1 }
+        ]
+    }
+];
+const DM_CRAFTING_BY_LOOT = Object.fromEntries(DM_CRAFTING_RECIPES.map(r => [r.lootKey, r]));
+
 let activeLootTag = 'Act I';
 function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
     const container = document.getElementById('loot-containers');
@@ -15229,7 +15478,7 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         { id: 'quest', title: '📜 4.1 Fated Tarokka Relics, Session 1 Items & Story Artifacts', cls: 'loot-header-quest' },
         { id: 'weapon', title: '⚔️ 4.2 Magic Weapons, Silvered Arms & Firearm Upgrades', cls: 'loot-header-weapon' },
         { id: 'caster', title: '🔮 4.3 Arcane Staves, Wands, Spellbooks & Caster Relics', cls: 'loot-header-caster' },
-        { id: 'armor', title: '🛡️ 4.4 Magic Armor, Rings, Cloaks & Defensive Relics', cls: 'loot-header-armor' },
+        { id: 'armor', title: '🛡️ 4.4 Magic Armor, Rings, Cloaks, Defensive Gear & Camp Shelter', cls: 'loot-header-armor' },
         { id: 'heal', title: '🧪 4.5 Potions, Elixirs, Holy Water & Barovian Vintages', cls: 'loot-header-heal' },
         { id: 'buff', title: '⚡ 4.6 Amber Temple Dark Gifts, Cursed Delicacies & Boons', cls: 'loot-header-buff' },
         { id: 'material', title: '🌿 4.7 Barovian Crafting Materials, Wilderness Forage & Shop Supplies', cls: 'loot-header-material' }
@@ -15258,15 +15507,18 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
                 const customBadge = it.isCustomForged
                     ? ` <span class="pill purple" style="font-size:0.62rem; padding:1px 6px; vertical-align:middle;">✨ CUSTOM</span>`
                     : '';
+                const craftBadge = DM_CRAFTING_BY_LOOT[k]
+                    ? ` <span class="pill green" style="font-size:0.62rem; padding:1px 6px; vertical-align:middle;" title="Craftable on Player Workbench (${DM_CRAFTING_BY_LOOT[k].code})">⚗️ CRAFTABLE</span>`
+                    : '';
                 rowsHtml += `
                     <tr class="searchable-row" ${it.isCustomForged ? 'style="background:rgba(168,85,247,0.06);"' : ''}>
                         <td>
                             <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
-                                <span><button class="link-btn" onclick="openItemModal('${k}')">${it.name}</button>${customBadge}</span>
+                                <span><button type="button" class="link-btn" onclick="openItemModal('${k}')">${it.name}</button>${craftBadge}${customBadge}</span>
                                 <span style="display:inline-flex; gap:3px; flex-shrink:0;" title="1-Click Live Drop to Hero">
-                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'piper', '🎩 Piper', event)" title="Drop 1x to Piper">🎩</button>
-                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'jacomir', '👑 Jacomir', event)" title="Drop 1x to Jacomir">👑</button>
-                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'yvaine', '🔫 Yvaine', event)" title="Drop 1x to Yvaine">🔫</button>
+                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'piper', '🎩 Piper', event)" title="Drop 1x to Piper" aria-label="Drop 1x ${it.name.replace(/"/g, '&quot;')} to Piper">🎩</button>
+                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'jacomir', '👑 Jacomir', event)" title="Drop 1x to Jacomir" aria-label="Drop 1x ${it.name.replace(/"/g, '&quot;')} to Jacomir">👑</button>
+                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'yvaine', '🔫 Yvaine', event)" title="Drop 1x to Yvaine" aria-label="Drop 1x ${it.name.replace(/"/g, '&quot;')} to Yvaine">🔫</button>
                                 </span>
                             </div>
                         </td>
@@ -15277,9 +15529,10 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
             });
         });
 
+        const catHeadingId = `loot-cat-head-${c.id}`;
         return `
-            <div class="table-wrap">
-                <div class="loot-cat-title ${c.cls}">${c.title} (${items.length})</div>
+            <div class="table-wrap" tabindex="0" role="region" aria-labelledby="${catHeadingId}">
+                <div id="${catHeadingId}" class="loot-cat-title ${c.cls}">${c.title} (${items.length})</div>
                 <table class="guide-table">
                     <thead><tr><th scope="col" style="width:42%;">Item Name</th><th scope="col" style="width:20%;">${c.id === 'material' ? 'Forage DC / Price' : 'Rarity / Cost'}</th><th scope="col" style="width:38%;">${c.id === 'material' ? 'Act, Wilderness / Shop Source' : 'Act, Location &amp; Best Fit'}</th></tr></thead>
                     <tbody>
@@ -15290,40 +15543,40 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         `;
     }).join('');
 
-    // When viewing the dedicated Materials tab, also show the DM-only Secret Crafting Recipes & 1-Click Live Unlocker!
-    if (renderTag === 'Materials') {
-        const recRow = (id, title, mats, code) => {
-            const isUnl = !!dmUnlockedRecipes[id];
-            const safeT = title.replace(/'/g, "\\'");
+    // When viewing the dedicated Materials tab (or global/section search), also show the DM-only Secret Crafting Recipes & 1-Click Live Unlocker!
+    if (renderTag === 'Materials' || renderTag === 'search_all') {
+        const recipeRowsHtml = DM_CRAFTING_RECIPES.map(r => {
+            const isUnl = r.unlockedDefault || !!dmUnlockedRecipes[r.id];
+            const safeT = r.summary.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            const ingBtns = r.ingredients.map(ing => {
+                const mat = LOOT_DATA[ing.key];
+                const matLabel = mat ? mat.name.replace(/\s*\([^)]*\)\s*/g, '').trim() : ing.key;
+                return `<button type="button" class="loot-link-pill" style="font-size:0.71rem; padding:2px 7px; margin:1px 3px 1px 0;" onclick="openItemModal('${ing.key}')">${ing.qty}x ${matLabel}</button>`;
+            }).join('');
+            const statusCol = r.unlockedDefault
+                ? `<span class="pill green">UNLOCKED (Session 1)</span>`
+                : `<div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+                        <span><span class="pill ${isUnl ? 'green' : 'crimson'}">${isUnl ? 'UNLOCKED LIVE' : 'LOCKED'}</span> • <code>${r.code}</code></span>
+                        <button type="button" class="btn-modal-mini" style="padding:2px 7px; font-size:0.66rem; border-color:${isUnl ? '#ef4444' : '#34d399'}; color:${isUnl ? '#fca5a5' : '#6ee7b7'};" aria-label="${isUnl ? 'Re-lock' : 'Unlock live'} ${safeT}" onclick="dmToggleRecipeUnlock('${r.id}', '${safeT}', ${!isUnl})">${isUnl ? '🔒 Re-Lock' : '🔓 Unlock Live'}</button>
+                   </div>`;
             return `
                 <tr class="searchable-row">
-                    <td>${title}</td>
-                    <td>${mats}</td>
                     <td>
-                        <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
-                            <span><span class="pill ${isUnl ? 'green' : 'crimson'}">${isUnl ? 'UNLOCKED LIVE' : 'LOCKED'}</span> • <code>${code}</code></span>
-                            <button type="button" class="btn-modal-mini" style="padding:2px 7px; font-size:0.66rem; border-color:${isUnl ? '#ef4444' : '#34d399'}; color:${isUnl ? '#fca5a5' : '#6ee7b7'};" onclick="dmToggleRecipeUnlock('${id}', '${safeT}', ${!isUnl})">${isUnl ? '🔒 Re-Lock' : '🔓 Unlock Live'}</button>
-                        </div>
+                        <button type="button" class="link-btn" onclick="openItemModal('${r.lootKey}')">${r.summary}</button>
+                        ${r.note ? `<div style="font-size:0.69rem; color:#fde68a; margin-top:2px;">${r.note}</div>` : ''}
                     </td>
+                    <td><div style="display:flex; flex-wrap:wrap; align-items:center; gap:2px;">${ingBtns}</div></td>
+                    <td>${statusCol}</td>
                 </tr>
             `;
-        };
+        }).join('');
         html += `
-            <div class="table-wrap">
-                <div class="loot-cat-title loot-header-quest">🔒 DM-ONLY: Secret Crafting Recipes &amp; 1-Click Live Firebase Unlocker</div>
+            <div class="table-wrap" tabindex="0" role="region" aria-labelledby="dm-crafting-recipes-heading">
+                <div id="dm-crafting-recipes-heading" class="loot-cat-title loot-header-quest">🔒 DM-ONLY: Secret Crafting Recipes (${DM_CRAFTING_RECIPES.length}) &amp; 1-Click Live Firebase Unlocker</div>
                 <table class="guide-table">
-                    <thead><tr><th scope="col" style="width:30%;">Crafted Consumable</th><th scope="col" style="width:36%;">Required Materials</th><th scope="col" style="width:34%;">Status, Code &amp; 1-Click Live Unlock</th></tr></thead>
+                    <thead><tr><th scope="col" style="width:31%;">Craftable Item (Click to View)</th><th scope="col" style="width:37%;">Required Materials (Click to View)</th><th scope="col" style="width:32%;">Status, Code &amp; 1-Click Live Unlock</th></tr></thead>
                     <tbody>
-                        <tr class="searchable-row"><td>🧪 Potion of Healing (2d6+1 HP)</td><td>2x Medicinal Herbs</td><td><span class="pill green">UNLOCKED (Session 1)</span></td></tr>
-                        <tr class="searchable-row"><td>🩹 Field Bandages (1d6+1 HP)</td><td>1x Medicinal Herb</td><td><span class="pill green">UNLOCKED (Session 1)</span></td></tr>
-                        ${recRow('craft_greater_healing', '🧪 Potion of Greater Healing (4d4+4 HP)', '4x Medicinal Herbs + 1x Alchemical Catalyst', 'GREATER-HEAL')}
-                        ${recRow('craft_holy_water', '💧 Morninglord Holy Water (2d6 Radiant)', '1x Pure Spring Water + 1x Powdered Silver Dust', 'MORNINGLORD')}
-                        ${recRow('craft_antitoxin', '🧪 Barovian Antitoxin Tonic (Adv vs Poison 1h)', '2x Medicinal Herbs + 1x Wolfbane Root', 'WOLFBANE')}
-                        ${recRow('craft_silver_oil', '✨ Liquid Silver Coating (Silvered 1h)', '1x Powdered Silver Dust + 1x Pine Pitch Oil', 'SILVER-COAT')}
-                        ${recRow('craft_fire_flask', '🔥 Alchemist\'s Fire Flask (1d4/turn Fire)', '1x Brimstone Sulfur + 1x Pine Pitch Oil', 'BRIMSTONE')}
-                        ${recRow('craft_smoke_bomb', '💨 Ash-Cloud Smoke Bomb (15ft Obscured)', '1x Brimstone Sulfur + 1x Medicinal Herbs', 'ASH-CLOUD')}
-                        ${recRow('craft_superior_healing', '🧪 Potion of Superior Healing (8d4+8 HP)', '4x Herbs + 2x Catalyst + 1x Svalich Moonpetal', 'MOONPETAL')}
-                        ${recRow('craft_vampire_ward', '☀️ Sun-Ash Repellent Balm (+1d4 Radiant 10m)', '1x Moonpetal + 1x Silver Dust + 1x Spring Water', 'SUN-ASH')}
+                        ${recipeRowsHtml}
                     </tbody>
                 </table>
             </div>

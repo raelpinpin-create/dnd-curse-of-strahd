@@ -3195,6 +3195,9 @@
         for (const [k, v] of Object.entries(worldLootVault)) {
             if (cleanLower.includes(k)) { match = v; break; }
         }
+        if (!match && window.COS_RPG && typeof window.COS_RPG.lookupSharedItemLore === 'function') {
+            match = window.COS_RPG.lookupSharedItemLore(parsed.name);
+        }
 
         document.getElementById('item-modal-title').innerText = match ? match.name : `${parsed.emoji}${parsed.name}`;
         document.getElementById('item-modal-body').innerHTML = `
