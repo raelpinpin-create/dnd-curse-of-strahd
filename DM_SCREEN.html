@@ -6328,7 +6328,8 @@ const MONSTER_DATA = {
         ],
         lootLinks: [
             { key: "strahd_cloak", note: "Campaign Boss Drop — Animated Cloak" },
-            { key: "obsidian_barovian_crown", note: "Royal Crown &amp; Signet" }
+            { key: "obsidian_barovian_crown", note: "Royal Crown &amp; Signet" },
+            { key: "heart_of_sorrow_shard", note: "Unique 1/Campaign K20 Crystal Drop" }
         ]
     },
 
@@ -10443,7 +10444,8 @@ const BIOME_DATA = {
             { key: "silvered_greatsword", note: "Vistani Silver Forge (150 GP)" },
             { key: "silvered_rapier", note: "Vistani Silver Forge (125 GP)" },
             { key: "silvered_handaxe", note: "Vistani Silver Forge (105 GP)" },
-            { key: "silvered_arrows", note: "Vistani Silver Forge (x10)" }
+            { key: "silvered_arrows", note: "Vistani Silver Forge (x10)" },
+            { key: "silvered_bolts", note: "Vistani Silver Forge (x10 Bolts)" }
         ],
         body: `
             <div class="modal-read-aloud">"Eight crimson-and-gold barrel vardos circle a crackling birch bonfire beside the obsidian mirror of Tser Pool. Copper-throated violins weave a mournful folk dance through woodsmoke and roasted boar fat, while beneath a towering silk pavilion candles gutter around a crooked crone shuffling bone-rimmed cards."</div>
@@ -10970,7 +10972,8 @@ const BIOME_DATA = {
             { key: "strahd_cloak", note: "Strahd Boss Drop K86" },
             { key: "obsidian_barovian_crown", note: "Royal Crown K86 / K41" },
             { key: "ravenloft_bride_regalia", note: "Catacomb Coffins K84–K86" },
-            { key: "strahd_animated_plate", note: "Optional Vault Tier K41" }
+            { key: "strahd_animated_plate", note: "Optional Vault Tier K41" },
+            { key: "heart_of_sorrow_shard", note: "Unique 1/Campaign K20 Crystal Drop" }
         ],
         body: `
             <div class="modal-read-aloud">"Crimson lightning splinters the storm clouds above the thousand-foot spire as your party rams open the oak cathedral doors of Castle Ravenloft for the final battle. High above inside the swaying North Tower thrums the giant crystal Heart of Sorrow—while eighty feet beneath the cobblestones, Count Strahd waits silently beside the pale marble coffin of his murdered brother Sergei."</div>
@@ -11145,8 +11148,14 @@ const LOOT_DATA = {
     silvered_arrows: {
         cat: "weapon", name: "🏹 Silvered Arrows (x10)", rarity: "Uncommon Silvered Ammunition • 50–100 GP",
         location: "Act I–IV • Tser Pool Vistani (G), Dusk Elf Camp (N9a) & Vallaki Armory • Cael / Party Allies",
-        mechanics: "• <strong>10 Silver-Broadhead Arrows:</strong> Bypass the nonmagical damage immunity of <strong>Werewolves</strong> and resistances of <strong>Vampire Spawn &amp; Night Hags</strong> (50% chance to recover unbroken shafts post-fight).",
+        mechanics: "• <strong>10 Silver-Broadhead Arrows:</strong> Load directly from Backpack into Bow Quiver, then toggle Silvered ON on any bow to bypass <strong>Werewolf</strong> immunity and <strong>Vampire Spawn / Night Hag</strong> resistances (50% chance to recover unbroken shafts post-fight).",
         lore: "Goose-feathered dusk shafts tipped with broadheads hammered from silver plate."
+    },
+    silvered_bolts: {
+        cat: "weapon", name: "Silvered Crossbow Bolts (x10)", rarity: "Uncommon Silvered Ammunition • 50–100 GP",
+        location: "Act I–III • Tser Pool Vistani Silver Forge (G), Arasek Stockyard (N5) & Vallaki Armory • Yvaine / Jacomir",
+        mechanics: "• <strong>10 Silver-Tipped Crossbow Bolts:</strong> Load directly from Backpack into Crossbow Quiver, then toggle <strong>Silvered: ON</strong> on any Hand, Light, or Heavy Crossbow to bypass Werewolf immunity and Vampire Spawn / Night Hag resistances!",
+        lore: "Heavy quarrels bound in stamped Barovian silver heads and stiff goose-vane fletching."
     },
     blood_spear: {
         cat: "weapon", name: "🩸 The Blood Spear of Kavan (+2 Vampiric Spear)", rarity: "Rare Magic Spear • Attunement (Jacomir)",
@@ -11509,10 +11518,10 @@ const LOOT_DATA = {
         lore: "Four dust-covered vials inside a hidden coffer beneath wreckage in Knights' Quarters (Official CoS Q28; DragnaCarta's Reloaded tones them down to Potions of Greater Healing)."
     },
     elixir_of_health: {
-        cat: "heal", name: "🍷 Elixir of Health (Legendary Revival)", rarity: "Legendary Consumable • Extra Rare • 5,000 GP (Base) / 15,000 GP (Royal Market) • Book Area N2q",
-        location: "Act II–III • Blue Water Inn Secret Stash (Area N2q — Non-Craftable Heirloom) • Party",
-        mechanics: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest.<br>• <strong>Extra Rare &amp; Expensive (<code>5,000 GP Base / 15,000 GP Royal Market</code>):</strong> Cannot be brewed at a campfire—only this hidden Martikov heirloom phial exists in the valley (<code>N2q</code>).",
-        lore: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—an heirloom relic smuggled into Barovia before the Mists closed, hidden inside the Martikovs' secret wereraven loft."
+        cat: "heal", name: "Elixir of Health (Legendary Revival)", rarity: "Legendary Consumable • Extra Rare • 5,000 GP (Base) / 15,000 GP (Royal Market) • Book Area N2q",
+        location: "Act II–IV • Blue Water Inn Secret Stash (Area N2q) OR Single Brew from Heart of Sorrow Shard (HEART-ELIXIR) • Party",
+        mechanics: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest.<br>• <strong>Extra Rare &amp; Expensive (<code>5,000 GP Base / 15,000 GP Royal Market</code>):</strong> Cannot be brewed from common herbs—only found in Area <code>N2q</code> or brewed <strong>once</strong> via Unlock Code <code>HEART-ELIXIR</code> using the unique <strong>Shard of the Heart of Sorrow</strong> (<code>K20</code>).",
+        lore: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—either smuggled into Barovia before the Mists closed or distilled once from the shattered Heart of Sorrow."
     },
     barovian_antitoxin: {
         cat: "heal", name: "🧪 Barovian Antitoxin Tonic (Adv vs Poison 1 hr)", rarity: "Common/Uncommon Consumable • Craftable / 5 GP",
@@ -11915,7 +11924,7 @@ const LOOT_DATA = {
     pure_spring_water: {
         cat: "material", name: "💧 Pure Mountain Spring Water (Unblessed Reagent)", rarity: "Common Forage • 2 SP / DC 10 Survival",
         location: "Act I • Tser Falls, Luna River & Village Springs • Wilderness Forage",
-        mechanics: "• <strong>Where Found:</strong> Collected cleanly in stoppered glass vials from Tser Falls mist-basins, clear mountain streams, or Krezk's White Sun Spring (<code>DC 10 Survival</code> to avoid bog rot).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>💧 Morninglord Holy Water</strong> (<code>MORNINGLORD</code>) and <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>).",
+        mechanics: "• <strong>Where Found:</strong> Collected cleanly in stoppered glass vials from Tser Falls mist-basins, clear mountain streams, or Krezk's White Sun Spring (<code>DC 10 Survival</code> to avoid bog rot).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>💧 Morninglord Holy Water</strong> (<code>MORNINGLORD</code>), <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
         lore: "Crystal-clear glacier melt free of Barovia's swamp miasma—the pure vessel required before sacred silver can be consecrated."
     },
     powdered_silver_dust: {
@@ -11957,14 +11966,20 @@ const LOOT_DATA = {
     alchemical_catalyst: {
         cat: "material", name: "⚗️ Alchemical Catalyst (Distilled Alembic Salt)", rarity: "Rare Alchemy Material • 25–40 GP / Salvage",
         location: "Act II • Old Bonegrinder Lab, Wachterhaus Cellar, Vallaki Apothecary & Abbey of St. Markovia • Labs / Shops",
-        mechanics: "• <strong>Where Found:</strong> Found strictly in arcane/alchemical workspaces—Old Bonegrinder's upper mill, Wachterhaus occult library, Rictavio's/Ezmerelda's wagons, or the Abbey of St. Markovia surgical wing (25–40 GP if bartered from secret apothecaries).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🧪 Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), and <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>).",
+        mechanics: "• <strong>Where Found:</strong> Found strictly in arcane/alchemical workspaces—Old Bonegrinder's upper mill, Wachterhaus occult library, Rictavio's/Ezmerelda's wagons, or the Abbey of St. Markovia surgical wing (25–40 GP if bartered from secret apothecaries).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🧪 Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
         lore: "Crystalline crimson alembic salts that violently concentrate ordinary herbal infusions into high-grade restorative elixirs."
     },
     svalich_moonpetal: {
         cat: "material", name: "🌸 Svalich Moonpetal Blossom", rarity: "Very Rare Dusk Forage • DC 15 Nature",
         location: "Act III • Drowned Ruins of Berez, Yester Hill Ridge & Lake Baratok Shore • Rare Wilderness Forage",
-        mechanics: "• <strong>Where Found:</strong> Ghost-white blossoms that open ONLY in the misty twilight near ancient Fane stones, Lake Baratok, or Berez marsh ruins (<code>DC 15 Nature/Survival</code> at dusk yields 1 intact bloom).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>) and <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>).",
+        mechanics: "• <strong>Where Found:</strong> Ghost-white blossoms that open ONLY in the misty twilight near ancient Fane stones, Lake Baratok, or Berez marsh ruins (<code>DC 15 Nature/Survival</code> at dusk yields 1 intact bloom).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>), <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
         lore: "Pale luminescent petals said to remember the last true sunrise before Strahd's curse sealed the valley."
+    },
+    heart_of_sorrow_shard: {
+        cat: "material", name: "Shard of the Heart of Sorrow (Unique Sorrow-Crystal Core)", rarity: "Legendary Unique Crafting Relic • Strict 1-Per-Campaign Opportunity",
+        location: "Act IV • Castle Ravenloft North Tower (Shattering K20 Heart of Sorrow) • Party (1 Only)",
+        mechanics: "• <strong>Strict 1-Per-Campaign Drop (Castle Ravenloft K20):</strong> Distinct from Morgantha's Night Hag Heartstone and the Martikovs' three green Winery Life-Gems. When the party shatters Strahd's 50-HP crimson <strong>Heart of Sorrow</strong> in Tower <code>K20</code>, they have <strong>ONE opportunity in the entire campaign</strong> to snatch <strong>1 intact fist-sized ruby crystal core</strong> before the rest turns to dissolving mist.<br>• <strong>Legendary Recipe (Unlock Code <code>HEART-ELIXIR</code>):</strong> Combines with <code>2x Alchemical Catalyst + 1x Svalich Moonpetal Blossom + 1x Pure Mountain Spring Water</code> to brew <strong>1x Elixir of Health (Legendary Revival)</strong>—consuming the unique shard permanently.",
+        lore: "A cold, pulsing prism of Khazan's blood-forged ruby crystal—still humming faintly with stolen vitality long after the North Tower chains snap."
     },
     vampire_ash_fang: {
         cat: "material", name: "🦇 Harvested Monster Trophy (Spawn Ash / Dire Wolf Fang)", rarity: "Uncommon Harvest • 10–25 GP Barter / DC 13 Survival",
@@ -13148,6 +13163,30 @@ let dmForgeKind = 'weapon'; // 'weapon' | 'armor' | 'caster' | 'accessory' | 'co
 let dmLiveHeroes = {};
 let dmSyncedCheckpoints = {};
 let dmUnlockedRecipes = {};
+let dmHeroGearOverrides = {};
+
+function dmToggleHeroGearOverride(heroId, heroName, allowNow = true) {
+    const rtdb = dmGetRtdb();
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    if (allowNow) {
+        dmHeroGearOverrides[heroId] = { enabled: true, source: 'dm', updatedAt: Date.now() };
+    } else {
+        delete dmHeroGearOverrides[heroId];
+    }
+    if (rtdb) {
+        rtdb.ref(`campaigns/${room}/heroes/${heroId}/dm_gear_override`).set(
+            allowNow ? { enabled: true, source: 'dm', updatedAt: Date.now() } : null
+        ).then(() => {
+            dmShowQuickToast(allowNow
+                ? `<strong>DM Override Activated for ${heroName}:</strong> Restricted armor and weapons are temporarily equippable.`
+                : `<strong>DM Override Removed for ${heroName}:</strong> Class and feat equipment restrictions restored.`);
+            if (activeModalKind === 'dm_drop' && dmDropActiveTab === 'party') renderDmDropModalBody();
+        }).catch(() => {});
+    } else {
+        if (activeModalKind === 'dm_drop' && dmDropActiveTab === 'party') renderDmDropModalBody();
+        dmShowQuickToast(`Offline preview: ${heroName} DM Override set to ${allowNow ? 'ON' : 'OFF'}.`);
+    }
+}
 
 function dmShowQuickToast(htmlMsg) {
     setModalLogsHtml(htmlMsg);
@@ -13535,10 +13574,12 @@ function initDmFirebaseSync() {
         const val = snap.val() || {};
         dmLiveHeroes = {};
         dmSyncedCheckpoints = {};
+        dmHeroGearOverrides = {};
         Object.entries(val).forEach(([hid, hObj]) => {
             if (hid === '_dm_state') return;
             if (hObj && hObj.state) dmLiveHeroes[hid] = hObj.state;
             if (hObj && hObj.synced_checkpoint) dmSyncedCheckpoints[hid] = hObj.synced_checkpoint;
+            if (hObj && hObj.dm_gear_override && hObj.dm_gear_override.enabled) dmHeroGearOverrides[hid] = hObj.dm_gear_override;
         });
         dmUpdateSection0LiveVitals();
         updateEncounterBoardLivePartyVitals();
@@ -13776,6 +13817,15 @@ function renderDmDropModalBody() {
                         <option value="yes">Yes (Uses 1/3 Attunement Slot)</option>
                     </select>
                 </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fca5a5; font-weight:700;">
+                    Weapon Proficiency Required
+                    <select id="dm-forge-wpn-prof" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="simple">Simple Weapons</option>
+                        <option value="martial">Martial Weapons (Blocks Casters)</option>
+                        <option value="firearm">Firearms (Gunner Feat Only)</option>
+                        <option value="">None (Anyone Can Equip)</option>
+                    </select>
+                </label>
             `;
         } else if (dmForgeKind === 'caster') {
             dynamicFieldsHtml = `
@@ -13922,6 +13972,17 @@ function renderDmDropModalBody() {
                     <select id="dm-forge-attune" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
                         <option value="no">No</option>
                         <option value="yes">Yes (Uses 1/3 Attunement Slot)</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fca5a5; font-weight:700;">
+                    Armor / Shield Proficiency Required
+                    <select id="dm-forge-armor-prof" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="">Auto (From Base Armor / None)</option>
+                        <option value="robe">Cloth / Robe (Anyone)</option>
+                        <option value="light">Light Armor</option>
+                        <option value="medium">Medium Armor</option>
+                        <option value="heavy">Heavy Armor</option>
+                        <option value="shield">Shield Proficiency</option>
                     </select>
                 </label>
             `;
@@ -14074,6 +14135,12 @@ function renderDmDropModalBody() {
                         <button type="button" class="btn-modal-mini" style="padding:1px 7px; font-size:0.68rem; border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroGold('${t.id}', '${t.label}', 5)">+5 GP</button>
                         <button type="button" class="btn-modal-mini" style="padding:1px 7px; font-size:0.68rem; border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroGold('${t.id}', '${t.label}', 10)">+10 GP</button>
                     </div>
+                    <div style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;">
+                        ${(() => {
+                            const ovActive = Boolean((dmHeroGearOverrides[t.id] && dmHeroGearOverrides[t.id].enabled) || st.dmOverrideActive);
+                            return `<button type="button" class="btn-modal-mini" style="padding:2px 9px; font-size:0.68rem; border-color:${ovActive ? '#f59e0b' : '#475569'}; color:${ovActive ? '#fde68a' : '#cbd5e1'}; background:${ovActive ? 'rgba(180,83,9,0.28)' : '#0f172a'};" onclick="dmToggleHeroGearOverride('${t.id}', '${t.label}', ${!ovActive})" title="Allow this hero to equip non-proficient armor or weapons for special scenarios">${ovActive ? 'DM Override: ON (Bypassed)' : 'DM Override: OFF'}</button>`;
+                        })()}
+                    </div>
                 </div>
 
                 <div>
@@ -14185,6 +14252,7 @@ function submitDmForgeItem(andSendToHero = true) {
         customMeta = {
             category: 'weapon',
             slots,
+            reqWeapon: document.getElementById('dm-forge-wpn-prof')?.value || null,
             hands: handsVal === '2' ? 2 : 1,
             versatile: handsVal === 'versatile',
             attune,
@@ -14281,9 +14349,12 @@ function submitDmForgeItem(andSendToHero = true) {
         ].filter(Boolean);
         rarity = `Custom Gear • ${parts[0] || 'Equippable'}`;
         mechanicsHtml = `• <strong>Equipped Bonuses:</strong> ${parts.join(' • ') || 'Custom Gear'}`;
+        const reqArmorExplicit = document.getElementById('dm-forge-armor-prof')?.value || '';
+        const derivedReqArmor = reqArmorExplicit || (slot === 'offHand' && acBonus > 0 ? 'shield' : (heavyArmor ? 'heavy' : (maxDex === 2 ? 'medium' : (armorWorn ? 'light' : null))));
         customMeta = {
             category: dmForgeKind === 'accessory' ? 'accessory' : 'armor',
             slots,
+            reqArmor: derivedReqArmor,
             hands: 1,
             baseAC,
             addDex,
@@ -15923,6 +15994,19 @@ const DM_CRAFTING_RECIPES = [
             { key: 'powdered_silver_dust', qty: 1 },
             { key: 'pure_spring_water', qty: 1 }
         ]
+    },
+    {
+        id: 'craft_elixir_of_health',
+        lootKey: 'elixir_of_health',
+        summary: 'Elixir of Health (Legendary Revival • 50% Max HP)',
+        code: 'HEART-ELIXIR',
+        ingredients: [
+            { key: 'heart_of_sorrow_shard', qty: 1 },
+            { key: 'alchemical_catalyst', qty: 2 },
+            { key: 'svalich_moonpetal', qty: 1 },
+            { key: 'pure_spring_water', qty: 1 }
+        ],
+        note: "Strict 1/Campaign Legendary Craft: Requires the single Shard of the Heart of Sorrow salvaged from shattering Tower K20's Heart of Sorrow."
     }
 ];
 const DM_CRAFTING_BY_LOOT = Object.fromEntries(DM_CRAFTING_RECIPES.map(r => [r.lootKey, r]));

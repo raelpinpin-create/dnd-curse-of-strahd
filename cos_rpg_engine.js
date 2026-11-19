@@ -49,6 +49,7 @@
             match: ['black robe'],
             category: 'armor',
             slots: ['body'],
+            reqArmor: 'robe',
             acBonus: 1,
             saveBonus: 1,
             robeKey: 'black',
@@ -58,6 +59,7 @@
             match: ['red robe'],
             category: 'armor',
             slots: ['body'],
+            reqArmor: 'robe',
             spellFireBonus: '1d4+1',
             robeKey: 'red',
             summary: '+1d4+1 Fire Dmg on Spells'
@@ -66,9 +68,17 @@
             match: ['green robe'],
             category: 'armor',
             slots: ['body'],
+            reqArmor: 'robe',
             skillAdv: ['Arcana'],
             robeKey: 'green',
             summary: 'Adv on Arcana Checks'
+        },
+        {
+            match: ['robe of useful items'],
+            category: 'armor',
+            slots: ['body'],
+            reqArmor: 'robe',
+            summary: 'Detachable Magic Patches'
         },
 
         // --- ARMOR & CLOAKS & HEADGEAR ---
@@ -76,6 +86,7 @@
             match: ['chain mail'],
             category: 'armor',
             slots: ['body'],
+            reqArmor: 'heavy',
             baseAC: 16,
             armorWorn: true,
             heavyArmor: true,
@@ -86,6 +97,7 @@
             match: ['dragonplate', 'plate armor', 'full plate'],
             category: 'armor',
             slots: ['body'],
+            reqArmor: 'heavy',
             baseAC: 18,
             armorWorn: true,
             heavyArmor: true,
@@ -96,6 +108,7 @@
             match: ['half plate'],
             category: 'armor',
             slots: ['body'],
+            reqArmor: 'medium',
             baseAC: 15,
             maxDex: 2,
             armorWorn: true,
@@ -106,6 +119,7 @@
             match: ['breastplate'],
             category: 'armor',
             slots: ['body'],
+            reqArmor: 'medium',
             baseAC: 14,
             maxDex: 2,
             armorWorn: true,
@@ -115,6 +129,7 @@
             match: ['studded leather'],
             category: 'armor',
             slots: ['body'],
+            reqArmor: 'light',
             baseAC: 12,
             addDex: true,
             armorWorn: true,
@@ -124,6 +139,7 @@
             match: ['leather armor'],
             category: 'armor',
             slots: ['body'],
+            reqArmor: 'light',
             baseAC: 11,
             addDex: true,
             armorWorn: true,
@@ -305,11 +321,44 @@
             summary: '+1 Ability Checks & Saves (Attune)'
         },
 
+        // --- AMMUNITION PACKS (Match BEFORE weapons so bolts/arrows never parse as ranged weapons!) ---
+        {
+            match: ['silvered bullets', 'silvered firearm', 'silver bullets', 'silver slugs'],
+            category: 'gear',
+            slots: [],
+            ammoKind: 'firearm',
+            ammoPackDefault: 10,
+            summary: 'Silvered Firearm/Sling Rounds (Load into Weapon Mag)'
+        },
+        {
+            match: ['silvered arrows', 'silver arrows'],
+            category: 'gear',
+            slots: [],
+            ammoKind: 'bow',
+            ammoPackDefault: 10,
+            summary: 'Silvered Bow Arrows (Load into Bow Quiver)'
+        },
+        {
+            match: ['silvered crossbow bolts', 'silvered bolts', 'silver bolts'],
+            category: 'gear',
+            slots: [],
+            ammoKind: 'crossbow',
+            ammoPackDefault: 10,
+            summary: 'Silvered Crossbow Bolts (Load into Crossbow Quiver)'
+        },
+        {
+            match: ['poisoned darts', 'crossbow bolts', 'arrows', 'bullets'],
+            category: 'gear',
+            slots: [],
+            summary: 'Ammunition Bundle'
+        },
+
         // --- WEAPONS & SHIELDS ---
         {
             match: ['+2 heraldic shield', 'heraldic shield'],
             category: 'weapon',
             slots: ['offHand'],
+            reqArmor: 'shield',
             acBonus: 4,
             initBonus: 2,
             isShield: true,
@@ -319,6 +368,7 @@
             match: ['shield'],
             category: 'weapon',
             slots: ['offHand'],
+            reqArmor: 'shield',
             acBonus: 2,
             isShield: true,
             summary: '+2 AC (Off-Hand Shield)'
@@ -327,6 +377,7 @@
             match: ['silvered greatsword'],
             category: 'weapon',
             slots: ['mainHand'],
+            reqWeapon: 'martial',
             hands: 2,
             summary: '2H Heavy • 2d6 Silvered • Graze'
         },
@@ -334,6 +385,7 @@
             match: ['ancestral greatsword', 'vladimir', 'greatsword'],
             category: 'weapon',
             slots: ['mainHand'],
+            reqWeapon: 'martial',
             hands: 2,
             weaponTag: 'greatsword',
             summary: '2H Heavy • 2d6+STR • Graze'
@@ -342,6 +394,7 @@
             match: ['silvered longsword'],
             category: 'weapon',
             slots: ['mainHand', 'offHand'],
+            reqWeapon: 'martial',
             hands: 1,
             versatile: true,
             weaponTag: 'silvered_longsword',
@@ -351,6 +404,7 @@
             match: ['sunsword'],
             category: 'weapon',
             slots: ['mainHand'],
+            reqWeapon: 'martial',
             hands: 1,
             versatile: true,
             attune: true,
@@ -360,6 +414,7 @@
             match: ['blood spear of kavan', 'blood spear'],
             category: 'weapon',
             slots: ['mainHand'],
+            reqWeapon: 'simple',
             hands: 1,
             versatile: true,
             attune: true,
@@ -369,6 +424,7 @@
             match: ['battleaxe', 'treebane'],
             category: 'weapon',
             slots: ['mainHand'],
+            reqWeapon: 'martial',
             hands: 1,
             versatile: true,
             summary: 'Versatile 1d8/1d10 • Topple'
@@ -377,6 +433,7 @@
             match: ['silvered handaxe', '+1 throwing handaxe', 'throwing handaxe'],
             category: 'weapon',
             slots: ['mainHand', 'offHand'],
+            reqWeapon: 'simple',
             hands: 1,
             summary: '1H Light • Thrown 20/60 • Vex'
         },
@@ -384,6 +441,7 @@
             match: ['handaxe'],
             category: 'weapon',
             slots: ['mainHand', 'offHand'],
+            reqWeapon: 'simple',
             hands: 1,
             weaponTag: 'handaxe',
             summary: '1H Light / Thrown 20/60 • Vex'
@@ -392,6 +450,7 @@
             match: ['kolyan\'s silvered heirloom dagger', 'silvered heirloom dagger'],
             category: 'weapon',
             slots: ['mainHand', 'offHand', 'legSheath'],
+            reqWeapon: 'simple',
             hands: 1,
             weaponTag: 'kolyan_dagger',
             isLegDagger: true,
@@ -401,6 +460,7 @@
             match: ['baal verzi', 'mirror dagger'],
             category: 'weapon',
             slots: ['mainHand', 'offHand', 'legSheath'],
+            reqWeapon: 'simple',
             hands: 1,
             isLegDagger: true,
             summary: '+1 Finesse Light Dagger • 1d4+1'
@@ -409,6 +469,7 @@
             match: ['trench knife', 'stiletto'],
             category: 'weapon',
             slots: ['legSheath', 'offHand', 'mainHand'],
+            reqWeapon: 'simple',
             hands: 1,
             weaponTag: 'knife',
             isLegDagger: true,
@@ -418,6 +479,7 @@
             match: ['dagger'],
             category: 'weapon',
             slots: ['mainHand', 'offHand', 'legSheath'],
+            reqWeapon: 'simple',
             hands: 1,
             weaponTag: 'dagger',
             isLegDagger: true,
@@ -427,6 +489,7 @@
             match: ['staff of power'],
             category: 'weapon',
             slots: ['mainHand'],
+            reqWeapon: 'simple',
             hands: 1,
             versatile: true,
             acBonus: 2,
@@ -439,6 +502,7 @@
             match: ['staff of frost'],
             category: 'weapon',
             slots: ['mainHand'],
+            reqWeapon: 'simple',
             hands: 1,
             versatile: true,
             attune: true,
@@ -448,6 +512,7 @@
             match: ['silver-capped quarterstaff', 'silvered quarterstaff'],
             category: 'weapon',
             slots: ['mainHand'],
+            reqWeapon: 'simple',
             hands: 1,
             versatile: true,
             summary: 'Versatile 1d6/1d8 Silvered • Topple'
@@ -456,6 +521,7 @@
             match: ['quarterstaff', 'magician\'s cane', 'gulthias staff'],
             category: 'weapon',
             slots: ['mainHand'],
+            reqWeapon: 'simple',
             hands: 1,
             versatile: true,
             weaponTag: 'staff',
@@ -465,6 +531,8 @@
             match: ['lament'],
             category: 'weapon',
             slots: ['ranged'],
+            reqWeapon: 'firearm',
+            ammoKind: 'firearm',
             hands: 2,
             weaponTag: 'lament',
             stance: 'lament',
@@ -474,6 +542,8 @@
             match: ['"mercy"', 'mercy (main', 'mercy revolver'],
             category: 'weapon',
             slots: ['mainHand', 'offHand'],
+            reqWeapon: 'firearm',
+            ammoKind: 'firearm',
             hands: 1,
             weaponTag: 'mercy',
             stance: 'revolvers',
@@ -483,6 +553,8 @@
             match: ['"less"', 'less (off', 'less revolver'],
             category: 'weapon',
             slots: ['offHand', 'mainHand'],
+            reqWeapon: 'firearm',
+            ammoKind: 'firearm',
             hands: 1,
             weaponTag: 'less',
             stance: 'revolvers',
@@ -492,6 +564,8 @@
             match: ['twin revolvers'],
             category: 'weapon',
             slots: ['mainHand'],
+            reqWeapon: 'firearm',
+            ammoKind: 'firearm',
             hands: 2,
             weaponTag: 'revolvers',
             stance: 'revolvers',
@@ -501,29 +575,88 @@
             match: ['hand crossbow'],
             category: 'weapon',
             slots: ['mainHand', 'offHand', 'ranged'],
+            reqWeapon: 'martial',
+            ammoKind: 'crossbow',
             hands: 1,
             summary: '1H Light Ranged 30/120ft • 1d6 • Vex'
         },
         {
-            match: ['longbow', 'shortbow', 'crossbow', 'musket', 'pistol', 'rifle', /\bbow\b/, /\bsling\b/],
+            match: ['heavy crossbow'],
             category: 'weapon',
             slots: ['ranged'],
+            reqWeapon: 'martial',
+            ammoKind: 'crossbow',
             hands: 2,
-            summary: 'Ranged Weapon'
+            summary: '2H Heavy Crossbow 100/400ft • 1d10 • Push'
+        },
+        {
+            match: ['light crossbow', 'crossbow'],
+            category: 'weapon',
+            slots: ['ranged'],
+            reqWeapon: 'simple',
+            ammoKind: 'crossbow',
+            hands: 2,
+            summary: '2H Light Crossbow 80/320ft • 1d8 • Slow'
+        },
+        {
+            match: ['longbow'],
+            category: 'weapon',
+            slots: ['ranged'],
+            reqWeapon: 'martial',
+            ammoKind: 'bow',
+            hands: 2,
+            summary: '2H Heavy Longbow 150/600ft • 1d8 • Slow'
+        },
+        {
+            match: ['shortbow', /\bbow\b/],
+            category: 'weapon',
+            slots: ['ranged'],
+            reqWeapon: 'simple',
+            ammoKind: 'bow',
+            hands: 2,
+            summary: '2H Shortbow 80/320ft • 1d6 • Vex'
+        },
+        {
+            match: ['musket', 'pistol', 'rifle'],
+            category: 'weapon',
+            slots: ['ranged'],
+            reqWeapon: 'firearm',
+            ammoKind: 'firearm',
+            hands: 2,
+            summary: 'Firearm Ranged Weapon'
+        },
+        {
+            match: [/\bsling\b/],
+            category: 'weapon',
+            slots: ['mainHand', 'ranged'],
+            reqWeapon: 'simple',
+            ammoKind: 'firearm',
+            hands: 1,
+            summary: '1H Sling 30/120ft • 1d4 Bludgeoning'
         },
         {
             match: ['wand of', 'rod of'],
             category: 'weapon',
             slots: ['mainHand', 'offHand'],
+            reqWeapon: 'simple',
             hands: 1,
             summary: 'Arcane Wand / Focus'
         },
         {
-            match: ['rapier', 'longsword', 'shortsword', 'scimitar', 'mace', 'thighbone', 'spear', /\bfan\b/],
+            match: ['rapier', 'longsword', 'shortsword', 'scimitar'],
             category: 'weapon',
             slots: ['mainHand', 'offHand'],
+            reqWeapon: 'martial',
             hands: 1,
-            summary: 'Melee Weapon'
+            summary: 'Martial Melee Weapon'
+        },
+        {
+            match: ['mace', 'thighbone', 'spear', /\bfan\b/],
+            category: 'weapon',
+            slots: ['mainHand', 'offHand'],
+            reqWeapon: 'simple',
+            hands: 1,
+            summary: 'Simple Melee Weapon'
         },
 
         // --- CONSUMABLES & CRAFTING & QUEST ---
@@ -534,10 +667,10 @@
             summary: 'Crafting Reagent (2x = Potion, 1x = Bandage)'
         },
         {
-            match: ['alchemical catalyst', 'catalyst', 'silver dust', 'wolfbane', 'sulfur', 'brimstone', 'pine pitch', 'pitch oil', 'lamp oil', 'moonpetal', 'charcoal', 'vampire ash', 'wolf fang', 'linen wrap', 'treated pelt', 'dire-pelt', 'waxed canvas'],
+            match: ['shard of the heart of sorrow', 'sorrow-crystal core', 'sorrow shard', 'heart of sorrow', 'alchemical catalyst', 'catalyst', 'silver dust', 'wolfbane', 'sulfur', 'brimstone', 'pine pitch', 'pitch oil', 'lamp oil', 'moonpetal', 'charcoal', 'vampire ash', 'wolf fang', 'linen wrap', 'treated pelt', 'dire-pelt', 'waxed canvas'],
             category: 'crafting',
             slots: [],
-            summary: 'Foraged / Shop Crafting Reagent'
+            summary: 'Barovian Crafting Material / Relic Reagent'
         },
         {
             match: ['potion of greater healing'],
@@ -614,8 +747,8 @@
             category: 'consumable',
             slots: [],
             quickBelt: true,
-            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Silver Coat (1 hr)', effect: 'Coated 1 weapon or 10 rounds as Silvered for 1 hour (bypasses Vampire/Werewolf/Hag resistance)!' },
-            summary: 'Coats Weapon/10 Ammo Silvered (1 hr)'
+            useAction: { type: 'silverCoat', verb: 'Applied', label: 'Silver Coat (+10/1h)', effect: 'Coated 1 melee blade for 1 hour OR loaded +10 Silvered rounds into your ranged magazine/quiver!' },
+            summary: 'Loads +10 Silvered Rounds / Coats Blade (1 hr)'
         },
         {
             match: ['alchemist\'s fire'],
@@ -648,12 +781,6 @@
             quickBelt: true,
             useAction: { type: 'utilityLog', verb: 'Applied', label: 'Sun-Ash (+1d4 Rad)', effect: 'Coated 1 weapon or 6 rounds for +1d4 Radiant damage for 10 minutes!' },
             summary: '+1d4 Radiant Coating (10 min)'
-        },
-        {
-            match: ['silvered bullets', 'silvered firearm', 'silvered arrows', 'silvered crossbow bolts', 'silver bolts'],
-            category: 'gear',
-            slots: [],
-            summary: 'Silvered Ammo (Bypasses Werewolf/Vampire Resist)'
         },
         {
             match: ['mist-ward', 'camp kit', 'traveler\'s camp'],
@@ -859,6 +986,23 @@
             ],
             outputRaw: '☀️ 1x Sun-Ash Repellent Balm (+1d4 Radiant Coat 10m)',
             outputMatch: 'sun-ash'
+        },
+        {
+            id: 'craft_elixir_of_health',
+            unlocked: false,
+            unlockCode: 'HEART-ELIXIR',
+            tierHint: 'Legendary Revival (1/Campaign)',
+            name: 'Elixir of Health (Legendary Revival)',
+            badge: '50% HP Revive • 1/Campaign',
+            desc: 'Distill Barovia\'s sole intact Shard of the Heart of Sorrow (K20) into a legendary draught that restores life within 1 minute of death (50% Max HP, severed limbs knit, -2 penalty until Long Rest). Consumes the unique Heartstone crystal forever.',
+            ingredients: [
+                { keyword: ['shard of the heart of sorrow', 'sorrow-crystal core', 'sorrow shard', 'heart of sorrow'], label: 'Shard of the Heart of Sorrow (Unique K20)', qty: 1 },
+                { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 2 },
+                { keyword: 'moonpetal', label: 'Svalich Moonpetal Blossom', qty: 1 },
+                { keyword: 'spring water', label: 'Pure Spring Water', qty: 1 }
+            ],
+            outputRaw: '1x Elixir of Health (Legendary Revival)',
+            outputMatch: 'elixir of health'
         }
     ];
 
@@ -945,12 +1089,20 @@
             effect: "• <strong>Damage:</strong> <code>1d6 + DEX</code> Piercing (<code>30/120 ft</code>, <strong>1-Handed Light</strong> — can be fired off-hand alongside a 1H sword or gun!).<br>• <strong>5.5e Vex Mastery:</strong> Hitting gives Advantage on your next attack!"
         },
         {
-            match: ['silvered crossbow bolts', 'silver bolts'],
-            name: "🎯 Rictavio's Silvered Crossbow Bolts (x20)",
+            match: ['rictavio\'s silvered crossbow bolts'],
+            name: "Rictavio's Silvered Crossbow Bolts (x20)",
             category: "UNCOMMON SILVERED AMMUNITION • Area N5",
             origin: "Rictavio's Carnival Wagon Secret Chest (Vallaki Area N5)",
             desc: "Twenty needle-pointed bolts sheathed in pure sterling silver.",
-            effect: "• <strong>Ammunition (20 Bolts):</strong> Bypasses Werewolf, Vampire Spawn &amp; Night Hag nonmagical damage resistances."
+            effect: "• <strong>Ammunition (20 Bolts):</strong> Load directly into your Crossbow Quiver from Backpack to fire Silvered shots that bypass Werewolf, Vampire Spawn &amp; Night Hag nonmagical damage resistances."
+        },
+        {
+            match: ['silvered crossbow bolts', 'silver bolts'],
+            name: "Silvered Crossbow Bolts (x10)",
+            category: "UNCOMMON SILVERED AMMUNITION • Vistani Forge (G) / Arasek (N5)",
+            origin: "Tser Pool Vistani Silver Forge (G) & Arasek Stockyard (Vallaki N5)",
+            desc: "Ten crisp-fletched crossbow bolts plated cleanly in hammered Barovian silver.",
+            effect: "• <strong>Ammunition (10 Bolts):</strong> Load directly into your Crossbow Quiver Reserve from Backpack, then toggle <strong>Silvered: ON</strong> on any equipped Hand, Light, or Heavy Crossbow to bypass Werewolf, Vampire Spawn &amp; Night Hag resistances."
         },
         {
             match: ['cloak of protection'],
@@ -969,12 +1121,21 @@
             effect: "• <strong>Saint's Blessing:</strong> Any Good-aligned creature carrying this statuette gains a <strong>+1 bonus to ALL Saving Throws</strong>!"
         },
         {
+            match: ['shard of the heart of sorrow', 'sorrow-crystal core', 'sorrow shard', 'heart of sorrow'],
+            name: "Shard of the Heart of Sorrow (Unique Sorrow-Crystal Core)",
+            category: "LEGENDARY UNIQUE CRAFTING RELIC • Strict 1-Per-Campaign Opportunity",
+            origin: "Castle Ravenloft North Tower (Recovered ONLY Upon Shattering K20 Heart of Sorrow)",
+            desc: "A cold, fist-sized prism of Khazan's blood-forged ruby crystal recovered intact from the shattered ruins of Strahd's 50-HP Heart of Sorrow (Area K20) — entirely distinct from Morgantha's Night Hag Heartstone and the Winery Life-Gems.",
+            effect: "• <strong>Single Campaign Opportunity (1 Only):</strong> Only ONE intact Sorrow-Crystal core can ever be salvaged before the rest dissolves into crimson mist.<br>• <strong>Legendary Recipe Reagent (<code>HEART-ELIXIR</code>):</strong> Combine <code>1x Shard of the Heart of Sorrow</code> with <code>2x Alchemical Catalyst + 1x Svalich Moonpetal Blossom + 1x Pure Spring Water</code> to distill Barovia's sole crafted <strong>Elixir of Health (Legendary Revival)</strong>. Crafting consumes this crystal permanently.",
+            isCraftableReagent: true
+        },
+        {
             match: ['elixir of health', 'elixir of life'],
-            name: "🍷 Elixir of Health (Legendary Revival)",
+            name: "Elixir of Health (Legendary Revival)",
             category: "LEGENDARY REVIVAL POTION • Extra Rare (5,000 GP / 15,000 GP Royal Market)",
-            origin: "Martikov Secret Heirloom Stash (Blue Water Inn N2q — Non-Craftable)",
-            desc: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—an ultra-rare relic smuggled into Barovia before the Mists closed.",
-            effect: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest.<br>• <strong>Worth:</strong> <code>5,000 GP</code> Base / <code>15,000 GP</code> Royal Market (Non-Craftable)."
+            origin: "Martikov Secret Loft (Area N2q) OR Single Brew from Shard of the Heart of Sorrow (HEART-ELIXIR)",
+            desc: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—an ultra-rare heirloom either hidden in the Martikov loft (N2q) or distilled once from the shattered Heart of Sorrow.",
+            effect: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest.<br>• <strong>Extra Rare &amp; Expensive (<code>5,000 GP</code> Base / <code>15,000 GP</code> Royal Market):</strong> Cannot be brewed from ordinary herbs—requires the unique <strong>Shard of the Heart of Sorrow</strong> (<code>1/Campaign</code> via <code>HEART-ELIXIR</code>)."
         },
         {
             match: ['antitoxin'],
@@ -986,11 +1147,11 @@
         },
         {
             match: ['liquid silver'],
-            name: "✨ Vial of Liquid Silver Coating",
+            name: "Vial of Liquid Silver Coating",
             category: "CRAFTED TACTICAL COATING • Unlock Code: SILVER-COAT",
             origin: "Crafted (1x Powdered Silver Dust + 1x Pine Pitch & Lamp Oil)",
             desc: "A swirling glass phial of pure silver filings suspended in amber pine resin oil.",
-            effect: "• <strong>Bonus Action / Prep (1-Hour Duration):</strong> Coat <strong>1 melee weapon</strong> or up to <strong>10 firearm rounds/arrows</strong>. Coated strikes count as <strong>Silvered for 1 hour</strong>, bypassing the nonmagical B/P/S resistances &amp; immunities of Vampire Spawn, Werewolves, Wights, and Night Hags!"
+            effect: "• <strong>Bonus Action / Prep (1-Hour Duration):</strong> Coat <strong>1 melee weapon</strong> or load <strong>+10 Silvered Rounds/Arrows/Bolts</strong> into your ranged reserve. Coated strikes count as <strong>Silvered</strong>, bypassing the nonmagical B/P/S resistances &amp; immunities of Vampire Spawn, Werewolves, Wights, and Night Hags!"
         },
         {
             match: ['alchemist\'s fire'],
@@ -1047,7 +1208,7 @@
             category: "RARE CRAFTING MATERIAL • 25–40 GP / Arcane Labs",
             origin: "Old Bonegrinder Lab, Wachterhaus Cellar, Vallaki Apothecary & Abbey S13",
             desc: "Crystalline crimson alembic salts that violently concentrate ordinary herbal infusions.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🧪 Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), and <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>Potion of Superior Healing</strong> (<code>MOONPETAL</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
             isCraftableReagent: true
         },
         {
@@ -1092,7 +1253,7 @@
             category: "VERY RARE DUSK FORAGE • DC 15 Nature",
             origin: "Drowned Ruins of Berez, Yester Hill & Lake Baratok at Dusk",
             desc: "Ghost-white luminescent petals that open only in misty twilight.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>) and <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Potion of Superior Healing</strong> (<code>MOONPETAL</code>), <strong>Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
             isCraftableReagent: true
         },
         {
@@ -1101,7 +1262,7 @@
             category: "COMMON FORAGE MATERIAL • DC 10 Survival / 2 SP",
             origin: "Tser Falls, Luna River & White Sun Spring",
             desc: "Crystal-clear glacier melt free of Barovia's bog rot.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>💧 Morninglord Holy Water</strong> (<code>MORNINGLORD</code>) and <strong>☀️ Sun-Ash Balm</strong> (<code>SUN-ASH</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Morninglord Holy Water</strong> (<code>MORNINGLORD</code>), <strong>Sun-Ash Balm</strong> (<code>SUN-ASH</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
             isCraftableReagent: true
         },
         {
@@ -1149,6 +1310,7 @@
     let customTagKind = 'weapon'; // 'weapon' | 'armor' | 'caster' | 'accessory' | 'consumable'
     let presetEditor = null; // null | { mode: 'save' | 'edit', targetId: '__new__' | string, draftName: string, slotDrafts: Object, errorMsg: string }
     let lastAppliedPresetId = null;
+    let dmRemoteGearOverride = { enabled: false, note: '' };
 
     // Live Firebase State (Realtime Database primary + Firestore fallback)
     let rtdb = null;
@@ -1201,15 +1363,282 @@
     }
 
     // =========================================================================
-    // STORAGE: EQUIPPED SLOTS & CUSTOM GEAR TAGS
+    // STORAGE: EQUIPPED SLOTS, PROFICIENCY RESTRICTIONS & SILVERED AMMO RESERVES
     // =========================================================================
     function getEquipStorageKey() { return `cos_equip_${adapter.heroId}_${adapter.equipStorageVersion || 'v1'}`; }
     function getCustomGearKey() { return `cos_custom_gear_${adapter.heroId}_v1`; }
     function getClaimedCodesKey() { return `cos_claimed_codes_${adapter.heroId}_v1`; }
     function getCustomPresetsKey() { return `cos_presets_${adapter.heroId}_v1`; }
     function getUnifiedPresetsKey() { return `cos_presets_${adapter.heroId}_v2`; }
+    function getLocalDmOverrideKey() { return `cos_dm_override_${adapter.heroId}_v1`; }
+    function getAmmoStorageKey() { return `cos_ammo_${adapter.heroId}_v1`; }
     function getUnlockedRecipesKey() { return `cos_unlocked_recipes_v1`; }
     function getFbUnlockedRecipesKey() { return `cos_fb_unlocked_recipes_v1`; }
+
+    const DEFAULT_HERO_PROFICIENCIES = {
+        piper: {
+            armor: ['robe'],
+            weapons: ['simple'],
+            label: 'Wild Magic Sorcerer (Robes & Simple Weapons)'
+        },
+        jacomir: {
+            armor: ['light', 'medium', 'heavy', 'shield'],
+            weapons: ['simple', 'martial'],
+            label: 'Battle Master Fighter (All Armor, Shields, Simple & Martial Weapons)'
+        },
+        yvaine: {
+            armor: ['light', 'medium', 'shield'],
+            weapons: ['simple', 'martial', 'firearm'],
+            label: 'Monster Slayer Ranger + Gunner (Light/Medium Armor, Shields, Simple/Martial & Firearms)'
+        }
+    };
+
+    const PROF_LABELS = {
+        light: 'Light Armor',
+        medium: 'Medium Armor',
+        heavy: 'Heavy Armor',
+        shield: 'Shield Proficiency',
+        robe: 'Cloth / Robe',
+        simple: 'Simple Weapons',
+        martial: 'Martial Weapons',
+        firearm: 'Firearms (Gunner Feat)'
+    };
+
+    function getHeroProficiencies() {
+        if (adapter && adapter.proficiencies) return adapter.proficiencies;
+        return (adapter && DEFAULT_HERO_PROFICIENCIES[adapter.heroId])
+            || { armor: ['robe', 'light', 'medium', 'heavy', 'shield'], weapons: ['simple', 'martial'] };
+    }
+
+    function isDmOverrideActive() {
+        if (!adapter) return false;
+        if (dmRemoteGearOverride && dmRemoteGearOverride.enabled) return true;
+        try { return localStorage.getItem(getLocalDmOverrideKey()) === '1'; } catch (e) { return false; }
+    }
+
+    function toggleDmOverride() {
+        if (!adapter) return;
+        const next = !isDmOverrideActive();
+        try {
+            if (next) localStorage.setItem(getLocalDmOverrideKey(), '1');
+            else localStorage.removeItem(getLocalDmOverrideKey());
+        } catch (e) {}
+        dmRemoteGearOverride = { enabled: next, note: next ? 'Scenario Override' : '' };
+        if (firebaseReady && rtdb) {
+            campaignRtdbRef(`heroes/${adapter.heroId}/dm_gear_override`).set(
+                next ? { enabled: true, source: 'sheet', updatedAt: Date.now() } : null
+            ).catch(() => {});
+        }
+        adapter.log(next
+            ? `<strong>DM Override Enabled:</strong> Non-proficient gear can now be equipped for this scenario.`
+            : `<strong>DM Override Disabled:</strong> Class &amp; feat equipment restrictions restored.`);
+        applyEquipmentToSheet(true);
+    }
+
+    function checkItemProficiency(raw, meta) {
+        const m = meta || (raw ? getItemMeta(raw) : {});
+        const prof = getHeroProficiencies();
+        const armorList = Array.isArray(prof.armor) ? prof.armor : ['robe'];
+        const weaponList = Array.isArray(prof.weapons) ? prof.weapons : ['simple'];
+
+        let reqArmor = m.reqArmor || null;
+        if (!reqArmor) {
+            if (m.isShield) reqArmor = 'shield';
+            else if (m.armorWorn) {
+                if (m.heavyArmor) reqArmor = 'heavy';
+                else if (m.maxDex === 2) reqArmor = 'medium';
+                else reqArmor = 'light';
+            }
+        }
+        if (reqArmor && reqArmor !== 'robe' && !armorList.includes(reqArmor)) {
+            return {
+                allowed: false,
+                reqKind: 'armor',
+                reqLevel: reqArmor,
+                requirement: PROF_LABELS[reqArmor] || reqArmor
+            };
+        }
+
+        const reqWeapon = m.reqWeapon || null;
+        if (reqWeapon && reqWeapon !== 'any' && !weaponList.includes(reqWeapon)) {
+            return {
+                allowed: false,
+                reqKind: 'weapon',
+                reqLevel: reqWeapon,
+                requirement: PROF_LABELS[reqWeapon] || reqWeapon
+            };
+        }
+
+        return { allowed: true, reqKind: null, reqLevel: null, requirement: '' };
+    }
+
+    function getDefaultAmmoState() {
+        return {
+            firearm: { count: 0, active: false, lastShotSilvered: null },
+            bow: { count: 0, active: false, lastShotSilvered: null },
+            crossbow: { count: 0, active: false, lastShotSilvered: null }
+        };
+    }
+
+    function getAmmoState() {
+        const def = getDefaultAmmoState();
+        if (!adapter) return def;
+        try {
+            const raw = localStorage.getItem(getAmmoStorageKey());
+            if (!raw) return def;
+            const parsed = JSON.parse(raw);
+            if (!parsed || typeof parsed !== 'object') return def;
+            ['firearm', 'bow', 'crossbow'].forEach(k => {
+                if (parsed[k] && typeof parsed[k] === 'object') {
+                    def[k] = {
+                        count: Math.max(0, parseInt(parsed[k].count) || 0),
+                        active: !!parsed[k].active && (parseInt(parsed[k].count) || 0) > 0,
+                        lastShotSilvered: typeof parsed[k].lastShotSilvered === 'boolean' ? parsed[k].lastShotSilvered : null
+                    };
+                }
+            });
+        } catch (e) {}
+        return def;
+    }
+
+    function saveAmmoState(st) {
+        if (!adapter) return;
+        try { localStorage.setItem(getAmmoStorageKey(), JSON.stringify(st)); } catch (e) {}
+    }
+
+    function getAmmoKindMeta(kind) {
+        if (kind === 'bow') return { title: 'Silvered Arrows', unit: 'arrow', unitPlural: 'arrows' };
+        if (kind === 'crossbow') return { title: 'Silvered Bolts', unit: 'bolt', unitPlural: 'bolts' };
+        return { title: 'Silvered Rounds', unit: 'round', unitPlural: 'rounds' };
+    }
+
+    function refreshAllAmmoDisplays() {
+        if (!adapter) return;
+        if (adapter.silverAmmoMount) {
+            renderSilverAmmoMount(adapter.silverAmmoMount.selector, adapter.silverAmmoMount.kind || 'firearm', adapter.silverAmmoMount.label || 'Silvered Rounds');
+        }
+        if (typeof window.syncSilveredAmmoVisuals === 'function') {
+            try { window.syncSilveredAmmoVisuals(); } catch (e) {}
+        }
+    }
+
+    function renderSilverAmmoMount(selector, kind = 'firearm', labelText = 'Silvered Rounds') {
+        const el = typeof selector === 'string' ? document.querySelector(selector) : selector;
+        if (!el) return;
+        el.innerHTML = buildSilverAmmoStripHtml(kind, labelText);
+    }
+
+    function buildSilverAmmoStripHtml(kind = 'firearm', labelText) {
+        const st = getAmmoState();
+        const slot = st[kind] || { count: 0, active: false };
+        const km = getAmmoKindMeta(kind);
+        const lbl = labelText || km.title;
+        const isSilver = !!slot.active && slot.count > 0;
+        const btnText = isSilver
+            ? `Silvered: ON (${slot.count})`
+            : (slot.count > 0 ? `Silvered: OFF (${slot.count})` : 'Silvered: Empty');
+        return `
+            <div class="rpg-ammo-strip ${isSilver ? 'is-silver' : ''}">
+                <div class="rpg-ammo-meta">
+                    <span style="font-weight:800; color:${isSilver ? '#f8fafc' : '#cbd5e1'};">${esc(lbl)}:</span>
+                    <div style="display:inline-flex; align-items:center; gap:3px;">
+                        <button type="button" class="rpg-ammo-step" onclick="COS_RPG.adjustSilveredAmmo('${kind}', -1)" aria-label="Remove 1 ${esc(km.unit)}">-</button>
+                        <span class="rpg-ammo-count">${slot.count} Left</span>
+                        <button type="button" class="rpg-ammo-step" onclick="COS_RPG.adjustSilveredAmmo('${kind}', 1)" aria-label="Add 1 ${esc(km.unit)}">+</button>
+                    </div>
+                </div>
+                <button type="button" class="rpg-ammo-toggle ${isSilver ? 'is-silver' : ''}" ${slot.count <= 0 && !slot.active ? 'disabled title="Load silvered ammunition from your Backpack first"' : ''} onclick="COS_RPG.toggleSilveredAmmoMode('${kind}')">${btnText}</button>
+            </div>
+        `;
+    }
+
+    function adjustSilveredAmmo(kind, delta) {
+        if (!adapter) return;
+        const st = getAmmoState();
+        const slot = st[kind] || { count: 0, active: false, lastShotSilvered: null };
+        slot.count = Math.max(0, (slot.count || 0) + (parseInt(delta) || 0));
+        if (slot.count === 0) slot.active = false;
+        st[kind] = slot;
+        saveAmmoState(st);
+        refreshAllAmmoDisplays();
+        renderDynamicWeaponCards(getGearBonuses());
+        syncHeroStateToFirebase(false);
+    }
+
+    function toggleSilveredAmmoMode(kind) {
+        if (!adapter) return;
+        const st = getAmmoState();
+        const slot = st[kind] || { count: 0, active: false, lastShotSilvered: null };
+        const km = getAmmoKindMeta(kind);
+        if (!slot.active && slot.count <= 0) {
+            adapter.log(`<strong>No ${esc(km.title)} Loaded:</strong> Add or load ${esc(km.unitPlural)} from your Backpack first.`);
+            return;
+        }
+        slot.active = !slot.active;
+        slot.lastShotSilvered = null;
+        st[kind] = slot;
+        saveAmmoState(st);
+        refreshAllAmmoDisplays();
+        renderDynamicWeaponCards(getGearBonuses());
+        syncHeroStateToFirebase(false);
+        adapter.log(`<strong>${esc(km.title)}:</strong> Switched <strong>${slot.active ? 'ON' : 'OFF'}</strong> (${slot.count} ${esc(slot.count === 1 ? km.unit : km.unitPlural)} remaining).`);
+    }
+
+    function loadSilveredAmmoFromBackpack(invIndex) {
+        if (!adapter) return;
+        const items = adapter.getItems();
+        const raw = items[invIndex];
+        if (!raw) return;
+        const p = parseItem(raw);
+        const meta = getItemMeta(raw);
+        const kind = meta.ammoKind;
+        if (!kind) return;
+        const addCount = p.hasQty ? p.qty : (meta.ammoPackDefault || 10);
+        items.splice(invIndex, 1);
+        adapter.saveItems(items);
+
+        const st = getAmmoState();
+        const slot = st[kind] || { count: 0, active: false, lastShotSilvered: null };
+        slot.count = (slot.count || 0) + addCount;
+        slot.active = true;
+        slot.lastShotSilvered = null;
+        st[kind] = slot;
+        saveAmmoState(st);
+
+        const km = getAmmoKindMeta(kind);
+        adapter.log(`<strong>Loaded +${addCount} ${esc(km.title)}</strong> (${slot.count} total ready • Silvered mode switched ON).`);
+        applyEquipmentToSheet(true);
+        refreshAllAmmoDisplays();
+    }
+
+    function consumeSilveredAmmoIfActive(kind) {
+        const st = getAmmoState();
+        const slot = st[kind] || { count: 0, active: false, lastShotSilvered: null };
+        if (slot.active && slot.count > 0) {
+            slot.count -= 1;
+            slot.lastShotSilvered = true;
+            const reverted = slot.count === 0;
+            if (reverted) slot.active = false;
+            st[kind] = slot;
+            saveAmmoState(st);
+            refreshAllAmmoDisplays();
+            renderDynamicWeaponCards(getGearBonuses());
+            syncHeroStateToFirebase(false);
+            return { silvered: true, remaining: slot.count, reverted };
+        }
+        slot.lastShotSilvered = false;
+        st[kind] = slot;
+        saveAmmoState(st);
+        return { silvered: false, remaining: slot.count, reverted: false };
+    }
+
+    function isWeaponSilveredDamage(kind) {
+        if (!kind) return false;
+        const st = getAmmoState();
+        const slot = st[kind] || { count: 0, active: false, lastShotSilvered: null };
+        if (typeof slot.lastShotSilvered === 'boolean') return slot.lastShotSilvered;
+        return Boolean(slot.active && slot.count > 0);
+    }
 
     function makeStarterPresetId(p, idx) {
         const slug = String(p?.label || 'preset').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').slice(0, 24) || 'preset';
@@ -1580,13 +2009,19 @@
         } else if (low.includes('blood spear')) {
             magic = 2; dice = '1d6'; dmgType = 'Piercing';
         } else if (low.includes('greatsword') || low.includes('vladimir')) {
-            dice = '2d6'; dmgType = 'Slashing';
+            dice = '2d6'; dmgType = low.includes('silver') ? 'Silvered Slashing' : 'Slashing';
         } else if (low.includes('longsword') || low.includes('battleaxe') || low.includes('treebane')) {
             dice = '1d8'; dmgType = low.includes('silver') ? 'Silvered Slashing' : 'Slashing';
-        } else if (low.includes('rapier') || low.includes('longbow') || low.includes('light crossbow')) {
-            dice = '1d8'; dmgType = 'Piercing';
-        } else if (low.includes('shortsword') || low.includes('scimitar') || low.includes('shortbow') || low.includes('handaxe') || low.includes('mace') || low.includes('spear') || low.includes('staff')) {
-            dice = '1d6'; dmgType = (low.includes('mace') || low.includes('staff')) ? 'Bludgeoning' : 'Piercing';
+        } else if (low.includes('hand crossbow')) {
+            dice = '1d6'; dmgType = 'Piercing';
+        } else if (low.includes('heavy crossbow')) {
+            dice = '1d10'; dmgType = 'Piercing';
+        } else if (low.includes('rapier') || low.includes('longbow') || low.includes('light crossbow') || low.includes('crossbow')) {
+            dice = '1d8'; dmgType = low.includes('silver') ? 'Silvered Piercing' : 'Piercing';
+        } else if (low.includes('shortsword') || low.includes('scimitar') || low.includes('shortbow') || low.includes('bow') || low.includes('handaxe') || low.includes('mace') || low.includes('spear') || low.includes('staff')) {
+            dice = '1d6'; dmgType = (low.includes('mace') || low.includes('staff')) ? (low.includes('silver') ? 'Silvered Bludgeoning' : 'Bludgeoning') : (low.includes('silver') ? 'Silvered Piercing' : 'Piercing');
+        } else if (low.includes('sling')) {
+            dice = '1d4'; dmgType = 'Bludgeoning';
         } else if (low.includes('dagger') || low.includes('knife') || low.includes('fan')) {
             dice = '1d4'; dmgType = low.includes('silver') ? 'Silvered Piercing' : 'Piercing';
         }
@@ -1620,9 +2055,21 @@
         if (!raw) return;
         const meta = getItemMeta(raw);
         const st = resolveWeaponCombatStats(raw, meta);
+        let silverShotInfo = null;
+        if (meta.ammoKind) {
+            silverShotInfo = consumeSilveredAmmoIfActive(meta.ammoKind);
+        }
         const d20 = Math.floor(Math.random() * 20) + 1;
         const total = d20 + st.atkBonus;
         const name = shortLabel(raw);
+        const km = meta.ammoKind ? getAmmoKindMeta(meta.ammoKind) : null;
+        const silverTag = (silverShotInfo && silverShotInfo.silvered)
+            ? ` <span style="color:#e2e8f0; font-size:0.74rem; font-weight:700;">[Silvered Round &bull; ${silverShotInfo.remaining} left${silverShotInfo.reverted ? ' &mdash; last silvered shot fired' : ''}]</span>`
+            : '';
+        const effDmgType = (silverShotInfo && silverShotInfo.silvered && !String(st.dmgType).toLowerCase().includes('silver'))
+            ? `Silvered ${st.dmgType}`
+            : st.dmgType;
+
         if (d20 === 20) {
             const base = rollDiceExpr(st.dmgDice);
             let critTotal = base.max + base.sum + st.dmgBonus;
@@ -1632,11 +2079,11 @@
                 critTotal += ex.max + ex.sum;
                 extraHtml = ` + ${ex.max}+[${ex.rolls.join('+')}](${esc(st.extraType || 'Bonus')})`;
             }
-            adapter.log(`🔥 <strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>] + ${st.atkBonus} = <strong>${total} to Hit</strong>! Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${st.dmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(st.dmgType)} Damage</span>!`);
+            adapter.log(`🔥 <strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>] + ${st.atkBonus} = <strong>${total} to Hit</strong>!${silverTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${st.dmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!`);
             return;
         }
         const tag = d20 === 1 ? ' <strong style="color:#f87171;">(NAT 1 MISS!)</strong>' : '';
-        adapter.log(`⚔️ <strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>] + ${st.atkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}`);
+        adapter.log(`⚔️ <strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>] + ${st.atkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}${silverTag}`);
     }
 
     function rollDynamicWeaponDamage(invIdx) {
@@ -1652,7 +2099,14 @@
             total += ex.sum;
             breakdown += ` + <span style="color:#fb923c;">${st.extraDice}[${ex.rolls.join('+')} ${esc(st.extraType || 'Bonus')}]</span>`;
         }
-        adapter.log(`💥 <strong>${esc(shortLabel(raw))} Damage:</strong> ${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(st.dmgType)} Damage</span>!`);
+        const isSilv = meta.ammoKind ? isWeaponSilveredDamage(meta.ammoKind) : false;
+        const effDmgType = (isSilv && !String(st.dmgType).toLowerCase().includes('silver'))
+            ? `Silvered ${st.dmgType}`
+            : st.dmgType;
+        const silverNote = (isSilv || String(effDmgType).toLowerCase().includes('silver'))
+            ? ` <small style="color:#cbd5e1;">(Bypasses Werewolf, Vampire &amp; Hag resistance)</small>`
+            : '';
+        adapter.log(`💥 <strong>${esc(shortLabel(raw))} Damage:</strong> ${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(effDmgType)} Damage</span>!${silverNote}`);
     }
 
     function renderDynamicWeaponCards(bonuses) {
@@ -1678,6 +2132,7 @@
             if (!slotObj) return;
             const st = resolveWeaponCombatStats(raw, meta);
             const dmgLabel = `${st.dmgDice}${st.dmgBonus ? (st.dmgBonus > 0 ? '+' + st.dmgBonus : st.dmgBonus) : ''}${st.extraDice ? ' +' + st.extraDice : ''}`;
+            const ammoStripHtml = meta.ammoKind ? buildSilverAmmoStripHtml(meta.ammoKind) : '';
             const card = document.createElement('div');
             card.className = 'action-card rpg-dyn-weapon-card';
             card.style.borderLeft = '3px solid #f59e0b';
@@ -1692,6 +2147,7 @@
                     <span class="rpg-card-equipped-pill">WORN</span>
                 </div>
                 <div class="action-desc">${esc(meta.summary || 'Equipped weapon from Backpack.')}</div>
+                ${ammoStripHtml}
                 <div class="action-btn-row" style="flex-wrap:wrap;">
                     <button type="button" class="btn-roll-action" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${st.atkBonus})</button>
                     <button type="button" class="btn-roll-action btn-roll-dmg" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${esc(dmgLabel)})</button>
@@ -1708,6 +2164,7 @@
             adapter.onEquipmentChange(bonuses, bonuses.equippedMap);
         }
         renderDynamicWeaponCards(bonuses);
+        refreshAllAmmoDisplays();
         renderHubPanel();
         renderHeaderBadges();
         if (document.getElementById('rpg-equip-modal')?.open) renderEquipModal();
@@ -1720,6 +2177,13 @@
         const raw = findInventoryRawByKey(itemKey);
         if (!raw) return;
         const meta = getItemMeta(raw);
+
+        // Enforce class / feat equipment proficiency unless DM Override is active
+        const profCheck = checkItemProficiency(raw, meta);
+        if (!profCheck.allowed && !isDmOverrideActive()) {
+            adapter.log(`<strong>Restricted Equipment:</strong> ${esc(shortLabel(raw))} requires <strong>${esc(profCheck.requirement)}</strong>. Enable <strong>DM Override</strong> inside Equipment if unlocked for this scenario.`);
+            return;
+        }
 
         const activeSlots = getActiveSlots();
 
@@ -1858,6 +2322,8 @@
         if (!p) return;
         const eq = reconcileEquippedWithInventory();
         const items = adapter.getItems();
+        const overrideOn = isDmOverrideActive();
+        const skipped = [];
         for (const [slotId, spec] of Object.entries(p.slots || {})) {
             if (slotId === '_grip') {
                 eq._grip = spec;
@@ -1869,6 +2335,12 @@
             }
             const found = findInventoryRawByPresetSpec(spec, items);
             if (found) {
+                const meta = getItemMeta(found);
+                const profCheck = checkItemProficiency(found, meta);
+                if (!profCheck.allowed && !overrideOn) {
+                    skipped.push(`${shortLabel(found)} (${profCheck.requirement})`);
+                    continue;
+                }
                 eq[slotId] = normKey(found);
             }
         }
@@ -1876,7 +2348,7 @@
         lastAppliedPresetId = p.id;
         saveEquippedState(eq);
         announceStatus(`Swapped loadout preset to ${p.label}.`);
-        adapter.log(`⚡ <strong>Loadout Swapped:</strong> ${esc(p.label)}!`);
+        adapter.log(`⚡ <strong>Loadout Swapped:</strong> ${esc(p.label)}!${skipped.length ? `<br><small style="color:#fca5a5;">Skipped restricted items (DM Override OFF): ${esc(skipped.join(', '))}</small>` : ''}`);
         applyEquipmentToSheet();
     }
 
@@ -2307,6 +2779,34 @@
             const d1 = Math.floor(Math.random() * 6) + 1;
             const d2 = Math.floor(Math.random() * 6) + 1;
             adapter.log(`💣 <strong>Threw ${esc(shortLabel(raw))} (30 ft, 10-ft radius):</strong> 2d6[${d1}+${d2}] = <span style="color:#fde68a; font-size:1.08rem; font-weight:800;">${d1 + d2} Fire/Radiant Damage</span> + <strong>Blinded 1 turn</strong> (<code>DC 13 DEX/CON Save</code>; lights up blood-mist &amp; invisible foes!).`);
+        } else if (act.type === 'silverCoat') {
+            const bonuses = getGearBonuses();
+            const eq = bonuses.equippedMap || {};
+            const allItems = adapter.getItems();
+            let targetKind = null;
+            for (const sid of ['ranged', 'mainHand', 'offHand']) {
+                const rawEq = eq[sid] ? findInventoryRawByKey(eq[sid]) : null;
+                const mEq = rawEq ? getItemMeta(rawEq) : null;
+                if (mEq && mEq.ammoKind) { targetKind = mEq.ammoKind; break; }
+            }
+            if (!targetKind && adapter.heroId === 'yvaine') targetKind = 'firearm';
+            if (!targetKind) {
+                const rangedInv = allItems.find(it => !!getItemMeta(it).ammoKind);
+                if (rangedInv) targetKind = getItemMeta(rangedInv).ammoKind;
+            }
+            if (targetKind) {
+                const st = getAmmoState();
+                const slot = st[targetKind] || { count: 0, active: false, lastShotSilvered: null };
+                slot.count = (slot.count || 0) + 10;
+                slot.active = true;
+                slot.lastShotSilvered = null;
+                st[targetKind] = slot;
+                saveAmmoState(st);
+                const km = getAmmoKindMeta(targetKind);
+                adapter.log(`<strong>Applied ${esc(shortLabel(raw))}:</strong> Loaded <strong>+10 ${esc(km.title)}</strong> into your reserve (${slot.count} total ready, Silvered ON) — or coated 1 melee blade for 1 hour!`);
+            } else {
+                adapter.log(`<strong>${esc(act.verb || 'Applied')} ${esc(shortLabel(raw))}:</strong> ${esc(act.effect || act.label)}`);
+            }
         } else if (act.type === 'utilityLog') {
             adapter.log(`⚗️ <strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${esc(act.effect || act.label)}`);
         }
@@ -2371,13 +2871,14 @@
     function addRawItemToList(items, rawStr, addQty = 1) {
         const incoming = parseItem(rawStr);
         const incKey = incoming.name.toLowerCase().trim();
+        const batchCount = incoming.hasQty ? (incoming.qty * Math.max(1, addQty)) : Math.max(1, addQty);
         const existingIdx = items.findIndex(r => parseItem(r).name.toLowerCase().trim() === incKey);
         if (existingIdx !== -1) {
             const ex = parseItem(items[existingIdx]);
-            const total = ex.qty + addQty;
+            const total = ex.qty + batchCount;
             items[existingIdx] = `${ex.emoji || incoming.emoji}${total > 1 ? total + 'x ' : ''}${ex.name}`.trim();
-        } else if (addQty > 1) {
-            items.unshift(`${incoming.emoji}${addQty}x ${incoming.name}`.trim());
+        } else if (batchCount > 1) {
+            items.unshift(`${incoming.emoji}${batchCount}x ${incoming.name}`.trim());
         } else {
             items.unshift(`${incoming.emoji}${incoming.name}`.trim());
         }
@@ -2521,6 +3022,8 @@
             customPresets: getCustomPresets().map(cp => ({ label: cp.label, slotLabels: cp.slotLabels || {} })),
             items: adapter.getItems(),
             notes: notesList,
+            ammoState: getAmmoState(),
+            dmOverrideActive: isDmOverrideActive(),
             resourcesSummary: resSummary,
             sheetExportStr: sheetStr,
             notesExportStr: notesStr,
@@ -2543,6 +3046,8 @@
                     eq: snap.equippedSlots,
                     it: snap.items,
                     nt: snap.notes,
+                    am: snap.ammoState,
+                    ov: snap.dmOverrideActive,
                     rs: snap.resourcesSummary
                 });
                 if (!forceNow && fp === lastSyncedFingerprint) return;
@@ -2660,12 +3165,32 @@
             }
             localStorage.setItem(getFbUnlockedRecipesKey(), JSON.stringify(nextFb));
             if (addedTitle) {
-                adapter.log(`🔓 <strong>DM Unlocked Crafting Recipe:</strong> <strong>${esc(addedTitle)}</strong> is now available in your Crafting Workbench!`);
+                adapter.log(`<strong>DM Unlocked Crafting Recipe:</strong> <strong>${esc(addedTitle)}</strong> is now available in your Crafting Workbench.`);
             }
             if (addedTitle || removedIds.length > 0) {
                 renderHubPanel();
                 if (document.getElementById('rpg-craft-modal')?.open) renderCraftModal();
             }
+        });
+
+        // 2b. Live sync remote DM Equipment Override flag (enables/disables restricted gear remotely!)
+        let overrideListenerReady = false;
+        campaignRtdbRef(`heroes/${adapter.heroId}/dm_gear_override`).on('value', snap => {
+            const val = snap.val();
+            const nextEnabled = Boolean(val && val.enabled);
+            const prevActive = isDmOverrideActive();
+            dmRemoteGearOverride = { enabled: nextEnabled, note: (val && val.note) || '' };
+            try {
+                if (nextEnabled) localStorage.setItem(getLocalDmOverrideKey(), '1');
+                else localStorage.removeItem(getLocalDmOverrideKey());
+            } catch (e) {}
+            if (overrideListenerReady && nextEnabled !== prevActive) {
+                adapter.log(nextEnabled
+                    ? `<strong>DM Override Activated:</strong> Non-proficient equipment is now unlocked for this scenario.`
+                    : `<strong>DM Override Removed:</strong> Class &amp; feat equipment restrictions re-enforced.`);
+            }
+            overrideListenerReady = true;
+            applyEquipmentToSheet(true);
         });
 
         // 3. Live DM Direct-Inject / Remote HP & Gold & Item Management commands
@@ -2739,6 +3264,12 @@
             localStorage.removeItem(getCustomGearKey());
             localStorage.removeItem(getCustomPresetsKey());
             localStorage.removeItem(getUnifiedPresetsKey());
+            localStorage.removeItem(getLocalDmOverrideKey());
+            localStorage.removeItem(getAmmoStorageKey());
+            dmRemoteGearOverride = { enabled: false, note: '' };
+            if (firebaseReady && rtdb) {
+                campaignRtdbRef(`heroes/${adapter.heroId}/dm_gear_override`).set(null).catch(() => {});
+            }
             lastAppliedPresetId = null;
             presetEditor = null;
             applyEquipmentToSheet(true);
@@ -3662,6 +4193,7 @@
         const equippedKeyInSlot = eq[selectedSlot] || null;
         const mhRaw = eq.mainHand ? findInventoryRawByKey(eq.mainHand) : null;
         const mhVersatile = mhRaw && getItemMeta(mhRaw).versatile;
+        const dmOverrideOn = isDmOverrideActive();
 
         let pickerItemsHtml = '';
         if (compatible.length === 0) {
@@ -3674,17 +4206,27 @@
         } else {
             pickerItemsHtml = compatible.map(item => {
                 const isEqHere = equippedKeyInSlot === item.key;
-                const gripToggleHtml = (selectedSlot === 'mainHand' && item.meta.versatile)
-                    ? `<button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('mainHand', '${esc(item.key).replace(/'/g, "\\'")}', '1h')">Equip 1H</button>
-                       <button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('mainHand', '${esc(item.key).replace(/'/g, "\\'")}', '2h')">Equip 2H</button>`
-                    : `<button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('${selectedSlot}', '${esc(item.key).replace(/'/g, "\\'")}')">Equip${item.meta.hands === 2 && selectedSlot === 'mainHand' ? ' (2H)' : ''}</button>`;
+                const profCheck = checkItemProficiency(item.raw, item.meta);
+                const isRestricted = !profCheck.allowed && !dmOverrideOn;
+                const isOverrideUnlocked = !profCheck.allowed && dmOverrideOn;
+
+                const gripToggleHtml = isRestricted
+                    ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Requires ${esc(profCheck.requirement)}">Restricted</button>`
+                    : ((selectedSlot === 'mainHand' && item.meta.versatile)
+                        ? `<button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('mainHand', '${esc(item.key).replace(/'/g, "\\'")}', '1h')">Equip 1H</button>
+                           <button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('mainHand', '${esc(item.key).replace(/'/g, "\\'")}', '2h')">Equip 2H</button>`
+                        : `<button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('${selectedSlot}', '${esc(item.key).replace(/'/g, "\\'")}')">Equip${item.meta.hands === 2 && selectedSlot === 'mainHand' ? ' (2H)' : ''}</button>`);
+
+                const restrictTagHtml = isRestricted
+                    ? ` <span class="rpg-restrict-tag">Requires ${esc(profCheck.requirement)}</span>`
+                    : (isOverrideUnlocked ? ` <span class="rpg-restrict-tag is-override">DM Override (${esc(profCheck.requirement)})</span>` : '');
 
                 const safeKeyAttr = esc(item.key).replace(/'/g, "\\'");
                 return `
-                    <div class="rpg-picker-item ${isEqHere ? 'is-equipped' : ''}">
+                    <div class="rpg-picker-item ${isEqHere ? 'is-equipped' : (isRestricted ? 'is-restricted' : (isOverrideUnlocked ? 'is-override' : ''))}">
                         <div class="rpg-picker-item-top">
                             <div>
-                                <div class="rpg-picker-item-name">${esc(shortLabel(item.raw))}${item.meta.isCustom ? ' <span class="rpg-card-unequipped-pill" style="color:#fde68a; border-color:rgba(245,158,11,0.45);">CUSTOM</span>' : ''}</div>
+                                <div class="rpg-picker-item-name">${esc(shortLabel(item.raw))}${item.meta.isCustom ? ' <span class="rpg-card-unequipped-pill" style="color:#fde68a; border-color:rgba(245,158,11,0.45);">CUSTOM</span>' : ''}${restrictTagHtml}</div>
                                 <div class="rpg-picker-item-meta">${esc(item.meta.summary || 'Equippable Gear')}${item.meta.attune ? ' • Attune' : ''}</div>
                             </div>
                             ${isEqHere ? '<span class="rpg-card-equipped-pill">WORN</span>' : ''}
@@ -3798,6 +4340,14 @@
                         <select id="rpg-tag-attune" class="rpg-select">
                             <option value="no">No</option>
                             <option value="yes">Yes (Uses 1/3 Slot)</option>
+                        </select>
+                    </label>
+                    <label class="rpg-field-lbl">Proficiency Required
+                        <select id="rpg-tag-prof" class="rpg-select">
+                            <option value="">None / Standard</option>
+                            <option value="weapon:simple">Simple Weapons</option>
+                            <option value="weapon:martial">Martial Weapons</option>
+                            <option value="weapon:firearm">Firearms (Gunner Feat)</option>
                         </select>
                     </label>
                 </div>
@@ -3930,6 +4480,16 @@
                             <option value="yes">Yes (Uses 1/3 Slot)</option>
                         </select>
                     </label>
+                    <label class="rpg-field-lbl">Armor / Shield Proficiency
+                        <select id="rpg-tag-prof" class="rpg-select">
+                            <option value="">Auto (From Base Armor / None)</option>
+                            <option value="armor:robe">Cloth / Robe (Any)</option>
+                            <option value="armor:light">Light Armor</option>
+                            <option value="armor:medium">Medium Armor</option>
+                            <option value="armor:heavy">Heavy Armor</option>
+                            <option value="armor:shield">Shield Proficiency</option>
+                        </select>
+                    </label>
                 </div>
                 <label class="rpg-field-lbl">Custom Gear Perk / Resistance Note (optional)
                     <input type="text" id="rpg-tag-note" class="rpg-input" placeholder="e.g. Cold Resistance, 30ft Fly Speed, +2 Initiative...">
@@ -3977,6 +4537,12 @@
                     ${bonuses.spellFireBonus ? `<span class="rpg-stat-pill" style="border-color:#ef4444; color:#fca5a5;">Spell Fire: +${esc(bonuses.spellFireBonus)}</span>` : ''}
                     ${bonuses.skillAdv.length ? `<span class="rpg-stat-pill green">Adv: ${esc(bonuses.skillAdv.join(', '))}</span>` : ''}
                     <span class="rpg-stat-pill purple" title="D&D 5e Attunement Limit: You can bond with at most 3 powerful magic items at the same time (e.g. Cloak of Protection, Sunsword, Bloodwell Vial).">Attuned: ${bonuses.attunedCount} / 3</span>
+                </div>
+                <div class="rpg-override-bar">
+                    <span style="font-size:0.68rem; color:#94a3b8;">
+                        <strong style="color:#cbd5e1;">Proficiency Rules:</strong> ${esc(getHeroProficiencies().label || 'Class & Feat Enforced')}
+                    </span>
+                    <button type="button" class="rpg-override-btn ${dmOverrideOn ? 'is-active' : ''}" onclick="COS_RPG.toggleDmOverride()" title="Allow equipping restricted armor or weapons for special DM scenarios">${dmOverrideOn ? 'DM Override: ON' : 'DM Override: OFF'}</button>
                 </div>
                 <div class="rpg-presets-bar">
                     <span style="font-size:0.66rem; font-weight:800; color:#94a3b8;">PRESETS:</span>
@@ -4131,6 +4697,8 @@
             const dmgBonus = parseInt(document.getElementById('rpg-tag-wpn-dmgmod')?.value) || 3;
             const extraRaw = document.getElementById('rpg-tag-wpn-extradice')?.value || '';
             const [extraDice, extraType] = extraRaw ? extraRaw.split('|') : ['', ''];
+            const profRaw = document.getElementById('rpg-tag-prof')?.value || '';
+            const reqWeapon = profRaw.startsWith('weapon:') ? profRaw.slice(7) : null;
 
             const slots = slotVal === 'both_1h' ? ['mainHand', 'offHand'] : [slotVal];
             equipTargetSlot = slots[0];
@@ -4145,6 +4713,7 @@
             meta = {
                 category: 'weapon',
                 slots,
+                reqWeapon,
                 hands: handsVal === '2' ? 2 : 1,
                 versatile: handsVal === 'versatile',
                 attune,
@@ -4217,6 +4786,8 @@
                 else if (dexMode === '2') { addDex = true; maxDex = 2; }
                 else { heavyArmor = true; }
             }
+            const profRaw = document.getElementById('rpg-tag-prof')?.value || '';
+            const reqArmor = profRaw.startsWith('armor:') ? profRaw.slice(6) : null;
 
             const parts = [
                 baseAC ? `Base AC ${baseAC}` : '',
@@ -4230,6 +4801,7 @@
             meta = {
                 category: customTagKind === 'accessory' ? 'accessory' : 'armor',
                 slots,
+                reqArmor,
                 hands: 1,
                 baseAC,
                 addDex,
@@ -4344,6 +4916,7 @@
         const rows = [];
         const activeSlots = getActiveSlots();
         const activeIds = new Set(activeSlots.map(s => s.id));
+        const dmOverrideOn = isDmOverrideActive();
         items.forEach((raw, idx) => {
             const p = parseItem(raw);
             const meta = getItemMeta(raw);
@@ -4356,6 +4929,9 @@
             if (bpCategoryFilter !== 'all' && bpCategoryFilter !== 'equipped' && meta.category !== bpCategoryFilter) return;
 
             const canEquip = meta.slots && meta.slots.some(sid => activeIds.has(sid));
+            const profCheck = canEquip ? checkItemProficiency(raw, meta) : { allowed: true, requirement: '' };
+            const isRestricted = canEquip && !profCheck.allowed && !dmOverrideOn;
+            const loadQty = meta.ammoKind ? (p.hasQty ? p.qty : (meta.ammoPackDefault || 10)) : 0;
             const catLbl = BP_CATS.find(c => c.id === meta.category)?.label || '📦 Gear';
 
             rows.push(`
@@ -4366,6 +4942,8 @@
                                 ${p.hasQty ? `${p.emoji}${p.name}` : esc(raw)}
                             </button>
                             ${isEquipped ? `<span class="rpg-card-equipped-pill">✓ ${eqSlot.icon} ${eqSlot.label}</span>` : ''}
+                            ${isRestricted ? ` <span class="rpg-restrict-tag">Requires ${esc(profCheck.requirement)}</span>` : ''}
+                            ${canEquip && !profCheck.allowed && dmOverrideOn ? ` <span class="rpg-restrict-tag is-override">DM Override</span>` : ''}
                         </div>
                         <div class="rpg-bp-tags">
                             <span class="rpg-bp-cat-tag">${catLbl}</span>
@@ -4373,7 +4951,12 @@
                         </div>
                     </div>
                     <div class="rpg-bp-actions">
-                        ${canEquip ? `<button type="button" class="rpg-mini-btn ${isEquipped ? 'btn-equipped' : 'btn-equip'}" onclick="COS_RPG.quickToggleEquipByIndex(${idx})">${isEquipped ? 'Unequip' : 'Equip'}</button>` : ''}
+                        ${canEquip
+                            ? (isRestricted
+                                ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Requires ${esc(profCheck.requirement)} (or enable DM Override)">Restricted</button>`
+                                : `<button type="button" class="rpg-mini-btn ${isEquipped ? 'btn-equipped' : 'btn-equip'}" onclick="COS_RPG.quickToggleEquipByIndex(${idx})">${isEquipped ? 'Unequip' : 'Equip'}</button>`)
+                            : ''}
+                        ${meta.ammoKind ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.loadSilveredAmmoFromBackpack(${idx})">Load (+${loadQty})</button>` : ''}
                         ${meta.useAction ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.useConsumableByIndex(${idx})">Use</button>` : ''}
                         <button type="button" class="rpg-mini-btn btn-send" onclick="COS_RPG.openSendForItem(${idx})" title="Send to party member">Send</button>
                         <div class="inv-stepper" style="display:inline-flex; align-items:center; gap:3px; background:#090e1a; border:1px solid #334155; border-radius:5px; padding:1px 4px;">
@@ -4913,6 +5496,16 @@
             renderEquipModal();
         },
         setCustomTagKind: (kind) => { customTagKind = kind; renderEquipModal(); },
+        toggleDmOverride,
+        isDmOverrideActive,
+        checkItemProficiency,
+        getAmmoState,
+        loadSilveredAmmoFromBackpack,
+        toggleSilveredAmmoMode,
+        adjustSilveredAmmo,
+        consumeSilveredAmmoIfActive,
+        isWeaponSilveredDamage,
+        renderSilverAmmoMount,
         rollDynamicWeaponAttack,
         rollDynamicWeaponDamage,
         syncHeroStateToFirebase,

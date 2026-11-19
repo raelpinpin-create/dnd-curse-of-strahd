@@ -4941,6 +4941,11 @@
             heroId: 'piper',
             heroName: 'Piper',
             heroEmoji: '🎩',
+            proficiencies: {
+                armor: ['robe'],
+                weapons: ['simple'],
+                label: 'Wild Magic Sorcerer (Robes & Simple Weapons)'
+            },
             getItems: getStoredItems,
             saveItems: saveStoredItems,
             resetItems: () => saveStoredItems([...defaultItems]),

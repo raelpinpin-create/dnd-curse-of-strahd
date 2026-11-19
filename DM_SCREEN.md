@@ -353,7 +353,7 @@ flowchart TD
 49. 🧪 **Potion of Greater Healing** *(Uncommon • 15 GP • Book Area N2q)*: Restores **`4d4 + 4 HP`**.
 50. 🧪 **Potion of Superior Healing** *(Rare • 45 GP • Book Area S13 Abbey)*: Restores **`8d4 + 8 HP (Avg 28 HP)`**.
 51. 🛡️ **Potion of Invulnerability (x4)** *(Rare Consumable • Book Area Q28 Knights' Quarters)*: For **1 minute**, grants **Resistance to ALL damage types**! *(Note: Reloaded swaps these for Potions of Greater Healing).*
-52. 🍷 **Elixir of Health (Legendary Revival)** *(Legendary Consumable • Extra Rare `5,000 GP` Base / `15,000 GP` Royal Market • Book Area N2q Blue Water Inn — Non-Craftable)*: **Action (Within 1 Minute of Death):** Administer to a creature that has died within the last minute; returns to life with **`50% Max HP`** and knits severed limbs back together. Suffers a **`-2 penalty`** to all attack rolls, saving throws, and ability checks until finishing a Long Rest.
+52. **Elixir of Health (Legendary Revival)** *(Legendary Consumable • Extra Rare `5,000 GP` Base / `15,000 GP` Royal Market • Book Area N2q Blue Water Inn OR 1/Campaign Brew `HEART-ELIXIR`)*: **Action (Within 1 Minute of Death):** Administer to a creature that has died within the last minute; returns to life with **`50% Max HP`** and knits severed limbs back together. Suffers a **`-2 penalty`** to all attack rolls, saving throws, and ability checks until finishing a Long Rest. Can only be brewed once using the unique **Shard of the Heart of Sorrow** (`K20`).
 52a. 🧪 **Barovian Antitoxin Tonic** *(Common/Uncommon Consumable • Craftable `WOLFBANE` / `5 GP`)*: Grants **Advantage on Saving Throws vs. Poison** for 1 full hour.
 53. 💧 **Flask of St. Andral's Holy Water** *(Uncommon • 2 GP 5 SP)*: Ranged splash (20 ft); deals **`2d6` Radiant damage** to Undead/Fiends and **halts Vampire Regeneration for 1 round**!
 54. 🍷 **Wizard of Wines — Purple Grapemash No. 3** *(Common Table Wine • 5 SP)*: Restores `+1` extra HP during a Short Rest.
@@ -401,18 +401,19 @@ flowchart TD
 | Material | Source & Forage DC / Shop Price | Secret Recipes Using This Material |
 | :--- | :--- | :--- |
 | 🌿 **Barovian Medicinal Herbs** | **Act I–IV** • Svalich Woods / Village Yards (`DC 10 Nature/Survival` = `1d3` bundles; `5 SP` shop) | Potion of Healing (`2x`, **Unlocked**), Field Bandages (`1x`, **Unlocked**), Greater Healing, Antitoxin, Smoke Bomb, Superior Healing |
-| 💧 **Pure Mountain Spring Water** | **Act I–IV** • Tser Falls / Luna River / Krezk Spring (`DC 10 Survival`; `2 SP` vial) | Morninglord Holy Water (`MORNINGLORD`), Sun-Ash Repellent Balm (`SUN-ASH`) |
+| 💧 **Pure Mountain Spring Water** | **Act I–IV** • Tser Falls / Luna River / Krezk Spring (`DC 10 Survival`; `2 SP` vial) | Morninglord Holy Water (`MORNINGLORD`), Sun-Ash Repellent Balm (`SUN-ASH`), Elixir of Health (`HEART-ELIXIR`) |
 | ✨ **Powdered Silver Dust** | **Act I–II** • Tser Pool Vistani (`15 GP`), Vallaki Arasek (`20 GP`), Bildrath's (`25 GP`), or file `25 SP` | Morninglord Holy Water (`MORNINGLORD`), Liquid Silver Coating (`SILVER-COAT`), Phosphor Flash-Bomb (`PHOSPHOR`), Mist-Ward Camp Kit (`MIST-CAMP`), Sun-Ash Balm (`SUN-ASH`) |
 | 🌱 **Svalich Wolfbane Root** | **Act I–II** • Svalich Woods pine ridges / wolf trails (`DC 12 Nature`; `2 GP` Vistani) | Barovian Antitoxin Tonic (`WOLFBANE`), Mist-Ward Camp Kit (`MIST-CAMP`) |
 | 🪨 **Brimstone & Pitch Sulfur** | **Act I–II** • Old Bonegrinder chimney, Vallaki smithy, Blinsky's (`3–5 GP`) | Alchemist's Fire (`BRIMSTONE`), Ash-Cloud Smoke Bomb (`ASH-CLOUD`), Phosphor Flash-Bomb (`PHOSPHOR`), Yvaine emergency powder |
 | 🛢️ **Pine Pitch & Lamp Oil** | **Act I–II** • General stores (`5 SP–1 GP`) or tapped evergreens (`DC 11 Survival`) | Alchemist's Fire (`BRIMSTONE`), Liquid Silver Coating (`SILVER-COAT`), Mist-Ward Camp Kit (`MIST-CAMP`) |
 | 🐺 **Treated Dire-Pelt & Waxed Canvas** | **Act I–IV** • Dire Wolf skinning (`DC 13 Survival`), wrecked coach tarps, Bildrath's (`6 GP`), Tser Pool / Arasek (`4 GP`) | Mist-Ward Traveler's Camp Kit (`2x` bundles — `MIST-CAMP`) |
 | 🧻 **Clean Linen Wraps & Salve Jar** | **Act I–II** • Village cottages / Blue Water Inn (`2 SP`) | Camp medical supply (`DC 14 Medicine` doubles Field Bandage yield) |
-| ⚗️ **Alchemical Catalyst** | **Act II–III** • Bonegrinder lab, Wachterhaus cellar, Vallaki apothecary, Krezk Abbey (`25–40 GP`) | Potion of Greater Healing (`GREATER-HEAL`), Phosphor Flash-Bomb (`PHOSPHOR`), Potion of Superior Healing (`MOONPETAL`) |
-| 🌸 **Svalich Moonpetal Blossom** | **Act III** • Berez ruins, Yester Hill, Lake Baratok at dusk (`DC 15 Nature`) | Potion of Superior Healing (`MOONPETAL`), Sun-Ash Repellent Balm (`SUN-ASH`) |
+| ⚗️ **Alchemical Catalyst** | **Act II–III** • Bonegrinder lab, Wachterhaus cellar, Vallaki apothecary, Krezk Abbey (`25–40 GP`) | Potion of Greater Healing (`GREATER-HEAL`), Phosphor Flash-Bomb (`PHOSPHOR`), Potion of Superior Healing (`MOONPETAL`), Elixir of Health (`HEART-ELIXIR`) |
+| 🌸 **Svalich Moonpetal Blossom** | **Act III** • Berez ruins, Yester Hill, Lake Baratok at dusk (`DC 15 Nature`) | Potion of Superior Healing (`MOONPETAL`), Sun-Ash Repellent Balm (`SUN-ASH`), Elixir of Health (`HEART-ELIXIR`) |
+| **Shard of the Heart of Sorrow** | **Act IV (1/Campaign Only)** • Castle Ravenloft North Tower (`K20` upon shattering Strahd's Heart of Sorrow — distinct from Morgantha's Night Hag Heartstone & Winery Life-Gems) | **Elixir of Health (Legendary Revival)** (`HEART-ELIXIR` — 1-time campaign craft) |
 | 🦇 **Harvested Monster Trophy** | **Act I–IV** • Spawn Ash / Dire Wolf Fang (`DC 13 Survival/Medicine`; Yvaine Journal Adv) | Barter (`10–25 GP`) or swap to Vistani / Ezmerelda for Catalysts or Recipe Unlocks |
 
-**🔒 DM-Only Secret Recipe Unlock Codes (Player Sheet Workbench — 12 Curated Craftables):**
+**🔒 DM-Only Secret Recipe Unlock Codes (Player Sheet Workbench — 13 Curated Craftables):**
 - **Unlocked (Session 1):** `🧪 Potion of Healing (2d6+1 HP)` (`2x Herbs`) • `🩹 Field Bandages (1d6+1 HP)` (`1x Herb`)
 - **Locked (`🔒 ???` on Player Sheets):**
   - `GREATER-HEAL` → **🧪 Potion of Greater Healing (`4d4+4 HP`)** = `4x Medicinal Herbs + 1x Alchemical Catalyst`
@@ -425,6 +426,7 @@ flowchart TD
   - `MIST-CAMP` → **⛺ Mist-Ward Traveler's Camp Kit (`Wilderness True Long Rest • DC 14 Survival`)** = `2x Treated Dire-Pelt & Waxed Canvas + 2x Pine Pitch & Lamp Oil + 1x Wolfbane Root + 1x Powdered Silver Dust`
   - `MOONPETAL` → **🧪 Potion of Superior Healing (`8d4+8 HP`)** = `4x Herbs + 2x Catalyst + 1x Svalich Moonpetal`
   - `SUN-ASH` → **☀️ Sun-Ash Repellent Balm (`+1d4 Radiant Coat 10m`)** = `1x Moonpetal + 1x Silver Dust + 1x Spring Water`
+  - `HEART-ELIXIR` → **Elixir of Health (Legendary Revival — `50% Max HP`)** = `1x Shard of the Heart of Sorrow (Unique K20) + 2x Alchemical Catalyst + 1x Svalich Moonpetal + 1x Pure Spring Water` *(1/Campaign craft; consumes the crystal forever)*
 
 ---
 

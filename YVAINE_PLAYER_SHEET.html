@@ -569,6 +569,11 @@
         .bullet-pip.mercy.spent { background: #1e293b; border-color: #334155; opacity: 0.35; }
         .bullet-pip.less { background: #38bdf8; border-color: #7dd3fc; }
         .bullet-pip.less.spent { background: #1e293b; border-color: #334155; opacity: 0.35; }
+        .bullet-pip.silver-active:not(.spent) {
+            background: linear-gradient(180deg, #f8fafc 0%, #94a3b8 100%);
+            border-color: #f8fafc;
+            box-shadow: 0 0 6px rgba(248, 250, 252, 0.45);
+        }
 
         .btn-roll-reload {
             background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
@@ -1207,6 +1212,9 @@
                             </div>
                         </button>
                     </div>
+
+                    <!-- SILVERED AMMO MAGAZINE RESERVE & TOGGLE (MANAGED BY COS_RPG) -->
+                    <div id="yvaine-silver-ammo-bar" style="margin-bottom:8px;"></div>
 
                     <!-- STANCE 1: "LAMENT" HEAVY RIFLE VIEW -->
                     <div id="stance-view-lament">
@@ -2005,6 +2013,13 @@
         }
     }
 
+    function syncSilveredAmmoVisuals() {
+        const isSilv = Boolean(window.COS_RPG && COS_RPG.getAmmoState().firearm?.active && (COS_RPG.getAmmoState().firearm?.count || 0) > 0);
+        document.querySelectorAll('#lament-pips-bar .bullet-pip, #mercy-pips-bar .bullet-pip, #less-pips-bar .bullet-pip').forEach(pip => {
+            pip.classList.toggle('silver-active', isSilv && !pip.classList.contains('spent'));
+        });
+    }
+
     function fireLamentShot() {
         if (lamentChamber <= 0) {
             logRoll(`⚠️ <strong style="color:#f87171;">CLICK! "Lament" is OUT OF AMMO (0/10)!</strong><br>Use a Bonus Action to reload from your reserves! <button class="btn-act btn-act-heal" onclick="reloadLament()" style="margin-left:6px; background:#f59e0b; color:#000; font-weight:700;">🔄 Reload Clip (Bonus Action)</button>`);
@@ -2013,14 +2028,17 @@
         }
 
         lamentChamber--;
+        const silv = window.COS_RPG ? COS_RPG.consumeSilveredAmmoIfActive('firearm') : { silvered: false };
         updateLamentAmmoUI();
-        rollD20('Lament Attack Roll (+8)', getRangedAttackBonus());
+        syncSilveredAmmoVisuals();
+        rollD20(silv.silvered ? `Lament Attack Roll (+8) [Silvered • ${silv.remaining} left]` : 'Lament Attack Roll (+8)', getRangedAttackBonus());
     }
 
     function rollLamentDamage() {
         const d12 = Math.floor(Math.random() * 12) + 1;
         let total = d12 + 4;
         let breakdown = `[1d12: ${d12}] + 4 DEX`;
+        const isSilv = Boolean(window.COS_RPG && COS_RPG.isWeaponSilveredDamage('firearm'));
 
         if (slayersPreyActive) {
             const spD6 = Math.floor(Math.random() * 6) + 1;
@@ -2033,7 +2051,9 @@
             breakdown += ` + <span style="color:#ef4444;">Hunter's Mark (+${trD6})</span>`;
         }
 
-        logRoll(`💥 <strong>"Lament" Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:#f87171; font-weight:800;">${total} Piercing Damage</span>! <span style="font-size:0.75rem; color:var(--text-dim);">(Chamber: <strong>${lamentChamber}/10</strong> left)</span>`);
+        const dmgLabel = isSilv ? 'Silvered Piercing Damage' : 'Piercing Damage';
+        const silverNote = isSilv ? ` <small style="color:#cbd5e1;">(Bypasses Werewolf, Vampire &amp; Hag resistance)</small>` : '';
+        logRoll(`💥 <strong>"Lament" Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:${isSilv ? '#e2e8f0' : '#f87171'}; font-weight:800;">${total} ${dmgLabel}</span>!${silverNote} <span style="font-size:0.75rem; color:var(--text-dim);">(Chamber: <strong>${lamentChamber}/10</strong> left)</span>`);
     }
 
     function reloadLament() {
@@ -2049,6 +2069,7 @@
         lamentReloadReserves--;
         lamentChamber = maxLamentChamber;
         updateLamentAmmoUI();
+        syncSilveredAmmoVisuals();
         logRoll(`🔄 <strong>Lament Reloaded (Bonus Action):</strong> Yvaine ejects the empty stripper rack and slaps a fresh 10-round clip into the breach. <strong>Chamber Full (10/10)</strong>! <em>(${lamentReloadReserves}/2 reserve clips left in tactical bandolier).</em>`);
     }
 
@@ -2102,6 +2123,7 @@
             reservesDisp.innerText = `${revolverReloadReserves} / ${maxRevolverReloadReserves} Left`;
             reservesDisp.style.color = (revolverReloadReserves > 0) ? '#86efac' : '#94a3b8';
         }
+        syncSilveredAmmoVisuals();
     }
 
     function fireMercyShot() {
@@ -2112,14 +2134,16 @@
         }
 
         mercyChamber--;
+        const silv = window.COS_RPG ? COS_RPG.consumeSilveredAmmoIfActive('firearm') : { silvered: false };
         updateRevolversAmmoUI();
-        rollD20('"Mercy" Attack Roll (+8)', getRangedAttackBonus());
+        rollD20(silv.silvered ? `"Mercy" Attack Roll (+8) [Silvered • ${silv.remaining} left]` : '"Mercy" Attack Roll (+8)', getRangedAttackBonus());
     }
 
     function rollMercyDamage() {
         const d6 = Math.floor(Math.random() * 6) + 1;
         let total = d6 + 4;
         let breakdown = `[1d6: ${d6}] + 4 DEX`;
+        const isSilv = Boolean(window.COS_RPG && COS_RPG.isWeaponSilveredDamage('firearm'));
 
         if (slayersPreyActive) {
             const spD6 = Math.floor(Math.random() * 6) + 1;
@@ -2132,7 +2156,9 @@
             breakdown += ` + <span style="color:#ef4444;">Hunter's Mark (+${trD6})</span>`;
         }
 
-        logRoll(`💥 <strong>"Mercy" Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:#f87171; font-weight:800;">${total} Piercing Damage</span>! <span style="font-size:0.75rem; color:var(--text-dim);">(Mercy: <strong>${mercyChamber}/6</strong> left)</span>`);
+        const dmgLabel = isSilv ? 'Silvered Piercing Damage' : 'Piercing Damage';
+        const silverNote = isSilv ? ` <small style="color:#cbd5e1;">(Bypasses Werewolf, Vampire &amp; Hag resistance)</small>` : '';
+        logRoll(`💥 <strong>"Mercy" Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:${isSilv ? '#e2e8f0' : '#f87171'}; font-weight:800;">${total} ${dmgLabel}</span>!${silverNote} <span style="font-size:0.75rem; color:var(--text-dim);">(Mercy: <strong>${mercyChamber}/6</strong> left)</span>`);
     }
 
     function fireLessShot() {
@@ -2143,14 +2169,16 @@
         }
 
         lessChamber--;
+        const silv = window.COS_RPG ? COS_RPG.consumeSilveredAmmoIfActive('firearm') : { silvered: false };
         updateRevolversAmmoUI();
-        rollD20('"Less" Off-Hand Attack Roll (+8)', getRangedAttackBonus());
+        rollD20(silv.silvered ? `"Less" Off-Hand Attack Roll (+8) [Silvered • ${silv.remaining} left]` : '"Less" Off-Hand Attack Roll (+8)', getRangedAttackBonus());
     }
 
     function rollLessDamage() {
         const d6 = Math.floor(Math.random() * 6) + 1;
         let total = d6; // Off-hand no DEX mod unless TWF style
         let breakdown = `[1d6: ${d6}]`;
+        const isSilv = Boolean(window.COS_RPG && COS_RPG.isWeaponSilveredDamage('firearm'));
 
         if (slayersPreyActive) {
             const spD6 = Math.floor(Math.random() * 6) + 1;
@@ -2163,7 +2191,9 @@
             breakdown += ` + <span style="color:#ef4444;">Hunter's Mark (+${trD6})</span>`;
         }
 
-        logRoll(`💥 <strong>"Less" Off-Hand Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:#38bdf8; font-weight:800;">${total} Piercing Damage</span>! <span style="font-size:0.75rem; color:var(--text-dim);">(Less: <strong>${lessChamber}/6</strong> left)</span>`);
+        const dmgLabel = isSilv ? 'Silvered Piercing Damage' : 'Piercing Damage';
+        const silverNote = isSilv ? ` <small style="color:#cbd5e1;">(Bypasses Werewolf, Vampire &amp; Hag resistance)</small>` : '';
+        logRoll(`💥 <strong>"Less" Off-Hand Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:${isSilv ? '#e2e8f0' : '#38bdf8'}; font-weight:800;">${total} ${dmgLabel}</span>!${silverNote} <span style="font-size:0.75rem; color:var(--text-dim);">(Less: <strong>${lessChamber}/6</strong> left)</span>`);
     }
 
     function reloadBothRevolvers() {
@@ -4634,6 +4664,16 @@
                 },
                 weaponsGridSelector: '#weapons-dyn-yvaine',
                 nativeWeaponTags: ['lament', 'mercy', 'less', 'revolvers', 'knife'],
+                proficiencies: {
+                    armor: ['light', 'medium', 'shield'],
+                    weapons: ['simple', 'martial', 'firearm'],
+                    label: 'Monster Slayer Ranger + Gunner (Light/Medium Armor, Shields, Simple/Martial & Firearms)'
+                },
+                silverAmmoMount: {
+                    selector: '#yvaine-silver-ammo-bar',
+                    kind: 'firearm',
+                    label: 'Silvered Rounds'
+                },
                 presets: [
                     { label: 'Mercy & Less (Dual Sidearms)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: '"mercy"', offHand: '"less"', legSheath: 'trench knife', ranged: 'lament', _grip: '1h' } },
                     { label: 'Mercy + Boot Knife (Close Quarters)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: '"mercy"', offHand: 'trench knife', legSheath: null, ranged: 'lament', _grip: '1h' } }
