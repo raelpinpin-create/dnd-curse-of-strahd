@@ -2321,9 +2321,23 @@
             header.insertAdjacentElement('afterend', banner);
         }
 
-        // Inject Header Quick Gear, Backpack, 1-Click Cloud Sync to DM & Reset buttons into top-right badge bar
+        // Inject Header Quick Gear, Backpack, and (to their right) 1-Click Cloud Sync to DM & Reset buttons
         const badgeGroup = document.querySelector('.pill-badge-group');
         if (badgeGroup && !document.getElementById('rpg-hdr-equip-btn')) {
+            const equipBtn = document.createElement('button');
+            equipBtn.type = 'button';
+            equipBtn.id = 'rpg-hdr-equip-btn';
+            equipBtn.className = 'rpg-header-btn';
+            equipBtn.onclick = () => openEquipModal();
+            equipBtn.innerHTML = `🛡️ Gear <span class="rpg-badge-count" id="rpg-hdr-equip-cnt">0</span>`;
+
+            const bpBtn = document.createElement('button');
+            bpBtn.type = 'button';
+            bpBtn.id = 'rpg-hdr-bp-btn';
+            bpBtn.className = 'rpg-header-btn rpg-btn-backpack';
+            bpBtn.onclick = () => openBackpackModal();
+            bpBtn.innerHTML = `🎒 Bag <span class="rpg-badge-count" id="rpg-hdr-bp-cnt">0</span>`;
+
             const syncBtn = document.createElement('button');
             syncBtn.type = 'button';
             syncBtn.id = 'rpg-hdr-sync-btn';
@@ -2342,24 +2356,11 @@
             resetBtn.onclick = () => resetSheetToOfficialBaseline(false);
             resetBtn.innerHTML = `🔄 Reset`;
 
-            const equipBtn = document.createElement('button');
-            equipBtn.type = 'button';
-            equipBtn.id = 'rpg-hdr-equip-btn';
-            equipBtn.className = 'rpg-header-btn';
-            equipBtn.onclick = () => openEquipModal();
-            equipBtn.innerHTML = `🛡️ Gear <span class="rpg-badge-count" id="rpg-hdr-equip-cnt">0</span>`;
-
-            const bpBtn = document.createElement('button');
-            bpBtn.type = 'button';
-            bpBtn.id = 'rpg-hdr-bp-btn';
-            bpBtn.className = 'rpg-header-btn rpg-btn-backpack';
-            bpBtn.onclick = () => openBackpackModal();
-            bpBtn.innerHTML = `🎒 Bag <span class="rpg-badge-count" id="rpg-hdr-bp-cnt">0</span>`;
-
-            badgeGroup.insertBefore(resetBtn, badgeGroup.firstChild);
-            badgeGroup.insertBefore(bpBtn, badgeGroup.firstChild);
-            badgeGroup.insertBefore(equipBtn, badgeGroup.firstChild);
-            badgeGroup.insertBefore(syncBtn, badgeGroup.firstChild);
+            // Order left-to-right: [🏰 Portal] [🛡️ Gear] [🎒 Bag] [☁️ Sync to DM] [🔄 Reset]
+            badgeGroup.appendChild(equipBtn);
+            badgeGroup.appendChild(bpBtn);
+            badgeGroup.appendChild(syncBtn);
+            badgeGroup.appendChild(resetBtn);
         }
 
         // Replace bloated inventory panel contents with compact Adventure Gear Hub!

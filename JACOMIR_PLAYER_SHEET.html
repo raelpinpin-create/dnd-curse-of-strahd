@@ -737,8 +737,6 @@
             </div>
             <div class="pill-badge-group">
                 <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">🏰 Portal</a>
-                <button class="btn-act btn-act-pre" onclick="exportPlayerNotes()" style="color:#c4b5fd; border:1px solid rgba(167, 139, 250, 0.5); display:flex; align-items:center; gap:4px;" title="Copy ONLY new, edited, or removed Player Notes from this session">📓 Export Notes</button>
-                <button class="btn-act btn-act-pre" onclick="exportSheetState()" style="color:var(--accent-gold); border:1px solid rgba(245, 158, 11, 0.5); display:flex; align-items:center; gap:4px;" title="Copy live HP, Superiority Dice, Second Wind, Action Surge, Heroic Inspiration, and session inventory delta">📋 Export Data</button>
             </div>
         </header>
 
@@ -1429,7 +1427,7 @@
 
             </div>
             <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
-                <button class="btn-act btn-act-pre" onclick="exportPlayerNotes()" style="color:#c4b5fd; border:1px solid rgba(167,139,250,0.5); padding:4px 10px; font-size:0.74rem; font-weight:700;">📓 Export Notes (New &amp; Removed Only)</button>
+                <button class="btn-act btn-act-pre" onclick="if(window.COS_RPG) COS_RPG.pushSyncedCheckpoint(false);" style="color:#6ee7b7; border:1px solid rgba(52,211,153,0.55); padding:4px 10px; font-size:0.74rem; font-weight:700;">☁️ Sync to DM</button>
                 <button class="btn-act btn-act-pre" onclick="closePlayerNotesModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
             </div>
         </div>
