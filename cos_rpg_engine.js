@@ -552,12 +552,12 @@
             summary: 'Foraged Crafting Reagent (Spring Water)'
         },
         {
-            match: ['elixir of health'],
+            match: ['elixir of health', 'elixir of life'],
             category: 'consumable',
             slots: [],
             quickBelt: true,
-            useAction: { type: 'utilityLog', verb: 'Drank', label: 'Elixir of Health', effect: 'Cured all diseases and removed Blinded, Deafened, Paralyzed, & Poisoned conditions!' },
-            summary: 'Cures Disease & Poison/Blind/Paralyze'
+            useAction: { type: 'utilityLog', verb: 'Administered', label: 'Elixir of Health (Legendary)', effect: 'Revives creature dead within 1 minute at 50% Max HP, knits severed limbs, & imposes -2 penalty to attacks, saves & checks until Long Rest!' },
+            summary: 'Legendary Revival (50% HP, -2 till Long Rest)'
         },
         {
             match: ['antitoxin'],
@@ -764,23 +764,6 @@
             outputMatch: 'phosphor'
         },
         {
-            id: 'craft_elixir_of_health',
-            unlocked: false,
-            unlockCode: 'PURIFY-ELIXIR',
-            tierHint: 'Master Apothecary',
-            name: '✨ Elixir of Health',
-            badge: 'Cure Disease & Conditions',
-            desc: 'Purifying sapphire-green restorative that cures any disease and removes Blinded, Deafened, Paralyzed, and Poisoned.',
-            ingredients: [
-                { keyword: 'medicinal herb', label: 'Medicinal Herbs', qty: 3 },
-                { keyword: 'wolfbane', label: 'Svalich Wolfbane Root', qty: 1 },
-                { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 1 },
-                { keyword: 'spring water', label: 'Pure Spring Water', qty: 1 }
-            ],
-            outputRaw: '✨ 1x Elixir of Health',
-            outputMatch: 'elixir of health'
-        },
-        {
             id: 'craft_camp_kit',
             unlocked: false,
             unlockCode: 'MIST-CAMP',
@@ -842,12 +825,12 @@
             effect: "• <strong>True Wilderness Long Rest (10 Min Setup • 4–6 Travelers):</strong> Allows the party to complete a <strong>full uninterrupted True Long Rest</strong> outdoors in the Svalich Woods or on the road (restoring 100% HP, Spell Slots, Sorcery Points, Superiority Dice, Help Tokens, &amp; clearing 1 Exhaustion level).<br>• <strong>Perimeter Ward &amp; Storm Cover:</strong> Grants <strong>+5 Group Stealth / Passive Perception</strong> against road patrols, chimes softly if beasts/undead cross within 30 ft, and grants <strong>Advantage on CON Saves</strong> vs freezing mountain weather.<br>• <em>Reusable permanent gear (must pitch on dry ground outside active dungeon rooms).</em>"
         },
         {
-            match: ['elixir of health'],
-            name: "✨ Elixir of Health",
-            category: "RARE RESTORATIVE CONSUMABLE • Craftable (PURIFY-ELIXIR) / Blue Water Loft",
-            origin: "Martikov Secret Stash / Master Apothecary Craft",
-            desc: "A clear, luminous blue-green elixir smelling cleanly of mountain spring melt and crushed comfrey.",
-            effect: "• <strong>Action / Bonus Action to Drink:</strong> Immediately <strong>cures any disease</strong> afflicting you and removes the <strong>Blinded, Deafened, Paralyzed, and Poisoned</strong> conditions!"
+            match: ['elixir of health', 'elixir of life'],
+            name: "🍷 Elixir of Health (Legendary Revival)",
+            category: "LEGENDARY REVIVAL POTION • Extra Rare (5,000 GP / 15,000 GP Royal Market)",
+            origin: "Martikov Secret Heirloom Stash (Blue Water Inn N2q — Non-Craftable)",
+            desc: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—an ultra-rare relic smuggled into Barovia before the Mists closed.",
+            effect: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest.<br>• <strong>Worth:</strong> <code>5,000 GP</code> Base / <code>15,000 GP</code> Royal Market (Non-Craftable)."
         },
         {
             match: ['antitoxin'],
@@ -920,7 +903,7 @@
             category: "RARE CRAFTING MATERIAL • 25–40 GP / Arcane Labs",
             origin: "Old Bonegrinder Lab, Wachterhaus Cellar, Vallaki Apothecary & Abbey S13",
             desc: "Crystalline crimson alembic salts that violently concentrate ordinary herbal infusions.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🧪 Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🧪 Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), and <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>).",
             isCraftableReagent: true
         },
         {
@@ -938,7 +921,7 @@
             category: "COMMON FORAGE MATERIAL • DC 12 Nature / 2 GP",
             origin: "Svalich Woods Pine Ridges & Werewolf Trails",
             desc: "Pungent purple-hooded wildflower root hung over Barovian barn doors against wolves.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🧪 Barovian Antitoxin Tonic</strong> (<code>WOLFBANE</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and <strong>⛺ Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🧪 Barovian Antitoxin Tonic</strong> (<code>WOLFBANE</code>) and <strong>⛺ Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>).",
             isCraftableReagent: true
         },
         {
@@ -974,7 +957,7 @@
             category: "COMMON FORAGE MATERIAL • DC 10 Survival / 2 SP",
             origin: "Tser Falls, Luna River & White Sun Spring",
             desc: "Crystal-clear glacier melt free of Barovia's bog rot.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>💧 Morninglord Holy Water</strong> (<code>MORNINGLORD</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and <strong>☀️ Sun-Ash Balm</strong> (<code>SUN-ASH</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>💧 Morninglord Holy Water</strong> (<code>MORNINGLORD</code>) and <strong>☀️ Sun-Ash Balm</strong> (<code>SUN-ASH</code>).",
             isCraftableReagent: true
         },
         {

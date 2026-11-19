@@ -1770,7 +1770,7 @@
             <div class="card clickable searchable-row biome-card" data-biome-key="blue_water_inn" data-biome-act="act2" onclick="openBiomeModal('blue_water_inn')">
                 <div class="card-header"><span class="card-title">🦅 10. Blue Water Inn</span><span class="pill purple">Sessions 4–7 • Area N2</span></div>
                 <div class="card-body">
-                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Warm taproom hearth, Urwin &amp; Danika Martikov's safehouse, Rictavio's corner booth, &amp; Brom/Bray's secret wereraven loft (<code>N2q</code>).<br><strong>⚠️ Hazards:</strong> Keepers secrecy check (unlocked via <strong>📖 Kolyan's Diary</strong>!), watchful Strahd spies outside.<br><strong>🎁 Loot:</strong> <strong>🐾 Gray Bag of Tricks</strong>, Elixir of Health, 2x Potions of Greater Healing, safe rest.</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; line-height:1.45;"><strong>📍 Landmarks:</strong> Warm taproom hearth, Urwin &amp; Danika Martikov's safehouse, Rictavio's corner booth, &amp; Brom/Bray's secret wereraven loft (<code>N2q</code>).<br><strong>⚠️ Hazards:</strong> Keepers secrecy check (unlocked via <strong>📖 Kolyan's Diary</strong>!), watchful Strahd spies outside.<br><strong>🎁 Loot:</strong> <strong>🐾 Gray Bag of Tricks</strong>, 🍷 Elixir of Health (Legendary), 2x Potions of Greater Healing, safe rest.</p>
                 </div>
             </div>
             <div class="card clickable searchable-row biome-card" data-biome-key="st_andral" data-biome-act="act2" onclick="openBiomeModal('st_andral')">
@@ -10517,7 +10517,7 @@ const BIOME_DATA = {
             • <strong>Deadly Wereraven Exposure Risk:</strong> Should Strahd or Vallaki's spies learn the Martikovs are shapechanging wereravens, he will burn both Blue Water Inn and their Winery to cinder! Urwin NEVER drops his humble tavernkeeper mask unless earned (<code>DC 14 Persuasion</code> or Diary).<br>
             • <strong>Drunk Noble &amp; Spy Eavesdroppers:</strong> Boasting loudly near <strong>Nikolai &amp; Karl Wachter</strong> or tavern regulars carries secret reports straight to Lady Wachter (<code>N4</code>) or Baron Vargas (<code>N3</code>) before sunrise!</div>
             <div class="nbox nbox-emerald"><strong>🎁 Area-by-Area Treasures &amp; Secret Loft Cache (Area N2q):</strong><br>
-            • <strong>Secret Wereraven Loft (<code>Area N2q</code> — Unlocked via Kolyan's Diary or Winery Mission!):</strong> 🐾 <em>Martikov Gray Bag of Tricks</em> (<code>3/day</code> furry scout creatures!), ✨ <em>Elixir of Health</em>, and 🧪 <em>2x Potions of Greater Healing</em>.<br>
+            • <strong>Secret Wereraven Loft (<code>Area N2q</code> — Unlocked via Kolyan's Diary or Winery Mission!):</strong> 🐾 <em>Martikov Gray Bag of Tricks</em> (<code>3/day</code> furry scout creatures!), 🍷 <em>Elixir of Health (Legendary • 5,000–15,000 GP Revival)</em>, and 🧪 <em>2x Potions of Greater Healing</em>.<br>
             • <strong>Hospitality &amp; Allies:</strong> Free warm beds, safe Long Rest sanctuary in Vallaki, cheap wolf-hunter scout escort (<code>Szoldar & Yevgeni</code>), &amp; courier network reaching straight to <strong>Wizard of Wines</strong>!</div>
         `
     },
@@ -11325,10 +11325,10 @@ const LOOT_DATA = {
         lore: "Four dust-covered vials inside a hidden coffer beneath wreckage in Knights' Quarters (Official CoS Q28; DragnaCarta's Reloaded tones them down to Potions of Greater Healing)."
     },
     elixir_of_health: {
-        cat: "heal", name: "✨ Elixir of Health", rarity: "Rare Consumable • Craftable / Book Area N2q",
-        location: "Act II–III • Blue Water Inn Secret Stash (N2q) or Craftable (PURIFY-ELIXIR) • Party",
-        mechanics: "• <strong>Action / Bonus Action to Drink:</strong> When you drink this clear blue-green liquid, it <strong>cures any disease</strong> afflicting you and immediately removes the <strong>Blinded, Deafened, Paralyzed, and Poisoned</strong> conditions!<br>• <strong>Craftable Formula (Unlock Code <code>PURIFY-ELIXIR</code>):</strong> <code>3x Barovian Medicinal Herbs + 1x Svalich Wolfbane Root + 1x Alchemical Catalyst + 1x Pure Mountain Spring Water</code>.",
-        lore: "Kept by the Martikov family for emergencies against hag poisons and vampire curses."
+        cat: "heal", name: "🍷 Elixir of Health (Legendary Revival)", rarity: "Legendary Consumable • Extra Rare • 5,000 GP (Base) / 15,000 GP (Royal Market) • Book Area N2q",
+        location: "Act II–III • Blue Water Inn Secret Stash (Area N2q — Non-Craftable Heirloom) • Party",
+        mechanics: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest.<br>• <strong>Extra Rare &amp; Expensive (<code>5,000 GP Base / 15,000 GP Royal Market</code>):</strong> Cannot be brewed at a campfire—only this hidden Martikov heirloom phial exists in the valley (<code>N2q</code>).",
+        lore: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—an heirloom relic smuggled into Barovia before the Mists closed, hidden inside the Martikovs' secret wereraven loft."
     },
     barovian_antitoxin: {
         cat: "heal", name: "🧪 Barovian Antitoxin Tonic (Adv vs Poison 1 hr)", rarity: "Common/Uncommon Consumable • Craftable / 5 GP",
@@ -11379,7 +11379,7 @@ const LOOT_DATA = {
     dream_pastry: {
         cat: "buff", name: "🥧 Morgantha's Dream Pastry (1x Uneaten in Jacomir's Pack!)", rarity: "Cursed Consumable • 1 GP (Session 1)",
         location: "Act I • Gifted to King Jacomir by Morgantha on Old Svalich Road (Session 1) & Old Bonegrinder",
-        mechanics: "Action to eat: grants <strong>1d6 Temporary HP</strong>, removes <strong>1 level of Exhaustion</strong>, and induces 8 hours of blissful dreams of your homeland. At dawn, make a <strong>DC 13 CON Save</strong> or suffer <code>-1d4</code> to Wisdom checks until eating another pastry (or cured by <em>Lesser Restoration / Elixir of Health</em>)!",
+        mechanics: "Action to eat: grants <strong>1d6 Temporary HP</strong>, removes <strong>1 level of Exhaustion</strong>, and induces 8 hours of blissful dreams of your homeland. At dawn, make a <strong>DC 13 CON Save</strong> or suffer <code>-1d4</code> to Wisdom checks until eating another pastry (or cured by <em>Lesser Restoration / Remove Curse</em>)!",
         lore: "Warm flaky golden crust smelling of nutmeg and caramelized sugar—secretly baked from the ground bones of kidnapped Barovian children at Old Bonegrinder."
     },
     tome_understanding: {
@@ -11623,13 +11623,13 @@ const LOOT_DATA = {
     medicinal_herbs: {
         cat: "material", name: "🌿 Barovian Medicinal Herbs (Forage Reagent)", rarity: "Common Forage • 5 SP / DC 10 Nature",
         location: "Act I • Svalich Woods, Village Yards & Crossroads • Wilderness Forage / Shops",
-        mechanics: "• <strong>Where Found:</strong> Foraged in the Svalich Woods, overgrown Barovian gardens, or bought from herbalists/Vistani (<code>DC 10 Nature or Survival</code> yields <code>1d3</code> bundles; Piper carries 4x from Session 1).<br>• <strong>Known Recipes (Unlocked):</strong> <strong>🧪 Potion of Healing</strong> (<code>2x</code>) &amp; <strong>🩹 Field Bandages</strong> (<code>1x</code>).<br>• <strong>Locked Recipes (DM Secret):</strong> Used in <em>Greater Healing</em> (<code>GREATER-HEAL</code>), <em>Barovian Antitoxin</em> (<code>WOLFBANE</code>), <em>Ash-Cloud Smoke Bomb</em> (<code>ASH-CLOUD</code>), <em>Elixir of Health</em> (<code>PURIFY-ELIXIR</code>), and <em>Superior Healing</em> (<code>MOONPETAL</code>).",
+        mechanics: "• <strong>Where Found:</strong> Foraged in the Svalich Woods, overgrown Barovian gardens, or bought from herbalists/Vistani (<code>DC 10 Nature or Survival</code> yields <code>1d3</code> bundles; Piper carries 4x from Session 1).<br>• <strong>Known Recipes (Unlocked):</strong> <strong>🧪 Potion of Healing</strong> (<code>2x</code>) &amp; <strong>🩹 Field Bandages</strong> (<code>1x</code>).<br>• <strong>Locked Recipes (DM Secret):</strong> Used in <em>Greater Healing</em> (<code>GREATER-HEAL</code>), <em>Barovian Antitoxin</em> (<code>WOLFBANE</code>), <em>Ash-Cloud Smoke Bomb</em> (<code>ASH-CLOUD</code>), and <em>Superior Healing</em> (<code>MOONPETAL</code>).",
         lore: "Silver-leaf thyme, mountain comfrey, and frost-bloom roots bundled fresh in oiled cloth—Barovia's rarest wholesome medicine."
     },
     pure_spring_water: {
         cat: "material", name: "💧 Pure Mountain Spring Water (Unblessed Reagent)", rarity: "Common Forage • 2 SP / DC 10 Survival",
         location: "Act I • Tser Falls, Luna River & Village Springs • Wilderness Forage",
-        mechanics: "• <strong>Where Found:</strong> Collected cleanly in stoppered glass vials from Tser Falls mist-basins, clear mountain streams, or Krezk's White Sun Spring (<code>DC 10 Survival</code> to avoid bog rot).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>💧 Morninglord Holy Water</strong> (<code>MORNINGLORD</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>).",
+        mechanics: "• <strong>Where Found:</strong> Collected cleanly in stoppered glass vials from Tser Falls mist-basins, clear mountain streams, or Krezk's White Sun Spring (<code>DC 10 Survival</code> to avoid bog rot).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>💧 Morninglord Holy Water</strong> (<code>MORNINGLORD</code>) and <strong>☀️ Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>).",
         lore: "Crystal-clear glacier melt free of Barovia's swamp miasma—the pure vessel required before sacred silver can be consecrated."
     },
     powdered_silver_dust: {
@@ -11641,7 +11641,7 @@ const LOOT_DATA = {
     wolfbane_root: {
         cat: "material", name: "🌱 Svalich Wolfbane Root", rarity: "Common Forage • 2 GP / DC 12 Nature",
         location: "Act I • Svalich Woods Pine Ridges & Werewolf Trails • Wilderness Forage",
-        mechanics: "• <strong>Where Found:</strong> Purple-hooded wildflower roots growing near mossy pine stumps and wolf dens across the Svalich Woods (<code>DC 12 Nature/Survival</code> yields <code>1d2</code> roots; Vistani apothecaries sell for 2 GP).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🧪 Barovian Antitoxin Tonic</strong> (<code>WOLFBANE</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and as wolf-repellent cord for <strong>⛺ Mist-Ward Traveler's Camp Kit</strong> (<code>MIST-CAMP</code>).",
+        mechanics: "• <strong>Where Found:</strong> Purple-hooded wildflower roots growing near mossy pine stumps and wolf dens across the Svalich Woods (<code>DC 12 Nature/Survival</code> yields <code>1d2</code> roots; Vistani apothecaries sell for 2 GP).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🧪 Barovian Antitoxin Tonic</strong> (<code>WOLFBANE</code>) and as wolf-repellent cord for <strong>⛺ Mist-Ward Traveler's Camp Kit</strong> (<code>MIST-CAMP</code>).",
         lore: "Pungent purple root hung over Barovian barn doors to sour the air against wolves and venomous swamp serpents."
     },
     charcoal_sulfur: {
@@ -11671,7 +11671,7 @@ const LOOT_DATA = {
     alchemical_catalyst: {
         cat: "material", name: "⚗️ Alchemical Catalyst (Distilled Alembic Salt)", rarity: "Rare Alchemy Material • 25–40 GP / Salvage",
         location: "Act II • Old Bonegrinder Lab, Wachterhaus Cellar, Vallaki Apothecary & Abbey of St. Markovia • Labs / Shops",
-        mechanics: "• <strong>Where Found:</strong> Found strictly in arcane/alchemical workspaces—Old Bonegrinder's upper mill, Wachterhaus occult library, Rictavio's/Ezmerelda's wagons, or the Abbey of St. Markovia surgical wing (25–40 GP if bartered from secret apothecaries).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🧪 Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>✨ Elixir of Health</strong> (<code>PURIFY-ELIXIR</code>), and <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>).",
+        mechanics: "• <strong>Where Found:</strong> Found strictly in arcane/alchemical workspaces—Old Bonegrinder's upper mill, Wachterhaus occult library, Rictavio's/Ezmerelda's wagons, or the Abbey of St. Markovia surgical wing (25–40 GP if bartered from secret apothecaries).<br>• <strong>DM Secret Recipes (Locked):</strong> Used in <strong>🧪 Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), and <strong>🧪 Potion of Superior Healing</strong> (<code>MOONPETAL</code>).",
         lore: "Crystalline crimson alembic salts that violently concentrate ordinary herbal infusions into high-grade restorative elixirs."
     },
     svalich_moonpetal: {
@@ -15409,18 +15409,6 @@ const DM_CRAFTING_RECIPES = [
             { key: 'charcoal_sulfur', qty: 1 },
             { key: 'powdered_silver_dust', qty: 1 },
             { key: 'alchemical_catalyst', qty: 1 }
-        ]
-    },
-    {
-        id: 'craft_elixir_of_health',
-        lootKey: 'elixir_of_health',
-        summary: '✨ Elixir of Health (Cure Disease & Conditions)',
-        code: 'PURIFY-ELIXIR',
-        ingredients: [
-            { key: 'medicinal_herbs', qty: 3 },
-            { key: 'wolfbane_root', qty: 1 },
-            { key: 'alchemical_catalyst', qty: 1 },
-            { key: 'pure_spring_water', qty: 1 }
         ]
     },
     {
