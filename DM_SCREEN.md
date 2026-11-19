@@ -243,7 +243,7 @@ flowchart TD
 2. 📖 **Burgomaster Kolyan's Wizard Diary (Keepers of the Feather VIP Lead — S1 Manor Loot)** *(Unique Quest Tome • Carried by Jacomir)*:
    * **Location:** Looted from Indirovich Manor in Session 1.
    * **Mechanics:** Reveals late Burgomaster Kolyan was a wizard and explicitly names **Davian Martikov** (*Wizard of Wines*) and **the Keepers of the Feather** (*Blue Water Inn*, Vallaki) as secret allies. Showing this diary to Urwin or Davian immediately unlocks the wereravens' trust and secret inn stash!
-3. 🧭 **Dalvan Olensky's Spinning Compass & Sealed Letter** *(Story Clue • Claimed S1 at Gates of Barovia)*: Brass needle spins endlessly in the Demiplane; letter reveals Strahd has bitten Ireena twice.
+3. 🧭 **Dalvan Olensky's Spinning Compass** & ✉️ **Burgomaster Kolyan's Sealed Warning Letter** *(Separated Story Relics • Claimed S1 at Gates of Barovia)*: Brass needle spins endlessly in the Demiplane; letter reveals Strahd has bitten Ireena twice.
 4. 📜 **The Tome of Strahd (Tarokka Relic #1 — RAW + *Reloaded*)** *(Legendary Lore Relic • No Attunement)*:
    * **Location:** Lady Fiona Wachter's Secret Cult Library in Vallaki (`Area N4` — Session 6, Level 5).
    * **Mechanics:** Allies within 30 ft gain **Advantage on saves against Strahd's Charm**. **1/Day Action:** Read aloud Strahd's murder of Sergei; Strahd or any Bride within 30 ft must pass a **DC 15 WIS Save or be Stunned until the end of their next turn**! *(In Reloaded: studying its chapters during Long Rests unlocks memory visions of the Heart of Sorrow and Amber Temple).*
@@ -265,8 +265,16 @@ flowchart TD
 
 ---
 
-### ⚔️ 4.2 Magic Weapons, Silvered Arms & Firearm Upgrades (13 Items)
-11. ⚔️ **Silvered Weapons & Ammunition (Greatsword / Rapier / 10 Bullets)** *(Uncommon • 5 GP • Ismark's Cache S1 & Vistani Trade S2)*: Bypasses nonmagical B/P/S resistance/immunity of Vampire Spawn, Werewolves, and Night Hags.
+### ⚔️ 4.2 Magic Weapons, Separated Silvered Arms & Firearm Upgrades
+11. **Individual Silvered Weapons & Ammunition *(Uncommon • Separated entries in `DM_SCREEN.html`)*:** Every silvered weapon/ammo is listed and droppable separately (all bypass Vampire Spawn, Werewolf & Night Hag nonmagical resistances):
+    * ⚔️ **Silvered Greatsword** *(`150 GP` • Heavy 2H, `2d6 + STR` Silvered Slashing, Graze — Jacomir)*
+    * ⚔️ **Silvered Rapier** *(`125 GP` / `X40` • Finesse, `1d8 + DEX` Silvered Piercing, Vex — Yvaine / Piper)*
+    * ⚔️ **Silvered Shortsword** *(`110 GP` / `E4` • Light Finesse, `1d6` Silvered Piercing, Vex)*
+    * 🪓 **Silvered Handaxe** *(`105 GP` / Vistani Forge `G` • Light, Thrown `20/60`, `1d6` Silvered Slashing, Vex — pairs w/ Jacomir's Silvered Longsword!)*
+    * 🔨 **Silvered Mace of the Morninglord** *(`105 GP` / `E5` • Simple 1H, `1d6` Silvered Bludgeoning, Sap)*
+    * 🪄 **Silver-Capped Quarterstaff** *(`102 GP` • Versatile `1d6/1d8` Silvered Bludgeoning, Topple — Piper / Cael)*
+    * 💥 **Silvered Firearm & Sling Bullets (`x10`)** *(`5 GP` Vistani Forge `G` / `E4` / `N5` — Yvaine)*
+    * 🏹 **Silvered Arrows (`x10`)** *(`50–100 GP` Vistani Forge `G` / Dusk Elves `N9a` — Cael / Allies)*
 12. 🩸 **The Blood Spear of Kavan (`+2 Vampiric Spear`)** *(Rare Magic Spear • Attunement • Book Area Y4)*:
     * **Location:** Yester Hill Burial Cairn (`Area Y4` — Session 8 • **Best for King Jacomir**).
     * **Mechanics:** **`+2 Spear`** (`1d6+2` / `1d8+2` versatile, *Sap Mastery*). Whenever you hit and reduce a hostile creature to 0 HP, you siphon their blood and gain **`2d6` Temporary HP**!
@@ -313,18 +321,18 @@ flowchart TD
 31. 🎶 **Pipes of Haunting** *(Uncommon Instrument • Book Area U3 in Berez)*: 3 Charges; Action (1 Charge) forces all enemies within 30 ft to pass a **DC 15 WIS Save or be Frightened for 1 minute**.
 32. 🪕 **Doss Lute of Ravenloft** *(Uncommon Instrument • Attunement • Book Area K36 Dining Hall of the Count)*: Casts *Animal Friendship, Protection from Poison, Protection from Energy (Fire), Fly, Invisibility, Levitate,* and *Protection from Evil and Good* 1/day each (*Official CoS Area K36 RAW*).
 33. 🃏 **Tarokka Deck of Illusions** *(Uncommon Wondrous Deck • Book Area K84 Crypt 9 • **Best for Piper**)*: 34 cards; throw a card up to 30 ft to conjure a lifelike, moving illusion of a monster, dragon, or knight under your control!
-34. 📖 **Master Spellbooks of Barovia** *(Book Locations: Kolyan's Diary `E4`, Victor's Spellbook `N3t`, Kasimir's Spellbook `N9a`, Patrina's Crypt 21, Baba Lysaga's Hut `U3`, Neferon's `X5a`, Exethanter's `X27`, & Amber Temple Library `X30` containing every Wizard spell in the PHB!)*.
-35. 📜 **Barovian Master Spell Scrolls Cache** *(Book Locations)*:
-    * **Rictavio's Wagon (`N5`):** *Spell Scroll of Raise Dead* + *Scrolls of Protection from Fiends & Undead*.
-    * **Ezmerelda's Wagon (`V1`):** *Scrolls of Major Image & Remove Curse*.
-    * **Baba Lysaga's Hut (`U3`):** *Spell Scroll of Revivify* (3rd-Lvl) & *Spell Scroll of Mass Cure Wounds* (5th-Lvl).
-    * **Abbey of St. Markovia (`S13`):** *Spell Scroll of Heroes' Feast* (6th-Lvl — grants **`+2d10` Max HP, Poison/Fear Immunity, and Advantage on ALL WIS Saves for 24 hours**!).
-    * **Amber Temple (`X27 / X30 / X5a`):** *Scrolls of Sending & Protection from Energy* (+ optional *Chain Lightning* & *Wall of Stone* from Neferon!).
+34. 📖 **Separated Barovian Spellbooks *(Each clickable individually in `DM_SCREEN.html`)*:** 📖 *Victor Vallakovich's Attic Spellbook (`N3t`)*, 📖 *Kasimir Velikov's Dusk Elf Spellbook (`N9a`)*, 📖 *Baba Lysaga's Swamp Grimoire (`U3`)*, 📖 *Patrina Velikovna's Crypt 21 Spellbook (`K84`)*, & 📚 *Exethanter's Incants + Amber Temple PHB Library (`X27/X30`)*.
+35. 📜 **Separated Barovian Spell Scrolls *(Each clickable individually in `DM_SCREEN.html`)*:**
+    * **Rictavio's Wagon (`N5`):** 📜 *Spell Scroll of Raise Dead* • 📜 *Spell Scrolls of Protection from Fiends & Undead (x2)*
+    * **Ezmerelda's Wagon (`V1`):** 📜 *Spell Scroll of Major Image* • 📜 *Spell Scroll of Remove Curse*
+    * **Baba Lysaga's Hut (`U3`):** 📜 *Spell Scroll of Revivify* (`3rd-Lvl`) • 📜 *Spell Scroll of Mass Cure Wounds* (`5th-Lvl`)
+    * **Abbey of St. Markovia (`S13`):** 📜 *Spell Scroll of Heroes' Feast* (`6th-Lvl` — **`+2d10` Max HP, Poison/Fear Immunity, and Advantage on ALL WIS Saves for 24 hours**!)
+    * **River Ivlis (`F`) & Amber Temple (`X5a/X15`):** 📜 *Spell Scroll of Protection from Evil & Good (`F`)* • 📜 *Amber Temple Scrolls (`Sending, Prot. from Energy, Chain Lightning`)*
 
 ---
 
-### 🛡️ 4.4 Magic Armor, Rings, Cloaks & Defensive Relics (13 Items)
-36. 🛡️ **Silvered Dragonplate / Strahd's Animated Plate (`+1 Heavy Armor`)** *(Rare Possible / Optional Heavy Armor Tier • **Best for Jacomir**)*: `+1 Plate Armor` (**AC 19 — or AC 20 with Jacomir's Defense Style!**) with Cold or Lightning resistance.
+### 🛡️ 4.4 Magic Armor, Rings, Cloaks & Defensive Relics
+36. 🛡️ **Silvered Dragonplate `+1` (`Cold Resist • Argynvostholt`)** & 🛡️ **Strahd's Animated Plate `+1` (`Lightning Resist • K41`)** *(Separated Heavy Armor tiers for **King Jacomir** — AC `19` base / `20` w/ Defense Style!)*
 37. 🛡️ **`+2` Heraldic Shield of the Silver Dragon (`+2 Initiative!`)** *(Very Rare Magic Shield • Book Area K41 Treasury)*: Grants **+4 AC total** (`+2` shield base + `+2` magical bonus) AND **+2 to Initiative** while held!
 38. 🍀 **Stone of Good Luck (Luckstone)** *(Uncommon Wondrous Item • Attunement • Book Area U3 in Berez)*: Grants a **`+1 bonus to all Ability Checks and +1 bonus to all Saving Throws`**!
 39. 💚 **Ring of Regeneration** *(Very Rare Ring • Attunement • Book Area S7 Abbey Graveyard)*: Found inside Tasha Petrovna's grave (`S7`) via Crypt 11's Holy Symbol; regains **`1d6 HP every 10 minutes`** (`6d6` HP/hour) and regrows lost body parts!
@@ -335,7 +343,7 @@ flowchart TD
 44. 💀 **Volenta's Porcelain Skull-Mask Charm** *(Uncommon Boss Drop • Bride Volenta)*: 1/day Bonus Action cast 2nd-level *False Life* (**`1d4 + 9` Temp HP**) and Advantage on Intimidation checks.
 45. 🧿 **Morgantha's Cracked Night Hag Heartstone** *(Rare Boss Drop • Old Bonegrinder Session 3)*: 1/day Action touch to **cure any 1 disease, poison, or curse**, and grants the carrier **Advantage on Death Saving Throws**!
 46. 🐾 **Martikov Gray Bag of Tricks** *(Uncommon Wondrous Item • Book Area N2q Blue Water Inn Loft)*: Up to 3/day Action toss a fuzzy ball to summon a friendly beast companion (*Dire Wolf, Panther, Giant Elk, Boar*, etc.) until dawn!
-47. 🏰 **Daern's Instant Fortress & Alchemy Jug** *(Rare Wondrous Vault Relics • Book Area K41 Ravenloft Treasury)*: Expands into a 30-ft adamantine tower; Jug pours wine, oil, acid, or fresh water on command.
+47. 🏰 **Daern's Instant Fortress** & 🏺 **Alchemy Jug** *(Separated Vault Relics • Book Area K41 Ravenloft Treasury)*: Expands into a 30-ft adamantine tower (`K41`); Jug pours wine, oil, acid, or fresh water on command.
 47a. ⛺ **Mist-Ward Traveler's Camp Kit (Wilderness True Long Rest)** *(Uncommon Permanent Survival Gear • `25–50 GP` in Selected Shops or Challenging Craft `MIST-CAMP`)*: 10-min setup shelters 4–6 travelers for a **full uninterrupted True Long Rest** in the wilderness (restores 100% HP, Spell Slots, Sorcery Points, Superiority Dice, Help Tokens, & clears 1 Exhaustion); silver-salt & wolfbane perimeter grants **`+5` Group Stealth / Passive Perception** & 30-ft beast/undead chime alert, plus Advantage on cold-weather CON saves. **Sold at:** *Bildrath's Mercantile (`E1`: `45–50 GP` / `30 GP` haggled)*, *Petru's Tser Pool Outfitters (`G`: `25–30 GP`)*, *Arasek Stockyard (`N5`: `25 GP`)*, & *Krezk Commune Supply (`S3`: `25 GP`)*.
 
 ---
@@ -351,7 +359,9 @@ flowchart TD
 54. 🍷 **Wizard of Wines — Purple Grapemash No. 3** *(Common Table Wine • 5 SP)*: Restores `+1` extra HP during a Short Rest.
 55. 🍷 **Wizard of Wines — Red Dragon Crush** *(Fine Ruby Vintage • 1 GP)*: Drinking during a Short Rest grants **`+1d4` Temp HP** and **Advantage on next save vs Frightened** for 2 hours.
 56. 🍾 **Wizard of Wines — Champagne du le Stomp (Lost Vintage)** *(Rare Sparkling Vintage • Winery `W16` / Ravenloft `K63`)*: Grants **`+2d4` Temp HP**, removes **1 level of Exhaustion**, and grants Advantage vs Charm/Fear for 4 hours!
-57. 🌿 **Old Bonegrinder Hag Brews (Elixir of Youth & Pale Tincture Poison)** *(Book Area O3 — Session 3)*: *Elixir of Youth* makes drinker look `1d6+4` years younger + `2d6` Temp HP; *Pale Tincture* coats a blade/3 bullets (`DC 16 CON Save` or `1d6` Poison + Poisoned condition).
+57. 🧪 **Old Bonegrinder Elixir of Youth** & ☠️ **Pale Tincture (Bonegrinder Hag Blade Poison)** *(Separated Potions • Book Area O3 — Session 3)*: *Elixir of Youth* makes drinker look `1d6+4` years younger + `2d6` Temp HP; *Pale Tincture* coats a blade/3 bullets (`DC 16 CON Save` or `1d6` Poison + Poisoned condition).
+
+> **Editable Vault Names (`✏️` in `DM_SCREEN.html`):** The Lead DM can rename any weapon or item inline right inside the World Loot Vault table or inside its Item Dossier modal (`COS_DM_LOOT_OVERRIDES_V1` + Firebase `loot_overrides`) and reset to default anytime.
 
 ---
 
@@ -363,13 +373,13 @@ flowchart TD
 62. 👁️ **Supreme Dark Gift of Zhudun & Sykane (The Corpse Star — Tailored for Yvaine)** *(Amber Temple Vault `X33` — Session 16)*: **`+2 Dexterity (up to 22)`**, 1/day *True Seeing* (120 ft), 1/day component-free *Raise Dead / Revivify*, and `+1d8` Necrotic/Radiant on first firearm hit each turn; binds Yvaine's *Hunter's Sense* for Campaign 3.
 63. 🪽 **The 20 Official Amber Temple Sarcophagi Gifts (`Book Areas X33a–f`)**: Includes **Tarakamedes** (*50-ft Skeletal Bat Wings Fly Speed*), **Drizlash** (*Permanent Spider Climb*), **Zantras** (*+4 Charisma up to 22*), **Great Taar Haak** (*25 Strength*), **Savnok** (*3x Mind Blank*), **Delban** (*7x Cone of Cold*), **Norganas** (*3x Finger of Death*), **Dahlver-Nar** (*3x Auto-Reincarnation*), and **Yrrga** (*120-ft Truesight*).
 
-### 📚 4.7 Newly Added Official *Curse of Strahd* Book Treasures & NPC-Linked Vault Gear (Items #64–94 in `DM_SCREEN.html`)
-64–68. **Act I & Tser Pool:** 🧥 *Cloak of Protection & M34 Crypt Scroll Cache (Optional if Death House `M34` Skipped)*, 📿 *Father Donavich's Cracked Silver Sun-Rosary (`E5`)*, 📜 *Deed to Old Bonegrinder & Vasili's Wax Seal (`O4`)*, 🔮 *Potion of Clairvoyance (`K38`)*, 🃏 *Madam Eva's Fated Tarokka Deck of Barovia (`G`)*.
-69–76. **Town of Vallaki & Vistani Camp (`N1–N9`):** 🧸 *Blinsky's Clockwork Curios & The Ireena Doll (`N7`)*, 🦴 *Sacred Bones of Saint Andral (`N6` ➔ `N1`)*, 👰 *Heirloom Bridal Gown of Vallaki (`N3` ➔ `S13`)*, 🪞 *Magic Mirror of Baal Verzi Assassination (`N3p`)*, 🏹 *Silvered Hand Crossbow & 20 Silver Bolts (`N5`)*, 🗡️ *Arrigal's Wyvern Venom & Assassin Repeating Blades (`N9`)*, 💰 *Luvash & Arrigal's Sealed Vistani Treasure Wagon (`N9i` — 1,200 EP, 650 GP, Onyx Box & Potion of Poison, Gold Throne, Unicorn Rug)*, ⚡ *Ezmerelda's Vistani Hunter Kit & Booby-Trapped Wagon Cache (`V1` — +1 Silvered Rapier, +1 Handaxe, 6x Holy Water, 2x Greater Healing, Major Image & Remove Curse Scrolls)*.
-77–80. **Yester Hill, Werewolf Den, Krezk & Baratok:** 🪓 *Treebane (+1 Sentient Battleaxe of Plant-Bane, `Y5`)*, 🐺 *Mother Night's Tribute Hoard (`Z7` — 4,500 CP, 900 SP, 250 GP, gems & cursed heirloom jewelry)*, ⛪ *Abbey of St. Markovia Reliquary (`S13` — Sun Disk 750 GP & Gold Statuette of Saint Markovia 250 GP granting +1 Saving Throws to Good creatures)*, 🧙 *Mordenkainen's Arcane Restoration & Charm of Heroism*.
-81–86. **Amber Temple & Castle Ravenloft Endgame:** 🧥 *Robe of Useful Items (`X5a` Neferon)*, 🛡️ *Amber Temple Shield Guardian & Control Amulet (`X9/X35`)*, 🌠 *Sir Klutz's Luck Blade (+1 Longsword • 1 Wish Remaining, Crypt 29 — Reloaded swaps to +2 Studded Leather)*, 📕 *Manual of Bodily Health (+2 Perm CON under 500 PP, `K30`)*, 👑 *Royal Brides' Tomb Regalia & Platinum Skull Mask (2,500+ GP, `K86`)*, 💀 *Rahadin's Dusk-Forged Scimitar & Choir Trinkets*.
-87–91. **Court Brides & Location Vault Extras:** 🪭 *Anastrasya's Gilded Razor Fan +1 (`N6` / Ravenloft)*, 💍 *Ludmilla's Silver Ring of Spell Storing (3 levels) & Amber Notes (Tsolenka / Ravenloft)*, ⚖️ *River Ivlis Crossroads Grave Cache (`15 SP` & Scroll of Protection from Evil & Good, `F`)*, 📖 *Count Strahd's Master Study Spellbook (`K37` — Greater Invisibility, Scrying, Animate Objects)*, ❄️ *Tsolenka Pass Guard Spear & Frozen Captain's Chest (`T3/T6` — silver-plated spear & 30 GP)*.
-92–94. **New Book & Boss Additions (`#92–94`):** ⚡ *+1 Rod of the Pact Keeper (`K41` Upper Floor)*, 🕊️ *Fallen Angelic Feather (Single-Use Revivify Charm, Abbot Boss Drop `S13`)*, & 🧥 *Animated Cloak of Ravenloft (+2 AC & 30-ft Fly Speed) + Obsidian Barovian Crown (Campaign Endgame Boss Drop `K86` — Not in RAW)*.
+### 📚 4.7 Separated Official *Curse of Strahd* Book Treasures & NPC-Linked Vault Gear (Individual Cards in `DM_SCREEN.html`)
+64–68. **Act I & Tser Pool:** 🧥 *Cloak of Protection (`M34`/General)*, 📜 *Death House M34 Reliquary Spellbook & Scrolls*, 📿 *Father Donavich's Cracked Silver Sun-Rosary (`E5`)*, 📜 *Deed to Old Bonegrinder (`O4`)*, 🔮 *Potion of Clairvoyance (`O3/G/K38`)*, 🃏 *Madam Eva's Fated Tarokka Deck of Barovia (`G`)*.
+69–76. **Town of Vallaki & Vistani Camp (`N1–N9`):** 🪆 *Blinsky's Porcelain Ireena Doll (`N7/N3j`)*, 🧸 *Blinsky's Wind-Up Pidlwick Prototype & Curios (`N7`)*, 🦴 *Sacred Bones of Saint Andral (`N6` ➔ `N1`)*, 👰 *Heirloom Bridal Gown of Vallaki (`N3` ➔ `S13`)*, 🪞 *Magic Mirror of Baal Verzi Assassination (`N3p`)*, 🏹 *Rictavio's Jeweled Hand Crossbow (`N5`, `250 GP`)*, 🎯 *Rictavio's Silvered Crossbow Bolts (`x20`, `N5`)*, ⚔️ *Rictavio's Silvered Shortsword (`N5`)*, 🗡️ *Arrigal's Twin Vistani Assassin Shortswords (`N9`)*, ☠️ *Arrigal's Assassin Wyvern Venom (`3 Doses`, `N9`)*, 💰 *Luvash & Arrigal's Sealed Vistani Treasure Wagon (`N9i`)*, ⚡ *Ezmerelda's `+1` Silvered Rapier, `+1` Throwing Handaxe, & Hunter Bandolier (`V1`, separated entries)*.
+77–80. **Yester Hill, Werewolf Den, Krezk & Baratok:** 🪓 *Treebane (`Y5`)*, 🐺 *Mother Night's Tribute Hoard (`Z7`)*, ☀️ *Sun Disk of Saint Markovia (`750 GP`, `S13`)*, 🗿 *Gold Statuette of Saint Markovia (`250 GP • +1 Saves`, `S13`)*, 🕯️ *Abbey Silver Candelabras (`1,000 GP`, `S13`)*, 🧙 *Mordenkainen's Arcane Restoration & Charm of Heroism*.
+81–86. **Amber Temple & Castle Ravenloft Endgame:** 🧥 *Robe of Useful Items (`X5a`)*, 🛡️ *Amber Temple Shield Guardian & Control Amulet (`X9/X35`)*, 🌠 *Sir Klutz's Luck Blade (`Crypt 29`)*, 📕 *Manual of Bodily Health (`K30`)*, 💎 *Royal Brides' Court Jewelry & Platinum Hoard (`2,500+ GP`, `K86`)*, 💀 *Rahadin's Dusk-Forged Scimitar*, 🎯 *Rahadin's Crimson Poisoned Darts (`x10`)*, & 📿 *Rahadin's Choir of Screams Bead Sash (`K72`)*.
+87–91. **Court Brides & Location Vault Extras:** 🪭 *Anastrasya's Gilded Razor-Fan (`+1`)* & 💍 *Karelova Ruby Engagement Ring (`N6`/Ravenloft)*, 💍 *Ludmilla's Silver Ring of Spell Storing (`3 levels`)* & 📜 *Ludmilla's Amber Temple Cipher Notes*, 🪦 *River Ivlis Crossroads Silver Wedding Bands (`15 SP`, `F`)*, 📜 *Spell Scroll of Protection from Evil & Good (`F`)*, 📘 *Count Strahd's Master Study Spellbook (`K37`)*, ❄️ *Tsolenka Pass Silver-Plated Guard Spear (`T3/T6`)*, & 🧰 *Frozen Guard Captain's Chest (`30 GP`, `T6`)*.
+92–94. **Endgame Relics & Boss Drops:** ⚡ *+1 Rod of the Pact Keeper (`K41`)*, 🕊️ *Fallen Angelic Feather (`S13`)*, 🧥 *Animated Cloak of Ravenloft (`+2 AC & 30-ft Fly`, `K86`)*, & 👑 *Obsidian Barovian Crown & Royal Signet (`K86 / K41`)*.
 
 ### 🆕 4.8 Session 1 Table Canon, Craftables & Appraised Loots (Items #95–106 in `DM_SCREEN.html`)
 95. 🗡️ **Kolyan's Silvered Heirloom Dagger** *(Rare Silvered Treasure • `150–250 GP` • Claimed by Piper in `E4`)*: Ornate curved silvered dagger with **3 blood-red gemstones** set in the hilt (`1d4 + DEX` Silvered Piercing, Finesse, Light, Thrown `20/60 ft`). Bypasses nonmagical B/P/S resistances/immunities of Vampire Spawn, Werewolves, and Night Hags!

@@ -226,6 +226,19 @@
             summary: '1/LR False Life Charm'
         },
         {
+            match: ['gold statuette of saint markovia', 'gold statuette'],
+            category: 'accessory',
+            slots: ['amulet', 'offHand'],
+            saveBonus: 1,
+            summary: '+1 All Saving Throws (Good PCs)'
+        },
+        {
+            match: ['karelova ruby', 'ruby engagement'],
+            category: 'accessory',
+            slots: ['ring1', 'ring2'],
+            summary: 'Royal Engagement Ruby Band (25 GP)'
+        },
+        {
             match: ['bloodstone', 'pendant', 'amulet', 'necklace', 'medallion'],
             category: 'accessory',
             slots: ['amulet'],
@@ -311,6 +324,13 @@
             summary: '+2 AC (Off-Hand Shield)'
         },
         {
+            match: ['silvered greatsword'],
+            category: 'weapon',
+            slots: ['mainHand'],
+            hands: 2,
+            summary: '2H Heavy • 2d6 Silvered • Graze'
+        },
+        {
             match: ['ancestral greatsword', 'vladimir', 'greatsword'],
             category: 'weapon',
             slots: ['mainHand'],
@@ -352,6 +372,13 @@
             hands: 1,
             versatile: true,
             summary: 'Versatile 1d8/1d10 • Topple'
+        },
+        {
+            match: ['silvered handaxe', '+1 throwing handaxe', 'throwing handaxe'],
+            category: 'weapon',
+            slots: ['mainHand', 'offHand'],
+            hands: 1,
+            summary: '1H Light • Thrown 20/60 • Vex'
         },
         {
             match: ['handaxe'],
@@ -418,6 +445,14 @@
             summary: 'Cold Resist • 10 Chg Ice Spells (Attune)'
         },
         {
+            match: ['silver-capped quarterstaff', 'silvered quarterstaff'],
+            category: 'weapon',
+            slots: ['mainHand'],
+            hands: 1,
+            versatile: true,
+            summary: 'Versatile 1d6/1d8 Silvered • Topple'
+        },
+        {
             match: ['quarterstaff', 'magician\'s cane', 'gulthias staff'],
             category: 'weapon',
             slots: ['mainHand'],
@@ -461,6 +496,13 @@
             weaponTag: 'revolvers',
             stance: 'revolvers',
             summary: 'Twin Six-Shooters • 1d6+4 / 1d6'
+        },
+        {
+            match: ['hand crossbow'],
+            category: 'weapon',
+            slots: ['mainHand', 'offHand', 'ranged'],
+            hands: 1,
+            summary: '1H Light Ranged 30/120ft • 1d6 • Vex'
         },
         {
             match: ['longbow', 'shortbow', 'crossbow', 'musket', 'pistol', 'rifle', /\bbow\b/, /\bsling\b/],
@@ -606,6 +648,12 @@
             quickBelt: true,
             useAction: { type: 'utilityLog', verb: 'Applied', label: 'Sun-Ash (+1d4 Rad)', effect: 'Coated 1 weapon or 6 rounds for +1d4 Radiant damage for 10 minutes!' },
             summary: '+1d4 Radiant Coating (10 min)'
+        },
+        {
+            match: ['silvered bullets', 'silvered firearm', 'silvered arrows', 'silvered crossbow bolts', 'silver bolts'],
+            category: 'gear',
+            slots: [],
+            summary: 'Silvered Ammo (Bypasses Werewolf/Vampire Resist)'
         },
         {
             match: ['mist-ward', 'camp kit', 'traveler\'s camp'],
@@ -823,6 +871,102 @@
             origin: "Selected Barovian Outfitters (25–50 GP) or Challenging Craft (MIST-CAMP)",
             desc: "A rugged expedition shelter woven from pitch-sealed Dire Wolf hides, heavy waxed canvas, cedar perimeter stakes, a smokeless trench brazier, and silver-salt wolfbane cord.",
             effect: "• <strong>True Wilderness Long Rest (10 Min Setup • 4–6 Travelers):</strong> Allows the party to complete a <strong>full uninterrupted True Long Rest</strong> outdoors in the Svalich Woods or on the road (restoring 100% HP, Spell Slots, Sorcery Points, Superiority Dice, Help Tokens, &amp; clearing 1 Exhaustion level).<br>• <strong>Perimeter Ward &amp; Storm Cover:</strong> Grants <strong>+5 Group Stealth / Passive Perception</strong> against road patrols, chimes softly if beasts/undead cross within 30 ft, and grants <strong>Advantage on CON Saves</strong> vs freezing mountain weather.<br>• <em>Reusable permanent gear (must pitch on dry ground outside active dungeon rooms).</em>"
+        },
+        {
+            match: ['silvered greatsword'],
+            name: "⚔️ Silvered Greatsword",
+            category: "UNCOMMON SILVERED MARTIAL WEAPON • Heavy • Two-Handed",
+            origin: "Vistani Silver Forge (Tser Pool G — 150 GP / +100 GP Plating) / Barovian Vaults",
+            desc: "A massive two-handed steel greatsword whose beveled edges have been alchemically bonded with pure Barovian silver.",
+            effect: "• <strong>Damage:</strong> <code>2d6 + STR</code> <strong>Silvered Slashing</strong> (Two-Handed, Heavy).<br>• <strong>Silvered Bane:</strong> Bypasses the nonmagical B/P/S damage resistances and immunities of <strong>Werewolves, Vampire Spawn, Wights, and Night Hags</strong>.<br>• <strong>5.5e Graze Mastery:</strong> If your attack roll misses a creature, you still deal damage equal to your <strong>STR modifier</strong>!"
+        },
+        {
+            match: ['silvered rapier'],
+            name: "⚔️ Silvered Rapier",
+            category: "UNCOMMON SILVERED MARTIAL WEAPON • Finesse • Vex",
+            origin: "Amber Temple Treasury (X40), Vistani Forge (125 GP) or Ezmerelda (+1 Variant)",
+            desc: "A balanced duelist's thrusting blade laminated in bright mirror-silver down the fuller.",
+            effect: "• <strong>Damage:</strong> <code>1d8 + DEX/STR</code> <strong>Silvered Piercing</strong> (Finesse).<br>• <strong>Silvered Bane:</strong> Bypasses the nonmagical B/P/S damage resistances and immunities of Werewolves, Vampire Spawn, and Night Hags.<br>• <strong>5.5e Vex Mastery:</strong> Hitting grants you <strong>Advantage on your next attack roll</strong> against that creature before the end of your next turn!"
+        },
+        {
+            match: ['silvered shortsword'],
+            name: "⚔️ Silvered Shortsword",
+            category: "UNCOMMON SILVERED MARTIAL WEAPON • Finesse • Light • Vex",
+            origin: "Ismark's Cellar Armory (E4), Rictavio's Wagon (N5) or Vistani Forge (110 GP)",
+            desc: "A quick, close-quarters silver-plated short blade ideal for off-hand pairing or agile strikes.",
+            effect: "• <strong>Damage:</strong> <code>1d6 + DEX/STR</code> <strong>Silvered Piercing</strong> (Finesse, Light).<br>• <strong>Silvered Bane:</strong> Bypasses Werewolf, Vampire Spawn &amp; Night Hag nonmagical resistances.<br>• <strong>5.5e Vex Mastery:</strong> Hitting grants <strong>Advantage on your next attack</strong> against that target before the end of your next turn!"
+        },
+        {
+            match: ['silvered handaxe'],
+            name: "🪓 Silvered Handaxe",
+            category: "UNCOMMON SILVERED MARTIAL WEAPON • Light • Thrown • Vex",
+            origin: "Tser Pool Vistani Forge (G — 105 GP) or Arasek Stockyard (N5)",
+            desc: "A keen, silver-edged boarding hatchet balanced cleanly for dual-wielding or hurled strikes at fleeing wolves.",
+            effect: "• <strong>Damage:</strong> <code>1d6 + STR</code> <strong>Silvered Slashing</strong> (Light, Thrown <code>20/60 ft</code>).<br>• <strong>Silvered Bane &amp; Vex Mastery:</strong> Bypasses Werewolf/Vampire/Hag nonmagical resistances and grants <strong>Advantage on your next attack</strong> after hitting!"
+        },
+        {
+            match: ['silvered mace'],
+            name: "🔨 Silvered Mace of the Morninglord",
+            category: "UNCOMMON SILVERED SIMPLE WEAPON • Sap Mastery",
+            origin: "Barovia Church (E5) or Vistani Silver Forge (105 GP)",
+            desc: "A flanged war-mace crowned with sun-stamped silver flanges for crushing undead ribs.",
+            effect: "• <strong>Damage:</strong> <code>1d6 + STR</code> <strong>Silvered Bludgeoning</strong> (Simple, 1H).<br>• <strong>Silvered Bane &amp; Sap Mastery:</strong> Bypasses Werewolf/Undead nonmagical resistances and imposes <strong>Disadvantage on the target's next attack roll</strong>!"
+        },
+        {
+            match: ['silver-capped quarterstaff', 'silvered quarterstaff'],
+            name: "🪄 Silver-Capped Quarterstaff",
+            category: "UNCOMMON SILVERED SIMPLE WEAPON • Versatile • Topple",
+            origin: "Vistani Forge (102 GP) or Barovian Scholar Stash",
+            desc: "An ironwood mage's staff bound at both ferrules with heavy bands of stamped silver.",
+            effect: "• <strong>Damage:</strong> <code>1d6</code> (1H) / <code>1d8</code> (2H) <strong>Silvered Bludgeoning</strong>.<br>• <strong>Silvered Bane &amp; Topple Mastery:</strong> Bypasses nonmagical resistances and forces targets hit to pass a <strong>CON Save or fall Prone</strong>!"
+        },
+        {
+            match: ['silvered firearm', 'silvered bullets'],
+            name: "💥 Silvered Firearm & Sling Bullets (x10)",
+            category: "UNCOMMON SILVERED AMMUNITION • Vistani Forge (5 GP) / Ismark (E4)",
+            origin: "Ismark's Cellar Armory (E4), Tser Pool Vistani (5 GP) & Arasek Stockyard (N5)",
+            desc: "Ten heavy spherical rounds cast from melted silver Barovian coins.",
+            effect: "• <strong>Ammunition (10 Rounds):</strong> Shots fired bypass Werewolf immunity and Vampire Spawn/Night Hag nonmagical resistance!"
+        },
+        {
+            match: ['silvered arrows'],
+            name: "🏹 Silvered Arrows (x10)",
+            category: "UNCOMMON SILVERED AMMUNITION • Vistani Forge (G) / Dusk Elves (N9a)",
+            origin: "Tser Pool Vistani Caravan (G) & Vallaki Dusk Elf Camp (N9a)",
+            desc: "Ten goose-fletched hunting arrows fitted with razor-edged broadheads of beaten silver.",
+            effect: "• <strong>Ammunition (10 Arrows):</strong> Hits with bows bypass Werewolf, Vampire Spawn &amp; Hag nonmagical damage resistance."
+        },
+        {
+            match: ['hand crossbow'],
+            name: "🏹 Rictavio's Jeweled Hand Crossbow (250 GP)",
+            category: "UNIQUE RANGED WEAPON • 1-Handed • Light • Vex",
+            origin: "Rictavio's Carnival Wagon Secret Box (Vallaki Area N5)",
+            desc: "A compact, silver-inlaid repeating wrist crossbow worth 250 GP to Barovian collectors.",
+            effect: "• <strong>Damage:</strong> <code>1d6 + DEX</code> Piercing (<code>30/120 ft</code>, <strong>1-Handed Light</strong> — can be fired off-hand alongside a 1H sword or gun!).<br>• <strong>5.5e Vex Mastery:</strong> Hitting gives Advantage on your next attack!"
+        },
+        {
+            match: ['silvered crossbow bolts', 'silver bolts'],
+            name: "🎯 Rictavio's Silvered Crossbow Bolts (x20)",
+            category: "UNCOMMON SILVERED AMMUNITION • Area N5",
+            origin: "Rictavio's Carnival Wagon Secret Chest (Vallaki Area N5)",
+            desc: "Twenty needle-pointed bolts sheathed in pure sterling silver.",
+            effect: "• <strong>Ammunition (20 Bolts):</strong> Bypasses Werewolf, Vampire Spawn &amp; Night Hag nonmagical damage resistances."
+        },
+        {
+            match: ['cloak of protection'],
+            name: "🧥 Cloak of Protection",
+            category: "UNCOMMON WONDROUS CLOAK • Attunement Required",
+            origin: "Barovian Vaults / Death House Reliquary (M34)",
+            desc: "A heavy, silver-hemmed charcoal wool mantle stitched with abjuration threads.",
+            effect: "• <strong>Protective Ward:</strong> Grants <strong>+1 bonus to Armor Class</strong> and <strong>+1 bonus to ALL Saving Throws</strong> while attuned."
+        },
+        {
+            match: ['gold statuette of saint markovia', 'gold statuette'],
+            name: "🗿 Gold Statuette of Saint Markovia (250 GP • +1 Saves)",
+            category: "UNCOMMON HOLY RELIC • Abbey of St. Markovia (S13)",
+            origin: "Abbey of Saint Markovia Altar Reliquary (Krezk Area S13)",
+            desc: "A fist-sized solid gold effigy of the sainted priestess Markovia (No Attunement required).",
+            effect: "• <strong>Saint's Blessing:</strong> Any Good-aligned creature carrying this statuette gains a <strong>+1 bonus to ALL Saving Throws</strong>!"
         },
         {
             match: ['elixir of health', 'elixir of life'],
