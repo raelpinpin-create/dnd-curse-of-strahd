@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cos_rpg_engine.css">
     <style>
         :root {
             --bg-page: #070b14;
@@ -977,10 +978,10 @@
                             </div>
                             <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
                         </li>
-                        <li class="stat-row-item" onclick="rollSkill('Stealth (DEX) [Disadv]', 0, false)">
+                        <li class="stat-row-item" onclick="rollSkill('Stealth (DEX)', 0, false)">
                             <div class="check-left-wrap">
                                 <button type="button" class="btn-info-tiny" onclick="openSkillModal('Stealth', event)" title="View Stealth rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Stealth (DEX) <small style="color:#f87171;">(Disadv)</small></span>
+                                <span style="font-weight:500; color:#f8fafc;">Stealth (DEX) <small id="stealth-disadv-tag" style="color:#f87171;">(Disadv)</small></span>
                             </div>
                             <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
                         </li>
@@ -998,32 +999,32 @@
                 <div class="panel">
                     <div class="panel-title">
                         <span style="font-size:0.78rem; font-weight:800;">🛡️ Saving Throws</span>
-                        <span style="font-size:0.68rem; color:var(--text-dim);">Proficiency: +2</span>
+                        <span id="saves-gear-tag" style="font-size:0.68rem; color:var(--text-dim);">Proficiency: +2</span>
                     </div>
                     <div class="saves-grid-2x3">
-                        <div class="save-box prof" onclick="rollSave('Strength Saving Throw ★', 3, true)" title="Strength Saving Throw (Proficient: +5)">
+                        <div class="save-box prof" onclick="rollSave('Strength Saving Throw ★', 3, true)" title="Strength Saving Throw (Proficient)">
                             <span class="save-lbl">STR ★</span>
-                            <span class="save-val" style="color:var(--accent-gold);">+5</span>
+                            <span class="save-val" id="save-val-str" style="color:var(--accent-gold);">+5</span>
                         </div>
-                        <div class="save-box" onclick="rollSave('Dexterity Saving Throw', 0, false)" title="Dexterity Saving Throw (+0)">
+                        <div class="save-box" onclick="rollSave('Dexterity Saving Throw', 0, false)" title="Dexterity Saving Throw">
                             <span class="save-lbl">DEX</span>
-                            <span class="save-val" style="color:var(--text-dim);">+0</span>
+                            <span class="save-val" id="save-val-dex" style="color:var(--text-dim);">+0</span>
                         </div>
-                        <div class="save-box prof" onclick="rollSave('Constitution Saving Throw ★', 3, true)" title="Constitution Saving Throw (Proficient: +5)">
+                        <div class="save-box prof" onclick="rollSave('Constitution Saving Throw ★', 3, true)" title="Constitution Saving Throw (Proficient)">
                             <span class="save-lbl">CON ★</span>
-                            <span class="save-val" style="color:var(--accent-gold);">+5</span>
+                            <span class="save-val" id="save-val-con" style="color:var(--accent-gold);">+5</span>
                         </div>
-                        <div class="save-box" onclick="rollSave('Intelligence Saving Throw', 0, false)" title="Intelligence Saving Throw (+0)">
+                        <div class="save-box" onclick="rollSave('Intelligence Saving Throw', 0, false)" title="Intelligence Saving Throw">
                             <span class="save-lbl">INT</span>
-                            <span class="save-val" style="color:var(--text-dim);">+0</span>
+                            <span class="save-val" id="save-val-int" style="color:var(--text-dim);">+0</span>
                         </div>
-                        <div class="save-box" onclick="rollSave('Wisdom Saving Throw', 1, false)" title="Wisdom Saving Throw (+1)">
+                        <div class="save-box" onclick="rollSave('Wisdom Saving Throw', 1, false)" title="Wisdom Saving Throw">
                             <span class="save-lbl">WIS</span>
-                            <span class="save-val" style="color:#38bdf8;">+1</span>
+                            <span class="save-val" id="save-val-wis" style="color:#38bdf8;">+1</span>
                         </div>
-                        <div class="save-box" onclick="rollSave('Charisma Saving Throw', 1, false)" title="Charisma Saving Throw (+1)">
+                        <div class="save-box" onclick="rollSave('Charisma Saving Throw', 1, false)" title="Charisma Saving Throw">
                             <span class="save-lbl">CHA</span>
-                            <span class="save-val" style="color:#38bdf8;">+1</span>
+                            <span class="save-val" id="save-val-cha" style="color:#38bdf8;">+1</span>
                         </div>
                     </div>
                 </div>
@@ -1103,7 +1104,7 @@
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('greatsword_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
-                                        🗡️ Ancestral Greatsword <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                        🗡️ Ancestral Greatsword <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span><span id="eq-badge-greatsword"></span>
                                     </div>
                                     <div style="font-size:0.67rem; font-weight:700; color:#fbbf24;">Heavy Melee (2H) • 1 Action • Reach 5ft</div>
                                 </div>
@@ -1122,7 +1123,7 @@
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('silvered_longsword_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#f8fafc'">
-                                        ⚔️ Silvered Longsword <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                        ⚔️ Silvered Longsword <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span><span id="eq-badge-silver_ls"></span>
                                     </div>
                                     <div style="font-size:0.67rem; font-weight:700; color:#e2e8f0;">Versatile (1H/2H) • Silvered • Bypasses Undead Resist</div>
                                 </div>
@@ -1142,7 +1143,7 @@
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('handaxe_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
-                                        🪓 Handaxe (2x Carried) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                        🪓 Handaxe (2x Carried) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span><span id="eq-badge-handaxe"></span>
                                     </div>
                                     <div style="font-size:0.67rem; font-weight:700; color:#38bdf8;">Light Melee / Thrown (20/60ft) • 1 Action</div>
                                 </div>
@@ -1446,6 +1447,10 @@
         <div id="floating-roll-body" style="font-size:0.98rem; color:#f8fafc; line-height:1.5; display:flex; align-items:center; flex-wrap:wrap; gap:8px;"></div>
     </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="cos_firebase_config.js"></script>
+<script src="cos_rpg_engine.js"></script>
 <script>
     // ==========================================
     // 👑 JACOMIR YULLE MASTER STATE VARIABLES
@@ -2573,27 +2578,55 @@
         const armorBadge = document.getElementById('badge-armor-style');
         const armorSub = document.getElementById('sub-armor-style');
 
-        const total = isChainMailActive ? 17 : 10; // Chain Mail (16) + Defense (+1) = 17, or 10 + DEX (0) = 10
+        const gc = window.__jacomirGearCache || null;
+        let total = isChainMailActive ? 17 : 10;
+        let armorActive = isChainMailActive;
+        if (gc) {
+            armorActive = !!gc.armorWorn;
+            isChainMailActive = armorActive;
+            const armorBase = gc.armorWorn ? ((gc.baseAC || 16) + 1) : 10; // +1 Defense Fighting Style when wearing armor!
+            total = armorBase + (gc.shieldBonus || 0) + (gc.acBonus || 0);
+        }
         if (acDisp) acDisp.innerText = total;
 
         if (!armorCard || !armorBadge || !armorSub) return;
-        if (isChainMailActive) {
+        if (armorActive) {
             armorCard.classList.add('active-buff');
             armorBadge.className = 'toggle-badge on';
-            armorBadge.innerText = 'ON (17)';
-            armorSub.innerText = 'Equipped AC: 17';
+            armorBadge.innerText = `ON (${total})`;
+            armorSub.innerText = `Equipped AC: ${total}`;
         } else {
             armorCard.classList.remove('active-buff');
             armorBadge.className = 'toggle-badge off';
-            armorBadge.innerText = 'OFF (10)';
-            armorSub.innerText = 'Unarmored: 10';
+            armorBadge.innerText = `OFF (${total})`;
+            armorSub.innerText = `Unarmored: ${total}`;
+        }
+    }
+
+    function updateSavesUI() {
+        const pb = getProfBonus();
+        const sb = window.__jacomirGearCache?.saveBonus || 0;
+        const fmt = n => n >= 0 ? `+${n}` : `${n}`;
+        const map = { str: 3 + pb + sb, dex: 0 + sb, con: 3 + pb + sb, int: 0 + sb, wis: 1 + sb, cha: 1 + sb };
+        Object.entries(map).forEach(([k, v]) => {
+            const el = document.getElementById(`save-val-${k}`);
+            if (el) el.innerText = fmt(v);
+        });
+        const tag = document.getElementById('saves-gear-tag');
+        if (tag) {
+            tag.innerText = sb ? `Prof: +${pb} • Gear +${sb}` : `Proficiency: +${pb}`;
+            tag.style.color = sb ? '#93c5fd' : 'var(--text-dim)';
         }
     }
 
     function toggleChainMailBuff() {
         isChainMailActive = !isChainMailActive;
-        updateACDisplay();
-        logRoll(`⛓️ <strong>Chain Mail Armor:</strong> Toggled ${isChainMailActive ? 'ON (17 AC)' : 'OFF (10 Unarmored AC)'}.`);
+        if (window.COS_RPG) {
+            COS_RPG.syncExternalBodySlot(isChainMailActive ? 'chain mail' : null);
+        } else {
+            updateACDisplay();
+        }
+        logRoll(`⛓️ <strong>Armor:</strong> Toggled ${isChainMailActive ? 'ON (AC ' + document.getElementById('ac-disp').innerText + ')' : 'OFF (Unarmored AC ' + document.getElementById('ac-disp').innerText + ')'}.`);
     }
 
     function updateHelpDisplay() {
@@ -2730,8 +2763,9 @@
     }
 
     function rollSave(label, baseStatMod, isProf) {
-        const bonus = baseStatMod + (isProf ? getProfBonus() : 0);
-        rollD20(label, bonus);
+        const sb = window.__jacomirGearCache?.saveBonus || 0;
+        const bonus = baseStatMod + (isProf ? getProfBonus() : 0) + sb;
+        rollD20(sb ? `${label} [🛡️ Gear +${sb}]` : label, bonus);
     }
 
     function rollSkill(label, baseStatMod, isProf) {
@@ -3625,7 +3659,8 @@
         if (delta.removed.length > 0) deltaParts.push(`➖ Consumed/Removed: ${delta.removed.join(', ')}`);
         const invSummary = deltaParts.length > 0 ? deltaParts.join(' | ') : '📦 Inventory: (No session changes)';
 
-        const stateStr = `👑 JACOMIR YULLE (Lvl ${characterLevel} Battle Master Fighter) [HP: ${curHP}/${maxHP}${tempHP > 0 ? ' (+' + tempHP + ' Temp)' : ''} | Superiority Dice: ${curSupDice}/${maxSupDice} (d8) | Second Wind: ${curSecondWind}/${maxSecondWind} | Action Surge: ${actionSurgeReady ? '1/1 Ready' : '0/1 Used'} | Heroic Inspiration: ${heroicInspirationReady ? '1/1 Ready' : '0/1 Used'} | Maneuvers: Parry, Riposte, Menacing Attack (DC 13) | Help: ${helpTokens}/2 | AC: ${document.getElementById('ac-disp').innerText} | Wealth: ${curGP} GP, ${curSilver} SP] • ${invSummary}`;
+        const eqSummary = window.COS_RPG ? ` | ${COS_RPG.getExportEquippedSummary()}` : '';
+        const stateStr = `👑 JACOMIR YULLE (Lvl ${characterLevel} Battle Master Fighter) [HP: ${curHP}/${maxHP}${tempHP > 0 ? ' (+' + tempHP + ' Temp)' : ''} | Superiority Dice: ${curSupDice}/${maxSupDice} (d8) | Second Wind: ${curSecondWind}/${maxSecondWind} | Action Surge: ${actionSurgeReady ? '1/1 Ready' : '0/1 Used'} | Heroic Inspiration: ${heroicInspirationReady ? '1/1 Ready' : '0/1 Used'} | Maneuvers: Parry, Riposte, Menacing Attack (DC 13) | Help: ${helpTokens}/2 | AC: ${document.getElementById('ac-disp').innerText} | Wealth: ${curGP} GP, ${curSilver} SP${eqSummary}] • ${invSummary}`;
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(stateStr).then(() => {
@@ -3651,13 +3686,14 @@
         }
     }
 
-    document.getElementById('hp-input').addEventListener('keydown', e => { if (e.key === 'Enter') applyDamage(); });
-    document.getElementById('new-item-input').addEventListener('keydown', e => { if (e.key === 'Enter') addItem(); });
-    document.getElementById('gold-input').addEventListener('keydown', e => { if (e.key === 'Enter') applyGoldAdd(); });
+    document.getElementById('hp-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') applyDamage(); });
+    document.getElementById('new-item-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') addItem(); });
+    document.getElementById('gold-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') applyGoldAdd(); });
 
     // Initialize Sheet
     updateHPUI();
     updateACDisplay();
+    updateSavesUI();
     updateHelpDisplay();
     updateSuperiorityDiceUI();
     updateFighterResourcesUI();
@@ -3666,6 +3702,74 @@
     renderManeuvers();
     renderInventory();
     renderPlayerNotes();
+
+    // Initialize Unified RPG Paper-Doll, Searchable Backpack, Crafting & Live Transfers
+    if (window.COS_RPG) {
+        COS_RPG.init({
+            heroId: 'jacomir',
+            heroName: 'Jacomir',
+            heroEmoji: '👑',
+            getItems: getStoredItems,
+            saveItems: saveStoredItems,
+            resetItems: () => saveStoredItems([...defaultItems]),
+            getGold: () => ({ gp: curGP, sp: curSilver }),
+            addGold: (gp, sp, memo) => {
+                curGP += (gp || 0);
+                curSilver += (sp || 0);
+                updateGoldUI();
+                logGoldTx('gain', memo || 'Trade Received', `+${gp || 0} GP${sp ? ', +' + sp + ' SP' : ''}`, `${curGP} GP, ${curSilver} SP`);
+            },
+            spendGold: (gp, sp, memo) => {
+                let totalSP = Math.max(0, (curGP * 10 + curSilver) - ((gp || 0) * 10 + (sp || 0)));
+                curGP = Math.floor(totalSP / 10);
+                curSilver = totalSP % 10;
+                updateGoldUI();
+                logGoldTx('spend', memo || 'Trade Sent', `-${gp || 0} GP${sp ? ', -' + sp + ' SP' : ''}`, `${curGP} GP, ${curSilver} SP`);
+            },
+            healHP: (amt, isTemp) => {
+                if (isTemp) { tempHP = Math.max(tempHP, amt); }
+                else {
+                    const space = maxHP - curHP;
+                    if (amt <= space) curHP += amt;
+                    else { curHP = maxHP; tempHP += (amt - space); }
+                }
+                updateHPUI();
+            },
+            log: logRoll,
+            openItemModal: openItemDetailsModal,
+            defaultEquipped: {
+                cape: "tattered royal traveling cloak with fur mantle",
+                body: "chain mail armor (ac 16 + 1 defense style)",
+                ring1: "signet ring bearing the lost crest of oakenshire",
+                mainHand: "ancestral greatsword (graze mastery)",
+                ranged: "handaxes (vex mastery)",
+                _grip: '2h'
+            },
+            presets: [
+                { label: '🗡️ Royal Cleave (Greatsword 2H)', slots: { body: 'chain mail', mainHand: 'ancestral greatsword', ranged: 'handaxe', _grip: '2h' } },
+                { label: '⚔️ Undead Hunter (Silver LS 2H)', slots: { body: 'chain mail', mainHand: 'silvered longsword', ranged: 'handaxe', _grip: '2h' } },
+                { label: '🪓 Dual Vanguard (Silver LS 1H + Axe)', slots: { body: 'chain mail', mainHand: 'silvered longsword', offHand: 'handaxe', _grip: '1h' } }
+            ],
+            onEquipmentChange: (bonuses) => {
+                window.__jacomirGearCache = bonuses;
+                updateACDisplay();
+                updateSavesUI();
+                const stealthTag = document.getElementById('stealth-disadv-tag');
+                if (stealthTag) stealthTag.style.display = bonuses.stealthDisadv ? 'inline' : 'none';
+                const setWpnBadge = (elId, tag) => {
+                    const el = document.getElementById(elId);
+                    if (!el) return;
+                    const hit = bonuses.equippedWeaponTags.find(w => w.tag === tag);
+                    el.innerHTML = hit
+                        ? `<span class="rpg-card-equipped-pill">✓ ${hit.slot === 'ranged' ? 'HOLSTERED' : (hit.grip === '2h' ? '2H WORN' : 'EQUIPPED')}</span>`
+                        : '';
+                };
+                setWpnBadge('eq-badge-greatsword', 'greatsword');
+                setWpnBadge('eq-badge-silver_ls', 'silvered_longsword');
+                setWpnBadge('eq-badge-handaxe', 'handaxe');
+            }
+        });
+    }
 </script>
 </body>
 </html>

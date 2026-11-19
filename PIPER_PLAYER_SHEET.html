@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cos_rpg_engine.css">
     <style>
         :root {
             --bg-page: #070b14;
@@ -1734,6 +1735,10 @@
         </div>
         <div id="floating-roll-body" style="font-size:0.98rem; color:#f8fafc; line-height:1.5; display:flex; align-items:center; flex-wrap:wrap; gap:8px;"></div>
     </div>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="cos_firebase_config.js"></script>
+<script src="cos_rpg_engine.js"></script>
 <script>
     // ==========================================
     // 🎩 PIPER MASTER STATE VARIABLES (POST-SESSION 1)
@@ -1770,10 +1775,12 @@
         return characterLevel >= 9 ? 4 : (characterLevel >= 5 ? 3 : 2);
     }
     function getSpellSaveDC() {
-        return 8 + getProfBonus() + 4; // CHA +4
+        const gearDc = (typeof window.COS_RPG !== 'undefined' && COS_RPG.getEquippedState) ? (window.__piperGearCache?.spellDcBonus || 0) : 0;
+        return 8 + getProfBonus() + 4 + gearDc; // CHA +4 + Equipped Focus
     }
     function getSpellAttackMod() {
-        return getProfBonus() + 4; // CHA +4
+        const gearAtk = (typeof window.COS_RPG !== 'undefined' && COS_RPG.getEquippedState) ? (window.__piperGearCache?.spellAtkBonus || 0) : 0;
+        return getProfBonus() + 4 + gearAtk; // CHA +4 + Equipped Focus
     }
 
     // ==========================================
@@ -3057,21 +3064,24 @@
         const surgeCard = document.getElementById('card-surge-ac-toggle');
         const surgeBadge = document.getElementById('badge-surge-ac');
 
-        const base = isMageArmorActive ? 15 : 12;
-        const robeAC = (activeRobe === 'black') ? 1 : 0;
-        const total = base + robeAC + (isSurgeACActive ? 2 : 0);
+        const gc = window.__piperGearCache || null;
+        const gearAC = gc ? ((gc.acBonus || 0) + (gc.shieldBonus || 0)) : ((activeRobe === 'black') ? 1 : 0);
+        const base = (gc && gc.armorWorn && gc.baseAC)
+            ? (gc.baseAC + (gc.addDex ? 2 : (gc.maxDex !== null ? Math.min(2, gc.maxDex) : 0)))
+            : (isMageArmorActive ? 15 : 12);
+        const total = base + gearAC + (isSurgeACActive ? 2 : 0);
         acDisp.innerText = total;
 
         if (isMageArmorActive) {
             mageCard.classList.add('active-buff');
             mageBadge.className = 'toggle-badge on';
-            mageBadge.innerText = `ON (${15 + robeAC})`;
-            mageSub.innerText = robeAC ? 'Base 15 + 1 Black Robe' : 'Base AC: 15 (Active)';
+            mageBadge.innerText = `ON (${base + gearAC})`;
+            mageSub.innerText = gearAC ? `Base 15 + ${gearAC} Equipped Gear` : 'Base AC: 15 (Active)';
         } else {
             mageCard.classList.remove('active-buff');
             mageBadge.className = 'toggle-badge off';
-            mageBadge.innerText = `OFF (${12 + robeAC})`;
-            mageSub.innerText = robeAC ? 'Base 12 + 1 Black Robe' : 'Base AC: 12 (10+DEX)';
+            mageBadge.innerText = `OFF (${base + gearAC})`;
+            mageSub.innerText = gearAC ? `Base ${base} + ${gearAC} Equipped Gear` : 'Base AC: 12 (10+DEX)';
         }
 
         if (isSurgeACActive) {
@@ -3087,15 +3097,16 @@
 
     function updateSavesUI() {
         const pb = getProfBonus();
-        const robeBonus = (activeRobe === 'black') ? 1 : 0;
+        const gc = window.__piperGearCache || null;
+        const saveBonus = gc ? (gc.saveBonus || 0) : ((activeRobe === 'black') ? 1 : 0);
         const fmt = (n) => (n >= 0 ? `+${n}` : `${n}`);
         const map = {
-            str: 0 + robeBonus,
-            dex: 2 + robeBonus,
-            con: 1 + pb + robeBonus,
-            int: 1 + robeBonus,
-            wis: 0 + robeBonus,
-            cha: 4 + pb + robeBonus
+            str: 0 + saveBonus,
+            dex: 2 + saveBonus,
+            con: 1 + pb + saveBonus,
+            int: 1 + saveBonus,
+            wis: 0 + saveBonus,
+            cha: 4 + pb + saveBonus
         };
         Object.entries(map).forEach(([k, v]) => {
             const el = document.getElementById(`save-val-${k}`);
@@ -3103,8 +3114,8 @@
         });
         const tag = document.getElementById('saves-robe-tag');
         if (tag) {
-            tag.innerText = robeBonus ? `Prof: +${pb} • Black Robe +1` : `Proficiency: +${pb}`;
-            tag.style.color = robeBonus ? '#93c5fd' : 'var(--text-dim)';
+            tag.innerText = saveBonus ? `Prof: +${pb} • Gear +${saveBonus}` : `Proficiency: +${pb}`;
+            tag.style.color = saveBonus ? '#93c5fd' : 'var(--text-dim)';
         }
     }
 
@@ -3150,7 +3161,12 @@
     function equipRobe(robeKey) {
         activeRobe = robeKey || 'none';
         localStorage.setItem('cos_robe_piper_v2', activeRobe);
-        updateRobeUI();
+        if (window.COS_RPG) {
+            const kwMap = { black: 'black robe', red: 'red robe', green: 'green robe', none: null };
+            COS_RPG.syncExternalBodySlot(kwMap[activeRobe] || null);
+        } else {
+            updateRobeUI();
+        }
         const labels = {
             black: '⬛ <strong>Kolyan\'s Black Robe of Warding Equipped:</strong> +1 AC (Total AC: ' + document.getElementById('ac-disp').innerText + ') and +1 to ALL Saving Throws!',
             red: '🟥 <strong>Kolyan\'s Red Robe of Embers Equipped:</strong> +1d4 + 1 bonus Fire damage auto-added to Fire Bolt &amp; Chaos Bolt!',
@@ -3643,9 +3659,10 @@
     }
 
     function rollSave(label, baseStatMod, isProf) {
-        const robeBonus = (activeRobe === 'black') ? 1 : 0;
-        const bonus = baseStatMod + (isProf ? getProfBonus() : 0) + robeBonus;
-        const finalLabel = robeBonus ? `${label} [⬛ Black Robe +1]` : label;
+        const gc = window.__piperGearCache || null;
+        const saveBonus = gc ? (gc.saveBonus || 0) : ((activeRobe === 'black') ? 1 : 0);
+        const bonus = baseStatMod + (isProf ? getProfBonus() : 0) + saveBonus;
+        const finalLabel = saveBonus ? `${label} [🛡️ Gear +${saveBonus}]` : label;
         rollD20(finalLabel, bonus);
     }
 
@@ -4778,7 +4795,8 @@
         const slotsStr = `L1(${spellSlots[1].current}/${spellSlots[1].max}) L2(${spellSlots[2].current}/${spellSlots[2].max})${spellSlots[3].max > 0 ? ' L3(' + spellSlots[3].current + '/' + spellSlots[3].max + ')' : ''}`;
         const knownStr = fullSpellbook.map(s => s.name).join(', ');
         const robeNameMap = { black: 'Black (+1 AC/Saves)', red: 'Red (+1d4+1 Fire)', green: 'Green (Arcana Adv)', none: 'None' };
-        const stateStr = `🎩 PIPER (Lvl ${characterLevel} Wild Magic Sorcerer) [HP: ${curHP}/${maxHP}${tempHP > 0 ? ' (+' + tempHP + ' Temp)' : ''} | Robe: ${robeNameMap[activeRobe] || 'None'} | Sorcery Points: ${curSP}/${maxSP} | Tides of Chaos: ${tidesOfChaosReady ? 'READY' : 'SURGE PRIMED'} | Fierna Charm: ${fiernaCharmReady ? '1/1 Ready' : '0/1 Used'} | Slots: ${slotsStr} | Last Surge: ${lastWildSurgeText} | Help: ${helpTokens}/2 | AC: ${document.getElementById('ac-disp').innerText} | Wealth: ${curGP} GP, ${curSilver} SP | Known: ${knownStr}] • ${invSummary}`;
+        const eqSummary = window.COS_RPG ? ` | ${COS_RPG.getExportEquippedSummary()}` : '';
+        const stateStr = `🎩 PIPER (Lvl ${characterLevel} Wild Magic Sorcerer) [HP: ${curHP}/${maxHP}${tempHP > 0 ? ' (+' + tempHP + ' Temp)' : ''} | Robe: ${robeNameMap[activeRobe] || 'None'} | Sorcery Points: ${curSP}/${maxSP} | Tides of Chaos: ${tidesOfChaosReady ? 'READY' : 'SURGE PRIMED'} | Fierna Charm: ${fiernaCharmReady ? '1/1 Ready' : '0/1 Used'} | Slots: ${slotsStr} | Last Surge: ${lastWildSurgeText} | Help: ${helpTokens}/2 | AC: ${document.getElementById('ac-disp').innerText} | Wealth: ${curGP} GP, ${curSilver} SP${eqSummary} | Known: ${knownStr}] • ${invSummary}`;
 
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(stateStr).then(() => {
@@ -4804,10 +4822,15 @@
         }
     }
 
-    document.getElementById('hp-input').addEventListener('keydown', e => { if (e.key === 'Enter') applyDamage(); });
-    document.getElementById('new-item-input').addEventListener('keydown', e => { if (e.key === 'Enter') addItem(); });
-    document.getElementById('gold-input').addEventListener('keydown', e => { if (e.key === 'Enter') applyGoldAdd(); });
-    document.getElementById('manual-d100-input').addEventListener('keydown', e => { if (e.key === 'Enter') lookupSpecificSurge(); });
+    document.getElementById('hp-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') applyDamage(); });
+    document.getElementById('new-item-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') addItem(); });
+    document.getElementById('gold-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') applyGoldAdd(); });
+    document.getElementById('manual-d100-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') lookupSpecificSurge(); });
+
+    // Delegate Piper's openCraftModal to unified RPG Workbench
+    function openCraftModal() {
+        if (window.COS_RPG) COS_RPG.openCraftModal();
+    }
 
     // Pre-populate Session 1 Last Surge display quietly (without popping HUD on load)
     function initLastSurgeDisplay() {
@@ -4836,6 +4859,66 @@
     renderInventory();
     renderPlayerNotes();
     initLastSurgeDisplay();
+
+    // Initialize Unified RPG Paper-Doll, Searchable Backpack, Crafting & Live Transfers
+    if (window.COS_RPG) {
+        COS_RPG.init({
+            heroId: 'piper',
+            heroName: 'Piper',
+            heroEmoji: '🎩',
+            getItems: getStoredItems,
+            saveItems: saveStoredItems,
+            resetItems: () => saveStoredItems([...defaultItems]),
+            getGold: () => ({ gp: curGP, sp: curSilver }),
+            addGold: (gp, sp, memo) => {
+                curGP += (gp || 0);
+                curSilver += (sp || 0);
+                updateGoldUI();
+                logGoldTx('gain', memo || 'Trade Received', `+${gp || 0} GP${sp ? ', +' + sp + ' SP' : ''}`, `${curGP} GP, ${curSilver} SP`);
+            },
+            spendGold: (gp, sp, memo) => {
+                let totalSP = Math.max(0, (curGP * 10 + curSilver) - ((gp || 0) * 10 + (sp || 0)));
+                curGP = Math.floor(totalSP / 10);
+                curSilver = totalSP % 10;
+                updateGoldUI();
+                logGoldTx('spend', memo || 'Trade Sent', `-${gp || 0} GP${sp ? ', -' + sp + ' SP' : ''}`, `${curGP} GP, ${curSilver} SP`);
+            },
+            healHP: (amt, isTemp) => {
+                if (isTemp) { tempHP = Math.max(tempHP, amt); }
+                else {
+                    const space = maxHP - curHP;
+                    if (amt <= space) curHP += amt;
+                    else { curHP = maxHP; tempHP += (amt - space); }
+                }
+                updateHPUI();
+            },
+            log: logRoll,
+            openItemModal: openItemDetailsModal,
+            defaultEquipped: {
+                head: "false-bottom stage props & rigged card deck",
+                body: "kolyan's black robe of warding (+1 ac & all saves)",
+                mainHand: "kolyan's silvered heirloom dagger (curved blade • 3 red gems)",
+                _grip: '1h'
+            },
+            presets: [
+                { label: '🛡️ Warding (Black Robe)', slots: { body: 'black robe', mainHand: 'silvered heirloom dagger', _grip: '1h' } },
+                { label: '🔥 Ember Burn (Red Robe)', slots: { body: 'red robe', mainHand: 'quarterstaff', _grip: '2h' } },
+                { label: '📚 Arcane Study (Green Robe)', slots: { body: 'green robe', mainHand: 'quarterstaff', _grip: '2h' } }
+            ],
+            onEquipmentChange: (bonuses) => {
+                window.__piperGearCache = bonuses;
+                activeRobe = bonuses.robeKey || 'none';
+                localStorage.setItem('cos_robe_piper_v2', activeRobe);
+                updateRobeUI();
+                const dcEl = document.getElementById('dc-hit-disp');
+                if (dcEl) dcEl.innerText = `DC ${getSpellSaveDC()} | +${getSpellAttackMod()}`;
+                const fbAtk = document.getElementById('btn-firebolt-atk');
+                if (fbAtk) fbAtk.innerText = `🔥 Attack (+${getSpellAttackMod()})`;
+                const fbTxt = document.getElementById('firebolt-hit-txt');
+                if (fbTxt) fbTxt.innerText = `+${getSpellAttackMod()} to Hit`;
+            }
+        });
+    }
 </script>
 </body>
 </html>

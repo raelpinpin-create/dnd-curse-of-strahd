@@ -1522,7 +1522,10 @@
     <section id="party-specs">
         <div class="section-header">
             <span>🛡️ SECTION 0: PARTY VITALS &amp; CORE COMPANION / ALLY ROSTER (LEVEL 3 START)</span>
-            <span class="section-tag">3 LEVEL 3 PCs + COMPANION &amp; ESCORT</span>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="btn-map-ref" style="background:linear-gradient(135deg,#78350f,#451a03); border-color:#f59e0b; color:#fef08a;" onclick="openDmCustomDropModal()">🎁 Send Loot / Gold to Player</button>
+                <span class="section-tag">3 LEVEL 3 PCs + COMPANION &amp; ESCORT</span>
+            </div>
         </div>
         <div class="grid-4">
             <div class="card clickable" onclick="openAllyCharacterWindow('piper')">
@@ -2520,6 +2523,9 @@
         </div>
     </div>
 </dialog>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="cos_firebase_config.js"></script>
 <script>
 // =========================================================
 // 1. FAST & 100% ACCURATE IN-WINDOW DICE ENGINE
@@ -12539,6 +12545,133 @@ function decorateBiomeCardsWithImages() {
     });
 }
 
+function dmGetFirebaseConfig() {
+    try {
+        const ov = localStorage.getItem('cos_firebase_override_v1');
+        if (ov) {
+            const p = JSON.parse(ov);
+            if (p && p.apiKey && p.projectId) return p;
+        }
+    } catch (e) {}
+    return window.COS_FIREBASE_CONFIG || null;
+}
+
+function dmGetFirestore() {
+    const cfg = dmGetFirebaseConfig();
+    if (!cfg || !cfg.apiKey || !cfg.projectId || typeof window.firebase === 'undefined') return null;
+    try {
+        if (!window.firebase.apps.length) window.firebase.initializeApp(cfg);
+        return window.firebase.firestore();
+    } catch (e) { return null; }
+}
+
+function dmEncodeTradeCode(payload) {
+    return 'COSTRADE:' + btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+}
+
+function dmSendLootDrop(toId, toName, itemRaw, qty = 1, gp = 0, sp = 0, note = '') {
+    const payload = {
+        cid: 'dm_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+        fromId: 'dm',
+        fromName: '🛡️ Dungeon Master',
+        toId,
+        toName,
+        kind: (gp > 0 || sp > 0) ? 'gold' : 'item',
+        itemRaw: itemRaw || '',
+        qty: Math.max(1, parseInt(qty) || 1),
+        gp: Math.max(0, parseInt(gp) || 0),
+        sp: Math.max(0, parseInt(sp) || 0),
+        note: note || '',
+        customMeta: null
+    };
+    const desc = payload.kind === 'gold'
+        ? `💰 ${payload.gp} GP${payload.sp ? ', ' + payload.sp + ' SP' : ''}`
+        : `${payload.qty > 1 ? payload.qty + 'x ' : ''}${payload.itemRaw}`;
+
+    const db = dmGetFirestore();
+    if (db) {
+        const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+        db.collection('campaigns').doc(room).collection('transfers').add({
+            ...payload,
+            status: 'pending',
+            refunded: true,
+            createdAt: window.firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+            setModalLogsHtml(`🚀 <strong>LIVE LOOT DROP SENT to ${toName}:</strong> ${desc}! It popped up on their sheet immediately.`);
+        }).catch(err => {
+            const code = dmEncodeTradeCode(payload);
+            navigator.clipboard?.writeText(code).catch(() => {});
+            setModalLogsHtml(`⚠️ Firestore blocked (${err.code || 'rules'}) — <strong>Offline Claim Code copied!</strong> Send to ${toName}: <code style="user-select:all;">${code}</code>`);
+        });
+    } else {
+        const code = dmEncodeTradeCode(payload);
+        navigator.clipboard?.writeText(code).catch(() => {});
+        setModalLogsHtml(`📲 <strong>Offline Claim Code copied for ${toName}!</strong> (${desc}) — Paste into their Trade Inbox: <code style="user-select:all; color:#93c5fd;">${code}</code>`);
+    }
+}
+
+function openDmCustomDropModal() {
+    const modal = resetDmModalChrome();
+    modalNavStack = [];
+    const fbLive = !!dmGetFirestore();
+    document.getElementById('modal-title').innerHTML = `🎁 DM Live Loot &amp; Gold Drop`;
+    document.getElementById('modal-content').innerHTML = `
+        <div class="nbox ${fbLive ? 'nbox-emerald' : 'nbox-amber'}" style="margin-bottom:10px;">
+            ${fbLive
+                ? '🟢 <strong>Live Cloud Firestore Connected!</strong> Clicking Send drops loot or gold straight into the player\'s sheet in real time.'
+                : '🟡 <strong>Offline Trade Code Mode:</strong> Clicking Send copies an instant <code>COSTRADE:...</code> claim code (add your Firebase Web <code>apiKey</code> in <code>cos_firebase_config.js</code> for live cross-device push!).'}
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; background:#0b1120; border:1px solid #334155; border-radius:8px; padding:12px;">
+            <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#fde68a; font-weight:700; grid-column:span 2;">
+                Target Hero
+                <select id="dm-drop-target" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
+                    <option value="piper|🎩 Piper">🎩 Piper ("The Incomparable")</option>
+                    <option value="jacomir|👑 Jacomir">👑 Jacomir Yulle ("King of Oakenshire")</option>
+                    <option value="yvaine|🔫 Yvaine">🔫 Eclipsa "Yvaine" the First</option>
+                </select>
+            </label>
+            <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#cbd5e1; font-weight:700; grid-column:span 2;">
+                Custom Item Name (leave blank if sending Gold only)
+                <input type="text" id="dm-drop-item" placeholder="e.g. 🩸 Vistani Bloodwell Vial (+1 Spell DC & Hit)" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
+            </label>
+            <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#cbd5e1; font-weight:700;">
+                Item Quantity
+                <input type="number" id="dm-drop-qty" value="1" min="1" max="99" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
+            </label>
+            <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#fde68a; font-weight:700;">
+                OR Send Gold (GP) / Silver (SP)
+                <div style="display:flex; gap:6px;">
+                    <input type="number" id="dm-drop-gp" value="0" min="0" placeholder="GP" style="width:50%; padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#facc15; font-size:0.84rem;">
+                    <input type="number" id="dm-drop-sp" value="0" min="0" placeholder="SP" style="width:50%; padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#cbd5e1; font-size:0.84rem;">
+                </div>
+            </label>
+            <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#cbd5e1; font-weight:700; grid-column:span 2;">
+                DM Flavor Note (optional)
+                <input type="text" id="dm-drop-note" placeholder="e.g. Found inside Madam Eva's velvet chest at Tser Pool" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
+            </label>
+            <div style="grid-column:span 2; display:flex; justify-content:flex-end;">
+                <button type="button" class="btn-roll" style="background:linear-gradient(135deg,#065f46,#047857); border-color:#34d399; color:#ecfdf5; padding:8px 16px;" onclick="submitDmCustomDrop()">🎁 Send Drop to Hero</button>
+            </div>
+        </div>
+    `;
+    setModalLogsHtml('Ready to send Live Loot or Gold Drop to any party hero.');
+    if (!modal.open) modal.showModal();
+}
+
+function submitDmCustomDrop() {
+    const targetVal = (document.getElementById('dm-drop-target')?.value || 'piper|🎩 Piper').split('|');
+    const item = (document.getElementById('dm-drop-item')?.value || '').trim();
+    const qty = parseInt(document.getElementById('dm-drop-qty')?.value) || 1;
+    const gp = parseInt(document.getElementById('dm-drop-gp')?.value) || 0;
+    const sp = parseInt(document.getElementById('dm-drop-sp')?.value) || 0;
+    const note = (document.getElementById('dm-drop-note')?.value || '').trim();
+    if (!item && gp === 0 && sp === 0) {
+        setModalLogsHtml('⚠️ Enter an Item Name or Gold/Silver amount first!');
+        return;
+    }
+    dmSendLootDrop(targetVal[0], targetVal[1], item, qty, item ? 0 : gp, item ? 0 : sp, note);
+}
+
 function openItemModal(key, fromNav = false) {
     const it = LOOT_DATA[key];
     if (!it) return;
@@ -12549,12 +12682,21 @@ function openItemModal(key, fromNav = false) {
     activeModalBiomeKey = null;
     activeModalLoreKey = null;
     if (!fromNav) modalNavStack = [];
-    const modal = document.getElementById('dm-modal');
+    const modal = resetDmModalChrome();
+    const safeName = it.name.replace(/'/g, "\\'").replace(/"/g, '&quot;');
     document.getElementById('modal-title').innerHTML = `${renderModalBackBtnHtml()}🎒 ${it.name}`;
     document.getElementById('modal-content').innerHTML = `
         <div style="background:#131c2c; border-left:3.5px solid var(--accent-gold); padding:9px 14px; border-radius:0 6px 6px 0; margin-bottom:12px;">
             <strong style="color:var(--accent-gold); font-size:0.98rem;">${it.name}</strong>
             <p style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">${it.rarity} • Found: <span style="color:#93c5fd;">${it.location}</span></p>
+        </div>
+        <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(52,211,153,0.35); border-radius:7px; padding:8px 11px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <span style="font-size:0.76rem; font-weight:800; color:#6ee7b7;">🎁 Send Direct Loot Drop to Hero:</span>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" class="btn-modal-mini" style="background:#3b0764; border-color:#a855f7; color:#f3e8ff;" onclick="dmSendLootDrop('piper', '🎩 Piper', '${safeName}', 1)">🎩 Send to Piper</button>
+                <button type="button" class="btn-modal-mini" style="background:#78350f; border-color:#f59e0b; color:#fef3c7;" onclick="dmSendLootDrop('jacomir', '👑 Jacomir', '${safeName}', 1)">👑 Send to Jacomir</button>
+                <button type="button" class="btn-modal-mini" style="background:#7f1d1d; border-color:#ef4444; color:#fee2e2;" onclick="dmSendLootDrop('yvaine', '🔫 Yvaine', '${safeName}', 1)">🔫 Send to Yvaine</button>
+            </div>
         </div>
         <h4>⚔️ D&D 5e Mechanics & Effects</h4>
         <div class="nbox nbox-emerald">${it.mechanics}</div>

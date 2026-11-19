@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cos_rpg_engine.css">
     <style>
         :root {
             --bg-page: #070b14;
@@ -1090,32 +1091,32 @@
                 <div class="panel">
                     <div class="panel-title">
                         <span>🛡️ Saving Throws</span>
-                        <span style="font-size:0.68rem; color:var(--text-dim);">Proficiency: +2</span>
+                        <span id="saves-gear-tag" style="font-size:0.68rem; color:var(--text-dim);">Proficiency: +2</span>
                     </div>
                     <div class="saves-grid-2x3">
-                        <div class="save-box prof" onclick="rollSave('Strength Saving Throw ★', 1, true)" title="Strength Saving Throw (Proficient: +1)">
+                        <div class="save-box prof" onclick="rollSave('Strength Saving Throw ★', 1, true)" title="Strength Saving Throw (Proficient)">
                             <span class="save-lbl">STR ★</span>
-                            <span class="save-val" style="color:var(--accent-gold);">+1</span>
+                            <span class="save-val" id="save-val-str" style="color:var(--accent-gold);">+1</span>
                         </div>
-                        <div class="save-box prof" onclick="rollSave('Dexterity Saving Throw ★', 6, true)" title="Dexterity Saving Throw (Proficient: +6)">
+                        <div class="save-box prof" onclick="rollSave('Dexterity Saving Throw ★', 6, true)" title="Dexterity Saving Throw (Proficient)">
                             <span class="save-lbl">DEX ★</span>
-                            <span class="save-val" style="color:#38bdf8;">+6</span>
+                            <span class="save-val" id="save-val-dex" style="color:#38bdf8;">+6</span>
                         </div>
-                        <div class="save-box" onclick="rollSave('Constitution Saving Throw', 2, false)" title="Constitution Saving Throw (+2)">
+                        <div class="save-box" onclick="rollSave('Constitution Saving Throw', 2, false)" title="Constitution Saving Throw">
                             <span class="save-lbl">CON</span>
-                            <span class="save-val" style="color:#38bdf8;">+2</span>
+                            <span class="save-val" id="save-val-con" style="color:#38bdf8;">+2</span>
                         </div>
-                        <div class="save-box" onclick="rollSave('Intelligence Saving Throw', 0, false)" title="Intelligence Saving Throw (+0)">
+                        <div class="save-box" onclick="rollSave('Intelligence Saving Throw', 0, false)" title="Intelligence Saving Throw">
                             <span class="save-lbl">INT</span>
-                            <span class="save-val" style="color:var(--text-dim);">+0</span>
+                            <span class="save-val" id="save-val-int" style="color:var(--text-dim);">+0</span>
                         </div>
-                        <div class="save-box" onclick="rollSave('Wisdom Saving Throw', 2, false)" title="Wisdom Saving Throw (+2)">
+                        <div class="save-box" onclick="rollSave('Wisdom Saving Throw', 2, false)" title="Wisdom Saving Throw">
                             <span class="save-lbl">WIS</span>
-                            <span class="save-val" style="color:#38bdf8;">+2</span>
+                            <span class="save-val" id="save-val-wis" style="color:#38bdf8;">+2</span>
                         </div>
-                        <div class="save-box" onclick="rollSave('Charisma Saving Throw', 0, false)" title="Charisma Saving Throw (+0)">
+                        <div class="save-box" onclick="rollSave('Charisma Saving Throw', 0, false)" title="Charisma Saving Throw">
                             <span class="save-lbl">CHA</span>
-                            <span class="save-val" style="color:var(--text-dim);">+0</span>
+                            <span class="save-val" id="save-val-cha" style="color:var(--text-dim);">+0</span>
                         </div>
                     </div>
                 </div>
@@ -1549,11 +1550,11 @@
                         </div>
 
                         <!-- Amulet of the Whispering Grave (Speak with Dead 1/LR) -->
-                        <div class="action-card" style="border-left:3px solid #dc2626;">
+                        <div class="action-card" id="card-speak-with-dead" style="border-left:3px solid #dc2626;">
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('spell_speak_with_dead')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
-                                        🩸 Amulet of the Whispering Grave <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                        🩸 Amulet of the Whispering Grave <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span><span id="eq-badge-amulet"></span>
                                     </div>
                                     <div style="font-size:0.66rem; font-weight:700; color:#fca5a5;">Appraised Relic • Speak with Dead • 1/Long Rest</div>
                                 </div>
@@ -1731,6 +1732,10 @@
         <div id="floating-roll-body" style="font-size:0.95rem; color:#f8fafc; line-height:1.5; display:flex; align-items:center; flex-wrap:wrap; gap:8px;"></div>
     </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="cos_firebase_config.js"></script>
+<script src="cos_rpg_engine.js"></script>
 <script>
     // ==========================================
     // 🧙‍♂️ CHARACTER BASELINE STATE (LEVEL 3 RANGER)
@@ -1906,13 +1911,19 @@
             if (btnRevolvers) btnRevolvers.classList.remove('active');
             if (viewLament) viewLament.style.display = 'block';
             if (viewRevolvers) viewRevolvers.style.display = 'none';
-            if (!silent) logRoll(`🎯 <strong>Firearm Stance Swapped:</strong> Yvaine shoulders <strong>"Lament" (Heavy Long Rifle)</strong>. Chamber: <strong>${lamentChamber}/10</strong> slugs ready.`);
+            if (!silent) {
+                logRoll(`🎯 <strong>Firearm Stance Swapped:</strong> Yvaine shoulders <strong>"Lament" (Heavy Long Rifle)</strong>. Chamber: <strong>${lamentChamber}/10</strong> slugs ready.`);
+                if (window.COS_RPG && !window.__yvaineSyncingStance) COS_RPG.syncExternalWeaponStance('lament');
+            }
         } else {
             if (btnLament) btnLament.classList.remove('active');
             if (btnRevolvers) btnRevolvers.classList.add('active');
             if (viewLament) viewLament.style.display = 'none';
             if (viewRevolvers) viewRevolvers.style.display = 'block';
-            if (!silent) logRoll(`💥 <strong>Firearm Stance Swapped:</strong> Yvaine draws twin revolvers <strong>"Mercy &amp; Less"</strong>! Mercy: <strong>${mercyChamber}/6</strong> • Less: <strong>${lessChamber}/6</strong>.`);
+            if (!silent) {
+                logRoll(`💥 <strong>Firearm Stance Swapped:</strong> Yvaine draws twin revolvers <strong>"Mercy &amp; Less"</strong>! Mercy: <strong>${mercyChamber}/6</strong> • Less: <strong>${lessChamber}/6</strong>.`);
+                if (window.COS_RPG && !window.__yvaineSyncingStance) COS_RPG.syncExternalWeaponStance('revolvers');
+            }
         }
     }
 
@@ -2434,28 +2445,61 @@
     // ==========================================
     // 🛡️ ARMOR TOGGLE & HIT POINTS ENGINE
     // ==========================================
-    function toggleArmorBuff() {
-        isArmorActive = !isArmorActive;
+    function updateACDisplay() {
         const card = document.getElementById('card-armor-toggle');
         const badge = document.getElementById('badge-armor-style');
         const sub = document.getElementById('sub-armor-style');
         const acDisp = document.getElementById('ac-disp');
 
-        if (isArmorActive) {
+        const gc = window.__yvaineGearCache || null;
+        let total = isArmorActive ? 16 : 14;
+        let armorActive = isArmorActive;
+        if (gc) {
+            armorActive = !!gc.armorWorn;
+            isArmorActive = armorActive;
+            const dexMod = 4;
+            const dexApplied = gc.armorWorn ? (gc.maxDex !== null ? Math.min(dexMod, gc.maxDex) : (gc.addDex ? dexMod : 0)) : dexMod;
+            const base = gc.armorWorn ? ((gc.baseAC || 12) + dexApplied) : (10 + dexMod);
+            total = base + (gc.shieldBonus || 0) + (gc.acBonus || 0);
+        }
+        if (acDisp) acDisp.innerText = String(total);
+        if (!card || !badge || !sub) return;
+        if (armorActive) {
             card.classList.add('active-buff');
             badge.className = 'toggle-badge on';
-            badge.innerText = 'ON (16)';
-            sub.innerText = 'AC: 16 (Equipped)';
-            acDisp.innerText = '16';
-            logRoll(`🧥 <strong>Studded Leather Coat Equipped:</strong> AC is now <strong>16</strong> (12 + 4 DEX).`);
+            badge.innerText = `ON (${total})`;
+            sub.innerText = `AC: ${total} (Equipped)`;
         } else {
             card.classList.remove('active-buff');
             badge.className = 'toggle-badge off';
-            badge.innerText = 'OFF (14)';
-            sub.innerText = 'AC: 14 (Unarmored)';
-            acDisp.innerText = '14';
-            logRoll(`🧥 <strong>Studded Leather Coat Removed:</strong> AC is now <strong>14</strong> (10 + 4 DEX).`);
+            badge.innerText = `OFF (${total})`;
+            sub.innerText = `AC: ${total} (Unarmored)`;
         }
+    }
+
+    function updateSavesUI() {
+        const sb = window.__yvaineGearCache?.saveBonus || 0;
+        const fmt = n => n >= 0 ? `+${n}` : `${n}`;
+        const map = { str: 1 + sb, dex: 6 + sb, con: 2 + sb, int: 0 + sb, wis: 2 + sb, cha: 0 + sb };
+        Object.entries(map).forEach(([k, v]) => {
+            const el = document.getElementById(`save-val-${k}`);
+            if (el) el.innerText = fmt(v);
+        });
+        const tag = document.getElementById('saves-gear-tag');
+        if (tag) {
+            tag.innerText = sb ? `Prof: +2 • Gear +${sb}` : `Proficiency: +2`;
+            tag.style.color = sb ? '#93c5fd' : 'var(--text-dim)';
+        }
+    }
+
+    function toggleArmorBuff() {
+        isArmorActive = !isArmorActive;
+        if (window.COS_RPG) {
+            COS_RPG.syncExternalBodySlot(isArmorActive ? 'studded leather' : null);
+        } else {
+            updateACDisplay();
+        }
+        logRoll(`🧥 <strong>Armor:</strong> Toggled ${isArmorActive ? 'ON (AC ' + document.getElementById('ac-disp').innerText + ')' : 'OFF (Unarmored AC ' + document.getElementById('ac-disp').innerText + ')'}.`);
     }
 
     function updateHPUI() {
@@ -2647,7 +2691,8 @@
     }
 
     function rollSave(name, mod, prof) {
-        rollD20(name, mod);
+        const sb = window.__yvaineGearCache?.saveBonus || 0;
+        rollD20(sb ? `${name} [🛡️ Gear +${sb}]` : name, mod + sb);
     }
 
     function rollSkill(name, mod, prof) {
@@ -3892,7 +3937,8 @@
         if (delta.removed.length > 0) deltaParts.push(`➖ Consumed/Removed: ${delta.removed.join(', ')}`);
         const invSummary = deltaParts.length > 0 ? deltaParts.join(' | ') : '📦 Inventory: (No session changes)';
 
-        const dataStr = `⚔️ YVAINE DATA EXPORT | HP: ${curHP}/${maxHP}${tempHP > 0 ? ` (+${tempHP} Temp)` : ''} | AC: ${isArmorActive ? 16 : 14} | Init: +6 | Stance: ${activeStance === 'lament' ? 'Lament Heavy Rifle' : 'Mercy & Less Revolvers'} | Speed: ${isLongstriderActive ? '40 ft' : '30 ft'} | Help: ${helpTokens}/${maxHelpTokens} | Lament: ${lamentChamber}/10 (Clips: ${lamentReloadReserves}/2) | Revolvers: Mercy ${mercyChamber}/6, Less ${lessChamber}/6 (Speedloaders: ${revolverReloadReserves}/2) | Spell Slots: ${curSpellSlots}/3 (1st) | Favored Enemy: ${favoredEnemyCasts}/2 Free | Hunter's Sense: ${huntersSenseUses}/2 | Whispering Grave Amulet: ${speakWithDeadReady ? '1/1 READY' : '0/1 USED'} | Heroic Inspiration: ${heroicInspirationReady ? 'READY' : 'USED'} | Wealth: ${curGP} GP, ${curSilver} SP | Active: Slayer (${slayersPreyActive ? 'ON' : 'OFF'}), Hunter's Mark (${isTracerActive ? 'ON' : 'OFF'}) • ${invSummary}`;
+        const eqSummary = window.COS_RPG ? ` | ${COS_RPG.getExportEquippedSummary()}` : '';
+        const dataStr = `⚔️ YVAINE DATA EXPORT | HP: ${curHP}/${maxHP}${tempHP > 0 ? ` (+${tempHP} Temp)` : ''} | AC: ${document.getElementById('ac-disp')?.innerText || (isArmorActive ? 16 : 14)} | Init: +6 | Stance: ${activeStance === 'lament' ? 'Lament Heavy Rifle' : 'Mercy & Less Revolvers'} | Speed: ${isLongstriderActive ? '40 ft' : '30 ft'} | Help: ${helpTokens}/${maxHelpTokens} | Lament: ${lamentChamber}/10 (Clips: ${lamentReloadReserves}/2) | Revolvers: Mercy ${mercyChamber}/6, Less ${lessChamber}/6 (Speedloaders: ${revolverReloadReserves}/2) | Spell Slots: ${curSpellSlots}/3 (1st) | Favored Enemy: ${favoredEnemyCasts}/2 Free | Hunter's Sense: ${huntersSenseUses}/2 | Whispering Grave Amulet: ${speakWithDeadReady ? '1/1 READY' : '0/1 USED'} | Heroic Inspiration: ${heroicInspirationReady ? 'READY' : 'USED'} | Wealth: ${curGP} GP, ${curSilver} SP | Active: Slayer (${slayersPreyActive ? 'ON' : 'OFF'}), Hunter's Mark (${isTracerActive ? 'ON' : 'OFF'})${eqSummary} • ${invSummary}`;
 
         navigator.clipboard.writeText(dataStr).then(() => {
             logRoll(`📋 <strong>Export Data Copied to Clipboard!</strong><br><span style="font-size:0.75rem; color:#cbd5e1; font-family:'JetBrains Mono',monospace;">${dataStr}</span>`);
@@ -4340,6 +4386,77 @@
 
         // Session 1 end stance: Mercy & Less Revolvers (silent init)
         switchWeaponStance(activeStance, true);
+
+        // Initialize Unified RPG Paper-Doll, Searchable Backpack, Crafting & Live Transfers
+        if (window.COS_RPG) {
+            COS_RPG.init({
+                heroId: 'yvaine',
+                heroName: 'Yvaine',
+                heroEmoji: '🔫',
+                getItems: getStoredItems,
+                saveItems: saveItems,
+                resetItems: () => saveItems([...defaultItems]),
+                getGold: () => ({ gp: curGP, sp: curSilver }),
+                addGold: (gp, sp, memo) => {
+                    curGP += (gp || 0);
+                    curSilver += (sp || 0);
+                    updateGoldUI();
+                    logGoldTx('gain', memo || 'Trade Received', `+${gp || 0} GP${sp ? ', +' + sp + ' SP' : ''}`, `${curGP} GP, ${curSilver} SP`);
+                },
+                spendGold: (gp, sp, memo) => {
+                    let totalSP = Math.max(0, (curGP * 10 + curSilver) - ((gp || 0) * 10 + (sp || 0)));
+                    curGP = Math.floor(totalSP / 10);
+                    curSilver = totalSP % 10;
+                    updateGoldUI();
+                    logGoldTx('spend', memo || 'Trade Sent', `-${gp || 0} GP${sp ? ', -' + sp + ' SP' : ''}`, `${curGP} GP, ${curSilver} SP`);
+                },
+                healHP: (amt, isTemp) => {
+                    if (isTemp) { tempHP = Math.max(tempHP, amt); }
+                    else {
+                        const space = maxHP - curHP;
+                        if (amt <= space) curHP += amt;
+                        else { curHP = maxHP; tempHP += (amt - space); }
+                    }
+                    updateHPUI();
+                },
+                log: logRoll,
+                openItemModal: openItemDetailsModal,
+                defaultEquipped: {
+                    body: "studded leather coat (ac 16)",
+                    amulet: "amulet of the whispering grave (speak with dead • 1/lr)",
+                    mainHand: "twin revolvers (\"mercy & less\")",
+                    ranged: "\"lament\" (royal heavy long rifle)",
+                    _grip: '2h'
+                },
+                presets: [
+                    { label: '💥 Gunslinger (Mercy & Less)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'twin revolvers', ranged: 'lament', _grip: '2h' } },
+                    { label: '🎯 Sniper (Lament 2H)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'lament', ranged: 'twin revolvers', _grip: '2h' } },
+                    { label: '🗡️ Trench Knife (1H Stealth)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: 'trench knife', ranged: 'lament', _grip: '1h' } }
+                ],
+                onEquipmentChange: (bonuses, eq) => {
+                    window.__yvaineGearCache = bonuses;
+                    updateACDisplay();
+                    updateSavesUI();
+                    // Sync active firearm stance when mainHand holds Lament or Twin Revolvers
+                    const mh = (eq.mainHand || '').toLowerCase();
+                    window.__yvaineSyncingStance = true;
+                    if (mh.includes('lament') && activeStance !== 'lament') switchWeaponStance('lament', true);
+                    else if ((mh.includes('mercy') || mh.includes('revolver')) && activeStance !== 'revolvers') switchWeaponStance('revolvers', true);
+                    window.__yvaineSyncingStance = false;
+
+                    // Reflect Amulet of the Whispering Grave equipped state on spell card
+                    const amCard = document.getElementById('card-speak-with-dead');
+                    const amBadge = document.getElementById('eq-badge-amulet');
+                    const isAmWorn = bonuses.equippedAbilities.includes('speak_with_dead');
+                    if (amCard) amCard.style.opacity = isAmWorn ? '1' : '0.68';
+                    if (amBadge) {
+                        amBadge.innerHTML = isAmWorn
+                            ? `<span class="rpg-card-equipped-pill">✓ WORN</span>`
+                            : `<span class="rpg-card-unequipped-pill">⚠️ Unequipped</span>`;
+                    }
+                }
+            });
+        }
     });
 </script>
 </body>

@@ -1,0 +1,855 @@
+/* =========================================================================
+   🛡️ CURSE OF STRAHD — UNIFIED RPG PAPER-DOLL, BACKPACK, CRAFT & TRADE UI
+   ========================================================================= */
+
+/* Modal scroll-chaining protection (Modern Web Guidance) */
+dialog:modal {
+    overscroll-behavior: contain;
+}
+dialog::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+}
+
+/* Header Quick Gear & Backpack Buttons */
+.rpg-header-btn {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid rgba(245, 158, 11, 0.45);
+    color: #fde68a;
+    border-radius: 5px;
+    padding: 4px 9px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s ease;
+    min-block-size: 28px;
+}
+.rpg-header-btn:hover {
+    border-color: var(--accent-gold, #f59e0b);
+    background: #1e293b;
+    filter: brightness(1.12);
+}
+.rpg-header-btn.rpg-btn-backpack {
+    border-color: rgba(56, 189, 248, 0.5);
+    color: #bae6fd;
+}
+.rpg-header-btn.rpg-btn-trade {
+    border-color: rgba(74, 222, 128, 0.45);
+    color: #bbf7d0;
+}
+.rpg-badge-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 999px;
+    background: rgba(245, 158, 11, 0.2);
+    color: #fde68a;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+}
+.rpg-badge-count.pulse-alert {
+    background: #15803d;
+    color: #fff;
+    border-color: #4ade80;
+    animation: rpgPulse 1.6s ease-in-out infinite;
+}
+@keyframes rpgPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.55); }
+    50% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+}
+
+/* Inline Incoming Live Trade Banner (Non-ephemeral, WCAG accessible) */
+.rpg-incoming-banner {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+.rpg-incoming-banner.has-trades {
+    display: flex;
+}
+.rpg-trade-alert-card {
+    background: linear-gradient(135deg, rgba(20, 83, 45, 0.92) 0%, rgba(15, 23, 42, 0.96) 100%);
+    border: 1.5px solid #4ade80;
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+.rpg-trade-alert-card.dm-drop {
+    background: linear-gradient(135deg, rgba(120, 53, 15, 0.92) 0%, rgba(15, 23, 42, 0.96) 100%);
+    border-color: #fbbf24;
+}
+
+/* Compact Adventure Gear Hub (Replaces bloated static inventory list on main sheet) */
+.rpg-hub-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.rpg-hub-btn-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+@media (max-width: 640px) {
+    .rpg-hub-btn-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+.rpg-hub-tile {
+    background: linear-gradient(180deg, #162033 0%, #0b1120 100%);
+    border: 1px solid #334155;
+    border-radius: 7px;
+    padding: 9px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    cursor: pointer;
+    color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s ease;
+    text-align: left;
+    min-block-size: 56px;
+}
+.rpg-hub-tile:hover {
+    border-color: var(--accent-gold, #f59e0b);
+    background: linear-gradient(180deg, #1e293b 0%, #111827 100%);
+    transform: translateY(-1px);
+}
+.rpg-hub-tile.tile-backpack { border-top: 2.5px solid #38bdf8; }
+.rpg-hub-tile.tile-equip { border-top: 2.5px solid #f59e0b; }
+.rpg-hub-tile.tile-craft { border-top: 2.5px solid #34d399; }
+.rpg-hub-tile.tile-trade { border-top: 2.5px solid #a78bfa; }
+.rpg-hub-tile-top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+.rpg-hub-tile-sub {
+    font-size: 0.66rem;
+    color: var(--text-dim, #94a3b8);
+    line-height: 1.25;
+}
+
+/* Compact Equipped Summary Strip on Main Sheet */
+.rpg-equipped-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 6px 8px;
+    background: #090e1a;
+    border: 1px solid #1e293b;
+    border-radius: 6px;
+}
+.rpg-eq-chip {
+    background: #111827;
+    border: 1px solid #334155;
+    border-radius: 5px;
+    padding: 3px 7px;
+    font-size: 0.68rem;
+    color: #e2e8f0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.15s, background 0.15s;
+}
+.rpg-eq-chip:hover {
+    border-color: var(--accent-gold, #f59e0b);
+    background: #1e293b;
+}
+.rpg-eq-chip .chip-slot {
+    color: var(--accent-gold, #f59e0b);
+    font-weight: 800;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+}
+
+/* Quick-Belt (1-Tap Combat Consumables on Main Sheet) */
+.rpg-quickbelt {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 5px 8px;
+    background: rgba(16, 185, 129, 0.05);
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    border-radius: 6px;
+}
+.rpg-quickbelt-lbl {
+    font-size: 0.66rem;
+    font-weight: 800;
+    color: #6ee7b7;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-right: 2px;
+}
+.rpg-qb-btn {
+    background: #0f172a;
+    border: 1px solid rgba(52, 211, 153, 0.45);
+    color: #ecfdf5;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+    min-block-size: 28px;
+}
+.rpg-qb-btn:hover {
+    background: #065f46;
+    border-color: #34d399;
+}
+
+/* Equipped Pill on Main Sheet Weapon Cards */
+.rpg-card-equipped-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    background: rgba(34, 197, 94, 0.18);
+    color: #86efac;
+    border: 1px solid rgba(74, 222, 128, 0.55);
+    margin-left: 5px;
+    vertical-align: middle;
+}
+.rpg-card-unequipped-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    background: rgba(148, 163, 184, 0.12);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* =========================================================================
+   SHARED MODAL SHELLS (WIDE RPG DIALOGS)
+   ========================================================================= */
+.rpg-dialog {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    max-width: min(920px, 95vw);
+    width: 100%;
+    max-height: 92vh;
+    overflow: visible;
+    margin: auto;
+}
+.rpg-dialog::backdrop {
+    background: rgba(2, 6, 23, 0.84);
+    backdrop-filter: blur(4px);
+}
+.rpg-modal-shell {
+    background: #0f172a;
+    border: 1.5px solid #475569;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.78);
+}
+.rpg-modal-head {
+    background: linear-gradient(180deg, #1b2438 0%, #0f172a 100%);
+    border-bottom: 1px solid #334155;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.rpg-modal-head h2 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: 1.02rem;
+    color: var(--accent-gold, #f59e0b);
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.rpg-modal-close {
+    background: #1e293b;
+    border: 1px solid #475569;
+    color: #e2e8f0;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.rpg-modal-close:hover {
+    background: #991b1b;
+    border-color: #ef4444;
+    color: #fff;
+}
+.rpg-modal-body {
+    padding: 12px 14px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+.rpg-modal-foot {
+    background: #0b1120;
+    border-top: 1px solid #1e293b;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* =========================================================================
+   🛡️ 11-SLOT RPG PAPER-DOLL EQUIPMENT MODAL
+   ========================================================================= */
+.rpg-equip-topstats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: #090e1a;
+    border: 1px solid #1e293b;
+    border-radius: 7px;
+    padding: 8px 10px;
+}
+.rpg-stat-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+.rpg-stat-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 5px;
+    background: #111827;
+    border: 1px solid #334155;
+    color: #f8fafc;
+}
+.rpg-stat-pill.gold { border-color: rgba(245, 158, 11, 0.5); color: #fde68a; background: rgba(245, 158, 11, 0.1); }
+.rpg-stat-pill.blue { border-color: rgba(56, 189, 248, 0.5); color: #7dd3fc; background: rgba(56, 189, 248, 0.1); }
+.rpg-stat-pill.purple { border-color: rgba(167, 139, 250, 0.5); color: #d8b4fe; background: rgba(167, 139, 250, 0.1); }
+.rpg-stat-pill.green { border-color: rgba(74, 222, 128, 0.5); color: #86efac; background: rgba(74, 222, 128, 0.1); }
+
+.rpg-presets-bar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.rpg-preset-btn {
+    background: #111827;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    border-radius: 5px;
+    padding: 4px 9px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    min-block-size: 28px;
+    transition: all 0.15s;
+}
+.rpg-preset-btn:hover {
+    border-color: var(--accent-gold, #f59e0b);
+    color: #fde68a;
+    background: #1e293b;
+}
+
+.rpg-equip-split {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr;
+    gap: 12px;
+    align-items: start;
+}
+@media (max-width: 780px) {
+    .rpg-equip-split {
+        grid-template-columns: 1fr;
+    }
+}
+
+.rpg-paperdoll-board {
+    background: linear-gradient(180deg, #0b1120 0%, #090d16 100%);
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.rpg-doll-upper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.rpg-doll-col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.rpg-doll-col-title {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-dim, #94a3b8);
+    padding-bottom: 2px;
+    border-bottom: 1px solid #1e293b;
+}
+.rpg-rings-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+.rpg-hands-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+@media (max-width: 520px) {
+    .rpg-doll-upper, .rpg-hands-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Individual Paper-Doll Slot Button */
+.rpg-slot-box {
+    background: #111827;
+    border: 1.5px solid #263348;
+    border-radius: 7px;
+    padding: 7px 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    cursor: pointer;
+    text-align: left;
+    color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s ease;
+    min-block-size: 56px;
+    position: relative;
+}
+.rpg-slot-box:hover {
+    border-color: #60a5fa;
+    background: #172136;
+}
+.rpg-slot-box.slot-filled {
+    border-color: rgba(245, 158, 11, 0.55);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.09) 0%, #111827 100%);
+}
+.rpg-slot-box.slot-selected {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
+    background: #16243b;
+}
+.rpg-slot-box.slot-locked-2h {
+    border-style: dashed;
+    border-color: #a78bfa;
+    background: rgba(109, 40, 217, 0.12);
+}
+.rpg-slot-hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.64rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #94a3b8;
+}
+.rpg-slot-box.slot-filled .rpg-slot-hdr {
+    color: #fbbf24;
+}
+.rpg-slot-item-name {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #f8fafc;
+    line-height: 1.25;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+.rpg-slot-empty-txt {
+    font-size: 0.7rem;
+    color: #64748b;
+    font-style: italic;
+}
+.rpg-slot-bonus-txt {
+    font-size: 0.64rem;
+    font-weight: 700;
+    color: #6ee7b7;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Active Gear Bonuses Box inside Paper-Doll */
+.rpg-active-bonuses-box {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid #334155;
+    border-left: 3px solid #34d399;
+    border-radius: 6px;
+    padding: 7px 9px;
+    font-size: 0.71rem;
+    color: #cbd5e1;
+    line-height: 1.4;
+}
+
+/* Right Pane: Slot Picker Drawer */
+.rpg-slot-picker {
+    background: #0b1120;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 280px;
+}
+.rpg-picker-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #1e293b;
+}
+.rpg-picker-item {
+    background: #111827;
+    border: 1px solid #263348;
+    border-radius: 6px;
+    padding: 8px 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.rpg-picker-item.is-equipped {
+    border-color: #22c55e;
+    background: rgba(20, 83, 45, 0.22);
+}
+.rpg-picker-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+.rpg-picker-item-name {
+    font-size: 0.77rem;
+    font-weight: 700;
+    color: #f8fafc;
+}
+.rpg-picker-item-meta {
+    font-size: 0.68rem;
+    color: #93c5fd;
+    font-family: 'JetBrains Mono', monospace;
+}
+.rpg-picker-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+/* Custom Gear Tagger Form */
+.rpg-custom-tagger {
+    background: #090e1a;
+    border: 1px solid #475569;
+    border-radius: 7px;
+    padding: 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.rpg-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+}
+.rpg-field-lbl {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.66rem;
+    font-weight: 700;
+    color: #94a3b8;
+}
+.rpg-input, .rpg-select {
+    background: #111827;
+    border: 1px solid #334155;
+    border-radius: 5px;
+    padding: 5px 7px;
+    font-size: 0.75rem;
+    color: #f8fafc;
+    font-family: 'Inter', sans-serif;
+    min-block-size: 32px;
+}
+
+/* =========================================================================
+   🎒 SEARCHABLE BACKPACK MODAL
+   ========================================================================= */
+.rpg-bp-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.rpg-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #090e1a;
+    border: 1.5px solid #334155;
+    border-radius: 7px;
+    padding: 3px 8px;
+}
+.rpg-search-wrap:focus-within {
+    border-color: #38bdf8;
+}
+.rpg-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #f8fafc;
+    font-size: 0.82rem;
+    padding: 5px 2px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+}
+.rpg-filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.rpg-filter-pill {
+    background: #111827;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    border-radius: 999px;
+    padding: 4px 9px;
+    font-size: 0.69rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    min-block-size: 28px;
+    transition: all 0.15s;
+}
+.rpg-filter-pill:hover { border-color: #38bdf8; color: #f8fafc; }
+.rpg-filter-pill[aria-pressed="true"] {
+    background: rgba(56, 189, 248, 0.18);
+    border-color: #38bdf8;
+    color: #e0f2fe;
+}
+
+.rpg-bp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-height: 46vh;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+.rpg-bp-row {
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 7px;
+    padding: 7px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.rpg-bp-row.row-equipped {
+    border-left: 3px solid #22c55e;
+    background: linear-gradient(90deg, rgba(20, 83, 45, 0.22) 0%, #111827 55%);
+}
+.rpg-bp-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 180px;
+}
+.rpg-bp-name-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #f8fafc;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+.rpg-bp-name-btn:hover { color: var(--accent-gold, #f59e0b); }
+.rpg-bp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    font-size: 0.64rem;
+    color: #94a3b8;
+}
+.rpg-bp-cat-tag {
+    background: #090e1a;
+    border: 1px solid #334155;
+    border-radius: 4px;
+    padding: 0px 5px;
+    color: #cbd5e1;
+}
+.rpg-bp-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+.rpg-mini-btn {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #e2e8f0;
+    border-radius: 5px;
+    padding: 4px 7px;
+    font-size: 0.69rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    min-block-size: 28px;
+    transition: all 0.15s;
+}
+.rpg-mini-btn:hover { border-color: var(--accent-gold, #f59e0b); color: #fff; }
+.rpg-mini-btn.btn-equip { border-color: rgba(245, 158, 11, 0.55); color: #fde68a; background: rgba(245, 158, 11, 0.12); }
+.rpg-mini-btn.btn-equipped { border-color: #22c55e; color: #86efac; background: rgba(20, 83, 45, 0.45); }
+.rpg-mini-btn.btn-use { border-color: rgba(52, 211, 153, 0.55); color: #6ee7b7; background: rgba(6, 95, 70, 0.35); }
+.rpg-mini-btn.btn-send { border-color: rgba(167, 139, 250, 0.55); color: #ddd6fe; background: rgba(109, 40, 217, 0.25); }
+.rpg-mini-btn.btn-danger { border-color: rgba(239, 68, 68, 0.45); color: #fca5a5; }
+.rpg-mini-btn.btn-danger:hover { background: #991b1b; color: #fff; }
+
+/* =========================================================================
+   🤝 LIVE TRANSFER & TRADE MODAL
+   ========================================================================= */
+.rpg-tab-bar {
+    display: flex;
+    gap: 6px;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 8px;
+}
+.rpg-tab-btn {
+    background: #111827;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    min-block-size: 34px;
+}
+.rpg-tab-btn[aria-pressed="true"] {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: #a78bfa;
+    color: #f5f3ff;
+}
+.rpg-recipient-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 6px;
+}
+.rpg-recip-btn {
+    background: #111827;
+    border: 1.5px solid #334155;
+    color: #e2e8f0;
+    border-radius: 7px;
+    padding: 8px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    min-block-size: 42px;
+}
+.rpg-recip-btn[aria-pressed="true"] {
+    border-color: #4ade80;
+    background: rgba(20, 83, 45, 0.35);
+    color: #dcfce7;
+}
+.rpg-code-box {
+    background: #090e1a;
+    border: 1px dashed #60a5fa;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #93c5fd;
+    word-break: break-all;
+}
+.rpg-status-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+.rpg-status-dot.online { background: rgba(20, 83, 45, 0.5); border: 1px solid #4ade80; color: #86efac; }
+.rpg-status-dot.offline { background: rgba(120, 53, 15, 0.45); border: 1px solid #fbbf24; color: #fde68a; }
+
+/* Crafting Cards inside Unified Craft Modal */
+.rpg-craft-card {
+    background: #111827;
+    border: 1px solid #263348;
+    border-left: 3.5px solid #34d399;
+    border-radius: 7px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.rpg-craft-card.locked {
+    border-left-color: #475569;
+    opacity: 0.85;
+}
+.rpg-craft-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rpg-badge-count.pulse-alert { animation: none; }
+    .rpg-hub-tile:hover { transform: none; }
+}
