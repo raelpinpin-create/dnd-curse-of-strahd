@@ -12637,7 +12637,53 @@ function dmEncodeTradeCode(payload) {
     return 'COSTRADE:' + btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
 }
 
-function dmSendLootDrop(toId, toName, itemRaw, qty = 1, gp = 0, sp = 0, note = '') {
+const DM_PARTY_TARGETS = [
+    { id: 'piper',   label: '🎩 Piper' },
+    { id: 'jacomir', label: '👑 Jacomir' },
+    { id: 'yvaine',  label: '🔫 Yvaine' }
+];
+let dmDropActiveTab = 'handout'; // 'handout' | 'forge' | 'party'
+let dmForgeKind = 'weapon'; // 'weapon' | 'armor' | 'caster' | 'accessory' | 'consumable' | 'material'
+let dmLiveHeroes = {};
+let dmUnlockedRecipes = {};
+
+function dmShowQuickToast(htmlMsg) {
+    setModalLogsHtml(htmlMsg);
+    let toast = document.getElementById('dm-quick-drop-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'dm-quick-drop-toast';
+        toast.style.cssText = 'position:fixed; bottom:18px; right:18px; z-index:9999; max-width:440px; background:linear-gradient(135deg,#064e3b,#0f172a); border:1.5px solid #34d399; color:#ecfdf5; padding:10px 14px; border-radius:8px; box-shadow:0 10px 28px rgba(0,0,0,0.65); font-size:0.8rem; line-height:1.4; transition:opacity 0.2s;';
+        document.body.appendChild(toast);
+    }
+    toast.innerHTML = htmlMsg;
+    toast.style.opacity = '1';
+    toast.style.display = 'block';
+    clearTimeout(window.__dmToastTimer);
+    window.__dmToastTimer = setTimeout(() => {
+        if (toast) toast.style.display = 'none';
+    }, 4200);
+}
+
+function dmLookupCustomMetaForItem(itemRaw) {
+    if (!itemRaw) return null;
+    const low = itemRaw.toLowerCase().trim();
+    for (const it of Object.values(LOOT_DATA)) {
+        if (it.customMeta && it.name && it.name.toLowerCase().trim() === low) {
+            return it.customMeta;
+        }
+    }
+    return null;
+}
+
+function dmSendLootDrop(toId, toName, itemRaw, qty = 1, gp = 0, sp = 0, note = '', customMeta = null, directInject = false) {
+    if (toId === 'all') {
+        DM_PARTY_TARGETS.forEach(t => {
+            dmSendLootDrop(t.id, t.label, itemRaw, qty, gp, sp, note, customMeta, directInject);
+        });
+        return;
+    }
+    const resolvedMeta = customMeta || dmLookupCustomMetaForItem(itemRaw);
     const payload = {
         cid: 'dm_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
         fromId: 'dm',
@@ -12650,7 +12696,7 @@ function dmSendLootDrop(toId, toName, itemRaw, qty = 1, gp = 0, sp = 0, note = '
         gp: Math.max(0, parseInt(gp) || 0),
         sp: Math.max(0, parseInt(sp) || 0),
         note: note || '',
-        customMeta: null
+        customMeta: resolvedMeta
     };
     const desc = payload.kind === 'gold'
         ? `💰 ${payload.gp} GP${payload.sp ? ', ' + payload.sp + ' SP' : ''}`
@@ -12659,17 +12705,28 @@ function dmSendLootDrop(toId, toName, itemRaw, qty = 1, gp = 0, sp = 0, note = '
     const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
     const rtdb = dmGetRtdb();
     if (rtdb) {
+        if (directInject) {
+            const cmdPayload = payload.kind === 'gold'
+                ? { action: 'inject_gold', gp: payload.gp, sp: payload.sp, note: payload.note, createdAt: Date.now() }
+                : { action: 'inject_item', itemRaw: payload.itemRaw, qty: payload.qty, customMeta: resolvedMeta, note: payload.note, createdAt: Date.now() };
+            rtdb.ref(`campaigns/${room}/heroes/${toId}/dm_commands`).push(cmdPayload).then(() => {
+                dmShowQuickToast(`⚡ <strong>DIRECT-INJECTED to ${toName}:</strong> ${desc}! Added straight into their Backpack.`);
+            }).catch(err => {
+                dmShowQuickToast(`⚠️ Direct-inject error: ${err.message}`);
+            });
+            return;
+        }
         rtdb.ref(`campaigns/${room}/transfers`).push({
             ...payload,
             status: 'pending',
             refunded: true,
             createdAt: Date.now()
         }).then(() => {
-            setModalLogsHtml(`🚀 <strong>LIVE LOOT DROP SENT to ${toName}:</strong> ${desc}! It popped up on their sheet immediately.`);
+            dmShowQuickToast(`🚀 <strong>LIVE LOOT DROP SENT to ${toName}:</strong> ${desc}! It popped up on their sheet immediately.`);
         }).catch(err => {
             const code = dmEncodeTradeCode(payload);
             navigator.clipboard?.writeText(code).catch(() => {});
-            setModalLogsHtml(`⚠️ Live DB blocked (${err.code || 'rules'}) — <strong>Offline Claim Code copied!</strong> Send to ${toName}: <code style="user-select:all;">${code}</code>`);
+            dmShowQuickToast(`⚠️ Live DB blocked (${err.code || 'rules'}) — <strong>Offline Claim Code copied!</strong> Send to ${toName}: <code style="user-select:all;">${code}</code>`);
         });
         return;
     }
@@ -12682,69 +12739,539 @@ function dmSendLootDrop(toId, toName, itemRaw, qty = 1, gp = 0, sp = 0, note = '
             refunded: true,
             createdAt: Date.now()
         }).then(() => {
-            setModalLogsHtml(`🚀 <strong>LIVE LOOT DROP SENT to ${toName}:</strong> ${desc}! It popped up on their sheet immediately.`);
+            dmShowQuickToast(`🚀 <strong>LIVE LOOT DROP SENT to ${toName}:</strong> ${desc}! It popped up on their sheet immediately.`);
         }).catch(err => {
             const code = dmEncodeTradeCode(payload);
             navigator.clipboard?.writeText(code).catch(() => {});
-            setModalLogsHtml(`⚠️ Firestore blocked (${err.code || 'rules'}) — <strong>Offline Claim Code copied!</strong> Send to ${toName}: <code style="user-select:all;">${code}</code>`);
+            dmShowQuickToast(`⚠️ Firestore blocked (${err.code || 'rules'}) — <strong>Offline Claim Code copied!</strong> Send to ${toName}: <code style="user-select:all;">${code}</code>`);
         });
     } else {
         const code = dmEncodeTradeCode(payload);
         navigator.clipboard?.writeText(code).catch(() => {});
-        setModalLogsHtml(`📲 <strong>Offline Claim Code copied for ${toName}!</strong> (${desc}) — Paste into their Trade Inbox: <code style="user-select:all; color:#93c5fd;">${code}</code>`);
+        dmShowQuickToast(`📲 <strong>Offline Claim Code copied for ${toName}!</strong> (${desc}) — Paste into their Trade Inbox: <code style="user-select:all; color:#93c5fd;">${code}</code>`);
     }
 }
 
-function openDmCustomDropModal() {
+function dmQuickDropByKey(lootKey, toId, toName, ev) {
+    if (ev) ev.stopPropagation();
+    const it = LOOT_DATA[lootKey];
+    if (!it) return;
+    dmSendLootDrop(toId, toName, it.name, 1, 0, 0, `From ${it.location.split('•')[1]?.trim() || 'Barovia'}`, it.customMeta || null, false);
+}
+
+function dmToggleRecipeUnlock(recipeId, recipeTitle, unlockNow = true) {
+    const rtdb = dmGetRtdb();
+    if (!rtdb) {
+        dmShowQuickToast('⚠️ Firebase Realtime Database not connected.');
+        return;
+    }
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    rtdb.ref(`campaigns/${room}/unlocked_recipes/${recipeId}`).set(unlockNow ? true : null).then(() => {
+        dmShowQuickToast(unlockNow
+            ? `🔓 <strong>Unlocked Live for All Players:</strong> <strong>${recipeTitle}</strong> is now craftable on their sheets!`
+            : `🔒 <strong>Re-Locked Recipe:</strong> ${recipeTitle}`);
+    });
+}
+
+function dmRemoteRemoveHeroItem(heroId, heroName, invIndex, itemLabel) {
+    const rtdb = dmGetRtdb();
+    if (!rtdb) return;
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    rtdb.ref(`campaigns/${room}/heroes/${heroId}/dm_commands`).push({
+        action: 'remove_item',
+        invIndex,
+        createdAt: Date.now()
+    }).then(() => {
+        dmShowQuickToast(`🗑️ <strong>Sent Remote Remove to ${heroName}:</strong> ${itemLabel}`);
+    });
+}
+
+function dmDeleteCustomLoot(lootKey) {
+    const rtdb = dmGetRtdb();
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    delete LOOT_DATA[lootKey];
+    if (rtdb) {
+        rtdb.ref(`campaigns/${room}/custom_loot/${lootKey}`).remove().catch(() => {});
+    }
+    closeDmModal();
+    renderLootVault(activeLootTag);
+    dmShowQuickToast(`🗑️ Removed custom item from Firebase Loot Vault.`);
+}
+
+function initDmFirebaseSync() {
+    const rtdb = dmGetRtdb();
+    if (!rtdb) return;
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+
+    // 1. Live sync DM custom-forged loot from Firebase into Section 4 LOOT_DATA
+    rtdb.ref(`campaigns/${room}/custom_loot`).on('value', snap => {
+        const val = snap.val() || {};
+        // Remove deleted custom items first
+        Object.keys(LOOT_DATA).forEach(k => {
+            if (LOOT_DATA[k].isCustomForged && !val[k]) delete LOOT_DATA[k];
+        });
+        Object.entries(val).forEach(([k, entry]) => {
+            if (!entry || !entry.name) return;
+            LOOT_DATA[k] = { ...entry, isCustomForged: true };
+        });
+        renderLootVault(activeLootTag, true);
+    });
+
+    // 2. Live sync unlocked recipes status
+    rtdb.ref(`campaigns/${room}/unlocked_recipes`).on('value', snap => {
+        dmUnlockedRecipes = snap.val() || {};
+        if (activeLootTag === 'Materials') renderLootVault('Materials', true);
+    });
+
+    // 3. Live sync party hero states (Backpacks, Equipped Gear, Gold, HP)
+    rtdb.ref(`campaigns/${room}/heroes`).on('value', snap => {
+        const val = snap.val() || {};
+        dmLiveHeroes = {};
+        Object.entries(val).forEach(([hid, hObj]) => {
+            if (hObj && hObj.state) dmLiveHeroes[hid] = hObj.state;
+        });
+        if (activeModalKind === 'dm_drop' && dmDropActiveTab === 'party') {
+            renderDmDropModalBody();
+        }
+    });
+}
+
+function openDmCustomDropModal(initialTab) {
     const modal = resetDmModalChrome();
     modalNavStack = [];
+    activeModalKind = 'dm_drop';
+    if (initialTab) dmDropActiveTab = initialTab;
+    document.getElementById('modal-title').innerHTML = `🎁 DM Firebase Loot Command, Custom Item Forge &amp; Live Party Gear`;
+    renderDmDropModalBody();
+    setModalLogsHtml('Connected to Firebase Realtime Database (dnd-curse-of-strahd-467ea).');
+    if (!modal.open) modal.showModal();
+}
+
+function switchDmDropTab(tab) {
+    dmDropActiveTab = tab;
+    renderDmDropModalBody();
+}
+
+function switchDmForgeKind(kind) {
+    dmForgeKind = kind;
+    renderDmDropModalBody();
+}
+
+function renderDmDropModalBody() {
+    const contentEl = document.getElementById('modal-content');
+    if (!contentEl) return;
     const fbLive = !!(dmGetRtdb() || dmGetFirestore());
-    document.getElementById('modal-title').innerHTML = `🎁 DM Live Loot &amp; Gold Drop`;
-    document.getElementById('modal-content').innerHTML = `
-        <div class="nbox ${fbLive ? 'nbox-emerald' : 'nbox-amber'}" style="margin-bottom:10px;">
-            ${fbLive
-                ? '🟢 <strong>Live Firebase Connected (dnd-curse-of-strahd-467ea)!</strong> Clicking Send drops loot or gold straight into the player\'s sheet in real time.'
-                : '🟡 <strong>Offline Trade Code Mode:</strong> Clicking Send copies an instant <code>COSTRADE:...</code> claim code.'}
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; background:#0b1120; border:1px solid #334155; border-radius:8px; padding:12px;">
-            <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#fde68a; font-weight:700; grid-column:span 2;">
-                Target Hero
-                <select id="dm-drop-target" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
-                    <option value="piper|🎩 Piper">🎩 Piper ("The Incomparable")</option>
-                    <option value="jacomir|👑 Jacomir">👑 Jacomir Yulle ("King of Oakenshire")</option>
-                    <option value="yvaine|🔫 Yvaine">🔫 Eclipsa "Yvaine" the First</option>
-                </select>
-            </label>
-            <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#cbd5e1; font-weight:700; grid-column:span 2;">
-                Custom Item Name (leave blank if sending Gold only)
-                <input type="text" id="dm-drop-item" placeholder="e.g. 🩸 Vistani Bloodwell Vial (+1 Spell DC & Hit)" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
-            </label>
-            <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#cbd5e1; font-weight:700;">
-                Item Quantity
-                <input type="number" id="dm-drop-qty" value="1" min="1" max="99" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
-            </label>
-            <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#fde68a; font-weight:700;">
-                OR Send Gold (GP) / Silver (SP)
-                <div style="display:flex; gap:6px;">
-                    <input type="number" id="dm-drop-gp" value="0" min="0" placeholder="GP" style="width:50%; padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#facc15; font-size:0.84rem;">
-                    <input type="number" id="dm-drop-sp" value="0" min="0" placeholder="SP" style="width:50%; padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#cbd5e1; font-size:0.84rem;">
-                </div>
-            </label>
-            <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#cbd5e1; font-weight:700; grid-column:span 2;">
-                DM Flavor Note (optional)
-                <input type="text" id="dm-drop-note" placeholder="e.g. Found inside Madam Eva's velvet chest at Tser Pool" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
-            </label>
-            <div style="grid-column:span 2; display:flex; justify-content:flex-end;">
-                <button type="button" class="btn-roll" style="background:linear-gradient(135deg,#065f46,#047857); border-color:#34d399; color:#ecfdf5; padding:8px 16px;" onclick="submitDmCustomDrop()">🎁 Send Drop to Hero</button>
-            </div>
+
+    const tabsHtml = `
+        <div class="modal-tabs" style="margin-bottom:10px;">
+            <button type="button" class="modal-tab-btn ${dmDropActiveTab === 'handout' ? 'active' : ''}" onclick="switchDmDropTab('handout')">⚡ 1. Quick Handout &amp; Gold</button>
+            <button type="button" class="modal-tab-btn ${dmDropActiveTab === 'forge' ? 'active' : ''}" onclick="switchDmDropTab('forge')">🛠️ 2. Custom Item Forge</button>
+            <button type="button" class="modal-tab-btn ${dmDropActiveTab === 'party' ? 'active' : ''}" onclick="switchDmDropTab('party')">🎒 3. Live Party Backpacks &amp; Gear</button>
         </div>
     `;
-    setModalLogsHtml('Ready to send Live Loot or Gold Drop to any party hero.');
-    if (!modal.open) modal.showModal();
+
+    if (dmDropActiveTab === 'handout') {
+        const vaultOpts = `<option value="">-- Choose from ${Object.keys(LOOT_DATA).length} Vault Items &amp; Materials (or type custom below) --</option>` +
+            Object.entries(LOOT_DATA).map(([k, it]) =>
+                `<option value="${it.name.replace(/"/g, '&quot;')}">${it.name} (${it.location.split('•')[0].trim()})</option>`
+            ).join('');
+
+        contentEl.innerHTML = tabsHtml + `
+            <div class="nbox ${fbLive ? 'nbox-emerald' : 'nbox-amber'}" style="margin-bottom:10px;">
+                ${fbLive
+                    ? '🟢 <strong>Live Firebase Connected (dnd-curse-of-strahd-467ea)!</strong> Hand over any Vault item, crafting material, or gold on the fly.'
+                    : '🟡 <strong>Offline Trade Code Mode:</strong> Clicking Send copies an instant <code>COSTRADE:...</code> claim code.'}
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; background:#0b1120; border:1px solid #334155; border-radius:8px; padding:12px;">
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#fde68a; font-weight:700;">
+                    Target Hero
+                    <select id="dm-drop-target" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.82rem;">
+                        <option value="piper|🎩 Piper">🎩 Piper ("The Incomparable")</option>
+                        <option value="jacomir|👑 Jacomir">👑 Jacomir Yulle ("King of Oakenshire")</option>
+                        <option value="yvaine|🔫 Yvaine">🔫 Eclipsa "Yvaine" the First</option>
+                        <option value="all|👥 Entire Party">👥 Entire Party (Send to All 3 Heroes)</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#6ee7b7; font-weight:700;">
+                    Delivery Mode
+                    <select id="dm-drop-mode" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.82rem;">
+                        <option value="offer">📨 Normal Trade Banner (Player Clicks Accept)</option>
+                        <option value="direct">⚡ Direct-Inject Straight into Backpack</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#93c5fd; font-weight:700; grid-column:span 2;">
+                    Quick-Pick from World Loot Vault or Crafting Materials
+                    <select id="dm-drop-vault-pick" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.82rem;" onchange="if(this.value) document.getElementById('dm-drop-item').value = this.value;">
+                        ${vaultOpts}
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#cbd5e1; font-weight:700; grid-column:span 2;">
+                    Item Name to Send (or leave blank if sending Gold only)
+                    <input type="text" id="dm-drop-item" placeholder="e.g. 🌿 Barovian Medicinal Herbs, 🩸 Vistani Bloodwell Vial..." style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#cbd5e1; font-weight:700;">
+                    Item Quantity
+                    <input type="number" id="dm-drop-qty" value="1" min="1" max="99" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#fde68a; font-weight:700;">
+                    OR Send Gold (GP) / Silver (SP)
+                    <div style="display:flex; gap:6px;">
+                        <input type="number" id="dm-drop-gp" value="0" min="0" placeholder="GP" style="width:50%; padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#facc15; font-size:0.84rem;">
+                        <input type="number" id="dm-drop-sp" value="0" min="0" placeholder="SP" style="width:50%; padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#cbd5e1; font-size:0.84rem;">
+                    </div>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#cbd5e1; font-weight:700; grid-column:span 2;">
+                    DM Flavor Note (optional)
+                    <input type="text" id="dm-drop-note" placeholder="e.g. Found inside Madam Eva's velvet chest at Tser Pool" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
+                </label>
+                <div style="grid-column:span 2; display:flex; justify-content:flex-end;">
+                    <button type="button" class="btn-roll" style="background:linear-gradient(135deg,#065f46,#047857); border-color:#34d399; color:#ecfdf5; padding:8px 16px;" onclick="submitDmCustomDrop()">🎁 Send Drop Now</button>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    if (dmDropActiveTab === 'forge') {
+        let dynamicFieldsHtml = '';
+        if (dmForgeKind === 'weapon') {
+            dynamicFieldsHtml = `
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fde68a; font-weight:700;">
+                    Equip Slot
+                    <select id="dm-forge-slot" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="mainHand">⚔️ Main Hand</option>
+                        <option value="both_1h">⚔️ Main or Off-Hand (1H)</option>
+                        <option value="legSheath">🗡️ Leg Sheath / Dagger (Main, Off, or Leg)</option>
+                        <option value="ranged">🏹 Ranged Slot Only (Bow / Rifle / Crossbow)</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fde68a; font-weight:700;">
+                    Grip / Hands
+                    <select id="dm-forge-hands" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="1">1-Handed</option>
+                        <option value="2">2-Handed (Locks Off-Hand)</option>
+                        <option value="versatile">Versatile (1H or 2H)</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fca5a5; font-weight:700;">
+                    Base Damage Dice
+                    <select id="dm-forge-wpn-dice" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="1d4">1d4 (Dagger / Stiletto / Whip)</option>
+                        <option value="1d6">1d6 (Shortsword / Scimitar / Revolver)</option>
+                        <option value="1d8" selected>1d8 (Longsword / Rapier / Battleaxe / Longbow)</option>
+                        <option value="1d10">1d10 (Glaive / Halberd / Heavy Crossbow)</option>
+                        <option value="1d12">1d12 (Greataxe / Heavy Rifle)</option>
+                        <option value="2d6">2d6 (Greatsword / Maul)</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fca5a5; font-weight:700;">
+                    Damage Type
+                    <select id="dm-forge-wpn-type" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="Slashing">Slashing</option>
+                        <option value="Piercing">Piercing</option>
+                        <option value="Bludgeoning">Bludgeoning</option>
+                        <option value="Silvered Slashing">Silvered Slashing (Undead/Werewolf Bane)</option>
+                        <option value="Silvered Piercing">Silvered Piercing (Undead/Werewolf Bane)</option>
+                        <option value="Radiant">Radiant</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Necrotic">Necrotic</option>
+                        <option value="Cold">Cold</option>
+                        <option value="Force">Force</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700;">
+                    Total Attack Bonus (+Hit on Sheet)
+                    <input type="number" id="dm-forge-wpn-atk" value="6" min="0" max="18" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700;">
+                    Flat Damage Bonus (+Mod on Sheet)
+                    <input type="number" id="dm-forge-wpn-dmgmod" value="4" min="-2" max="15" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fb923c; font-weight:700;">
+                    Extra Bonus Elemental / Magic Dice
+                    <select id="dm-forge-wpn-extra" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="">None</option>
+                        <option value="1d4|Fire">+1d4 Fire Damage</option>
+                        <option value="1d6|Fire">+1d6 Fire Damage</option>
+                        <option value="1d4|Radiant">+1d4 Radiant Damage</option>
+                        <option value="1d6|Radiant">+1d6 Radiant Damage</option>
+                        <option value="2d6|Radiant">+2d6 Radiant Damage</option>
+                        <option value="1d6|Necrotic">+1d6 Necrotic Damage</option>
+                        <option value="1d6|Cold">+1d6 Cold Damage</option>
+                        <option value="1d8|Force">+1d8 Force Damage</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#d8b4fe; font-weight:700;">
+                    Requires Attunement?
+                    <select id="dm-forge-attune" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="no">No</option>
+                        <option value="yes">Yes (Uses 1/3 Attunement Slot)</option>
+                    </select>
+                </label>
+            `;
+        } else if (dmForgeKind === 'caster') {
+            dynamicFieldsHtml = `
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#d8b4fe; font-weight:700;">
+                    Equip Slot
+                    <select id="dm-forge-slot" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="mainHand">⚔️ Main Hand (Staff / Wand / Rod)</option>
+                        <option value="offHand">🛡️ Off-Hand (Bloodwell Vial / Focus)</option>
+                        <option value="amulet">📿 Amulet (Arcane Talisman)</option>
+                        <option value="body">🛡️ Body (Enchanted Caster Robe)</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#d8b4fe; font-weight:700;">
+                    +Spell Save DC &amp; Spell Attack Hit
+                    <input type="number" id="dm-forge-spell" value="1" min="0" max="5" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fca5a5; font-weight:700;">
+                    Bonus Spell Damage (like Red Robe)
+                    <select id="dm-forge-spellfire" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="">None</option>
+                        <option value="1d4">+1d4 Bonus Spell Damage</option>
+                        <option value="1d4+1">+1d4+1 Fire Damage on Spells</option>
+                        <option value="1d6">+1d6 Bonus Spell Damage</option>
+                        <option value="1d8">+1d8 Bonus Spell Damage</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#93c5fd; font-weight:700;">
+                    +AC &amp; Saving Throws Bonus
+                    <input type="number" id="dm-forge-ac" value="0" min="0" max="5" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#6ee7b7; font-weight:700;">
+                    Skill Check Advantage
+                    <select id="dm-forge-skilladv" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="">None</option>
+                        <option value="Arcana">Arcana</option>
+                        <option value="Religion">Religion</option>
+                        <option value="History">History</option>
+                        <option value="Perception">Perception</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#d8b4fe; font-weight:700;">
+                    Requires Attunement?
+                    <select id="dm-forge-attune" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="no">No</option>
+                        <option value="yes">Yes (Uses 1/3 Attunement Slot)</option>
+                    </select>
+                </label>
+            `;
+        } else if (dmForgeKind === 'consumable') {
+            dynamicFieldsHtml = `
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#6ee7b7; font-weight:700;">
+                    Consumable Action Type
+                    <select id="dm-forge-cons-type" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="heal">💚 Restore Hit Points (Healing Potion / Food / Bandage)</option>
+                        <option value="holyWater">💥 Radiant / Fire Throwable Bomb or Holy Water</option>
+                        <option value="dreamPastry">🛡️ Grant Temporary Hit Points</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#6ee7b7; font-weight:700;">
+                    Dice Rolled on Use
+                    <select id="dm-forge-cons-dice" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="1|4">1d4 (Croissant / Light Snack)</option>
+                        <option value="1|6">1d6 (Bandages / Herbal Salve)</option>
+                        <option value="2|4">2d4</option>
+                        <option value="2|6" selected>2d6 (Potion of Healing / Holy Water)</option>
+                        <option value="4|4">4d4 (Potion of Greater Healing)</option>
+                        <option value="8|4">8d4 (Potion of Superior Healing)</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700;">
+                    Flat Bonus (+HP)
+                    <input type="number" id="dm-forge-cons-bonus" value="1" min="0" max="25" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fde68a; font-weight:700;">
+                    Pin to 1-Tap Combat Quick-Belt?
+                    <select id="dm-forge-cons-qb" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="yes">Yes (1-Tap Button on Player Sheet)</option>
+                        <option value="no">No (Keep in Backpack Only)</option>
+                    </select>
+                </label>
+            `;
+        } else if (dmForgeKind === 'material') {
+            dynamicFieldsHtml = `
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#6ee7b7; font-weight:700;">
+                    Vault Category
+                    <select id="dm-forge-mat-cat" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="material">🌿 Crafting Material &amp; Wilderness Forage (Separate Filter)</option>
+                        <option value="quest">📜 Story Relic / Key / Trade Treasure</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fde68a; font-weight:700;">
+                    Forage DC / Shop Price Tag
+                    <input type="text" id="dm-forge-rarity" value="Common Forage • DC 12 Nature / 5 GP" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                </label>
+            `;
+        } else {
+            // 'armor' or 'accessory'
+            const slotOpts = dmForgeKind === 'accessory'
+                ? `<option value="amulet">📿 Amulet / Neck Slot</option>
+                   <option value="ring1">💍 Ring (Slots into Ring 1 or Ring 2)</option>`
+                : `<option value="body">🛡️ Body (Armor / Robe / Coat)</option>
+                   <option value="offHand">🛡️ Off-Hand Shield</option>
+                   <option value="cape">🧥 Cape / Cloak</option>
+                   <option value="head">🪖 Head / Helm / Hat</option>
+                   <option value="legs">👖 Legs / Greaves</option>
+                   <option value="feet">🥾 Feet / Boots</option>`;
+            dynamicFieldsHtml = `
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#93c5fd; font-weight:700;">
+                    Equip Slot
+                    <select id="dm-forge-slot" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">${slotOpts}</select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fde68a; font-weight:700;">
+                    +AC Bonus
+                    <input type="number" id="dm-forge-ac" value="1" min="-5" max="10" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#93c5fd; font-weight:700;">
+                    +All Saving Throws Bonus
+                    <input type="number" id="dm-forge-saves" value="1" min="-5" max="10" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700;">
+                    Base Armor AC (Body Armor Only)
+                    <select id="dm-forge-baseac" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="0">None (Use +AC Bonus Above)</option>
+                        <option value="12|full">12 + Full DEX (Light Studded Leather)</option>
+                        <option value="14|2">14 + DEX max 2 (Medium Breastplate)</option>
+                        <option value="15|2">15 + DEX max 2 (Medium Half Plate)</option>
+                        <option value="16|0">16 Heavy (Chain Mail)</option>
+                        <option value="18|0">18 Heavy (Full Plate)</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#6ee7b7; font-weight:700;">
+                    Skill Check Advantage
+                    <select id="dm-forge-skilladv" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="">None</option>
+                        <option value="Stealth">Stealth</option>
+                        <option value="Arcana">Arcana</option>
+                        <option value="Perception">Perception</option>
+                        <option value="Athletics">Athletics</option>
+                        <option value="Intimidation">Intimidation</option>
+                    </select>
+                </label>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#d8b4fe; font-weight:700;">
+                    Requires Attunement?
+                    <select id="dm-forge-attune" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <option value="no">No</option>
+                        <option value="yes">Yes (Uses 1/3 Attunement Slot)</option>
+                    </select>
+                </label>
+            `;
+        }
+
+        contentEl.innerHTML = tabsHtml + `
+            <div style="display:flex; flex-direction:column; gap:10px; background:#0b1120; border:1px solid #334155; border-radius:8px; padding:12px;">
+                <div>
+                    <div style="font-size:0.72rem; font-weight:800; color:#fde68a; text-transform:uppercase; margin-bottom:6px;">1. Choose What Kind of Custom Item to Forge</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                        <button type="button" class="btn-loot-filter ${dmForgeKind === 'weapon' ? 'active' : ''}" onclick="switchDmForgeKind('weapon')">⚔️ Damaging Weapon</button>
+                        <button type="button" class="btn-loot-filter ${dmForgeKind === 'armor' ? 'active' : ''}" onclick="switchDmForgeKind('armor')">🛡️ Armor / Robe / Shield</button>
+                        <button type="button" class="btn-loot-filter ${dmForgeKind === 'caster' ? 'active' : ''}" onclick="switchDmForgeKind('caster')">🔮 Caster Focus / Staff</button>
+                        <button type="button" class="btn-loot-filter ${dmForgeKind === 'accessory' ? 'active' : ''}" onclick="switchDmForgeKind('accessory')">💍 Amulet / Ring / Relic</button>
+                        <button type="button" class="btn-loot-filter ${dmForgeKind === 'consumable' ? 'active' : ''}" onclick="switchDmForgeKind('consumable')">🧪 Potion / Bomb / Food</button>
+                        <button type="button" class="btn-loot-filter ${dmForgeKind === 'material' ? 'active' : ''}" onclick="switchDmForgeKind('material')">🌿 Crafting Material / Quest</button>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#f8fafc; font-weight:700; grid-column:span 2;">
+                        Item Name (with optional Emoji)
+                        <input type="text" id="dm-forge-name" placeholder="e.g. 🗡️ Crimson Fang Stiletto +1, 🧥 Cloak of the Mist-Walker..." style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
+                    </label>
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700;">
+                        Act &amp; Where Found
+                        <input type="text" id="dm-forge-loc" value="Act I • Custom DM Reward" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                    </label>
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#fde68a; font-weight:700;">
+                        Send To Hero (if dropping now)
+                        <select id="dm-forge-target" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                            <option value="piper|🎩 Piper">🎩 Piper</option>
+                            <option value="jacomir|👑 Jacomir">👑 Jacomir</option>
+                            <option value="yvaine|🔫 Yvaine">🔫 Yvaine</option>
+                            <option value="all|👥 Entire Party">👥 Entire Party (All 3)</option>
+                        </select>
+                    </label>
+                    ${dynamicFieldsHtml}
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700; grid-column:span 2;">
+                        Custom Mechanics / Special Perk / Lore Note
+                        <input type="text" id="dm-forge-note" placeholder="e.g. Deals +1d6 Radiant to Undead, glows near Strahd's spies, or heals 2d6+2..." style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                    </label>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; gap:8px; flex-wrap:wrap; margin-top:4px;">
+                    <button type="button" class="btn-roll" style="background:#1e293b; border-color:#60a5fa; color:#bfdbfe; padding:7px 14px;" onclick="submitDmForgeItem(false)">💾 Save to Firebase Loot Vault Only</button>
+                    <button type="button" class="btn-roll" style="background:linear-gradient(135deg,#065f46,#047857); border-color:#34d399; color:#ecfdf5; padding:7px 14px;" onclick="submitDmForgeItem(true)">🎁 Forge, Save to Vault &amp; Send to Hero</button>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    // Tab 3: Live Party Backpacks & Equipped Gear (Mirrored from Firebase)
+    const heroCards = DM_PARTY_TARGETS.map(t => {
+        const st = dmLiveHeroes[t.id];
+        if (!st) {
+            return `
+                <div style="background:#0b1120; border:1px solid #334155; border-radius:8px; padding:12px;">
+                    <div style="font-weight:800; color:#fde68a; font-size:0.88rem;">${t.label}</div>
+                    <div style="font-size:0.75rem; color:#64748b; margin-top:4px; font-style:italic;">Waiting for ${t.label}'s sheet to open once so it mirrors its live Backpack &amp; Equipment to Firebase...</div>
+                </div>
+            `;
+        }
+        const eqEntries = Object.entries(st.equippedSlots || {});
+        const eqHtml = eqEntries.length > 0
+            ? eqEntries.map(([slotLbl, itemLbl]) => `<span class="pill gold" style="font-size:0.68rem;"><strong>${escapeEncounterHtml(slotLbl)}:</strong> ${escapeEncounterHtml(itemLbl)}</span>`).join(' ')
+            : '<span style="font-size:0.72rem; color:#64748b;">No gear equipped</span>';
+
+        const items = Array.isArray(st.items) ? st.items : [];
+        const itemsHtml = items.map((raw, idx) => {
+            const safeRaw = String(raw).replace(/'/g, "\\'").replace(/"/g, '&quot;');
+            return `
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; background:#111827; border:1px solid #1e293b; border-radius:5px; padding:4px 8px; font-size:0.74rem;">
+                    <span style="color:#e2e8f0;">${escapeEncounterHtml(raw)}</span>
+                    <div style="display:flex; gap:4px; flex-shrink:0;">
+                        <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.66rem;" onclick="dmSendLootDrop('${t.id}', '${t.label}', '${safeRaw}', 1, 0, 0, 'DM +1 Stack', null, true)" title="Direct-inject +1 copy into ${t.label}'s Backpack">+1</button>
+                        <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.66rem; border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteRemoveHeroItem('${t.id}', '${t.label}', ${idx}, '${safeRaw}')" title="Remotely remove this item from ${t.label}'s Backpack">✕</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        return `
+            <div style="background:#0b1120; border:1px solid #334155; border-radius:8px; padding:11px 12px; display:flex; flex-direction:column; gap:7px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; border-bottom:1px solid #1e293b; padding-bottom:6px;">
+                    <div>
+                        <strong style="color:#fde68a; font-size:0.9rem;">${t.label}</strong>
+                        <span class="pill purple" style="margin-left:6px; font-size:0.68rem;">Preset: ${escapeEncounterHtml(st.preset || 'Default')}</span>
+                    </div>
+                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:#86efac;">
+                        HP: <strong>${escapeEncounterHtml(st.hpDisplay || '--')}</strong> • AC: <strong>${escapeEncounterHtml(st.acDisplay || '--')}</strong> • 💰 <strong>${st.gp || 0} GP, ${st.sp || 0} SP</strong>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size:0.66rem; font-weight:800; color:#93c5fd; text-transform:uppercase; margin-bottom:4px;">🛡️ Live Equipped Paper-Doll (${eqEntries.length})</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:4px;">${eqHtml}</div>
+                </div>
+                <div>
+                    <div style="font-size:0.66rem; font-weight:800; color:#6ee7b7; text-transform:uppercase; margin-bottom:4px;">🎒 Live Backpack Inventory (${items.length} items)</div>
+                    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:4px; max-height:190px; overflow-y:auto;">
+                        ${itemsHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    contentEl.innerHTML = tabsHtml + `
+        <div style="display:flex; flex-direction:column; gap:10px;">
+            ${heroCards}
+        </div>
+    `;
 }
 
 function submitDmCustomDrop() {
     const targetVal = (document.getElementById('dm-drop-target')?.value || 'piper|🎩 Piper').split('|');
+    const directMode = document.getElementById('dm-drop-mode')?.value === 'direct';
     const item = (document.getElementById('dm-drop-item')?.value || '').trim();
     const qty = parseInt(document.getElementById('dm-drop-qty')?.value) || 1;
     const gp = parseInt(document.getElementById('dm-drop-gp')?.value) || 0;
@@ -12754,7 +13281,188 @@ function submitDmCustomDrop() {
         setModalLogsHtml('⚠️ Enter an Item Name or Gold/Silver amount first!');
         return;
     }
-    dmSendLootDrop(targetVal[0], targetVal[1], item, qty, item ? 0 : gp, item ? 0 : sp, note);
+    dmSendLootDrop(targetVal[0], targetVal[1], item, qty, item ? 0 : gp, item ? 0 : sp, note, null, directMode);
+}
+
+function submitDmForgeItem(andSendToHero = true) {
+    const name = (document.getElementById('dm-forge-name')?.value || '').trim();
+    if (!name) {
+        setModalLogsHtml('⚠️ Enter a name for your custom item first!');
+        return;
+    }
+    const loc = (document.getElementById('dm-forge-loc')?.value || 'Act I • Custom DM Reward').trim();
+    const note = (document.getElementById('dm-forge-note')?.value || '').trim();
+    const targetVal = (document.getElementById('dm-forge-target')?.value || 'piper|🎩 Piper').split('|');
+    const attune = document.getElementById('dm-forge-attune')?.value === 'yes';
+
+    let vaultCat = 'quest';
+    let rarity = 'Custom DM Reward';
+    let mechanicsHtml = '';
+    let customMeta = null;
+
+    if (dmForgeKind === 'weapon') {
+        vaultCat = 'weapon';
+        const slotVal = document.getElementById('dm-forge-slot')?.value || 'mainHand';
+        const handsVal = document.getElementById('dm-forge-hands')?.value || '1';
+        const dmgDice = document.getElementById('dm-forge-wpn-dice')?.value || '1d8';
+        const dmgType = document.getElementById('dm-forge-wpn-type')?.value || 'Slashing';
+        const atkBonus = parseInt(document.getElementById('dm-forge-wpn-atk')?.value) || 6;
+        const dmgBonus = parseInt(document.getElementById('dm-forge-wpn-dmgmod')?.value) || 4;
+        const extraRaw = document.getElementById('dm-forge-wpn-extra')?.value || '';
+        const [extraDice, extraType] = extraRaw ? extraRaw.split('|') : ['', ''];
+        const slots = slotVal === 'both_1h' ? ['mainHand', 'offHand'] : (slotVal === 'legSheath' ? ['legSheath', 'offHand', 'mainHand'] : [slotVal]);
+        const summaryParts = [
+            `${handsVal === '2' ? '2H' : (handsVal === 'versatile' ? 'Versatile' : '1H')} • +${atkBonus} Hit`,
+            `${dmgDice}${dmgBonus ? (dmgBonus > 0 ? '+' + dmgBonus : dmgBonus) : ''} ${dmgType}`,
+            extraDice ? `+${extraDice} ${extraType}` : '',
+            note,
+            attune ? 'Attune' : ''
+        ].filter(Boolean);
+        rarity = `Custom Weapon • +${atkBonus} Hit (${dmgDice}+${dmgBonus})`;
+        mechanicsHtml = `• <strong>Weapon Combat Stats:</strong> <code>+${atkBonus} to Hit</code>, <code>${dmgDice}${dmgBonus ? '+' + dmgBonus : ''} ${dmgType}</code>${extraDice ? ` + <code>${extraDice} ${extraType}</code>` : ''}.${note ? '<br>• ' + note : ''}`;
+        customMeta = {
+            category: 'weapon',
+            slots,
+            hands: handsVal === '2' ? 2 : 1,
+            versatile: handsVal === 'versatile',
+            attune,
+            isLegDagger: slots.includes('legSheath'),
+            weaponStats: { atkBonus, dmgDice, dmgBonus, dmgType, extraDice, extraType },
+            summary: summaryParts.join(' • ')
+        };
+    } else if (dmForgeKind === 'caster') {
+        vaultCat = 'caster';
+        const slot = document.getElementById('dm-forge-slot')?.value || 'mainHand';
+        const spellBonus = parseInt(document.getElementById('dm-forge-spell')?.value) || 0;
+        const spellFireBonus = document.getElementById('dm-forge-spellfire')?.value || null;
+        const acBonus = parseInt(document.getElementById('dm-forge-ac')?.value) || 0;
+        const skillAdvVal = document.getElementById('dm-forge-skilladv')?.value || '';
+        const parts = [
+            spellBonus ? `+${spellBonus} Spell DC & Hit` : '',
+            spellFireBonus ? `+${spellFireBonus} Spell Dmg` : '',
+            acBonus ? `+${acBonus} AC & Saves` : '',
+            skillAdvVal ? `Adv ${skillAdvVal}` : '',
+            note,
+            attune ? 'Attune' : ''
+        ].filter(Boolean);
+        rarity = `Custom Caster Relic • ${parts[0] || 'Arcane'}`;
+        mechanicsHtml = `• <strong>Caster Bonuses:</strong> ${parts.join(' • ') || 'Arcane Focus'}`;
+        customMeta = {
+            category: slot === 'body' ? 'armor' : (slot === 'amulet' ? 'accessory' : 'weapon'),
+            slots: [slot],
+            hands: 1,
+            acBonus,
+            saveBonus: acBonus,
+            spellDcBonus: spellBonus,
+            spellAtkBonus: spellBonus,
+            spellFireBonus,
+            skillAdv: skillAdvVal ? [skillAdvVal] : [],
+            attune,
+            summary: parts.join(' • ') || 'Arcane Focus'
+        };
+    } else if (dmForgeKind === 'consumable') {
+        vaultCat = 'heal';
+        const cType = document.getElementById('dm-forge-cons-type')?.value || 'heal';
+        const [diceCnt, diceSides] = (document.getElementById('dm-forge-cons-dice')?.value || '2|6').split('|').map(Number);
+        const bonus = parseInt(document.getElementById('dm-forge-cons-bonus')?.value) || 0;
+        const qb = document.getElementById('dm-forge-cons-qb')?.value !== 'no';
+        const fStr = `${diceCnt}d${diceSides}${bonus ? '+' + bonus : ''}`;
+        const shortN = name.replace(/^[^\w"]+/, '').split(' ').slice(0, 2).join(' ') || 'Potion';
+        const sumTxt = `${cType === 'heal' ? `Heal ${fStr} HP` : (cType === 'holyWater' ? '2d6 Radiant Splash' : '+1d6 Temp HP')}${note ? ' • ' + note : ''}`;
+        rarity = `Custom Consumable • ${fStr}`;
+        mechanicsHtml = `• <strong>Consumable Use:</strong> ${sumTxt}`;
+        customMeta = {
+            category: 'consumable',
+            slots: [],
+            quickBelt: qb,
+            useAction: cType === 'heal'
+                ? { type: 'heal', dice: diceCnt, sides: diceSides, bonus, verb: 'Used', label: `${shortN} (${fStr})` }
+                : (cType === 'holyWater'
+                    ? { type: 'holyWater', label: `${shortN} (2d6 Rad)` }
+                    : { type: 'dreamPastry', label: `${shortN} (+1d6 Temp)` }),
+            summary: sumTxt
+        };
+    } else if (dmForgeKind === 'material') {
+        vaultCat = document.getElementById('dm-forge-mat-cat')?.value || 'material';
+        rarity = (document.getElementById('dm-forge-rarity')?.value || 'Common Forage').trim();
+        mechanicsHtml = `• ${note || 'Foraged Barovian crafting material / story item.'}`;
+        customMeta = {
+            category: vaultCat === 'material' ? 'crafting' : 'quest',
+            slots: [],
+            summary: note || rarity
+        };
+    } else {
+        // 'armor' or 'accessory'
+        vaultCat = 'armor';
+        const slot = document.getElementById('dm-forge-slot')?.value || 'body';
+        const acBonus = parseInt(document.getElementById('dm-forge-ac')?.value) || 0;
+        const saveBonus = parseInt(document.getElementById('dm-forge-saves')?.value) || 0;
+        const baseAcRaw = document.getElementById('dm-forge-baseac')?.value || '0';
+        const skillAdvVal = document.getElementById('dm-forge-skilladv')?.value || '';
+        const slots = (slot === 'ring1' || slot === 'ring2') ? ['ring1', 'ring2'] : [slot];
+        let baseAC = null, addDex = false, maxDex = null, armorWorn = false, heavyArmor = false;
+        if (slot === 'body' && baseAcRaw !== '0') {
+            const [bVal, dexMode] = baseAcRaw.split('|');
+            baseAC = parseInt(bVal) || 12;
+            armorWorn = true;
+            if (dexMode === 'full') addDex = true;
+            else if (dexMode === '2') { addDex = true; maxDex = 2; }
+            else { heavyArmor = true; }
+        }
+        const parts = [
+            baseAC ? `Base AC ${baseAC}` : '',
+            acBonus ? `${acBonus > 0 ? '+' : ''}${acBonus} AC` : '',
+            saveBonus ? `${saveBonus > 0 ? '+' : ''}${saveBonus} Saves` : '',
+            skillAdvVal ? `Adv ${skillAdvVal}` : '',
+            note,
+            attune ? 'Attune' : ''
+        ].filter(Boolean);
+        rarity = `Custom Gear • ${parts[0] || 'Equippable'}`;
+        mechanicsHtml = `• <strong>Equipped Bonuses:</strong> ${parts.join(' • ') || 'Custom Gear'}`;
+        customMeta = {
+            category: dmForgeKind === 'accessory' ? 'accessory' : 'armor',
+            slots,
+            hands: 1,
+            baseAC,
+            addDex,
+            maxDex,
+            armorWorn,
+            heavyArmor,
+            acBonus,
+            saveBonus,
+            skillAdv: skillAdvVal ? [skillAdvVal] : [],
+            attune,
+            isShield: slot === 'offHand' && acBonus > 0,
+            summary: parts.join(' • ') || 'Custom Equippable Gear'
+        };
+    }
+
+    const lootKey = 'custom_' + name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').slice(0, 40) + '_' + Date.now().toString(36).slice(-4);
+    const lootRecord = {
+        cat: vaultCat,
+        name,
+        rarity,
+        location: loc,
+        mechanics: mechanicsHtml,
+        lore: note || `Forged by the Lead DM in Curse of Strahd (${loc}).`,
+        customMeta,
+        isCustomForged: true
+    };
+
+    LOOT_DATA[lootKey] = lootRecord;
+    renderLootVault(activeLootTag, true);
+
+    const rtdb = dmGetRtdb();
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    if (rtdb) {
+        rtdb.ref(`campaigns/${room}/custom_loot/${lootKey}`).set(lootRecord).catch(() => {});
+    }
+
+    if (andSendToHero) {
+        dmSendLootDrop(targetVal[0], targetVal[1], name, 1, 0, 0, note, customMeta, false);
+    } else {
+        dmShowQuickToast(`💾 <strong>Saved "${name}" to Firebase World Loot Vault!</strong> (${customMeta.summary})`);
+    }
 }
 
 function openItemModal(key, fromNav = false) {
@@ -12778,9 +13486,11 @@ function openItemModal(key, fromNav = false) {
         <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(52,211,153,0.35); border-radius:7px; padding:8px 11px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <span style="font-size:0.76rem; font-weight:800; color:#6ee7b7;">🎁 Send Direct Loot Drop to Hero:</span>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button type="button" class="btn-modal-mini" style="background:#3b0764; border-color:#a855f7; color:#f3e8ff;" onclick="dmSendLootDrop('piper', '🎩 Piper', '${safeName}', 1)">🎩 Send to Piper</button>
-                <button type="button" class="btn-modal-mini" style="background:#78350f; border-color:#f59e0b; color:#fef3c7;" onclick="dmSendLootDrop('jacomir', '👑 Jacomir', '${safeName}', 1)">👑 Send to Jacomir</button>
-                <button type="button" class="btn-modal-mini" style="background:#7f1d1d; border-color:#ef4444; color:#fee2e2;" onclick="dmSendLootDrop('yvaine', '🔫 Yvaine', '${safeName}', 1)">🔫 Send to Yvaine</button>
+                <button type="button" class="btn-modal-mini" style="background:#3b0764; border-color:#a855f7; color:#f3e8ff;" onclick="dmQuickDropByKey('${key}', 'piper', '🎩 Piper')">🎩 Send to Piper</button>
+                <button type="button" class="btn-modal-mini" style="background:#78350f; border-color:#f59e0b; color:#fef3c7;" onclick="dmQuickDropByKey('${key}', 'jacomir', '👑 Jacomir')">👑 Send to Jacomir</button>
+                <button type="button" class="btn-modal-mini" style="background:#7f1d1d; border-color:#ef4444; color:#fee2e2;" onclick="dmQuickDropByKey('${key}', 'yvaine', '🔫 Yvaine')">🔫 Send to Yvaine</button>
+                <button type="button" class="btn-modal-mini" style="background:#064e3b; border-color:#34d399; color:#ecfdf5;" onclick="dmQuickDropByKey('${key}', 'all', '👥 Entire Party')">👥 All 3</button>
+                ${it.isCustomForged ? `<button type="button" class="btn-modal-mini" style="background:#450a0a; border-color:#ef4444; color:#fca5a5;" onclick="dmDeleteCustomLoot('${key}')">🗑️ Delete Custom</button>` : ''}
             </div>
         </div>
         <h4>⚔️ D&D 5e Mechanics & Effects</h4>
@@ -14043,7 +14753,16 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
             actItems.forEach(([k, it]) => {
                 rowsHtml += `
                     <tr class="searchable-row">
-                        <td><button class="link-btn" onclick="openItemModal('${k}')">${it.name}</button></td>
+                        <td>
+                            <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                                <button class="link-btn" onclick="openItemModal('${k}')">${it.name}</button>
+                                <span style="display:inline-flex; gap:3px; flex-shrink:0;" title="1-Click Live Drop to Hero">
+                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'piper', '🎩 Piper', event)" title="Drop 1x to Piper">🎩</button>
+                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'jacomir', '👑 Jacomir', event)" title="Drop 1x to Jacomir">👑</button>
+                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'yvaine', '🔫 Yvaine', event)" title="Drop 1x to Yvaine">🔫</button>
+                                </span>
+                            </div>
+                        </td>
                         <td><span class="pill gold">${it.rarity.split('•')[0]}</span></td>
                         <td style="font-size:0.78rem; color:var(--text-muted);">${it.location}</td>
                     </tr>
@@ -14064,24 +14783,40 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         `;
     }).join('');
 
-    // When viewing the dedicated Materials tab, also show the DM-only Secret Crafting Recipes & Unlock Codes Cheatsheet!
+    // When viewing the dedicated Materials tab, also show the DM-only Secret Crafting Recipes & 1-Click Live Unlocker!
     if (renderTag === 'Materials') {
+        const recRow = (id, title, mats, code) => {
+            const isUnl = !!dmUnlockedRecipes[id];
+            const safeT = title.replace(/'/g, "\\'");
+            return `
+                <tr class="searchable-row">
+                    <td>${title}</td>
+                    <td>${mats}</td>
+                    <td>
+                        <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+                            <span><span class="pill ${isUnl ? 'green' : 'crimson'}">${isUnl ? 'UNLOCKED LIVE' : 'LOCKED'}</span> • <code>${code}</code></span>
+                            <button type="button" class="btn-modal-mini" style="padding:2px 7px; font-size:0.66rem; border-color:${isUnl ? '#ef4444' : '#34d399'}; color:${isUnl ? '#fca5a5' : '#6ee7b7'};" onclick="dmToggleRecipeUnlock('${id}', '${safeT}', ${!isUnl})">${isUnl ? '🔒 Re-Lock' : '🔓 Unlock Live'}</button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        };
         html += `
             <div class="table-wrap">
-                <div class="loot-cat-title loot-header-quest">🔒 DM-ONLY: Secret Crafting Recipes &amp; Player Sheet Unlock Codes (2 Known • 8 Locked)</div>
+                <div class="loot-cat-title loot-header-quest">🔒 DM-ONLY: Secret Crafting Recipes &amp; 1-Click Live Firebase Unlocker</div>
                 <table class="guide-table">
-                    <thead><tr><th scope="col" style="width:30%;">Crafted Consumable</th><th scope="col" style="width:38%;">Required Materials</th><th scope="col" style="width:32%;">Status &amp; DM Unlock Code</th></tr></thead>
+                    <thead><tr><th scope="col" style="width:30%;">Crafted Consumable</th><th scope="col" style="width:36%;">Required Materials</th><th scope="col" style="width:34%;">Status, Code &amp; 1-Click Live Unlock</th></tr></thead>
                     <tbody>
                         <tr class="searchable-row"><td>🧪 Potion of Healing (2d6+1 HP)</td><td>2x Medicinal Herbs</td><td><span class="pill green">UNLOCKED (Session 1)</span></td></tr>
                         <tr class="searchable-row"><td>🩹 Field Bandages (1d6+1 HP)</td><td>1x Medicinal Herb</td><td><span class="pill green">UNLOCKED (Session 1)</span></td></tr>
-                        <tr class="searchable-row"><td>🧪 Potion of Greater Healing (4d4+4 HP)</td><td>4x Medicinal Herbs + 1x Alchemical Catalyst</td><td><span class="pill crimson">LOCKED</span> • Code: <code>GREATER-HEAL</code></td></tr>
-                        <tr class="searchable-row"><td>💧 Morninglord Holy Water (2d6 Radiant)</td><td>1x Pure Spring Water + 1x Powdered Silver Dust</td><td><span class="pill crimson">LOCKED</span> • Code: <code>MORNINGLORD</code></td></tr>
-                        <tr class="searchable-row"><td>🧪 Barovian Antitoxin Tonic (Adv vs Poison 1h)</td><td>2x Medicinal Herbs + 1x Wolfbane Root</td><td><span class="pill crimson">LOCKED</span> • Code: <code>WOLFBANE</code></td></tr>
-                        <tr class="searchable-row"><td>✨ Liquid Silver Coating (Silvered 1h)</td><td>1x Powdered Silver Dust + 1x Pine Pitch Oil</td><td><span class="pill crimson">LOCKED</span> • Code: <code>SILVER-COAT</code></td></tr>
-                        <tr class="searchable-row"><td>🔥 Alchemist's Fire Flask (1d4/turn Fire)</td><td>1x Brimstone Sulfur + 1x Pine Pitch Oil</td><td><span class="pill crimson">LOCKED</span> • Code: <code>BRIMSTONE</code></td></tr>
-                        <tr class="searchable-row"><td>💨 Ash-Cloud Smoke Bomb (15ft Obscured)</td><td>1x Brimstone Sulfur + 1x Medicinal Herbs</td><td><span class="pill crimson">LOCKED</span> • Code: <code>ASH-CLOUD</code></td></tr>
-                        <tr class="searchable-row"><td>🧪 Potion of Superior Healing (8d4+8 HP)</td><td>4x Herbs + 2x Catalyst + 1x Svalich Moonpetal</td><td><span class="pill crimson">LOCKED</span> • Code: <code>MOONPETAL</code></td></tr>
-                        <tr class="searchable-row"><td>☀️ Sun-Ash Repellent Balm (+1d4 Radiant 10m)</td><td>1x Moonpetal + 1x Silver Dust + 1x Spring Water</td><td><span class="pill crimson">LOCKED</span> • Code: <code>SUN-ASH</code></td></tr>
+                        ${recRow('craft_greater_healing', '🧪 Potion of Greater Healing (4d4+4 HP)', '4x Medicinal Herbs + 1x Alchemical Catalyst', 'GREATER-HEAL')}
+                        ${recRow('craft_holy_water', '💧 Morninglord Holy Water (2d6 Radiant)', '1x Pure Spring Water + 1x Powdered Silver Dust', 'MORNINGLORD')}
+                        ${recRow('craft_antitoxin', '🧪 Barovian Antitoxin Tonic (Adv vs Poison 1h)', '2x Medicinal Herbs + 1x Wolfbane Root', 'WOLFBANE')}
+                        ${recRow('craft_silver_oil', '✨ Liquid Silver Coating (Silvered 1h)', '1x Powdered Silver Dust + 1x Pine Pitch Oil', 'SILVER-COAT')}
+                        ${recRow('craft_fire_flask', '🔥 Alchemist\'s Fire Flask (1d4/turn Fire)', '1x Brimstone Sulfur + 1x Pine Pitch Oil', 'BRIMSTONE')}
+                        ${recRow('craft_smoke_bomb', '💨 Ash-Cloud Smoke Bomb (15ft Obscured)', '1x Brimstone Sulfur + 1x Medicinal Herbs', 'ASH-CLOUD')}
+                        ${recRow('craft_superior_healing', '🧪 Potion of Superior Healing (8d4+8 HP)', '4x Herbs + 2x Catalyst + 1x Svalich Moonpetal', 'MOONPETAL')}
+                        ${recRow('craft_vampire_ward', '☀️ Sun-Ash Repellent Balm (+1d4 Radiant 10m)', '1x Moonpetal + 1x Silver Dust + 1x Spring Water', 'SUN-ASH')}
                     </tbody>
                 </table>
             </div>
@@ -14293,6 +15028,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderLootVault(activeLootTag);
     filterLoreCodex(activeLoreCat);
     decorateBiomeCardsWithImages();
+    initDmFirebaseSync();
 });
 </script>
 </body>

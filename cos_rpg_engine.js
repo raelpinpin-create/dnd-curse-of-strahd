@@ -736,6 +736,7 @@
     let tradeRecipient = null;
     let tradeMode = 'item'; // 'item' | 'gold'
     let showCustomTagger = false;
+    let customTagKind = 'weapon'; // 'weapon' | 'armor' | 'caster' | 'accessory' | 'consumable'
     let showPresetForm = false;
     let lastAppliedPresetName = null;
 
@@ -1038,6 +1039,98 @@
         return bonuses;
     }
 
+    function resolveWeaponCombatStats(raw, meta) {
+        if (meta && meta.weaponStats) return meta.weaponStats;
+        const low = String(raw || '').toLowerCase();
+        // Auto-detect magic bonus (+1/+2/+3)
+        let magic = 0;
+        const mMatch = low.match(/\+(\d+)/);
+        if (mMatch) magic = parseInt(mMatch[1]) || 0;
+        // Default ability mod by hero (Piper DEX +2, Jacomir STR +3, Yvaine DEX +4)
+        const heroAbil = adapter.heroId === 'yvaine' ? 4 : (adapter.heroId === 'jacomir' ? 3 : 2);
+        const pb = 2;
+        let dice = '1d6', dmgType = low.includes('silver') ? 'Silvered Slashing' : 'Slashing';
+        let extraDice = '', extraType = '';
+        if (low.includes('sunsword')) {
+            magic = 2; dice = '1d8'; dmgType = 'Radiant'; extraDice = '1d8'; extraType = 'Radiant vs Undead';
+        } else if (low.includes('blood spear')) {
+            magic = 2; dice = '1d6'; dmgType = 'Piercing';
+        } else if (low.includes('greatsword') || low.includes('vladimir')) {
+            dice = '2d6'; dmgType = 'Slashing';
+        } else if (low.includes('longsword') || low.includes('battleaxe') || low.includes('treebane')) {
+            dice = '1d8'; dmgType = low.includes('silver') ? 'Silvered Slashing' : 'Slashing';
+        } else if (low.includes('rapier') || low.includes('longbow') || low.includes('light crossbow')) {
+            dice = '1d8'; dmgType = 'Piercing';
+        } else if (low.includes('shortsword') || low.includes('scimitar') || low.includes('shortbow') || low.includes('handaxe') || low.includes('mace') || low.includes('spear') || low.includes('staff')) {
+            dice = '1d6'; dmgType = (low.includes('mace') || low.includes('staff')) ? 'Bludgeoning' : 'Piercing';
+        } else if (low.includes('dagger') || low.includes('knife') || low.includes('fan')) {
+            dice = '1d4'; dmgType = low.includes('silver') ? 'Silvered Piercing' : 'Piercing';
+        }
+        return {
+            atkBonus: heroAbil + pb + magic,
+            dmgDice: dice,
+            dmgBonus: heroAbil + magic,
+            dmgType,
+            extraDice,
+            extraType
+        };
+    }
+
+    function rollDiceExpr(expr) {
+        const m = String(expr || '1d6').trim().match(/^(\d+)d(\d+)$/i);
+        if (!m) return { count: 1, sides: 6, rolls: [1], sum: 1, max: 6 };
+        const count = Math.max(1, parseInt(m[1]) || 1);
+        const sides = Math.max(2, parseInt(m[2]) || 6);
+        const rolls = [];
+        let sum = 0;
+        for (let i = 0; i < count; i++) {
+            const r = Math.floor(Math.random() * sides) + 1;
+            rolls.push(r);
+            sum += r;
+        }
+        return { count, sides, rolls, sum, max: count * sides };
+    }
+
+    function rollDynamicWeaponAttack(invIdx) {
+        const raw = adapter.getItems()[invIdx];
+        if (!raw) return;
+        const meta = getItemMeta(raw);
+        const st = resolveWeaponCombatStats(raw, meta);
+        const d20 = Math.floor(Math.random() * 20) + 1;
+        const total = d20 + st.atkBonus;
+        const name = shortLabel(raw);
+        if (d20 === 20) {
+            const base = rollDiceExpr(st.dmgDice);
+            let critTotal = base.max + base.sum + st.dmgBonus;
+            let extraHtml = '';
+            if (st.extraDice) {
+                const ex = rollDiceExpr(st.extraDice);
+                critTotal += ex.max + ex.sum;
+                extraHtml = ` + ${ex.max}+[${ex.rolls.join('+')}](${esc(st.extraType || 'Bonus')})`;
+            }
+            adapter.log(`🔥 <strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>] + ${st.atkBonus} = <strong>${total} to Hit</strong>! Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${st.dmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(st.dmgType)} Damage</span>!`);
+            return;
+        }
+        const tag = d20 === 1 ? ' <strong style="color:#f87171;">(NAT 1 MISS!)</strong>' : '';
+        adapter.log(`⚔️ <strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>] + ${st.atkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}`);
+    }
+
+    function rollDynamicWeaponDamage(invIdx) {
+        const raw = adapter.getItems()[invIdx];
+        if (!raw) return;
+        const meta = getItemMeta(raw);
+        const st = resolveWeaponCombatStats(raw, meta);
+        const base = rollDiceExpr(st.dmgDice);
+        let total = base.sum + st.dmgBonus;
+        let breakdown = `${st.dmgDice}[<strong>${base.rolls.join('+')}</strong>]${st.dmgBonus ? (st.dmgBonus > 0 ? ' + ' + st.dmgBonus : ' - ' + Math.abs(st.dmgBonus)) : ''}`;
+        if (st.extraDice) {
+            const ex = rollDiceExpr(st.extraDice);
+            total += ex.sum;
+            breakdown += ` + <span style="color:#fb923c;">${st.extraDice}[${ex.rolls.join('+')} ${esc(st.extraType || 'Bonus')}]</span>`;
+        }
+        adapter.log(`💥 <strong>${esc(shortLabel(raw))} Damage:</strong> ${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(st.dmgType)} Damage</span>!`);
+    }
+
     function renderDynamicWeaponCards(bonuses) {
         if (!adapter || !adapter.weaponsGridSelector) return;
         const grid = document.querySelector(adapter.weaponsGridSelector);
@@ -1059,6 +1152,8 @@
             if (adapter.heroId === 'yvaine' && slotId === 'offHand' && meta.isLegDagger) return;
             const slotObj = activeSlots.find(s => s.id === slotId);
             if (!slotObj) return;
+            const st = resolveWeaponCombatStats(raw, meta);
+            const dmgLabel = `${st.dmgDice}${st.dmgBonus ? (st.dmgBonus > 0 ? '+' + st.dmgBonus : st.dmgBonus) : ''}${st.extraDice ? ' +' + st.extraDice : ''}`;
             const card = document.createElement('div');
             card.className = 'action-card rpg-dyn-weapon-card';
             card.style.borderLeft = '3px solid #f59e0b';
@@ -1068,13 +1163,14 @@
                         <div onclick="COS_RPG.openItemDetails(${idx})" style="cursor:pointer; color:#f8fafc;">
                             ${esc(shortLabel(raw))} <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                         </div>
-                        <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Equipped in ${slotObj.label}${slotId === 'mainHand' && bonuses.mainHand2H ? ' (2-Handed)' : ''}</div>
+                        <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Equipped in ${slotObj.label}${slotId === 'mainHand' && bonuses.mainHand2H ? ' (2-Handed)' : ''} • +${st.atkBonus} Hit • ${esc(dmgLabel)} ${esc(st.dmgType)}</div>
                     </div>
                     <span class="rpg-card-equipped-pill">WORN</span>
                 </div>
                 <div class="action-desc">${esc(meta.summary || 'Equipped weapon from Backpack.')}</div>
-                <div class="action-btn-row">
-                    <button type="button" class="btn-roll-action" onclick="COS_RPG.openItemDetails(${idx})">Details</button>
+                <div class="action-btn-row" style="flex-wrap:wrap;">
+                    <button type="button" class="btn-roll-action" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${st.atkBonus})</button>
+                    <button type="button" class="btn-roll-action btn-roll-dmg" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${esc(dmgLabel)})</button>
                     <button type="button" class="btn-act btn-act-pre" onclick="COS_RPG.unequipSlot('${slotId}')">Unequip</button>
                 </div>
             `;
@@ -1092,6 +1188,7 @@
         renderHeaderBadges();
         if (document.getElementById('rpg-equip-modal')?.open) renderEquipModal();
         if (document.getElementById('rpg-backpack-modal')?.open) renderBackpackModal();
+        syncHeroStateToFirebase();
     }
 
     function equipItemToSlot(slotId, itemKey, gripMode = null) {
@@ -1501,6 +1598,129 @@
         return rtdb.ref(`campaigns/${room}/transfers`);
     }
 
+    function campaignRtdbRef(subPath) {
+        const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+        return rtdb.ref(`campaigns/${room}/${subPath}`);
+    }
+
+    let heroSyncTimer = null;
+    function syncHeroStateToFirebase() {
+        if (!firebaseReady || !rtdb || !adapter) return;
+        if (heroSyncTimer) clearTimeout(heroSyncTimer);
+        heroSyncTimer = setTimeout(() => {
+            try {
+                const bonuses = getGearBonuses();
+                const eq = bonuses.equippedMap || {};
+                const activeSlots = getActiveSlots();
+                const equippedLabels = {};
+                activeSlots.forEach(s => {
+                    if (!eq[s.id]) return;
+                    const raw = findInventoryRawByKey(eq[s.id]);
+                    if (raw) {
+                        equippedLabels[s.label] = shortLabel(raw) + (s.id === 'mainHand' && bonuses.mainHand2H ? ' (2H)' : '');
+                    }
+                });
+                const wallet = adapter.getGold ? adapter.getGold() : { gp: 0, sp: 0 };
+                const hpTxt = document.getElementById('hp-disp')?.innerText || document.getElementById('cur-hp')?.innerText || '';
+                const acTxt = document.getElementById('ac-disp')?.innerText || '';
+                const activePreset = getActivePresetInfo(eq);
+                campaignRtdbRef(`heroes/${adapter.heroId}/state`).set({
+                    heroId: adapter.heroId,
+                    heroName: adapter.heroName,
+                    heroEmoji: adapter.heroEmoji || '🛡️',
+                    hpDisplay: hpTxt,
+                    acDisplay: acTxt,
+                    gp: wallet.gp || 0,
+                    sp: wallet.sp || 0,
+                    preset: activePreset.label + (activePreset.isCustom ? ' [Custom]' : ''),
+                    equippedSlots: equippedLabels,
+                    customPresets: getCustomPresets().map(cp => ({ label: cp.label, slotLabels: cp.slotLabels || {} })),
+                    items: adapter.getItems(),
+                    updatedAt: Date.now()
+                }).catch(() => {});
+            } catch (e) {}
+        }, 120);
+    }
+
+    function startCloudVaultAndCommandListeners() {
+        if (!firebaseReady || !rtdb || !adapter) return;
+
+        // 1. Live sync DM-created custom items (customMeta) into local recognition map
+        campaignRtdbRef('custom_loot').on('value', snap => {
+            const val = snap.val() || {};
+            const map = getCustomGearMap();
+            let changed = false;
+            Object.values(val).forEach(entry => {
+                if (!entry || !entry.name || !entry.customMeta) return;
+                const k = normKey(entry.name);
+                if (k && JSON.stringify(map[k]) !== JSON.stringify(entry.customMeta)) {
+                    map[k] = entry.customMeta;
+                    changed = true;
+                }
+            });
+            if (changed) {
+                saveCustomGearMap(map);
+                applyEquipmentToSheet(true);
+            }
+        });
+
+        // 2. Live sync DM remote recipe unlocks
+        campaignRtdbRef('unlocked_recipes').on('value', snap => {
+            const val = snap.val() || {};
+            const cur = getUnlockedRecipeIds();
+            let addedTitle = null;
+            Object.keys(val).forEach(recId => {
+                if (val[recId] && !cur.includes(recId)) {
+                    cur.push(recId);
+                    const rObj = CRAFTING_RECIPES.find(r => r.id === recId);
+                    if (rObj) addedTitle = `${rObj.name} (${rObj.badge})`;
+                }
+            });
+            if (addedTitle) {
+                localStorage.setItem(getUnlockedRecipesKey(), JSON.stringify(cur));
+                adapter.log(`🔓 <strong>DM Unlocked Crafting Recipe:</strong> <strong>${esc(addedTitle)}</strong> is now available in your Crafting Workbench!`);
+                renderHubPanel();
+                if (document.getElementById('rpg-craft-modal')?.open) renderCraftModal();
+            }
+        });
+
+        // 3. Live DM Direct-Inject / Remote Item Removal commands
+        const cmdRef = campaignRtdbRef(`heroes/${adapter.heroId}/dm_commands`);
+        cmdRef.on('value', snap => {
+            const val = snap.val();
+            if (!val || typeof val !== 'object') return;
+            Object.entries(val).forEach(([cmdId, cmd]) => {
+                if (!cmd || cmd.executed) return;
+                cmdRef.child(cmdId).remove().then(() => {
+                    if (cmd.action === 'inject_item' && cmd.itemRaw) {
+                        const items = adapter.getItems();
+                        addRawItemToList(items, cmd.itemRaw, cmd.qty || 1);
+                        adapter.saveItems(items);
+                        if (cmd.customMeta) {
+                            const map = getCustomGearMap();
+                            map[normKey(cmd.itemRaw)] = cmd.customMeta;
+                            saveCustomGearMap(map);
+                        }
+                        applyEquipmentToSheet(true);
+                        adapter.log(`🎁 <strong>DM Added to Your Backpack:</strong> <strong>${cmd.qty > 1 ? cmd.qty + 'x ' : ''}${esc(shortLabel(cmd.itemRaw))}</strong>${cmd.note ? ` <em>("${esc(cmd.note)}")</em>` : ''}!`);
+                    } else if (cmd.action === 'inject_gold') {
+                        adapter.addGold(cmd.gp || 0, cmd.sp || 0, cmd.note || 'DM Grant');
+                        syncHeroStateToFirebase();
+                        adapter.log(`💰 <strong>DM Granted Gold:</strong> <strong>+${cmd.gp || 0} GP${cmd.sp ? ', +' + cmd.sp + ' SP' : ''}</strong>!`);
+                    } else if (cmd.action === 'remove_item' && typeof cmd.invIndex === 'number') {
+                        const items = adapter.getItems();
+                        if (items[cmd.invIndex]) {
+                            const removed = items.splice(cmd.invIndex, 1);
+                            adapter.saveItems(items);
+                            applyEquipmentToSheet(true);
+                            adapter.log(`🛡️ <strong>DM Removed Item:</strong> ${esc(shortLabel(removed[0]))}`);
+                        }
+                    }
+                }).catch(() => {});
+            });
+        });
+    }
+
     function transfersCol() {
         const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
         return firestoreDb.collection('campaigns').doc(room).collection('transfers');
@@ -1564,6 +1784,8 @@
             ref.on('value', handler, err => console.warn('[COS_RPG] RTDB listener error:', err));
             unsubRtdbRef = ref;
             unsubRtdbHandler = handler;
+            startCloudVaultAndCommandListeners();
+            syncHeroStateToFirebase();
             return;
         }
 
@@ -2272,7 +2494,7 @@
             }).join('');
         }
 
-        // Custom Gear Tagger form (+ active custom overrides reset list)
+        // Context-Aware Custom Gear Tagger & Builder (+ active custom overrides reset list)
         const untaggedOptions = items.map(r => `<option value="${esc(normKey(r))}">${esc(shortLabel(r))}</option>`).join('');
         const customMap = getCustomGearMap();
         const customEntries = Object.entries(customMap);
@@ -2285,12 +2507,12 @@
                 ${customEntries.map(([ck, cm]) => {
                     const rawFound = findInventoryRawByKey(ck);
                     const disp = rawFound ? shortLabel(rawFound) : ck;
-                    const slotLbl = (cm.slots || []).map(sid => activeSlots.find(s => s.id === sid)?.label || sid).join('/');
+                    const slotLbl = (cm.slots || []).map(sid => activeSlots.find(s => s.id === sid)?.label || sid).join('/') || cm.category || 'Custom';
                     const safeCk = esc(ck).replace(/'/g, "\\'");
                     return `
                         <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:4px 7px;">
                             <div style="font-size:0.7rem; color:#e2e8f0; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
-                                <strong>${esc(disp)}</strong> <span style="color:#94a3b8;">(${esc(slotLbl)})</span>
+                                <strong>${esc(disp)}</strong> <span style="color:#94a3b8;">(${esc(slotLbl)}${cm.summary ? ' • ' + esc(cm.summary) : ''})</span>
                             </div>
                             <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:22px; padding:1px 6px; font-size:0.65rem; flex-shrink:0;" onclick="COS_RPG.removeCustomGearTag('${safeCk}')">Reset</button>
                         </div>
@@ -2298,33 +2520,67 @@
                 }).join('')}
             </div>
         ` : '';
-        const customTaggerHtml = showCustomTagger ? `
-            <div class="rpg-custom-tagger">
-                <div style="font-size:0.72rem; font-weight:800; color:#fde68a;">Tag Any Backpack Item as Equippable Gear</div>
-                <label class="rpg-field-lbl">Item from Backpack
-                    <select id="rpg-tag-item" class="rpg-select">${untaggedOptions}</select>
-                </label>
+
+        let kindFieldsHtml = '';
+        if (customTagKind === 'weapon') {
+            const handSlotOpts = activeSlots.filter(s => s.group === 'hand').map(s =>
+                `<option value="${s.id}" ${s.id === selectedSlot ? 'selected' : ''}>${s.icon} ${s.label}</option>`
+            ).join('') + `<option value="both_1h">⚔️ Main or Off-Hand (1H)</option>`;
+            const defAbil = adapter.heroId === 'yvaine' ? 4 : (adapter.heroId === 'jacomir' ? 3 : 2);
+            kindFieldsHtml = `
                 <div class="rpg-form-grid">
-                    <label class="rpg-field-lbl">Slot
-                        <select id="rpg-tag-slot" class="rpg-select">
-                            ${activeSlots.map(s => `<option value="${s.id}" ${s.id === selectedSlot ? 'selected' : ''}>${s.icon} ${s.label}</option>`).join('')}
-                        </select>
+                    <label class="rpg-field-lbl">Weapon Slot
+                        <select id="rpg-tag-slot" class="rpg-select">${handSlotOpts}</select>
                     </label>
                     <label class="rpg-field-lbl">Hands / Grip
                         <select id="rpg-tag-hands" class="rpg-select">
-                            <option value="1">Standard / 1-Handed</option>
+                            <option value="1">1-Handed</option>
                             <option value="2">2-Handed (Locks Off-Hand)</option>
                             <option value="versatile">Versatile (1H or 2H)</option>
                         </select>
                     </label>
-                    <label class="rpg-field-lbl">+AC Bonus
-                        <input type="number" id="rpg-tag-ac" class="rpg-input" value="0" min="-5" max="10">
+                    <label class="rpg-field-lbl">Base Damage Dice
+                        <select id="rpg-tag-wpn-dice" class="rpg-select">
+                            <option value="1d4">1d4 (Dagger / Whip)</option>
+                            <option value="1d6">1d6 (Shortsword / Staff / Revolver)</option>
+                            <option value="1d8" selected>1d8 (Longsword / Rapier / Bow)</option>
+                            <option value="1d10">1d10 (Halberd / Pike / 2H)</option>
+                            <option value="1d12">1d12 (Greataxe / Heavy Rifle)</option>
+                            <option value="2d6">2d6 (Greatsword / Maul)</option>
+                        </select>
                     </label>
-                    <label class="rpg-field-lbl">+All Saves Bonus
-                        <input type="number" id="rpg-tag-saves" class="rpg-input" value="0" min="-5" max="10">
+                    <label class="rpg-field-lbl">Damage Type
+                        <select id="rpg-tag-wpn-type" class="rpg-select">
+                            <option value="Slashing">Slashing</option>
+                            <option value="Piercing">Piercing</option>
+                            <option value="Bludgeoning">Bludgeoning</option>
+                            <option value="Silvered Slashing">Silvered Slashing</option>
+                            <option value="Silvered Piercing">Silvered Piercing</option>
+                            <option value="Radiant">Radiant</option>
+                            <option value="Fire">Fire</option>
+                            <option value="Necrotic">Necrotic</option>
+                            <option value="Cold">Cold</option>
+                            <option value="Force">Force</option>
+                        </select>
                     </label>
-                    <label class="rpg-field-lbl">+Spell DC &amp; Hit
-                        <input type="number" id="rpg-tag-spell" class="rpg-input" value="0" min="0" max="5">
+                    <label class="rpg-field-lbl">Total Attack Bonus (+Hit)
+                        <input type="number" id="rpg-tag-wpn-atk" class="rpg-input" value="${defAbil + 2}" min="-2" max="18">
+                    </label>
+                    <label class="rpg-field-lbl">Flat Damage Bonus (+Mod)
+                        <input type="number" id="rpg-tag-wpn-dmgmod" class="rpg-input" value="${defAbil}" min="-2" max="15">
+                    </label>
+                    <label class="rpg-field-lbl">Extra Elemental Dice (optional)
+                        <select id="rpg-tag-wpn-extradice" class="rpg-select">
+                            <option value="">None</option>
+                            <option value="1d4|Fire">+1d4 Fire</option>
+                            <option value="1d6|Fire">+1d6 Fire</option>
+                            <option value="1d4|Radiant">+1d4 Radiant</option>
+                            <option value="1d6|Radiant">+1d6 Radiant</option>
+                            <option value="2d6|Radiant">+2d6 Radiant</option>
+                            <option value="1d6|Necrotic">+1d6 Necrotic</option>
+                            <option value="1d6|Cold">+1d6 Cold</option>
+                            <option value="1d8|Force">+1d8 Force</option>
+                        </select>
                     </label>
                     <label class="rpg-field-lbl">Requires Attunement?
                         <select id="rpg-tag-attune" class="rpg-select">
@@ -2333,12 +2589,162 @@
                         </select>
                     </label>
                 </div>
-                <label class="rpg-field-lbl">Custom Perk Note (optional)
-                    <input type="text" id="rpg-tag-note" class="rpg-input" placeholder="e.g. Fire Resistance, +1d6 Radiant...">
+                <label class="rpg-field-lbl">Weapon Mastery / Special Effect Note (optional)
+                    <input type="text" id="rpg-tag-note" class="rpg-input" placeholder="e.g. Sap Mastery, Bypasses Undead Resistance, +2d6 Temp HP on Kill...">
                 </label>
+            `;
+        } else if (customTagKind === 'caster') {
+            kindFieldsHtml = `
+                <div class="rpg-form-grid">
+                    <label class="rpg-field-lbl">Equip Slot
+                        <select id="rpg-tag-slot" class="rpg-select">
+                            <option value="mainHand">⚔️ Main Hand (Staff / Wand / Rod)</option>
+                            <option value="offHand">🛡️ Off-Hand (Vial / Focus)</option>
+                            <option value="amulet">📿 Amulet (Arcane Talisman)</option>
+                            <option value="body">🛡️ Body (Enchanted Caster Robe)</option>
+                        </select>
+                    </label>
+                    <label class="rpg-field-lbl">+Spell Save DC &amp; Spell Hit
+                        <input type="number" id="rpg-tag-spell" class="rpg-input" value="1" min="0" max="5">
+                    </label>
+                    <label class="rpg-field-lbl">Bonus Fire/Spell Damage
+                        <select id="rpg-tag-spellfire" class="rpg-select">
+                            <option value="">None</option>
+                            <option value="1d4">+1d4 Spell Damage</option>
+                            <option value="1d4+1">+1d4+1 Fire (Red Robe)</option>
+                            <option value="1d6">+1d6 Spell Damage</option>
+                            <option value="1d8">+1d8 Spell Damage</option>
+                        </select>
+                    </label>
+                    <label class="rpg-field-lbl">+AC / +Saves Bonus
+                        <input type="number" id="rpg-tag-ac" class="rpg-input" value="0" min="0" max="5">
+                    </label>
+                    <label class="rpg-field-lbl">Skill Advantage
+                        <select id="rpg-tag-skilladv" class="rpg-select">
+                            <option value="">None</option>
+                            <option value="Arcana">Arcana</option>
+                            <option value="Religion">Religion</option>
+                            <option value="History">History</option>
+                            <option value="Perception">Perception</option>
+                        </select>
+                    </label>
+                    <label class="rpg-field-lbl">Requires Attunement?
+                        <select id="rpg-tag-attune" class="rpg-select">
+                            <option value="no">No</option>
+                            <option value="yes">Yes (Uses 1/3 Slot)</option>
+                        </select>
+                    </label>
+                </div>
+                <label class="rpg-field-lbl">Granted Spells / Charges / Custom Perk
+                    <input type="text" id="rpg-tag-note" class="rpg-input" placeholder="e.g. 1/LR Speak with Dead, +5 Sorcery Points on Short Rest...">
+                </label>
+            `;
+        } else if (customTagKind === 'consumable') {
+            kindFieldsHtml = `
+                <div class="rpg-form-grid">
+                    <label class="rpg-field-lbl">Consumable Effect
+                        <select id="rpg-tag-cons-type" class="rpg-select">
+                            <option value="heal">Restore Hit Points (Heal)</option>
+                            <option value="holyWater">Radiant / Fire Splash Damage</option>
+                            <option value="dreamPastry">Grant Temporary HP</option>
+                        </select>
+                    </label>
+                    <label class="rpg-field-lbl">Dice Rolled
+                        <select id="rpg-tag-cons-dice" class="rpg-select">
+                            <option value="1|4">1d4 (Croissant / Snack)</option>
+                            <option value="1|6">1d6 (Bandage / Salve)</option>
+                            <option value="2|4">2d4</option>
+                            <option value="2|6" selected>2d6 (Healing Potion / Holy Water)</option>
+                            <option value="4|4">4d4 (Greater Healing)</option>
+                            <option value="8|4">8d4 (Superior Healing)</option>
+                        </select>
+                    </label>
+                    <label class="rpg-field-lbl">Flat Bonus (+HP)
+                        <input type="number" id="rpg-tag-cons-bonus" class="rpg-input" value="1" min="0" max="20">
+                    </label>
+                    <label class="rpg-field-lbl">Pin to 1-Tap Quick-Belt?
+                        <select id="rpg-tag-cons-qb" class="rpg-select">
+                            <option value="yes">Yes (Show on Main Sheet)</option>
+                            <option value="no">No (Backpack Only)</option>
+                        </select>
+                    </label>
+                </div>
+                <label class="rpg-field-lbl">Consumable Effect Note
+                    <input type="text" id="rpg-tag-note" class="rpg-input" placeholder="e.g. Halts Vampire Regen, Advantage vs Poison 1 hr...">
+                </label>
+            `;
+        } else {
+            // 'armor' or 'accessory'
+            const slotOpts = customTagKind === 'accessory'
+                ? `<option value="amulet" ${selectedSlot === 'amulet' ? 'selected' : ''}>📿 Amulet / Neck</option>
+                   <option value="ring1" ${selectedSlot === 'ring1' || selectedSlot === 'ring2' ? 'selected' : ''}>💍 Ring (Ring 1 / Ring 2)</option>`
+                : activeSlots.filter(s => s.group === 'body' || s.id === 'offHand').map(s =>
+                    `<option value="${s.id}" ${s.id === selectedSlot ? 'selected' : ''}>${s.icon} ${s.label}${s.id === 'offHand' ? ' (Shield)' : ''}</option>`
+                ).join('');
+            kindFieldsHtml = `
+                <div class="rpg-form-grid">
+                    <label class="rpg-field-lbl">Equip Slot
+                        <select id="rpg-tag-slot" class="rpg-select">${slotOpts}</select>
+                    </label>
+                    <label class="rpg-field-lbl">+AC Bonus
+                        <input type="number" id="rpg-tag-ac" class="rpg-input" value="1" min="-5" max="10">
+                    </label>
+                    <label class="rpg-field-lbl">+All Saving Throws Bonus
+                        <input type="number" id="rpg-tag-saves" class="rpg-input" value="0" min="-5" max="10">
+                    </label>
+                    <label class="rpg-field-lbl">Base Armor AC (Body Armor Only)
+                        <select id="rpg-tag-baseac" class="rpg-select">
+                            <option value="0">None (Use +AC Bonus Above)</option>
+                            <option value="12|full">12 + Full DEX (Studded Leather)</option>
+                            <option value="14|2">14 + DEX max 2 (Breastplate)</option>
+                            <option value="15|2">15 + DEX max 2 (Half Plate)</option>
+                            <option value="16|0">16 Heavy (Chain Mail)</option>
+                            <option value="18|0">18 Heavy (Full Plate)</option>
+                        </select>
+                    </label>
+                    <label class="rpg-field-lbl">Skill Advantage
+                        <select id="rpg-tag-skilladv" class="rpg-select">
+                            <option value="">None</option>
+                            <option value="Arcana">Arcana</option>
+                            <option value="Stealth">Stealth</option>
+                            <option value="Perception">Perception</option>
+                            <option value="Athletics">Athletics</option>
+                            <option value="Intimidation">Intimidation</option>
+                        </select>
+                    </label>
+                    <label class="rpg-field-lbl">Requires Attunement?
+                        <select id="rpg-tag-attune" class="rpg-select">
+                            <option value="no">No</option>
+                            <option value="yes">Yes (Uses 1/3 Slot)</option>
+                        </select>
+                    </label>
+                </div>
+                <label class="rpg-field-lbl">Custom Gear Perk / Resistance Note (optional)
+                    <input type="text" id="rpg-tag-note" class="rpg-input" placeholder="e.g. Cold Resistance, 30ft Fly Speed, +2 Initiative...">
+                </label>
+            `;
+        }
+
+        const customTaggerHtml = showCustomTagger ? `
+            <div class="rpg-custom-tagger">
+                <div style="font-size:0.72rem; font-weight:800; color:#fde68a;">Customize Item Type &amp; Stats</div>
+                <label class="rpg-field-lbl">1. Select Item from Backpack
+                    <select id="rpg-tag-item" class="rpg-select">${untaggedOptions}</select>
+                </label>
+                <div>
+                    <div style="font-size:0.65rem; font-weight:800; color:#94a3b8; text-transform:uppercase; margin-bottom:4px;">2. Choose What Kind of Item It Is</div>
+                    <div class="rpg-filter-pills">
+                        <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'weapon' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('weapon')">⚔️ Weapon</button>
+                        <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'armor' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('armor')">🛡️ Armor / Gear</button>
+                        <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'caster' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('caster')">🔮 Caster Focus</button>
+                        <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'accessory' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('accessory')">💍 Amulet / Ring</button>
+                        <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'consumable' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('consumable')">🧪 Consumable</button>
+                    </div>
+                </div>
+                ${kindFieldsHtml}
                 <div style="display:flex; gap:6px; justify-content:flex-end;">
                     <button type="button" class="rpg-mini-btn" onclick="COS_RPG.toggleCustomTagger()">Cancel</button>
-                    <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.saveCustomGearTag()">Save &amp; Equip</button>
+                    <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.saveCustomGearTag()">Save${customTagKind === 'consumable' ? ' Consumable' : ' &amp; Equip'}</button>
                 </div>
                 ${customListHtml}
             </div>
@@ -2431,43 +2837,148 @@
 
     function saveCustomGearTag() {
         const key = document.getElementById('rpg-tag-item')?.value;
-        const slot = document.getElementById('rpg-tag-slot')?.value || 'body';
-        const handsVal = document.getElementById('rpg-tag-hands')?.value || '1';
-        const acBonus = parseInt(document.getElementById('rpg-tag-ac')?.value) || 0;
-        const saveBonus = parseInt(document.getElementById('rpg-tag-saves')?.value) || 0;
-        const spellBonus = parseInt(document.getElementById('rpg-tag-spell')?.value) || 0;
-        const attune = document.getElementById('rpg-tag-attune')?.value === 'yes';
-        const note = (document.getElementById('rpg-tag-note')?.value || '').trim();
         if (!key) return;
+        const raw = findInventoryRawByKey(key) || key;
+        const note = (document.getElementById('rpg-tag-note')?.value || '').trim();
+        const attune = document.getElementById('rpg-tag-attune')?.value === 'yes';
 
-        const parts = [];
-        if (acBonus) parts.push(`${acBonus > 0 ? '+' : ''}${acBonus} AC`);
-        if (saveBonus) parts.push(`${saveBonus > 0 ? '+' : ''}${saveBonus} Saves`);
-        if (spellBonus) parts.push(`+${spellBonus} Spell DC/Hit`);
-        if (note) parts.push(note);
-        if (attune) parts.push('Attune');
+        let meta = null;
+        let equipTargetSlot = null;
 
-        const slots = (slot === 'ring1' || slot === 'ring2') ? ['ring1', 'ring2'] : [slot];
-        const meta = {
-            category: ['mainHand', 'offHand', 'legSheath', 'ranged'].includes(slot) ? 'weapon' : (['amulet', 'ring1', 'ring2'].includes(slot) ? 'accessory' : 'armor'),
-            slots,
-            hands: handsVal === '2' ? 2 : 1,
-            versatile: handsVal === 'versatile',
-            acBonus,
-            saveBonus,
-            spellDcBonus: spellBonus,
-            spellAtkBonus: spellBonus,
-            attune,
-            isShield: slot === 'offHand' && acBonus > 0,
-            isLegDagger: slot === 'legSheath',
-            summary: parts.join(' • ') || 'Custom Equippable Gear'
-        };
+        if (customTagKind === 'weapon') {
+            const slotVal = document.getElementById('rpg-tag-slot')?.value || 'mainHand';
+            const handsVal = document.getElementById('rpg-tag-hands')?.value || '1';
+            const dmgDice = document.getElementById('rpg-tag-wpn-dice')?.value || '1d8';
+            const dmgType = document.getElementById('rpg-tag-wpn-type')?.value || 'Slashing';
+            const atkBonus = parseInt(document.getElementById('rpg-tag-wpn-atk')?.value) || 5;
+            const dmgBonus = parseInt(document.getElementById('rpg-tag-wpn-dmgmod')?.value) || 3;
+            const extraRaw = document.getElementById('rpg-tag-wpn-extradice')?.value || '';
+            const [extraDice, extraType] = extraRaw ? extraRaw.split('|') : ['', ''];
+
+            const slots = slotVal === 'both_1h' ? ['mainHand', 'offHand'] : [slotVal];
+            equipTargetSlot = slots[0];
+            const summaryParts = [
+                `${handsVal === '2' ? '2H' : (handsVal === 'versatile' ? 'Versatile' : '1H')} • +${atkBonus} Hit`,
+                `${dmgDice}${dmgBonus ? (dmgBonus > 0 ? '+' + dmgBonus : dmgBonus) : ''} ${dmgType}`,
+                extraDice ? `+${extraDice} ${extraType}` : '',
+                note,
+                attune ? 'Attune' : ''
+            ].filter(Boolean);
+
+            meta = {
+                category: 'weapon',
+                slots,
+                hands: handsVal === '2' ? 2 : 1,
+                versatile: handsVal === 'versatile',
+                attune,
+                isLegDagger: slots.includes('legSheath'),
+                weaponStats: { atkBonus, dmgDice, dmgBonus, dmgType, extraDice, extraType },
+                summary: summaryParts.join(' • ')
+            };
+        } else if (customTagKind === 'caster') {
+            const slot = document.getElementById('rpg-tag-slot')?.value || 'mainHand';
+            const spellBonus = parseInt(document.getElementById('rpg-tag-spell')?.value) || 0;
+            const spellFireBonus = document.getElementById('rpg-tag-spellfire')?.value || null;
+            const acBonus = parseInt(document.getElementById('rpg-tag-ac')?.value) || 0;
+            const skillAdvVal = document.getElementById('rpg-tag-skilladv')?.value || '';
+            equipTargetSlot = slot;
+            const parts = [
+                spellBonus ? `+${spellBonus} Spell DC & Hit` : '',
+                spellFireBonus ? `+${spellFireBonus} Spell Dmg` : '',
+                acBonus ? `+${acBonus} AC & Saves` : '',
+                skillAdvVal ? `Adv ${skillAdvVal}` : '',
+                note,
+                attune ? 'Attune' : ''
+            ].filter(Boolean);
+            meta = {
+                category: slot === 'body' ? 'armor' : (slot === 'amulet' ? 'accessory' : 'weapon'),
+                slots: [slot],
+                hands: 1,
+                acBonus,
+                saveBonus: acBonus,
+                spellDcBonus: spellBonus,
+                spellAtkBonus: spellBonus,
+                spellFireBonus,
+                skillAdv: skillAdvVal ? [skillAdvVal] : [],
+                attune,
+                summary: parts.join(' • ') || 'Arcane Focus'
+            };
+        } else if (customTagKind === 'consumable') {
+            const cType = document.getElementById('rpg-tag-cons-type')?.value || 'heal';
+            const [diceCnt, diceSides] = (document.getElementById('rpg-tag-cons-dice')?.value || '2|6').split('|').map(Number);
+            const bonus = parseInt(document.getElementById('rpg-tag-cons-bonus')?.value) || 0;
+            const qb = document.getElementById('rpg-tag-cons-qb')?.value !== 'no';
+            const fStr = `${diceCnt}d${diceSides}${bonus ? '+' + bonus : ''}`;
+            const sLbl = shortLabel(raw).replace(/^[^\w"]+/, '').split(' ').slice(0, 2).join(' ') || 'Item';
+            meta = {
+                category: 'consumable',
+                slots: [],
+                quickBelt: qb,
+                useAction: cType === 'heal'
+                    ? { type: 'heal', dice: diceCnt, sides: diceSides, bonus, verb: 'Used', label: `${sLbl} (${fStr})` }
+                    : (cType === 'holyWater'
+                        ? { type: 'holyWater', label: `${sLbl} (2d6 Rad)` }
+                        : { type: 'dreamPastry', label: `${sLbl} (+1d6 Temp)` }),
+                summary: `${cType === 'heal' ? `Heal ${fStr} HP` : (cType === 'holyWater' ? '2d6 Radiant Splash' : '+1d6 Temp HP')}${note ? ' • ' + note : ''}`
+            };
+        } else {
+            // 'armor' or 'accessory'
+            const slot = document.getElementById('rpg-tag-slot')?.value || 'body';
+            const acBonus = parseInt(document.getElementById('rpg-tag-ac')?.value) || 0;
+            const saveBonus = parseInt(document.getElementById('rpg-tag-saves')?.value) || 0;
+            const baseAcRaw = document.getElementById('rpg-tag-baseac')?.value || '0';
+            const skillAdvVal = document.getElementById('rpg-tag-skilladv')?.value || '';
+            const slots = (slot === 'ring1' || slot === 'ring2') ? ['ring1', 'ring2'] : [slot];
+            equipTargetSlot = slot;
+
+            let baseAC = null, addDex = false, maxDex = null, armorWorn = false, heavyArmor = false;
+            if (slot === 'body' && baseAcRaw !== '0') {
+                const [bVal, dexMode] = baseAcRaw.split('|');
+                baseAC = parseInt(bVal) || 12;
+                armorWorn = true;
+                if (dexMode === 'full') addDex = true;
+                else if (dexMode === '2') { addDex = true; maxDex = 2; }
+                else { heavyArmor = true; }
+            }
+
+            const parts = [
+                baseAC ? `Base AC ${baseAC}` : '',
+                acBonus ? `${acBonus > 0 ? '+' : ''}${acBonus} AC` : '',
+                saveBonus ? `${saveBonus > 0 ? '+' : ''}${saveBonus} Saves` : '',
+                skillAdvVal ? `Adv ${skillAdvVal}` : '',
+                note,
+                attune ? 'Attune' : ''
+            ].filter(Boolean);
+
+            meta = {
+                category: customTagKind === 'accessory' ? 'accessory' : 'armor',
+                slots,
+                hands: 1,
+                baseAC,
+                addDex,
+                maxDex,
+                armorWorn,
+                heavyArmor,
+                acBonus,
+                saveBonus,
+                skillAdv: skillAdvVal ? [skillAdvVal] : [],
+                attune,
+                isShield: slot === 'offHand' && acBonus > 0,
+                summary: parts.join(' • ') || 'Custom Equippable Gear'
+            };
+        }
+
         const map = getCustomGearMap();
         map[key] = meta;
         saveCustomGearMap(map);
         showCustomTagger = false;
-        selectedSlot = slot;
-        equipItemToSlot(slot, key);
+        if (equipTargetSlot) {
+            selectedSlot = equipTargetSlot;
+            equipItemToSlot(equipTargetSlot, key);
+        } else {
+            adapter.log(`🧪 <strong>Saved Custom Consumable:</strong> <strong>${esc(shortLabel(raw))}</strong> (${esc(meta.summary)})!`);
+            applyEquipmentToSheet();
+        }
     }
 
     function removeCustomGearTag(itemKey) {
@@ -3007,7 +3518,18 @@
         openTradeModal,
         openSendForItem,
         closeModal,
-        selectEquipSlot: (slotId) => { selectedSlot = slotId; showCustomTagger = false; renderEquipModal(); },
+        selectEquipSlot: (slotId) => {
+            selectedSlot = slotId;
+            if (['mainHand', 'offHand', 'legSheath', 'ranged'].includes(slotId)) customTagKind = 'weapon';
+            else if (['amulet', 'ring1', 'ring2'].includes(slotId)) customTagKind = 'accessory';
+            else customTagKind = 'armor';
+            showCustomTagger = false;
+            renderEquipModal();
+        },
+        setCustomTagKind: (kind) => { customTagKind = kind; renderEquipModal(); },
+        rollDynamicWeaponAttack,
+        rollDynamicWeaponDamage,
+        syncHeroStateToFirebase,
         equipItemToSlot,
         unequipSlot,
         toggleMainHandGrip,
