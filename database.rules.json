@@ -22,6 +22,12 @@
             ".write": true
           }
         },
+        "loot_overrides": {
+          ".read": true,
+          "$lootKey": {
+            ".write": true
+          }
+        },
         "heroes": {
           ".read": true,
           "$heroId": {
