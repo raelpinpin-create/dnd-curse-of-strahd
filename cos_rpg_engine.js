@@ -1461,7 +1461,7 @@
         // Deduct 1 from inventory
         const newQty = parsed.qty - 1;
         if (newQty <= 0) items.splice(invIndex, 1);
-        else items[invIndex] = `${parsed.emoji}${newQty}x ${parsed.name}`.trim();
+        else items[invIndex] = `${parsed.emoji}${newQty > 1 ? newQty + 'x ' : ''}${parsed.name}`.trim();
         adapter.saveItems(items);
 
         const act = meta.useAction;
@@ -1522,7 +1522,7 @@
                         items.splice(i, 1);
                     } else {
                         const rem = p.qty - need;
-                        items[i] = `${p.emoji}${rem}x ${p.name}`.trim();
+                        items[i] = `${p.emoji}${rem > 1 ? rem + 'x ' : ''}${p.name}`.trim();
                         need = 0;
                     }
                 }
@@ -1542,11 +1542,11 @@
         if (existingIdx !== -1) {
             const ex = parseItem(items[existingIdx]);
             const total = ex.qty + addQty;
-            items[existingIdx] = `${ex.emoji || incoming.emoji}${total}x ${ex.name}`.trim();
-        } else if (addQty > 1 || incoming.hasQty) {
+            items[existingIdx] = `${ex.emoji || incoming.emoji}${total > 1 ? total + 'x ' : ''}${ex.name}`.trim();
+        } else if (addQty > 1) {
             items.unshift(`${incoming.emoji}${addQty}x ${incoming.name}`.trim());
         } else {
-            items.unshift(rawStr);
+            items.unshift(`${incoming.emoji}${incoming.name}`.trim());
         }
     }
 
@@ -2141,15 +2141,16 @@
             }
             const raw = items[selIdx];
             const parsed = parseItem(raw);
-            const sendQty = Math.min(qty, parsed.qty);
-            if (parsed.qty <= sendQty) items.splice(selIdx, 1);
-            else items[selIdx] = `${parsed.emoji}${parsed.qty - sendQty}x ${parsed.name}`.trim();
+            const sendQty = Math.min(Math.max(1, qty), parsed.qty);
+            const remaining = parsed.qty - sendQty;
+            if (remaining <= 0) items.splice(selIdx, 1);
+            else items[selIdx] = `${parsed.emoji}${remaining > 1 ? remaining + 'x ' : ''}${parsed.name}`.trim();
             adapter.saveItems(items);
 
             const customMap = getCustomGearMap();
             const cMeta = customMap[normKey(raw)] || null;
             payload.kind = 'item';
-            payload.itemRaw = `${parsed.emoji}${sendQty > 1 ? sendQty + 'x ' : ''}${parsed.name}`.trim();
+            payload.itemRaw = `${parsed.emoji}${parsed.name}`.trim();
             payload.qty = sendQty;
             payload.customMeta = cMeta;
             applyEquipmentToSheet(true);
@@ -2429,6 +2430,13 @@
         if (eqCnt) eqCnt.textContent = bonuses.equippedCount;
     }
 
+    function formatTradeItemDisplay(itemRaw, qty) {
+        const p = parseItem(itemRaw || '');
+        const cleanName = `${p.emoji}${p.name}`.trim() || String(itemRaw || '');
+        const n = Math.max(1, parseInt(qty) || p.qty || 1);
+        return n > 1 ? `${n}x ${cleanName}` : cleanName;
+    }
+
     function renderIncomingBanner() {
         const banner = document.getElementById('rpg-incoming-banner');
         if (!banner) return;
@@ -2442,7 +2450,7 @@
             const isDm = tr.fromId === 'dm';
             const desc = tr.kind === 'gold'
                 ? `💰 <strong>${tr.gp || 0} GP${tr.sp ? ', ' + tr.sp + ' SP' : ''}</strong>`
-                : `<strong>${tr.qty > 1 ? tr.qty + 'x ' : ''}${esc(tr.itemRaw)}</strong>`;
+                : `<strong>${esc(formatTradeItemDisplay(tr.itemRaw, tr.qty))}</strong>`;
             return `
                 <div class="rpg-trade-alert-card ${isDm ? 'dm-drop' : ''}">
                     <div style="font-size:0.8rem; color:#f8fafc;">
@@ -2492,7 +2500,7 @@
             const p = parseItem(raw);
             quickBtns.push(`
                 <button type="button" class="rpg-qb-btn" onclick="COS_RPG.useConsumableByIndex(${idx})" title="1-Tap Combat Use (${esc(p.name)})">
-                    ${p.emoji}${esc(meta.useAction.label)} <span style="color:#6ee7b7; font-family:'JetBrains Mono',monospace;">(${p.qty}x)</span>
+                    ${p.emoji}${esc(meta.useAction.label)}${p.qty > 1 ? ` <span style="color:#6ee7b7; font-family:'JetBrains Mono',monospace;">(${p.qty}x)</span>` : ''}
                 </button>
             `);
         });
@@ -3278,7 +3286,7 @@
                         ${meta.useAction ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.useConsumableByIndex(${idx})">Use</button>` : ''}
                         <button type="button" class="rpg-mini-btn btn-send" onclick="COS_RPG.openSendForItem(${idx})" title="Send to party member">Send</button>
                         <div class="inv-stepper" style="display:inline-flex; align-items:center; gap:3px; background:#090e1a; border:1px solid #334155; border-radius:5px; padding:1px 4px;">
-                            ${p.hasQty ? `<button type="button" class="rpg-mini-btn" style="min-block-size:22px; padding:0 5px; border:none;" onclick="COS_RPG.stepBackpackQty(${idx}, -1)" aria-label="Decrease quantity">−</button><span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:800; color:#fde68a; min-width:22px; text-align:center;">${p.qty}x</span>` : ''}
+                            ${p.qty > 1 ? `<button type="button" class="rpg-mini-btn" style="min-block-size:22px; padding:0 5px; border:none;" onclick="COS_RPG.stepBackpackQty(${idx}, -1)" aria-label="Decrease quantity">−</button><span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:800; color:#fde68a; min-width:22px; text-align:center;">${p.qty}x</span>` : ''}
                             <button type="button" class="rpg-mini-btn" style="min-block-size:22px; padding:0 5px; border:none;" onclick="COS_RPG.stepBackpackQty(${idx}, 1)" aria-label="Increase quantity">+</button>
                         </div>
                         <button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.deleteBackpackItem(${idx})" aria-label="Remove item">✕</button>
@@ -3302,7 +3310,7 @@
             items.splice(idx, 1);
             adapter.log(`🗑️ <strong>Consumed last:</strong> ${esc(p.name)} removed from Backpack.`);
         } else {
-            items[idx] = `${p.emoji}${next}x ${p.name}`.trim();
+            items[idx] = `${p.emoji}${next > 1 ? next + 'x ' : ''}${p.name}`.trim();
         }
         adapter.saveItems(items);
         applyEquipmentToSheet(true);
@@ -3422,6 +3430,62 @@
     // =========================================================================
     let preselectedSendIdx = 0;
 
+    function getSelectedTradeItemMaxQty() {
+        const items = adapter ? adapter.getItems() : [];
+        const selEl = document.getElementById('rpg-trade-item-select');
+        const idx = selEl ? parseInt(selEl.value) : preselectedSendIdx;
+        if (isNaN(idx) || !items[idx]) return 1;
+        return Math.max(1, parseItem(items[idx]).qty || 1);
+    }
+
+    function clampTradeItemQty(explicitMax) {
+        const inp = document.getElementById('rpg-trade-item-qty');
+        if (!inp) return 1;
+        const maxQty = explicitMax || getSelectedTradeItemMaxQty();
+        inp.max = String(maxQty);
+        let val = parseInt(inp.value);
+        if (isNaN(val) || val < 1) val = 1;
+        if (val > maxQty) val = maxQty;
+        inp.value = String(val);
+        const minusBtn = document.getElementById('rpg-trade-qty-minus');
+        const plusBtn = document.getElementById('rpg-trade-qty-plus');
+        if (minusBtn) minusBtn.disabled = val <= 1;
+        if (plusBtn) plusBtn.disabled = val >= maxQty;
+        return val;
+    }
+
+    function stepTradeItemQty(delta) {
+        const inp = document.getElementById('rpg-trade-item-qty');
+        if (!inp) return;
+        const maxQty = getSelectedTradeItemMaxQty();
+        const cur = parseInt(inp.value) || 1;
+        inp.value = String(Math.min(maxQty, Math.max(1, cur + delta)));
+        clampTradeItemQty(maxQty);
+    }
+
+    function setTradeItemMaxQty() {
+        const inp = document.getElementById('rpg-trade-item-qty');
+        if (!inp) return;
+        const maxQty = getSelectedTradeItemMaxQty();
+        inp.value = String(maxQty);
+        clampTradeItemQty(maxQty);
+    }
+
+    function onTradeItemChange(newIdxVal) {
+        const idx = parseInt(newIdxVal);
+        if (!isNaN(idx)) preselectedSendIdx = idx;
+        const maxQty = getSelectedTradeItemMaxQty();
+        const lbl = document.getElementById('rpg-trade-qty-max-lbl');
+        if (lbl) lbl.textContent = `(Max in Bag: ${maxQty})`;
+        const maxBtn = document.getElementById('rpg-trade-qty-max-btn');
+        if (maxBtn) maxBtn.style.display = maxQty > 1 ? 'inline-flex' : 'none';
+        const inp = document.getElementById('rpg-trade-item-qty');
+        if (inp) {
+            if ((parseInt(inp.value) || 1) > maxQty) inp.value = String(maxQty);
+            clampTradeItemQty(maxQty);
+        }
+    }
+
     function renderTradeModal() {
         const body = document.getElementById('rpg-trade-body');
         const pill = document.getElementById('rpg-trade-status-pill');
@@ -3436,6 +3500,9 @@
         if (!tradeRecipient || tradeRecipient === adapter.heroId) tradeRecipient = others[0].id;
 
         const items = adapter.getItems();
+        if (preselectedSendIdx < 0 || preselectedSendIdx >= items.length) preselectedSendIdx = 0;
+        const selectedParsed = items[preselectedSendIdx] ? parseItem(items[preselectedSendIdx]) : { qty: 1 };
+        const maxAvailQty = Math.max(1, selectedParsed.qty || 1);
         const wallet = adapter.getGold();
 
         const sendTabHtml = `
@@ -3457,13 +3524,23 @@
                 ${tradeMode === 'item' ? `
                     <div class="rpg-form-grid">
                         <label class="rpg-field-lbl" style="grid-column: span 2;">Item from Your Backpack
-                            <select id="rpg-trade-item-select" class="rpg-select">
-                                ${items.map((raw, i) => `<option value="${i}" ${i === preselectedSendIdx ? 'selected' : ''}>${esc(raw)}</option>`).join('')}
+                            <select id="rpg-trade-item-select" class="rpg-select" onchange="COS_RPG.onTradeItemChange(this.value)">
+                                ${items.map((raw, i) => {
+                                    const p = parseItem(raw);
+                                    const cleanName = `${p.emoji}${p.name}`.trim();
+                                    return `<option value="${i}" ${i === preselectedSendIdx ? 'selected' : ''}>${esc(cleanName)}</option>`;
+                                }).join('')}
                             </select>
                         </label>
-                        <label class="rpg-field-lbl">Quantity to Send
-                            <input type="number" id="rpg-trade-item-qty" class="rpg-input" value="1" min="1" max="99">
-                        </label>
+                        <div class="rpg-field-lbl">
+                            <span>Quantity to Send <strong id="rpg-trade-qty-max-lbl" style="color:#fde68a;">(Max in Bag: ${maxAvailQty})</strong></span>
+                            <div style="display:flex; align-items:center; gap:5px; margin-top:2px;">
+                                <button type="button" id="rpg-trade-qty-minus" class="rpg-mini-btn" style="min-block-size:32px; padding:0 10px; font-weight:800;" onclick="COS_RPG.stepTradeItemQty(-1)" ${maxAvailQty <= 1 ? 'disabled' : ''} aria-label="Decrease send quantity">−</button>
+                                <input type="number" id="rpg-trade-item-qty" class="rpg-input" style="text-align:center; font-weight:800; width:64px;" value="1" min="1" max="${maxAvailQty}" oninput="COS_RPG.clampTradeItemQty()" onchange="COS_RPG.clampTradeItemQty()">
+                                <button type="button" id="rpg-trade-qty-plus" class="rpg-mini-btn" style="min-block-size:32px; padding:0 10px; font-weight:800;" onclick="COS_RPG.stepTradeItemQty(1)" ${maxAvailQty <= 1 ? 'disabled' : ''} aria-label="Increase send quantity">+</button>
+                                <button type="button" id="rpg-trade-qty-max-btn" class="rpg-mini-btn btn-equip" style="min-block-size:32px; padding:0 8px; display:${maxAvailQty > 1 ? 'inline-flex' : 'none'};" onclick="COS_RPG.setTradeItemMaxQty()" title="Send all ${maxAvailQty} in your bag">Max</button>
+                            </div>
+                        </div>
                         <label class="rpg-field-lbl">Note (optional)
                             <input type="text" id="rpg-trade-note" class="rpg-input" placeholder="e.g. Drink this before Doru!">
                         </label>
@@ -3502,7 +3579,7 @@
                         <div style="font-size:0.7rem; font-weight:800; color:#fde68a; text-transform:uppercase;">Outgoing Pending Transfers (${outgoingTrades.length})</div>
                         ${outgoingTrades.map(t => `
                             <div class="rpg-bp-row">
-                                <span style="font-size:0.75rem; color:#f8fafc;">To <strong>${esc(t.toName)}</strong>: ${t.kind === 'gold' ? `${t.gp} GP ${t.sp} SP` : esc(t.itemRaw)}</span>
+                                <span style="font-size:0.75rem; color:#f8fafc;">To <strong>${esc(t.toName)}</strong>: ${t.kind === 'gold' ? `${t.gp} GP ${t.sp} SP` : esc(formatTradeItemDisplay(t.itemRaw, t.qty))}</span>
                                 <button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.cancelOutgoingTransfer('${t.id}')">Cancel &amp; Reclaim</button>
                             </div>
                         `).join('')}
@@ -3520,7 +3597,7 @@
                         : incomingTrades.map(tr => `
                             <div class="rpg-bp-row row-equipped">
                                 <div style="font-size:0.78rem; color:#f8fafc;">
-                                    <strong>${esc(tr.fromName)}</strong> sent: <strong>${tr.kind === 'gold' ? `${tr.gp || 0} GP, ${tr.sp || 0} SP` : `${tr.qty > 1 ? tr.qty + 'x ' : ''}${esc(tr.itemRaw)}`}</strong>
+                                    <strong>${esc(tr.fromName)}</strong> sent: <strong>${tr.kind === 'gold' ? `${tr.gp || 0} GP, ${tr.sp || 0} SP` : esc(formatTradeItemDisplay(tr.itemRaw, tr.qty))}</strong>
                                     ${tr.note ? `<div style="font-size:0.7rem; color:#cbd5e1; font-style:italic;">"${esc(tr.note)}"</div>` : ''}
                                 </div>
                                 <div style="display:flex; gap:5px;">
@@ -3781,6 +3858,10 @@
         setTradeTab: (tab) => { tradeActiveTab = tab; renderTradeModal(); },
         setTradeRecipient: (id) => { tradeRecipient = id; renderTradeModal(); },
         setTradeMode: (mode) => { tradeMode = mode; renderTradeModal(); },
+        onTradeItemChange,
+        stepTradeItemQty,
+        setTradeItemMaxQty,
+        clampTradeItemQty,
         sendTransfer,
         acceptLiveTransfer,
         declineLiveTransfer,
