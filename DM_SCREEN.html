@@ -10441,6 +10441,8 @@ const BIOME_DATA = {
             { key: "mist_ward_camp_kit", note: "Petru Wagon Trade (25–30 GP)" },
             { key: "healing_potion", note: "Vistani Apothecary" },
             { key: "silvered_bullets", note: "Petru Forge (5 GP / 10 Rounds)" },
+            { key: "incendiary_bullets", note: "Petru Forge (10 GP / 10 Rounds)" },
+            { key: "fire_arrows", note: "Vistani Fletchers (x10)" },
             { key: "silvered_greatsword", note: "Vistani Silver Forge (150 GP)" },
             { key: "silvered_rapier", note: "Vistani Silver Forge (125 GP)" },
             { key: "silvered_handaxe", note: "Vistani Silver Forge (105 GP)" },
@@ -10468,10 +10470,12 @@ const BIOME_DATA = {
         tag: "SESSION 3 NIGHT HAG LAIR (BOOK CHAPTER 6 AREAS O1–O4 & RELOADED ARC D)",
         loreKey: "lore_bonegrinder",
         lootLinks: [
-            { key: "hag_heartstone", note: "Morgantha Drop" },
+            { key: "hag_heartstone", note: "Morgantha Drop (Secret Catalyst!)" },
             { key: "potion_clairvoyance", note: "Divination Bottle O3" },
             { key: "elixir_of_youth", note: "Elixir of Youth O3" },
             { key: "pale_tincture_poison", note: "Hag Blade Poison O3" },
+            { key: "poison_bullets", note: "Hag Venom Case O3 (x10)" },
+            { key: "poison_arrows", note: "Nightshade Quiver O3 (x10)" },
             { key: "windmill_deed", note: "Floor 4 Toad Chest" },
             { key: "dream_pastry", note: "Fresh Tray" }
         ],
@@ -10509,6 +10513,10 @@ const BIOME_DATA = {
             { key: "rictavio_hand_crossbow", note: "Rictavio Wagon N5" },
             { key: "rictavio_silvered_bolts", note: "20x Silver Bolts N5" },
             { key: "rictavio_silvered_shortsword", note: "Silvered Shortsword N5" },
+            { key: "incendiary_bullets", note: "Arasek / Blinsky Bench N5/N7 (x10)" },
+            { key: "fire_bolts", note: "Arasek Stockyard N5 (x10)" },
+            { key: "poison_bolts", note: "Arrigal Assassin Quiver N9 (x10)" },
+            { key: "sunburst_bolts", note: "St. Andral Sanctuary N1 (x10)" },
             { key: "mist_ward_camp_kit", note: "Arasek Stockyard N5 (25 GP)" },
             { key: "scroll_raise_dead", note: "Raise Dead Scroll N5" },
             { key: "scroll_prot_undead_fiends", note: "Prot. Undead & Fiends N5" },
@@ -10784,13 +10792,15 @@ const BIOME_DATA = {
             { key: "ring_regeneration", note: "Abbey Graveyard S7 (w/ Crypt 11 Symbol)" },
             { key: "scroll_heroes_feast", note: "Heroes' Feast Scroll (Abbey)" },
             { key: "superior_healing", note: "Abbey Apothecary S13" },
-            { key: "ezmerelda_ammo", note: "Barracks S19" }
+            { key: "ezmerelda_ammo", note: "Barracks S19" },
+            { key: "sunburst_arrows", note: "Barracks S19 / White Sun S4" },
+            { key: "sunburst_bolts", note: "Abbey Watch Barracks S19" }
         ],
         body: `
             <div class="modal-read-aloud">"Above the frost-rimmed roofs of Krezk winds a steep switchback trail to the twin fieldstone wings of Saint Markovia's Abbey. Inside the candlelit sanctuary, a serene young monk with luminescent golden eyes and a blood-spattered linen apron murmurs encouragingly—teaching a tall, mute patchwork woman stitched from twenty corpses how to bow like a countess while an emerald glow pulses faintly behind her stitched silk ribs."</div>
             <div class="nbox nbox-cyan"><strong>📍 Monastery Cloisters &amp; Surgical Sanctum (Book Chapter 8 Areas S12–S24):</strong><br>
             • <strong>Area S12 &amp; S17 — Madhouse Cloister &amp; Belltower:</strong> Barred stone asylum wings screaming with mutated <strong>Belview Mongrelfolk</strong> (<code>spider-limbs, bat-wings, crab-claws</code>), ruled from the belfry (<code>S17</code>) by sad two-headed violist <strong>Clovin Belview</strong> (<code>holds the cellar iron keyring</code>).<br>
-            • <strong>Area S13 — Abbey Main Hall &amp; Surgical Table (<code>Vasilka + 3rd Life-Gem!</code>):</strong> <strong>The Abbot (<code>CR 10 Deva</code>)</strong> offers <strong>3 free <em>Raise Dead</em> / <em>Greater Restoration</em> miracles</strong> ONLY in exchange for <strong>Baroness Lydia's Bridal Gown (<code>Area N3</code>)</strong>—unless seeing <strong>Ireena's face</strong> tempts him to harvest hers! Inside <strong><code>Vasilka's</code> chest</strong>, faint emerald light bleeds beneath corseted sutures (<code>DC 13 Perception</code>)—housing the <strong>3rd Life-Gem (<em>Champagne du le Stomp</em>)</strong>!<br>
+            • <strong>Area S13 — Abbey Main Hall &amp; Surgical Table (<code>Vasilka + 3rd Life-Gem + Heartstone Secret!</code>):</strong> <strong>The Abbot (<code>CR 10 Deva</code>)</strong> offers <strong>3 free <em>Raise Dead</em> / <em>Greater Restoration</em> miracles</strong> ONLY in exchange for <strong>Baroness Lydia's Bridal Gown (<code>Area N3</code>)</strong>—unless seeing <strong>Ireena's face</strong> tempts him to harvest hers! Inside <strong><code>Vasilka's</code> chest</strong>, faint emerald light bleeds beneath corseted sutures (<code>DC 13 Perception</code>)—housing the <strong>3rd Life-Gem (<em>Champagne du le Stomp</em>)</strong>! If questioned cleanly about Dark Powers revival alchemy, the Abbot also knows the ancient secret to transmuting a <strong>Night Hag Heartstone</strong> or crimson Strahd shard into an <em>Elixir of Health</em> (<code>HEART-ELIXIR</code>).<br>
             • <strong>Area S19 — North Watch Barracks (<code>Ezmerelda's Safehouse</code>):</strong> Stocked with chalk salt-wards, stakes, and Vistani monster hunter <strong>⚔️ Ezmerelda d'Avenir's</strong> spare firearms/silvered munitions!</div>
             <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Deva Wrath &amp; Gem Extraction Counterplay:</strong><br>
             • <strong>The Abbot &amp; Vasilka Duo (<code>CR 10 Deva + CR 5 Flesh Golem</code>):</strong> Lightning spells <strong>HEAL</strong> Vasilka, while Fire inflicts Disadvantage on her Slams! <strong>Gem Extraction (<code>S13</code>):</strong> While Vasilka is grappled, restrained, or bloodied (&lt;=46 HP), a hero can cut open her chest seam (<code>DC 14 Athletics or Medicine</code>) to wrench out the <strong>3rd Winery Life-Gem</strong>—halving her speed, imposing Disadvantage, and killing her Berserk overdrive!<br>
@@ -10813,6 +10823,7 @@ const BIOME_DATA = {
             { key: "luckstone", note: "Baba Iron Trunk U3" },
             { key: "pipes_of_haunting", note: "Baba Iron Trunk U3" },
             { key: "plus1_bullets", note: "Baba Iron Trunk U3" },
+            { key: "necrotic_bullets", note: "Baba Swamp Cache U3 (x10)" },
             { key: "scroll_revivify", note: "Revivify Scroll U3" },
             { key: "scroll_mass_cure_wounds", note: "Mass Cure Wounds Scroll U3" },
             { key: "lysaga_spellbook", note: "Baba Lysaga Grimoire U3" }
@@ -10922,6 +10933,9 @@ const BIOME_DATA = {
             { key: "robe_of_useful_items", note: "Neferon Study X5a" },
             { key: "shield_guardian_amulet", note: "Vilnius X9 / Guardian X35" },
             { key: "silvered_rapier", note: "Treasury Vault X40 Rapier" },
+            { key: "necrotic_bullets", note: "Sealed Vault X40 (x10)" },
+            { key: "necrotic_arrows", note: "Sealed Vault X40 (x10)" },
+            { key: "necrotic_bolts", note: "Sealed Vault X40 (x10)" },
             { key: "gift_of_vampyr", note: "West Vault X42" },
             { key: "gift_of_vecna", note: "Whispering Vault X42" },
             { key: "gift_of_zhudun", note: "West Vault X42" },
@@ -10933,7 +10947,7 @@ const BIOME_DATA = {
             • <strong>Areas X1–X2b &amp; X24 — Cracked Pillar Entry, Architect Skeleton &amp; Castle Scale Model:</strong> Bypassing the snow facade leads to the dead Temple Architect holding a <strong>🪄 Wand of Secrets (<code>X2b</code>)</strong> beside the <strong>10-ft Carved Stone Scale Model of Castle Ravenloft (<code>X24</code>)</strong> (<code>lets PCs memorize every secret chute & Vault before Session 17</code>!).<br>
             • <strong>Areas X4–X5 — The 40-ft Hooded Statue &amp; Neferon's Death-Trap:</strong> Inside the hollow statue head (<code>X5a</code>, <code>+5 AC Three-Quarters Cover -> AC 22</code>) disguised <strong>Neferon (<code>CR 12 Arcanaloth</code>)</strong> fires <em>Chain Lightning</em> &amp; <em>Finger of Death</em> beside <strong>3 Flameskulls</strong> on upper ledges!<br>
             • <strong>Area X17 — Frozen Corridor &amp; Wizard Corpse:</strong> Frost-hardened corpse propped against an amber column gripping the <strong>❄️ Staff of Frost</strong>.<br>
-            • <strong>Areas X27 &amp; X30 — Lich Exethanter &amp; Complete PHB Master Library:</strong> Casting <em>Greater Restoration</em> restores Exethanter's fractured memory—earning ALL locked door command words, tranquilizing the <strong>Amber Stone Golem</strong>, and unlocking the <strong>Master Library (<code>X30</code>)</strong> holding <strong>every PHB Wizard Spell (<code>Lvl 1–9</code>)</strong>!<br>
+            • <strong>Areas X27 &amp; X30 — Lich Exethanter, Master Library &amp; Carved Wall Heartstone Ritual:</strong> Casting <em>Greater Restoration</em> restores Exethanter's fractured memory—earning ALL locked door command words, tranquilizing the <strong>Amber Stone Golem</strong>, and unlocking the <strong>Master Library (<code>X30</code>)</strong> holding <strong>every PHB Wizard Spell (<code>Lvl 1–9</code>)</strong>! Behind a soot-streaked lectern in <code>X30</code> (or whispered by restored Exethanter in <code>X27</code>) lies an etched obsidian-and-amber wall fresco depicting the forbidden <strong>Elixir of Health Transmutation (<code>HEART-ELIXIR</code>)</strong>: distilling EITHER a <strong>Night Hag Heartstone</strong> OR a shard of Strahd's crimson <strong>Heart of Sorrow</strong> with <code>2x Catalyst + Moonpetal + Pure Spring Water</code>!<br>
             • <strong>Areas X33–X42 — The 20 Minor Sarcophagi &amp; The Breached West Vault (<code>X42</code>):</strong> Where Kasimir seeks <strong>Zhudun</strong>, Strahd forged <strong>Vampyr</strong>, and the cracked monolith of <strong>Vecna's Whispering Hand</strong> waits for <strong>Piper, Jacomir &amp; Yvaine</strong>!</div>
             <div class="nbox nbox-crimson"><strong>⚠️ Hazards, Crossfire Rotunda &amp; Amber Madness (<code>X4–X42</code>):</strong><br>
             • <strong>Extreme Temple Cold (<code>-30°F</code>) &amp; X4 Crossfire:</strong> Exposed freezing corridors threaten Exhaustion; marching straight onto the center nave floor triggers elevated crossfire from X5a &amp; balconies (<code>flanking via upper west/east passages </code>X2b<code> bypasses the trap!</code>).<br>
@@ -11140,22 +11154,88 @@ const LOOT_DATA = {
         lore: "Seasoned dark-oak walking staff shod at both tips in heavy etched bands of pure silver."
     },
     silvered_bullets: {
-        cat: "weapon", name: "💥 Silvered Firearm & Sling Bullets (x10)", rarity: "Uncommon Silvered Ammunition • 5 GP (Forge)",
+        cat: "weapon", name: "Silvered Firearm & Sling Bullets (x10)", rarity: "Uncommon Silvered Ammunition • 5 GP (Forge)",
         location: "Act I–IV • Ismark's Armory (E4), Tser Pool Vistani (G — 5 GP) & Arasek Stockyard (N5) • Best for Yvaine",
-        mechanics: "• <strong>10 Cast Silver Rounds:</strong> Load into <em>Mercy &amp; Less</em>, <em>Lament</em>, or slings. Shots bypass the nonmagical damage immunity of <strong>Werewolves</strong> and resistances of <strong>Vampire Spawn, Wights &amp; Night Hags</strong>!",
+        mechanics: "• <strong>10 Cast Silver Rounds:</strong> Click <strong>Load</strong> from Backpack to load 1–10 rounds into <em>Mercy</em>, <em>Less</em>, <em>Lament</em>, or slings. Shots bypass the nonmagical damage immunity of <strong>Werewolves</strong> and resistances of <strong>Vampire Spawn, Wights &amp; Night Hags</strong>!",
         lore: "Smoothly swaged firearm slugs cast directly from melted Strahd-profile silver pieces in Petru's Tser Pool crucible."
     },
     silvered_arrows: {
-        cat: "weapon", name: "🏹 Silvered Arrows (x10)", rarity: "Uncommon Silvered Ammunition • 50–100 GP",
+        cat: "weapon", name: "Silvered Arrows (x10)", rarity: "Uncommon Silvered Ammunition • 50–100 GP",
         location: "Act I–IV • Tser Pool Vistani (G), Dusk Elf Camp (N9a) & Vallaki Armory • Cael / Party Allies",
-        mechanics: "• <strong>10 Silver-Broadhead Arrows:</strong> Load directly from Backpack into Bow Quiver, then toggle Silvered ON on any bow to bypass <strong>Werewolf</strong> immunity and <strong>Vampire Spawn / Night Hag</strong> resistances (50% chance to recover unbroken shafts post-fight).",
+        mechanics: "• <strong>10 Silver-Broadhead Arrows:</strong> Click <strong>Load</strong> from Backpack into any Bow Quiver to fire Silvered shots bypassing <strong>Werewolf</strong> immunity and <strong>Vampire Spawn / Night Hag</strong> resistances (50% chance to recover unbroken shafts post-fight).",
         lore: "Goose-feathered dusk shafts tipped with broadheads hammered from silver plate."
     },
     silvered_bolts: {
         cat: "weapon", name: "Silvered Crossbow Bolts (x10)", rarity: "Uncommon Silvered Ammunition • 50–100 GP",
         location: "Act I–III • Tser Pool Vistani Silver Forge (G), Arasek Stockyard (N5) & Vallaki Armory • Yvaine / Jacomir",
-        mechanics: "• <strong>10 Silver-Tipped Crossbow Bolts:</strong> Load directly from Backpack into Crossbow Quiver, then toggle <strong>Silvered: ON</strong> on any Hand, Light, or Heavy Crossbow to bypass Werewolf immunity and Vampire Spawn / Night Hag resistances!",
+        mechanics: "• <strong>10 Silver-Tipped Crossbow Bolts:</strong> Click <strong>Load</strong> from Backpack into a chosen Crossbow, then pick how many bolts to load! Bypasses Werewolf immunity and Vampire Spawn / Night Hag resistances.",
         lore: "Heavy quarrels bound in stamped Barovian silver heads and stiff goose-vane fletching."
+    },
+    incendiary_bullets: {
+        cat: "weapon", name: "Brimstone Incendiary Bullets (x10)", rarity: "Uncommon Alchemical Ammunition • 10 GP / Craftable (INCENDIARY-ROUNDS)",
+        location: "Act I–II • Arasek Stockyard (N5), Petru Forge (G), Blinsky (N7) & Craftable • Best for Yvaine",
+        mechanics: "• <strong>Load Into Specific Firearm (1–10 Rounds):</strong> Deals an extra <strong>+1d4 Fire damage</strong> on hit, ignites flammable targets (webs, dry blight vines), and disrupts flame-vulnerable regeneration.<br>• <strong>Craftable Formula (Unlock Code <code>INCENDIARY-ROUNDS</code>):</strong> <code>1x Brimstone &amp; Pitch Sulfur + 1x Pine Pitch &amp; Lamp Oil</code> (learned from Petru, Blinsky, or Ezmerelda/Rictavio).",
+        lore: "Hollow-point lead slugs packed with yellow sulfur grit and capped in red wax."
+    },
+    fire_arrows: {
+        cat: "weapon", name: "Pitch-Tipped Fire Arrows (x10)", rarity: "Uncommon Alchemical Ammunition • 10 GP",
+        location: "Act I–II • Tser Pool Vistani Caravan (G), Arasek Stockyard (N5) & Dusk Elf Scouts • Party",
+        mechanics: "• <strong>Load Into Bow Quiver:</strong> Deals an extra <strong>+1d4 Fire damage</strong> on hit and ignites flammable webs, oil slicks, or dry Blight tendrils.",
+        lore: "Barbed broadheads tightly wrapped in resin-soaked pitchcloth that sparks sharply upon release."
+    },
+    fire_bolts: {
+        cat: "weapon", name: "Brimstone Fire Crossbow Bolts (x10)", rarity: "Uncommon Alchemical Ammunition • 10 GP",
+        location: "Act I–II • Arasek Stockyard (Vallaki N5) & Vallaki Town Guard Armory • Yvaine / Jacomir",
+        mechanics: "• <strong>Load Into Chosen Crossbow:</strong> Deals an extra <strong>+1d4 Fire damage</strong> on hit.",
+        lore: "Heavy oak bolts fitted with striker collars that ignite pitch-oil tips at muzzle snap."
+    },
+    poison_bullets: {
+        cat: "weapon", name: "Pale Tincture Poisoned Bullets (x10)", rarity: "Uncommon Toxic Ammunition • Old Bonegrinder / Arrigal",
+        location: "Act I–II • Old Bonegrinder Cabinet (O3), Wachterhaus Cellar & Arrigal (N9) • Best for Yvaine",
+        mechanics: "• <strong>Load Into Specific Firearm (1–10 Rounds):</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit, and struck targets must pass a <strong>DC 12 CON Save or become Poisoned</strong> until the end of their next turn.",
+        lore: "Alchemical copper-jacketed rounds filled with bitter Bonegrinder pale tincture sealed in tallow."
+    },
+    poison_arrows: {
+        cat: "weapon", name: "Nightshade Venom Arrows (x10)", rarity: "Uncommon Toxic Ammunition • Old Bonegrinder / Svalich Woods",
+        location: "Act I–II • Old Bonegrinder (O3), Vistani Assassins (N9) & Svalich Poacher Caches • Party",
+        mechanics: "• <strong>Load Into Bow Quiver:</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit, and targets must pass a <strong>DC 12 CON Save or become Poisoned</strong> until the end of their next turn.",
+        lore: "Dark green-fletched arrows grooved along the broadhead to carry cold belladonna venom."
+    },
+    poison_bolts: {
+        cat: "weapon", name: "Arrigal's Venom-Dipped Crossbow Bolts (x10)", rarity: "Uncommon Toxic Ammunition • Vallaki Vistani Camp N9",
+        location: "Act II • Vallaki Vistani Encampment (Arrigal — Area N9) • Yvaine / Jacomir",
+        mechanics: "• <strong>Load Into Chosen Crossbow:</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit; target makes a <strong>DC 12 CON Save or becomes Poisoned</strong> until the end of its next turn.",
+        lore: "Slender black iron bolts dipped in serpentine gall by Vistani scouts outside Vallaki."
+    },
+    sunburst_arrows: {
+        cat: "weapon", name: "Morninglord Sunburst Arrows (x10)", rarity: "Rare Radiant Ammunition • Shrine of White Sun S4 / Barracks S19",
+        location: "Act II–III • Krezk Shrine of the White Sun (S4) & Ezmerelda Barracks (S19) • Party",
+        mechanics: "• <strong>Load Into Bow Quiver:</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong>, deals an extra <strong>+1d6 Radiant damage</strong>, counts as <strong>Silvered</strong>, and <strong>halts Vampire Regeneration for 1 round</strong>!",
+        lore: "Ashwood arrows tipped with sun-forged bronze and silver broadheads consecrated in pure dawn spring water."
+    },
+    sunburst_bolts: {
+        cat: "weapon", name: "Morninglord Sunburst Crossbow Bolts (x10)", rarity: "Rare Radiant Ammunition • St. Andral N1 / Barracks S19",
+        location: "Act II–III • St. Andral Sanctuary (N1), Van Richten Stockpile (N5) & Abbey S19 • Yvaine / Jacomir",
+        mechanics: "• <strong>Load Into Chosen Crossbow:</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong>, deals an extra <strong>+1d6 Radiant damage</strong>, counts as <strong>Silvered</strong>, and <strong>halts Vampire Regeneration for 1 round</strong>!",
+        lore: "White-fletched heavy bolts blessed under Morninglord altars specifically to halt Strahd's spawn."
+    },
+    necrotic_bullets: {
+        cat: "weapon", name: "Grave-Salt Necrotic Bullets (x10)", rarity: "Rare Shadowfell Ammunition • Berez U3 / Amber Temple X40",
+        location: "Act III–IV • Baba Lysaga Swamp Cache (U3) & Amber Temple Treasury (X40) • Best for Yvaine",
+        mechanics: "• <strong>Load Into Specific Firearm (1–10 Rounds):</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and the struck target <strong>cannot regain Hit Points</strong> until the start of your next turn.",
+        lore: "Dull charcoal-gray firearm rounds packed with cold grave salt and shattered lich-bone."
+    },
+    necrotic_arrows: {
+        cat: "weapon", name: "Shadow-Bone Necrotic Arrows (x10)", rarity: "Rare Shadowfell Ammunition • Amber Temple X40",
+        location: "Act III–IV • Dusk Elf Sanctuary & Amber Temple Treasury Vault (X40) • Party",
+        mechanics: "• <strong>Load Into Bow Quiver:</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and struck targets <strong>cannot regain Hit Points</strong> until the start of your next turn.",
+        lore: "Honed femur-tip shafts chilled inside the amber vaults beneath Mount Ghakis."
+    },
+    necrotic_bolts: {
+        cat: "weapon", name: "Grave-Salt Necrotic Crossbow Bolts (x10)", rarity: "Rare Shadowfell Ammunition • Amber Temple X40 / Crypts",
+        location: "Act III–IV • Amber Temple Sealed Treasury (X40) & Ravenloft Catacombs • Yvaine / Jacomir",
+        mechanics: "• <strong>Load Into Chosen Crossbow:</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and struck targets <strong>cannot regain Hit Points</strong> until the start of your next turn.",
+        lore: "Blackened steel quarrels etched with hunger runes that choke off cellular healing."
     },
     blood_spear: {
         cat: "weapon", name: "🩸 The Blood Spear of Kavan (+2 Vampiric Spear)", rarity: "Rare Magic Spear • Attunement (Jacomir)",
@@ -11202,7 +11282,7 @@ const LOOT_DATA = {
     oil_of_sharpness: {
         cat: "weapon", name: "🧪 Oil of Sharpness (+3 Weapon / Ammunition Coating)", rarity: "Very Rare Consumable • Book Area U3",
         location: "Act III • Baba Lysaga's Creeping Hut in Berez (Area U3 — Session 14) • Jacomir / Yvaine",
-        mechanics: "• <strong>Apex Boss-Killer Coating:</strong> Taking 1 Action (or pre-combat prep) to coat 1 slashing/piercing weapon (like Jacomir's Greatsword) or <strong>5 pieces of ammunition</strong> (like Yvaine's rifle rounds): for <strong>1 full hour</strong>, the coated weapon/ammo becomes magical and gains a massive <strong>+3 bonus to attack and damage rolls</strong>!",
+        mechanics: "• <strong>Apex Boss-Killer Coating:</strong> Click <strong>Use</strong> on a slashing/piercing melee blade OR click <strong>Load</strong> in Backpack to coat up to <strong>5 rounds</strong> in a specific firearm, bow, or crossbow for a massive <strong>+3 bonus to attack and damage rolls</strong>!",
         lore: "A clear, gelatinous vial of oil flecked with tiny, razor-sharp shards of pure silver, hidden inside Baba Lysaga's treasure chest."
     },
     baal_verzi_dagger: {
@@ -11232,7 +11312,7 @@ const LOOT_DATA = {
     liquid_silver_coating: {
         cat: "weapon", name: "✨ Vial of Liquid Silver Coating (Silvered 1 hr)", rarity: "Uncommon Tactical Coating • Craftable / 10 GP",
         location: "Act I–IV • Craftable (SILVER-COAT) or Vistani / Ezmerelda Supply • Jacomir & Yvaine",
-        mechanics: "• <strong>Bonus Action / Prep (1 Hour Duration):</strong> Brush this shimmering alchemical oil onto <strong>1 melee weapon</strong> or up to <strong>10 bullets/arrows</strong>. For <strong>1 full hour</strong>, coated strikes count as <strong>Silvered</strong>—bypassing the nonmagical B/P/S resistances and immunities of <strong>Vampire Spawn, Werewolves, Wights, and Night Hags</strong>!<br>• <strong>Craftable Formula (Unlock Code <code>SILVER-COAT</code>):</strong> <code>1x Powdered Silver Dust + 1x Pine Pitch &amp; Lamp Oil</code>.",
+        mechanics: "• <strong>Bonus Action / Prep (1 Hour Duration):</strong> Click <strong>Use</strong> on a melee blade OR click <strong>Load</strong> in Backpack to coat up to <strong>10 bullets, arrows, or bolts</strong> inside a specific firearm/bow/crossbow. Coated strikes count as <strong>Silvered</strong>—bypassing the nonmagical B/P/S resistances and immunities of <strong>Vampire Spawn, Werewolves, Wights, and Night Hags</strong>!<br>• <strong>Craftable Formula (Unlock Code <code>SILVER-COAT</code>):</strong> <code>1x Powdered Silver Dust + 1x Pine Pitch &amp; Lamp Oil</code>.",
         lore: "Suspended silver powder bound in refined pine oil, keeping blades gleaming like frost against Barovia's beasts."
     },
     alchemists_fire: {
@@ -11250,7 +11330,7 @@ const LOOT_DATA = {
     sun_ash_balm: {
         cat: "weapon", name: "☀️ Sun-Ash Repellent Balm (+1d4 Radiant Coat 10m)", rarity: "Rare Sacred Unguent • Craftable (Act III)",
         location: "Act III–IV • Craftable (SUN-ASH) • Jacomir, Yvaine & Party",
-        mechanics: "• <strong>Bonus Action / Prep (10-Minute Duration):</strong> Rub this luminous pale-gold paste across <strong>1 melee weapon</strong> or <strong>6 firearm rounds</strong>. For <strong>10 minutes</strong>, hits deal an extra <strong>+1d4 Radiant damage</strong> and briefly sear Undead flesh (disrupts regeneration until the start of your next turn on a Critical Hit or DM discretion!).<br>• <strong>Craftable Formula (Unlock Code <code>SUN-ASH</code>):</strong> <code>1x Svalich Moonpetal Blossom + 1x Powdered Silver Dust + 1x Pure Mountain Spring Water</code>.",
+        mechanics: "• <strong>Bonus Action / Prep (10-Minute Duration):</strong> Click <strong>Use</strong> on a melee weapon OR click <strong>Load</strong> in Backpack to coat up to <strong>6 rounds</strong> in a chosen firearm, bow, or crossbow. Hits deal an extra <strong>+1d4 Radiant damage</strong> and briefly sear Undead flesh (disrupts regeneration on Crit or DM discretion!).<br>• <strong>Craftable Formula (Unlock Code <code>SUN-ASH</code>):</strong> <code>1x Svalich Moonpetal Blossom + 1x Powdered Silver Dust + 1x Pure Mountain Spring Water</code>.",
         lore: "Consecrated dawn-petal unguent mixed with silver ash—shining like ember-gold in dark crypts when the Sun itself cannot breach the clouds."
     },
 
@@ -11460,10 +11540,10 @@ const LOOT_DATA = {
         lore: "A cracked, hand-painted white porcelain half-mask shaped like a grinning human skull."
     },
     hag_heartstone: {
-        cat: "armor", name: "🧿 Morgantha's Cracked Night Hag Heartstone", rarity: "Rare Wondrous Gem • Boss Drop (Session 3)",
+        cat: "armor", name: "🧿 Morgantha's Cracked Night Hag Heartstone", rarity: "Rare Wondrous Gem • Boss Drop (Session 3) • Alternate Relic Catalyst",
         location: "Act I • Old Bonegrinder Windmill (Dropped by Morgantha — Session 3) • Cael / Party",
-        mechanics: "• <strong>Purifying Touch (1/Day Action):</strong> Touch a creature to immediately <strong>cure any 1 disease, poison, or hag nightmare curse</strong> (MM Night Hags use intact stones freely; cracked for PC balance).<br>• <strong>Soul-Tether Ward:</strong> While carried in your pocket, you have <strong>Advantage on Death Saving Throws</strong>!",
-        lore: "A lustrous, cracked jet-black gem worn around Granny Morgantha's neck. Though cracked enough to lose its Etherealness power, it still drinks away sickness and death."
+        mechanics: "• <strong>Purifying Touch (1/Day Action):</strong> Touch a creature to immediately <strong>cure any 1 disease, poison, or hag nightmare curse</strong> (MM Night Hags use intact stones freely; cracked for PC balance).<br>• <strong>Soul-Tether Ward:</strong> While carried in your pocket, you have <strong>Advantage on Death Saving Throws</strong>!<br>• <span style=\"color:#fde68a;\"><strong>DM Late-Game Secret (Amber Temple X30 / Exethanter X27 / Abbot S13):</strong> Can ALSO be sacrificed (consuming the stone forever) instead of Strahd's <em>Heart of Sorrow Shard (K20)</em> to brew an <strong>Elixir of Health (HEART-ELIXIR)</strong> once the party learns the ritual later in Barovia!</span>",
+        lore: "A lustrous, cracked jet-black gem worn around Granny Morgantha's neck. Though cracked enough to lose its Etherealness power, its core still holds unspent life-transmutation resonance."
     },
     bag_of_tricks: {
         cat: "armor", name: "🐾 Martikov Gray Bag of Tricks", rarity: "Uncommon Wondrous Item • (Book Area N2q)",
@@ -11519,9 +11599,9 @@ const LOOT_DATA = {
     },
     elixir_of_health: {
         cat: "heal", name: "Elixir of Health (Legendary Revival)", rarity: "Legendary Consumable • Extra Rare • 5,000 GP (Base) / 15,000 GP (Royal Market) • Book Area N2q",
-        location: "Act II–IV • Blue Water Inn Secret Stash (Area N2q) OR Single Brew from Heart of Sorrow Shard (HEART-ELIXIR) • Party",
-        mechanics: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest.<br>• <strong>Extra Rare &amp; Expensive (<code>5,000 GP Base / 15,000 GP Royal Market</code>):</strong> Cannot be brewed from common herbs—only found in Area <code>N2q</code> or brewed <strong>once</strong> via Unlock Code <code>HEART-ELIXIR</code> using the unique <strong>Shard of the Heart of Sorrow</strong> (<code>K20</code>).",
-        lore: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—either smuggled into Barovia before the Mists closed or distilled once from the shattered Heart of Sorrow."
+        location: "Act II–IV • Blue Water Inn Secret Stash (Area N2q) OR Heartstone Transmutation (HEART-ELIXIR) • Party",
+        mechanics: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest.<br>• <strong>Extra Rare &amp; Expensive (<code>5,000 GP Base / 15,000 GP Royal Market</code>):</strong> Cannot be brewed from common herbs—either found in Area <code>N2q</code> or distilled once (<code>HEART-ELIXIR</code>) by sacrificing EITHER the unique <strong>Shard of the Heart of Sorrow (<code>K20</code>)</strong> OR <strong>Morgantha's Cracked Night Hag Heartstone</strong>.<br>• <strong>DM Discovery (Locked Until Late Campaign):</strong> Formula is unknown at start—carved onto an ancient fresco behind a lectern in the <strong>Amber Temple Master Library (<code>X30</code>)</strong>, remembered by restored <strong>Lich Exethanter (<code>X27</code>)</strong>, or confided by <strong>The Abbot (<code>S13</code>) / Van Richten</strong>.",
+        lore: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—an ultra-rare heirloom smuggled into Barovia or distilled through forbidden Heartstone transmutation."
     },
     barovian_antitoxin: {
         cat: "heal", name: "🧪 Barovian Antitoxin Tonic (Adv vs Poison 1 hr)", rarity: "Common/Uncommon Consumable • Craftable / 5 GP",
@@ -11705,7 +11785,7 @@ const LOOT_DATA = {
     arrigal_wyvern_venom: {
         cat: "weapon", name: "☠️ Arrigal's Assassin Wyvern Venom (3 Doses)", rarity: "Rare Deadly Poison • Act II (Book Area N9)",
         location: "Act II • Vallaki Vistani Camp (Arrigal — Area N9)",
-        mechanics: "• <strong>Bonus Action Blade/Ammo Coating (3 Doses):</strong> Coat 1 blade or 1 bolt/bullet per dose; next hit forces a <strong>DC 15 CON Save</strong> or inflicts <strong>7d6 (24) Poison damage</strong> (half on success)!",
+        mechanics: "• <strong>Bonus Action Blade/Ammo Coating (3 Doses):</strong> Click <strong>Use</strong> on 1 blade OR click <strong>Load</strong> in Backpack to coat individual bullets, arrows, or bolts (1 dose = 1 coated round). Next hit forces a <strong>DC 15 CON Save</strong> or inflicts <strong>7d6 (24) Poison damage</strong> (half on success)!",
         lore: "Five drops of black mountain venom stop a treasonous whisper in two heartbeats."
     },
     vistani_treasure_wagon: {
@@ -11978,7 +12058,7 @@ const LOOT_DATA = {
     heart_of_sorrow_shard: {
         cat: "material", name: "Shard of the Heart of Sorrow (Unique Sorrow-Crystal Core)", rarity: "Legendary Unique Crafting Relic • Strict 1-Per-Campaign Opportunity",
         location: "Act IV • Castle Ravenloft North Tower (Shattering K20 Heart of Sorrow) • Party (1 Only)",
-        mechanics: "• <strong>Strict 1-Per-Campaign Drop (Castle Ravenloft K20):</strong> Distinct from Morgantha's Night Hag Heartstone and the Martikovs' three green Winery Life-Gems. When the party shatters Strahd's 50-HP crimson <strong>Heart of Sorrow</strong> in Tower <code>K20</code>, they have <strong>ONE opportunity in the entire campaign</strong> to snatch <strong>1 intact fist-sized ruby crystal core</strong> before the rest turns to dissolving mist.<br>• <strong>Legendary Recipe (Unlock Code <code>HEART-ELIXIR</code>):</strong> Combines with <code>2x Alchemical Catalyst + 1x Svalich Moonpetal Blossom + 1x Pure Mountain Spring Water</code> to brew <strong>1x Elixir of Health (Legendary Revival)</strong>—consuming the unique shard permanently.",
+        mechanics: "• <strong>Strict 1-Per-Campaign Drop (Castle Ravenloft K20):</strong> Distinct from Morgantha's Night Hag Heartstone and the Martikovs' three green Winery Life-Gems. When the party shatters Strahd's 50-HP crimson <strong>Heart of Sorrow</strong> in Tower <code>K20</code>, they have <strong>ONE opportunity in the entire campaign</strong> to snatch <strong>1 intact fist-sized ruby crystal core</strong> before the rest turns to dissolving mist.<br>• <strong>Legendary Recipe Catalyst (<code>HEART-ELIXIR</code>):</strong> Can be sacrificed (or alternatively <strong>Morgantha's Night Hag Heartstone</strong> if the party kept it and discovered the ritual!) alongside <code>2x Alchemical Catalyst + 1x Svalich Moonpetal Blossom + 1x Pure Mountain Spring Water</code> to brew <strong>Elixir of Health (Legendary Revival)</strong>.",
         lore: "A cold, pulsing prism of Khazan's blood-forged ruby crystal—still humming faintly with stolen vitality long after the North Tower chains snap."
     },
     vampire_ash_fang: {
@@ -14119,6 +14199,18 @@ function renderDmDropModalBody() {
                 <div style="font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:#d8b4fe; background:#111827; border:1px solid #1e293b; border-radius:5px; padding:4px 8px;">
                     <strong>Live Class Resources:</strong> ${escapeEncounterHtml(st.resourcesSummary)}
                 </div>` : ''}
+                ${(() => {
+                    const wa = st.weaponAmmo && typeof st.weaponAmmo === 'object' ? st.weaponAmmo : {};
+                    const lines = Object.entries(wa).map(([wid, wobj]) => {
+                        const pools = wobj && wobj.pools ? Object.entries(wobj.pools).filter(([, c]) => c > 0) : [];
+                        if (!pools.length) return '';
+                        const act = wobj.active || 'standard';
+                        const parts = pools.map(([aid, cnt]) => `${aid === act ? '*' : ''}${aid} (${cnt})`).join(', ');
+                        return `${wid}: ${parts}`;
+                    }).filter(Boolean);
+                    if (!lines.length) return '';
+                    return `<div style="font-family:'JetBrains Mono',monospace; font-size:0.71rem; color:#fde68a; background:#090e1a; border:1px solid #334155; border-radius:5px; padding:4px 8px;"><strong>Loaded Specialty Ammo:</strong> ${escapeEncounterHtml(lines.join(' | '))}</div>`;
+                })()}
 
                 <!-- Remote DM Vitals & Purse Controls -->
                 <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; background:#111827; border:1px solid #1e293b; border-radius:6px; padding:5px 8px;">
@@ -14570,6 +14662,13 @@ function openItemModal(key, fromNav = false) {
             ? ''
             : `<button type="button" class="btn-modal-mini" style="padding:3px 9px; font-size:0.7rem; border-color:${isUnlocked ? '#ef4444' : '#34d399'}; color:${isUnlocked ? '#fca5a5' : '#6ee7b7'};" onclick="dmToggleRecipeUnlock('${craftRec.id}', '${safeName}', ${!isUnlocked})">${isUnlocked ? '🔒 Re-Lock' : '🔓 Unlock Live'}</button>`;
         const ingPills = craftRec.ingredients.map(ing => {
+            if (Array.isArray(ing.orKeys) && ing.orKeys.length > 0) {
+                return ing.orKeys.map(ok => {
+                    const m = LOOT_DATA[ok];
+                    const lbl = m ? m.name.replace(/\s*\([^)]*\)\s*/g, '').trim() : ok;
+                    return `<button type="button" class="loot-link-pill" onclick="navigateModalFromInside('item', '${ok}')">${ing.qty}x ${lbl}</button>`;
+                }).join('<span style="font-size:0.68rem; color:#94a3b8; margin:0 4px;">OR</span>');
+            }
             const mat = LOOT_DATA[ing.key];
             const matLabel = mat ? mat.name.replace(/\s*\([^)]*\)\s*/g, '').trim() : ing.key;
             return `<button type="button" class="loot-link-pill" onclick="navigateModalFromInside('item', '${ing.key}')">${ing.qty}x ${matLabel}</button>`;
@@ -14582,16 +14681,17 @@ function openItemModal(key, fromNav = false) {
                     ${toggleBtnHtml}
                 </div>
                 <div style="font-size:0.76rem; color:var(--text-muted); margin-bottom:6px;">Required Materials (click any reagent to inspect Forage DC &amp; Shop Price):</div>
-                <div style="display:flex; flex-wrap:wrap; gap:4px;">${ingPills}</div>
-                ${craftRec.note ? `<div style="font-size:0.74rem; color:#fde68a; margin-top:7px;">${craftRec.note}</div>` : ''}
+                <div style="display:flex; flex-wrap:wrap; align-items:center; gap:4px;">${ingPills}</div>
+                ${craftRec.learnedFrom ? `<div style="font-size:0.73rem; color:#93c5fd; margin-top:7px;"><strong>How Learned:</strong> ${craftRec.learnedFrom}</div>` : ''}
+                ${craftRec.note ? `<div style="font-size:0.74rem; color:#fde68a; margin-top:5px;">${craftRec.note}</div>` : ''}
             </div>
         `;
-    } else if (it.cat === 'material') {
-        const usedIn = DM_CRAFTING_RECIPES.filter(r => r.ingredients.some(ing => ing.key === key));
+    } else {
+        const usedIn = DM_CRAFTING_RECIPES.filter(r => r.ingredients.some(ing => ing.key === key || (Array.isArray(ing.orKeys) && ing.orKeys.includes(key))));
         if (usedIn.length > 0) {
             const usedPills = usedIn.map(r => {
                 const targetItem = LOOT_DATA[r.lootKey];
-                const ingObj = r.ingredients.find(ing => ing.key === key);
+                const ingObj = r.ingredients.find(ing => ing.key === key || (Array.isArray(ing.orKeys) && ing.orKeys.includes(key)));
                 const lbl = targetItem ? targetItem.name : r.summary;
                 return `<button type="button" class="loot-link-pill" onclick="navigateModalFromInside('item', '${r.lootKey}')">${lbl} <small style="color:#94a3b8;">(Needs ${ingObj.qty}x • ${r.unlockedDefault ? 'Unlocked' : r.code})</small></button>`;
             }).join('');
@@ -15894,6 +15994,7 @@ const DM_CRAFTING_RECIPES = [
         lootKey: 'greater_healing',
         summary: '🧪 Potion of Greater Healing (4d4+4 HP)',
         code: 'GREATER-HEAL',
+        learnedFrom: 'Taught by Jeny Greenteeth, Jenny/Vistani apothecaries, or Father Donavich / Martikov secret notes.',
         ingredients: [
             { key: 'medicinal_herbs', qty: 4 },
             { key: 'alchemical_catalyst', qty: 1 }
@@ -15904,6 +16005,7 @@ const DM_CRAFTING_RECIPES = [
         lootKey: 'holy_water',
         summary: '💧 Morninglord Holy Water (2d6 Radiant)',
         code: 'MORNINGLORD',
+        learnedFrom: 'Taught orally by Father Lucian Petrovich (N1) or Ezmerelda d\'Avenir after trusting the party.',
         ingredients: [
             { key: 'pure_spring_water', qty: 1 },
             { key: 'powdered_silver_dust', qty: 1 }
@@ -15914,6 +16016,7 @@ const DM_CRAFTING_RECIPES = [
         lootKey: 'barovian_antitoxin',
         summary: '🧪 Barovian Antitoxin Tonic (Adv vs Poison 1h)',
         code: 'WOLFBANE',
+        learnedFrom: 'Shared by Vistani herbalists (G), Muriel Vinshaw (wereraven scouts), or Krezk woodsmen.',
         ingredients: [
             { key: 'medicinal_herbs', qty: 2 },
             { key: 'wolfbane_root', qty: 1 }
@@ -15924,6 +16027,7 @@ const DM_CRAFTING_RECIPES = [
         lootKey: 'liquid_silver_coating',
         summary: '✨ Vial of Liquid Silver Coating (Silvered 1h)',
         code: 'SILVER-COAT',
+        learnedFrom: 'Shown at Petru\'s Tser Pool Silver Forge (G) or found in Dr. van Richten\'s hunter ledger (N5).',
         ingredients: [
             { key: 'powdered_silver_dust', qty: 1 },
             { key: 'pitch_oil', qty: 1 }
@@ -15934,6 +16038,7 @@ const DM_CRAFTING_RECIPES = [
         lootKey: 'alchemists_fire',
         summary: "🔥 Alchemist's Fire Flask (1d4/turn Fire)",
         code: 'BRIMSTONE',
+        learnedFrom: 'Picked up at Ezmerelda\'s Wagon (V1), Rictavio\'s carnival kit (N5), or Blinsky\'s workshop.',
         ingredients: [
             { key: 'charcoal_sulfur', qty: 1 },
             { key: 'pitch_oil', qty: 1 }
@@ -15944,6 +16049,7 @@ const DM_CRAFTING_RECIPES = [
         lootKey: 'ash_smoke_bomb',
         summary: '💨 Ash-Cloud Smoke Bomb (15-ft Obscured)',
         code: 'ASH-CLOUD',
+        learnedFrom: 'Whispered by Vistani scouts or Arasek Stockyard smugglers for quick ambush getaways.',
         ingredients: [
             { key: 'charcoal_sulfur', qty: 1 },
             { key: 'medicinal_herbs', qty: 1 }
@@ -15954,6 +16060,7 @@ const DM_CRAFTING_RECIPES = [
         lootKey: 'phosphor_grenades',
         summary: '💣 Alchemical Phosphor Flash-Bomb (2d6 Fire/Rad + Blind)',
         code: 'PHOSPHOR',
+        learnedFrom: 'Learned from Ezmerelda d\'Avenir\'s field notes (V1/S19) or Van Richten\'s Tower study.',
         ingredients: [
             { key: 'charcoal_sulfur', qty: 1 },
             { key: 'powdered_silver_dust', qty: 1 },
@@ -15961,10 +16068,22 @@ const DM_CRAFTING_RECIPES = [
         ]
     },
     {
+        id: 'craft_incendiary_bullets',
+        lootKey: 'incendiary_bullets',
+        summary: 'Brimstone Incendiary Bullets (x10 • +1d4 Fire)',
+        code: 'INCENDIARY-ROUNDS',
+        learnedFrom: 'Demonstrated by Petru at Tser Pool (G), Gadof Blinsky (N7), or Ezmerelda d\'Avenir.',
+        ingredients: [
+            { key: 'charcoal_sulfur', qty: 1 },
+            { key: 'pitch_oil', qty: 1 }
+        ]
+    },
+    {
         id: 'craft_camp_kit',
         lootKey: 'mist_ward_camp_kit',
         summary: "⛺ Mist-Ward Traveler's Camp Kit (Wilderness True Long Rest)",
         code: 'MIST-CAMP',
+        learnedFrom: 'Bought (25–50 GP) or stitched from survival patterns taught by Krezk trappers / Ismark / Tser Pool outfitters.',
         ingredients: [
             { key: 'treated_pelt_canvas', qty: 2 },
             { key: 'pitch_oil', qty: 2 },
@@ -15978,6 +16097,7 @@ const DM_CRAFTING_RECIPES = [
         lootKey: 'superior_healing',
         summary: '🧪 Potion of Superior Healing (8d4+8 HP)',
         code: 'MOONPETAL',
+        learnedFrom: 'Revealed by Damia/Abbey infirmary notes (S13), Keepers of the Feather inner circle, or Lady Wachter\'s library.',
         ingredients: [
             { key: 'medicinal_herbs', qty: 4 },
             { key: 'alchemical_catalyst', qty: 2 },
@@ -15989,6 +16109,7 @@ const DM_CRAFTING_RECIPES = [
         lootKey: 'sun_ash_balm',
         summary: '☀️ Sun-Ash Repellent Balm (+1d4 Radiant Coat 10m)',
         code: 'SUN-ASH',
+        learnedFrom: 'Consecrated ritual passed down by Order of the Silver Dragon Knights (Q) or Dr. van Richten.',
         ingredients: [
             { key: 'svalich_moonpetal', qty: 1 },
             { key: 'powdered_silver_dust', qty: 1 },
@@ -16000,13 +16121,14 @@ const DM_CRAFTING_RECIPES = [
         lootKey: 'elixir_of_health',
         summary: 'Elixir of Health (Legendary Revival • 50% Max HP)',
         code: 'HEART-ELIXIR',
+        learnedFrom: 'Carved behind a soot-stained lectern mural in Amber Temple Library (X30), recalled by restored Lich Exethanter (X27), or confided by The Fallen Abbot (S13) / Van Richten.',
         ingredients: [
-            { key: 'heart_of_sorrow_shard', qty: 1 },
+            { key: 'heart_of_sorrow_shard', orKeys: ['heart_of_sorrow_shard', 'hag_heartstone'], qty: 1 },
             { key: 'alchemical_catalyst', qty: 2 },
             { key: 'svalich_moonpetal', qty: 1 },
             { key: 'pure_spring_water', qty: 1 }
         ],
-        note: "Strict 1/Campaign Legendary Craft: Requires the single Shard of the Heart of Sorrow salvaged from shattering Tower K20's Heart of Sorrow."
+        note: "Strict Heartstone Transmutation: Sacrifices EITHER Strahd's Shard of the Heart of Sorrow (K20) OR Morgantha's Cracked Night Hag Heartstone permanently."
     }
 ];
 const DM_CRAFTING_BY_LOOT = Object.fromEntries(DM_CRAFTING_RECIPES.map(r => [r.lootKey, r]));
@@ -16115,6 +16237,13 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
             const isUnl = r.unlockedDefault || !!dmUnlockedRecipes[r.id];
             const safeT = r.summary.replace(/'/g, "\\'").replace(/"/g, '&quot;');
             const ingBtns = r.ingredients.map(ing => {
+                if (Array.isArray(ing.orKeys) && ing.orKeys.length > 0) {
+                    return ing.orKeys.map(ok => {
+                        const m = LOOT_DATA[ok];
+                        const lbl = m ? m.name.replace(/\s*\([^)]*\)\s*/g, '').trim() : ok;
+                        return `<button type="button" class="loot-link-pill" style="font-size:0.71rem; padding:2px 7px; margin:1px 2px;" onclick="openItemModal('${ok}')">${ing.qty}x ${lbl}</button>`;
+                    }).join('<span style="font-size:0.66rem; color:#94a3b8; margin:0 2px;">OR</span>');
+                }
                 const mat = LOOT_DATA[ing.key];
                 const matLabel = mat ? mat.name.replace(/\s*\([^)]*\)\s*/g, '').trim() : ing.key;
                 return `<button type="button" class="loot-link-pill" style="font-size:0.71rem; padding:2px 7px; margin:1px 3px 1px 0;" onclick="openItemModal('${ing.key}')">${ing.qty}x ${matLabel}</button>`;
@@ -16129,6 +16258,7 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
                 <tr class="searchable-row">
                     <td>
                         <button type="button" class="link-btn" onclick="openItemModal('${r.lootKey}')">${r.summary}</button>
+                        ${r.learnedFrom ? `<div style="font-size:0.68rem; color:#93c5fd; margin-top:2px;"><strong>Learned:</strong> ${r.learnedFrom}</div>` : ''}
                         ${r.note ? `<div style="font-size:0.69rem; color:#fde68a; margin-top:2px;">${r.note}</div>` : ''}
                     </td>
                     <td><div style="display:flex; flex-wrap:wrap; align-items:center; gap:2px;">${ingBtns}</div></td>

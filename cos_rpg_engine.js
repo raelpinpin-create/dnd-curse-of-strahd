@@ -323,34 +323,122 @@
 
         // --- AMMUNITION PACKS (Match BEFORE weapons so bolts/arrows never parse as ranged weapons!) ---
         {
+            match: ['ezmerelda', 'sunburst cartridges', 'sunburst bullets', 'dawn-powder'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'sunburst', ammoKind: 'firearm', packSizeDefault: 10 },
+            summary: '+1/+1 & +1d6 Radiant Firearm Rounds (Halts Regen)'
+        },
+        {
+            match: ['sunburst arrows', 'morninglord sunburst arrows'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'sunburst', ammoKind: 'bow', packSizeDefault: 10 },
+            summary: '+1/+1 & +1d6 Radiant Arrows (Silvered, Halts Regen)'
+        },
+        {
+            match: ['sunburst crossbow bolts', 'sunburst bolts', 'morninglord sunburst bolts'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'sunburst', ammoKind: 'crossbow', packSizeDefault: 10 },
+            summary: '+1/+1 & +1d6 Radiant Bolts (Silvered, Halts Regen)'
+        },
+        {
+            match: ['baba lysaga', '+1 magical sling', '+1 firearm bullets', '+1 bullets'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'plus1', ammoKind: 'firearm', packSizeDefault: 10 },
+            summary: '+1 Hit & +1 Magical Firearm/Sling Rounds'
+        },
+        {
+            match: ['incendiary bullets', 'brimstone bullets', 'fire bullets'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'incendiary', ammoKind: 'firearm', packSizeDefault: 10 },
+            summary: '+1d4 Fire Firearm/Sling Rounds'
+        },
+        {
+            match: ['fire arrows', 'pitch-tipped fire arrows', 'incendiary arrows'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'incendiary', ammoKind: 'bow', packSizeDefault: 10 },
+            summary: '+1d4 Fire Bow Arrows'
+        },
+        {
+            match: ['fire crossbow bolts', 'brimstone fire crossbow bolts', 'fire bolts', 'incendiary bolts'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'incendiary', ammoKind: 'crossbow', packSizeDefault: 10 },
+            summary: '+1d4 Fire Crossbow Bolts'
+        },
+        {
+            match: ['pale tincture poisoned bullets', 'poisoned bullets', 'poison bullets'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'poison', ammoKind: 'firearm', packSizeDefault: 10 },
+            summary: '+1d6 Poison + DC 12 CON Save Bullets'
+        },
+        {
+            match: ['venom arrows', 'poison arrows', 'poisoned arrows', 'nightshade venom arrows'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'poison', ammoKind: 'bow', packSizeDefault: 10 },
+            summary: '+1d6 Poison + DC 12 CON Save Arrows'
+        },
+        {
+            match: ['venom-dipped', 'venom bolts', 'poison bolts', 'poisoned bolts'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'poison', ammoKind: 'crossbow', packSizeDefault: 10 },
+            summary: '+1d6 Poison + DC 12 CON Save Bolts'
+        },
+        {
+            match: ['necrotic bullets', 'grave-salt necrotic bullets'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'necrotic', ammoKind: 'firearm', packSizeDefault: 10 },
+            summary: '+1d6 Necrotic (Blocks Healing Until Next Turn)'
+        },
+        {
+            match: ['necrotic arrows', 'shadow-bone necrotic arrows'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'necrotic', ammoKind: 'bow', packSizeDefault: 10 },
+            summary: '+1d6 Necrotic Arrows (Blocks Healing)'
+        },
+        {
+            match: ['necrotic crossbow bolts', 'necrotic bolts', 'grave-salt necrotic bolts'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'necrotic', ammoKind: 'crossbow', packSizeDefault: 10 },
+            summary: '+1d6 Necrotic Bolts (Blocks Healing)'
+        },
+        {
             match: ['silvered bullets', 'silvered firearm', 'silver bullets', 'silver slugs'],
             category: 'gear',
             slots: [],
-            ammoKind: 'firearm',
-            ammoPackDefault: 10,
-            summary: 'Silvered Firearm/Sling Rounds (Load into Weapon Mag)'
+            ammoMeta: { ammoId: 'silvered', ammoKind: 'firearm', packSizeDefault: 10 },
+            summary: 'Silvered Firearm/Sling Rounds (Bypasses Resist)'
         },
         {
             match: ['silvered arrows', 'silver arrows'],
             category: 'gear',
             slots: [],
-            ammoKind: 'bow',
-            ammoPackDefault: 10,
-            summary: 'Silvered Bow Arrows (Load into Bow Quiver)'
+            ammoMeta: { ammoId: 'silvered', ammoKind: 'bow', packSizeDefault: 10 },
+            summary: 'Silvered Bow Arrows (Bypasses Resist)'
         },
         {
             match: ['silvered crossbow bolts', 'silvered bolts', 'silver bolts'],
             category: 'gear',
             slots: [],
-            ammoKind: 'crossbow',
-            ammoPackDefault: 10,
-            summary: 'Silvered Crossbow Bolts (Load into Crossbow Quiver)'
+            ammoMeta: { ammoId: 'silvered', ammoKind: 'crossbow', packSizeDefault: 10 },
+            summary: 'Silvered Crossbow Bolts (Bypasses Resist)'
         },
         {
             match: ['poisoned darts', 'crossbow bolts', 'arrows', 'bullets'],
             category: 'gear',
             slots: [],
-            summary: 'Ammunition Bundle'
+            summary: 'Standard Ammunition Bundle'
         },
 
         // --- WEAPONS & SHIELDS ---
@@ -617,12 +705,12 @@
             summary: '2H Shortbow 80/320ft • 1d6 • Vex'
         },
         {
-            match: ['musket', 'pistol', 'rifle'],
+            match: ['musket', 'pistol', 'rifle', 'revolver', 'pepperbox', 'blunderbuss', 'flintlock'],
             category: 'weapon',
-            slots: ['ranged'],
+            slots: ['ranged', 'mainHand', 'offHand'],
             reqWeapon: 'firearm',
             ammoKind: 'firearm',
-            hands: 2,
+            hands: 1,
             summary: 'Firearm Ranged Weapon'
         },
         {
@@ -747,8 +835,36 @@
             category: 'consumable',
             slots: [],
             quickBelt: true,
-            useAction: { type: 'silverCoat', verb: 'Applied', label: 'Silver Coat (+10/1h)', effect: 'Coated 1 melee blade for 1 hour OR loaded +10 Silvered rounds into your ranged magazine/quiver!' },
-            summary: 'Loads +10 Silvered Rounds / Coats Blade (1 hr)'
+            ammoMeta: { ammoId: 'silvered', ammoKind: 'coating', isCoating: true, coatingRounds: 10 },
+            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Liquid Silver (1h Blade)', effect: 'Coated 1 melee weapon in gleaming silver for 1 hour (or click Load in Backpack to coat up to 10 rounds in a specific ranged weapon!).' },
+            summary: 'Coats Blade (1h) or Load +10 Silvered Rounds'
+        },
+        {
+            match: ['sun-ash'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            ammoMeta: { ammoId: 'sun_ash', ammoKind: 'coating', isCoating: true, coatingRounds: 6 },
+            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Sun-Ash (+1d4 Rad Blade)', effect: 'Coated 1 melee weapon for +1d4 Radiant damage for 10 minutes (or click Load in Backpack to coat up to 6 rounds!).' },
+            summary: 'Coats Blade or Load +6 Sun-Ash Rounds (+1d4 Rad)'
+        },
+        {
+            match: ['oil of sharpness'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            ammoMeta: { ammoId: 'sharpness', ammoKind: 'coating', isCoating: true, coatingRounds: 5 },
+            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Oil of Sharpness (+3 Blade)', effect: 'Coated 1 slashing/piercing melee weapon for +3 Attack & +3 Damage for 1 hour (or click Load in Backpack to coat up to 5 rounds!).' },
+            summary: 'Coats Blade or Load +5 Rounds (+3 Hit / +3 Dmg)'
+        },
+        {
+            match: ['wyvern venom'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            ammoMeta: { ammoId: 'wyvern_venom', ammoKind: 'coating', isCoating: true, coatingRounds: 1 },
+            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Wyvern Venom (7d6 Blade)', effect: 'Coated 1 melee weapon with assassin Wyvern Venom (next hit DC 15 CON Save or +7d6 Poison; or click Load in Backpack to tip individual rounds!).' },
+            summary: 'Coats Blade or Load 1 Round/Dose (7d6 Poison, DC 15 CON)'
         },
         {
             match: ['alchemist\'s fire'],
@@ -773,14 +889,6 @@
             quickBelt: true,
             useAction: { type: 'utilityLog', verb: 'Threw', label: 'Smoke Bomb (15 ft)', effect: '15-ft radius cloud is Heavily Obscured for 1 minute (blocks sightlines & covers Stealth/Disengage)!' },
             summary: '30 ft Throw • 15-ft Heavily Obscured'
-        },
-        {
-            match: ['sun-ash'],
-            category: 'consumable',
-            slots: [],
-            quickBelt: true,
-            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Sun-Ash (+1d4 Rad)', effect: 'Coated 1 weapon or 6 rounds for +1d4 Radiant damage for 10 minutes!' },
-            summary: '+1d4 Radiant Coating (10 min)'
         },
         {
             match: ['mist-ward', 'camp kit', 'traveler\'s camp'],
@@ -972,6 +1080,21 @@
             outputMatch: 'potion of superior healing'
         },
         {
+            id: 'craft_incendiary_bullets',
+            unlocked: false,
+            unlockCode: 'INCENDIARY-ROUNDS',
+            tierHint: 'Gunsmith & Fletcher Munitions',
+            name: 'Brimstone Incendiary Bullets (x10)',
+            badge: 'x10 • +1d4 Fire',
+            desc: 'Swage brimstone sulfur & pitch oil into hollow-point rounds (+1d4 Fire damage on hit; disrupts Troll/Plant regeneration). Learned from Blinsky, Rictavio, or Ezmerelda.',
+            ingredients: [
+                { keyword: 'sulfur', label: 'Brimstone & Pitch Sulfur', qty: 1 },
+                { keyword: ['pine pitch', 'pitch oil', 'lamp oil'], label: 'Pine Pitch & Lamp Oil', qty: 1 }
+            ],
+            outputRaw: '10x Brimstone Incendiary Bullets (+1d4 Fire)',
+            outputMatch: 'incendiary bullets'
+        },
+        {
             id: 'craft_vampire_ward',
             unlocked: false,
             unlockCode: 'SUN-ASH',
@@ -991,12 +1114,12 @@
             id: 'craft_elixir_of_health',
             unlocked: false,
             unlockCode: 'HEART-ELIXIR',
-            tierHint: 'Legendary Revival (1/Campaign)',
+            tierHint: 'Legendary Revival (Amber Temple Secret)',
             name: 'Elixir of Health (Legendary Revival)',
-            badge: '50% HP Revive • 1/Campaign',
-            desc: 'Distill Barovia\'s sole intact Shard of the Heart of Sorrow (K20) into a legendary draught that restores life within 1 minute of death (50% Max HP, severed limbs knit, -2 penalty until Long Rest). Consumes the unique Heartstone crystal forever.',
+            badge: '50% HP Revive • Heartstone Ritual',
+            desc: 'Distill EITHER Strahd\'s Shard of the Heart of Sorrow (K20) OR Morgantha\'s Night Hag Heartstone into a legendary draught that revives within 1 minute of death (50% Max HP, severed limbs knit, -2 penalty until Long Rest). Consumes the sacrificed Heartstone permanently; formula carved behind Amber Temple walls (X30) or whispered by Exethanter / The Abbot.',
             ingredients: [
-                { keyword: ['shard of the heart of sorrow', 'sorrow-crystal core', 'sorrow shard', 'heart of sorrow'], label: 'Shard of the Heart of Sorrow (Unique K20)', qty: 1 },
+                { keyword: ['shard of the heart of sorrow', 'sorrow-crystal core', 'sorrow shard', 'heart of sorrow', 'hag heartstone', 'night hag heartstone'], label: 'Heart of Sorrow Shard OR Night Hag Heartstone', qty: 1 },
                 { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 2 },
                 { keyword: 'moonpetal', label: 'Svalich Moonpetal Blossom', qty: 1 },
                 { keyword: 'spring water', label: 'Pure Spring Water', qty: 1 }
@@ -1089,12 +1212,140 @@
             effect: "• <strong>Damage:</strong> <code>1d6 + DEX</code> Piercing (<code>30/120 ft</code>, <strong>1-Handed Light</strong> — can be fired off-hand alongside a 1H sword or gun!).<br>• <strong>5.5e Vex Mastery:</strong> Hitting gives Advantage on your next attack!"
         },
         {
+            match: ['ezmerelda', 'sunburst cartridges', 'sunburst bullets', 'dawn-powder'],
+            name: "Ezmerelda's Sunburst & Silver Cartridges (x10)",
+            category: "RARE RADIANT AMMUNITION • Firearms",
+            origin: "Ezmerelda's Wagon (V1) or Abbey Barracks (S19)",
+            desc: "Brass paper cartridges packed with silver filings and consecrated sunburst quartz.",
+            effect: "• <strong>Load Into Specific Firearm:</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong>, deals an extra <strong>+1d6 Radiant</strong> on hit, counts as <strong>Silvered</strong>, and <strong>halts Vampire Regeneration for 1 round</strong>."
+        },
+        {
+            match: ['sunburst arrows', 'morninglord sunburst arrows'],
+            name: "Morninglord Sunburst Arrows (x10)",
+            category: "RARE RADIANT AMMUNITION • Bows",
+            origin: "Shrine of the White Sun (S4) / Ezmerelda (V1)",
+            desc: "Ashwood arrows tipped with sun-forged bronze and silvered broadheads.",
+            effect: "• <strong>Load Into Bow Quiver:</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong>, deals an extra <strong>+1d6 Radiant</strong> on hit, counts as <strong>Silvered</strong>, and <strong>halts Vampire Regeneration for 1 round</strong>."
+        },
+        {
+            match: ['sunburst crossbow bolts', 'sunburst bolts', 'morninglord sunburst bolts'],
+            name: "Morninglord Sunburst Crossbow Bolts (x10)",
+            category: "RARE RADIANT AMMUNITION • Crossbows",
+            origin: "St. Andral Sanctuary (N1) / Van Richten Stockpile (N5)",
+            desc: "Heavy oak bolts winged in white swan vanes and blessed sunburst iron.",
+            effect: "• <strong>Load Into Crossbow Quiver:</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong>, deals an extra <strong>+1d6 Radiant</strong> on hit, counts as <strong>Silvered</strong>, and <strong>halts Vampire Regeneration for 1 round</strong>."
+        },
+        {
+            match: ['baba lysaga', '+1 magical sling', '+1 firearm bullets', '+1 bullets'],
+            name: "Baba Lysaga's +1 Magical Bullets (x10)",
+            category: "UNCOMMON MAGICAL AMMUNITION • Firearms / Slings",
+            origin: "Baba Lysaga's Creeping Hut Iron Trunk (Berez U3)",
+            desc: "Lead-and-silver slugs etched with microscopic Mother Night runes.",
+            effect: "• <strong>Load Into Firearm:</strong> Grants a <strong>+1 bonus to Attack and Damage rolls</strong> and overcomes nonmagical resistances."
+        },
+        {
+            match: ['incendiary bullets', 'brimstone bullets', 'fire bullets'],
+            name: "Brimstone Incendiary Bullets (x10)",
+            category: "ALCHEMICAL FIRE AMMUNITION • Craftable (INCENDIARY-ROUNDS)",
+            origin: "Arasek Stockyard (N5), Blinsky/Petru Forge, or Craftable (1x Sulfur + 1x Pitch Oil)",
+            desc: "Hollow-point firearm slugs sealed with yellow brimstone paste that sparks on muzzle flash.",
+            effect: "• <strong>Load Into Individual Firearm:</strong> Adds <strong>+1d4 Fire damage</strong> on hit, ignites flammable objects, and disrupts regeneration stopped by flame."
+        },
+        {
+            match: ['fire arrows', 'pitch-tipped fire arrows', 'incendiary arrows'],
+            name: "Pitch-Tipped Fire Arrows (x10)",
+            category: "ALCHEMICAL FIRE AMMUNITION • Bows",
+            origin: "Arasek Stockyard (N5) / Tser Pool Caravan Forge (G)",
+            desc: "Barbed broadheads wrapped in oil-soaked pitchcloth.",
+            effect: "• <strong>Load Into Bow Quiver:</strong> Adds <strong>+1d4 Fire damage</strong> on hit and ignites flammable webs, thatch, or blight tendrils."
+        },
+        {
+            match: ['fire crossbow bolts', 'brimstone fire crossbow bolts', 'fire bolts', 'incendiary bolts'],
+            name: "Brimstone Fire Crossbow Bolts (x10)",
+            category: "ALCHEMICAL FIRE AMMUNITION • Crossbows",
+            origin: "Arasek Stockyard (N5) / Vallaki Guard Armory",
+            desc: "Short steel quarrels collared with striker flint and pine-pitch rings.",
+            effect: "• <strong>Load Into Crossbow Quiver:</strong> Adds <strong>+1d4 Fire damage</strong> on hit."
+        },
+        {
+            match: ['pale tincture poisoned bullets', 'poisoned bullets', 'poison bullets'],
+            name: "Pale Tincture Poisoned Bullets (x10)",
+            category: "TOXIC AMMUNITION • Firearms",
+            origin: "Old Bonegrinder (O3), Wachterhaus Cellar, or Arrigal (N9)",
+            desc: "Wax-capped bullets housing a slow-acting alchemical toxin inside a hollow tip.",
+            effect: "• <strong>Load Into Firearm:</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit; struck creatures must pass a <strong>DC 12 CON Save or become Poisoned</strong> until the end of their next turn."
+        },
+        {
+            match: ['venom arrows', 'poison arrows', 'poisoned arrows', 'nightshade venom arrows'],
+            name: "Nightshade Venom Arrows (x10)",
+            category: "TOXIC AMMUNITION • Bows",
+            origin: "Svalich Woods Scouts / Old Bonegrinder (O3) / Vistani Camp (N9)",
+            desc: "Dark green-fletched arrows grooved along the tip to hold belladonna serum.",
+            effect: "• <strong>Load Into Bow Quiver:</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit; target must pass a <strong>DC 12 CON Save or become Poisoned</strong> until the end of its next turn."
+        },
+        {
+            match: ['venom-dipped', 'venom bolts', 'poison bolts', 'poisoned bolts'],
+            name: "Arrigal's Venom-Dipped Crossbow Bolts (x10)",
+            category: "TOXIC AMMUNITION • Crossbows",
+            origin: "Vallaki Vistani Camp (Arrigal — Area N9)",
+            desc: "Blackened iron bolts steeped in serpentine gall by Vistani assassins.",
+            effect: "• <strong>Load Into Crossbow Quiver:</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit; target must pass a <strong>DC 12 CON Save or become Poisoned</strong> until the end of its next turn."
+        },
+        {
+            match: ['necrotic bullets', 'grave-salt necrotic bullets'],
+            name: "Grave-Salt Necrotic Bullets (x10)",
+            category: "SHADOW AMMUNITION • Firearms",
+            origin: "Ruins of Berez (U3) / Amber Temple Vaults (X40)",
+            desc: "Charcoal-gray rounds packed with chilled grave salt and ground crypt bone.",
+            effect: "• <strong>Load Into Firearm:</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and the target <strong>cannot regain Hit Points</strong> until the start of your next turn."
+        },
+        {
+            match: ['necrotic arrows', 'shadow-bone necrotic arrows'],
+            name: "Shadow-Bone Necrotic Arrows (x10)",
+            category: "SHADOW AMMUNITION • Bows",
+            origin: "Dusk Elf Sanctuary / Amber Temple Vaults (X40)",
+            desc: "Blackened bone-tipped arrows humming with icy Shadowfell stillness.",
+            effect: "• <strong>Load Into Bow Quiver:</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and the target <strong>cannot regain Hit Points</strong> until the start of your next turn."
+        },
+        {
+            match: ['necrotic crossbow bolts', 'necrotic bolts', 'grave-salt necrotic bolts'],
+            name: "Grave-Salt Necrotic Crossbow Bolts (x10)",
+            category: "SHADOW AMMUNITION • Crossbows",
+            origin: "Amber Temple Treasury (X40) / Ravenloft Crypts",
+            desc: "Cold iron quarrels dusted in grave-salt and preserved lich-ash.",
+            effect: "• <strong>Load Into Crossbow Quiver:</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and the target <strong>cannot regain Hit Points</strong> until the start of your next turn."
+        },
+        {
+            match: ['oil of sharpness'],
+            name: "Oil of Sharpness",
+            category: "VERY RARE WEAPON / AMMO COATING • Area U3",
+            origin: "Baba Lysaga's Creeping Hut Chest (Berez Area U3)",
+            desc: "Clear, gelatinous alchemical oil shimmering with suspended silver diamond-shards.",
+            effect: "• <strong>Load Ammo or Coat Blade:</strong> Coat 1 slashing/piercing melee blade OR click <strong>Load</strong> in Backpack to coat up to <strong>5 rounds</strong> in a chosen weapon for <strong>+3 Attack and +3 Damage</strong>!"
+        },
+        {
+            match: ['wyvern venom'],
+            name: "Arrigal's Assassin Wyvern Venom",
+            category: "RARE LETHAL VENOM COATING • Area N9",
+            origin: "Arrigal's Assassin Belt (Vallaki Vistani Camp Area N9)",
+            desc: "Concentrated amber mountain-wyvern venom bottled in slender black glass ampoules.",
+            effect: "• <strong>1 Round or Blade per Dose:</strong> Use on a melee weapon OR click <strong>Load</strong> in Backpack to coat individual bullets/arrows/bolts (1 dose = 1 round). Hit forces a <strong>DC 15 CON Save or takes 7d6 Poison damage</strong> (half on success)."
+        },
+        {
+            match: ['hag heartstone', 'night hag heartstone'],
+            name: "Morgantha's Cracked Night Hag Heartstone",
+            category: "RARE WONDROUS GEM • Old Bonegrinder Boss Drop",
+            origin: "Old Bonegrinder Windmill (Morgantha — Session 3)",
+            desc: "A lustrous jet-black stone veined with deep internal fractures, braided onto blacksinew cord.",
+            effect: "• <strong>Purifying Touch (1/Day Action):</strong> Cure any 1 disease, poison, or hag nightmare curse.<br>• <strong>Soul-Tether Ward:</strong> Grants <strong>Advantage on Death Saving Throws</strong> while carried."
+        },
+        {
             match: ['rictavio\'s silvered crossbow bolts'],
             name: "Rictavio's Silvered Crossbow Bolts (x20)",
             category: "UNCOMMON SILVERED AMMUNITION • Area N5",
             origin: "Rictavio's Carnival Wagon Secret Chest (Vallaki Area N5)",
             desc: "Twenty needle-pointed bolts sheathed in pure sterling silver.",
-            effect: "• <strong>Ammunition (20 Bolts):</strong> Load directly into your Crossbow Quiver from Backpack to fire Silvered shots that bypass Werewolf, Vampire Spawn &amp; Night Hag nonmagical damage resistances."
+            effect: "• <strong>Ammunition (20 Bolts):</strong> Click <strong>Load</strong> to load into any Crossbow to fire Silvered shots that bypass Werewolf, Vampire Spawn &amp; Night Hag nonmagical damage resistances."
         },
         {
             match: ['silvered crossbow bolts', 'silver bolts'],
@@ -1102,7 +1353,7 @@
             category: "UNCOMMON SILVERED AMMUNITION • Vistani Forge (G) / Arasek (N5)",
             origin: "Tser Pool Vistani Silver Forge (G) & Arasek Stockyard (Vallaki N5)",
             desc: "Ten crisp-fletched crossbow bolts plated cleanly in hammered Barovian silver.",
-            effect: "• <strong>Ammunition (10 Bolts):</strong> Load directly into your Crossbow Quiver Reserve from Backpack, then toggle <strong>Silvered: ON</strong> on any equipped Hand, Light, or Heavy Crossbow to bypass Werewolf, Vampire Spawn &amp; Night Hag resistances."
+            effect: "• <strong>Ammunition (10 Bolts):</strong> Click <strong>Load</strong> to load into a specific Crossbow to bypass Werewolf, Vampire Spawn &amp; Night Hag resistances."
         },
         {
             match: ['cloak of protection'],
@@ -1133,9 +1384,9 @@
             match: ['elixir of health', 'elixir of life'],
             name: "Elixir of Health (Legendary Revival)",
             category: "LEGENDARY REVIVAL POTION • Extra Rare (5,000 GP / 15,000 GP Royal Market)",
-            origin: "Martikov Secret Loft (Area N2q) OR Single Brew from Shard of the Heart of Sorrow (HEART-ELIXIR)",
-            desc: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—an ultra-rare heirloom either hidden in the Martikov loft (N2q) or distilled once from the shattered Heart of Sorrow.",
-            effect: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest.<br>• <strong>Extra Rare &amp; Expensive (<code>5,000 GP</code> Base / <code>15,000 GP</code> Royal Market):</strong> Cannot be brewed from ordinary herbs—requires the unique <strong>Shard of the Heart of Sorrow</strong> (<code>1/Campaign</code> via <code>HEART-ELIXIR</code>)."
+            origin: "Martikov Secret Loft (Area N2q) OR Heartstone Transmutation Ritual (HEART-ELIXIR)",
+            desc: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—an ultra-rare heirloom either hidden in the Martikov loft (N2q) or distilled once via ancient Barovian alchemy.",
+            effect: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest.<br>• <strong>Extra Rare &amp; Expensive (<code>5,000 GP</code> Base / <code>15,000 GP</code> Royal Market):</strong> Cannot be brewed from ordinary herbs—requires ancient secrets and a sacrificed Heartstone artifact."
         },
         {
             match: ['antitoxin'],
@@ -1472,172 +1723,710 @@
         return { allowed: true, reqKind: null, reqLevel: null, requirement: '' };
     }
 
-    function getDefaultAmmoState() {
-        return {
-            firearm: { count: 0, active: false, lastShotSilvered: null },
-            bow: { count: 0, active: false, lastShotSilvered: null },
-            crossbow: { count: 0, active: false, lastShotSilvered: null }
-        };
+    // =========================================================================
+    // PER-WEAPON SPECIALTY AMMUNITION ENGINE & LOADER MODAL
+    // =========================================================================
+    const AMMO_CATALOG = {
+        silvered: {
+            id: 'silvered',
+            shortName: 'Silvered',
+            fullName: 'Silvered Ammunition',
+            badge: 'Bypasses Resist',
+            accent: 'silver',
+            atkBonus: 0,
+            dmgBonus: 0,
+            extraDice: null,
+            extraType: null,
+            isSilvered: true,
+            haltsRegen: false,
+            blocksHealing: false,
+            saveNote: null,
+            note: 'Bypasses Werewolf immunity and Vampire Spawn, Wight & Night Hag nonmagical resistances.',
+            packNames: {
+                firearm: 'Silvered Firearm & Sling Bullets',
+                bow: 'Silvered Arrows',
+                crossbow: 'Silvered Crossbow Bolts'
+            }
+        },
+        incendiary: {
+            id: 'incendiary',
+            shortName: 'Incendiary',
+            fullName: 'Brimstone Incendiary',
+            badge: '+1d4 Fire',
+            accent: 'fire',
+            atkBonus: 0,
+            dmgBonus: 0,
+            extraDice: '1d4',
+            extraType: 'Fire',
+            isSilvered: false,
+            haltsRegen: false,
+            blocksHealing: false,
+            saveNote: null,
+            note: '+1d4 Fire damage on hit; ignites flammable targets & disrupts flame-vulnerable regeneration.',
+            packNames: {
+                firearm: 'Brimstone Incendiary Bullets',
+                bow: 'Pitch-Tipped Fire Arrows',
+                crossbow: 'Brimstone Fire Crossbow Bolts'
+            }
+        },
+        poison: {
+            id: 'poison',
+            shortName: 'Venom',
+            fullName: 'Nightshade / Pale Tincture Venom',
+            badge: '+1d6 Poison',
+            accent: 'poison',
+            atkBonus: 0,
+            dmgBonus: 0,
+            extraDice: '1d6',
+            extraType: 'Poison',
+            isSilvered: false,
+            haltsRegen: false,
+            blocksHealing: false,
+            saveNote: 'DC 12 CON Save or Poisoned until end of next turn',
+            note: '+1d6 Poison damage; target makes a DC 12 CON Save or becomes Poisoned until the end of its next turn.',
+            packNames: {
+                firearm: 'Pale Tincture Poisoned Bullets',
+                bow: 'Nightshade Venom Arrows',
+                crossbow: "Arrigal's Venom-Dipped Crossbow Bolts"
+            }
+        },
+        wyvern_venom: {
+            id: 'wyvern_venom',
+            shortName: 'Wyvern Venom',
+            fullName: "Arrigal's Assassin Wyvern Venom",
+            badge: '+7d6 Poison (DC 15)',
+            accent: 'poison',
+            atkBonus: 0,
+            dmgBonus: 0,
+            extraDice: '7d6',
+            extraType: 'Poison',
+            isSilvered: false,
+            haltsRegen: false,
+            blocksHealing: false,
+            isCoatingOnly: true,
+            saveNote: 'DC 15 CON Save for half Venom damage',
+            note: 'Assassin toxin: target makes a DC 15 CON Save or takes +7d6 Poison damage (half on success).'
+        },
+        sunburst: {
+            id: 'sunburst',
+            shortName: 'Sunburst',
+            fullName: 'Sunburst Radiant',
+            badge: '+1/+1 & +1d6 Rad',
+            accent: 'radiant',
+            atkBonus: 1,
+            dmgBonus: 1,
+            extraDice: '1d6',
+            extraType: 'Radiant',
+            isSilvered: true,
+            haltsRegen: true,
+            blocksHealing: false,
+            saveNote: null,
+            note: '+1 Attack & Damage, +1d6 Radiant, Silvered, and halts Vampire Regeneration for 1 round!',
+            packNames: {
+                firearm: "Ezmerelda's Sunburst & Silver Alchemical Cartridges",
+                bow: 'Morninglord Sunburst Arrows',
+                crossbow: 'Morninglord Sunburst Crossbow Bolts'
+            }
+        },
+        sun_ash: {
+            id: 'sun_ash',
+            shortName: 'Sun-Ash',
+            fullName: 'Sun-Ash Coated',
+            badge: '+1d4 Radiant',
+            accent: 'radiant',
+            atkBonus: 0,
+            dmgBonus: 0,
+            extraDice: '1d4',
+            extraType: 'Radiant',
+            isSilvered: false,
+            haltsRegen: false,
+            blocksHealing: false,
+            isCoatingOnly: true,
+            saveNote: null,
+            note: 'Blessed unguent coating: deals +1d4 Radiant damage (halts undead regen on Crit / DM ruling).'
+        },
+        necrotic: {
+            id: 'necrotic',
+            shortName: 'Necrotic',
+            fullName: 'Grave-Salt Necrotic',
+            badge: '+1d6 Necrotic',
+            accent: 'necrotic',
+            atkBonus: 0,
+            dmgBonus: 0,
+            extraDice: '1d6',
+            extraType: 'Necrotic',
+            isSilvered: false,
+            haltsRegen: false,
+            blocksHealing: true,
+            saveNote: null,
+            note: '+1d6 Necrotic damage; struck target cannot regain Hit Points until the start of your next turn.',
+            packNames: {
+                firearm: 'Grave-Salt Necrotic Bullets',
+                bow: 'Shadow-Bone Necrotic Arrows',
+                crossbow: 'Grave-Salt Necrotic Crossbow Bolts'
+            }
+        },
+        plus1: {
+            id: 'plus1',
+            shortName: '+1 Arcane',
+            fullName: "Baba Lysaga's +1 Round",
+            badge: '+1 Hit / +1 Dmg',
+            accent: 'magic',
+            atkBonus: 1,
+            dmgBonus: 1,
+            extraDice: null,
+            extraType: null,
+            isSilvered: false,
+            haltsRegen: false,
+            blocksHealing: false,
+            saveNote: null,
+            note: 'Mother Night rune-etched bullet: +1 Attack & +1 Magical Damage.',
+            packNames: {
+                firearm: "Baba Lysaga's +1 Magical Sling / Firearm Bullets"
+            }
+        },
+        sharpness: {
+            id: 'sharpness',
+            shortName: '+3 Sharpness',
+            fullName: 'Oil of Sharpness Coated',
+            badge: '+3 Hit / +3 Dmg',
+            accent: 'magic',
+            atkBonus: 3,
+            dmgBonus: 3,
+            extraDice: null,
+            extraType: null,
+            isSilvered: false,
+            haltsRegen: false,
+            blocksHealing: false,
+            isCoatingOnly: true,
+            saveNote: null,
+            note: 'Ultra-rare Oil of Sharpness coating: +3 Attack & +3 Magical Damage.'
+        }
+    };
+
+    let ammoLoaderState = {
+        invIndex: null,
+        weaponId: null,
+        qty: 1
+    };
+
+    function encArg(s) {
+        return encodeURIComponent(String(s || '')).replace(/'/g, '%27');
+    }
+
+    function detectWeaponMaxCap(rawName, meta) {
+        const low = String(rawName || '').toLowerCase();
+        if (meta && meta.maxCap) return meta.maxCap;
+        if (low.includes('lament') || low.includes('heavy long rifle')) return 10;
+        if (low.includes('revolver') || low.includes('six-shooter') || low.includes('pepperbox')) return 6;
+        return null;
+    }
+
+    function getWeaponAmmoStore() {
+        const store = { weapons: {} };
+        if (!adapter) return store;
+        try {
+            const raw = localStorage.getItem(getAmmoStorageKey());
+            if (!raw) return store;
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === 'object' && parsed.weapons && typeof parsed.weapons === 'object') {
+                Object.entries(parsed.weapons).forEach(([wid, wst]) => {
+                    if (!wst || typeof wst !== 'object') return;
+                    const pools = {};
+                    if (wst.pools && typeof wst.pools === 'object') {
+                        Object.entries(wst.pools).forEach(([aid, cnt]) => {
+                            const n = Math.max(0, parseInt(cnt) || 0);
+                            if (n > 0 && AMMO_CATALOG[aid]) pools[aid] = n;
+                        });
+                    }
+                    let active = typeof wst.active === 'string' && pools[wst.active] > 0 ? wst.active : 'standard';
+                    const lastShot = typeof wst.lastShot === 'string' && (wst.lastShot === 'standard' || AMMO_CATALOG[wst.lastShot]) ? wst.lastShot : null;
+                    store.weapons[wid] = { pools, active, lastShot };
+                });
+            }
+        } catch (e) {}
+        return store;
+    }
+
+    function saveWeaponAmmoStore(store) {
+        if (!adapter) return;
+        try { localStorage.setItem(getAmmoStorageKey(), JSON.stringify(store)); } catch (e) {}
+    }
+
+    function getWeaponAmmoEntry(weaponId) {
+        const store = getWeaponAmmoStore();
+        return store.weapons[weaponId] || { pools: {}, active: 'standard', lastShot: null };
+    }
+
+    function getTotalLoadedSpecialty(entry) {
+        if (!entry || !entry.pools) return 0;
+        return Object.values(entry.pools).reduce((s, n) => s + (parseInt(n) || 0), 0);
     }
 
     function getAmmoState() {
-        const def = getDefaultAmmoState();
-        if (!adapter) return def;
-        try {
-            const raw = localStorage.getItem(getAmmoStorageKey());
-            if (!raw) return def;
-            const parsed = JSON.parse(raw);
-            if (!parsed || typeof parsed !== 'object') return def;
-            ['firearm', 'bow', 'crossbow'].forEach(k => {
-                if (parsed[k] && typeof parsed[k] === 'object') {
-                    def[k] = {
-                        count: Math.max(0, parseInt(parsed[k].count) || 0),
-                        active: !!parsed[k].active && (parseInt(parsed[k].count) || 0) > 0,
-                        lastShotSilvered: typeof parsed[k].lastShotSilvered === 'boolean' ? parsed[k].lastShotSilvered : null
-                    };
-                }
+        return getWeaponAmmoStore();
+    }
+
+    function getHeroWeaponsForAmmo(includeBagRanged = false) {
+        if (!adapter) return [];
+        const list = [];
+        const seenIds = new Set();
+        const declared = Array.isArray(adapter.ammoWeapons) ? adapter.ammoWeapons : [];
+        declared.forEach(w => {
+            if (!w || !w.id || seenIds.has(w.id)) return;
+            seenIds.add(w.id);
+            list.push({
+                id: w.id,
+                label: w.label || w.id,
+                kind: w.kind || 'firearm',
+                maxCap: w.maxCap || null,
+                mount: w.mount || null,
+                isEquipped: true,
+                isNative: true
             });
-        } catch (e) {}
-        return def;
-    }
+        });
 
-    function saveAmmoState(st) {
-        if (!adapter) return;
-        try { localStorage.setItem(getAmmoStorageKey(), JSON.stringify(st)); } catch (e) {}
-    }
+        const eq = reconcileEquippedWithInventory();
+        const nativeTags = new Set(adapter.nativeWeaponTags || []);
+        const equippedKeys = new Set();
+        ['ranged', 'mainHand', 'offHand', 'legSheath'].forEach(slotId => {
+            const key = eq[slotId];
+            if (!key || equippedKeys.has(key)) return;
+            const raw = findInventoryRawByKey(key);
+            if (!raw) return;
+            const meta = getItemMeta(raw);
+            if (meta.isShield || !meta.ammoKind) return;
+            if (meta.weaponTag && nativeTags.has(meta.weaponTag)) return;
+            equippedKeys.add(key);
+            if (!seenIds.has(key)) {
+                seenIds.add(key);
+                list.push({
+                    id: key,
+                    label: shortLabel(raw),
+                    kind: meta.ammoKind,
+                    maxCap: detectWeaponMaxCap(raw, meta),
+                    mount: null,
+                    isEquipped: true,
+                    isNative: false
+                });
+            }
+        });
 
-    function getAmmoKindMeta(kind) {
-        if (kind === 'bow') return { title: 'Silvered Arrows', unit: 'arrow', unitPlural: 'arrows' };
-        if (kind === 'crossbow') return { title: 'Silvered Bolts', unit: 'bolt', unitPlural: 'bolts' };
-        return { title: 'Silvered Rounds', unit: 'round', unitPlural: 'rounds' };
-    }
-
-    function refreshAllAmmoDisplays() {
-        if (!adapter) return;
-        if (adapter.silverAmmoMount) {
-            renderSilverAmmoMount(adapter.silverAmmoMount.selector, adapter.silverAmmoMount.kind || 'firearm', adapter.silverAmmoMount.label || 'Silvered Rounds');
+        if (includeBagRanged) {
+            adapter.getItems().forEach(raw => {
+                const key = normKey(raw);
+                if (seenIds.has(key) || equippedKeys.has(key)) return;
+                const meta = getItemMeta(raw);
+                if (meta.isShield || meta.category !== 'weapon' || !meta.ammoKind) return;
+                if (meta.weaponTag && nativeTags.has(meta.weaponTag)) return;
+                seenIds.add(key);
+                list.push({
+                    id: key,
+                    label: `${shortLabel(raw)} (In Bag)`,
+                    kind: meta.ammoKind,
+                    maxCap: detectWeaponMaxCap(raw, meta),
+                    mount: null,
+                    isEquipped: false,
+                    isNative: false
+                });
+            });
         }
-        if (typeof window.syncSilveredAmmoVisuals === 'function') {
-            try { window.syncSilveredAmmoVisuals(); } catch (e) {}
-        }
+        return list;
     }
 
-    function renderSilverAmmoMount(selector, kind = 'firearm', labelText = 'Silvered Rounds') {
-        const el = typeof selector === 'string' ? document.querySelector(selector) : selector;
-        if (!el) return;
-        el.innerHTML = buildSilverAmmoStripHtml(kind, labelText);
+    function getLoadableAmmoItemsFromBackpack(filterKind = null) {
+        if (!adapter) return [];
+        const out = [];
+        adapter.getItems().forEach((raw, idx) => {
+            const meta = getItemMeta(raw);
+            if (!meta.ammoMeta || !AMMO_CATALOG[meta.ammoMeta.ammoId]) return;
+            const am = meta.ammoMeta;
+            if (filterKind && !am.isCoating && am.ammoKind !== filterKind) return;
+            const p = parseItem(raw);
+            const unitCount = am.isCoating
+                ? (p.qty || 1)
+                : (p.hasQty ? p.qty : (am.packSizeDefault || 10));
+            out.push({
+                invIndex: idx,
+                raw,
+                label: shortLabel(raw),
+                ammoId: am.ammoId,
+                ammoDef: AMMO_CATALOG[am.ammoId],
+                ammoKind: am.ammoKind,
+                isCoating: !!am.isCoating,
+                coatingRounds: am.coatingRounds || 1,
+                unitCount
+            });
+        });
+        return out;
     }
 
-    function buildSilverAmmoStripHtml(kind = 'firearm', labelText) {
-        const st = getAmmoState();
-        const slot = st[kind] || { count: 0, active: false };
-        const km = getAmmoKindMeta(kind);
-        const lbl = labelText || km.title;
-        const isSilver = !!slot.active && slot.count > 0;
-        const btnText = isSilver
-            ? `Silvered: ON (${slot.count})`
-            : (slot.count > 0 ? `Silvered: OFF (${slot.count})` : 'Silvered: Empty');
+    function getActiveWeaponAmmoDef(weaponId) {
+        const entry = getWeaponAmmoEntry(weaponId);
+        if (!entry || entry.active === 'standard' || !(entry.pools[entry.active] > 0)) return null;
+        return AMMO_CATALOG[entry.active] || null;
+    }
+
+    function getWeaponLastShotDef(weaponId) {
+        const entry = getWeaponAmmoEntry(weaponId);
+        if (!entry) return null;
+        if (entry.lastShot === 'standard') return null;
+        if (entry.lastShot && AMMO_CATALOG[entry.lastShot]) return AMMO_CATALOG[entry.lastShot];
+        return getActiveWeaponAmmoDef(weaponId);
+    }
+
+    function buildWeaponAmmoBarHtml(weaponId, weaponMeta) {
+        const entry = getWeaponAmmoEntry(weaponId);
+        const totalSpec = getTotalLoadedSpecialty(entry);
+        const activeId = (entry.active && entry.pools[entry.active] > 0) ? entry.active : 'standard';
+        const activeDef = activeId !== 'standard' ? AMMO_CATALOG[activeId] : null;
+        const accentCls = activeDef ? `accent-${activeDef.accent}` : '';
+        const capTxt = (weaponMeta && weaponMeta.maxCap)
+            ? ` <span style="color:#64748b; font-weight:600;">(${totalSpec}/${weaponMeta.maxCap} cap)</span>`
+            : (totalSpec > 0 ? ` <span style="color:#64748b; font-weight:600;">(${totalSpec} specialty)</span>` : '');
+
+        const statusTxt = activeDef
+            ? `Chamber: <strong style="color:#f8fafc;">${esc(activeDef.shortName)} (${entry.pools[activeId]})</strong>${capTxt}`
+            : `Chamber: <strong>Standard</strong>${capTxt}`;
+
+        const loadedEntries = Object.entries(entry.pools).filter(([aid, c]) => c > 0 && AMMO_CATALOG[aid]);
+        const pillsHtml = [
+            `<button type="button" class="rpg-ammo-pill ${activeId === 'standard' ? 'is-active' : ''}" onclick="COS_RPG.selectWeaponAmmo(decodeURIComponent('${encArg(weaponId)}'), 'standard')">Standard</button>`,
+            ...loadedEntries.map(([aid, cnt]) => {
+                const def = AMMO_CATALOG[aid];
+                const isAct = activeId === aid;
+                return `<button type="button" class="rpg-ammo-pill accent-${def.accent} ${isAct ? 'is-active' : ''}" onclick="COS_RPG.selectWeaponAmmo(decodeURIComponent('${encArg(weaponId)}'), '${aid}')">${esc(def.shortName)} (${cnt})</button>`;
+            })
+        ].join('');
+
+        const canUnload = !!activeDef && (entry.pools[activeId] > 0);
+        const unloadBtn = canUnload
+            ? `<button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.unloadWeaponAmmo(decodeURIComponent('${encArg(weaponId)}'), '${activeId}')" title="${activeDef.isCoatingOnly ? 'Clear remaining coated rounds' : 'Return unused rounds to Backpack'}">${activeDef.isCoatingOnly ? 'Clear' : 'Unload'}</button>`
+            : '';
+
         return `
-            <div class="rpg-ammo-strip ${isSilver ? 'is-silver' : ''}">
-                <div class="rpg-ammo-meta">
-                    <span style="font-weight:800; color:${isSilver ? '#f8fafc' : '#cbd5e1'};">${esc(lbl)}:</span>
-                    <div style="display:inline-flex; align-items:center; gap:3px;">
-                        <button type="button" class="rpg-ammo-step" onclick="COS_RPG.adjustSilveredAmmo('${kind}', -1)" aria-label="Remove 1 ${esc(km.unit)}">-</button>
-                        <span class="rpg-ammo-count">${slot.count} Left</span>
-                        <button type="button" class="rpg-ammo-step" onclick="COS_RPG.adjustSilveredAmmo('${kind}', 1)" aria-label="Add 1 ${esc(km.unit)}">+</button>
-                    </div>
+            <div class="rpg-wpn-ammo-bar ${accentCls}">
+                <div class="rpg-ammo-top">
+                    <span class="rpg-ammo-status">${statusTxt}</span>
+                    <span class="rpg-ammo-act-group">
+                        ${unloadBtn}
+                        <button type="button" class="rpg-ammo-act-btn is-load" onclick="COS_RPG.openAmmoLoaderModal({ targetWeaponId: decodeURIComponent('${encArg(weaponId)}') })">Load</button>
+                    </span>
                 </div>
-                <button type="button" class="rpg-ammo-toggle ${isSilver ? 'is-silver' : ''}" ${slot.count <= 0 && !slot.active ? 'disabled title="Load silvered ammunition from your Backpack first"' : ''} onclick="COS_RPG.toggleSilveredAmmoMode('${kind}')">${btnText}</button>
+                <div class="rpg-ammo-pills">${pillsHtml}</div>
+                ${activeDef ? `<div class="rpg-ammo-effect-hint">${esc(activeDef.note)}</div>` : ''}
             </div>
         `;
     }
 
-    function adjustSilveredAmmo(kind, delta) {
+    function refreshAllAmmoDisplays() {
         if (!adapter) return;
-        const st = getAmmoState();
-        const slot = st[kind] || { count: 0, active: false, lastShotSilvered: null };
-        slot.count = Math.max(0, (slot.count || 0) + (parseInt(delta) || 0));
-        if (slot.count === 0) slot.active = false;
-        st[kind] = slot;
-        saveAmmoState(st);
-        refreshAllAmmoDisplays();
-        renderDynamicWeaponCards(getGearBonuses());
-        syncHeroStateToFirebase(false);
-    }
-
-    function toggleSilveredAmmoMode(kind) {
-        if (!adapter) return;
-        const st = getAmmoState();
-        const slot = st[kind] || { count: 0, active: false, lastShotSilvered: null };
-        const km = getAmmoKindMeta(kind);
-        if (!slot.active && slot.count <= 0) {
-            adapter.log(`<strong>No ${esc(km.title)} Loaded:</strong> Add or load ${esc(km.unitPlural)} from your Backpack first.`);
-            return;
+        const nativeWeapons = Array.isArray(adapter.ammoWeapons) ? adapter.ammoWeapons : [];
+        nativeWeapons.forEach(w => {
+            if (!w || !w.mount) return;
+            const el = typeof w.mount === 'string' ? document.querySelector(w.mount) : w.mount;
+            if (el) el.innerHTML = buildWeaponAmmoBarHtml(w.id, w);
+        });
+        if (typeof window.syncWeaponAmmoVisuals === 'function') {
+            try { window.syncWeaponAmmoVisuals(); } catch (e) {}
+        } else if (typeof window.syncSilveredAmmoVisuals === 'function') {
+            try { window.syncSilveredAmmoVisuals(); } catch (e) {}
         }
-        slot.active = !slot.active;
-        slot.lastShotSilvered = null;
-        st[kind] = slot;
-        saveAmmoState(st);
+    }
+
+    function selectWeaponAmmo(weaponId, ammoId) {
+        if (!adapter || !weaponId) return;
+        const store = getWeaponAmmoStore();
+        const entry = store.weapons[weaponId] || { pools: {}, active: 'standard', lastShot: null };
+        if (ammoId !== 'standard' && !(entry.pools[ammoId] > 0)) return;
+        entry.active = ammoId;
+        entry.lastShot = null;
+        store.weapons[weaponId] = entry;
+        saveWeaponAmmoStore(store);
         refreshAllAmmoDisplays();
         renderDynamicWeaponCards(getGearBonuses());
         syncHeroStateToFirebase(false);
-        adapter.log(`<strong>${esc(km.title)}:</strong> Switched <strong>${slot.active ? 'ON' : 'OFF'}</strong> (${slot.count} ${esc(slot.count === 1 ? km.unit : km.unitPlural)} remaining).`);
     }
 
-    function loadSilveredAmmoFromBackpack(invIndex) {
-        if (!adapter) return;
-        const items = adapter.getItems();
-        const raw = items[invIndex];
-        if (!raw) return;
-        const p = parseItem(raw);
-        const meta = getItemMeta(raw);
-        const kind = meta.ammoKind;
-        if (!kind) return;
-        const addCount = p.hasQty ? p.qty : (meta.ammoPackDefault || 10);
-        items.splice(invIndex, 1);
-        adapter.saveItems(items);
+    function consumeWeaponAmmo(weaponId) {
+        const store = getWeaponAmmoStore();
+        const entry = store.weapons[weaponId] || { pools: {}, active: 'standard', lastShot: null };
+        const actId = entry.active;
+        if (actId && actId !== 'standard' && (entry.pools[actId] || 0) > 0 && AMMO_CATALOG[actId]) {
+            entry.pools[actId] -= 1;
+            const remaining = entry.pools[actId];
+            entry.lastShot = actId;
+            let exhausted = false;
+            if (remaining <= 0) {
+                delete entry.pools[actId];
+                entry.active = 'standard';
+                exhausted = true;
+            }
+            store.weapons[weaponId] = entry;
+            saveWeaponAmmoStore(store);
+            refreshAllAmmoDisplays();
+            renderDynamicWeaponCards(getGearBonuses());
+            syncHeroStateToFirebase(false);
+            return { ammoId: actId, def: AMMO_CATALOG[actId], remaining, exhausted };
+        }
+        entry.lastShot = 'standard';
+        store.weapons[weaponId] = entry;
+        saveWeaponAmmoStore(store);
+        return { ammoId: 'standard', def: null, remaining: 0, exhausted: false };
+    }
 
-        const st = getAmmoState();
-        const slot = st[kind] || { count: 0, active: false, lastShotSilvered: null };
-        slot.count = (slot.count || 0) + addCount;
-        slot.active = true;
-        slot.lastShotSilvered = null;
-        st[kind] = slot;
-        saveAmmoState(st);
+    function unloadWeaponAmmo(weaponId, ammoId) {
+        if (!adapter || !weaponId || !ammoId || ammoId === 'standard') return;
+        const store = getWeaponAmmoStore();
+        const entry = store.weapons[weaponId];
+        if (!entry || !(entry.pools[ammoId] > 0)) return;
+        const count = entry.pools[ammoId];
+        const def = AMMO_CATALOG[ammoId];
+        const weapons = getHeroWeaponsForAmmo(true);
+        const wMeta = weapons.find(w => w.id === weaponId) || { label: weaponId, kind: 'firearm' };
 
-        const km = getAmmoKindMeta(kind);
-        adapter.log(`<strong>Loaded +${addCount} ${esc(km.title)}</strong> (${slot.count} total ready • Silvered mode switched ON).`);
+        delete entry.pools[ammoId];
+        const remKeys = Object.keys(entry.pools).filter(k => entry.pools[k] > 0);
+        entry.active = remKeys.length > 0 ? remKeys[0] : 'standard';
+        entry.lastShot = null;
+        store.weapons[weaponId] = entry;
+        saveWeaponAmmoStore(store);
+
+        if (def && !def.isCoatingOnly) {
+            const packName = (def.packNames && def.packNames[wMeta.kind]) || (def.packNames && Object.values(def.packNames)[0]) || `${def.shortName} Rounds`;
+            const items = adapter.getItems();
+            addRawItemToList(items, `${count}x ${packName}`, 1);
+            adapter.saveItems(items);
+            adapter.log(`Unloaded <strong>${count}x ${esc(def.shortName)}</strong> from ${esc(wMeta.label)} back into Backpack.`);
+        } else {
+            adapter.log(`Cleared remaining coated <strong>${esc(def ? def.shortName : ammoId)}</strong> rounds from ${esc(wMeta.label)}.`);
+        }
         applyEquipmentToSheet(true);
         refreshAllAmmoDisplays();
     }
 
-    function consumeSilveredAmmoIfActive(kind) {
-        const st = getAmmoState();
-        const slot = st[kind] || { count: 0, active: false, lastShotSilvered: null };
-        if (slot.active && slot.count > 0) {
-            slot.count -= 1;
-            slot.lastShotSilvered = true;
-            const reverted = slot.count === 0;
-            if (reverted) slot.active = false;
-            st[kind] = slot;
-            saveAmmoState(st);
-            refreshAllAmmoDisplays();
-            renderDynamicWeaponCards(getGearBonuses());
-            syncHeroStateToFirebase(false);
-            return { silvered: true, remaining: slot.count, reverted };
+    function computeMaxLoadUnits(ammoItem, weaponMeta) {
+        if (!ammoItem || !weaponMeta) return 0;
+        const entry = getWeaponAmmoEntry(weaponMeta.id);
+        const freeCap = weaponMeta.maxCap
+            ? Math.max(0, weaponMeta.maxCap - getTotalLoadedSpecialty(entry))
+            : Infinity;
+        if (freeCap <= 0) return 0;
+        if (ammoItem.isCoating && ammoItem.coatingRounds > 1) {
+            return Math.min(ammoItem.unitCount, 1);
         }
-        slot.lastShotSilvered = false;
-        st[kind] = slot;
-        saveAmmoState(st);
-        return { silvered: false, remaining: slot.count, reverted: false };
+        return Math.min(ammoItem.unitCount, freeCap);
     }
 
-    function isWeaponSilveredDamage(kind) {
-        if (!kind) return false;
-        const st = getAmmoState();
-        const slot = st[kind] || { count: 0, active: false, lastShotSilvered: null };
-        if (typeof slot.lastShotSilvered === 'boolean') return slot.lastShotSilvered;
-        return Boolean(slot.active && slot.count > 0);
+    function openAmmoLoaderModal({ invIndex = null, targetWeaponId = null } = {}) {
+        if (!adapter) return;
+        const dlg = document.getElementById('rpg-ammo-loader-dialog');
+        if (!dlg) return;
+
+        const weapons = getHeroWeaponsForAmmo(true);
+        const targetWeapon = targetWeaponId ? weapons.find(w => w.id === targetWeaponId) : null;
+        const allItems = getLoadableAmmoItemsFromBackpack(targetWeapon && !invIndex ? targetWeapon.kind : null);
+
+        let chosenInv = (invIndex !== null && invIndex !== undefined)
+            ? allItems.find(it => it.invIndex === invIndex) || null
+            : null;
+        if (!chosenInv && allItems.length > 0) chosenInv = allItems[0];
+
+        let chosenWeapon = targetWeapon || null;
+        if (!chosenWeapon && chosenInv) {
+            const compat = weapons.filter(w => chosenInv.isCoating || w.kind === chosenInv.ammoKind);
+            chosenWeapon = compat.find(w => {
+                const free = w.maxCap ? w.maxCap - getTotalLoadedSpecialty(getWeaponAmmoEntry(w.id)) : 1;
+                return free > 0;
+            }) || compat[0] || null;
+        }
+        if (!chosenWeapon && weapons.length > 0) chosenWeapon = weapons[0];
+
+        const maxQty = (chosenInv && chosenWeapon) ? computeMaxLoadUnits(chosenInv, chosenWeapon) : 0;
+        let defQty = 1;
+        if (chosenInv && maxQty > 0) {
+            if (chosenInv.isCoating && chosenInv.coatingRounds > 1) defQty = 1;
+            else defQty = Math.min(maxQty, chosenWeapon && chosenWeapon.maxCap ? chosenWeapon.maxCap : Math.min(maxQty, 10));
+        }
+
+        ammoLoaderState = {
+            invIndex: chosenInv ? chosenInv.invIndex : null,
+            weaponId: chosenWeapon ? chosenWeapon.id : null,
+            qty: Math.max(1, defQty || 1),
+            lockedFromInv: invIndex !== null && invIndex !== undefined
+        };
+
+        renderAmmoLoaderModal();
+        if (!dlg.open) dlg.showModal();
+    }
+
+    function renderAmmoLoaderModal() {
+        const body = document.getElementById('rpg-ammo-loader-body');
+        const confirmBtn = document.getElementById('rpg-ammo-loader-confirm');
+        if (!body) return;
+
+        const weapons = getHeroWeaponsForAmmo(true);
+        const curWeapon = weapons.find(w => w.id === ammoLoaderState.weaponId) || null;
+        const loadable = getLoadableAmmoItemsFromBackpack(null);
+        const curAmmo = loadable.find(it => it.invIndex === ammoLoaderState.invIndex) || null;
+
+        const compatAmmo = curWeapon && !ammoLoaderState.lockedFromInv
+            ? loadable.filter(it => it.isCoating || it.ammoKind === curWeapon.kind)
+            : loadable;
+        const activeAmmo = curAmmo && compatAmmo.some(a => a.invIndex === curAmmo.invIndex)
+            ? curAmmo
+            : (compatAmmo[0] || null);
+        ammoLoaderState.invIndex = activeAmmo ? activeAmmo.invIndex : null;
+
+        const compatWeapons = activeAmmo
+            ? weapons.filter(w => activeAmmo.isCoating || w.kind === activeAmmo.ammoKind)
+            : weapons;
+        const activeWeapon = curWeapon && compatWeapons.some(w => w.id === curWeapon.id)
+            ? curWeapon
+            : (compatWeapons[0] || null);
+        ammoLoaderState.weaponId = activeWeapon ? activeWeapon.id : null;
+
+        const maxUnits = (activeAmmo && activeWeapon) ? computeMaxLoadUnits(activeAmmo, activeWeapon) : 0;
+        const safeQty = maxUnits > 0 ? Math.max(1, Math.min(maxUnits, parseInt(ammoLoaderState.qty) || 1)) : 0;
+        ammoLoaderState.qty = safeQty;
+
+        const ammoHtml = compatAmmo.length > 0
+            ? `<div class="rpg-loader-choice-grid">${compatAmmo.map(a => {
+                const isSel = activeAmmo && a.invIndex === activeAmmo.invIndex;
+                const stockLabel = a.isCoating
+                    ? (a.coatingRounds > 1 ? `${a.unitCount} vial (${a.coatingRounds} rounds/vial)` : `${a.unitCount} dose (1 round/dose)`)
+                    : `${a.unitCount} rounds left`;
+                return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" onclick="COS_RPG.selectLoaderAmmo(${a.invIndex})">
+                    <span><strong>${esc(a.label)}</strong><br><small style="color:#94a3b8;">${esc(a.ammoDef.badge)}</small></span>
+                    <span class="rpg-loader-cap">${esc(stockLabel)}</span>
+                </button>`;
+            }).join('')}</div>`
+            : `<div style="font-size:0.74rem; color:#94a3b8; font-style:italic; padding:4px 0;">No compatible specialty ammunition or coatings found in your Backpack.</div>`;
+
+        const wpnHtml = compatWeapons.length > 0
+            ? `<div class="rpg-loader-choice-grid">${compatWeapons.map(w => {
+                const entry = getWeaponAmmoEntry(w.id);
+                const loaded = getTotalLoadedSpecialty(entry);
+                const free = w.maxCap ? Math.max(0, w.maxCap - loaded) : Infinity;
+                const isFull = w.maxCap && free <= 0;
+                const isSel = activeWeapon && w.id === activeWeapon.id;
+                const capText = w.maxCap ? `${loaded}/${w.maxCap} (${free} free)` : `Quiver (${loaded} spec)`;
+                return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" ${isFull ? 'disabled title="Chamber capacity full — Unload or fire rounds first"' : ''} onclick="COS_RPG.selectLoaderWeapon(decodeURIComponent('${encArg(w.id)}'))">
+                    <span><strong>${esc(w.label)}</strong><br><small style="color:#94a3b8;">${esc(w.kind.toUpperCase())}</small></span>
+                    <span class="rpg-loader-cap">${esc(capText)}</span>
+                </button>`;
+            }).join('')}</div>`
+            : `<div style="font-size:0.74rem; color:#fca5a5;">No compatible weapon available for this ammunition type.</div>`;
+
+        let qtyBlockHtml = '';
+        if (activeAmmo && activeWeapon && maxUnits > 0) {
+            const wEntry = getWeaponAmmoEntry(activeWeapon.id);
+            const wFree = activeWeapon.maxCap ? Math.max(0, activeWeapon.maxCap - getTotalLoadedSpecialty(wEntry)) : Infinity;
+            if (activeAmmo.isCoating && activeAmmo.coatingRounds > 1) {
+                const coatedCount = Math.min(activeAmmo.coatingRounds, wFree);
+                qtyBlockHtml = `
+                    <div class="rpg-loader-section">
+                        <div class="rpg-loader-label">Application Summary</div>
+                        <div style="font-size:0.75rem; color:#e2e8f0; line-height:1.4;">
+                            Consumes <strong>1 vial</strong> from Backpack to coat <strong>+${coatedCount} rounds</strong> in <strong>${esc(activeWeapon.label)}</strong>.
+                            ${wFree < activeAmmo.coatingRounds ? `<div style="color:#fde68a; font-size:0.7rem; margin-top:3px;">Capacity note: this weapon holds up to ${wFree} more specialty rounds (vial capacity: ${activeAmmo.coatingRounds}).</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            } else {
+                const isDose = activeAmmo.isCoating && activeAmmo.coatingRounds === 1;
+                const quickPills = [1, 3, 6].filter(n => n < maxUnits).map(n =>
+                    `<button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.setLoaderQty(${n})">${n}</button>`
+                ).join('');
+                qtyBlockHtml = `
+                    <div class="rpg-loader-section">
+                        <div class="rpg-loader-label">Quantity to Load (${isDose ? '1 round per dose' : '1..Max'})</div>
+                        <div class="rpg-loader-qty-row">
+                            <button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.setLoaderQty(${Math.max(1, safeQty - 1)})">-</button>
+                            <input type="number" id="rpg-loader-qty-inp" class="rpg-loader-qty-input" min="1" max="${maxUnits}" value="${safeQty}" oninput="COS_RPG.setLoaderQty(this.value, true)">
+                            <button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.setLoaderQty(${Math.min(maxUnits, safeQty + 1)})">+</button>
+                            ${quickPills}
+                            <button type="button" class="rpg-ammo-act-btn is-load" onclick="COS_RPG.setLoaderQty(${maxUnits})">Max (${maxUnits})</button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        body.innerHTML = `
+            <div class="rpg-loader-section">
+                <div class="rpg-loader-label">1. Select Ammunition / Coating</div>
+                ${ammoHtml}
+            </div>
+            <div class="rpg-loader-section">
+                <div class="rpg-loader-label">2. Select Target Weapon</div>
+                ${wpnHtml}
+            </div>
+            ${qtyBlockHtml}
+        `;
+        if (confirmBtn) confirmBtn.disabled = !(activeAmmo && activeWeapon && maxUnits > 0 && safeQty > 0);
+    }
+
+    function confirmLoadSpecialtyAmmo() {
+        if (!adapter) return;
+        const loadable = getLoadableAmmoItemsFromBackpack(null);
+        const ammoItem = loadable.find(it => it.invIndex === ammoLoaderState.invIndex);
+        const weapons = getHeroWeaponsForAmmo(true);
+        const weaponMeta = weapons.find(w => w.id === ammoLoaderState.weaponId);
+        if (!ammoItem || !weaponMeta) return;
+
+        const maxUnits = computeMaxLoadUnits(ammoItem, weaponMeta);
+        if (maxUnits <= 0) {
+            adapter.log(`<strong>Weapon Full:</strong> ${esc(weaponMeta.label)} has no room for more specialty rounds.`);
+            return;
+        }
+        const reqUnits = Math.max(1, Math.min(maxUnits, parseInt(ammoLoaderState.qty) || 1));
+
+        const store = getWeaponAmmoStore();
+        const entry = store.weapons[weaponMeta.id] || { pools: {}, active: 'standard', lastShot: null };
+        const freeCap = weaponMeta.maxCap ? Math.max(0, weaponMeta.maxCap - getTotalLoadedSpecialty(entry)) : Infinity;
+
+        let roundsToAdd = 0;
+        let unitsConsumed = reqUnits;
+        if (ammoItem.isCoating) {
+            roundsToAdd = Math.min(ammoItem.coatingRounds * unitsConsumed, freeCap);
+        } else {
+            roundsToAdd = Math.min(reqUnits, freeCap);
+            unitsConsumed = roundsToAdd;
+        }
+        if (roundsToAdd <= 0) return;
+
+        // Deduct exact stack count from Backpack (preserve unconsumed stack cleanly)
+        const items = adapter.getItems();
+        const raw = items[ammoItem.invIndex];
+        if (!raw) return;
+        const p = parseItem(raw);
+        if (ammoItem.isCoating) {
+            const remVials = (p.qty || 1) - unitsConsumed;
+            if (remVials <= 0) items.splice(ammoItem.invIndex, 1);
+            else items[ammoItem.invIndex] = `${p.emoji}${remVials > 1 ? remVials + 'x ' : ''}${p.name}`.trim();
+        } else {
+            const packCount = p.hasQty ? p.qty : ammoItem.unitCount;
+            const remRounds = packCount - unitsConsumed;
+            if (remRounds <= 0) items.splice(ammoItem.invIndex, 1);
+            else items[ammoItem.invIndex] = `${p.emoji}${remRounds > 1 ? remRounds + 'x ' : ''}${p.name}`.trim();
+        }
+        adapter.saveItems(items);
+
+        entry.pools[ammoItem.ammoId] = (entry.pools[ammoItem.ammoId] || 0) + roundsToAdd;
+        entry.active = ammoItem.ammoId;
+        entry.lastShot = null;
+        store.weapons[weaponMeta.id] = entry;
+        saveWeaponAmmoStore(store);
+
+        if (typeof adapter.onAmmoLoaded === 'function') {
+            try { adapter.onAmmoLoaded(weaponMeta.id, roundsToAdd, ammoItem.ammoId); } catch (e) {}
+        }
+
+        adapter.log(`Loaded <strong>+${roundsToAdd} ${esc(ammoItem.ammoDef.shortName)}</strong> into <strong>${esc(weaponMeta.label)}</strong> (${entry.pools[ammoItem.ammoId]} ${esc(ammoItem.ammoDef.shortName)} active).`);
+        closeModal('rpg-ammo-loader-dialog');
+        applyEquipmentToSheet(true);
+        refreshAllAmmoDisplays();
     }
 
     function makeStarterPresetId(p, idx) {
@@ -2055,35 +2844,43 @@
         if (!raw) return;
         const meta = getItemMeta(raw);
         const st = resolveWeaponCombatStats(raw, meta);
-        let silverShotInfo = null;
+        const weaponId = normKey(raw);
+        let shotInfo = null;
         if (meta.ammoKind) {
-            silverShotInfo = consumeSilveredAmmoIfActive(meta.ammoKind);
+            shotInfo = consumeWeaponAmmo(weaponId);
         }
+        const aDef = shotInfo && shotInfo.def ? shotInfo.def : null;
+        const effAtkBonus = st.atkBonus + (aDef ? (aDef.atkBonus || 0) : 0);
+        const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0);
         const d20 = Math.floor(Math.random() * 20) + 1;
-        const total = d20 + st.atkBonus;
+        const total = d20 + effAtkBonus;
         const name = shortLabel(raw);
-        const km = meta.ammoKind ? getAmmoKindMeta(meta.ammoKind) : null;
-        const silverTag = (silverShotInfo && silverShotInfo.silvered)
-            ? ` <span style="color:#e2e8f0; font-size:0.74rem; font-weight:700;">[Silvered Round &bull; ${silverShotInfo.remaining} left${silverShotInfo.reverted ? ' &mdash; last silvered shot fired' : ''}]</span>`
+        const ammoTag = aDef
+            ? ` <span style="color:#e2e8f0; font-size:0.74rem; font-weight:700;">[${esc(aDef.shortName)} &bull; ${shotInfo.remaining} left${shotInfo.exhausted ? ' &mdash; last loaded round fired' : ''}]</span>`
             : '';
-        const effDmgType = (silverShotInfo && silverShotInfo.silvered && !String(st.dmgType).toLowerCase().includes('silver'))
+        const effDmgType = (aDef && aDef.isSilvered && !String(st.dmgType).toLowerCase().includes('silver'))
             ? `Silvered ${st.dmgType}`
             : st.dmgType;
 
         if (d20 === 20) {
             const base = rollDiceExpr(st.dmgDice);
-            let critTotal = base.max + base.sum + st.dmgBonus;
+            let critTotal = base.max + base.sum + effDmgBonus;
             let extraHtml = '';
             if (st.extraDice) {
                 const ex = rollDiceExpr(st.extraDice);
                 critTotal += ex.max + ex.sum;
-                extraHtml = ` + ${ex.max}+[${ex.rolls.join('+')}](${esc(st.extraType || 'Bonus')})`;
+                extraHtml += ` + ${ex.max}+[${ex.rolls.join('+')}](${esc(st.extraType || 'Bonus')})`;
             }
-            adapter.log(`🔥 <strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>] + ${st.atkBonus} = <strong>${total} to Hit</strong>!${silverTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${st.dmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!`);
+            if (aDef && aDef.extraDice) {
+                const exA = rollDiceExpr(aDef.extraDice);
+                critTotal += exA.max + exA.sum;
+                extraHtml += ` + ${exA.max}+[${exA.rolls.join('+')}](${esc(aDef.extraType || aDef.shortName)})`;
+            }
+            adapter.log(`<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>] + ${effAtkBonus} = <strong>${total} to Hit</strong>!${ammoTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${effDmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!`);
             return;
         }
         const tag = d20 === 1 ? ' <strong style="color:#f87171;">(NAT 1 MISS!)</strong>' : '';
-        adapter.log(`⚔️ <strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>] + ${st.atkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}${silverTag}`);
+        adapter.log(`<strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>] + ${effAtkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}${ammoTag}`);
     }
 
     function rollDynamicWeaponDamage(invIdx) {
@@ -2091,22 +2888,33 @@
         if (!raw) return;
         const meta = getItemMeta(raw);
         const st = resolveWeaponCombatStats(raw, meta);
+        const weaponId = normKey(raw);
+        const aDef = meta.ammoKind ? getWeaponLastShotDef(weaponId) : null;
+        const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0);
         const base = rollDiceExpr(st.dmgDice);
-        let total = base.sum + st.dmgBonus;
-        let breakdown = `${st.dmgDice}[<strong>${base.rolls.join('+')}</strong>]${st.dmgBonus ? (st.dmgBonus > 0 ? ' + ' + st.dmgBonus : ' - ' + Math.abs(st.dmgBonus)) : ''}`;
+        let total = base.sum + effDmgBonus;
+        let breakdown = `${st.dmgDice}[<strong>${base.rolls.join('+')}</strong>]${effDmgBonus ? (effDmgBonus > 0 ? ' + ' + effDmgBonus : ' - ' + Math.abs(effDmgBonus)) : ''}`;
         if (st.extraDice) {
             const ex = rollDiceExpr(st.extraDice);
             total += ex.sum;
             breakdown += ` + <span style="color:#fb923c;">${st.extraDice}[${ex.rolls.join('+')} ${esc(st.extraType || 'Bonus')}]</span>`;
         }
-        const isSilv = meta.ammoKind ? isWeaponSilveredDamage(meta.ammoKind) : false;
+        if (aDef && aDef.extraDice) {
+            const exA = rollDiceExpr(aDef.extraDice);
+            total += exA.sum;
+            breakdown += ` + <span style="color:#fde68a;">${aDef.extraDice}[${exA.rolls.join('+')} ${esc(aDef.extraType || aDef.shortName)}]</span>`;
+        }
+        const isSilv = Boolean(aDef && aDef.isSilvered);
         const effDmgType = (isSilv && !String(st.dmgType).toLowerCase().includes('silver'))
             ? `Silvered ${st.dmgType}`
             : st.dmgType;
-        const silverNote = (isSilv || String(effDmgType).toLowerCase().includes('silver'))
-            ? ` <small style="color:#cbd5e1;">(Bypasses Werewolf, Vampire &amp; Hag resistance)</small>`
-            : '';
-        adapter.log(`💥 <strong>${esc(shortLabel(raw))} Damage:</strong> ${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(effDmgType)} Damage</span>!${silverNote}`);
+        const notes = [];
+        if (isSilv || String(effDmgType).toLowerCase().includes('silver')) notes.push('Bypasses Werewolf, Vampire &amp; Hag resistance');
+        if (aDef && aDef.haltsRegen) notes.push('Halts Vampire Regeneration for 1 round');
+        if (aDef && aDef.blocksHealing) notes.push('Target cannot regain HP until start of your next turn');
+        if (aDef && aDef.saveNote) notes.push(esc(aDef.saveNote));
+        const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.join(' &bull; ')})</small>` : '';
+        adapter.log(`<strong>${esc(shortLabel(raw))} Damage:</strong> ${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(effDmgType)} Damage</span>!${noteHtml}`);
     }
 
     function renderDynamicWeaponCards(bonuses) {
@@ -2131,8 +2939,15 @@
             const slotObj = activeSlots.find(s => s.id === slotId);
             if (!slotObj) return;
             const st = resolveWeaponCombatStats(raw, meta);
-            const dmgLabel = `${st.dmgDice}${st.dmgBonus ? (st.dmgBonus > 0 ? '+' + st.dmgBonus : st.dmgBonus) : ''}${st.extraDice ? ' +' + st.extraDice : ''}`;
-            const ammoStripHtml = meta.ammoKind ? buildSilverAmmoStripHtml(meta.ammoKind) : '';
+            const weaponId = normKey(raw);
+            const aDef = meta.ammoKind ? getActiveWeaponAmmoDef(weaponId) : null;
+            const effAtk = st.atkBonus + (aDef ? (aDef.atkBonus || 0) : 0);
+            const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0);
+            const dmgParts = [`${st.dmgDice}${effDmgBonus ? (effDmgBonus > 0 ? '+' + effDmgBonus : effDmgBonus) : ''}`];
+            if (st.extraDice) dmgParts.push(`+${st.extraDice}`);
+            if (aDef && aDef.extraDice) dmgParts.push(`+${aDef.extraDice}`);
+            const dmgLabel = dmgParts.join(' ');
+            const ammoStripHtml = meta.ammoKind ? buildWeaponAmmoBarHtml(weaponId, { id: weaponId, kind: meta.ammoKind, maxCap: detectWeaponMaxCap(raw, meta) }) : '';
             const card = document.createElement('div');
             card.className = 'action-card rpg-dyn-weapon-card';
             card.style.borderLeft = '3px solid #f59e0b';
@@ -2142,14 +2957,14 @@
                         <div onclick="COS_RPG.openItemDetails(${idx})" style="cursor:pointer; color:#f8fafc;">
                             ${esc(shortLabel(raw))} <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                         </div>
-                        <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Equipped in ${slotObj.label}${slotId === 'mainHand' && bonuses.mainHand2H ? ' (2-Handed)' : ''} • +${st.atkBonus} Hit • ${esc(dmgLabel)} ${esc(st.dmgType)}</div>
+                        <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Equipped in ${slotObj.label}${slotId === 'mainHand' && bonuses.mainHand2H ? ' (2-Handed)' : ''} • +${effAtk} Hit • ${esc(dmgLabel)} ${esc(st.dmgType)}</div>
                     </div>
                     <span class="rpg-card-equipped-pill">WORN</span>
                 </div>
                 <div class="action-desc">${esc(meta.summary || 'Equipped weapon from Backpack.')}</div>
                 ${ammoStripHtml}
                 <div class="action-btn-row" style="flex-wrap:wrap;">
-                    <button type="button" class="btn-roll-action" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${st.atkBonus})</button>
+                    <button type="button" class="btn-roll-action" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${effAtk})</button>
                     <button type="button" class="btn-roll-action btn-roll-dmg" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${esc(dmgLabel)})</button>
                     <button type="button" class="btn-act btn-act-pre" onclick="COS_RPG.unequipSlot('${slotId}')">Unequip</button>
                 </div>
@@ -2779,36 +3594,8 @@
             const d1 = Math.floor(Math.random() * 6) + 1;
             const d2 = Math.floor(Math.random() * 6) + 1;
             adapter.log(`💣 <strong>Threw ${esc(shortLabel(raw))} (30 ft, 10-ft radius):</strong> 2d6[${d1}+${d2}] = <span style="color:#fde68a; font-size:1.08rem; font-weight:800;">${d1 + d2} Fire/Radiant Damage</span> + <strong>Blinded 1 turn</strong> (<code>DC 13 DEX/CON Save</code>; lights up blood-mist &amp; invisible foes!).`);
-        } else if (act.type === 'silverCoat') {
-            const bonuses = getGearBonuses();
-            const eq = bonuses.equippedMap || {};
-            const allItems = adapter.getItems();
-            let targetKind = null;
-            for (const sid of ['ranged', 'mainHand', 'offHand']) {
-                const rawEq = eq[sid] ? findInventoryRawByKey(eq[sid]) : null;
-                const mEq = rawEq ? getItemMeta(rawEq) : null;
-                if (mEq && mEq.ammoKind) { targetKind = mEq.ammoKind; break; }
-            }
-            if (!targetKind && adapter.heroId === 'yvaine') targetKind = 'firearm';
-            if (!targetKind) {
-                const rangedInv = allItems.find(it => !!getItemMeta(it).ammoKind);
-                if (rangedInv) targetKind = getItemMeta(rangedInv).ammoKind;
-            }
-            if (targetKind) {
-                const st = getAmmoState();
-                const slot = st[targetKind] || { count: 0, active: false, lastShotSilvered: null };
-                slot.count = (slot.count || 0) + 10;
-                slot.active = true;
-                slot.lastShotSilvered = null;
-                st[targetKind] = slot;
-                saveAmmoState(st);
-                const km = getAmmoKindMeta(targetKind);
-                adapter.log(`<strong>Applied ${esc(shortLabel(raw))}:</strong> Loaded <strong>+10 ${esc(km.title)}</strong> into your reserve (${slot.count} total ready, Silvered ON) — or coated 1 melee blade for 1 hour!`);
-            } else {
-                adapter.log(`<strong>${esc(act.verb || 'Applied')} ${esc(shortLabel(raw))}:</strong> ${esc(act.effect || act.label)}`);
-            }
         } else if (act.type === 'utilityLog') {
-            adapter.log(`⚗️ <strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${esc(act.effect || act.label)}`);
+            adapter.log(`<strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${esc(act.effect || act.label)}`);
         }
         applyEquipmentToSheet(true);
     }
@@ -3022,6 +3809,7 @@
             customPresets: getCustomPresets().map(cp => ({ label: cp.label, slotLabels: cp.slotLabels || {} })),
             items: adapter.getItems(),
             notes: notesList,
+            weaponAmmo: getWeaponAmmoStore().weapons,
             ammoState: getAmmoState(),
             dmOverrideActive: isDmOverrideActive(),
             resourcesSummary: resSummary,
@@ -3828,6 +4616,21 @@
                         <div class="rpg-modal-foot">
                             <span style="font-size:0.69rem; color:#94a3b8;">Supports Live Firestore Table Sync + Offline COSTRADE Codes.</span>
                             <button type="button" class="rpg-mini-btn" onclick="COS_RPG.closeModal('rpg-trade-modal')">Close</button>
+                        </div>
+                    </div>
+                </dialog>
+
+                <!-- PER-WEAPON SPECIALTY AMMO LOADER MODAL -->
+                <dialog class="rpg-dialog" id="rpg-ammo-loader-dialog" closedby="any" aria-labelledby="rpg-ammo-loader-title" style="max-width:460px;">
+                    <div class="rpg-modal-shell">
+                        <div class="rpg-modal-head">
+                            <h2 id="rpg-ammo-loader-title">Load Specialty Ammunition</h2>
+                            <button type="button" class="rpg-modal-close" onclick="COS_RPG.closeModal('rpg-ammo-loader-dialog')" aria-label="Close Ammo Loader">✕</button>
+                        </div>
+                        <div class="rpg-modal-body" id="rpg-ammo-loader-body"></div>
+                        <div class="rpg-modal-foot">
+                            <button type="button" class="rpg-mini-btn" onclick="COS_RPG.closeModal('rpg-ammo-loader-dialog')">Cancel</button>
+                            <button type="button" class="rpg-mini-btn btn-use" id="rpg-ammo-loader-confirm" onclick="COS_RPG.confirmLoadSpecialtyAmmo()">Load into Weapon</button>
                         </div>
                     </div>
                 </dialog>
@@ -4931,7 +5734,7 @@
             const canEquip = meta.slots && meta.slots.some(sid => activeIds.has(sid));
             const profCheck = canEquip ? checkItemProficiency(raw, meta) : { allowed: true, requirement: '' };
             const isRestricted = canEquip && !profCheck.allowed && !dmOverrideOn;
-            const loadQty = meta.ammoKind ? (p.hasQty ? p.qty : (meta.ammoPackDefault || 10)) : 0;
+            const hasLoadableAmmo = Boolean(meta.ammoMeta && AMMO_CATALOG[meta.ammoMeta.ammoId]);
             const catLbl = BP_CATS.find(c => c.id === meta.category)?.label || '📦 Gear';
 
             rows.push(`
@@ -4956,7 +5759,7 @@
                                 ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Requires ${esc(profCheck.requirement)} (or enable DM Override)">Restricted</button>`
                                 : `<button type="button" class="rpg-mini-btn ${isEquipped ? 'btn-equipped' : 'btn-equip'}" onclick="COS_RPG.quickToggleEquipByIndex(${idx})">${isEquipped ? 'Unequip' : 'Equip'}</button>`)
                             : ''}
-                        ${meta.ammoKind ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.loadSilveredAmmoFromBackpack(${idx})">Load (+${loadQty})</button>` : ''}
+                        ${hasLoadableAmmo ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })">Load</button>` : ''}
                         ${meta.useAction ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.useConsumableByIndex(${idx})">Use</button>` : ''}
                         <button type="button" class="rpg-mini-btn btn-send" onclick="COS_RPG.openSendForItem(${idx})" title="Send to party member">Send</button>
                         <div class="inv-stepper" style="display:inline-flex; align-items:center; gap:3px; background:#090e1a; border:1px solid #334155; border-radius:5px; padding:1px 4px;">
@@ -5500,12 +6303,31 @@
         isDmOverrideActive,
         checkItemProficiency,
         getAmmoState,
-        loadSilveredAmmoFromBackpack,
-        toggleSilveredAmmoMode,
-        adjustSilveredAmmo,
-        consumeSilveredAmmoIfActive,
-        isWeaponSilveredDamage,
-        renderSilverAmmoMount,
+        getWeaponAmmoStore,
+        getHeroWeaponsForAmmo,
+        getActiveWeaponAmmoDef,
+        getWeaponLastShotDef,
+        openAmmoLoaderModal,
+        selectLoaderAmmo: (idx) => { ammoLoaderState.invIndex = idx; renderAmmoLoaderModal(); },
+        selectLoaderWeapon: (wid) => { ammoLoaderState.weaponId = wid; renderAmmoLoaderModal(); },
+        setLoaderQty: (val, skipInputDom = false) => {
+            const loadable = getLoadableAmmoItemsFromBackpack(null);
+            const a = loadable.find(it => it.invIndex === ammoLoaderState.invIndex);
+            const w = getHeroWeaponsForAmmo(true).find(x => x.id === ammoLoaderState.weaponId);
+            const mx = (a && w) ? computeMaxLoadUnits(a, w) : 1;
+            const n = Math.max(1, Math.min(mx || 1, parseInt(val) || 1));
+            ammoLoaderState.qty = n;
+            if (!skipInputDom) {
+                const inp = document.getElementById('rpg-loader-qty-inp');
+                if (inp) inp.value = String(n);
+            }
+        },
+        confirmLoadSpecialtyAmmo,
+        selectWeaponAmmo,
+        unloadWeaponAmmo,
+        consumeWeaponAmmo,
+        buildWeaponAmmoBarHtml,
+        refreshAllAmmoDisplays,
         rollDynamicWeaponAttack,
         rollDynamicWeaponDamage,
         syncHeroStateToFirebase,

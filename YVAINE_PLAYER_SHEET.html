@@ -569,10 +569,35 @@
         .bullet-pip.mercy.spent { background: #1e293b; border-color: #334155; opacity: 0.35; }
         .bullet-pip.less { background: #38bdf8; border-color: #7dd3fc; }
         .bullet-pip.less.spent { background: #1e293b; border-color: #334155; opacity: 0.35; }
-        .bullet-pip.silver-active:not(.spent) {
+        .bullet-pip.ammo-silver:not(.spent) {
             background: linear-gradient(180deg, #f8fafc 0%, #94a3b8 100%);
             border-color: #f8fafc;
             box-shadow: 0 0 6px rgba(248, 250, 252, 0.45);
+        }
+        .bullet-pip.ammo-fire:not(.spent) {
+            background: linear-gradient(180deg, #fdba74 0%, #ea580c 100%);
+            border-color: #fb923c;
+            box-shadow: 0 0 6px rgba(251, 146, 60, 0.45);
+        }
+        .bullet-pip.ammo-poison:not(.spent) {
+            background: linear-gradient(180deg, #86efac 0%, #15803d 100%);
+            border-color: #4ade80;
+            box-shadow: 0 0 6px rgba(74, 222, 128, 0.4);
+        }
+        .bullet-pip.ammo-radiant:not(.spent) {
+            background: linear-gradient(180deg, #fef08a 0%, #ca8a04 100%);
+            border-color: #fde047;
+            box-shadow: 0 0 6px rgba(253, 224, 71, 0.45);
+        }
+        .bullet-pip.ammo-necrotic:not(.spent) {
+            background: linear-gradient(180deg, #d8b4fe 0%, #7e22ce 100%);
+            border-color: #c084fc;
+            box-shadow: 0 0 6px rgba(192, 132, 252, 0.45);
+        }
+        .bullet-pip.ammo-magic:not(.spent) {
+            background: linear-gradient(180deg, #7dd3fc 0%, #0284c7 100%);
+            border-color: #38bdf8;
+            box-shadow: 0 0 6px rgba(56, 189, 248, 0.45);
         }
 
         .btn-roll-reload {
@@ -1213,9 +1238,6 @@
                         </button>
                     </div>
 
-                    <!-- SILVERED AMMO MAGAZINE RESERVE & TOGGLE (MANAGED BY COS_RPG) -->
-                    <div id="yvaine-silver-ammo-bar" style="margin-bottom:8px;"></div>
-
                     <!-- STANCE 1: "LAMENT" HEAVY RIFLE VIEW -->
                     <div id="stance-view-lament">
                         <div class="action-card" id="card-lament">
@@ -1249,6 +1271,8 @@
                                     <button id="btn-reload-lament" class="btn-roll-action btn-roll-reload" onclick="reloadLament()">🔄 Reload Clip (BA)</button>
                                 </div>
                             </div>
+
+                            <div id="yvaine-ammo-bar-lament"></div>
 
                             <div class="action-btn-row">
                                 <button class="btn-roll-action" onclick="fireLamentShot()">🎯 Attack (+8)</button>
@@ -1285,6 +1309,8 @@
                                     </div>
                                 </div>
 
+                                <div id="yvaine-ammo-bar-mercy"></div>
+
                                 <div class="action-btn-row">
                                     <button class="btn-roll-action" onclick="fireMercyShot()">🔴 Attack (+8)</button>
                                     <button class="btn-roll-action btn-roll-dmg" onclick="rollMercyDamage()">💥 Damage (1d6+4)</button>
@@ -1315,6 +1341,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div id="yvaine-ammo-bar-less"></div>
 
                                 <div class="action-btn-row" style="flex-wrap:wrap;">
                                     <button type="button" class="btn-roll-action" style="background:#0284c7;" onclick="fireLessShot()">🔵 Attack (+8)</button>
@@ -1919,6 +1947,7 @@
 
         const bonusStr = totalBonus !== 0 ? ` + ${totalBonus}` : '';
         logRoll(`🎯 <strong>${label}:</strong> [d20: <strong>${roll}</strong>]${bonusStr}${modeNote} = <span style="font-size:1.15rem; color:${isCrit ? '#fde68a' : (isFumble ? '#f87171' : 'var(--accent-gold)')}; font-weight:800;">${total}</span>${critBadge}`);
+        return { roll, total, isCrit, isFumble };
     }
 
     function rollCustomDie(sides) {
@@ -2011,13 +2040,98 @@
                 btn.innerHTML = `🔄 Reload Clip (BA)`;
             }
         }
+        syncWeaponAmmoVisuals();
     }
 
-    function syncSilveredAmmoVisuals() {
-        const isSilv = Boolean(window.COS_RPG && COS_RPG.getAmmoState().firearm?.active && (COS_RPG.getAmmoState().firearm?.count || 0) > 0);
-        document.querySelectorAll('#lament-pips-bar .bullet-pip, #mercy-pips-bar .bullet-pip, #less-pips-bar .bullet-pip').forEach(pip => {
-            pip.classList.toggle('silver-active', isSilv && !pip.classList.contains('spent'));
+    const lastShotCritByWeapon = { lament: false, mercy: false, less: false };
+
+    function rollDiceExprLocal(expr) {
+        const m = String(expr || '').trim().match(/^(\d+)d(\d+)$/i);
+        if (!m) return { count: 0, sides: 0, rolls: [], sum: 0, max: 0 };
+        const count = parseInt(m[1]) || 1;
+        const sides = parseInt(m[2]) || 6;
+        const rolls = [];
+        let sum = 0;
+        for (let i = 0; i < count; i++) {
+            const r = Math.floor(Math.random() * sides) + 1;
+            rolls.push(r);
+            sum += r;
+        }
+        return { count, sides, rolls, sum, max: count * sides };
+    }
+
+    function syncWeaponAmmoVisuals() {
+        const accentClasses = ['ammo-silver', 'ammo-fire', 'ammo-poison', 'ammo-radiant', 'ammo-necrotic', 'ammo-magic', 'silver-active'];
+        [
+            { id: 'lament', sel: '#lament-pips-bar .bullet-pip' },
+            { id: 'mercy', sel: '#mercy-pips-bar .bullet-pip' },
+            { id: 'less', sel: '#less-pips-bar .bullet-pip' }
+        ].forEach(w => {
+            const def = (window.COS_RPG && COS_RPG.getActiveWeaponAmmoDef) ? COS_RPG.getActiveWeaponAmmoDef(w.id) : null;
+            const cls = def ? `ammo-${def.accent}` : null;
+            document.querySelectorAll(w.sel).forEach(pip => {
+                accentClasses.forEach(c => pip.classList.remove(c));
+                if (cls && !pip.classList.contains('spent')) pip.classList.add(cls);
+            });
         });
+    }
+    const syncSilveredAmmoVisuals = syncWeaponAmmoVisuals;
+
+    function fireWeaponWithSpecialty(weaponId, baseLabel, baseAtkBonus) {
+        const shot = (window.COS_RPG && COS_RPG.consumeWeaponAmmo) ? COS_RPG.consumeWeaponAmmo(weaponId) : { ammoId: 'standard', def: null, remaining: 0 };
+        const aDef = shot && shot.def ? shot.def : null;
+        const effAtk = baseAtkBonus + (aDef ? (aDef.atkBonus || 0) : 0);
+        const tag = aDef ? ` [${aDef.shortName} • ${shot.remaining} left]` : '';
+        const res = rollD20(`${baseLabel} (+${effAtk})${tag}`, effAtk);
+        lastShotCritByWeapon[weaponId] = Boolean(res && res.isCrit);
+        return { shot, res };
+    }
+
+    function rollYvaineFirearmDamage(weaponId, weaponLabel, dieSides, dexBonus, chamberRemain, maxChamber, accentColor) {
+        const isCrit = Boolean(lastShotCritByWeapon[weaponId]);
+        lastShotCritByWeapon[weaponId] = false;
+        const aDef = (window.COS_RPG && COS_RPG.getWeaponLastShotDef) ? COS_RPG.getWeaponLastShotDef(weaponId) : null;
+        const modBonus = dexBonus + (aDef ? (aDef.dmgBonus || 0) : 0);
+
+        const baseRoll = Math.floor(Math.random() * dieSides) + 1;
+        let total = isCrit ? (dieSides + baseRoll + modBonus) : (baseRoll + modBonus);
+        let breakdown = isCrit
+            ? `Brutal Crit [${dieSides} Max + 1d${dieSides}:${baseRoll}]${modBonus ? ' + ' + modBonus : ''}`
+            : `[1d${dieSides}: ${baseRoll}]${modBonus ? (dexBonus ? ' + ' + dexBonus + ' DEX' : '') + (aDef && aDef.dmgBonus ? ' + ' + aDef.dmgBonus + ' Ammo' : '') : ''}`;
+
+        if (slayersPreyActive) {
+            const sp = Math.floor(Math.random() * 6) + 1;
+            total += isCrit ? (6 + sp) : sp;
+            breakdown += isCrit
+                ? ` + <span style="color:#f87171;">Slayer's Prey [6+${sp}]</span>`
+                : ` + <span style="color:#f87171;">Slayer's Prey (+${sp})</span>`;
+        }
+        if (isTracerActive) {
+            const tr = Math.floor(Math.random() * 6) + 1;
+            total += isCrit ? (6 + tr) : tr;
+            breakdown += isCrit
+                ? ` + <span style="color:#ef4444;">Hunter's Mark [6+${tr}]</span>`
+                : ` + <span style="color:#ef4444;">Hunter's Mark (+${tr})</span>`;
+        }
+        if (aDef && aDef.extraDice) {
+            const ex = rollDiceExprLocal(aDef.extraDice);
+            total += isCrit ? (ex.max + ex.sum) : ex.sum;
+            breakdown += isCrit
+                ? ` + <span style="color:#fde68a;">${aDef.extraType} [${ex.max} Max + ${ex.rolls.join('+')}]</span>`
+                : ` + <span style="color:#fde68a;">+${ex.sum} ${aDef.extraType} (${aDef.extraDice}: ${ex.rolls.join('+')})</span>`;
+        }
+
+        const isSilv = Boolean(aDef && aDef.isSilvered);
+        const dmgLabel = isSilv ? 'Silvered Piercing Damage' : 'Piercing Damage';
+        const notes = [];
+        if (isSilv) notes.push('Bypasses Werewolf, Vampire &amp; Hag resistance');
+        if (aDef && aDef.haltsRegen) notes.push('Halts Vampire Regeneration for 1 round');
+        if (aDef && aDef.blocksHealing) notes.push('Target cannot regain HP until start of your next turn');
+        if (aDef && aDef.saveNote) notes.push(aDef.saveNote);
+        const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.join(' &bull; ')})</small>` : '';
+        const critHead = isCrit ? `<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — </strong>` : '';
+        const valColor = isSilv ? '#e2e8f0' : accentColor;
+        logRoll(`${critHead}<strong>${weaponLabel} Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:${valColor}; font-weight:800;">${total} ${dmgLabel}</span>!${noteHtml} <span style="font-size:0.75rem; color:var(--text-dim);">(Chamber: <strong>${chamberRemain}/${maxChamber}</strong> left)</span>`);
     }
 
     function fireLamentShot() {
@@ -2028,32 +2142,12 @@
         }
 
         lamentChamber--;
-        const silv = window.COS_RPG ? COS_RPG.consumeSilveredAmmoIfActive('firearm') : { silvered: false };
+        fireWeaponWithSpecialty('lament', 'Lament Attack Roll', getRangedAttackBonus());
         updateLamentAmmoUI();
-        syncSilveredAmmoVisuals();
-        rollD20(silv.silvered ? `Lament Attack Roll (+8) [Silvered • ${silv.remaining} left]` : 'Lament Attack Roll (+8)', getRangedAttackBonus());
     }
 
     function rollLamentDamage() {
-        const d12 = Math.floor(Math.random() * 12) + 1;
-        let total = d12 + 4;
-        let breakdown = `[1d12: ${d12}] + 4 DEX`;
-        const isSilv = Boolean(window.COS_RPG && COS_RPG.isWeaponSilveredDamage('firearm'));
-
-        if (slayersPreyActive) {
-            const spD6 = Math.floor(Math.random() * 6) + 1;
-            total += spD6;
-            breakdown += ` + <span style="color:#f87171;">Slayer's Prey (+${spD6})</span>`;
-        }
-        if (isTracerActive) {
-            const trD6 = Math.floor(Math.random() * 6) + 1;
-            total += trD6;
-            breakdown += ` + <span style="color:#ef4444;">Hunter's Mark (+${trD6})</span>`;
-        }
-
-        const dmgLabel = isSilv ? 'Silvered Piercing Damage' : 'Piercing Damage';
-        const silverNote = isSilv ? ` <small style="color:#cbd5e1;">(Bypasses Werewolf, Vampire &amp; Hag resistance)</small>` : '';
-        logRoll(`💥 <strong>"Lament" Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:${isSilv ? '#e2e8f0' : '#f87171'}; font-weight:800;">${total} ${dmgLabel}</span>!${silverNote} <span style="font-size:0.75rem; color:var(--text-dim);">(Chamber: <strong>${lamentChamber}/10</strong> left)</span>`);
+        rollYvaineFirearmDamage('lament', '"Lament"', 12, 4, lamentChamber, maxLamentChamber, '#f87171');
     }
 
     function reloadLament() {
@@ -2069,7 +2163,6 @@
         lamentReloadReserves--;
         lamentChamber = maxLamentChamber;
         updateLamentAmmoUI();
-        syncSilveredAmmoVisuals();
         logRoll(`🔄 <strong>Lament Reloaded (Bonus Action):</strong> Yvaine ejects the empty stripper rack and slaps a fresh 10-round clip into the breach. <strong>Chamber Full (10/10)</strong>! <em>(${lamentReloadReserves}/2 reserve clips left in tactical bandolier).</em>`);
     }
 
@@ -2123,7 +2216,7 @@
             reservesDisp.innerText = `${revolverReloadReserves} / ${maxRevolverReloadReserves} Left`;
             reservesDisp.style.color = (revolverReloadReserves > 0) ? '#86efac' : '#94a3b8';
         }
-        syncSilveredAmmoVisuals();
+        syncWeaponAmmoVisuals();
     }
 
     function fireMercyShot() {
@@ -2134,31 +2227,12 @@
         }
 
         mercyChamber--;
-        const silv = window.COS_RPG ? COS_RPG.consumeSilveredAmmoIfActive('firearm') : { silvered: false };
+        fireWeaponWithSpecialty('mercy', '"Mercy" Attack Roll', getRangedAttackBonus());
         updateRevolversAmmoUI();
-        rollD20(silv.silvered ? `"Mercy" Attack Roll (+8) [Silvered • ${silv.remaining} left]` : '"Mercy" Attack Roll (+8)', getRangedAttackBonus());
     }
 
     function rollMercyDamage() {
-        const d6 = Math.floor(Math.random() * 6) + 1;
-        let total = d6 + 4;
-        let breakdown = `[1d6: ${d6}] + 4 DEX`;
-        const isSilv = Boolean(window.COS_RPG && COS_RPG.isWeaponSilveredDamage('firearm'));
-
-        if (slayersPreyActive) {
-            const spD6 = Math.floor(Math.random() * 6) + 1;
-            total += spD6;
-            breakdown += ` + <span style="color:#f87171;">Slayer's Prey (+${spD6})</span>`;
-        }
-        if (isTracerActive) {
-            const trD6 = Math.floor(Math.random() * 6) + 1;
-            total += trD6;
-            breakdown += ` + <span style="color:#ef4444;">Hunter's Mark (+${trD6})</span>`;
-        }
-
-        const dmgLabel = isSilv ? 'Silvered Piercing Damage' : 'Piercing Damage';
-        const silverNote = isSilv ? ` <small style="color:#cbd5e1;">(Bypasses Werewolf, Vampire &amp; Hag resistance)</small>` : '';
-        logRoll(`💥 <strong>"Mercy" Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:${isSilv ? '#e2e8f0' : '#f87171'}; font-weight:800;">${total} ${dmgLabel}</span>!${silverNote} <span style="font-size:0.75rem; color:var(--text-dim);">(Mercy: <strong>${mercyChamber}/6</strong> left)</span>`);
+        rollYvaineFirearmDamage('mercy', '"Mercy"', 6, 4, mercyChamber, maxMercyChamber, '#f87171');
     }
 
     function fireLessShot() {
@@ -2169,31 +2243,12 @@
         }
 
         lessChamber--;
-        const silv = window.COS_RPG ? COS_RPG.consumeSilveredAmmoIfActive('firearm') : { silvered: false };
+        fireWeaponWithSpecialty('less', '"Less" Off-Hand Attack Roll', getRangedAttackBonus());
         updateRevolversAmmoUI();
-        rollD20(silv.silvered ? `"Less" Off-Hand Attack Roll (+8) [Silvered • ${silv.remaining} left]` : '"Less" Off-Hand Attack Roll (+8)', getRangedAttackBonus());
     }
 
     function rollLessDamage() {
-        const d6 = Math.floor(Math.random() * 6) + 1;
-        let total = d6; // Off-hand no DEX mod unless TWF style
-        let breakdown = `[1d6: ${d6}]`;
-        const isSilv = Boolean(window.COS_RPG && COS_RPG.isWeaponSilveredDamage('firearm'));
-
-        if (slayersPreyActive) {
-            const spD6 = Math.floor(Math.random() * 6) + 1;
-            total += spD6;
-            breakdown += ` + <span style="color:#f87171;">Slayer's Prey (+${spD6})</span>`;
-        }
-        if (isTracerActive) {
-            const trD6 = Math.floor(Math.random() * 6) + 1;
-            total += trD6;
-            breakdown += ` + <span style="color:#ef4444;">Hunter's Mark (+${trD6})</span>`;
-        }
-
-        const dmgLabel = isSilv ? 'Silvered Piercing Damage' : 'Piercing Damage';
-        const silverNote = isSilv ? ` <small style="color:#cbd5e1;">(Bypasses Werewolf, Vampire &amp; Hag resistance)</small>` : '';
-        logRoll(`💥 <strong>"Less" Off-Hand Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:${isSilv ? '#e2e8f0' : '#38bdf8'}; font-weight:800;">${total} ${dmgLabel}</span>!${silverNote} <span style="font-size:0.75rem; color:var(--text-dim);">(Less: <strong>${lessChamber}/6</strong> left)</span>`);
+        rollYvaineFirearmDamage('less', '"Less" Off-Hand', 6, 0, lessChamber, maxLessChamber, '#38bdf8');
     }
 
     function reloadBothRevolvers() {
@@ -4669,10 +4724,23 @@
                     weapons: ['simple', 'martial', 'firearm'],
                     label: 'Monster Slayer Ranger + Gunner (Light/Medium Armor, Shields, Simple/Martial & Firearms)'
                 },
-                silverAmmoMount: {
-                    selector: '#yvaine-silver-ammo-bar',
-                    kind: 'firearm',
-                    label: 'Silvered Rounds'
+                ammoWeapons: [
+                    { id: 'lament', label: '"Lament" (Royal Heavy Long Rifle)', kind: 'firearm', maxCap: 10, mount: '#yvaine-ammo-bar-lament' },
+                    { id: 'mercy', label: '"Mercy" (Main-Hand Revolver)', kind: 'firearm', maxCap: 6, mount: '#yvaine-ammo-bar-mercy' },
+                    { id: 'less', label: '"Less" (Off-Hand Revolver)', kind: 'firearm', maxCap: 6, mount: '#yvaine-ammo-bar-less' }
+                ],
+                onAmmoLoaded: (weaponId, addRounds) => {
+                    if (weaponId === 'lament') {
+                        lamentChamber = Math.min(maxLamentChamber, lamentChamber + (parseInt(addRounds) || 0));
+                        updateLamentAmmoUI();
+                    } else if (weaponId === 'mercy') {
+                        mercyChamber = Math.min(maxMercyChamber, mercyChamber + (parseInt(addRounds) || 0));
+                        updateRevolversAmmoUI();
+                    } else if (weaponId === 'less') {
+                        lessChamber = Math.min(maxLessChamber, lessChamber + (parseInt(addRounds) || 0));
+                        updateRevolversAmmoUI();
+                    }
+                    syncWeaponAmmoVisuals();
                 },
                 presets: [
                     { label: 'Mercy & Less (Dual Sidearms)', slots: { body: 'studded leather', amulet: 'whispering grave', mainHand: '"mercy"', offHand: '"less"', legSheath: 'trench knife', ranged: 'lament', _grip: '1h' } },

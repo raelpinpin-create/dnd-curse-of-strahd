@@ -852,89 +852,243 @@ dialog::backdrop {
     color: #fca5a5;
 }
 
-/* Silvered Ammunition Reserve & Toggle Strip (Firearms, Bows, Crossbows) */
-.rpg-ammo-strip {
+/* Per-Weapon Specialty Ammunition Bar & Loader Modal (Firearms, Bows, Crossbows) */
+.rpg-wpn-ammo-bar {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 6px;
+    flex-direction: column;
+    gap: 5px;
     background: #090e1a;
     border: 1px solid #334155;
     border-left: 3px solid #64748b;
     border-radius: 6px;
-    padding: 6px 9px;
-    margin-bottom: 6px;
+    padding: 6px 8px;
+    margin: 4px 0 6px 0;
     transition: border-color 0.15s, background 0.15s;
 }
-.rpg-ammo-strip.is-silver {
+.rpg-wpn-ammo-bar.accent-silver {
     border-color: #94a3b8;
-    border-left: 3px solid #e2e8f0;
-    background: linear-gradient(135deg, rgba(148, 163, 184, 0.14) 0%, #090e1a 70%);
+    border-left-color: #e2e8f0;
+    background: linear-gradient(135deg, rgba(148, 163, 184, 0.11) 0%, #090e1a 75%);
 }
-.rpg-ammo-meta {
+.rpg-wpn-ammo-bar.accent-fire {
+    border-color: rgba(251, 146, 60, 0.55);
+    border-left-color: #fb923c;
+    background: linear-gradient(135deg, rgba(234, 88, 12, 0.12) 0%, #090e1a 75%);
+}
+.rpg-wpn-ammo-bar.accent-poison {
+    border-color: rgba(74, 222, 128, 0.5);
+    border-left-color: #4ade80;
+    background: linear-gradient(135deg, rgba(22, 163, 74, 0.12) 0%, #090e1a 75%);
+}
+.rpg-wpn-ammo-bar.accent-radiant {
+    border-color: rgba(250, 204, 21, 0.55);
+    border-left-color: #fde047;
+    background: linear-gradient(135deg, rgba(202, 138, 4, 0.13) 0%, #090e1a 75%);
+}
+.rpg-wpn-ammo-bar.accent-necrotic {
+    border-color: rgba(192, 132, 252, 0.55);
+    border-left-color: #c084fc;
+    background: linear-gradient(135deg, rgba(126, 34, 206, 0.13) 0%, #090e1a 75%);
+}
+.rpg-wpn-ammo-bar.accent-magic {
+    border-color: rgba(56, 189, 248, 0.55);
+    border-left-color: #38bdf8;
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.12) 0%, #090e1a 75%);
+}
+.rpg-ammo-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    font-size: 0.7rem;
+    color: #cbd5e1;
+}
+.rpg-ammo-status {
+    font-weight: 700;
+    color: #94a3b8;
+    font-family: 'Inter', sans-serif;
+}
+.rpg-ammo-status strong {
+    color: #f8fafc;
+}
+.rpg-ammo-act-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+.rpg-ammo-act-btn {
+    background: #111827;
+    border: 1px solid #475569;
+    color: #e2e8f0;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.67rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    min-block-size: 23px;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.rpg-ammo-act-btn:hover {
+    border-color: #93c5fd;
+    color: #ffffff;
+    background: #1e293b;
+}
+.rpg-ammo-act-btn.is-load {
+    border-color: rgba(245, 158, 11, 0.6);
+    color: #fde68a;
+}
+.rpg-ammo-act-btn.is-load:hover {
+    border-color: #f59e0b;
+    background: rgba(180, 83, 9, 0.25);
+}
+.rpg-ammo-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+.rpg-ammo-pill {
+    background: #111827;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    border-radius: 999px;
+    padding: 2px 9px;
+    font-size: 0.67rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    min-block-size: 22px;
+    transition: all 0.14s ease;
+}
+.rpg-ammo-pill:hover {
+    border-color: #64748b;
+    color: #f8fafc;
+}
+.rpg-ammo-pill.is-active {
+    background: #1e293b;
+    border-color: #cbd5e1;
+    color: #f8fafc;
+}
+.rpg-ammo-pill.accent-silver.is-active {
+    background: linear-gradient(135deg, #475569 0%, #1e293b 100%);
+    border-color: #f8fafc;
+    color: #ffffff;
+}
+.rpg-ammo-pill.accent-fire.is-active {
+    background: rgba(194, 65, 12, 0.32);
+    border-color: #fb923c;
+    color: #ffedd5;
+}
+.rpg-ammo-pill.accent-poison.is-active {
+    background: rgba(21, 128, 61, 0.3);
+    border-color: #4ade80;
+    color: #dcfce7;
+}
+.rpg-ammo-pill.accent-radiant.is-active {
+    background: rgba(161, 98, 7, 0.34);
+    border-color: #fde047;
+    color: #fef9c3;
+}
+.rpg-ammo-pill.accent-necrotic.is-active {
+    background: rgba(107, 33, 168, 0.34);
+    border-color: #c084fc;
+    color: #f3e8ff;
+}
+.rpg-ammo-pill.accent-magic.is-active {
+    background: rgba(3, 105, 161, 0.32);
+    border-color: #38bdf8;
+    color: #e0f2fe;
+}
+.rpg-ammo-effect-hint {
+    font-size: 0.66rem;
+    color: #cbd5e1;
+    line-height: 1.3;
+    border-top: 1px dashed rgba(148, 163, 184, 0.22);
+    padding-top: 3px;
+}
+
+/* Load Specialty Ammo Dialog */
+.rpg-loader-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: #0b1120;
+    border: 1px solid #1e293b;
+    border-radius: 7px;
+    padding: 9px 10px;
+}
+.rpg-loader-label {
+    font-size: 0.69rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #93c5fd;
+}
+.rpg-loader-choice-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.rpg-loader-choice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    text-align: left;
+    background: #111827;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    padding: 7px 10px;
+    color: #cbd5e1;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    transition: border-color 0.14s, background 0.14s;
+}
+.rpg-loader-choice:hover:not(:disabled) {
+    border-color: #64748b;
+    color: #f8fafc;
+}
+.rpg-loader-choice.is-selected {
+    border-color: #f59e0b;
+    background: rgba(180, 83, 9, 0.18);
+    color: #fef3c7;
+}
+.rpg-loader-choice:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+.rpg-loader-cap {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+.rpg-loader-qty-row {
     display: flex;
     align-items: center;
     gap: 6px;
     flex-wrap: wrap;
-    font-size: 0.72rem;
-    color: #cbd5e1;
 }
-.rpg-ammo-count {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 800;
-    color: #e2e8f0;
-    background: #111827;
-    border: 1px solid #334155;
-    border-radius: 4px;
-    padding: 1px 6px;
-    font-size: 0.73rem;
-}
-.rpg-ammo-step {
-    background: #111827;
-    border: 1px solid #334155;
-    color: #cbd5e1;
-    border-radius: 4px;
-    min-width: 22px;
-    height: 22px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'JetBrains Mono', monospace;
-}
-.rpg-ammo-step:hover {
-    border-color: #94a3b8;
-    color: #ffffff;
-}
-.rpg-ammo-toggle {
-    background: #111827;
-    border: 1px solid #475569;
-    color: #cbd5e1;
+.rpg-loader-qty-input {
+    width: 66px;
+    height: 30px;
+    text-align: center;
+    background: #090e1a;
+    border: 1.5px solid #475569;
     border-radius: 5px;
-    padding: 4px 10px;
-    font-size: 0.7rem;
-    font-weight: 800;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    min-block-size: 26px;
-    transition: all 0.15s;
-}
-.rpg-ammo-toggle:hover:not(:disabled) {
-    border-color: #e2e8f0;
-    color: #ffffff;
-}
-.rpg-ammo-toggle.is-silver {
-    background: linear-gradient(135deg, #475569 0%, #1e293b 100%);
-    border-color: #f8fafc;
     color: #f8fafc;
-    box-shadow: 0 0 10px rgba(226, 232, 240, 0.22);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.86rem;
+    font-weight: 800;
 }
-.rpg-ammo-toggle:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
+.rpg-loader-qty-input:focus {
+    outline: none;
+    border-color: #f59e0b;
 }
 .rpg-picker-item-top {
     display: flex;
