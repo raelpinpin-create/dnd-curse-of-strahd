@@ -2321,20 +2321,22 @@
             header.insertAdjacentElement('afterend', banner);
         }
 
-        // Inject Header Quick Gear, Backpack, and (to their right) 1-Click Cloud Sync to DM & Reset buttons
+        // Inject Header Quick Gear, Backpack (slightly bigger), followed by Cloud Sync to DM, Reset, and Portal on the very right
         const badgeGroup = document.querySelector('.pill-badge-group');
         if (badgeGroup && !document.getElementById('rpg-hdr-equip-btn')) {
+            const portalLink = badgeGroup.querySelector('a[href*="index.html"]');
+
             const equipBtn = document.createElement('button');
             equipBtn.type = 'button';
             equipBtn.id = 'rpg-hdr-equip-btn';
-            equipBtn.className = 'rpg-header-btn';
+            equipBtn.className = 'rpg-header-btn rpg-btn-primary-lg';
             equipBtn.onclick = () => openEquipModal();
             equipBtn.innerHTML = `🛡️ Gear <span class="rpg-badge-count" id="rpg-hdr-equip-cnt">0</span>`;
 
             const bpBtn = document.createElement('button');
             bpBtn.type = 'button';
             bpBtn.id = 'rpg-hdr-bp-btn';
-            bpBtn.className = 'rpg-header-btn rpg-btn-backpack';
+            bpBtn.className = 'rpg-header-btn rpg-btn-backpack rpg-btn-primary-lg';
             bpBtn.onclick = () => openBackpackModal();
             bpBtn.innerHTML = `🎒 Bag <span class="rpg-badge-count" id="rpg-hdr-bp-cnt">0</span>`;
 
@@ -2356,11 +2358,16 @@
             resetBtn.onclick = () => resetSheetToOfficialBaseline(false);
             resetBtn.innerHTML = `🔄 Reset`;
 
-            // Order left-to-right: [🏰 Portal] [🛡️ Gear] [🎒 Bag] [☁️ Sync to DM] [🔄 Reset]
-            badgeGroup.appendChild(equipBtn);
-            badgeGroup.appendChild(bpBtn);
-            badgeGroup.appendChild(syncBtn);
-            badgeGroup.appendChild(resetBtn);
+            // Order left-to-right: [🛡️ Gear (bigger)] [🎒 Bag (bigger)] [☁️ Sync to DM] [🔄 Reset] [🏰 Portal (very right)]
+            badgeGroup.insertBefore(resetBtn, badgeGroup.firstChild);
+            badgeGroup.insertBefore(syncBtn, badgeGroup.firstChild);
+            badgeGroup.insertBefore(bpBtn, badgeGroup.firstChild);
+            badgeGroup.insertBefore(equipBtn, badgeGroup.firstChild);
+            if (portalLink) {
+                portalLink.className = 'rpg-header-btn';
+                portalLink.style.cssText = 'background:#0f172a; border-color:#334155; color:#cbd5e1; text-decoration:none;';
+                badgeGroup.appendChild(portalLink);
+            }
         }
 
         // Replace bloated inventory panel contents with compact Adventure Gear Hub!
