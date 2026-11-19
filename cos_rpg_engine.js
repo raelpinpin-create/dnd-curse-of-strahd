@@ -2166,11 +2166,12 @@
                        <button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('mainHand', '${esc(item.key).replace(/'/g, "\\'")}', '2h')">Equip 2H</button>`
                     : `<button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.equipItemToSlot('${selectedSlot}', '${esc(item.key).replace(/'/g, "\\'")}')">Equip${item.meta.hands === 2 && selectedSlot === 'mainHand' ? ' (2H)' : ''}</button>`;
 
+                const safeKeyAttr = esc(item.key).replace(/'/g, "\\'");
                 return `
                     <div class="rpg-picker-item ${isEqHere ? 'is-equipped' : ''}">
                         <div class="rpg-picker-item-top">
                             <div>
-                                <div class="rpg-picker-item-name">${esc(shortLabel(item.raw))}</div>
+                                <div class="rpg-picker-item-name">${esc(shortLabel(item.raw))}${item.meta.isCustom ? ' <span class="rpg-card-unequipped-pill" style="color:#fde68a; border-color:rgba(245,158,11,0.45);">CUSTOM</span>' : ''}</div>
                                 <div class="rpg-picker-item-meta">${esc(item.meta.summary || 'Equippable Gear')}${item.meta.attune ? ' • Attune' : ''}</div>
                             </div>
                             ${isEqHere ? '<span class="rpg-card-equipped-pill">WORN</span>' : ''}
@@ -2182,6 +2183,9 @@
                             ${isEqHere && selectedSlot === 'mainHand' && item.meta.versatile
                                 ? `<button type="button" class="rpg-mini-btn" onclick="COS_RPG.toggleMainHandGrip()">Switch to ${bonuses.mainHand2H ? '1H' : '2H'}</button>`
                                 : ''}
+                            ${item.meta.isCustom
+                                ? `<button type="button" class="rpg-mini-btn btn-danger" onclick="COS_RPG.removeCustomGearTag('${safeKeyAttr}')" title="Remove custom tag and restore item's original behavior">Reset Tag</button>`
+                                : ''}
                             <button type="button" class="rpg-mini-btn" onclick="COS_RPG.openItemDetails(${item.idx})">Info</button>
                         </div>
                     </div>
@@ -2189,8 +2193,32 @@
             }).join('');
         }
 
-        // Custom Gear Tagger form
+        // Custom Gear Tagger form (+ active custom overrides reset list)
         const untaggedOptions = items.map(r => `<option value="${esc(normKey(r))}">${esc(shortLabel(r))}</option>`).join('');
+        const customMap = getCustomGearMap();
+        const customEntries = Object.entries(customMap);
+        const customListHtml = customEntries.length > 0 ? `
+            <div style="border-top:1px solid #1e293b; padding-top:6px; margin-top:2px; display:flex; flex-direction:column; gap:4px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:0.66rem; font-weight:800; color:#94a3b8; text-transform:uppercase;">Custom Tagged Items (${customEntries.length})</span>
+                    <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:22px; padding:1px 6px; font-size:0.65rem;" onclick="COS_RPG.clearAllCustomGearTags()">Reset All</button>
+                </div>
+                ${customEntries.map(([ck, cm]) => {
+                    const rawFound = findInventoryRawByKey(ck);
+                    const disp = rawFound ? shortLabel(rawFound) : ck;
+                    const slotLbl = (cm.slots || []).map(sid => activeSlots.find(s => s.id === sid)?.label || sid).join('/');
+                    const safeCk = esc(ck).replace(/'/g, "\\'");
+                    return `
+                        <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:4px 7px;">
+                            <div style="font-size:0.7rem; color:#e2e8f0; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                                <strong>${esc(disp)}</strong> <span style="color:#94a3b8;">(${esc(slotLbl)})</span>
+                            </div>
+                            <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:22px; padding:1px 6px; font-size:0.65rem; flex-shrink:0;" onclick="COS_RPG.removeCustomGearTag('${safeCk}')">Reset</button>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        ` : '';
         const customTaggerHtml = showCustomTagger ? `
             <div class="rpg-custom-tagger">
                 <div style="font-size:0.72rem; font-weight:800; color:#fde68a;">Tag Any Backpack Item as Equippable Gear</div>
@@ -2233,6 +2261,7 @@
                     <button type="button" class="rpg-mini-btn" onclick="COS_RPG.toggleCustomTagger()">Cancel</button>
                     <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.saveCustomGearTag()">Save &amp; Equip</button>
                 </div>
+                ${customListHtml}
             </div>
         ` : '';
 
@@ -2250,7 +2279,7 @@
                     ${bonuses.spellDcBonus ? `<span class="rpg-stat-pill purple">Spell DC/Hit: +${bonuses.spellDcBonus}</span>` : ''}
                     ${bonuses.spellFireBonus ? `<span class="rpg-stat-pill" style="border-color:#ef4444; color:#fca5a5;">Spell Fire: +${esc(bonuses.spellFireBonus)}</span>` : ''}
                     ${bonuses.skillAdv.length ? `<span class="rpg-stat-pill green">Adv: ${esc(bonuses.skillAdv.join(', '))}</span>` : ''}
-                    <span class="rpg-stat-pill purple">Attuned: ${bonuses.attunedCount} / 3</span>
+                    <span class="rpg-stat-pill purple" title="D&D 5e Attunement Limit: You can bond with at most 3 powerful magic items at the same time (e.g. Cloak of Protection, Sunsword, Bloodwell Vial).">Attuned: ${bonuses.attunedCount} / 3</span>
                 </div>
                 <div class="rpg-presets-bar">
                     <span style="font-size:0.66rem; font-weight:800; color:#94a3b8;">PRESETS:</span>
@@ -2360,6 +2389,27 @@
         showCustomTagger = false;
         selectedSlot = slot;
         equipItemToSlot(slot, key);
+    }
+
+    function removeCustomGearTag(itemKey) {
+        const map = getCustomGearMap();
+        if (!map[itemKey]) return;
+        const raw = findInventoryRawByKey(itemKey);
+        delete map[itemKey];
+        saveCustomGearMap(map);
+        reconcileEquippedWithInventory();
+        adapter.log(`🔄 <strong>Custom Tag Removed:</strong> <strong>${esc(raw ? shortLabel(raw) : itemKey)}</strong> restored to its original default properties!`);
+        applyEquipmentToSheet();
+    }
+
+    function clearAllCustomGearTags() {
+        const map = getCustomGearMap();
+        const cnt = Object.keys(map).length;
+        if (cnt === 0) return;
+        saveCustomGearMap({});
+        reconcileEquippedWithInventory();
+        adapter.log(`🔄 <strong>Cleared ${cnt} Custom Tag${cnt === 1 ? '' : 's'}:</strong> All items restored to their original default properties!`);
+        applyEquipmentToSheet();
     }
 
     // =========================================================================
@@ -2889,6 +2939,8 @@
         quickToggleEquipByIndex,
         toggleCustomTagger: () => { showCustomTagger = !showCustomTagger; renderEquipModal(); },
         saveCustomGearTag,
+        removeCustomGearTag,
+        clearAllCustomGearTags,
         setBackpackCategory: (cat) => { bpCategoryFilter = cat; renderBackpackModal(); },
         clearBackpackSearch: () => {
             bpSearchQuery = '';
