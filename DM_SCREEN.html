@@ -389,11 +389,158 @@
             background-color: rgba(255, 255, 255, 0.03);
         }
 
-        /* Section 4 World Loot Vault Full-Width Responsive Ledger */
+        /* Section 4 World Loot Vault Compact Glanceable Ledger */
         .loot-vault-stack {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 12px;
+        }
+        .loot-cat-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 5px;
+            margin: 6px 0 10px;
+            padding: 7px 10px;
+            background: rgba(11, 18, 32, 0.85);
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+        }
+        .loot-slot-bar {
+            display: none;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 5px;
+            margin: -4px 0 10px;
+            padding: 6px 10px;
+            background: rgba(15, 23, 42, 0.92);
+            border: 1px solid rgba(96, 165, 250, 0.35);
+            border-radius: 7px;
+        }
+        .loot-slot-bar.is-open { display: flex; }
+        .btn-loot-cat, .btn-loot-slot {
+            background: #0f172a;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 4px 9px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.14s ease;
+        }
+        .btn-loot-cat:hover, .btn-loot-slot:hover {
+            border-color: #60a5fa;
+            color: #f8fafc;
+        }
+        .btn-loot-cat.active {
+            background: linear-gradient(135deg, #1e3a5f, #0f172a);
+            border-color: #60a5fa;
+            color: #f8fafc;
+            box-shadow: 0 0 0 1px rgba(96,165,250,0.35);
+        }
+        .btn-loot-slot.active {
+            background: rgba(59, 130, 246, 0.22);
+            border-color: #93c5fd;
+            color: #eff6ff;
+        }
+        .loot-cat-details {
+            border: 1px solid #24324a;
+            border-radius: 8px;
+            background: rgba(9, 14, 26, 0.72);
+            overflow: hidden;
+        }
+        .loot-cat-summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            user-select: none;
+        }
+        .loot-cat-summary::-webkit-details-marker { display: none; }
+        .loot-cat-summary-caret {
+            font-size: 0.72rem;
+            color: #94a3b8;
+            transition: transform 0.15s ease;
+        }
+        .loot-cat-details[open] > .loot-cat-summary .loot-cat-summary-caret {
+            transform: rotate(90deg);
+        }
+        .loot-act-group {
+            border-top: 1px solid #1e293b;
+        }
+        .loot-act-banner {
+            background: linear-gradient(90deg, #162238 0%, #0e1626 100%);
+            border-bottom: 1px solid #24385a;
+            font-family: 'Cinzel', serif;
+            font-size: 0.76rem;
+            color: var(--accent-gold-soft);
+            font-weight: 700;
+            padding: 5px 12px;
+            letter-spacing: 0.4px;
+        }
+        .loot-dense-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(430px, 1fr));
+            gap: 7px;
+            padding: 8px 10px 10px;
+        }
+        @media (max-width: 520px) {
+            .loot-dense-grid { grid-template-columns: 1fr; }
+        }
+        .loot-dense-card {
+            background: rgba(15, 23, 42, 0.84);
+            border: 1px solid #1e293b;
+            border-left: 3px solid #334155;
+            border-radius: 7px;
+            padding: 7px 9px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: border-color 0.14s ease, background 0.14s ease;
+        }
+        .loot-dense-card:hover {
+            border-color: #475569;
+            background: rgba(23, 34, 58, 0.96);
+        }
+        .loot-dense-card.card-upgrade { border-left-color: #f59e0b; background: rgba(245,158,11,0.06); }
+        .loot-dense-card.card-attach { border-left-color: #38bdf8; }
+        .loot-dense-card.card-custom { border-left-color: #a855f7; background: rgba(168,85,247,0.06); }
+        .loot-card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 6px;
+        }
+        .loot-card-title {
+            flex: 1 1 auto;
+            min-width: 0;
+            line-height: 1.3;
+        }
+        .loot-card-title .link-btn {
+            font-size: 0.84rem;
+            text-align: left;
+        }
+        .loot-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 4px 8px;
+            font-size: 0.71rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+        .loot-card-loc {
+            flex: 1 1 180px;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #94a3b8;
         }
         .loot-vault-wrap {
             max-height: 580px;
@@ -436,17 +583,17 @@
         .loot-row-actions {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             flex-shrink: 0;
         }
         .loot-row-qty-input {
-            width: 30px;
+            width: 28px;
             text-align: center;
             background: transparent;
             border: none;
             color: #fde68a;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 800;
             padding: 1px 0;
             -moz-appearance: textfield;
@@ -465,16 +612,29 @@
         .loot-cost-pill {
             display: inline-block;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.71rem;
+            font-size: 0.68rem;
             font-weight: 700;
-            padding: 2px 7px;
+            padding: 1px 6px;
             border-radius: 4px;
             background: rgba(52, 211, 153, 0.12);
             color: #a7f3d0;
             border: 1px solid rgba(52, 211, 153, 0.35);
-            line-height: 1.32;
-            max-width: 100%;
-            white-space: normal;
+            line-height: 1.3;
+            white-space: nowrap;
+        }
+        .loot-slot-pill {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.61rem;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 4px;
+            background: rgba(56, 189, 248, 0.15);
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            vertical-align: middle;
+            text-transform: uppercase;
+            margin-left: 4px;
         }
 
         /* Table Row Accents */
@@ -2096,28 +2256,47 @@
     <!-- SECTION 4: WORLD LOOT VAULT -->
     <section id="loot-vault">
         <div class="section-header">
-            <span id="loot-sec-title">🎒 SECTION 4: COMPLETE BAROVIAN WORLD LOOT VAULT, OFFICIAL MODULE TREASURES &amp; CRAFTING MATERIALS</span>
+            <span id="loot-sec-title">🎒 SECTION 4: BAROVIAN WORLD LOOT VAULT, ATTACHMENTS &amp; CRAFTING LEDGER</span>
             <search class="section-search-wrap" aria-label="Search World Loot Vault">
                 <label class="visually-hidden" for="loot-search">Search Section 4 Loot</label>
-                <input type="search" id="loot-search" class="section-search-input" placeholder="🔍 Search items, rarities, heroes, acts, crafting materials..." autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" oninput="filterSectionSearch('loot', this.value)">
+                <input type="search" id="loot-search" class="section-search-input" placeholder="🔍 Search items, slots, costs, heroes, acts, materials..." autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" oninput="filterSectionSearch('loot', this.value)">
                 <button type="button" id="loot-search-clear" class="section-search-clear" onclick="clearSectionSearch('loot')" aria-label="Clear loot search" title="Clear">✕</button>
             </search>
         </div>
         <div class="loot-filter-bar" id="loot-filter-bar">
-            <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Quick Loot Filter:</span>
-            <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Loot</button>
+            <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:2px;">1. Act / Hero:</span>
+            <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Acts</button>
             <button type="button" class="btn-loot-filter active" data-loottag="Act I" onclick="filterLootVault('Act I', this)">🩸 Act I</button>
             <button type="button" class="btn-loot-filter" data-loottag="Act II" onclick="filterLootVault('Act II', this)">⚔️ Act II</button>
             <button type="button" class="btn-loot-filter" data-loottag="Act III" onclick="filterLootVault('Act III', this)">🐉 Act III</button>
             <button type="button" class="btn-loot-filter" data-loottag="Act IV" onclick="filterLootVault('Act IV', this)">🏰 Act IV</button>
-            <button type="button" id="btn-loot-attachments" class="btn-loot-filter" style="border-color:rgba(96,165,250,0.55); color:#93c5fd;" data-loottag="Attachments" onclick="filterLootVault('Attachments', this)">🔧 Attachments (20)</button>
-            <button type="button" id="btn-loot-upgrades" class="btn-loot-filter" style="border-color:rgba(251,191,36,0.55); color:#fde68a;" data-loottag="Upgrades" onclick="filterLootVault('Upgrades', this)">⬆️ DM Upgrades (7)</button>
-            <button type="button" id="btn-loot-recipes" class="btn-loot-filter" style="border-color:rgba(192,132,252,0.55); color:#e9d5ff;" data-loottag="Recipes" onclick="filterLootVault('Recipes', this)">📜 Recipes (13)</button>
-            <button type="button" id="btn-loot-craftables" class="btn-loot-filter" style="border-color:rgba(52,211,153,0.45); color:#a7f3d0;" data-loottag="Craftables" onclick="filterLootVault('Craftables', this)">⚗️ Craftable Items (15)</button>
-            <button type="button" class="btn-loot-filter" data-loottag="Piper" onclick="filterLootVault('Piper', this)">🎭 Piper</button>
+            <span style="color:#334155; margin:0 2px;">|</span>
+            <button type="button" class="btn-loot-filter" data-loottag="Piper" onclick="filterLootVault('Piper', this)">🎩 Piper</button>
             <button type="button" class="btn-loot-filter" data-loottag="Jacomir" onclick="filterLootVault('Jacomir', this)">👑 Jacomir</button>
-            <button type="button" class="btn-loot-filter" data-loottag="Yvaine" onclick="filterLootVault('Yvaine', this)">🎯 Yvaine</button>
-            <button type="button" id="btn-loot-materials" class="btn-loot-filter" style="border-color:rgba(52,211,153,0.55); color:#6ee7b7;" data-loottag="Materials" onclick="filterLootVault('Materials', this)">🌿 Materials &amp; Forage</button>
+            <button type="button" class="btn-loot-filter" data-loottag="Yvaine" onclick="filterLootVault('Yvaine', this)">🔫 Yvaine</button>
+        </div>
+        <div class="loot-cat-bar" id="loot-cat-bar">
+            <span style="font-family:'Cinzel',serif; font-size:0.74rem; color:#93c5fd; font-weight:700; margin-right:2px;">2. Category:</span>
+            <button type="button" id="btn-lcat-overview" class="btn-loot-cat active" data-lootcat="overview" onclick="filterLootCategory('overview', this)">📋 Overview</button>
+            <button type="button" id="btn-lcat-weapons" class="btn-loot-cat" data-lootcat="weapons" onclick="filterLootCategory('weapons', this)">⚔️ Weapons &amp; Ammo</button>
+            <button type="button" id="btn-loot-attachments" class="btn-loot-cat" style="border-color:rgba(96,165,250,0.55); color:#93c5fd;" data-lootcat="attachments" onclick="filterLootCategory('attachments', this)">🔧 Attachments</button>
+            <button type="button" id="btn-loot-upgrades" class="btn-loot-cat" style="border-color:rgba(251,191,36,0.55); color:#fde68a;" data-lootcat="upgrades" onclick="filterLootCategory('upgrades', this)">⬆️ Upgrades</button>
+            <button type="button" id="btn-lcat-caster" class="btn-loot-cat" data-lootcat="caster" onclick="filterLootCategory('caster', this)">🔮 Caster &amp; Relics</button>
+            <button type="button" id="btn-lcat-armor" class="btn-loot-cat" data-lootcat="armor" onclick="filterLootCategory('armor', this)">🛡️ Armor &amp; Gear</button>
+            <button type="button" id="btn-lcat-consumables" class="btn-loot-cat" data-lootcat="consumables" onclick="filterLootCategory('consumables', this)">🧪 Vials &amp; Potions</button>
+            <button type="button" id="btn-loot-craftables" class="btn-loot-cat" style="border-color:rgba(192,132,252,0.55); color:#e9d5ff;" data-lootcat="craftables" onclick="filterLootCategory('craftables', this)">⚗️ Craft &amp; Recipes</button>
+            <button type="button" id="btn-loot-materials" class="btn-loot-cat" style="border-color:rgba(52,211,153,0.55); color:#6ee7b7;" data-lootcat="materials" onclick="filterLootCategory('materials', this)">🌿 Materials</button>
+            <button type="button" id="btn-lcat-quest" class="btn-loot-cat" data-lootcat="quest" onclick="filterLootCategory('quest', this)">🗝️ Quest</button>
+        </div>
+        <div class="loot-slot-bar" id="loot-slot-bar">
+            <span style="font-size:0.72rem; color:#7dd3fc; font-weight:700; margin-right:2px;">3. Weapon Slot:</span>
+            <button type="button" class="btn-loot-slot active" data-lootslot="all" onclick="filterLootSlot('all', this)">All Slots</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="hilt" onclick="filterLootSlot('hilt', this)">🗡️ Hilt / Pommel (Handling &amp; Init)</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="guard" onclick="filterLootSlot('guard', this)">🛡️ Edge / Guard (Dmg &amp; AC)</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="optic" onclick="filterLootSlot('optic', this)">🎯 Optic / Sight (Hit &amp; Vision)</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="barrel" onclick="filterLootSlot('barrel', this)">🔫 Barrel / Mag (Dmg &amp; Cap)</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="crown" onclick="filterLootSlot('crown', this)">🔮 Arcane Core (Spell &amp; Elements)</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="grip" onclick="filterLootSlot('grip', this)">🎗️ Shaft Grip (Conc, Saves &amp; AC)</button>
         </div>
         <div class="loot-vault-stack" id="loot-containers"></div>
     </section>
@@ -6415,7 +6594,9 @@ const MONSTER_DATA = {
             { key: "strahd_cloak", note: "Campaign Boss Drop — Animated Cloak" },
             { key: "obsidian_barovian_crown", note: "Royal Crown &amp; Signet" },
             { key: "heart_of_sorrow_shard", note: "Unique 1/Campaign K20 Crystal Drop" },
-            { key: "dawnshard_blade_rail", note: "Consecrated Dawn-Glass Edge Rail K15/K41 (1,500 GP)" }
+            { key: "dawnshard_blade_rail", note: "Consecrated Dawn-Glass Edge Rail K15/K41 (1,500 GP)" },
+            { key: "argynvost_vanguard_pommel", note: "Argynvost Vanguard Sovereign Pommel K41 (1,150 GP)" },
+            { key: "dawnforged_rifled_barrel", note: "Dawn-Forged Rifled Barrel K15/K41 (1,450 GP)" }
         ]
     },
 
@@ -10452,7 +10633,8 @@ const BIOME_DATA = {
             { key: "extended_speed_clip", note: "Extended Speed-Cylinder (95 GP)" },
             { key: "duelist_feather_wrap", note: "Vistani Suede Counter-Grip (50 GP)" },
             { key: "ironwood_brass_core", note: "Brass Stage-Cane Core (65 GP)" },
-            { key: "starlight_tarokka_finial", note: "Tarokka Star-Prism Finial (110 GP)" },
+            { key: "quicksilver_quickdraw_pommel", note: "Quicksilver Quick-Draw Pommel (75 GP)" },
+            { key: "vistani_snap_sight", note: "Vistani Quick-Snap Bead Sight (80 GP)" },
             { key: "fire_arrows", note: "Vistani Fletchers (x10)" },
             { key: "silvered_greatsword", note: "Vistani Silver Forge (150 GP)" },
             { key: "silvered_rapier", note: "Vistani Silver Forge (125 GP)" },
@@ -10532,6 +10714,8 @@ const BIOME_DATA = {
             { key: "ashen_cinder_guard", note: "Cinder-Forged Hearthguard (210 GP)" },
             { key: "frostveil_crystal_crown", note: "Frostveil Resonator Crown (360 GP)" },
             { key: "lightning_fulgurite_core", note: "Storm-Glass Fulgurite Core (290 GP)" },
+            { key: "balinok_frost_sight", note: "Balinok Frost-Lens Sight (260 GP)" },
+            { key: "starlight_tarokka_finial", note: "Tarokka Star-Prism Grip-Charm (160 GP)" },
             { key: "heavy_bore_barrel", note: "Overbore Siege Barrel (130 GP)" },
             { key: "dusk_prism_lens", note: "Dusk-Quartz Night Scope (140 GP)" },
             { key: "warding_silk_grip", note: "Warding Silk Grip Wrap (90 GP)" },
@@ -10821,7 +11005,8 @@ const BIOME_DATA = {
             { key: "superior_healing", note: "Abbey Apothecary S13" },
             { key: "ezmerelda_ammo", note: "Barracks S19" },
             { key: "sunburst_arrows", note: "Barracks S19 / White Sun S4" },
-            { key: "sunburst_bolts", note: "Abbey Watch Barracks S19" }
+            { key: "sunburst_bolts", note: "Abbey Watch Barracks S19" },
+            { key: "raven_conc_wrap", note: "Raven-Feather Concentration Wrap S13 (480 GP)" }
         ],
         body: `
             <div class="modal-read-aloud">"Above the frost-rimmed roofs of Krezk winds a steep switchback trail to the twin fieldstone wings of Saint Markovia's Abbey. Inside the candlelit sanctuary, a serene young monk with luminescent golden eyes and a blood-spattered linen apron murmurs encouragingly—teaching a tall, mute patchwork woman stitched from twenty corpses how to bow like a countess while an emerald glow pulses faintly behind her stitched silk ribs."</div>
@@ -10853,6 +11038,7 @@ const BIOME_DATA = {
             { key: "recipe_witch_iron_vial", note: "Carved Bog-Witch Runestone U3" },
             { key: "grave_marrow_edge", note: "Mourning-Iron Soul-Serrated Edge U3 (540 GP)" },
             { key: "bloodmoon_ruby_crown", note: "Crimson Bloodmoon Conduit Crown U3 (720 GP)" },
+            { key: "cinder_phoenix_core", note: "Cinder-Heart Phoenix Core U3 (580 GP)" },
             { key: "necrotic_bullets", note: "Baba Swamp Cache U3 (x10)" },
             { key: "scroll_revivify", note: "Revivify Scroll U3" },
             { key: "scroll_mass_cure_wounds", note: "Mass Cure Wounds Scroll U3" },
@@ -10884,6 +11070,7 @@ const BIOME_DATA = {
             { key: "ezmerelda_hunter_kit", note: "V1 Painted Wagon Cache" },
             { key: "van_richten_scope", note: "Van Richten's Silver-Runed Scope V4 (900 GP)" },
             { key: "van_richten_barrel", note: "Van Richten's Clockwork Barrel V4 (900 GP)" },
+            { key: "storm_coil_barrel", note: "Storm-Coil Arc Barrel V4 (640 GP)" },
             { key: "phosphor_grenades", note: "Ezmerelda Bombs V1" },
             { key: "alchemists_fire", note: "Wagon Flasks V1" },
             { key: "scroll_major_image", note: "Major Image Scroll V1" },
@@ -10971,7 +11158,8 @@ const BIOME_DATA = {
             { key: "amber_minor_gifts", note: "Sarcophagi X33–X41" },
             { key: "amber_eclipse_guard", note: "Eclipse-Rune Crossguard X40 (1,450 GP)" },
             { key: "amber_sovereign_crown", note: "Sovereign Halo Crown X30 (1,650 GP)" },
-            { key: "fey_mistweave_core", note: "Svalich Mist-Heart Core X40 (1,400 GP)" }
+            { key: "fey_mistweave_core", note: "Svalich Mist-Heart Warding Grip X40 (1,350 GP)" },
+            { key: "amber_astral_scope", note: "Amber Astral-Prism Scope X40 (1,400 GP)" }
         ],
         body: `
             <div class="modal-read-aloud">"Chiseled straight into a glacier wall at two thousand feet hangs a windowless stone facade of six towering, cracked amber-streaked pillars. Inside the vast frigid rotunda, a forty-foot obsidian statue of a faceless hooded god watches silently over three blazing balconies—while far below, cracked monoliths of solidified golden amber thrum with starving, imprisoned vestiges."</div>
@@ -11419,7 +11607,8 @@ const LOOT_DATA = {
         "cost": "900 GP",
         "location": "Act III • Van Richten's Tower (Area V4) or Ezmerelda's Safehouse (Area S19)",
         "mechanics": "Mount into a ranged weapon's <strong>Optic / Sight Slot</strong> via the weapon's <strong>[Attachments]</strong> window. <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong> and <strong>Mist-Piercing Sight</strong> (ignores light and heavy mist/fog obscurity). <strong>Trade-Off:</strong> Imposes <strong>-1 to Initiative</strong> while equipped (heavy telescopic sighting tube). Can be upgraded by the DM in Act IV via <strong>Enhanced Van Richten's Silver-Runed Scope</strong>.",
-        "lore": "An etched brass telescopic sight ground with silver-dusted lenses designed by Rudolph van Richten to pierce Barovia's suffocating fog."
+        "lore": "An etched brass telescopic sight ground with silver-dusted lenses designed by Rudolph van Richten to pierce Barovia's suffocating fog.",
+        "attachSlot": "optic"
     },
     "ezmerelda_ammo": {
         "cat": "weapon",
@@ -12656,11 +12845,12 @@ const LOOT_DATA = {
         "actTag": "Act I",
         "isAttachment": true,
         "name": "Silver-Runed Hilt Counterweight",
-        "rarity": "Uncommon Hilt Attachment (Hilt / Pommel Slot — Any Melee Weapon)",
-        "cost": "65 GP",
+        "rarity": "Uncommon Handling Attachment (Hilt / Pommel Slot — Any Melee Weapon)",
+        "cost": "90 GP",
         "location": "Act I & II • Tser Pool Vistani Camp (Petru's Silver Forge, 65 GP) & Vallaki (Arasek Stockyard)",
-        "mechanics": "Mount into a melee weapon's <strong>Hilt / Pommel Slot</strong>. Grants <strong>+1 to Damage rolls</strong> and counts strikes as <strong>Silvered</strong> to bypass nonmagical resistance of Werewolves, Vampire Spawn, and Night Hags. Can be upgraded later via <strong>Masterwork Silver-Runed Hilt Counterweight</strong>.",
-        "lore": "A hand-cast counterweight pommel etched with silver wolf-ward runes."
+        "mechanics": "Mount into a melee weapon's <strong>Hilt / Pommel Slot</strong>. Grants <strong>+1 to Attack rolls</strong> and treats the weapon as <strong>Silvered</strong> (bypassing Werewolf, Vampire Spawn &amp; Hag nonmagical resistances). Can be upgraded by the DM into <strong>Masterwork Silver-Runed Hilt Counterweight</strong>.",
+        "lore": "A hand-cast counterweight pommel etched with silver wolf-ward runes.",
+        "attachSlot": "hilt"
     },
     "serrated_bloodgroove_edge": {
         "cat": "weapon",
@@ -12668,11 +12858,12 @@ const LOOT_DATA = {
         "actTag": "Act II",
         "isAttachment": true,
         "name": "Honed Counterbalance Edge-Guard",
-        "rarity": "Uncommon Guard Attachment (Edge / Guard Slot — Slashing & Piercing Blades)",
-        "cost": "120 GP",
+        "rarity": "Uncommon Blade Attachment (Edge / Guard Slot — Slashing & Piercing Blades)",
+        "cost": "160 GP",
         "location": "Act II • Vallaki (Burgomaster Baron Vargas's Armory N3) or Krezk Militia Smithy (120 GP)",
-        "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. Grants <strong>+1 to Attack rolls</strong> and treats strikes as <strong>Magical</strong>. Can be upgraded later via <strong>Reforged Counterbalance Edge-Guard</strong>.",
-        "lore": "A tempered steel edge-clamp with fine balance flutes that steady every downstroke."
+        "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. Grants <strong>+1 to Damage rolls</strong> and treats strikes as <strong>Magical</strong>. Can be upgraded by the DM into <strong>Reforged Counterbalance Edge-Guard</strong>.",
+        "lore": "A tempered steel edge-clamp with fine balance flutes that steady every downstroke.",
+        "attachSlot": "guard"
     },
     "sun_ruby_pommel_stone": {
         "cat": "weapon",
@@ -12680,11 +12871,12 @@ const LOOT_DATA = {
         "actTag": "Act II",
         "isAttachment": true,
         "name": "Morninglord Sunstone Pommel Gem",
-        "rarity": "Rare Consecrated Attachment (Hilt / Pommel Slot — Any Melee Weapon)",
-        "cost": "250 GP",
+        "rarity": "Rare Sacred Handling Attachment (Hilt / Pommel Slot — Any Melee Weapon)",
+        "cost": "240 GP",
         "location": "Act II & III • St. Andral's Reliquary (Father Lucian's Gift) or Argynvostholt Chapel Altar (Area Q13)",
-        "mechanics": "Mount into a melee weapon's <strong>Hilt / Pommel Slot</strong>. Adds <strong>+1d4 Radiant damage</strong> on every hit and sheds <strong>10 ft of Bright Light</strong>.",
-        "lore": "A warm translucent amber-ruby cabochon consecrated beneath the Morninglord's chapel window."
+        "mechanics": "Mount into a melee weapon's <strong>Hilt / Pommel Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>, <strong>+1 to Initiative</strong>, and sheds 10-ft dim golden light on command. <strong>Trade-Off:</strong> Imposes <strong>Disadvantage on Stealth checks</strong> while lit.",
+        "lore": "A warm translucent amber-ruby cabochon consecrated beneath the Morninglord's chapel window.",
+        "attachSlot": "hilt"
     },
     "quick_release_crossbow_cam": {
         "cat": "weapon",
@@ -12696,7 +12888,8 @@ const LOOT_DATA = {
         "cost": "110 GP",
         "location": "Act II • Vallaki (Blinsky's Toyshop Precision Bench N7, 110 GP) or Van Richten's Tower",
         "mechanics": "Mount into a firearm, crossbow, or bow's <strong>Barrel / Mechanism Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Attack rolls</strong> due to heavy high-tension draw/trigger pull.",
-        "lore": "Precision brass cam-gears and a high-tension sear from Gadof Blinsky's workbench."
+        "lore": "Precision brass cam-gears and a high-tension sear from Gadof Blinsky's workbench.",
+        "attachSlot": "barrel"
     },
     "amber_focus_collar": {
         "cat": "caster",
@@ -12704,11 +12897,12 @@ const LOOT_DATA = {
         "actTag": "Act II",
         "isAttachment": true,
         "name": "Amber-Inlaid Focusing Collar",
-        "rarity": "Rare Arcane Attachment (Staff Crown / Hilt Slot — Staves & Daggers)",
+        "rarity": "Rare Arcane Core Attachment (Arcane Core / Crown Slot — Quarterstaffs & Daggers)",
         "cost": "160 GP",
         "location": "Act II & III • Vallaki (Victor Vallakovich's Workroom N3T) or Kasimir's Dusk Elf Hovel",
-        "mechanics": "Mount into a Quarterstaff's <strong>Staff Crown Slot</strong> (or a Dagger's Hilt Slot). Grants <strong>+1 to Weapon Attack rolls</strong> AND <strong>+1 to Spell Attack rolls</strong> while equipped. Can be upgraded in Act III via <strong>Enhanced Amber-Inlaid Focusing Collar</strong>.",
-        "lore": "A segmented brass-and-amber collar etched with micro-sigils that steady arcane channeling."
+        "mechanics": "Mount into a Quarterstaff's <strong>Arcane Core / Crown Slot</strong> (or Dagger Hilt). Grants <strong>+1 to Spell Attack rolls</strong> and <strong>+1 to Weapon Attack rolls</strong> while equipped. Can be upgraded by the DM in Act III via <strong>Enhanced Amber-Inlaid Focusing Collar</strong>.",
+        "lore": "A segmented brass-and-amber collar etched with micro-sigils that steady arcane channeling.",
+        "attachSlot": "crown"
     },
     "recipe_silver_oil": {
         "cat": "quest",
@@ -12889,7 +13083,8 @@ const LOOT_DATA = {
         "cost": "900 GP",
         "location": "Act III • Van Richten's Tower (Area V4) or Ezmerelda's Wagon (Area V1)",
         "mechanics": "Mount into a firearm's <strong>Barrel / Magazine Slot</strong> via the weapon's <strong>[Attachments]</strong> window. <strong>Bonus:</strong> Grants <strong>+1 to Damage rolls</strong> and treats all shots fired as <strong>Magical &amp; Silvered</strong>. <strong>Trade-Off:</strong> Reduces weapon <strong>Max Magazine Capacity by -1</strong> (heavy silver-rifled sleeve). Can be upgraded by the DM in Act IV via <strong>Enhanced Clockwork Rifled Barrel</strong>.",
-        "lore": "A fluted cold-steel rifled barrel lined with silver threading to stabilize heavy slugs against unnatural hides."
+        "lore": "A fluted cold-steel rifled barrel lined with silver threading to stabilize heavy slugs against unnatural hides.",
+        "attachSlot": "barrel"
     },
     "duelist_iron_sights": {
         "cat": "weapon",
@@ -12901,7 +13096,8 @@ const LOOT_DATA = {
         "cost": "60 GP",
         "location": "Act I • Tser Pool Vistani Camp (Petru's Forge, 60 GP) or Vallaki Arasek Stockyard",
         "mechanics": "Mount into a firearm or crossbow's <strong>Optic / Sight Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Damage rolls</strong> (requires lighter powder loads to hold crisp sight alignment).",
-        "lore": "Ultra-fine notched steel iron sights favored by marksmen who value dead-center shot placement."
+        "lore": "Ultra-fine notched steel iron sights favored by marksmen who value dead-center shot placement.",
+        "attachSlot": "optic"
     },
     "dusk_prism_lens": {
         "cat": "weapon",
@@ -12913,7 +13109,8 @@ const LOOT_DATA = {
         "cost": "140 GP",
         "location": "Act II • Vallaki Dusk Elf Camp (Area N9a, 140 GP) or Blinsky's Toyshop",
         "mechanics": "Mount into a ranged weapon's <strong>Optic / Sight Slot</strong>. <strong>Bonus:</strong> Grants <strong>Mist-Piercing Sight</strong> and negates Dim Light / Darkness penalties out to <strong>60 feet</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Attack rolls</strong> when firing in Bright Sunlight (prism glare).",
-        "lore": "A smoky twilight-quartz lens cut by Dusk Elf artisans to gather starlight through Barovian gloom."
+        "lore": "A smoky twilight-quartz lens cut by Dusk Elf artisans to gather starlight through Barovian gloom.",
+        "attachSlot": "optic"
     },
     "heavy_bore_barrel": {
         "cat": "weapon",
@@ -12925,7 +13122,8 @@ const LOOT_DATA = {
         "cost": "130 GP",
         "location": "Act II • Vallaki Armory (Area N3, 130 GP) or Wizard of Wines Carriage House",
         "mechanics": "Mount into a firearm's <strong>Barrel / Magazine Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>. <strong>Trade-Off:</strong> Reduces weapon <strong>Max Magazine Capacity by -2</strong> (Lament 10 ➔ 8, Mercy/Less 6 ➔ 4).",
-        "lore": "A thick-walled heavy-gauge cannon barrel bored for brutal close-range stopping power."
+        "lore": "A thick-walled heavy-gauge cannon barrel bored for brutal close-range stopping power.",
+        "attachSlot": "barrel"
     },
     "extended_speed_clip": {
         "cat": "weapon",
@@ -12937,7 +13135,8 @@ const LOOT_DATA = {
         "cost": "95 GP",
         "location": "Act I & II • Tser Pool Outfitter Wagon (95 GP) or Vallaki Arasek Stockyard",
         "mechanics": "Mount into a firearm's <strong>Barrel / Magazine Slot</strong>. <strong>Bonus:</strong> Increases weapon <strong>Max Magazine Capacity by +2</strong> (Lament 10 ➔ 12, Mercy/Less 6 ➔ 8). <strong>Trade-Off:</strong> Imposes <strong>-1 to Attack rolls</strong> from heavier front-end balance.",
-        "lore": "An oversized machined brass cylinder and extended magazine spring housing."
+        "lore": "An oversized machined brass cylinder and extended magazine spring housing.",
+        "attachSlot": "barrel"
     },
     "whisper_muzzle_shroud": {
         "cat": "weapon",
@@ -12949,19 +13148,21 @@ const LOOT_DATA = {
         "cost": "220 GP",
         "location": "Act III • Ezmerelda's Wagon (Area V1) or Argynvostholt Guardroom",
         "mechanics": "Mount into a firearm's <strong>Barrel / Magazine Slot</strong>. <strong>Bonus:</strong> <strong>Silences gunfire</strong> (no 300-ft alert boom!) and counts shots as <strong>Silvered</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Damage rolls</strong> due to reduced muzzle velocity.",
-        "lore": "A baffled dark-steel tube packed with silver mesh that turns thunderous rifle shots into quiet hisses."
+        "lore": "A baffled dark-steel tube packed with silver mesh that turns thunderous rifle shots into quiet hisses.",
+        "attachSlot": "barrel"
     },
     "lead_breaker_pommel": {
         "cat": "weapon",
         "bestHeroId": "jacomir",
         "actTag": "Act I",
         "isAttachment": true,
-        "name": "Heavy Lead-Core Breaker Pommel",
-        "rarity": "Common Trade-Off Attachment (Hilt / Pommel Slot — Any Melee Weapon)",
-        "cost": "55 GP",
+        "name": "Heavy Cleaver Spine-Weight",
+        "rarity": "Common Trade-Off Attachment (Edge / Guard Slot — Slashing & Piercing Blades)",
+        "cost": "60 GP",
         "location": "Act I • Village of Barovia Blacksmith Ruins or Tser Pool Forge (55 GP)",
-        "mechanics": "Mount into a melee weapon's <strong>Hilt / Pommel Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Attack rolls</strong> from top-heavy momentum.",
-        "lore": "A dense lead-filled steel pommel forged to turn every cleave into a bone-shattering impact."
+        "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Attack rolls</strong> from heavy forward momentum.",
+        "lore": "A dense lead-filled steel spine clamped along the blade back to turn every cleave into a bone-shattering impact.",
+        "attachSlot": "guard"
     },
     "duelist_feather_wrap": {
         "cat": "weapon",
@@ -12973,7 +13174,8 @@ const LOOT_DATA = {
         "cost": "50 GP",
         "location": "Act I • Tser Pool Vistani Camp (50 GP) or Blood on the Vine Peddler",
         "mechanics": "Mount into a melee weapon's <strong>Hilt / Pommel Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Damage rolls</strong> (featherweight finesse balance).",
-        "lore": "Supple cross-stitched leather grip wrap built for rapid wrist redirects and pinpoint thrusts."
+        "lore": "Supple cross-stitched leather grip wrap built for rapid wrist redirects and pinpoint thrusts.",
+        "attachSlot": "hilt"
     },
     "vampiric_thorn_grip": {
         "cat": "weapon",
@@ -12981,11 +13183,12 @@ const LOOT_DATA = {
         "actTag": "Act III",
         "isAttachment": true,
         "name": "Blood-Thorn Barbed Hilt",
-        "rarity": "Rare Cursed Trade-Off Attachment (Hilt / Pommel Slot — Any Melee Weapon)",
-        "cost": "260 GP",
+        "rarity": "Rare Cursed Handling Attachment (Hilt / Pommel Slot — Any Melee Weapon)",
+        "cost": "340 GP",
         "location": "Act III & IV • Ruins of Berez (Area U3) or Castle Ravenloft Torture Chamber (Area K73)",
-        "mechanics": "Mount into a melee weapon's <strong>Hilt / Pommel Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong> and <strong>+1d4 Necrotic damage</strong> on hit. <strong>Trade-Off (Self-Bite):</strong> Whenever you roll a natural <strong>1–3</strong> on an attack roll with this weapon, the thorns bite your palm for <strong>1 HP</strong>.",
-        "lore": "Blackened iron brambles coiled tightly around the tang, slick with cold crimson dew."
+        "mechanics": "Mount into a melee weapon's <strong>Hilt / Pommel Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Attack rolls</strong> (blood-guided thrust precision). <strong>Trade-Off (Self-Bite):</strong> Whenever you roll a natural <strong>1–3</strong> on an attack roll with this weapon, the thorns bite your palm for <strong>1 HP</strong>.",
+        "lore": "Blackened iron brambles coiled tightly around the tang, slick with cold crimson dew.",
+        "attachSlot": "hilt"
     },
     "iron_bastion_crossguard": {
         "cat": "weapon",
@@ -12997,7 +13200,8 @@ const LOOT_DATA = {
         "cost": "180 GP",
         "location": "Act II & III • Vallaki Guard Captain Armory (180 GP) or Argynvostholt (Area Q10)",
         "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Armor Class</strong> while wielding this weapon. <strong>Trade-Off:</strong> Imposes <strong>-1 to Attack rolls</strong> from the heavy steel basket-guard.",
-        "lore": "A wide fluted knightly crossguard forged to catch vampire claws and heavy halberd shafts."
+        "lore": "A wide fluted knightly crossguard forged to catch vampire claws and heavy halberd shafts.",
+        "attachSlot": "guard"
     },
     "jagged_hook_spine": {
         "cat": "weapon",
@@ -13009,19 +13213,21 @@ const LOOT_DATA = {
         "cost": "115 GP",
         "location": "Act II & III • Werewolf Den Entrance Cache (Area Z1) or Vallaki Hunter's Stall (115 GP)",
         "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Adds <strong>+1d4 Piercing damage</strong> on every hit. <strong>Trade-Off:</strong> Imposes <strong>-1 to Attack rolls</strong> (jagged barbs catch awkwardly on wide swings).",
-        "lore": "A bolted serrated spine lined with wolf-tooth hooks designed to tear deeply on the backswing."
+        "lore": "A bolted serrated spine lined with wolf-tooth hooks designed to tear deeply on the backswing.",
+        "attachSlot": "guard"
     },
     "volatile_wild_prism": {
         "cat": "caster",
         "bestHeroId": "piper",
         "actTag": "Act II",
         "isAttachment": true,
-        "name": "Cracked Chaos-Quartz Staff Crown",
-        "rarity": "Rare Trade-Off Arcane Attachment (Staff Crown Slot — Quarterstaffs & Staves)",
+        "name": "Cracked Chaos-Quartz Core",
+        "rarity": "Rare Trade-Off Arcane Core (Arcane Core / Crown Slot — Quarterstaffs & Staves)",
         "cost": "190 GP",
         "location": "Act II & III • Old Bonegrinder Top Floor (Area O4) or Van Richten's Tower Study",
-        "mechanics": "Mount into a Quarterstaff's <strong>Staff Crown Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Spell Attack rolls</strong> and adds <strong>+1d4 Force damage</strong> to staff strikes. <strong>Trade-Off:</strong> Imposes <strong>-1 to Armor Class</strong> while equipped (crackling wild arcana disrupts personal wards).",
-        "lore": "A humming fractured prism of wild-magic quartz clasped in blackened brass claws."
+        "mechanics": "Mount into a Quarterstaff's <strong>Arcane Core / Crown Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Spell Attack rolls</strong> and adds <strong>+1d4 Force damage</strong> to channeled strikes. <strong>Trade-Off:</strong> Imposes <strong>-1 to Armor Class</strong> while equipped (crackling wild arcana disrupts personal wards).",
+        "lore": "A humming fractured prism of wild-magic quartz clasped in blackened brass claws.",
+        "attachSlot": "crown"
     },
     "warding_silk_grip": {
         "cat": "caster",
@@ -13029,23 +13235,25 @@ const LOOT_DATA = {
         "actTag": "Act I",
         "isAttachment": true,
         "name": "Warding Silk Grip Wrap",
-        "rarity": "Uncommon Arcane Attachment (Shaft Grip Slot — Quarterstaffs & Daggers)",
+        "rarity": "Uncommon Grip Attachment (Shaft Grip / Wrap Slot — Quarterstaffs & Daggers)",
         "cost": "90 GP",
         "location": "Act I & II • St. Andral's Church Vestibule (Father Lucian, 90 GP) or Blue Water Inn",
         "mechanics": "Mount into a Quarterstaff's <strong>Shaft Grip Slot</strong> (or a Dagger's Hilt Slot). Grants <strong>+1 to all Saving Throws</strong> (including <strong>Concentration CON saves</strong>) while equipped!",
-        "lore": "Silver-threaded abjuration ribbons woven snugly around a spellcaster's focus."
+        "lore": "Silver-threaded abjuration ribbons woven snugly around a spellcaster's focus.",
+        "attachSlot": "grip"
     },
     "ironwood_brass_core": {
         "cat": "caster",
         "bestHeroId": "piper",
         "actTag": "Act I",
         "isAttachment": true,
-        "name": "Weighted Brass Stage-Cane Core",
-        "rarity": "Common Trade-Off Arcane Attachment (Shaft Grip Slot — Quarterstaffs)",
+        "name": "Weighted Brass Stage-Cane Ferrule",
+        "rarity": "Common Trade-Off Grip Attachment (Shaft Grip / Wrap Slot — Quarterstaffs)",
         "cost": "65 GP",
         "location": "Act I & II • Tser Pool Outfitter (65 GP) or Blinsky's Toyshop (Vallaki Area N7)",
-        "mechanics": "Mount into a Quarterstaff's <strong>Shaft Grip Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Melee Damage rolls</strong> and treats strikes as <strong>Silvered</strong>. <strong>Trade-Off:</strong> Imposes <strong>Disadvantage on Stealth checks</strong> while equipped (audible brass clink).",
-        "lore": "A solid silver-plated brass rod hidden inside a hollow theatrical cane—turns a stage prop into a sneaky monster-whacking club."
+        "mechanics": "Mount into a Quarterstaff's <strong>Shaft Grip / Wrap Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Melee Self-Defense Damage</strong> and treats strikes as <strong>Silvered</strong>. <strong>Trade-Off:</strong> Imposes <strong>Disadvantage on Stealth checks</strong> while equipped (audible brass clink).",
+        "lore": "A solid silver-plated brass rod hidden inside a hollow theatrical cane—turns a stage prop into a sneaky monster-whacking club.",
+        "attachSlot": "grip"
     },
     "frostbite_silver_fuller": {
         "cat": "weapon",
@@ -13057,7 +13265,8 @@ const LOOT_DATA = {
         "cost": "190 GP",
         "location": "Act II • Vallaki Armory Rare Rack (190 GP) or Tsolenka Trail Cache",
         "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Adds <strong>+1d4 Cold damage</strong> on every hit and counts as <strong>Magical</strong> (trails pale glacier vapor along the blade). <strong>Trade-Off (Brittle Chill):</strong> On a <strong>Natural 1</strong> attack roll, rime locks your wrist, imposing <strong>-1 AC</strong> until the start of your next turn.",
-        "lore": "A pale mountain-steel fuller rail inlaid with Balinok frost glyphs that chime softly in cold wind."
+        "lore": "A pale mountain-steel fuller rail inlaid with Balinok frost glyphs that chime softly in cold wind.",
+        "attachSlot": "guard"
     },
     "ashen_cinder_guard": {
         "cat": "weapon",
@@ -13069,7 +13278,8 @@ const LOOT_DATA = {
         "cost": "210 GP",
         "location": "Act II • Vallaki Smithy Back Forge (210 GP) or Wizard of Wines Kiln",
         "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Adds <strong>+1d4 Fire damage</strong> on every hit and counts as <strong>Magical</strong> (ember veins flare across the steel). <strong>Trade-Off (Ember Glow):</strong> Sheds 10-ft dim fiery light and imposes <strong>Disadvantage on Stealth checks</strong> while equipped.",
-        "lore": "Blackened iron quillons veined with volcanic ember-slag that never cool completely."
+        "lore": "Blackened iron quillons veined with volcanic ember-slag that never cool completely.",
+        "attachSlot": "guard"
     },
     "silver_dragon_crossguard": {
         "cat": "weapon",
@@ -13080,8 +13290,9 @@ const LOOT_DATA = {
         "rarity": "Rare Magical Attachment (Edge / Guard Slot — Slashing & Piercing Blades)",
         "cost": "620 GP",
         "location": "Act III • Argynvostholt Chapel &amp; Knights' Quarters (Areas Q13 / Q28)",
-        "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>, adds <strong>+1d4 Radiant damage</strong> on hit, and treats strikes as <strong>Silvered &amp; Magical</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Initiative</strong> while equipped (heavy swept silver dragon wings).",
-        "lore": "Swept sterling-silver dragon wings glowing with pale blue-white starlight, once mounted on the ceremonial blades of the Order of the Silver Dragon."
+        "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Armor Class</strong>, adds <strong>+1d4 Radiant damage</strong> on hit, and treats strikes as <strong>Silvered &amp; Magical</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Initiative</strong> while equipped (heavy swept silver dragon wings).",
+        "lore": "Swept sterling-silver dragon wings glowing with pale blue-white starlight, once mounted on the ceremonial blades of the Order of the Silver Dragon.",
+        "attachSlot": "guard"
     },
     "grave_marrow_edge": {
         "cat": "weapon",
@@ -13093,7 +13304,8 @@ const LOOT_DATA = {
         "cost": "540 GP",
         "location": "Act III • Ruins of Berez (Area U3) or Old Bonegrinder Crypt Vault",
         "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Adds <strong>+1d6 Necrotic damage</strong> on every hit and counts as <strong>Magical</strong> (trails violet shadow-mist). <strong>Trade-Off (Grave Chill):</strong> Imposes <strong>-1 to all Saving Throws</strong> while equipped.",
-        "lore": "A dark-violet etched edge-clamp forged from coffin nails and grave-iron that hums whenever living blood is near."
+        "lore": "A dark-violet etched edge-clamp forged from coffin nails and grave-iron that hums whenever living blood is near.",
+        "attachSlot": "guard"
     },
     "amber_eclipse_guard": {
         "cat": "weapon",
@@ -13104,8 +13316,9 @@ const LOOT_DATA = {
         "rarity": "Very Rare Endgame Magical Attachment (Edge / Guard Slot — Slashing & Piercing Blades)",
         "cost": "1,450 GP",
         "location": "Act IV • Amber Temple Sealed Treasury (Area X40) or West Vault",
-        "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>, <strong>+1 to Damage rolls</strong>, adds <strong>+1d6 Force damage</strong> on every hit, and counts as <strong>Magical</strong> (crowned with a hovering golden eclipse ring). <strong>Trade-Off:</strong> Imposes <strong>-1 to Armor Class</strong> while equipped (dark amber drains defensive wards).",
-        "lore": "Obsidian-and-amber crossguard forged by ancient temple artificers; a miniature ring of golden fire orbits the ricasso whenever drawn."
+        "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>, adds <strong>+1d6 Force damage</strong> on every hit, and counts as <strong>Magical</strong> (crowned with a hovering golden eclipse ring). <strong>Trade-Off:</strong> Imposes <strong>-1 to Armor Class</strong> while equipped (dark amber drains defensive wards).",
+        "lore": "Obsidian-and-amber crossguard forged by ancient temple artificers; a miniature ring of golden fire orbits the ricasso whenever drawn.",
+        "attachSlot": "guard"
     },
     "dawnshard_blade_rail": {
         "cat": "weapon",
@@ -13116,20 +13329,22 @@ const LOOT_DATA = {
         "rarity": "Very Rare Endgame Magical Attachment (Edge / Guard Slot — Slashing & Piercing Blades)",
         "cost": "1,500 GP",
         "location": "Act IV • Castle Ravenloft Chapel / Treasury (Areas K15 / K41) or Krezk Abbey Sanctum",
-        "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>, adds <strong>+1d6 Radiant damage</strong> on every hit, and treats strikes as <strong>Silvered &amp; Magical</strong>. <strong>Trade-Off (Blazing Beacon):</strong> Sheds 20-ft Bright Light and imposes <strong>Disadvantage on Stealth checks</strong> while equipped.",
-        "lore": "A slender lattice of sun-crystal prisms locked along the blade spine that sings like a cathedral bell when swung through darkness."
+        "mechanics": "Mount into a blade's <strong>Edge / Guard Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Damage rolls</strong>, adds <strong>+1d6 Radiant damage</strong> on every hit, and treats strikes as <strong>Silvered &amp; Magical</strong>. <strong>Trade-Off (Blazing Beacon):</strong> Sheds 20-ft Bright Light and imposes <strong>Disadvantage on Stealth checks</strong> while equipped.",
+        "lore": "A slender lattice of sun-crystal prisms locked along the blade spine that sings like a cathedral bell when swung through darkness.",
+        "attachSlot": "guard"
     },
     "starlight_tarokka_finial": {
         "cat": "caster",
         "bestHeroId": "piper",
-        "actTag": "Act I",
+        "actTag": "Act II",
         "isAttachment": true,
-        "name": "Vistani Tarokka Star-Prism Finial",
-        "rarity": "Uncommon Arcane Attachment (Staff Crown / Hilt Slot — Quarterstaffs & Daggers)",
-        "cost": "110 GP",
-        "location": "Act I • Tser Pool Vistani Camp (Madam Eva's Wagon, 110 GP) or Vallaki Dusk Elf Camp",
-        "mechanics": "Mount into a Quarterstaff's <strong>Staff Crown Slot</strong> (or a Dagger's Hilt Slot). <strong>Bonus:</strong> Grants <strong>+1 to Spell Attack rolls</strong> and <strong>+1 to Initiative</strong> while equipped. <strong>Trade-Off:</strong> Imposes <strong>-1 to Melee Weapon Attack rolls</strong> (delicate orbiting brass rings).",
-        "lore": "Miniature brass astrolabe rings spinning lazily around a star-cut quartz prism tuned to Tarokka omens."
+        "name": "Vistani Tarokka Star-Prism Grip-Charm",
+        "rarity": "Uncommon Grip Attachment (Shaft Grip / Wrap Slot — Quarterstaffs & Daggers)",
+        "cost": "160 GP",
+        "location": "Act II • Vallaki Dusk Elf Camp (Area N9a, 160 GP) or Tser Pool Caravan",
+        "mechanics": "Mount into a Quarterstaff's <strong>Shaft Grip / Wrap Slot</strong> (or a Dagger's Hilt Slot). <strong>Bonus:</strong> Grants <strong>+2 to Initiative</strong> while equipped (quickened arcane reaction). <strong>Trade-Off:</strong> Imposes <strong>-1 to Melee Weapon Attack rolls</strong> (delicate orbiting brass rings).",
+        "lore": "Miniature brass astrolabe rings spinning lazily around a star-cut quartz prism tuned to Tarokka omens.",
+        "attachSlot": "grip"
     },
     "frostveil_crystal_crown": {
         "cat": "caster",
@@ -13137,11 +13352,12 @@ const LOOT_DATA = {
         "actTag": "Act II",
         "isAttachment": true,
         "name": "Balinok Frostveil Resonator Crown",
-        "rarity": "Rare Arcane Attachment (Staff Crown Slot — Quarterstaffs & Staves)",
+        "rarity": "Rare Arcane Core Attachment (Arcane Core / Crown Slot — Quarterstaffs & Staves)",
         "cost": "360 GP",
         "location": "Act II • Vallaki Dusk Elf Enclave (Kasimir, 360 GP) or Tsolenka Pass",
-        "mechanics": "Mount into a Quarterstaff's <strong>Staff Crown Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Spell Save DC</strong> while equipped (freezes hostile resistance to your spell geometry). <strong>Trade-Off:</strong> Imposes <strong>-1 to Weapon Attack rolls</strong> (numbing frost aura along the shaft).",
-        "lore": "A jagged crown of glacial quartz harvested from Balinok snowdrifts that refracts arcane runes into razor-sharp frost halos."
+        "mechanics": "Mount into a Quarterstaff's <strong>Arcane Core / Crown Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Spell Save DC</strong> and adds <strong>+1d4 Cold damage</strong> to channeled strikes. <strong>Trade-Off:</strong> Imposes <strong>-1 to Weapon Attack rolls</strong> (numbing frost aura along the shaft).",
+        "lore": "A jagged crown of glacial quartz harvested from Balinok snowdrifts that refracts arcane runes into razor-sharp frost halos.",
+        "attachSlot": "crown"
     },
     "bloodmoon_ruby_crown": {
         "cat": "caster",
@@ -13149,59 +13365,64 @@ const LOOT_DATA = {
         "actTag": "Act III",
         "isAttachment": true,
         "name": "Crimson Bloodmoon Conduit Crown",
-        "rarity": "Rare Arcane Attachment (Staff Crown / Hilt Slot — Quarterstaffs & Daggers)",
+        "rarity": "Rare Arcane Core Attachment (Arcane Core / Crown Slot — Quarterstaffs & Daggers)",
         "cost": "720 GP",
         "location": "Act III • Ruins of Berez (Area U3) or Wachterhaus Occult Vault",
         "mechanics": "Mount into a Quarterstaff's <strong>Staff Crown Slot</strong> (or a Dagger's Hilt Slot). <strong>Bonus:</strong> Grants <strong>+1 to Spell Save DC</strong>, <strong>+1 to Spell Attack rolls</strong>, and adds <strong>+1d4 Necrotic damage</strong> to weapon strikes. <strong>Trade-Off:</strong> Imposes <strong>-1 to Armor Class</strong> while equipped (blood tithe siphons personal wards).",
-        "lore": "A ruby-veined crescent finial that pulses in time with the caster's heartbeat under Barovia's crimson moon."
+        "lore": "A ruby-veined crescent finial that pulses in time with the caster's heartbeat under Barovia's crimson moon.",
+        "attachSlot": "crown"
     },
     "amber_sovereign_crown": {
         "cat": "caster",
         "bestHeroId": "piper",
         "actTag": "Act IV",
         "isAttachment": true,
-        "name": "Amber Temple Sovereign Halo Crown",
-        "rarity": "Very Rare Endgame Arcane Attachment (Staff Crown Slot — Quarterstaffs & Staves)",
+        "name": "Amber Temple Sovereign Halo Core",
+        "rarity": "Very Rare Endgame Arcane Core (Arcane Core / Crown Slot — Quarterstaffs & Staves)",
         "cost": "1,650 GP",
         "location": "Act IV • Amber Temple Master Library (Area X30) or Neferon's Sanctum",
         "mechanics": "Mount into a Quarterstaff's <strong>Staff Crown Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Spell Save DC</strong>, <strong>+1 to Spell Attack rolls</strong>, and adds <strong>+1d6 Force damage</strong> to weapon strikes. <strong>Trade-Off:</strong> Imposes <strong>-2 to Armor Class</strong> while equipped (glass-cannon arcane overcharge shreds personal defenses).",
-        "lore": "A hovering diadem of cracked amber glyphs and violet lightning suspended an inch above the staff head—raw archmage authority."
+        "lore": "A hovering diadem of cracked amber glyphs and violet lightning suspended an inch above the staff head—raw archmage authority.",
+        "attachSlot": "crown"
     },
     "lightning_fulgurite_core": {
         "cat": "caster",
         "bestHeroId": "piper",
         "actTag": "Act II",
         "isAttachment": true,
-        "name": "Storm-Glass Fulgurite Staff Core",
-        "rarity": "Rare Arcane Core Attachment (Shaft Grip / Core Slot — Quarterstaffs & Staves)",
+        "name": "Storm-Glass Fulgurite Core",
+        "rarity": "Rare Arcane Core Attachment (Arcane Core / Crown Slot — Quarterstaffs & Staves)",
         "cost": "290 GP",
         "location": "Act II • Vallaki Baron's Attic (Victor's Bench N3t, 290 GP) or Yester Hill Storm Spire",
-        "mechanics": "Mount into a Quarterstaff's <strong>Shaft Grip / Core Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Spell Attack rolls</strong> and adds <strong>+1d4 Lightning damage</strong> to weapon strikes. <strong>Trade-Off (Static Hum):</strong> Imposes <strong>Disadvantage on Stealth checks</strong> while equipped (audible crackling storm charge).",
-        "lore": "A branched tube of lightning-fused sand glass threaded straight down the center of an arcane staff."
+        "mechanics": "Mount into a Quarterstaff's <strong>Arcane Core / Crown Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Spell Attack rolls</strong> and adds <strong>+1d4 Lightning damage</strong> to channeled strikes. <strong>Trade-Off (Static Hum):</strong> Imposes <strong>Disadvantage on Stealth checks</strong> while equipped (audible crackling storm charge).",
+        "lore": "A branched tube of lightning-fused sand glass threaded straight down the center of an arcane staff.",
+        "attachSlot": "crown"
     },
     "silver_dragon_heartcore": {
         "cat": "caster",
         "bestHeroId": "piper",
         "actTag": "Act III",
         "isAttachment": true,
-        "name": "Argynvost Silver-Soul Resonance Core",
-        "rarity": "Rare Arcane Core Attachment (Shaft Grip / Core Slot — Quarterstaffs & Staves)",
+        "name": "Argynvost Silver-Soul Resonance Wrap",
+        "rarity": "Rare Grip Attachment (Shaft Grip / Wrap Slot — Quarterstaffs & Staves)",
         "cost": "680 GP",
         "location": "Act III • Argynvostholt Beacon Spire &amp; Chapel (Areas Q13 / Q53)",
-        "mechanics": "Mount into a Quarterstaff's <strong>Shaft Grip / Core Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Armor Class</strong>, <strong>+1 to all Saving Throws</strong> (including Concentration CON saves), and treats weapon strikes as <strong>Silvered</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Initiative</strong> while equipped (dense silver-dragon core).",
-        "lore": "Tempered silver dragonbone filaments coiled through a crystal rod, anchoring the wielder inside a serene frost-silver ward."
+        "mechanics": "Mount into a Quarterstaff's <strong>Shaft Grip / Wrap Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Armor Class</strong>, <strong>+1 to all Saving Throws</strong> (including Concentration CON saves), and treats weapon strikes as <strong>Silvered</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Initiative</strong> while equipped (heavy silver cord).",
+        "lore": "Tempered silver dragonbone filaments coiled through a crystal rod, anchoring the wielder inside a serene frost-silver ward.",
+        "attachSlot": "grip"
     },
     "fey_mistweave_core": {
         "cat": "caster",
         "bestHeroId": "piper",
         "actTag": "Act IV",
         "isAttachment": true,
-        "name": "Svalich Mist-Heart Hollow Core",
-        "rarity": "Very Rare Endgame Arcane Core Attachment (Shaft Grip / Core Slot — Quarterstaffs & Staves)",
-        "cost": "1,400 GP",
+        "name": "Svalich Mist-Heart Warding Grip",
+        "rarity": "Very Rare Endgame Grip Attachment (Shaft Grip / Wrap Slot — Quarterstaffs & Staves)",
+        "cost": "1,350 GP",
         "location": "Act IV • Amber Temple Vault (Area X40) or Berez Weaver's Standing Stones (Area U6)",
-        "mechanics": "Mount into a Quarterstaff's <strong>Shaft Grip / Core Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Spell Save DC</strong>, <strong>+1 to all Saving Throws</strong>, and <strong>Mist-Piercing Sight</strong>. <strong>Trade-Off:</strong> Imposes <strong>-2 to Melee Weapon Damage</strong> (fragile blown-glass core swirling with living silver fog).",
-        "lore": "A hollow glass rod filled with captive silver mist from the ancient Fanes—whispering softly whenever spell slots are woven."
+        "mechanics": "Mount into a Quarterstaff's <strong>Shaft Grip / Wrap Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Armor Class</strong>, <strong>+2 to all Saving Throws &amp; Concentration</strong>, and <strong>Mist-Piercing Sight</strong>. <strong>Trade-Off:</strong> Imposes <strong>-2 to Melee Weapon Damage</strong> (fragile blown-glass mist grip).",
+        "lore": "A hollow glass rod filled with captive silver mist from the ancient Fanes—whispering softly whenever spell slots are woven.",
+        "attachSlot": "grip"
     },
     "upgrade_van_richten_scope": {
         "cat": "weapon",
@@ -13214,13 +13435,13 @@ const LOOT_DATA = {
                 "silver-runed scope"
             ],
             "upgradedName": "Enhanced Van Richten's Silver-Runed Scope",
-            "bonusSummary": "+1 Attack, +1d4 Radiant & Mist Sight / -1 Init"
+            "bonusSummary": "+2 Attack, Mist & 30-ft Ethereal Sight / -1 Init"
         },
         "name": "Enhanced Van Richten's Silver-Runed Scope",
         "rarity": "Very Rare DM Upgrade (Upgrades Van Richten's Silver-Runed Scope)",
         "cost": "1,200 GP (Act IV Consecrated Recalibration)",
         "location": "Act IV • Amber Temple / Castle Ravenloft Consecrated Lens Bench",
-        "mechanics": "<strong>DM Remote Upgrade:</strong> Click <strong>[Upgrade]</strong> to permanently transform the hero's <em>Van Richten's Silver-Runed Scope</em> (whether in Backpack or mounted on a firearm!) into <strong>Enhanced Van Richten's Silver-Runed Scope (+1 Attack, +1d4 Radiant &amp; Mist-Piercing Sight; Trade-Off: -1 Initiative)</strong>.",
+        "mechanics": "<strong>DM Remote Upgrade:</strong> Click <strong>[Upgrade]</strong> to permanently transform the hero's <em>Van Richten's Silver-Runed Scope</em> (whether in Backpack or mounted on a firearm!) into <strong>Enhanced Van Richten's Silver-Runed Scope (+2 Attack, Mist &amp; 30-ft Ethereal Sight; Trade-Off: -1 Initiative)</strong>.",
         "lore": "Recalibrated with consecrated dawn-silver lenses from Van Richten's private lens chest."
     },
     "upgrade_van_richten_barrel": {
@@ -13274,13 +13495,13 @@ const LOOT_DATA = {
                 "hilt counterweight"
             ],
             "upgradedName": "Masterwork Silver-Runed Hilt Counterweight",
-            "bonusSummary": "+1 Attack, +1 Damage & Silvered"
+            "bonusSummary": "+1 Attack, +1 Initiative & Silvered"
         },
         "name": "Masterwork Silver-Runed Hilt Counterweight",
         "rarity": "Rare DM Upgrade (Upgrades Silver-Runed Hilt Counterweight)",
         "cost": "350 GP (Act II/III Master Smithing)",
         "location": "Act II & III • Vallaki Master Smithy or Argynvostholt Armory",
-        "mechanics": "<strong>DM Remote Upgrade:</strong> Click <strong>[Upgrade]</strong> to permanently upgrade the hero's <em>Silver-Runed Hilt Counterweight</em> into <strong>Masterwork Silver-Runed Hilt Counterweight (+1 Attack, +1 Damage &amp; Silvered)</strong>.",
+        "mechanics": "<strong>DM Remote Upgrade:</strong> Click <strong>[Upgrade]</strong> to permanently upgrade the hero's <em>Silver-Runed Hilt Counterweight</em> into <strong>Masterwork Silver-Runed Hilt Counterweight (+1 Attack, +1 Initiative &amp; Silvered)</strong>.",
         "lore": "Re-weighted in pure sterling for effortless balance and monster-slaying poise."
     },
     "upgrade_honed_edge_guard": {
@@ -13295,13 +13516,13 @@ const LOOT_DATA = {
                 "edge-guard"
             ],
             "upgradedName": "Reforged Counterbalance Edge-Guard",
-            "bonusSummary": "+2 Attack, +1 Damage (Magical)"
+            "bonusSummary": "+2 Damage, +1 AC & Magical"
         },
         "name": "Reforged Counterbalance Edge-Guard",
         "rarity": "Very Rare DM Upgrade (Upgrades Honed Counterbalance Edge-Guard)",
         "cost": "650 GP (Act III Dragon-Anvil Reforging)",
         "location": "Act III • Argynvostholt Forge or Krezk Smithy",
-        "mechanics": "<strong>DM Remote Upgrade:</strong> Click <strong>[Upgrade]</strong> to permanently upgrade the hero's <em>Honed Counterbalance Edge-Guard</em> into <strong>Reforged Counterbalance Edge-Guard (+2 Attack, +1 Damage &amp; Magical)</strong>.",
+        "mechanics": "<strong>DM Remote Upgrade:</strong> Click <strong>[Upgrade]</strong> to permanently upgrade the hero's <em>Honed Counterbalance Edge-Guard</em> into <strong>Reforged Counterbalance Edge-Guard (+2 Damage, +1 AC &amp; Magical)</strong>.",
         "lore": "Folded and quenched upon the silent silver-dragon anvil of Argynvostholt."
     },
     "upgrade_bloodwell_vial": {
@@ -13341,6 +13562,123 @@ const LOOT_DATA = {
         "location": "Act IV • Lighting the Beacon of Argynvostholt",
         "mechanics": "<strong>DM Remote Upgrade:</strong> Click <strong>[Upgrade]</strong> when Argynvost's Beacon is lit to bless the hero's <em>Silvered Dragonplate +1</em> into <strong>Reforged Silvered Dragonplate +2 (Base AC 20; AC 21 with Defense Style)</strong>.",
         "lore": "Silver scales etched across the cuirass gleam with warm spectral dragonlight."
+    },
+    "quicksilver_quickdraw_pommel": {
+        "cat": "weapon",
+        "bestHeroId": "jacomir",
+        "actTag": "Act I",
+        "isAttachment": true,
+        "attachSlot": "hilt",
+        "name": "Quicksilver Quick-Draw Pommel",
+        "rarity": "Common Trade-Off Handling Attachment (Hilt / Pommel Slot — Any Melee Weapon)",
+        "cost": "75 GP",
+        "location": "Act I • Tser Pool Vistani Camp (Petru Forge, 75 GP) or Barovia Smithy",
+        "mechanics": "Mount into a melee weapon's <strong>Hilt / Pommel Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Initiative</strong> while equipped (lightning-fast scabbard draw). <strong>Trade-Off:</strong> Imposes <strong>-1 to Damage rolls</strong> (feather-light balance).",
+        "lore": "A sealed sterling pommel chambered with shifting droplets of mercury that snap the blade forward the instant danger strikes."
+    },
+    "argynvost_vanguard_pommel": {
+        "cat": "weapon",
+        "bestHeroId": "jacomir",
+        "actTag": "Act IV",
+        "isAttachment": true,
+        "attachSlot": "hilt",
+        "name": "Argynvost Vanguard Sovereign Pommel",
+        "rarity": "Very Rare Endgame Handling Attachment (Hilt / Pommel Slot — Any Melee Weapon)",
+        "cost": "1,150 GP",
+        "location": "Act IV • Castle Ravenloft Treasury (Area K41) or Argynvostholt Beacon Vault",
+        "mechanics": "Mount into a melee weapon's <strong>Hilt / Pommel Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Attack rolls</strong>, <strong>+2 to Initiative</strong>, and treats strikes as <strong>Silvered</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Armor Class</strong> while equipped (aggressive vanguard lunge).",
+        "lore": "A sculpted silver dragon-claw pommel forged for frontline duelists who refuse to let Strahd strike first."
+    },
+    "vistani_snap_sight": {
+        "cat": "weapon",
+        "bestHeroId": "yvaine",
+        "actTag": "Act I",
+        "isAttachment": true,
+        "attachSlot": "optic",
+        "name": "Vistani Quick-Snap Bead Sight",
+        "rarity": "Common Trade-Off Optic Attachment (Optic / Sight Slot — Firearms, Crossbows & Bows)",
+        "cost": "80 GP",
+        "location": "Act I • Tser Pool Outfitter Wagon (80 GP) or Blood on the Vine Peddler",
+        "mechanics": "Mount into a ranged weapon's <strong>Optic / Sight Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to Initiative</strong> while equipped (instantaneous hip-draw target lock). <strong>Trade-Off:</strong> Imposes <strong>-1 to Damage rolls</strong> (snap-aimed close shots).",
+        "lore": "A bright gilded brass-and-enamel front bead forged for gunslingers who draw before blinking."
+    },
+    "balinok_frost_sight": {
+        "cat": "weapon",
+        "bestHeroId": "yvaine",
+        "actTag": "Act II",
+        "isAttachment": true,
+        "attachSlot": "optic",
+        "name": "Balinok Frost-Lens Hunter's Sight",
+        "rarity": "Uncommon Magical Optic Attachment (Optic / Sight Slot — Firearms, Crossbows & Bows)",
+        "cost": "260 GP",
+        "location": "Act II • Vallaki Dusk Elf Enclave (Area N9a, 260 GP) or Arasek Secret Stock",
+        "mechanics": "Mount into a ranged weapon's <strong>Optic / Sight Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong> and <strong>60-ft Thermal / Mist Sight</strong> (outlines silhouettes through fog and blizzard haze). <strong>Trade-Off:</strong> Imposes <strong>-1 to Initiative</strong> while equipped (deliberate lens calibration).",
+        "lore": "A glacial quartz sighting glass etched with fine frost-hair crosslines harvested from the Balinok peaks."
+    },
+    "amber_astral_scope": {
+        "cat": "weapon",
+        "bestHeroId": "yvaine",
+        "actTag": "Act IV",
+        "isAttachment": true,
+        "attachSlot": "optic",
+        "name": "Amber Temple Astral-Prism Scope",
+        "rarity": "Very Rare Endgame Optic Attachment (Optic / Sight Slot — Firearms, Crossbows & Bows)",
+        "cost": "1,400 GP",
+        "location": "Act IV • Amber Temple Sealed Treasury (Area X40) or Neferon Vault",
+        "mechanics": "Mount into a ranged weapon's <strong>Optic / Sight Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>, <strong>+2 to Initiative</strong>, and <strong>Mist / Dark Sight</strong>. <strong>Trade-Off:</strong> Imposes <strong>-1 to Armor Class</strong> while equipped (narrow arcane tunnel-vision).",
+        "lore": "Faceted amber-quartz lenses suspended in dark brass gimbals that stretch the heartbeat before a trigger breaks."
+    },
+    "storm_coil_barrel": {
+        "cat": "weapon",
+        "bestHeroId": "yvaine",
+        "actTag": "Act III",
+        "isAttachment": true,
+        "attachSlot": "barrel",
+        "name": "Storm-Coil Arc Barrel",
+        "rarity": "Rare Magical Barrel Attachment (Barrel / Magazine Slot — Firearms)",
+        "cost": "640 GP",
+        "location": "Act III • Van Richten Tower Workshop (Area V4) or Yester Hill Storm Spire",
+        "mechanics": "Mount into a firearm's <strong>Barrel / Magazine Slot</strong>. <strong>Bonus:</strong> Adds <strong>+1d4 Lightning damage</strong> on every hit and treats shots as <strong>Magical</strong>. <strong>Trade-Off (Static Crack):</strong> Imposes <strong>Disadvantage on Stealth checks</strong> while equipped.",
+        "lore": "Braided copper lightning coils wrapped tightly along a blackened rifle barrel, humming with bottled mountain thunder."
+    },
+    "dawnforged_rifled_barrel": {
+        "cat": "weapon",
+        "bestHeroId": "yvaine",
+        "actTag": "Act IV",
+        "isAttachment": true,
+        "attachSlot": "barrel",
+        "name": "Consecrated Dawn-Forged Rifled Barrel",
+        "rarity": "Very Rare Endgame Barrel Attachment (Barrel / Magazine Slot — Firearms)",
+        "cost": "1,450 GP",
+        "location": "Act IV • Castle Ravenloft Chapel / Treasury (Areas K15 / K41) or Krezk Abbey Sanctum",
+        "mechanics": "Mount into a firearm's <strong>Barrel / Magazine Slot</strong>. <strong>Bonus:</strong> Adds <strong>+1d6 Radiant damage</strong> on every hit and treats shots as <strong>Silvered &amp; Magical</strong>. <strong>Trade-Off:</strong> Reduces weapon <strong>Max Magazine Capacity by -1</strong> and imposes <strong>Disadvantage on Stealth checks</strong> (brilliant muzzle flash).",
+        "lore": "A gleaming sun-silver rifled barrel engraved with Morninglord prayers that ignites rounds into streaks of dawnlight."
+    },
+    "cinder_phoenix_core": {
+        "cat": "caster",
+        "bestHeroId": "piper",
+        "actTag": "Act III",
+        "isAttachment": true,
+        "attachSlot": "crown",
+        "name": "Cinder-Heart Phoenix Core",
+        "rarity": "Rare Elemental Arcane Core (Arcane Core / Crown Slot — Quarterstaffs & Staves)",
+        "cost": "580 GP",
+        "location": "Act III • Ruins of Berez Hearth (Area U3) or Argynvostholt Brazier Chamber",
+        "mechanics": "Mount into a Quarterstaff's <strong>Arcane Core / Crown Slot</strong>. <strong>Bonus:</strong> Grants <strong>+1 to Spell Attack rolls</strong> and adds <strong>+1d6 Fire damage</strong> to channeled strikes. <strong>Trade-Off (Ember Glow):</strong> Sheds 10-ft dim fiery light and imposes <strong>Disadvantage on Stealth checks</strong> while equipped.",
+        "lore": "A glowing heart-coal of alchemical wildfire caged in bronze filigree that crackles whenever sorcery flares."
+    },
+    "raven_conc_wrap": {
+        "cat": "caster",
+        "bestHeroId": "piper",
+        "actTag": "Act III",
+        "isAttachment": true,
+        "attachSlot": "grip",
+        "name": "Sanctified Raven-Feather Concentration Wrap",
+        "rarity": "Rare Concentration Grip Attachment (Shaft Grip / Wrap Slot — Quarterstaffs & Staves)",
+        "cost": "480 GP",
+        "location": "Act III • Krezk Abbey Sanctuary (Area S13) or Keepers of the Feather Loft",
+        "mechanics": "Mount into a Quarterstaff's <strong>Shaft Grip / Wrap Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to all Saving Throws</strong> (including <strong>Concentration CON saves</strong>) while equipped. <strong>Trade-Off:</strong> Imposes <strong>-1 to Initiative</strong> while equipped (steady meditative trance grip).",
+        "lore": "Iridescent black raven plumes braided with incense-cured linen around the staff handle to hold spells steady under siege."
     }
 };
 
@@ -16299,7 +16637,7 @@ function openItemModal(key, fromNav = false) {
             const usedPills = usedIn.map(r => {
                 const targetItem = LOOT_DATA[r.lootKey];
                 const ingObj = r.ingredients.find(ing => ing.key === key || (Array.isArray(ing.orKeys) && ing.orKeys.includes(key)));
-                const lbl = targetItem ? targetItem.name : r.summary;
+                const lbl = targetItem ? targetItem.name : r.lootKey;
                 return `<button type="button" class="loot-link-pill" onclick="navigateModalFromInside('item', '${r.lootKey}')">${lbl} <small style="color:#94a3b8;">(Needs ${ingObj.qty}x • ${r.unlockedDefault ? 'Unlocked' : r.code})</small></button>`;
             }).join('');
             craftSectionHtml = `
@@ -17578,21 +17916,21 @@ function getPrimaryAct(locationStr, itObj) {
     return 'Act I';
 }
 
-function matchesLootFilter(it, filterTag, itemKey = '') {
-    if (filterTag === 'search_all') return true;
-    if (filterTag === 'Materials') return it.cat === 'material';
-    if (filterTag === 'Attachments') return !!it.isAttachment;
-    if (filterTag === 'Upgrades') return !!it.isUpgradeItem;
-    if (filterTag === 'Recipes') return !!it.isRecipeWriting;
-    if (filterTag === 'Craftables') return Boolean(itemKey && DM_CRAFTING_BY_LOOT[itemKey]);
-    // Keep wilderness forage & shop crafting materials separated from actual treasure loot!
-    if (it.cat === 'material') return false;
-    if (!filterTag || filterTag === 'all') return true;
-    if (filterTag === 'Act I' || filterTag === 'Act II' || filterTag === 'Act III' || filterTag === 'Act IV') {
-        return getPrimaryAct(it.location, it) === filterTag;
+const LOOT_SLOT_LABELS = {
+    hilt: 'HILT',
+    guard: 'EDGE/GUARD',
+    optic: 'OPTIC',
+    barrel: 'BARREL/MAG',
+    crown: 'ARCANE CORE',
+    grip: 'SHAFT GRIP'
+};
+
+function matchesLootScope(it, scopeTag) {
+    if (!scopeTag || scopeTag === 'all' || scopeTag === 'search_all') return true;
+    if (scopeTag === 'Act I' || scopeTag === 'Act II' || scopeTag === 'Act III' || scopeTag === 'Act IV') {
+        return getPrimaryAct(it.location, it) === scopeTag;
     }
-    if (filterTag === 'Possible' && it.isCustomForged) return true;
-    const q = filterTag.toLowerCase();
+    const q = scopeTag.toLowerCase();
     if ((q === 'piper' || q === 'jacomir' || q === 'yvaine') && (it.bestHeroId === q || it.bestHeroId === 'all')) {
         return true;
     }
@@ -17600,11 +17938,34 @@ function matchesLootFilter(it, filterTag, itemKey = '') {
     return blob.includes(q);
 }
 
+function getLootViewBucket(it, itemKey = '') {
+    if (it.cat === 'material') return 'materials';
+    if (it.isUpgradeItem) return 'upgrades';
+    if (it.isAttachment) return 'attachments';
+    if (it.isRecipeWriting) return 'craftables';
+    if (it.cat === 'weapon') return 'weapons';
+    if (it.cat === 'caster') return 'caster';
+    if (it.cat === 'armor') return 'armor';
+    if (it.cat === 'heal' || it.cat === 'buff') return 'consumables';
+    return 'quest';
+}
+
+function matchesLootFilter(it, filterTag, itemKey = '') {
+    if (filterTag === 'search_all') return true;
+    if (filterTag === 'Materials') return it.cat === 'material';
+    if (filterTag === 'Attachments') return !!it.isAttachment;
+    if (filterTag === 'Upgrades') return !!it.isUpgradeItem;
+    if (filterTag === 'Recipes') return !!it.isRecipeWriting;
+    if (filterTag === 'Craftables') return Boolean((itemKey && DM_CRAFTING_BY_LOOT[itemKey]) || it.isRecipeWriting);
+    if (it.cat === 'material') return false;
+    return matchesLootScope(it, filterTag);
+}
+
 const DM_CRAFTING_RECIPES = [
     {
         id: 'craft_healing_potion',
         lootKey: 'healing_potion',
-        summary: 'Potion of Healing (2d4+2 HP)',
+        badge: '2d6+1 HP • Bonus Action',
         code: 'UNLOCKED',
         unlockedDefault: true,
         ingredients: [{ key: 'medicinal_herbs', qty: 2 }]
@@ -17612,19 +17973,18 @@ const DM_CRAFTING_RECIPES = [
     {
         id: 'craft_field_bandages',
         lootKey: 'bandages_field',
-        summary: 'Field Healing Bandages (1d6+1 HP)',
+        badge: '1d6+1 HP • Action',
         code: 'UNLOCKED',
         unlockedDefault: true,
         ingredients: [{ key: 'medicinal_herbs', qty: 1 }],
-        note: 'Tip: Having Clean Linen Wraps & Salve Jar in camp lets allies assist or double yield on a DC 14 Medicine check.'
+        note: 'Tip: Clean Linen Wraps & Salve Jar lets allies assist or double yield on a DC 14 Medicine check.'
     },
     {
         id: 'craft_greater_healing',
         lootKey: 'greater_healing',
         recipeLootKey: 'recipe_greater_healing',
-        summary: 'Potion of Greater Healing (4d4+4 HP)',
+        badge: '4d4+4 HP • Bonus Action',
         code: 'GREATER-HEAL',
-        learnedFrom: 'Study the Apothecary\'s Alembic Treatise (220 GP shop investment) or learn from Jeny / Abbey Infirmary notes.',
         ingredients: [
             { key: 'medicinal_herbs', qty: 4 },
             { key: 'alchemical_catalyst', qty: 1 }
@@ -17634,9 +17994,8 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_holy_water',
         lootKey: 'holy_water',
         recipeLootKey: 'recipe_holy_water',
-        summary: 'Morninglord Holy Water (2d8/2d6 Radiant)',
+        badge: '2d6 Radiant • Halts Regen',
         code: 'MORNINGLORD',
-        learnedFrom: 'Study St. Andral\'s Rite of Consecrated Springs (Father Donavich or Father Lucian Petrovich N1).',
         ingredients: [
             { key: 'pure_spring_water', qty: 1 },
             { key: 'powdered_silver_dust', qty: 1 }
@@ -17646,9 +18005,8 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_antitoxin',
         lootKey: 'barovian_antitoxin',
         recipeLootKey: 'recipe_antitoxin',
-        summary: 'Barovian Antitoxin Tonic (Adv vs Poison 1h)',
+        badge: 'Adv vs Poison (1 hr)',
         code: 'WOLFBANE',
-        learnedFrom: 'Study the Vistani Herbalist\'s Counter-Venom Scroll (120 GP at Tser Pool) or shared by Muriel Vinshaw.',
         ingredients: [
             { key: 'medicinal_herbs', qty: 2 },
             { key: 'wolfbane_root', qty: 1 }
@@ -17658,9 +18016,8 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_silver_oil',
         lootKey: 'liquid_silver_coating',
         recipeLootKey: 'recipe_silver_oil',
-        summary: 'Liquid Silver Vial (Coats Full Mag or Melee Blade)',
+        badge: 'Silvered • Full Mag or Blade',
         code: 'SILVER-COAT',
-        learnedFrom: 'Study Petru\'s Silver-Suspend Foundry Ledger (200 GP investment at Tser Pool Silver Forge G or Van Richten\'s wagon).',
         ingredients: [
             { key: 'powdered_silver_dust', qty: 1 },
             { key: 'pitch_oil', qty: 1 }
@@ -17670,9 +18027,8 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_incendiary_vial',
         lootKey: 'incendiary_vial',
         recipeLootKey: 'recipe_incendiary_vial',
-        summary: 'Incendiary Oil Vial (+1d4 Fire • Coats Full Mag or Melee Blade)',
+        badge: '+1d4 Fire • Full Mag or Blade',
         code: 'INCENDIARY-VIAL',
-        learnedFrom: 'Study the Charred Brimstone Ignition Slate (180 GP investment at Petru\'s Forge G, Arasek Stockyard N5, or Blinsky N7).',
         ingredients: [
             { key: 'charcoal_sulfur', qty: 1 },
             { key: 'pitch_oil', qty: 1 }
@@ -17682,9 +18038,8 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_fire_flask',
         lootKey: 'alchemists_fire',
         recipeLootKey: 'recipe_fire_flask',
-        summary: "Alchemist's Fire Flask (1d4/turn Fire)",
+        badge: '1d4 Fire / Turn (20 ft)',
         code: 'BRIMSTONE',
-        learnedFrom: 'Study the Vallakian Pyrotechnic Naphtha Diagram (160 GP at Arasek Stockyard or Ezmerelda\'s Wagon V1).',
         ingredients: [
             { key: 'charcoal_sulfur', qty: 1 },
             { key: 'pitch_oil', qty: 1 }
@@ -17694,9 +18049,8 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_smoke_bomb',
         lootKey: 'ash_smoke_bomb',
         recipeLootKey: 'recipe_smoke_bomb',
-        summary: 'Ash-Cloud Smoke Bomb (15-ft Obscured)',
+        badge: '15-ft Heavily Obscured',
         code: 'ASH-CLOUD',
-        learnedFrom: 'Study Arrigal\'s Black-Powder Flash Charter (150 GP at Vistani Camp or Van Richten\'s Tower).',
         ingredients: [
             { key: 'charcoal_sulfur', qty: 1 },
             { key: 'medicinal_herbs', qty: 1 }
@@ -17706,9 +18060,8 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_phosphor_bomb',
         lootKey: 'phosphor_grenades',
         recipeLootKey: 'recipe_phosphor_bomb',
-        summary: 'Alchemical Phosphor Flash-Bomb (2d6 Fire/Rad + Blind)',
+        badge: '2d6 Fire/Rad + Blind',
         code: 'PHOSPHOR',
-        learnedFrom: 'Study Van Richten\'s Magnesium Sun-Flare Notes (Found in Van Richten\'s Tower or Ezmerelda\'s Wagon V1).',
         ingredients: [
             { key: 'charcoal_sulfur', qty: 1 },
             { key: 'powdered_silver_dust', qty: 1 },
@@ -17719,24 +18072,22 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_camp_kit',
         lootKey: 'mist_ward_camp_kit',
         recipeLootKey: 'recipe_camp_kit',
-        summary: "Mist-Ward Traveler's Camp Kit (Wilderness True Long Rest)",
+        badge: 'Wilderness True Long Rest',
         code: 'MIST-CAMP',
-        learnedFrom: 'Study the Vistani Perimeter Ward-Weaving Pattern (130 GP at Tser Pool Outfitters or Krezk trappers).',
         ingredients: [
             { key: 'treated_pelt_canvas', qty: 2 },
             { key: 'pitch_oil', qty: 2 },
             { key: 'wolfbane_root', qty: 1 },
             { key: 'powdered_silver_dust', qty: 1 }
         ],
-        note: "Challenging Field Craft: Suggest requiring 1 Short Rest + DC 14 Survival or Leatherworker's/Tinker's Check at the table!"
+        note: 'Field Craft: 1 Short Rest + DC 14 Survival or Tinker check.'
     },
     {
         id: 'craft_witch_iron_vial',
         lootKey: 'witch_iron_vial',
         recipeLootKey: 'recipe_witch_iron_vial',
-        summary: 'Witch-Iron Oil Vial (+1 Hit/Dmg Magical • Coats Full Mag or Melee Blade)',
+        badge: '+1 Hit/Dmg Magical • Full Mag or Blade',
         code: 'WITCH-IRON',
-        learnedFrom: 'Found Only: Decipher the Carved Bog-Witch Runestone inside Baba Lysaga\'s Creeping Hut in Berez (Area U3).',
         ingredients: [
             { key: 'powdered_silver_dust', qty: 1 },
             { key: 'wolfbane_root', qty: 1 },
@@ -17747,9 +18098,8 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_superior_healing',
         lootKey: 'superior_healing',
         recipeLootKey: 'recipe_superior_healing',
-        summary: 'Potion of Superior Healing (8d4+8 HP)',
+        badge: '8d4+8 HP • Rare Elixir',
         code: 'MOONPETAL',
-        learnedFrom: 'Found Only: Study the Abbey of St. Markovia Moonpetal Vellum in Krezk (S13) or Berez.',
         ingredients: [
             { key: 'medicinal_herbs', qty: 4 },
             { key: 'alchemical_catalyst', qty: 2 },
@@ -17760,9 +18110,8 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_vampire_ward',
         lootKey: 'sun_ash_balm',
         recipeLootKey: 'recipe_sun_ash',
-        summary: 'Sun-Ash Vial (+1d6 Radiant • Coats 6 Rounds or Melee Blade)',
+        badge: '+1d4 Radiant • 6 Rnds or Blade',
         code: 'SUN-ASH',
-        learnedFrom: 'Found Only: Study the Order of the Silver Dragon Consecration Scroll in Argynvostholt (Q).',
         ingredients: [
             { key: 'svalich_moonpetal', qty: 1 },
             { key: 'powdered_silver_dust', qty: 1 },
@@ -17773,207 +18122,291 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_elixir_of_health',
         lootKey: 'elixir_of_health',
         recipeLootKey: 'recipe_elixir_of_health',
-        summary: 'Elixir of Health (Legendary Revival • 50% Max HP)',
+        badge: 'Legendary Revival • 50% Max HP',
         code: 'HEART-ELIXIR',
-        learnedFrom: 'Found Only: Study the Amber Temple Heartstone Wall-Rubbing (X17/X30) showing how Morgantha\'s or Strahd\'s Heart of Sorrow can be distilled.',
         ingredients: [
             { key: 'heart_of_sorrow_shard', orKeys: ['heart_of_sorrow_shard', 'hag_heartstone'], qty: 1 },
             { key: 'alchemical_catalyst', qty: 2 },
             { key: 'svalich_moonpetal', qty: 1 },
             { key: 'pure_spring_water', qty: 1 }
         ],
-        note: "Strict Heartstone Transmutation: Sacrifices EITHER Strahd's Shard of the Heart of Sorrow (K20) OR Morgantha's Night Hag Heartstone permanently."
+        note: 'Heartstone Transmutation: Permanently consumes EITHER Heart of Sorrow Shard (K20) OR Night Hag Heartstone.'
     }
 ];
 const DM_CRAFTING_BY_LOOT = Object.fromEntries(DM_CRAFTING_RECIPES.map(r => [r.lootKey, r]));
 
 let activeLootTag = 'Act I';
+let activeLootCat = 'overview';
+let activeLootSlot = 'all';
+
+function renderLootCardHtml(k, it) {
+    const customBadge = it.isCustomForged
+        ? ' <span class="pill purple" style="font-size:0.59rem; padding:1px 5px; vertical-align:middle;">CUSTOM</span>'
+        : '';
+    const slotPill = (it.isAttachment && it.attachSlot && LOOT_SLOT_LABELS[it.attachSlot])
+        ? `<span class="loot-slot-pill">${LOOT_SLOT_LABELS[it.attachSlot]}</span>`
+        : (it.isAttachment ? '<span class="loot-slot-pill">MOD</span>' : '');
+    const upgBadge = it.isUpgradeItem
+        ? ' <span class="pill gold" style="font-size:0.59rem; padding:1px 5px; vertical-align:middle;">⬆️ UPGRADE</span>'
+        : '';
+    const craftBadge = DM_CRAFTING_BY_LOOT[k]
+        ? ` <span class="pill green" style="font-size:0.59rem; padding:1px 5px; vertical-align:middle;" title="Craftable (${DM_CRAFTING_BY_LOOT[k].code})">⚗️ CRAFT</span>`
+        : '';
+    const renamedBadge = it.isRenamed
+        ? ' <span class="pill blue" style="font-size:0.59rem; padding:1px 5px; vertical-align:middle;">✏️</span>'
+        : '';
+    const escItemAttr = escapeEncounterHtml(it.name);
+    const rowDropSpec = dmParseDropItemAndQty(it.name);
+    const splitRC = dmSplitRarityAndCost(it);
+    const shortRarity = splitRC.rarityText.replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim();
+    const rowActionsHtml = it.isUpgradeItem && it.upgradeTarget
+        ? `<span class="loot-row-actions" title="Upgrade owned base item directly in hero's sheet">
+                <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.65rem; border-color:${dmHeroOwnsUpgradeBase('piper', it) ? '#34d399' : '#f59e0b'}; color:${dmHeroOwnsUpgradeBase('piper', it) ? '#a7f3d0' : '#fde68a'};" onclick="dmSendItemUpgrade('${k}', 'piper', '🎩 Piper', event)" title="Upgrade Piper's base item">⬆️ 🎩</button>
+                <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.65rem; border-color:${dmHeroOwnsUpgradeBase('jacomir', it) ? '#34d399' : '#f59e0b'}; color:${dmHeroOwnsUpgradeBase('jacomir', it) ? '#a7f3d0' : '#fde68a'};" onclick="dmSendItemUpgrade('${k}', 'jacomir', '👑 Jacomir', event)" title="Upgrade Jacomir's base item">⬆️ 👑</button>
+                <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.65rem; border-color:${dmHeroOwnsUpgradeBase('yvaine', it) ? '#34d399' : '#f59e0b'}; color:${dmHeroOwnsUpgradeBase('yvaine', it) ? '#a7f3d0' : '#fde68a'};" onclick="dmSendItemUpgrade('${k}', 'yvaine', '🔫 Yvaine', event)" title="Upgrade Yvaine's base item">⬆️ 🔫</button>
+           </span>`
+        : `<span class="loot-row-actions" title="Set quantity then click a hero to live-drop">
+                <span style="display:inline-flex; align-items:center; background:#090e1a; border:1px solid #334155; border-radius:4px; padding:0 2px;" onclick="event.stopPropagation()">
+                    <button type="button" class="btn-modal-mini" style="padding:0 4px; font-size:0.64rem; border:none;" onclick="event.stopPropagation(); dmStepInputQty('dm-row-qty-${k}', -1, 999)" aria-label="Decrease quantity of ${escItemAttr}">-</button>
+                    <input type="number" id="dm-row-qty-${k}" class="loot-row-qty-input" value="${rowDropSpec.defaultQty}" min="1" max="999" aria-label="Quantity for ${escItemAttr}" onclick="event.stopPropagation()">
+                    <button type="button" class="btn-modal-mini" style="padding:0 4px; font-size:0.64rem; border:none;" onclick="event.stopPropagation(); dmStepInputQty('dm-row-qty-${k}', 1, 999)" aria-label="Increase quantity of ${escItemAttr}">+</button>
+                </span>
+                <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${k}', 'piper', '🎩 Piper', event)" title="Drop to Piper" aria-label="Drop ${escItemAttr} to Piper">🎩</button>
+                <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${k}', 'jacomir', '👑 Jacomir', event)" title="Drop to Jacomir" aria-label="Drop ${escItemAttr} to Jacomir">👑</button>
+                <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${k}', 'yvaine', '🔫 Yvaine', event)" title="Drop to Yvaine" aria-label="Drop ${escItemAttr} to Yvaine">🔫</button>
+                <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" data-loot-edit-btn="${k}" onclick="dmStartInlineLootRename('${k}', event)" title="Edit item name" aria-label="Edit name of ${escItemAttr}">✏️</button>
+           </span>`;
+    const inlineFormHtml = (dmEditingLootKey === k) ? `
+        <form class="dm-loot-rename-form" onsubmit="dmSaveInlineLootRename(event, '${k}')" novalidate>
+            <label for="dm-loot-rename-${k}" class="visually-hidden">Edit name of ${escItemAttr}</label>
+            <input type="text" id="dm-loot-rename-${k}" class="dm-loot-rename-input" value="${escItemAttr}" maxlength="120" required enterkeyhint="done" onkeydown="dmHandleRenameKeydown(event, '${k}', 'table')">
+            <button type="submit" class="btn-modal-mini" style="background:#064e3b; border-color:#34d399; color:#ecfdf5;">💾 Save</button>
+            <button type="button" class="btn-modal-mini" onclick="dmCancelInlineLootRename(event)">Cancel</button>
+            ${it.isRenamed ? `<button type="button" class="btn-modal-mini" onclick="dmResetLootName('${k}', event)" title="Restore default name">↺ Reset</button>` : ''}
+            <div id="dm-loot-rename-err-${k}" class="dm-loot-rename-err" role="status" aria-live="polite"></div>
+        </form>
+    ` : '';
+    const cardCls = it.isUpgradeItem ? 'card-upgrade' : (it.isAttachment ? 'card-attach' : (it.isCustomForged ? 'card-custom' : ''));
+    return `
+        <div class="loot-dense-card searchable-row ${cardCls}">
+            <div class="loot-card-top">
+                <div class="loot-card-title">
+                    <button type="button" class="link-btn" onclick="openItemModal('${k}')">${escapeEncounterHtml(it.name)}</button>${slotPill}${upgBadge}${craftBadge}${customBadge}${renamedBadge}
+                </div>
+                ${rowActionsHtml}
+            </div>
+            ${inlineFormHtml}
+            <div class="loot-card-meta">
+                <span class="loot-cost-pill">${escapeEncounterHtml(splitRC.costText)}</span>
+                <span style="color:#fde68a; font-weight:600;">${escapeEncounterHtml(shortRarity)}</span>
+                <span class="loot-card-loc" title="${escapeEncounterHtml(String(it.location || '').replace(/<[^>]+>/g, ''))}">• ${it.location}</span>
+            </div>
+            <span class="visually-hidden">${escapeEncounterHtml(String(it.mechanics || '').replace(/<[^>]+>/g, ' '))}</span>
+        </div>
+    `;
+}
+
+function renderDmCraftingTableHtml() {
+    const recipeRowsHtml = DM_CRAFTING_RECIPES.map(r => {
+        const isUnl = r.unlockedDefault || !!dmUnlockedRecipes[r.id];
+        const outItem = LOOT_DATA[r.lootKey];
+        const cleanTitle = outItem ? outItem.name : r.lootKey;
+        const safeT = cleanTitle.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const recItem = r.recipeLootKey ? LOOT_DATA[r.recipeLootKey] : null;
+        const learnedHtml = recItem
+            ? `<div style="display:flex; flex-wrap:wrap; align-items:center; gap:4px; margin-top:4px;">
+                    <span style="font-size:0.67rem; color:#94a3b8; font-weight:700;">Recipe:</span>
+                    <button type="button" class="loot-link-pill" style="font-size:0.68rem; padding:1px 7px; border-color:rgba(192,132,252,0.5); color:#e9d5ff;" onclick="openItemModal('${r.recipeLootKey}')">📜 ${escapeEncounterHtml(recItem.name)} (${escapeEncounterHtml(recItem.cost || '')})</button>
+                    <button type="button" class="btn-modal-mini" style="padding:0 4px; font-size:0.6rem;" onclick="dmQuickDropByKey('${r.recipeLootKey}', 'piper', '🎩 Piper', event, 1)" title="Give recipe writing to Piper">🎩</button>
+                    <button type="button" class="btn-modal-mini" style="padding:0 4px; font-size:0.6rem;" onclick="dmQuickDropByKey('${r.recipeLootKey}', 'jacomir', '👑 Jacomir', event, 1)" title="Give recipe writing to Jacomir">👑</button>
+                    <button type="button" class="btn-modal-mini" style="padding:0 4px; font-size:0.6rem;" onclick="dmQuickDropByKey('${r.recipeLootKey}', 'yvaine', '🔫 Yvaine', event, 1)" title="Give recipe writing to Yvaine">🔫</button>
+               </div>`
+            : '';
+        const ingBtns = r.ingredients.map(ing => {
+            if (Array.isArray(ing.orKeys) && ing.orKeys.length > 0) {
+                return ing.orKeys.map(ok => {
+                    const m = LOOT_DATA[ok];
+                    const lbl = m ? m.name.replace(/\s*\([^)]*\)\s*/g, '').trim() : ok;
+                    return `<button type="button" class="loot-link-pill" style="font-size:0.7rem; padding:2px 7px; margin:1px 2px;" onclick="openItemModal('${ok}')">${ing.qty}x ${escapeEncounterHtml(lbl)}</button>`;
+                }).join('<span style="font-size:0.66rem; color:#94a3b8; margin:0 2px;">OR</span>');
+            }
+            const mat = LOOT_DATA[ing.key];
+            const matLabel = mat ? mat.name.replace(/\s*\([^)]*\)\s*/g, '').trim() : ing.key;
+            return `<button type="button" class="loot-link-pill" style="font-size:0.7rem; padding:2px 7px; margin:1px 3px 1px 0;" onclick="openItemModal('${ing.key}')">${ing.qty}x ${escapeEncounterHtml(matLabel)}</button>`;
+        }).join('');
+        const statusCol = r.unlockedDefault
+            ? '<span class="pill green">UNLOCKED (Session 1)</span>'
+            : `<div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+                    <span><span class="pill ${isUnl ? 'green' : 'crimson'}">${isUnl ? 'UNLOCKED LIVE' : 'LOCKED'}</span> • <code>${r.code}</code></span>
+                    <button type="button" class="btn-modal-mini" style="padding:2px 7px; font-size:0.66rem; border-color:${isUnl ? '#ef4444' : '#34d399'}; color:${isUnl ? '#fca5a5' : '#6ee7b7'};" aria-label="${isUnl ? 'Re-lock' : 'Unlock live'} ${safeT}" onclick="dmToggleRecipeUnlock('${r.id}', '${safeT}', ${!isUnl})">${isUnl ? '🔒 Re-Lock' : '🔓 Unlock Live'}</button>
+               </div>`;
+        return `
+            <tr class="searchable-row">
+                <td>
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+                        <span>
+                            <button type="button" class="link-btn" onclick="openItemModal('${r.lootKey}')">${escapeEncounterHtml(cleanTitle)}</button>
+                            ${r.badge ? ` <span style="font-size:0.67rem; color:#94a3b8;">(${escapeEncounterHtml(r.badge)})</span>` : ''}
+                        </span>
+                        <span style="display:inline-flex; gap:3px;">
+                            <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${r.lootKey}', 'piper', '🎩 Piper', event, 1)" title="Drop finished item to Piper">🎩</button>
+                            <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${r.lootKey}', 'jacomir', '👑 Jacomir', event, 1)" title="Drop finished item to Jacomir">👑</button>
+                            <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${r.lootKey}', 'yvaine', '🔫 Yvaine', event, 1)" title="Drop finished item to Yvaine">🔫</button>
+                        </span>
+                    </div>
+                    ${learnedHtml}
+                    ${r.note ? `<div style="font-size:0.67rem; color:#fde68a; margin-top:3px;">${escapeEncounterHtml(r.note)}</div>` : ''}
+                </td>
+                <td><div style="display:flex; flex-wrap:wrap; align-items:center; gap:2px;">${ingBtns}</div></td>
+                <td>${statusCol}</td>
+            </tr>
+        `;
+    }).join('');
+    return `
+        <details class="table-wrap loot-cat-details" open>
+            <summary id="dm-crafting-recipes-heading" class="loot-cat-summary loot-cat-title loot-header-quest">
+                <span>🔒 DM-ONLY: Secret Crafting Recipes (${DM_CRAFTING_RECIPES.length}) &amp; 1-Click Live Firebase Unlocker</span>
+                <span class="loot-cat-summary-caret">▶</span>
+            </summary>
+            <div class="loot-vault-wrap" tabindex="0" role="region" aria-labelledby="dm-crafting-recipes-heading">
+                <table class="guide-table loot-vault-table">
+                    <thead><tr><th scope="col" style="width:38%;">Craftable Item &amp; Recipe Writing (Click to View)</th><th scope="col" style="width:34%;">Required Materials (Click to View)</th><th scope="col" style="width:28%;">Status, Code &amp; Live Unlock</th></tr></thead>
+                    <tbody>${recipeRowsHtml}</tbody>
+                </table>
+            </div>
+        </details>
+    `;
+}
+
 function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
     const container = document.getElementById('loot-containers');
     if (!container) return;
-    const renderTag = filterTag || 'all';
-    if (!preserveActive) activeLootTag = renderTag;
+    let renderScope = filterTag || 'all';
+    let renderCat = activeLootCat || 'overview';
+    // Legacy shortcut support (Attachments, Upgrades, Recipes, Craftables, Materials)
+    if (renderScope === 'Attachments') { renderCat = 'attachments'; renderScope = 'all'; }
+    else if (renderScope === 'Upgrades') { renderCat = 'upgrades'; renderScope = 'all'; }
+    else if (renderScope === 'Recipes' || renderScope === 'Craftables') { renderCat = 'craftables'; renderScope = 'all'; }
+    else if (renderScope === 'Materials') { renderCat = 'materials'; renderScope = 'all'; }
+    else if (renderScope === 'search_all') { renderCat = 'overview'; }
+    if (!preserveActive) {
+        activeLootTag = renderScope;
+        activeLootCat = renderCat;
+    }
+
     const allEntries = Object.entries(LOOT_DATA);
-    const treasureCount = allEntries.filter(([_, it]) => it.cat !== 'material').length;
-    const materialCount = allEntries.filter(([_, it]) => it.cat === 'material').length;
-    const attachCount = allEntries.filter(([_, it]) => !!it.isAttachment).length;
-    const upgCount = allEntries.filter(([_, it]) => !!it.isUpgradeItem).length;
-    const recCount = allEntries.filter(([_, it]) => !!it.isRecipeWriting).length;
-    const allLootBtn = document.getElementById('btn-loot-all');
-    if (allLootBtn) allLootBtn.innerText = `📦 All Loot (${treasureCount})`;
-    const matBtn = document.getElementById('btn-loot-materials');
-    if (matBtn) matBtn.innerText = `🌿 Materials & Forage (${materialCount})`;
-    const attBtn = document.getElementById('btn-loot-attachments');
-    if (attBtn) attBtn.innerText = `🔧 Attachments (${attachCount})`;
-    const upgBtn = document.getElementById('btn-loot-upgrades');
-    if (upgBtn) upgBtn.innerText = `⬆️ DM Upgrades (${upgCount})`;
-    const recBtn = document.getElementById('btn-loot-recipes');
-    if (recBtn) recBtn.innerText = `📜 Recipes (${recCount})`;
-    const craftBtn = document.getElementById('btn-loot-craftables');
-    if (craftBtn) craftBtn.innerText = `⚗️ Craftable Items (${DM_CRAFTING_RECIPES.length})`;
-    const cats = [
-        { id: 'quest', title: '📜 4.1 Fated Tarokka Relics, Recipe Writings & Story Artifacts', cls: 'loot-header-quest' },
-        { id: 'weapon', title: '⚔️ 4.2 Weapons, Silvered Arms, Attachments & Firearm Mods', cls: 'loot-header-weapon' },
-        { id: 'caster', title: '🔮 4.3 Arcane Staves, Focus Attachments, Spellbooks & Relics', cls: 'loot-header-caster' },
-        { id: 'armor', title: '🛡️ 4.4 Armor, Rings, Cloaks, Defensive Gear & Camp Shelter', cls: 'loot-header-armor' },
-        { id: 'heal', title: '🧪 4.5 Potions, Elixirs, Holy Water & Barovian Vintages', cls: 'loot-header-heal' },
-        { id: 'buff', title: '⚡ 4.6 Weapon & Ammo Coating Vials, Dark Gifts & Boons', cls: 'loot-header-buff' },
-        { id: 'material', title: '🌿 4.7 Barovian Crafting Materials, Wilderness Forage & Shop Supplies', cls: 'loot-header-material' }
+    const scopeEntries = allEntries.filter(([_, it]) => matchesLootScope(it, renderScope));
+
+    // Live counts for Category Bar buttons scoped to current Act / Hero!
+    const catDefs = [
+        { id: 'weapons', btnId: 'btn-lcat-weapons', shortLabel: '⚔️ Weapons & Ammo', title: '⚔️ Weapons, Silvered Arms & Specialty Ammo', cls: 'loot-header-weapon' },
+        { id: 'attachments', btnId: 'btn-loot-attachments', shortLabel: '🔧 Attachments', title: '🔧 Weapon Attachments (2 Non-Overlapping Slots per Weapon)', cls: 'loot-header-weapon' },
+        { id: 'upgrades', btnId: 'btn-loot-upgrades', shortLabel: '⬆️ Upgrades', title: '⬆️ DM-Exclusive Remote Gear Upgrades', cls: 'loot-header-quest' },
+        { id: 'caster', btnId: 'btn-lcat-caster', shortLabel: '🔮 Caster & Relics', title: '🔮 Arcane Staves, Spellbooks, Foci & Relics', cls: 'loot-header-caster' },
+        { id: 'armor', btnId: 'btn-lcat-armor', shortLabel: '🛡️ Armor & Gear', title: '🛡️ Armor, Shields, Rings, Cloaks & Camp Gear', cls: 'loot-header-armor' },
+        { id: 'consumables', btnId: 'btn-lcat-consumables', shortLabel: '🧪 Vials & Potions', title: '🧪 Coating Vials, Potions, Holy Water, Vintages & Boons', cls: 'loot-header-heal' },
+        { id: 'craftables', btnId: 'btn-loot-craftables', shortLabel: '⚗️ Craft & Recipes', title: '📜 Physical Crafting Recipe Writings & Formula Scrolls', cls: 'loot-header-quest' },
+        { id: 'materials', btnId: 'btn-loot-materials', shortLabel: '🌿 Materials', title: '🌿 Barovian Crafting Materials & Wilderness Forage', cls: 'loot-header-material' },
+        { id: 'quest', btnId: 'btn-lcat-quest', shortLabel: '🗝️ Quest', title: '🗝️ Fated Tarokka Relics, Story Artifacts & Deeds', cls: 'loot-header-quest' }
     ];
+
+    const byBucket = {};
+    catDefs.forEach(c => { byBucket[c.id] = []; });
+    scopeEntries.forEach(([k, it]) => {
+        const b = getLootViewBucket(it, k);
+        if (byBucket[b]) byBucket[b].push([k, it]);
+    });
+    // Materials & Craftables are always countable globally when scope is All or Act
+    const matGlobal = allEntries.filter(([_, it]) => it.cat === 'material');
+    if (byBucket.materials.length === 0 && (renderScope === 'all' || renderScope === 'search_all')) {
+        byBucket.materials = matGlobal;
+    }
+
+    const totalTreasureInScope = scopeEntries.filter(([_, it]) => it.cat !== 'material').length;
+    const allBtn = document.getElementById('btn-loot-all');
+    if (allBtn) allBtn.innerText = `📦 All Acts (${allEntries.filter(([_, it]) => it.cat !== 'material').length})`;
+    const ovBtn = document.getElementById('btn-lcat-overview');
+    if (ovBtn) ovBtn.innerText = `📋 Overview (${totalTreasureInScope})`;
+    catDefs.forEach(c => {
+        const bEl = document.getElementById(c.btnId);
+        if (bEl) {
+            const cnt = c.id === 'craftables' ? DM_CRAFTING_RECIPES.length : (byBucket[c.id] ? byBucket[c.id].length : 0);
+            bEl.innerText = `${c.shortLabel} (${cnt})`;
+        }
+    });
+
+    // Show/hide Attachment Slot sub-filter bar cleanly
+    const slotBar = document.getElementById('loot-slot-bar');
+    if (slotBar) {
+        if (renderCat === 'attachments') slotBar.classList.add('is-open');
+        else slotBar.classList.remove('is-open');
+    }
+
     const actOrder = ['Act I', 'Act II', 'Act III', 'Act IV'];
     const actLabels = {
-        'Act I': '🩸 ACT I (Sessions 1–3): Svalich Woods, Barovia Village, Tser Pool & Bonegrinder',
-        'Act II': '⚔️ ACT II (Sessions 4–9): Town of Vallaki, Wizard of Wines & Yester Hill',
-        'Act III': '🐉 ACT III (Sessions 10–14): Argynvostholt, Krezk Abbey & Ruins of Berez',
-        'Act IV': '🏰 ACT IV (Sessions 15–20): Tsolenka Pass, Amber Temple & Castle Ravenloft'
+        'Act I': '🩸 ACT I — Svalich Woods, Barovia Village, Tser Pool & Bonegrinder',
+        'Act II': '⚔️ ACT II — Town of Vallaki, Wizard of Wines & Yester Hill',
+        'Act III': '🐉 ACT III — Argynvostholt, Krezk Abbey, Tower & Berez',
+        'Act IV': '🏰 ACT IV — Tsolenka Pass, Amber Temple & Castle Ravenloft'
     };
 
-    let html = cats.map(c => {
-        const items = allEntries.filter(([k, it]) => it.cat === c.id && matchesLootFilter(it, renderTag, k));
+    const catsToRender = renderCat === 'overview'
+        ? (renderScope === 'search_all' ? catDefs : catDefs.filter(c => c.id !== 'materials'))
+        : catDefs.filter(c => c.id === renderCat);
+
+    let html = '';
+
+    // When viewing Craft & Recipes (or search_all), put the 100%-clickable Secret Crafting Table right at top!
+    if (renderCat === 'craftables' || renderCat === 'materials' || renderScope === 'search_all') {
+        html += renderDmCraftingTableHtml();
+    }
+
+    html += catsToRender.map((c, idx) => {
+        let items = (byBucket[c.id] || []);
+        if (c.id === 'materials' && items.length === 0) items = matGlobal;
+        if (c.id === 'attachments' && renderCat === 'attachments' && activeLootSlot && activeLootSlot !== 'all') {
+            items = items.filter(([_, it]) => it.attachSlot === activeLootSlot);
+        }
         if (items.length === 0) return '';
 
-        // Group items strictly by Act I -> Act II -> Act III -> Act IV with visual divider rows
-        let rowsHtml = '';
-        actOrder.forEach(actKey => {
-            const actItems = items
-                .filter(([_, it]) => getPrimaryAct(it.location, it) === actKey)
-                .sort((a, b) => (b[1].isCustomForged ? 1 : 0) - (a[1].isCustomForged ? 1 : 0));
-            if (actItems.length === 0) return;
-            rowsHtml += `<tr class="biome-row-header"><td colspan="3">${actLabels[actKey]} (${actItems.length})</td></tr>`;
-            actItems.forEach(([k, it]) => {
-                const customBadge = it.isCustomForged
-                    ? ` <span class="pill purple" style="font-size:0.62rem; padding:1px 6px; vertical-align:middle;">✨ CUSTOM</span>`
-                    : '';
-                const attachBadge = it.isAttachment
-                    ? ` <span class="pill blue" style="font-size:0.62rem; padding:1px 6px; vertical-align:middle;">ATTACHMENT</span>`
-                    : '';
-                const upgBadge = it.isUpgradeItem
-                    ? ` <span class="pill gold" style="font-size:0.62rem; padding:1px 6px; vertical-align:middle;">⬆️ UPGRADE</span>`
-                    : '';
-                const craftBadge = DM_CRAFTING_BY_LOOT[k]
-                    ? ` <span class="pill green" style="font-size:0.62rem; padding:1px 6px; vertical-align:middle;" title="Craftable on Player Workbench (${DM_CRAFTING_BY_LOOT[k].code})">⚗️ CRAFTABLE</span>`
-                    : '';
-                const renamedBadge = it.isRenamed
-                    ? ` <span class="pill blue" style="font-size:0.62rem; padding:1px 6px; vertical-align:middle;" title="Edited in World Loot Vault">✏️ EDITED</span>`
-                    : '';
-                const escItemAttr = escapeEncounterHtml(it.name);
-                const rowDropSpec = dmParseDropItemAndQty(it.name);
-                const rowActionsHtml = it.isUpgradeItem && it.upgradeTarget
-                    ? `<span class="loot-row-actions" title="Upgrade owned base item directly in hero's sheet">
-                            <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.65rem; border-color:${dmHeroOwnsUpgradeBase('piper', it) ? '#34d399' : '#f59e0b'}; color:${dmHeroOwnsUpgradeBase('piper', it) ? '#a7f3d0' : '#fde68a'};" onclick="dmSendItemUpgrade('${k}', 'piper', '🎩 Piper', event)" title="Upgrade Piper's base item">⬆️ 🎩</button>
-                            <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.65rem; border-color:${dmHeroOwnsUpgradeBase('jacomir', it) ? '#34d399' : '#f59e0b'}; color:${dmHeroOwnsUpgradeBase('jacomir', it) ? '#a7f3d0' : '#fde68a'};" onclick="dmSendItemUpgrade('${k}', 'jacomir', '👑 Jacomir', event)" title="Upgrade Jacomir's base item">⬆️ 👑</button>
-                            <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.65rem; border-color:${dmHeroOwnsUpgradeBase('yvaine', it) ? '#34d399' : '#f59e0b'}; color:${dmHeroOwnsUpgradeBase('yvaine', it) ? '#a7f3d0' : '#fde68a'};" onclick="dmSendItemUpgrade('${k}', 'yvaine', '🔫 Yvaine', event)" title="Upgrade Yvaine's base item">⬆️ 🔫</button>
-                       </span>`
-                    : `<span class="loot-row-actions" title="Set quantity then click a hero to live-drop">
-                            <span style="display:inline-flex; align-items:center; background:#090e1a; border:1px solid #334155; border-radius:4px; padding:0 2px;" onclick="event.stopPropagation()">
-                                <button type="button" class="btn-modal-mini" style="padding:0 5px; font-size:0.65rem; border:none;" onclick="event.stopPropagation(); dmStepInputQty('dm-row-qty-${k}', -1, 999)" aria-label="Decrease quantity of ${escItemAttr}">-</button>
-                                <input type="number" id="dm-row-qty-${k}" class="loot-row-qty-input" value="${rowDropSpec.defaultQty}" min="1" max="999" aria-label="Quantity for ${escItemAttr}" onclick="event.stopPropagation()">
-                                <button type="button" class="btn-modal-mini" style="padding:0 5px; font-size:0.65rem; border:none;" onclick="event.stopPropagation(); dmStepInputQty('dm-row-qty-${k}', 1, 999)" aria-label="Increase quantity of ${escItemAttr}">+</button>
-                            </span>
-                            <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'piper', '🎩 Piper', event)" title="Drop to Piper" aria-label="Drop ${escItemAttr} to Piper">🎩</button>
-                            <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'jacomir', '👑 Jacomir', event)" title="Drop to Jacomir" aria-label="Drop ${escItemAttr} to Jacomir">👑</button>
-                            <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'yvaine', '🔫 Yvaine', event)" title="Drop to Yvaine" aria-label="Drop ${escItemAttr} to Yvaine">🔫</button>
-                            <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.65rem;" data-loot-edit-btn="${k}" onclick="dmStartInlineLootRename('${k}', event)" title="Edit item name" aria-label="Edit name of ${escItemAttr}">✏️</button>
-                       </span>`;
-                const inlineFormHtml = (dmEditingLootKey === k) ? `
-                    <form class="dm-loot-rename-form" onsubmit="dmSaveInlineLootRename(event, '${k}')" novalidate>
-                        <label for="dm-loot-rename-${k}" class="visually-hidden">Edit name of ${escItemAttr}</label>
-                        <input type="text" id="dm-loot-rename-${k}" class="dm-loot-rename-input" value="${escItemAttr}" maxlength="120" required enterkeyhint="done" onkeydown="dmHandleRenameKeydown(event, '${k}', 'table')">
-                        <button type="submit" class="btn-modal-mini" style="background:#064e3b; border-color:#34d399; color:#ecfdf5;">💾 Save</button>
-                        <button type="button" class="btn-modal-mini" onclick="dmCancelInlineLootRename(event)">Cancel</button>
-                        ${it.isRenamed ? `<button type="button" class="btn-modal-mini" onclick="dmResetLootName('${k}', event)" title="Restore default name">↺ Reset</button>` : ''}
-                        <div id="dm-loot-rename-err-${k}" class="dm-loot-rename-err" role="status" aria-live="polite"></div>
-                    </form>
-                ` : '';
-                rowsHtml += `
-                    <tr class="searchable-row" ${it.isUpgradeItem ? 'style="background:rgba(245,158,11,0.06);"' : (it.isCustomForged ? 'style="background:rgba(168,85,247,0.06);"' : '')}>
-                        <td>
-                            <div class="loot-name-row">
-                                <span class="loot-name-main"><button type="button" class="link-btn" onclick="openItemModal('${k}')">${escapeEncounterHtml(it.name)}</button>${upgBadge}${attachBadge}${craftBadge}${customBadge}${renamedBadge}</span>
-                                ${rowActionsHtml}
-                            </div>
-                            ${inlineFormHtml}
-                        </td>
-                        <td>
-                            <div class="loot-rarity-cost-stack">
-                                <span class="pill gold">${escapeEncounterHtml(dmSplitRarityAndCost(it).rarityText)}</span>
-                                <span class="loot-cost-pill">${escapeEncounterHtml(dmSplitRarityAndCost(it).costText)}</span>
-                            </div>
-                        </td>
-                        <td style="font-size:0.78rem; color:var(--text-muted);">${it.location}</td>
-                    </tr>
+        const showActHeaders = (renderScope === 'all' || renderScope === 'search_all' || !/^Act\s+/i.test(renderScope));
+        let innerHtml = '';
+        if (showActHeaders) {
+            actOrder.forEach(actKey => {
+                const actItems = items
+                    .filter(([_, it]) => getPrimaryAct(it.location, it) === actKey)
+                    .sort((a, b) => (b[1].isCustomForged ? 1 : 0) - (a[1].isCustomForged ? 1 : 0));
+                if (actItems.length === 0) return;
+                innerHtml += `
+                    <div class="loot-act-group">
+                        <div class="loot-act-banner">${actLabels[actKey]} (${actItems.length})</div>
+                        <div class="loot-dense-grid">${actItems.map(([k, it]) => renderLootCardHtml(k, it)).join('')}</div>
+                    </div>
                 `;
             });
-        });
+        } else {
+            const sorted = [...items].sort((a, b) => (b[1].isCustomForged ? 1 : 0) - (a[1].isCustomForged ? 1 : 0));
+            innerHtml = `<div class="loot-dense-grid">${sorted.map(([k, it]) => renderLootCardHtml(k, it)).join('')}</div>`;
+        }
 
+        // In Overview mode, keep the first 2 categories open and remaining neatly collapsed (1-click toggle) so you see EVERYTHING at first glance with ZERO giant scrolling!
+        const shouldOpen = (renderCat !== 'overview' || renderScope === 'search_all' || idx < 2);
         const catHeadingId = `loot-cat-head-${c.id}`;
         return `
-            <div class="table-wrap loot-vault-wrap" tabindex="0" role="region" aria-labelledby="${catHeadingId}">
-                <div id="${catHeadingId}" class="loot-cat-title ${c.cls}">${c.title} (${items.length})</div>
-                <table class="guide-table loot-vault-table">
-                    <thead><tr><th scope="col" style="width:44%;">Item Name &amp; Quick Drop</th><th scope="col" style="width:22%;">${c.id === 'material' ? 'Forage DC &amp; Price' : 'Rarity &amp; Cost'}</th><th scope="col" style="width:34%;">${c.id === 'material' ? 'Act, Wilderness / Shop Source' : 'Act, Location &amp; Best Fit'}</th></tr></thead>
-                    <tbody>
-                        ${rowsHtml}
-                    </tbody>
-                </table>
-            </div>
+            <details class="table-wrap loot-cat-details" ${shouldOpen ? 'open' : ''}>
+                <summary id="${catHeadingId}" class="loot-cat-summary loot-cat-title ${c.cls}">
+                    <span>${c.title} (${items.length})</span>
+                    <span class="loot-cat-summary-caret">▶</span>
+                </summary>
+                ${innerHtml}
+            </details>
         `;
     }).join('');
 
-    // When viewing the dedicated Materials tab (or global/section search), also show the DM-only Secret Crafting Recipes & 1-Click Live Unlocker!
-    if (renderTag === 'Materials' || renderTag === 'search_all') {
-        const recipeRowsHtml = DM_CRAFTING_RECIPES.map(r => {
-            const isUnl = r.unlockedDefault || !!dmUnlockedRecipes[r.id];
-            const safeT = r.summary.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-            const ingBtns = r.ingredients.map(ing => {
-                if (Array.isArray(ing.orKeys) && ing.orKeys.length > 0) {
-                    return ing.orKeys.map(ok => {
-                        const m = LOOT_DATA[ok];
-                        const lbl = m ? m.name.replace(/\s*\([^)]*\)\s*/g, '').trim() : ok;
-                        return `<button type="button" class="loot-link-pill" style="font-size:0.71rem; padding:2px 7px; margin:1px 2px;" onclick="openItemModal('${ok}')">${ing.qty}x ${lbl}</button>`;
-                    }).join('<span style="font-size:0.66rem; color:#94a3b8; margin:0 2px;">OR</span>');
-                }
-                const mat = LOOT_DATA[ing.key];
-                const matLabel = mat ? mat.name.replace(/\s*\([^)]*\)\s*/g, '').trim() : ing.key;
-                return `<button type="button" class="loot-link-pill" style="font-size:0.71rem; padding:2px 7px; margin:1px 3px 1px 0;" onclick="openItemModal('${ing.key}')">${ing.qty}x ${matLabel}</button>`;
-            }).join('');
-            const statusCol = r.unlockedDefault
-                ? `<span class="pill green">UNLOCKED (Session 1)</span>`
-                : `<div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
-                        <span><span class="pill ${isUnl ? 'green' : 'crimson'}">${isUnl ? 'UNLOCKED LIVE' : 'LOCKED'}</span> • <code>${r.code}</code></span>
-                        <button type="button" class="btn-modal-mini" style="padding:2px 7px; font-size:0.66rem; border-color:${isUnl ? '#ef4444' : '#34d399'}; color:${isUnl ? '#fca5a5' : '#6ee7b7'};" aria-label="${isUnl ? 'Re-lock' : 'Unlock live'} ${safeT}" onclick="dmToggleRecipeUnlock('${r.id}', '${safeT}', ${!isUnl})">${isUnl ? '🔒 Re-Lock' : '🔓 Unlock Live'}</button>
-                   </div>`;
-            return `
-                <tr class="searchable-row">
-                    <td>
-                        <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
-                            <button type="button" class="link-btn" onclick="openItemModal('${r.lootKey}')">${r.summary}</button>
-                            <span style="display:inline-flex; gap:3px;">
-                                <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${r.lootKey}', 'piper', '🎩 Piper', event, 1)" title="Drop finished item to Piper">🎩</button>
-                                <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${r.lootKey}', 'jacomir', '👑 Jacomir', event, 1)" title="Drop finished item to Jacomir">👑</button>
-                                <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${r.lootKey}', 'yvaine', '🔫 Yvaine', event, 1)" title="Drop finished item to Yvaine">🔫</button>
-                            </span>
-                        </div>
-                        ${r.learnedFrom ? `<div style="font-size:0.68rem; color:#93c5fd; margin-top:2px;"><strong>Learned:</strong> ${r.learnedFrom}</div>` : ''}
-                        ${r.note ? `<div style="font-size:0.69rem; color:#fde68a; margin-top:2px;">${r.note}</div>` : ''}
-                    </td>
-                    <td><div style="display:flex; flex-wrap:wrap; align-items:center; gap:2px;">${ingBtns}</div></td>
-                    <td>${statusCol}</td>
-                </tr>
-            `;
-        }).join('');
-        html += `
-            <div class="table-wrap loot-vault-wrap" tabindex="0" role="region" aria-labelledby="dm-crafting-recipes-heading">
-                <div id="dm-crafting-recipes-heading" class="loot-cat-title loot-header-quest">🔒 DM-ONLY: Secret Crafting Recipes (${DM_CRAFTING_RECIPES.length}) &amp; 1-Click Live Firebase Unlocker</div>
-                <table class="guide-table loot-vault-table">
-                    <thead><tr><th scope="col" style="width:31%;">Craftable Item (Click to View)</th><th scope="col" style="width:37%;">Required Materials (Click to View)</th><th scope="col" style="width:32%;">Status, Code &amp; 1-Click Live Unlock</th></tr></thead>
-                    <tbody>
-                        ${recipeRowsHtml}
-                    </tbody>
-                </table>
-            </div>
-        `;
+    if (!html.trim()) {
+        html = '<div style="padding:18px; text-align:center; color:#94a3b8; font-size:0.82rem; border:1px dashed #334155; border-radius:8px;">No loot entries match this Act/Hero + Category filter. Try switching to <strong>📦 All Acts</strong> or another Category tab!</div>';
     }
+
     container.innerHTML = html;
     if (dmEditingLootKey) {
         const rInp = document.getElementById(`dm-loot-rename-${dmEditingLootKey}`);
@@ -17991,22 +18424,59 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
     }
 }
 
+function syncLootBarButtonsUI() {
+    const lootBar = document.getElementById('loot-filter-bar');
+    if (lootBar) {
+        lootBar.querySelectorAll('.btn-loot-filter').forEach(b => {
+            const on = b.getAttribute('data-loottag') === activeLootTag;
+            b.classList.toggle('active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+    }
+    const catBar = document.getElementById('loot-cat-bar');
+    if (catBar) {
+        catBar.querySelectorAll('.btn-loot-cat').forEach(b => {
+            const on = b.getAttribute('data-lootcat') === activeLootCat;
+            b.classList.toggle('active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+    }
+    const slotBar = document.getElementById('loot-slot-bar');
+    if (slotBar) {
+        slotBar.querySelectorAll('.btn-loot-slot').forEach(b => {
+            const on = b.getAttribute('data-lootslot') === activeLootSlot;
+            b.classList.toggle('active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+    }
+}
+
 function filterLootVault(tag, btnEl) {
     searchExpandedAll = false;
     sectionSearchExpanded.loot = false;
-    activeLootTag = tag || 'all';
-    const lootBar = btnEl ? btnEl.closest('.loot-filter-bar') : document.getElementById('loot-filter-bar');
-    if (lootBar) {
-        lootBar.querySelectorAll('.btn-loot-filter').forEach(b => {
-            b.classList.remove('active');
-            b.setAttribute('aria-pressed', 'false');
-        });
-        const targetBtn = btnEl || lootBar.querySelector(`.btn-loot-filter[data-loottag="${activeLootTag}"]`);
-        if (targetBtn) {
-            targetBtn.classList.add('active');
-            targetBtn.setAttribute('aria-pressed', 'true');
-        }
-    }
+    if (tag === 'Attachments') { activeLootTag = 'all'; activeLootCat = 'attachments'; }
+    else if (tag === 'Upgrades') { activeLootTag = 'all'; activeLootCat = 'upgrades'; }
+    else if (tag === 'Recipes' || tag === 'Craftables') { activeLootTag = 'all'; activeLootCat = 'craftables'; }
+    else if (tag === 'Materials') { activeLootTag = 'all'; activeLootCat = 'materials'; }
+    else { activeLootTag = tag || 'all'; }
+    syncLootBarButtonsUI();
+    renderLootVault(activeLootTag);
+    if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
+}
+
+function filterLootCategory(catId, btnEl) {
+    searchExpandedAll = false;
+    sectionSearchExpanded.loot = false;
+    activeLootCat = catId || 'overview';
+    if (activeLootCat !== 'attachments') activeLootSlot = 'all';
+    syncLootBarButtonsUI();
+    renderLootVault(activeLootTag);
+    if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
+}
+
+function filterLootSlot(slotId, btnEl) {
+    activeLootSlot = slotId || 'all';
+    syncLootBarButtonsUI();
     renderLootVault(activeLootTag);
     if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
 }
@@ -18110,9 +18580,18 @@ function syncSectionVisibility(scope, keepActiveSubfilter = false) {
     if (scope === 'loot') {
         document.querySelectorAll('#loot-containers .table-wrap').forEach(wrap => {
             wrap.querySelectorAll('tbody').forEach(tb => syncTbodyGroupHeaders(tb));
+            wrap.querySelectorAll('.loot-act-group').forEach(ag => {
+                if (hasQuery) {
+                    const anyVis = Array.from(ag.querySelectorAll('.searchable-row')).some(r => r.style.display !== 'none');
+                    ag.style.display = anyVis ? '' : 'none';
+                } else {
+                    ag.style.display = '';
+                }
+            });
             if (hasQuery) {
                 const hasVisible = Array.from(wrap.querySelectorAll('.searchable-row')).some(r => r.style.display !== 'none');
                 wrap.style.display = hasVisible ? '' : 'none';
+                if (hasVisible && wrap.tagName === 'DETAILS') wrap.open = true;
             } else {
                 wrap.style.display = '';
             }
