@@ -1109,10 +1109,11 @@
                                 <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;">GRAZE</span>
                             </div>
                             <div class="action-desc"><strong>+5 to Hit</strong>, <strong>2d6 + 3 Slashing</strong>. <em>Savage Attacker:</em> rolls 2d6 twice &amp; takes higher! <em>Graze:</em> deals <strong>3 Slashing</strong> on a miss!</div>
+                            <div id="jacomir-mods-greatsword"></div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" onclick="rollWeaponAttack('Ancestral Greatsword (+5 • Graze: 3 Dmg on Miss)', 5)">🗡️ Attack (+5)</button>
-                                <button class="btn-roll-action btn-roll-dmg" onclick="rollSavageGreatswordDamage()">💥 2d6+3 (Savage)</button>
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#fde68a; border-color:#b45309;" onclick="applyGrazeDamage()" title="Weapon Mastery — Graze: On a missed attack roll, deal 3 Slashing damage (STR mod)">⚡ Graze (3 Dmg)</button>
+                                <button id="btn-atk-gs" class="btn-roll-action" onclick="rollWeaponAttack('Ancestral Greatsword (Graze: 3 Dmg on Miss)', 5, 'greatsword')">🗡️ Attack (+5)</button>
+                                <button id="btn-dmg-gs" class="btn-roll-action btn-roll-dmg" onclick="rollSavageGreatswordDamage()">💥 2d6+3 (Savage)</button>
+                                <button id="btn-graze-gs" class="btn-act btn-act-pre" style="font-size:0.68rem; color:#fde68a; border-color:#b45309;" onclick="applyGrazeDamage()" title="Weapon Mastery — Graze: On a missed attack roll, deal 3 Slashing damage (STR mod)">⚡ Graze (3 Dmg)</button>
                             </div>
                         </div>
 
@@ -1128,10 +1129,11 @@
                                 <span class="pill-badge" style="background:rgba(226,232,240,0.16); color:#f8fafc; border:1px solid #cbd5e1; font-size:0.62rem; padding:1px 6px;">SAP • SILVER</span>
                             </div>
                             <div class="action-desc"><strong>+5 to Hit</strong>, <strong>1d8+3 (1H)</strong> or <strong>1d10+3 (2H) Silvered Slashing</strong>. Bypasses vampire/werewolf/undead resistance! <em>Sap:</em> target has <strong>Disadvantage</strong> on its next attack!</div>
+                            <div id="jacomir-mods-silvered_longsword"></div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" style="background:#475569; border:1px solid #cbd5e1;" onclick="rollWeaponAttack('Silvered Longsword (+5 • Sap • Bypasses Undead Resist)', 5)">⚔️ Silver (+5)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollSavageLongswordDamage(true)">💥 2H 1d10+3</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg" style="background:#991b1b;" onclick="rollSavageLongswordDamage(false)">💥 1H 1d8+3</button>
+                                <button id="btn-atk-sls" type="button" class="btn-roll-action" style="background:#475569; border:1px solid #cbd5e1;" onclick="rollWeaponAttack('Silvered Longsword (Sap • Bypasses Undead Resist)', 5, 'silvered_longsword')">⚔️ Silver (+5)</button>
+                                <button id="btn-dmg-sls-2h" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollSavageLongswordDamage(true)">💥 2H 1d10+3</button>
+                                <button id="btn-dmg-sls-1h" type="button" class="btn-roll-action btn-roll-dmg" style="background:#991b1b;" onclick="rollSavageLongswordDamage(false)">💥 1H 1d8+3</button>
                                 <button type="button" class="btn-act btn-act-pre" style="font-size:0.68rem; color:#e2e8f0; border-color:#94a3b8;" onclick="applySapDebuff()" title="5.5e Weapon Mastery — Sap: Target has Disadvantage on its next attack roll!">🛡️ Sap</button>
                             </div>
                         </div>
@@ -1148,9 +1150,10 @@
                                 <span class="pill-badge" style="background:rgba(56,189,248,0.16); color:#7dd3fc; border:1px solid #38bdf8; font-size:0.62rem; padding:1px 6px;">VEX</span>
                             </div>
                             <div class="action-desc"><strong>+5 to Hit</strong>, <strong>1d6 + 3 Slashing</strong>. <em>Vex Mastery:</em> hitting grants <strong>Advantage</strong> on your next attack vs target before end of next turn!</div>
+                            <div id="jacomir-mods-handaxe"></div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" onclick="rollWeaponAttack('Handaxe (Melee / Thrown 20/60ft • Vex)', 5)">🪓 Attack (+5)</button>
-                                <button class="btn-roll-action btn-roll-dmg" onclick="rollSavageHandaxeDamage()">💥 1d6+3 (Savage)</button>
+                                <button id="btn-atk-axe" class="btn-roll-action" onclick="rollWeaponAttack('Handaxe (Melee / Thrown 20/60ft • Vex)', 5, 'handaxe')">🪓 Attack (+5)</button>
+                                <button id="btn-dmg-axe" class="btn-roll-action btn-roll-dmg" onclick="rollSavageHandaxeDamage()">💥 1d6+3 (Savage)</button>
                                 <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#38bdf8;" onclick="activateVexAdvantage()" title="Vex Mastery: Activate Advantage on your next attack roll!">🎯 Vex (+Adv)</button>
                             </div>
                         </div>
@@ -1634,12 +1637,39 @@
     // ==========================================
     // ⚔️ WEAPON MASTERIES & SAVAGE ATTACKER ENGINE
     // ==========================================
-    function rollWeaponAttack(weaponLabel, attackBonus) {
-        rollD20(weaponLabel, attackBonus);
+    function getJacomirWpnMods(weaponId) {
+        return (window.COS_RPG && typeof window.COS_RPG.getWeaponCombatMods === 'function')
+            ? window.COS_RPG.getWeaponCombatMods(weaponId)
+            : { atkBonus: 0, dmgBonus: 0, extras: [], isSilvered: false, isMagical: false, saveNotes: [] };
+    }
+
+    function rollJacomirExtraDice(wMods) {
+        let extraSum = 0;
+        const parts = [];
+        if (wMods && Array.isArray(wMods.extras)) {
+            wMods.extras.forEach(ex => {
+                if (ex.dice && window.COS_RPG && typeof window.COS_RPG.rollDiceExpr === 'function') {
+                    const r = window.COS_RPG.rollDiceExpr(ex.dice);
+                    extraSum += r.total;
+                    parts.push(`+ ${ex.dice}[${r.rolls.join('+')}] ${ex.type || ''} (${ex.label || 'Mod'})`);
+                }
+            });
+        }
+        return { extraSum, extraText: parts.length ? ' ' + parts.join(' ') : '' };
+    }
+
+    function rollWeaponAttack(weaponLabel, attackBonus, weaponId) {
+        const wMods = weaponId ? getJacomirWpnMods(weaponId) : { atkBonus: 0, mod: null, coating: null };
+        const modTags = [];
+        if (wMods.mod) modTags.push(wMods.mod.itemName);
+        if (wMods.coating) modTags.push(wMods.coating.itemName);
+        const tagStr = modTags.length ? ` • ${modTags.join(' + ')}` : '';
+        rollD20(`${weaponLabel}${tagStr}`, attackBonus + (wMods.atkBonus || 0));
     }
 
     function rollSavageGreatswordDamage() {
         // Savage Attacker: Roll 2d6 twice and take the higher total + 3 STR!
+        const wMods = getJacomirWpnMods('greatsword');
         const r1a = Math.floor(Math.random() * 6) + 1;
         const r1b = Math.floor(Math.random() * 6) + 1;
         const sum1 = r1a + r1b;
@@ -1649,22 +1679,32 @@
         const sum2 = r2a + r2b;
 
         const chosenSum = Math.max(sum1, sum2);
-        const total = chosenSum + 3;
-        logRoll(`🗡️ <strong>Ancestral Greatsword Damage (Savage Attacker):</strong> Roll 1 [${r1a}+${r1b}=${sum1}] vs Roll 2 [${r2a}+${r2b}=${sum2}] ➔ Kept <strong>${chosenSum}</strong> + 3 STR = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} Slashing Damage</span>!`);
+        const flatMod = 3 + (wMods.dmgBonus || 0);
+        const ex = rollJacomirExtraDice(wMods);
+        const total = chosenSum + flatMod + ex.extraSum;
+        const dmgType = wMods.isSilvered ? 'Silvered Slashing' : 'Slashing';
+        const notes = wMods.saveNotes && wMods.saveNotes.length ? ` <small style="color:#fde68a;">(${wMods.saveNotes.join(' • ')})</small>` : '';
+        logRoll(`🗡️ <strong>Ancestral Greatsword Damage (Savage Attacker):</strong> Roll 1 [${r1a}+${r1b}=${sum1}] vs Roll 2 [${r2a}+${r2b}=${sum2}] ➔ Kept <strong>${chosenSum}</strong> + ${flatMod}${ex.extraText} = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} ${dmgType} Damage</span>!${notes}`);
     }
 
     function applyGrazeDamage() {
-        logRoll(`⚡ <strong>Weapon Mastery — Graze (Ancestral Greatsword):</strong> Even on a missed attack roll, Jacomir's heavy blade scrapes through the enemy's guard for <strong><span style="color:#fbbf24; font-size:1.05rem;">3 Slashing Damage</span></strong> (STR modifier)!`);
+        const wMods = getJacomirWpnMods('greatsword');
+        const grazeTotal = 3 + (wMods.dmgBonus || 0);
+        logRoll(`⚡ <strong>Weapon Mastery — Graze (Ancestral Greatsword):</strong> Even on a missed attack roll, Jacomir's heavy blade scrapes through the enemy's guard for <strong><span style="color:#fbbf24; font-size:1.05rem;">${grazeTotal} ${wMods.isSilvered ? 'Silvered ' : ''}Slashing Damage</span></strong> (STR modifier${wMods.dmgBonus ? ` + ${wMods.dmgBonus} mod` : ''})!`);
     }
 
     function rollSavageLongswordDamage(twoHanded = true) {
+        const wMods = getJacomirWpnMods('silvered_longsword');
         const sides = twoHanded ? 10 : 8;
-        const grip = twoHanded ? '2H Versatile (1d10+3)' : '1H (1d8+3)';
+        const flatMod = 3 + (wMods.dmgBonus || 0);
+        const grip = twoHanded ? `2H Versatile (1d10+${flatMod})` : `1H (1d8+${flatMod})`;
         const d1 = Math.floor(Math.random() * sides) + 1;
         const d2 = Math.floor(Math.random() * sides) + 1;
         const chosen = Math.max(d1, d2);
-        const total = chosen + 3;
-        logRoll(`⚔️ <strong>Silvered Longsword Damage (${grip} • Savage Attacker):</strong> Roll 1 [${d1}] vs Roll 2 [${d2}] ➔ Kept <strong>${chosen}</strong> + 3 STR = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} Silvered Slashing Damage</span>! <small style="color:#cbd5e1;">(Bypasses Undead/Werewolf Resistance • 🛡️ Sap: target has Disadvantage on next attack!)</small>`);
+        const ex = rollJacomirExtraDice(wMods);
+        const total = chosen + flatMod + ex.extraSum;
+        const notes = wMods.saveNotes && wMods.saveNotes.length ? ` • ${wMods.saveNotes.join(' • ')}` : '';
+        logRoll(`⚔️ <strong>Silvered Longsword Damage (${grip} • Savage Attacker):</strong> Roll 1 [${d1}] vs Roll 2 [${d2}] ➔ Kept <strong>${chosen}</strong> + ${flatMod}${ex.extraText} = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} Silvered Slashing Damage</span>! <small style="color:#cbd5e1;">(Bypasses Undead/Werewolf Resistance • 🛡️ Sap: target has Disadvantage on next attack!${notes})</small>`);
     }
 
     function applySapDebuff() {
@@ -1672,11 +1712,16 @@
     }
 
     function rollSavageHandaxeDamage() {
+        const wMods = getJacomirWpnMods('handaxe');
         const d1 = Math.floor(Math.random() * 6) + 1;
         const d2 = Math.floor(Math.random() * 6) + 1;
         const chosen = Math.max(d1, d2);
-        const total = chosen + 3;
-        logRoll(`🪓 <strong>Handaxe Damage (Savage Attacker • Vex):</strong> Roll 1 [${d1}] vs Roll 2 [${d2}] ➔ Kept <strong>${chosen}</strong> + 3 STR = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} Slashing Damage</span>! <em>(🎯 Vex: You have Advantage on your next attack roll against this target before the end of your next turn!)</em>`);
+        const flatMod = 3 + (wMods.dmgBonus || 0);
+        const ex = rollJacomirExtraDice(wMods);
+        const total = chosen + flatMod + ex.extraSum;
+        const dmgType = wMods.isSilvered ? 'Silvered Slashing' : 'Slashing';
+        const notes = wMods.saveNotes && wMods.saveNotes.length ? ` <small style="color:#fde68a;">(${wMods.saveNotes.join(' • ')})</small>` : '';
+        logRoll(`🪓 <strong>Handaxe Damage (Savage Attacker • Vex):</strong> Roll 1 [${d1}] vs Roll 2 [${d2}] ➔ Kept <strong>${chosen}</strong> + ${flatMod}${ex.extraText} = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} ${dmgType} Damage</span>! <em>(🎯 Vex: You have Advantage on your next attack roll against this target before the end of your next turn!)</em>${notes}`);
     }
 
     function activateVexAdvantage() {
@@ -2956,36 +3001,36 @@
     // 🎒 INVENTORY & BAROVIAN LOOT VAULT ENGINE
     // ==========================================
     const defaultItems = [
-        "📖 Burgomaster Kolyan's Wizard Diary (Davian Martikov & Keepers of the Feather Lead)",
-        "⚔️ Silvered Longsword (Sap Mastery • Bypasses Undead/Werewolf Resist)",
-        "💧 Flask of Morninglord Spring Water (Holy Water — 2d6 Radiant & Halts Vampire Regen)",
-        "🥧 Dirty Dream Pastry (Morgantha's Pie — Uneaten)",
-        "🪵 Wooden Smoking Pipe",
-        "🗡️ Ancestral Greatsword (Graze Mastery)",
-        "🪓 2x Handaxes (Vex Mastery)",
-        "⛓️ Chain Mail Armor (AC 16 + 1 Defense Style)",
-        "💍 Signet Ring Bearing the Lost Crest of Oakenshire",
-        "🧥 Tattered Royal Traveling Cloak with Fur Mantle",
-        "♟️ Dragonchess Gaming Set (Carved Oakenshire Ivory)"
+        "Burgomaster Kolyan's Wizard Diary",
+        "Silvered Longsword",
+        "Flask of Morninglord Spring Water",
+        "Dirty Dream Pastry",
+        "Wooden Smoking Pipe",
+        "Ancestral Greatsword",
+        "2x Handaxes",
+        "Chain Mail Armor",
+        "Signet Ring of Oakenshire",
+        "Tattered Royal Traveling Cloak",
+        "Dragonchess Gaming Set"
     ];
 
     const worldLootVault = {
         "wizard diary": {
-            name: "📖 Burgomaster Kolyan's Wizard Diary",
+            name: "Burgomaster Kolyan's Wizard Diary",
             category: "QUEST TOME & FACTION LEAD • Session 1 Indirovich Manor Loot",
             origin: "Hidden Study of Late Burgomaster Kolyan Indirovich",
             desc: "A leather-bound arcane journal written by Ismark and Ireena's late father, Burgomaster Kolyan Indirovich, revealing that he practiced wizardry in his youth and quietly researched ways to resist Count Strahd's grip on the valley.",
             effect: "• <strong>Keepers of the Feather Lead:</strong> Kolyan explicitly writes that he knows <strong>Davian Martikov</strong> (master of the <em>Wizard of Wines</em>) and a secret fellowship called <strong>the Keepers of the Feather</strong>, noting that if his children or their champions ever need aid against Strahd, they should present this diary to the Martikov family (at the <em>Blue Water Inn</em> in Vallaki or the Winery).<br>• <strong>Social Key:</strong> Showing this diary to Urwin or Davian Martikov grants immediate trust and faction assistance!"
         },
         "kolyan": {
-            name: "📖 Burgomaster Kolyan's Wizard Diary",
+            name: "Burgomaster Kolyan's Wizard Diary",
             category: "QUEST TOME & FACTION LEAD • Session 1 Indirovich Manor Loot",
             origin: "Hidden Study of Late Burgomaster Kolyan Indirovich",
             desc: "A leather-bound arcane journal written by Ismark and Ireena's late father, Burgomaster Kolyan Indirovich, revealing that he practiced wizardry in his youth and quietly researched ways to resist Count Strahd's grip on the valley.",
             effect: "• <strong>Keepers of the Feather Lead:</strong> Kolyan explicitly writes that he knows <strong>Davian Martikov</strong> (master of the <em>Wizard of Wines</em>) and a secret fellowship called <strong>the Keepers of the Feather</strong>, noting that if his children or their champions ever need aid against Strahd, they should present this diary to the Martikov family (at the <em>Blue Water Inn</em> in Vallaki or the Winery).<br>• <strong>Social Key:</strong> Showing this diary to Urwin or Davian Martikov grants immediate trust and faction assistance!"
         },
         "silvered longsword": {
-            name: "⚔️ Silvered Longsword (Undead & Werewolf Bane)",
+            name: "Silvered Longsword",
             category: "SILVERED MARTIAL WEAPON • Versatile (1d8 / 1d10) • Sap Mastery",
             origin: "Claimed in Session 1 — Barovia Village / Indirovich Armory",
             desc: "A finely balanced Barovian steel longsword plated cleanly in pure silver, gleaming coldly beneath the storm clouds.",
@@ -2993,7 +3038,7 @@
             isSilverLongsword: true
         },
         "spring water": {
-            name: "💧 Flask of Morninglord Spring Water (Holy Water)",
+            name: "Flask of Morninglord Spring Water",
             category: "ANTI-UNDEAD • Consecrated Consumable (Session 1)",
             origin: "Pure Spring Water Blessed by the Morninglord",
             desc: "A stoppered glass flask of pure, crystal-clear spring water consecrated in the name of the Morninglord.",
@@ -3001,7 +3046,7 @@
             isHolyWater: true
         },
         "holy water": {
-            name: "💧 Flask of Morninglord Spring Water (Holy Water)",
+            name: "Flask of Morninglord Spring Water",
             category: "ANTI-UNDEAD • Consecrated Consumable (Session 1)",
             origin: "Pure Spring Water Blessed by the Morninglord",
             desc: "A stoppered glass flask of pure, crystal-clear spring water consecrated in the name of the Morninglord.",
@@ -3009,7 +3054,7 @@
             isHolyWater: true
         },
         "dream pastry": {
-            name: "🥧 Morgantha's Dirty Dream Pastry (Uneaten)",
+            name: "Dirty Dream Pastry",
             category: "SUSPICIOUS CONSUMABLE • Gifted by 'Granny' Morgantha in Session 1",
             origin: "Old Bonegrinder Windmill Peddler Cart",
             desc: "A slightly mud-smudged minced-meat hand pie dusted with sweet spices, handed to King Jacomir by old Morgantha after she shrugged off Piper's enchantment and grew wary of the party.",
@@ -3017,64 +3062,64 @@
             isDreamPastry: true
         },
         "pipe": {
-            name: "🪵 Barovian Wooden Smoking Pipe",
+            name: "Wooden Smoking Pipe",
             category: "PERSONAL KEEPSAKE • Session 1 Village Find",
             origin: "Village of Barovia (Session 1)",
             desc: "A carved dark-briar wooden smoking pipe claimed in Barovia—a quiet, regal comfort while keeping watch beside damp campfires in the Mists.",
             effect: "• Pure roleplay &amp; sovereign ambiance: puffing pipe-smoke across Barovia's fog while plotting strategy over Dragonchess or sizing up Count Strahd."
         },
         "greatsword": {
-            name: "🗡️ Ancestral Greatsword of Oakenshire",
+            name: "Ancestral Greatsword",
             category: "MARTIAL MELEE WEAPON • Heavy, Two-Handed",
             origin: "Royal Armory of Oakenshire",
             desc: "A heavy, battle-worn two-handed greatsword bearing the faint oak-and-crown etching of King Jacomir's vanished homeland.",
             effect: "• <strong>Attack:</strong> +5 to Hit, <strong>2d6 + 3 Slashing damage</strong> (rolls 2d6 twice via <em>Savage Attacker</em>).<br>• <strong>Weapon Mastery — Graze:</strong> When an attack roll misses, the target still takes <strong>3 Slashing damage</strong> (STR modifier)."
         },
         "handaxe": {
-            name: "🪓 Balanced Royal Handaxes",
+            name: "Handaxes",
             category: "SIMPLE MELEE / THROWN WEAPON • Light, Thrown (20/60 ft)",
             origin: "Fighter Starting Loadout",
             desc: "A pair of balanced steel handaxes carried at Jacomir's belt for close-quarters combinations or ranged throws.",
             effect: "• <strong>Attack (Melee or 20/60 ft):</strong> +5 to Hit, <strong>1d6 + 3 Slashing damage</strong>.<br>• <strong>Weapon Mastery — Vex:</strong> Hitting grants <strong>Advantage</strong> on your next attack roll against that target before the end of your next turn."
         },
         "chain mail": {
-            name: "⛓️ Heavy Chain Mail Armor",
+            name: "Chain Mail Armor",
             category: "HEAVY ARMOR • AC 16 (+1 Defense Style = 17 AC)",
             origin: "King Jacomir's Campaign Panoply",
             desc: "Interlocking rings of blackened steel worn over a padded royal gambeson.",
             effect: "• <strong>Armor Class:</strong> Base AC 16 + 1 from <em>Defense Fighting Style</em> = <strong>17 AC</strong>.<br>• Requires STR 13 (met with STR 17); imposes Disadvantage on Stealth checks."
         },
         "signet ring": {
-            name: "💍 Signet Ring of the Lost Crest of Oakenshire",
+            name: "Signet Ring of Oakenshire",
             category: "ROYAL RELIC • Noble Regalia",
             origin: "Sovereign Seal of Oakenshire",
             desc: "A heavy gold-and-iron signet ring stamped with the ancient crest of Oakenshire—proof of Jacomir's bloodline and sworn duty to his vanished subjects.",
             effect: "• Marks Jacomir Yulle as the rightful sovereign of Oakenshire.<br>• Can press royal wax seals and resonates with any surviving relics or citizens of Oakenshire trapped inside the Mists."
         },
         "cloak": {
-            name: "🧥 Tattered Royal Traveling Cloak with Fur Mantle",
+            name: "Tattered Royal Traveling Cloak",
             category: "ROYAL REGALIA • Weather-Worn Garment",
             origin: "Night of the Mist-Swallowing",
             desc: "A heavy wool-and-wolfskin royal mantle, frayed at the hem from riding through the freezing border fog.",
             effect: "• Keeps off Barovia's incessant mountain rain and marks Jacomir's silhouette with unmistakable regal bearing."
         },
         "dragonchess": {
-            name: "♟️ Carved Dragonchess Gaming Set",
+            name: "Dragonchess Gaming Set",
             category: "TOOL PROFICIENCY • Strategic Gaming Set",
             origin: "Royal War Room of Oakenshire",
             desc: "A travel-sized three-tiered Dragonchess set with weighted pieces carved from oak and bone.",
             effect: "• Jacomir has <strong>Tool Proficiency (+2 PB)</strong> in Dragonchess via his Noble/Skilled background—useful for testing the tactical minds of Barovian nobles, burgomasters, or Count Strahd himself."
         },
         "potion of healing": {
-            name: "🧪 Potion of Healing",
-            category: "HEAL • Common Consumable (5 GP)",
+            name: "Potion of Healing",
+            category: "HEAL • Common Consumable (50 GP)",
             origin: "Barovian Apothecary / Ismark's Cache",
             desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
-            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong>.<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
-            healFormula: { dice: 2, sides: 6, bonus: 1, verb: 'Drank' }
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d4 + 2 Hit Points</strong>.<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
+            healFormula: { dice: 2, sides: 4, bonus: 2, verb: 'Drank' }
         },
         "bandage": {
-            name: "🩹 Field Bandages (1d6 + 1 HP)",
+            name: "Field Healing Bandages",
             category: "HEAL • Common Consumable (5 SP)",
             origin: "Village of Barovia / Crafted from Medicinal Herbs",
             desc: "Clean linen wraps soaked in mild herbal salve.",
@@ -3192,8 +3237,11 @@
         const cleanLower = parsed.name.toLowerCase();
 
         let match = null;
-        for (const [k, v] of Object.entries(worldLootVault)) {
-            if (cleanLower.includes(k)) { match = v; break; }
+        const isSharedPriority = cleanLower.includes('moonlight') || cleanLower.includes('vladimir') || cleanLower.includes('sunblade') || cleanLower.includes('sunsword') || cleanLower.includes('counterweight') || cleanLower.includes('edge-guard') || cleanLower.includes('sunstone') || cleanLower.includes('draw-cam') || cleanLower.includes('focusing collar') || cleanLower.includes('witch-iron') || cleanLower.includes('incendiary') || cleanLower.includes('liquid silver') || cleanLower.includes('sun-ash') || cleanLower.includes('oil of sharpness') || cleanLower.includes('wyvern') || cleanLower.includes('tincture') || cleanLower.includes('runestone') || cleanLower.includes('ledger') || cleanLower.includes('slate') || cleanLower.includes('wall-rubbing') || cleanLower.includes('rubric') || cleanLower.includes('folio') || cleanLower.includes('treatise') || cleanLower.includes('chart') || cleanLower.includes('diagram') || cleanLower.includes('pattern') || cleanLower.includes('vellum');
+        if (!isSharedPriority) {
+            for (const [k, v] of Object.entries(worldLootVault)) {
+                if (cleanLower.includes(k)) { match = v; break; }
+            }
         }
         if (!match && window.COS_RPG && typeof window.COS_RPG.lookupSharedItemLore === 'function') {
             match = window.COS_RPG.lookupSharedItemLore(parsed.name);
@@ -3740,10 +3788,10 @@
             log: logRoll,
             openItemModal: openItemDetailsModal,
             defaultEquipped: {
-                cape: "tattered royal traveling cloak with fur mantle",
-                body: "chain mail armor (ac 16 + 1 defense style)",
-                ring1: "signet ring bearing the lost crest of oakenshire",
-                mainHand: "ancestral greatsword (graze mastery)",
+                cape: "tattered royal traveling cloak",
+                body: "chain mail armor",
+                ring1: "signet ring of oakenshire",
+                mainHand: "ancestral greatsword",
                 _grip: '2h'
             },
             weaponsGridSelector: '#weapons-grid-jacomir',
@@ -3774,10 +3822,39 @@
                             ? `<span class="rpg-card-equipped-pill">${hit.grip === '2h' ? '2H' : 'EQUIPPED'}</span>`
                             : '';
                     }
+                    const modMount = document.getElementById(`jacomir-mods-${tag}`);
+                    if (modMount && window.COS_RPG && typeof window.COS_RPG.buildWeaponModAndCoatingBadgesHtml === 'function') {
+                        modMount.innerHTML = window.COS_RPG.buildWeaponModAndCoatingBadgesHtml(tag);
+                    }
                 };
                 syncWpnCard('card-wpn-greatsword', 'eq-badge-greatsword', 'greatsword');
                 syncWpnCard('card-wpn-silver-ls', 'eq-badge-silver_ls', 'silvered_longsword');
                 syncWpnCard('card-wpn-handaxe', 'eq-badge-handaxe', 'handaxe');
+
+                const gsMods = getJacomirWpnMods('greatsword');
+                const gsEx = (gsMods.extras || []).map(e => `+${e.dice}`).join('');
+                const btnAtkGs = document.getElementById('btn-atk-gs');
+                const btnDmgGs = document.getElementById('btn-dmg-gs');
+                const btnGrazeGs = document.getElementById('btn-graze-gs');
+                if (btnAtkGs) btnAtkGs.textContent = `🗡️ Attack (+${5 + (gsMods.atkBonus || 0)})`;
+                if (btnDmgGs) btnDmgGs.textContent = `💥 2d6+${3 + (gsMods.dmgBonus || 0)}${gsEx} (Savage)`;
+                if (btnGrazeGs) btnGrazeGs.textContent = `⚡ Graze (${3 + (gsMods.dmgBonus || 0)} Dmg)`;
+
+                const slsMods = getJacomirWpnMods('silvered_longsword');
+                const slsEx = (slsMods.extras || []).map(e => `+${e.dice}`).join('');
+                const btnAtkSls = document.getElementById('btn-atk-sls');
+                const btnDmgSls2h = document.getElementById('btn-dmg-sls-2h');
+                const btnDmgSls1h = document.getElementById('btn-dmg-sls-1h');
+                if (btnAtkSls) btnAtkSls.textContent = `⚔️ Silver (+${5 + (slsMods.atkBonus || 0)})`;
+                if (btnDmgSls2h) btnDmgSls2h.textContent = `💥 2H 1d10+${3 + (slsMods.dmgBonus || 0)}${slsEx}`;
+                if (btnDmgSls1h) btnDmgSls1h.textContent = `💥 1H 1d8+${3 + (slsMods.dmgBonus || 0)}${slsEx}`;
+
+                const axeMods = getJacomirWpnMods('handaxe');
+                const axeEx = (axeMods.extras || []).map(e => `+${e.dice}`).join('');
+                const btnAtkAxe = document.getElementById('btn-atk-axe');
+                const btnDmgAxe = document.getElementById('btn-dmg-axe');
+                if (btnAtkAxe) btnAtkAxe.textContent = `🪓 Attack (+${5 + (axeMods.atkBonus || 0)})`;
+                if (btnDmgAxe) btnDmgAxe.textContent = `💥 1d6+${3 + (axeMods.dmgBonus || 0)}${axeEx} (Savage)`;
             }
         });
     }

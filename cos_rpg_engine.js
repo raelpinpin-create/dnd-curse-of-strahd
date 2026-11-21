@@ -321,13 +321,13 @@
             summary: '+1 Ability Checks & Saves (Attune)'
         },
 
-        // --- AMMUNITION PACKS (Match BEFORE weapons so bolts/arrows never parse as ranged weapons!) ---
+        // --- AMMUNITION PACKS (Match BEFORE weapons/vials so bolts/arrows/coated rounds parse accurately!) ---
         {
-            match: ['ezmerelda', 'sunburst cartridges', 'sunburst bullets', 'dawn-powder'],
+            match: ['sunburst rounds', 'sunburst cartridges', 'sunburst bullets', 'dawn-powder'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'sunburst', ammoKind: 'firearm', packSizeDefault: 10 },
-            summary: '+1/+1 & +1d6 Radiant Firearm Rounds (Halts Regen)'
+            summary: '+1/+1 & +1d6 Radiant Firearm Rounds (Silvered, Halts Regen)'
         },
         {
             match: ['sunburst arrows', 'morninglord sunburst arrows'],
@@ -337,21 +337,35 @@
             summary: '+1/+1 & +1d6 Radiant Arrows (Silvered, Halts Regen)'
         },
         {
-            match: ['sunburst crossbow bolts', 'sunburst bolts', 'morninglord sunburst bolts'],
+            match: ['sunburst bolts', 'sunburst crossbow bolts', 'morninglord sunburst bolts'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'sunburst', ammoKind: 'crossbow', packSizeDefault: 10 },
             summary: '+1/+1 & +1d6 Radiant Bolts (Silvered, Halts Regen)'
         },
         {
-            match: ['baba lysaga', '+1 magical sling', '+1 firearm bullets', '+1 bullets'],
+            match: ['hex-iron bullets', 'witch-iron bullets', 'baba lysaga', '+1 magical sling', '+1 firearm bullets', '+1 bullets'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'plus1', ammoKind: 'firearm', packSizeDefault: 10 },
             summary: '+1 Hit & +1 Magical Firearm/Sling Rounds'
         },
         {
-            match: ['incendiary bullets', 'brimstone bullets', 'fire bullets'],
+            match: ['hex-iron arrows', 'witch-iron arrows'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'plus1', ammoKind: 'bow', packSizeDefault: 10 },
+            summary: '+1 Hit & +1 Magical Bow Arrows'
+        },
+        {
+            match: ['hex-iron bolts', 'witch-iron bolts'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'plus1', ammoKind: 'crossbow', packSizeDefault: 10 },
+            summary: '+1 Hit & +1 Magical Crossbow Bolts'
+        },
+        {
+            match: ['incendiary rounds', 'incendiary bullets', 'brimstone bullets', 'fire bullets'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'incendiary', ammoKind: 'firearm', packSizeDefault: 10 },
@@ -365,28 +379,28 @@
             summary: '+1d4 Fire Bow Arrows'
         },
         {
-            match: ['fire crossbow bolts', 'brimstone fire crossbow bolts', 'fire bolts', 'incendiary bolts'],
+            match: ['fire bolts', 'fire crossbow bolts', 'brimstone fire crossbow bolts', 'incendiary bolts'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'incendiary', ammoKind: 'crossbow', packSizeDefault: 10 },
             summary: '+1d4 Fire Crossbow Bolts'
         },
         {
-            match: ['pale tincture poisoned bullets', 'poisoned bullets', 'poison bullets'],
+            match: ['poisoned bullets', 'pale tincture poisoned bullets', 'poison bullets'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'poison', ammoKind: 'firearm', packSizeDefault: 10 },
             summary: '+1d6 Poison + DC 12 CON Save Bullets'
         },
         {
-            match: ['venom arrows', 'poison arrows', 'poisoned arrows', 'nightshade venom arrows'],
+            match: ['poisoned arrows', 'venom arrows', 'poison arrows', 'nightshade venom arrows'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'poison', ammoKind: 'bow', packSizeDefault: 10 },
             summary: '+1d6 Poison + DC 12 CON Save Arrows'
         },
         {
-            match: ['venom-dipped', 'venom bolts', 'poison bolts', 'poisoned bolts'],
+            match: ['poisoned bolts', 'venom-dipped', 'venom bolts', 'poison bolts'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'poison', ammoKind: 'crossbow', packSizeDefault: 10 },
@@ -397,7 +411,7 @@
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'necrotic', ammoKind: 'firearm', packSizeDefault: 10 },
-            summary: '+1d6 Necrotic (Blocks Healing Until Next Turn)'
+            summary: '+1d6 Necrotic Bullets (Blocks Healing Until Next Turn)'
         },
         {
             match: ['necrotic arrows', 'shadow-bone necrotic arrows'],
@@ -407,7 +421,7 @@
             summary: '+1d6 Necrotic Arrows (Blocks Healing)'
         },
         {
-            match: ['necrotic crossbow bolts', 'necrotic bolts', 'grave-salt necrotic bolts'],
+            match: ['necrotic bolts', 'necrotic crossbow bolts', 'grave-salt necrotic bolts'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'necrotic', ammoKind: 'crossbow', packSizeDefault: 10 },
@@ -428,70 +442,70 @@
             summary: 'Silvered Bow Arrows (Bypasses Resist)'
         },
         {
-            match: ['silvered crossbow bolts', 'silvered bolts', 'silver bolts'],
+            match: ['silvered bolts', 'silvered crossbow bolts', 'silver bolts'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'silvered', ammoKind: 'crossbow', packSizeDefault: 10 },
             summary: 'Silvered Crossbow Bolts (Bypasses Resist)'
         },
         {
-            match: ['sun-ash coated bullets'],
+            match: ['sun-ash bullets', 'sun-ash coated bullets'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'sun_ash', ammoKind: 'firearm', packSizeDefault: 1 },
-            summary: '+1d4 Radiant Coated Firearm Bullets'
+            summary: '+1d4 Radiant Coated Bullets'
         },
         {
-            match: ['sun-ash coated arrows'],
+            match: ['sun-ash arrows', 'sun-ash coated arrows'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'sun_ash', ammoKind: 'bow', packSizeDefault: 1 },
             summary: '+1d4 Radiant Coated Arrows'
         },
         {
-            match: ['sun-ash coated crossbow bolts', 'sun-ash coated bolts'],
+            match: ['sun-ash bolts', 'sun-ash coated crossbow bolts', 'sun-ash coated bolts'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'sun_ash', ammoKind: 'crossbow', packSizeDefault: 1 },
             summary: '+1d4 Radiant Coated Bolts'
         },
         {
-            match: ['oil of sharpness (+3) bullets'],
+            match: ['sharpened bullets', 'oil of sharpness (+3) bullets'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'sharpness', ammoKind: 'firearm', packSizeDefault: 1 },
-            summary: '+3 Hit / +3 Dmg Coated Firearm Bullets'
+            summary: '+3 Hit / +3 Dmg Sharpened Bullets'
         },
         {
-            match: ['oil of sharpness (+3) arrows'],
+            match: ['sharpened arrows', 'oil of sharpness (+3) arrows'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'sharpness', ammoKind: 'bow', packSizeDefault: 1 },
-            summary: '+3 Hit / +3 Dmg Coated Arrows'
+            summary: '+3 Hit / +3 Dmg Sharpened Arrows'
         },
         {
-            match: ['oil of sharpness (+3) crossbow bolts', 'oil of sharpness (+3) bolts'],
+            match: ['sharpened bolts', 'oil of sharpness (+3) crossbow bolts', 'oil of sharpness (+3) bolts'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'sharpness', ammoKind: 'crossbow', packSizeDefault: 1 },
-            summary: '+3 Hit / +3 Dmg Coated Crossbow Bolts'
+            summary: '+3 Hit / +3 Dmg Sharpened Bolts'
         },
         {
-            match: ['wyvern-venom tipped bullets'],
+            match: ['wyvern-venom bullets', 'wyvern-venom tipped bullets'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'wyvern_venom', ammoKind: 'firearm', packSizeDefault: 1 },
             summary: '+7d6 Poison (DC 15 CON) Bullets'
         },
         {
-            match: ['wyvern-venom tipped arrows'],
+            match: ['wyvern-venom arrows', 'wyvern-venom tipped arrows'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'wyvern_venom', ammoKind: 'bow', packSizeDefault: 1 },
             summary: '+7d6 Poison (DC 15 CON) Arrows'
         },
         {
-            match: ['wyvern-venom tipped crossbow bolts', 'wyvern-venom tipped bolts'],
+            match: ['wyvern-venom bolts', 'wyvern-venom tipped crossbow bolts', 'wyvern-venom tipped bolts'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'wyvern_venom', ammoKind: 'crossbow', packSizeDefault: 1 },
@@ -509,6 +523,94 @@
             slots: [],
             isBulletContainer: true,
             summary: 'Stores Multiple Specialty Bullet Types (Unlocks Firearm Load)'
+        },
+
+        // --- WEAPON ATTACHMENTS (Attach to Firearms, Bows, Crossbows, or Melee Weapons!) ---
+        {
+            match: ['van richten', 'silver-runed scope', 'clockwork barrel'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'van_richten_scope',
+                targetClasses: ['firearm', 'crossbow'],
+                atkBonus: 1,
+                dmgBonus: 1,
+                isSilvered: true,
+                mistSight: true,
+                supportsTier2: true,
+                badgeLabel: 'Scope +1 / Silvered'
+            },
+            summary: 'Attach to Firearm/Crossbow: +1 Hit/Dmg (+2 Act III), Silvered & Mist Sight'
+        },
+        {
+            match: ['silver-runed hilt', 'hilt counterweight'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'silver_runed_pommel',
+                targetClasses: ['melee'],
+                atkBonus: 0,
+                dmgBonus: 1,
+                isSilvered: true,
+                badgeLabel: 'Silvered Hilt (+1 Dmg)'
+            },
+            summary: 'Attach to Melee Weapon: Counts as Silvered & +1 Damage'
+        },
+        {
+            match: ['counterbalance edge-guard', 'honed counterbalance', 'edge-guard'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'serrated_bloodgroove_edge',
+                targetClasses: ['slashing_piercing'],
+                atkBonus: 1,
+                dmgBonus: 1,
+                isMagical: true,
+                badgeLabel: 'Honed Edge (+1/+1)'
+            },
+            summary: 'Attach to Slashing/Piercing Blade: +1 Attack & +1 Damage (Magical)'
+        },
+        {
+            match: ['sunstone pommel', 'pommel gem'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'sun_ruby_pommel_stone',
+                targetClasses: ['melee'],
+                atkBonus: 0,
+                dmgBonus: 0,
+                extraDice: '1d4',
+                extraType: 'Radiant',
+                badgeLabel: 'Sunstone (+1d4 Radiant)'
+            },
+            summary: 'Attach to Melee Weapon: +1d4 Radiant Damage & 10-ft Light'
+        },
+        {
+            match: ['clockwork draw-cam', 'draw-cam', 'hair trigger'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'quick_release_crossbow_cam',
+                targetClasses: ['bow', 'crossbow', 'firearm'],
+                atkBonus: 1,
+                dmgBonus: 1,
+                badgeLabel: 'Draw-Cam (+1/+1)'
+            },
+            summary: 'Attach to Bow/Crossbow/Firearm: +1 Attack & +1 Damage'
+        },
+        {
+            match: ['amber-inlaid focusing collar', 'focusing collar'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'amber_focus_collar',
+                targetClasses: ['caster_weapon'],
+                atkBonus: 1,
+                dmgBonus: 0,
+                spellAtkBonus: 1,
+                badgeLabel: 'Amber Collar (+1 Hit / +1 Spell Atk)'
+            },
+            summary: 'Attach to Staff/Dagger: +1 Weapon Hit & +1 Spell Attack'
         },
 
         // --- WEAPONS & SHIELDS ---
@@ -817,6 +919,99 @@
             summary: 'Simple Melee Weapon'
         },
 
+        // --- PHYSICAL CRAFTING RECIPE WRITINGS (Checked before reagents/consumables so titles never collide!) ---
+        {
+            match: ['apothecary\'s stained distillation folio', 'distillation folio'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_greater_healing', label: 'Study Recipe' },
+            summary: 'Crafting Formula: Potion of Greater Healing (GREATER-HEAL)'
+        },
+        {
+            match: ['morninglord sacristan prayer rubric', 'prayer rubric'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_holy_water', label: 'Study Recipe' },
+            summary: 'Crafting Formula: Morninglord Holy Water (MORNINGLORD)'
+        },
+        {
+            match: ['wolfbane & marsh-herb herbalist treatise', 'herbalist treatise'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_antitoxin', label: 'Study Recipe' },
+            summary: 'Crafting Formula: Barovian Antitoxin Tonic (WOLFBANE)'
+        },
+        {
+            match: ['silver-suspend foundry ledger', 'foundry ledger'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_silver_oil', label: 'Study Recipe' },
+            summary: 'Crafting Formula: Liquid Silver Vial (SILVER-COAT)'
+        },
+        {
+            match: ['charred brimstone ignition slate', 'ignition slate'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_incendiary_vial', label: 'Study Recipe' },
+            summary: 'Crafting Formula: Incendiary Oil Vial (INCENDIARY-VIAL)'
+        },
+        {
+            match: ['volatile oil & sulfur mixing chart', 'mixing chart'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_fire_flask', label: 'Study Recipe' },
+            summary: 'Crafting Formula: Alchemist\'s Fire Flask (BRIMSTONE)'
+        },
+        {
+            match: ['scout shadow-pellet scrap', 'shadow-pellet scrap'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_smoke_bomb', label: 'Study Recipe' },
+            summary: 'Crafting Formula: Ash-Cloud Smoke Bomb (ASH-CLOUD)'
+        },
+        {
+            match: ['silver-flash powder diagram', 'powder diagram'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_phosphor_bomb', label: 'Study Recipe' },
+            summary: 'Crafting Formula: Phosphor Flash-Bomb (PHOSPHOR)'
+        },
+        {
+            match: ['pitch-ward stitch pattern', 'stitch pattern'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_camp_kit', label: 'Study Recipe' },
+            summary: 'Crafting Formula: Mist-Ward Camp Kit (MIST-CAMP)'
+        },
+        {
+            match: ['carved bog-witch runestone', 'bog-witch runestone'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_witch_iron_vial', label: 'Study Recipe' },
+            summary: 'Rare Formula: Witch-Iron Oil Vial (WITCH-IRON)'
+        },
+        {
+            match: ['moonpetal infusion vellum', 'infusion vellum'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_superior_healing', label: 'Study Recipe' },
+            summary: 'Rare Formula: Potion of Superior Healing (MOONPETAL)'
+        },
+        {
+            match: ['silver dragon consecration scroll', 'consecration scroll'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_vampire_ward', label: 'Study Recipe' },
+            summary: 'Rare Formula: Sun-Ash Vial (SUN-ASH)'
+        },
+        {
+            match: ['amber temple heartstone wall-rubbing', 'heartstone wall-rubbing'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'learnRecipe', recipeId: 'craft_elixir_of_health', label: 'Study Recipe' },
+            summary: 'Legendary Formula: Elixir of Health (HEART-ELIXIR)'
+        },
+
         // --- CONSUMABLES & CRAFTING & QUEST ---
         {
             match: ['medicinal herb'],
@@ -901,13 +1096,56 @@
             summary: 'Adv vs Poison Saves (1 hr)'
         },
         {
+            match: ['witch-iron oil', 'witch-iron vial', 'bog-witch hex', 'witch power vial'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            ammoMeta: { ammoId: 'plus1', ammoKind: 'coating', isCoating: true, coatingFullMag: true, coatingRounds: 10 },
+            coatMelee: {
+                id: 'plus1',
+                label: 'Witch-Iron (+1 Hit/Dmg)',
+                atkBonus: 1,
+                dmgBonus: 1,
+                isSilvered: false,
+                isMagical: true,
+                targetClasses: ['melee'],
+                duration: '1 Hour',
+                singleHit: false
+            },
+            summary: 'Bonus Action: Coat Melee Blade (+1/+1) or Full Magazine'
+        },
+        {
+            match: ['incendiary oil vial', 'brimstone spark-oil', 'incendiary vial'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            ammoMeta: { ammoId: 'incendiary', ammoKind: 'coating', isCoating: true, coatingFullMag: true, coatingRounds: 10 },
+            coatMelee: {
+                id: 'incendiary',
+                label: 'Incendiary (+1d4 Fire)',
+                extraDice: '1d4',
+                extraType: 'Fire',
+                targetClasses: ['melee'],
+                duration: '10 Min',
+                singleHit: false
+            },
+            summary: 'Bonus Action: Coat Melee Weapon or Full Magazine (+1d4 Fire)'
+        },
+        {
             match: ['liquid silver'],
             category: 'consumable',
             slots: [],
             quickBelt: true,
-            ammoMeta: { ammoId: 'silvered', ammoKind: 'coating', isCoating: true, coatingRounds: 10 },
-            useAction: { type: 'utilityLog', verb: 'Applied (Bonus Action)', label: 'Liquid Silver (1h Blade)', effect: 'Coated 1 melee weapon in gleaming silver for 1 hour (Bonus Action) — or click Load in Backpack to coat the first 10 rounds of a loaded weapon (turning them into Silvered rounds!).' },
-            summary: 'Bonus Action: Coat Blade (1h) or Top 10 Rounds Silvered'
+            ammoMeta: { ammoId: 'silvered', ammoKind: 'coating', isCoating: true, coatingFullMag: true, coatingRounds: 10 },
+            coatMelee: {
+                id: 'silvered',
+                label: 'Liquid Silver (Silvered)',
+                isSilvered: true,
+                targetClasses: ['melee'],
+                duration: '1 Hour',
+                singleHit: false
+            },
+            summary: 'Bonus Action: Coat Melee Weapon or Full Magazine (Silvered)'
         },
         {
             match: ['sun-ash'],
@@ -915,8 +1153,16 @@
             slots: [],
             quickBelt: true,
             ammoMeta: { ammoId: 'sun_ash', ammoKind: 'coating', isCoating: true, coatingRounds: 6 },
-            useAction: { type: 'utilityLog', verb: 'Applied (Bonus Action)', label: 'Sun-Ash (+1d4 Rad Blade)', effect: 'Coated 1 melee weapon for +1d4 Radiant damage for 10 minutes (Bonus Action) — or click Load in Backpack to coat the first 6 loaded rounds!' },
-            summary: 'Bonus Action: Coat Blade or Top 6 Rounds (+1d4 Rad)'
+            coatMelee: {
+                id: 'sun_ash',
+                label: 'Sun-Ash (+1d4 Radiant)',
+                extraDice: '1d4',
+                extraType: 'Radiant',
+                targetClasses: ['melee'],
+                duration: '10 Min',
+                singleHit: false
+            },
+            summary: 'Bonus Action: Coat Melee Weapon or 6 Rounds (+1d4 Radiant)'
         },
         {
             match: ['oil of sharpness'],
@@ -924,8 +1170,17 @@
             slots: [],
             quickBelt: true,
             ammoMeta: { ammoId: 'sharpness', ammoKind: 'coating', isCoating: true, coatingRounds: 5 },
-            useAction: { type: 'utilityLog', verb: 'Applied (1 Action)', label: 'Oil of Sharpness (+3 Blade)', effect: 'Coated 1 slashing/piercing melee weapon for +3 Attack & +3 Damage for 1 hour (1 Action in combat / Free pre-combat) — or click Load to coat the first 5 loaded rounds!' },
-            summary: '1 Action: Coat Blade or Top 5 Rounds (+3 Hit / +3 Dmg)'
+            coatMelee: {
+                id: 'sharpness',
+                label: 'Oil of Sharpness (+3/+3)',
+                atkBonus: 3,
+                dmgBonus: 3,
+                isMagical: true,
+                targetClasses: ['slashing_piercing'],
+                duration: '1 Hour',
+                singleHit: false
+            },
+            summary: '1 Action: Coat Slashing/Piercing Blade or 5 Rounds (+3/+3)'
         },
         {
             match: ['wyvern venom'],
@@ -933,8 +1188,35 @@
             slots: [],
             quickBelt: true,
             ammoMeta: { ammoId: 'wyvern_venom', ammoKind: 'coating', isCoating: true, coatingRounds: 1 },
-            useAction: { type: 'utilityLog', verb: 'Applied (Bonus Action)', label: 'Wyvern Venom (7d6 Blade)', effect: 'Coated 1 melee weapon with assassin Wyvern Venom (Bonus Action; next hit DC 15 CON Save or +7d6 Poison) — or click Load in Backpack to tip front rounds (1 dose = 1 round)!' },
-            summary: 'Bonus Action: Coat Blade or 1 Front Round/Dose (7d6 Poison)'
+            coatMelee: {
+                id: 'wyvern_venom',
+                label: 'Wyvern Venom (+7d6 Poison)',
+                extraDice: '7d6',
+                extraType: 'Poison',
+                saveNote: 'DC 15 CON Save for half Poison damage',
+                targetClasses: ['slashing_piercing'],
+                duration: 'Next Hit (1 Min)',
+                singleHit: true
+            },
+            summary: 'Bonus Action: Coat Blade (+7d6 Poison) or 1 Round/Dose'
+        },
+        {
+            match: ['pale tincture'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            ammoMeta: { ammoId: 'poison', ammoKind: 'coating', isCoating: true, coatingRounds: 3 },
+            coatMelee: {
+                id: 'poison',
+                label: 'Pale Tincture (+1d6 Poison)',
+                extraDice: '1d6',
+                extraType: 'Poison',
+                saveNote: 'DC 16 CON Save or Poisoned',
+                targetClasses: ['slashing_piercing'],
+                duration: '1 Min',
+                singleHit: false
+            },
+            summary: 'Bonus Action: Coat Blade or 3 Rounds (+1d6 Poison + Save)'
         },
         {
             match: ['alchemist\'s fire'],
@@ -988,26 +1270,26 @@
         }
     ];
 
-    // Unified Extensible Crafting Recipes (Unlocked vs Hidden & Locked until discovered!)
+    // Unified Extensible Crafting Recipes (Vials, Potions, Gadgets — NEVER craft bullets directly!)
     const CRAFTING_RECIPES = [
         {
             id: 'craft_healing_potion',
             unlocked: true,
-            name: '🧪 Potion of Healing',
+            name: 'Potion of Healing',
             badge: '2d6 + 1 HP',
             desc: 'Steep 2 bundles of Barovian Medicinal Herbs into a restorative ruby draught (Bonus Action self / Action ally).',
             ingredients: [{ keyword: 'medicinal herb', label: 'Medicinal Herbs', qty: 2 }],
-            outputRaw: '🧪 1x Potion of Healing (2d6+1 HP)',
+            outputRaw: 'Potion of Healing',
             outputMatch: 'potion of healing'
         },
         {
             id: 'craft_field_bandages',
             unlocked: true,
-            name: '🩹 Field Bandages',
+            name: 'Field Healing Bandages',
             badge: '1d6 + 1 HP',
             desc: 'Infuse clean linen strips with crushed medicinal herbs to bind wounds quickly in the field.',
             ingredients: [{ keyword: 'medicinal herb', label: 'Medicinal Herb', qty: 1 }],
-            outputRaw: '🩹 1x Field Bandages (Heals 1d6+1 HP)',
+            outputRaw: 'Field Healing Bandages',
             outputMatch: 'bandage'
         },
         {
@@ -1015,14 +1297,14 @@
             unlocked: false,
             unlockCode: 'GREATER-HEAL',
             tierHint: 'Apothecary Formula',
-            name: '🧪 Potion of Greater Healing',
+            name: 'Potion of Greater Healing',
             badge: '4d4 + 4 HP',
             desc: 'Distill 4 bundles of Medicinal Herbs with 1 Alchemical Catalyst for potent mid-battle recovery.',
             ingredients: [
                 { keyword: 'medicinal herb', label: 'Medicinal Herbs', qty: 4 },
                 { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 1 }
             ],
-            outputRaw: '🧪 1x Potion of Greater Healing (4d4+4 HP)',
+            outputRaw: 'Potion of Greater Healing',
             outputMatch: 'potion of greater healing'
         },
         {
@@ -1030,14 +1312,14 @@
             unlocked: false,
             unlockCode: 'MORNINGLORD',
             tierHint: 'Sacred Rite Formula',
-            name: '💧 Flask of Morninglord Holy Water',
+            name: 'Morninglord Holy Water Flask',
             badge: '2d6 Radiant',
             desc: 'Consecrate Pure Mountain Spring Water with Powdered Silver Dust to burn Undead & halt Vampire Regeneration.',
             ingredients: [
                 { keyword: 'spring water', label: 'Pure Spring Water', qty: 1 },
                 { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 }
             ],
-            outputRaw: '💧 1x Flask of Morninglord Holy Water (2d6 Radiant)',
+            outputRaw: 'Morninglord Holy Water Flask',
             outputMatch: 'holy water'
         },
         {
@@ -1045,44 +1327,77 @@
             unlocked: false,
             unlockCode: 'WOLFBANE',
             tierHint: 'Wilderness Herbalism',
-            name: '🧪 Barovian Antitoxin Tonic',
+            name: 'Barovian Antitoxin Tonic',
             badge: 'Adv vs Poison (1 hr)',
             desc: 'Boil Medicinal Herbs with bitter Svalich Wolfbane Root for 1 hour of Advantage on saving throws against poison.',
             ingredients: [
                 { keyword: 'medicinal herb', label: 'Medicinal Herbs', qty: 2 },
                 { keyword: 'wolfbane', label: 'Svalich Wolfbane Root', qty: 1 }
             ],
-            outputRaw: '🧪 1x Barovian Antitoxin Tonic (Adv vs Poison 1 hr)',
+            outputRaw: 'Barovian Antitoxin Tonic',
             outputMatch: 'antitoxin'
         },
         {
             id: 'craft_silver_oil',
             unlocked: false,
             unlockCode: 'SILVER-COAT',
-            tierHint: 'Monster-Hunter Alchemy',
-            name: '✨ Vial of Liquid Silver Coating',
-            badge: 'Silvered Weapon (1 hr)',
-            desc: 'Suspend Powdered Silver Dust in Pine Pitch Oil; coats 1 blade or 10 bullets/slugs as Silvered for 1 hour.',
+            tierHint: 'Investment Foundry Vial',
+            name: 'Liquid Silver Vial',
+            badge: 'Full Mag / 1h Blade (Silvered)',
+            desc: 'Suspend Powdered Silver Dust in Pine Pitch Oil. Press Coat in Backpack to coat a melee weapon (1 hr) or a full weapon magazine (up to 10 rounds) as Silvered.',
             ingredients: [
                 { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 },
                 { keyword: ['pine pitch', 'pitch oil', 'lamp oil'], label: 'Pine Pitch & Lamp Oil', qty: 1 }
             ],
-            outputRaw: '✨ 1x Vial of Liquid Silver Coating (1 hr)',
+            outputRaw: 'Liquid Silver Vial',
             outputMatch: 'liquid silver'
+        },
+        {
+            id: 'craft_incendiary_vial',
+            unlocked: false,
+            unlockCode: 'INCENDIARY-VIAL',
+            legacyIds: ['craft_incendiary_bullets'],
+            unlockAliases: ['INCENDIARY-ROUNDS'],
+            tierHint: 'Investment Gunsmith Vial',
+            name: 'Incendiary Oil Vial',
+            badge: '+1d4 Fire (Full Mag / Blade)',
+            desc: 'Distill brimstone sulfur & pine pitch into an oil coating vial (cannot craft bullets directly). Press Coat to apply +1d4 Fire to a melee blade (10 min) or coat a full magazine/quiver (up to 10 rounds).',
+            ingredients: [
+                { keyword: 'sulfur', label: 'Brimstone & Pitch Sulfur', qty: 1 },
+                { keyword: ['pine pitch', 'pitch oil', 'lamp oil'], label: 'Pine Pitch & Lamp Oil', qty: 1 }
+            ],
+            outputRaw: 'Incendiary Oil Vial',
+            outputMatch: 'incendiary oil vial'
+        },
+        {
+            id: 'craft_witch_iron_vial',
+            unlocked: false,
+            unlockCode: 'WITCH-IRON',
+            tierHint: 'Rare Bog-Witch Formula (Found Only)',
+            name: 'Witch-Iron Oil Vial',
+            badge: '+1 Hit / +1 Dmg (Full Mag / Blade)',
+            desc: 'Boil Powdered Silver Dust, Alchemical Catalyst, and Wolfbane Root over witch-peat fire. Coats an entire firearm magazine/cylinder or a melee blade (+1 Hit & +1 Magical Damage; bypasses nonmagical immunity). Learned only from the Carved Bog-Witch Runestone in Berez.',
+            ingredients: [
+                { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 },
+                { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 1 },
+                { keyword: 'wolfbane', label: 'Svalich Wolfbane Root', qty: 1 }
+            ],
+            outputRaw: 'Witch-Iron Oil Vial',
+            outputMatch: 'witch-iron oil vial'
         },
         {
             id: 'craft_fire_flask',
             unlocked: false,
             unlockCode: 'BRIMSTONE',
             tierHint: 'Volatile Concoction',
-            name: '🔥 Alchemist\'s Fire Flask',
+            name: 'Alchemist\'s Fire Flask',
             badge: '1d4 Fire / Turn',
-            desc: 'Volatile flask of Brimstone Sulfur suspended in Pine Pitch Oil; ignites on impact (DC 10 DEX to extinguish).',
+            desc: 'Volatile flask of Brimstone Sulfur suspended in Pine Pitch Oil; ignites on impact (DC 10 DEX Check to extinguish).',
             ingredients: [
                 { keyword: 'sulfur', label: 'Brimstone & Pitch Sulfur', qty: 1 },
                 { keyword: ['pine pitch', 'pitch oil', 'lamp oil'], label: 'Pine Pitch & Lamp Oil', qty: 1 }
             ],
-            outputRaw: '🔥 1x Alchemist\'s Fire Flask (1d4/turn Fire)',
+            outputRaw: 'Alchemist\'s Fire Flask',
             outputMatch: 'alchemist\'s fire'
         },
         {
@@ -1090,14 +1405,14 @@
             unlocked: false,
             unlockCode: 'ASH-CLOUD',
             tierHint: 'Tactical Gadget',
-            name: '💨 Ash-Cloud Smoke Bomb',
+            name: 'Ash-Cloud Smoke Bomb',
             badge: '15-ft Obscured',
-            desc: 'Compact sulfur-charcoal sphere that bursts into a 15-ft radius cloud of choking fog for 1 minute.',
+            desc: 'Compact sulfur-herb sphere that bursts into a 15-ft radius cloud of choking fog for 1 minute.',
             ingredients: [
                 { keyword: 'sulfur', label: 'Brimstone & Pitch Sulfur', qty: 1 },
                 { keyword: 'medicinal herb', label: 'Dried Herbs / Tinder', qty: 1 }
             ],
-            outputRaw: '💨 1x Ash-Cloud Smoke Bomb (15-ft Heavily Obscured)',
+            outputRaw: 'Ash-Cloud Smoke Bomb',
             outputMatch: 'smoke bomb'
         },
         {
@@ -1105,40 +1420,40 @@
             unlocked: false,
             unlockCode: 'PHOSPHOR',
             tierHint: 'Monster-Hunter Gadget',
-            name: '💣 Alchemical Phosphor & Smoke Flash-Bomb',
+            name: 'Alchemical Phosphor Flash-Bomb',
             badge: '2d6 Fire/Rad + Blind',
-            desc: 'Alchemical flash sphere packed with sulfur, silver filings, and alembic salt (30 ft, 10-ft radius, DC 13 DEX/CON or 2d6 Fire/Radiant + Blind 1 turn).',
+            desc: 'Alchemical flash sphere packed with sulfur, silver filings, and alembic salt (30 ft, 10-ft radius, DC 13 DEX/CON Save or 2d6 Fire/Radiant + Blind 1 turn).',
             ingredients: [
                 { keyword: 'sulfur', label: 'Brimstone & Pitch Sulfur', qty: 1 },
                 { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 },
                 { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 1 }
             ],
-            outputRaw: '💣 1x Alchemical Phosphor & Smoke Flash-Bomb',
+            outputRaw: 'Alchemical Phosphor Flash-Bomb',
             outputMatch: 'phosphor'
         },
         {
             id: 'craft_camp_kit',
             unlocked: false,
             unlockCode: 'MIST-CAMP',
-            tierHint: 'Challenging Field Craft (DC 14 Survival)',
-            name: '⛺ Mist-Ward Traveler\'s Camp Kit',
+            tierHint: 'Field Survival Craft (DC 14 Survival)',
+            name: 'Mist-Ward Traveler\'s Camp Kit',
             badge: 'Wilderness True Long Rest',
-            desc: 'Challenging heavy survival build (DC 14 Survival at table): pitch-sealed dire-pelt canvas tent & silver-salt perimeter ward enabling a True Long Rest in the wilderness.',
+            desc: 'Heavy survival shelter build (DC 14 Survival at table): pitch-sealed dire-pelt canvas tent & silver-salt perimeter ward enabling a True Long Rest outdoors.',
             ingredients: [
                 { keyword: ['dire-pelt', 'treated pelt', 'waxed canvas'], label: 'Treated Dire-Pelt & Waxed Canvas', qty: 2 },
                 { keyword: ['pine pitch', 'pitch oil', 'lamp oil'], label: 'Pine Pitch & Lamp Oil', qty: 2 },
                 { keyword: 'wolfbane', label: 'Svalich Wolfbane Root', qty: 1 },
                 { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 }
             ],
-            outputRaw: '⛺ Mist-Ward Traveler\'s Camp Kit (Wilderness True Long Rest)',
+            outputRaw: 'Mist-Ward Traveler\'s Camp Kit',
             outputMatch: 'mist-ward'
         },
         {
             id: 'craft_superior_healing',
             unlocked: false,
             unlockCode: 'MOONPETAL',
-            tierHint: 'Master Alchemy',
-            name: '🧪 Potion of Superior Healing',
+            tierHint: 'Rare Alchemy (Found Only)',
+            name: 'Potion of Superior Healing',
             badge: '8d4 + 8 HP',
             desc: 'Rare master-grade Barovian elixir brewed with Svalich Moonpetal and double Alchemical Catalyst.',
             ingredients: [
@@ -1146,55 +1461,40 @@
                 { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 2 },
                 { keyword: 'moonpetal', label: 'Svalich Moonpetal Blossom', qty: 1 }
             ],
-            outputRaw: '🧪 1x Potion of Superior Healing (8d4+8 HP)',
+            outputRaw: 'Potion of Superior Healing',
             outputMatch: 'potion of superior healing'
-        },
-        {
-            id: 'craft_incendiary_bullets',
-            unlocked: false,
-            unlockCode: 'INCENDIARY-ROUNDS',
-            tierHint: 'Gunsmith & Fletcher Munitions',
-            name: 'Brimstone Incendiary Bullets (x10)',
-            badge: 'x10 • +1d4 Fire',
-            desc: 'Swage brimstone sulfur & pitch oil into hollow-point rounds (+1d4 Fire damage on hit; disrupts Troll/Plant regeneration). Learned from Blinsky, Rictavio, or Ezmerelda.',
-            ingredients: [
-                { keyword: 'sulfur', label: 'Brimstone & Pitch Sulfur', qty: 1 },
-                { keyword: ['pine pitch', 'pitch oil', 'lamp oil'], label: 'Pine Pitch & Lamp Oil', qty: 1 }
-            ],
-            outputRaw: '10x Brimstone Incendiary Bullets (+1d4 Fire)',
-            outputMatch: 'incendiary bullets'
         },
         {
             id: 'craft_vampire_ward',
             unlocked: false,
             unlockCode: 'SUN-ASH',
-            tierHint: 'Sacred Relic Alchemy',
-            name: '☀️ Sun-Ash Repellent Balm',
-            badge: '+1d4 Radiant Coat (10m)',
-            desc: 'Luminous consecrated unguent of Moonpetal, Silver Dust, and Spring Water; coats 1 weapon or 6 rounds for +1d4 Radiant.',
+            tierHint: 'Rare Sacred Vial (Found Only)',
+            name: 'Sun-Ash Vial',
+            badge: '+1d4 Radiant (6 Rounds / Blade)',
+            desc: 'Luminous consecrated unguent of Moonpetal, Silver Dust, and Spring Water; press Coat to apply +1d4 Radiant to 1 melee weapon (10 min) or 6 rounds.',
             ingredients: [
                 { keyword: 'moonpetal', label: 'Svalich Moonpetal Blossom', qty: 1 },
                 { keyword: 'silver dust', label: 'Powdered Silver Dust', qty: 1 },
                 { keyword: 'spring water', label: 'Pure Spring Water', qty: 1 }
             ],
-            outputRaw: '☀️ 1x Sun-Ash Repellent Balm (+1d4 Radiant Coat 10m)',
+            outputRaw: 'Sun-Ash Vial',
             outputMatch: 'sun-ash'
         },
         {
             id: 'craft_elixir_of_health',
             unlocked: false,
             unlockCode: 'HEART-ELIXIR',
-            tierHint: 'Legendary Revival (Amber Temple Secret)',
-            name: 'Elixir of Health (Legendary Revival)',
+            tierHint: 'Legendary Revival (Found Only)',
+            name: 'Elixir of Health',
             badge: '50% HP Revive • Heartstone Ritual',
-            desc: 'Distill EITHER Strahd\'s Shard of the Heart of Sorrow (K20) OR Morgantha\'s Night Hag Heartstone into a legendary draught that revives within 1 minute of death (50% Max HP, severed limbs knit, -2 penalty until Long Rest). Consumes the sacrificed Heartstone permanently; formula carved behind Amber Temple walls (X30) or whispered by Exethanter / The Abbot.',
+            desc: 'Distill EITHER Strahd\'s Shard of the Heart of Sorrow (K20) OR Morgantha\'s Night Hag Heartstone into a legendary draught that revives within 1 minute of death (50% Max HP, severed limbs knit, -2 penalty until Long Rest). Sacrifices the Heartstone permanently.',
             ingredients: [
                 { keyword: ['shard of the heart of sorrow', 'sorrow-crystal core', 'sorrow shard', 'heart of sorrow', 'hag heartstone', 'night hag heartstone'], label: 'Heart of Sorrow Shard OR Night Hag Heartstone', qty: 1 },
                 { keyword: 'alchemical catalyst', label: 'Alchemical Catalyst', qty: 2 },
                 { keyword: 'moonpetal', label: 'Svalich Moonpetal Blossom', qty: 1 },
                 { keyword: 'spring water', label: 'Pure Spring Water', qty: 1 }
             ],
-            outputRaw: '1x Elixir of Health (Legendary Revival)',
+            outputRaw: 'Elixir of Health',
             outputMatch: 'elixir of health'
         }
     ];
@@ -1203,15 +1503,15 @@
     const SHARED_ITEM_LORE = [
         {
             match: ['mist-ward', 'camp kit', 'traveler\'s camp'],
-            name: "⛺ Mist-Ward Traveler's Camp Kit (Wilderness True Long Rest)",
+            name: "Mist-Ward Traveler's Camp Kit",
             category: "PERMANENT SURVIVAL GEAR • Wilderness Long Rest Shelter",
-            origin: "Selected Barovian Outfitters (25–50 GP) or Challenging Craft (MIST-CAMP)",
+            origin: "Selected Barovian Outfitters (25–50 GP) or Craftable (MIST-CAMP)",
             desc: "A rugged expedition shelter woven from pitch-sealed Dire Wolf hides, heavy waxed canvas, cedar perimeter stakes, a smokeless trench brazier, and silver-salt wolfbane cord.",
             effect: "• <strong>True Wilderness Long Rest (10 Min Setup • 4–6 Travelers):</strong> Allows the party to complete a <strong>full uninterrupted True Long Rest</strong> outdoors in the Svalich Woods or on the road (restoring 100% HP, Spell Slots, Sorcery Points, Superiority Dice, Help Tokens, &amp; clearing 1 Exhaustion level).<br>• <strong>Perimeter Ward &amp; Storm Cover:</strong> Grants <strong>+5 Group Stealth / Passive Perception</strong> against road patrols, chimes softly if beasts/undead cross within 30 ft, and grants <strong>Advantage on CON Saves</strong> vs freezing mountain weather.<br>• <em>Reusable permanent gear (must pitch on dry ground outside active dungeon rooms).</em>"
         },
         {
             match: ['silvered greatsword'],
-            name: "⚔️ Silvered Greatsword",
+            name: "Silvered Greatsword",
             category: "UNCOMMON SILVERED MARTIAL WEAPON • Heavy • Two-Handed",
             origin: "Vistani Silver Forge (Tser Pool G — 150 GP / +100 GP Plating) / Barovian Vaults",
             desc: "A massive two-handed steel greatsword whose beveled edges have been alchemically bonded with pure Barovian silver.",
@@ -1219,7 +1519,7 @@
         },
         {
             match: ['silvered rapier'],
-            name: "⚔️ Silvered Rapier",
+            name: "Silvered Rapier",
             category: "UNCOMMON SILVERED MARTIAL WEAPON • Finesse • Vex",
             origin: "Amber Temple Treasury (X40), Vistani Forge (125 GP) or Ezmerelda (+1 Variant)",
             desc: "A balanced duelist's thrusting blade laminated in bright mirror-silver down the fuller.",
@@ -1227,7 +1527,7 @@
         },
         {
             match: ['silvered shortsword'],
-            name: "⚔️ Silvered Shortsword",
+            name: "Silvered Shortsword",
             category: "UNCOMMON SILVERED MARTIAL WEAPON • Finesse • Light • Vex",
             origin: "Ismark's Cellar Armory (E4), Rictavio's Wagon (N5) or Vistani Forge (110 GP)",
             desc: "A quick, close-quarters silver-plated short blade ideal for off-hand pairing or agile strikes.",
@@ -1235,7 +1535,7 @@
         },
         {
             match: ['silvered handaxe'],
-            name: "🪓 Silvered Handaxe",
+            name: "Silvered Handaxe",
             category: "UNCOMMON SILVERED MARTIAL WEAPON • Light • Thrown • Vex",
             origin: "Tser Pool Vistani Forge (G — 105 GP) or Arasek Stockyard (N5)",
             desc: "A keen, silver-edged boarding hatchet balanced cleanly for dual-wielding or hurled strikes at fleeing wolves.",
@@ -1243,7 +1543,7 @@
         },
         {
             match: ['silvered mace'],
-            name: "🔨 Silvered Mace of the Morninglord",
+            name: "Silvered Mace of the Morninglord",
             category: "UNCOMMON SILVERED SIMPLE WEAPON • Sap Mastery",
             origin: "Barovia Church (E5) or Vistani Silver Forge (105 GP)",
             desc: "A flanged war-mace crowned with sun-stamped silver flanges for crushing undead ribs.",
@@ -1251,7 +1551,7 @@
         },
         {
             match: ['silver-capped quarterstaff', 'silvered quarterstaff'],
-            name: "🪄 Silver-Capped Quarterstaff",
+            name: "Silver-Capped Quarterstaff",
             category: "UNCOMMON SILVERED SIMPLE WEAPON • Versatile • Topple",
             origin: "Vistani Forge (102 GP) or Barovian Scholar Stash",
             desc: "An ironwood mage's staff bound at both ferrules with heavy bands of stamped silver.",
@@ -1259,147 +1559,227 @@
         },
         {
             match: ['silvered firearm', 'silvered bullets'],
-            name: "💥 Silvered Firearm & Sling Bullets (x10)",
-            category: "UNCOMMON SILVERED AMMUNITION • Vistani Forge (5 GP) / Ismark (E4)",
-            origin: "Ismark's Cellar Armory (E4), Tser Pool Vistani (5 GP) & Arasek Stockyard (N5)",
-            desc: "Ten heavy spherical rounds cast from melted silver Barovian coins.",
-            effect: "• <strong>Ammunition (10 Rounds):</strong> Shots fired bypass Werewolf immunity and Vampire Spawn/Night Hag nonmagical resistance!"
+            name: "Silvered Bullets",
+            category: "UNCOMMON SILVERED AMMUNITION • Vistani Forge / Ismark (E4)",
+            origin: "Ismark's Cellar Armory (E4), Tser Pool Vistani (G) & Arasek Stockyard (N5)",
+            desc: "Heavy spherical rounds cast from melted silver Barovian coins.",
+            effect: "• <strong>Load Into Firearm / Sling (Bonus Action in Combat):</strong> Shots fired bypass Werewolf immunity and Vampire Spawn/Night Hag nonmagical resistance."
         },
         {
             match: ['silvered arrows'],
-            name: "🏹 Silvered Arrows (x10)",
+            name: "Silvered Arrows",
             category: "UNCOMMON SILVERED AMMUNITION • Vistani Forge (G) / Dusk Elves (N9a)",
             origin: "Tser Pool Vistani Caravan (G) & Vallaki Dusk Elf Camp (N9a)",
-            desc: "Ten goose-fletched hunting arrows fitted with razor-edged broadheads of beaten silver.",
-            effect: "• <strong>Ammunition (10 Arrows):</strong> Hits with bows bypass Werewolf, Vampire Spawn &amp; Hag nonmagical damage resistance."
+            desc: "Goose-fletched hunting arrows fitted with razor-edged broadheads of beaten silver.",
+            effect: "• <strong>Load Into Bow Quiver (Bonus Action):</strong> Hits bypass Werewolf, Vampire Spawn &amp; Hag nonmagical damage resistance."
+        },
+        {
+            match: ['silvered bolts', 'silvered crossbow bolts', 'rictavio\'s silvered'],
+            name: "Silvered Bolts",
+            category: "UNCOMMON SILVERED AMMUNITION • Vistani Forge (G) / Rictavio (N5)",
+            origin: "Tser Pool Vistani Forge (G), Arasek Stockyard (N5) & Rictavio's Wagon (N5)",
+            desc: "Crisp-fletched crossbow bolts plated cleanly in hammered sterling silver.",
+            effect: "• <strong>Load Into Crossbow (Bonus Action):</strong> Shots bypass Werewolf, Vampire Spawn &amp; Night Hag nonmagical damage resistances."
         },
         {
             match: ['hand crossbow'],
-            name: "🏹 Rictavio's Jeweled Hand Crossbow (250 GP)",
+            name: "Rictavio's Jeweled Hand Crossbow",
             category: "UNIQUE RANGED WEAPON • 1-Handed • Light • Vex",
             origin: "Rictavio's Carnival Wagon Secret Box (Vallaki Area N5)",
             desc: "A compact, silver-inlaid repeating wrist crossbow worth 250 GP to Barovian collectors.",
-            effect: "• <strong>Damage:</strong> <code>1d6 + DEX</code> Piercing (<code>30/120 ft</code>, <strong>1-Handed Light</strong> — can be fired off-hand alongside a 1H sword or gun!).<br>• <strong>5.5e Vex Mastery:</strong> Hitting gives Advantage on your next attack!"
+            effect: "• <strong>Damage:</strong> <code>1d6 + DEX</code> Piercing (<code>30/120 ft</code>, <strong>1-Handed Light</strong> — can be fired off-hand alongside a 1H sword or gun).<br>• <strong>5.5e Vex Mastery:</strong> Hitting gives Advantage on your next attack."
         },
         {
-            match: ['ezmerelda', 'sunburst cartridges', 'sunburst bullets', 'dawn-powder'],
-            name: "Ezmerelda's Sunburst & Silver Cartridges (x10)",
+            match: ['sunburst rounds', 'ezmerelda', 'sunburst cartridges', 'sunburst bullets', 'dawn-powder'],
+            name: "Sunburst Rounds",
             category: "RARE RADIANT AMMUNITION • Firearms",
             origin: "Ezmerelda's Wagon (V1) or Abbey Barracks (S19)",
             desc: "Brass paper cartridges packed with silver filings and consecrated sunburst quartz.",
-            effect: "• <strong>Load Into Specific Firearm:</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong>, deals an extra <strong>+1d6 Radiant</strong> on hit, counts as <strong>Silvered</strong>, and <strong>halts Vampire Regeneration for 1 round</strong>."
+            effect: "• <strong>Load Into Specific Firearm (Bonus Action in Combat / Free Pre-Combat):</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong>, deals an extra <strong>+1d6 Radiant</strong> on hit, counts as <strong>Silvered</strong>, and <strong>halts Vampire Regeneration for 1 round</strong>."
         },
         {
             match: ['sunburst arrows', 'morninglord sunburst arrows'],
-            name: "Morninglord Sunburst Arrows (x10)",
+            name: "Sunburst Arrows",
             category: "RARE RADIANT AMMUNITION • Bows",
             origin: "Shrine of the White Sun (S4) / Ezmerelda (V1)",
             desc: "Ashwood arrows tipped with sun-forged bronze and silvered broadheads.",
-            effect: "• <strong>Load Into Bow Quiver:</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong>, deals an extra <strong>+1d6 Radiant</strong> on hit, counts as <strong>Silvered</strong>, and <strong>halts Vampire Regeneration for 1 round</strong>."
+            effect: "• <strong>Load Into Bow Quiver (Bonus Action):</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong>, deals an extra <strong>+1d6 Radiant</strong> on hit, counts as <strong>Silvered</strong>, and <strong>halts Vampire Regeneration for 1 round</strong>."
         },
         {
-            match: ['sunburst crossbow bolts', 'sunburst bolts', 'morninglord sunburst bolts'],
-            name: "Morninglord Sunburst Crossbow Bolts (x10)",
+            match: ['sunburst bolts', 'sunburst crossbow bolts', 'morninglord sunburst bolts'],
+            name: "Sunburst Bolts",
             category: "RARE RADIANT AMMUNITION • Crossbows",
             origin: "St. Andral Sanctuary (N1) / Van Richten Stockpile (N5)",
             desc: "Heavy oak bolts winged in white swan vanes and blessed sunburst iron.",
-            effect: "• <strong>Load Into Crossbow Quiver:</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong>, deals an extra <strong>+1d6 Radiant</strong> on hit, counts as <strong>Silvered</strong>, and <strong>halts Vampire Regeneration for 1 round</strong>."
+            effect: "• <strong>Load Into Crossbow (Bonus Action):</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong>, deals an extra <strong>+1d6 Radiant</strong> on hit, counts as <strong>Silvered</strong>, and <strong>halts Vampire Regeneration for 1 round</strong>."
         },
         {
-            match: ['baba lysaga', '+1 magical sling', '+1 firearm bullets', '+1 bullets'],
-            name: "Baba Lysaga's +1 Magical Bullets (x10)",
-            category: "UNCOMMON MAGICAL AMMUNITION • Firearms / Slings",
-            origin: "Baba Lysaga's Creeping Hut Iron Trunk (Berez U3)",
-            desc: "Lead-and-silver slugs etched with microscopic Mother Night runes.",
-            effect: "• <strong>Load Into Firearm:</strong> Grants a <strong>+1 bonus to Attack and Damage rolls</strong> and overcomes nonmagical resistances."
+            match: ['witch-iron oil', 'witch-iron vial', 'bog-witch'],
+            name: "Witch-Iron Oil Vial",
+            category: "RARE ENHANCEMENT VIAL • Full Magazine / Blade • Craftable (WITCH-IRON)",
+            origin: "Found rarely in Berez Swamp Ruins / Iron Trunk (U3) or crafted once Carved Bog-Witch Runestone (WITCH-IRON) is learned",
+            desc: "Viscous swamp-alchemical oil etched with cold hedge-magic shimmer that binds instantly to lead, steel, or brass.",
+            effect: "• <strong>Coat Weapon or Full Magazine (Bonus Action / Free Pre-Combat):</strong> Press <strong>Coat</strong> in Backpack to coat either a <strong>full loaded firearm/crossbow/bow magazine</strong> (turning every round inside into +1 Hex-Iron rounds!) OR <strong>1 melee weapon</strong> for 1 hour (<strong>+1 Attack &amp; +1 Magical Damage</strong>, bypassing nonmagical resistance)."
         },
         {
-            match: ['incendiary bullets', 'brimstone bullets', 'fire bullets'],
-            name: "Brimstone Incendiary Bullets (x10)",
-            category: "ALCHEMICAL FIRE AMMUNITION • Craftable (INCENDIARY-ROUNDS)",
-            origin: "Arasek Stockyard (N5), Blinsky/Petru Forge, or Craftable (1x Sulfur + 1x Pitch Oil)",
-            desc: "Hollow-point firearm slugs sealed with yellow brimstone paste that sparks on muzzle flash.",
-            effect: "• <strong>Load Into Individual Firearm:</strong> Adds <strong>+1d4 Fire damage</strong> on hit, ignites flammable objects, and disrupts regeneration stopped by flame."
+            match: ['hex-iron bullets', 'witch-iron bullets', 'baba lysaga', '+1 magical sling', '+1 firearm bullets', '+1 bullets'],
+            name: "Hex-Iron Bullets",
+            category: "ENCHANTED AMMUNITION • +1 Hit / +1 Magical Damage",
+            origin: "Coated with a Witch-Iron Oil Vial (or returned on Reload/Unload)",
+            desc: "Lead-and-silver rounds shimmering with dark hedge-enchanted witch-iron.",
+            effect: "• <strong>Load Into Firearm (Bonus Action):</strong> Grants a <strong>+1 bonus to Attack and Damage rolls</strong> and overcomes nonmagical resistances."
+        },
+        {
+            match: ['incendiary oil vial', 'brimstone spark-oil', 'incendiary vial'],
+            name: "Incendiary Oil Vial",
+            category: "ALCHEMICAL COATING VIAL • Full Magazine / Blade • Craftable (INCENDIARY-VIAL)",
+            origin: "Crafted (1x Brimstone Sulfur + 1x Pine Pitch & Lamp Oil) or bought at Arasek Stockyard / Petru Forge",
+            desc: "Amber bottle of stabilized liquid brimstone formulated to glaze bullets or steel blades without fouling barrels.",
+            effect: "• <strong>Coat Weapon or Magazine (Bonus Action / Free Pre-Combat):</strong> Press <strong>Coat</strong> in Backpack to coat up to <strong>10 loaded rounds</strong> (turning them into Incendiary Rounds/Arrows/Bolts) OR coat <strong>1 melee weapon</strong> for 10 minutes (<strong>+1d4 Fire damage</strong> on hit!)."
+        },
+        {
+            match: ['incendiary rounds', 'incendiary bullets', 'brimstone bullets', 'fire bullets'],
+            name: "Incendiary Rounds",
+            category: "ALCHEMICAL FIRE AMMUNITION • Bought or Coated via Vial",
+            origin: "Arasek Stockyard (N5), Petru Forge (G), or Coated with Incendiary Oil Vial",
+            desc: "Hollow-point firearm slugs sealed with yellow brimstone paste that sparks on impact.",
+            effect: "• <strong>Load Into Individual Firearm (Bonus Action):</strong> Adds <strong>+1d4 Fire damage</strong> on hit, ignites flammable objects, and disrupts regeneration stopped by flame."
         },
         {
             match: ['fire arrows', 'pitch-tipped fire arrows', 'incendiary arrows'],
-            name: "Pitch-Tipped Fire Arrows (x10)",
+            name: "Fire Arrows",
             category: "ALCHEMICAL FIRE AMMUNITION • Bows",
-            origin: "Arasek Stockyard (N5) / Tser Pool Caravan Forge (G)",
+            origin: "Arasek Stockyard (N5), Tser Pool Caravan (G), or Coated via Incendiary Oil Vial",
             desc: "Barbed broadheads wrapped in oil-soaked pitchcloth.",
-            effect: "• <strong>Load Into Bow Quiver:</strong> Adds <strong>+1d4 Fire damage</strong> on hit and ignites flammable webs, thatch, or blight tendrils."
+            effect: "• <strong>Load Into Bow Quiver (Bonus Action):</strong> Adds <strong>+1d4 Fire damage</strong> on hit and ignites flammable webs, thatch, or blight tendrils."
         },
         {
-            match: ['fire crossbow bolts', 'brimstone fire crossbow bolts', 'fire bolts', 'incendiary bolts'],
-            name: "Brimstone Fire Crossbow Bolts (x10)",
+            match: ['fire bolts', 'fire crossbow bolts', 'brimstone fire crossbow bolts', 'incendiary bolts'],
+            name: "Fire Bolts",
             category: "ALCHEMICAL FIRE AMMUNITION • Crossbows",
-            origin: "Arasek Stockyard (N5) / Vallaki Guard Armory",
+            origin: "Arasek Stockyard (N5), Vallaki Armory, or Coated via Incendiary Oil Vial",
             desc: "Short steel quarrels collared with striker flint and pine-pitch rings.",
-            effect: "• <strong>Load Into Crossbow Quiver:</strong> Adds <strong>+1d4 Fire damage</strong> on hit."
+            effect: "• <strong>Load Into Crossbow (Bonus Action):</strong> Adds <strong>+1d4 Fire damage</strong> on hit."
         },
         {
-            match: ['pale tincture poisoned bullets', 'poisoned bullets', 'poison bullets'],
-            name: "Pale Tincture Poisoned Bullets (x10)",
+            match: ['poisoned bullets', 'pale tincture poisoned bullets', 'poison bullets'],
+            name: "Poisoned Bullets",
             category: "TOXIC AMMUNITION • Firearms",
             origin: "Old Bonegrinder (O3), Wachterhaus Cellar, or Arrigal (N9)",
-            desc: "Wax-capped bullets housing a slow-acting alchemical toxin inside a hollow tip.",
-            effect: "• <strong>Load Into Firearm:</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit; struck creatures must pass a <strong>DC 12 CON Save or become Poisoned</strong> until the end of their next turn."
+            desc: "Wax-capped bullets housing a bitter toxic serum inside a hollow tip.",
+            effect: "• <strong>Load Into Firearm (Bonus Action):</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit; struck creatures must pass a <strong>DC 12 CON Save or become Poisoned</strong> until the end of their next turn."
         },
         {
-            match: ['venom arrows', 'poison arrows', 'poisoned arrows', 'nightshade venom arrows'],
-            name: "Nightshade Venom Arrows (x10)",
+            match: ['poisoned arrows', 'venom arrows', 'poison arrows', 'nightshade venom arrows'],
+            name: "Poisoned Arrows",
             category: "TOXIC AMMUNITION • Bows",
             origin: "Svalich Woods Scouts / Old Bonegrinder (O3) / Vistani Camp (N9)",
             desc: "Dark green-fletched arrows grooved along the tip to hold belladonna serum.",
-            effect: "• <strong>Load Into Bow Quiver:</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit; target must pass a <strong>DC 12 CON Save or become Poisoned</strong> until the end of its next turn."
+            effect: "• <strong>Load Into Bow Quiver (Bonus Action):</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit; target must pass a <strong>DC 12 CON Save or become Poisoned</strong> until the end of its next turn."
         },
         {
-            match: ['venom-dipped', 'venom bolts', 'poison bolts', 'poisoned bolts'],
-            name: "Arrigal's Venom-Dipped Crossbow Bolts (x10)",
+            match: ['poisoned bolts', 'venom-dipped', 'venom bolts', 'poison bolts'],
+            name: "Poisoned Bolts",
             category: "TOXIC AMMUNITION • Crossbows",
             origin: "Vallaki Vistani Camp (Arrigal — Area N9)",
             desc: "Blackened iron bolts steeped in serpentine gall by Vistani assassins.",
-            effect: "• <strong>Load Into Crossbow Quiver:</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit; target must pass a <strong>DC 12 CON Save or become Poisoned</strong> until the end of its next turn."
+            effect: "• <strong>Load Into Crossbow (Bonus Action):</strong> Deals an extra <strong>+1d6 Poison damage</strong> on hit; target must pass a <strong>DC 12 CON Save or become Poisoned</strong> until the end of its next turn."
         },
         {
             match: ['necrotic bullets', 'grave-salt necrotic bullets'],
-            name: "Grave-Salt Necrotic Bullets (x10)",
+            name: "Necrotic Bullets",
             category: "SHADOW AMMUNITION • Firearms",
             origin: "Ruins of Berez (U3) / Amber Temple Vaults (X40)",
             desc: "Charcoal-gray rounds packed with chilled grave salt and ground crypt bone.",
-            effect: "• <strong>Load Into Firearm:</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and the target <strong>cannot regain Hit Points</strong> until the start of your next turn."
+            effect: "• <strong>Load Into Firearm (Bonus Action):</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and the target <strong>cannot regain Hit Points</strong> until the start of your next turn."
         },
         {
             match: ['necrotic arrows', 'shadow-bone necrotic arrows'],
-            name: "Shadow-Bone Necrotic Arrows (x10)",
+            name: "Necrotic Arrows",
             category: "SHADOW AMMUNITION • Bows",
             origin: "Dusk Elf Sanctuary / Amber Temple Vaults (X40)",
             desc: "Blackened bone-tipped arrows humming with icy Shadowfell stillness.",
-            effect: "• <strong>Load Into Bow Quiver:</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and the target <strong>cannot regain Hit Points</strong> until the start of your next turn."
+            effect: "• <strong>Load Into Bow Quiver (Bonus Action):</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and the target <strong>cannot regain Hit Points</strong> until the start of your next turn."
         },
         {
-            match: ['necrotic crossbow bolts', 'necrotic bolts', 'grave-salt necrotic bolts'],
-            name: "Grave-Salt Necrotic Crossbow Bolts (x10)",
+            match: ['necrotic bolts', 'necrotic crossbow bolts', 'grave-salt necrotic bolts'],
+            name: "Necrotic Bolts",
             category: "SHADOW AMMUNITION • Crossbows",
             origin: "Amber Temple Treasury (X40) / Ravenloft Crypts",
             desc: "Cold iron quarrels dusted in grave-salt and preserved lich-ash.",
-            effect: "• <strong>Load Into Crossbow Quiver:</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and the target <strong>cannot regain Hit Points</strong> until the start of your next turn."
+            effect: "• <strong>Load Into Crossbow (Bonus Action):</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and the target <strong>cannot regain Hit Points</strong> until the start of your next turn."
+        },
+        {
+            match: ['van richten', 'silver-runed scope', 'clockwork barrel'],
+            name: "Van Richten's Silver-Runed Scope & Clockwork Barrel",
+            category: "RARE WEAPON ATTACHMENT • Firearms & Crossbows",
+            origin: "Rictavio's Wagon (Vallaki N5) or Ezmerelda's Wagon (V1)",
+            desc: "Precision crystal optics paired with a silver-lined rifled barrel sleeve crafted by master monster hunters.",
+            effect: "• <strong>Attach to Firearm / Crossbow (Backpack):</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong> (upgradable to <strong>+2</strong> in Act III), renders standard shots <strong>Silvered</strong>, ignores lightly obscured mist up to 120 ft, and highlights invisible/ethereal foes within 30 ft."
+        },
+        {
+            match: ['silver-runed hilt', 'hilt counterweight'],
+            name: "Silver-Runed Hilt Counterweight",
+            category: "UNCOMMON WEAPON ATTACHMENT • Melee Weapons",
+            origin: "Tser Pool Vistani Forge (G), Ismark's Armory (E4), or Bildrath's (120 GP)",
+            desc: "Stamped sterling-silver pommel collar and crossguard filigree balanced cleanly for swords, axes, maces, and spears.",
+            effect: "• <strong>Attach to Melee Weapon (Backpack):</strong> Makes the weapon count as <strong>Silvered</strong> (bypassing Werewolf, Vampire Spawn &amp; Hag nonmagical resistances) and grants <strong>+1 Damage</strong>."
+        },
+        {
+            match: ['counterbalance edge-guard', 'honed counterbalance', 'edge-guard'],
+            name: "Honed Counterbalance Edge-Guard",
+            category: "RARE WEAPON ATTACHMENT • Slashing / Piercing Melee",
+            origin: "Vallaki Smithy or Arasek Stockyard Secret Stock (N5 — 450 GP)",
+            desc: "Micro-serrated tungsten spine guard and weight-tuned tang clamp engineered for clean follow-through.",
+            effect: "• <strong>Attach to Sword, Axe, Dagger, or Spear (Backpack):</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong> (counts as magical against nonmagical resistances)."
+        },
+        {
+            match: ['sunstone pommel', 'pommel gem'],
+            name: "Morninglord Sunstone Pommel Gem",
+            category: "RARE SACRED ATTACHMENT • Melee Weapons",
+            origin: "Abbey of Saint Markovia (Krezk S13) or Argynvostholt (Q)",
+            desc: "A warm, facets-cut sunburst ruby set inside a brass pommel socket blessed at Saint Markovia's altar.",
+            effect: "• <strong>Attach to Melee Weapon (Backpack):</strong> Deals an extra <strong>+1d4 Radiant damage</strong> on hits and sheds 10-ft dim golden light on command."
+        },
+        {
+            match: ['clockwork draw-cam', 'draw-cam', 'hair trigger'],
+            name: "Clockwork Draw-Cam & Hair Trigger",
+            category: "UNCOMMON WEAPON ATTACHMENT • Bows, Crossbows & Firearms",
+            origin: "Blinsky's Workshop (N7) or Arasek Stockyard (N5 — 200 GP)",
+            desc: "Taut torsion cam & hair-spring sear assembly fitted to bows, crossbows, or firearm triggers.",
+            effect: "• <strong>Attach to Bow, Crossbow, or Firearm (Backpack):</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong> via crisp release timing."
+        },
+        {
+            match: ['amber-inlaid focusing collar', 'focusing collar'],
+            name: "Amber-Inlaid Focusing Collar",
+            category: "RARE CASTER ATTACHMENT • Quarterstaffs & Daggers",
+            origin: "Van Richten's Tower Study (V) or Amber Temple Wizard Quarters (X5a)",
+            desc: "Octagonal bronze ring set with warm Barovian amber shards that channel spell weave through an arcane weapon.",
+            effect: "• <strong>Attach to Quarterstaff or Dagger (Backpack):</strong> Grants <strong>+1 to Weapon Attacks</strong> AND <strong>+1 to Spell Attack Rolls</strong> while wielded!"
         },
         {
             match: ['oil of sharpness'],
             name: "Oil of Sharpness",
-            category: "VERY RARE WEAPON / AMMO COATING • Area U3",
+            category: "VERY RARE COATING VIAL • Area U3",
             origin: "Baba Lysaga's Creeping Hut Chest (Berez Area U3)",
             desc: "Clear, gelatinous alchemical oil shimmering with suspended silver diamond-shards.",
-            effect: "• <strong>Load Ammo or Coat Blade:</strong> Coat 1 slashing/piercing melee blade OR click <strong>Load</strong> in Backpack to coat up to <strong>5 rounds</strong> in a chosen weapon for <strong>+3 Attack and +3 Damage</strong>!"
+            effect: "• <strong>Coat Blade or Magazine (1 Action in Combat / Free Pre-Combat):</strong> Press <strong>Coat</strong> in Backpack to buff a slashing/piercing melee blade (1 hr) OR coat the front <strong>5 rounds</strong> of a ranged weapon for <strong>+3 Attack and +3 Damage</strong>!"
         },
         {
             match: ['wyvern venom', 'wyvern-venom'],
-            name: "Arrigal's Assassin Wyvern Venom",
-            category: "RARE LETHAL VENOM COATING • Area N9",
+            name: "Arrigal's Wyvern Venom Vial",
+            category: "RARE LETHAL VENOM VIAL • Area N9",
             origin: "Arrigal's Assassin Belt (Vallaki Vistani Camp Area N9)",
             desc: "Concentrated amber mountain-wyvern venom bottled in slender black glass ampoules.",
-            effect: "• <strong>1 Round or Blade per Dose:</strong> Use on a melee weapon OR click <strong>Load</strong> in Backpack to coat individual bullets/arrows/bolts (1 dose = 1 round). Hit forces a <strong>DC 15 CON Save or takes 7d6 Poison damage</strong> (half on success)."
+            effect: "• <strong>Coat Blade or Round (Bonus Action):</strong> Press <strong>Coat</strong> in Backpack to coat a slashing/piercing melee blade (next hit) OR 1 round per dose of a loaded ranged weapon. Forces a <strong>DC 15 CON Save or takes 7d6 Poison damage</strong> (half on success)."
+        },
+        {
+            match: ['pale tincture'],
+            name: "Pale Tincture Vial",
+            category: "RARE POISON COATING VIAL • Area O3",
+            origin: "Old Bonegrinder Cabinet (Area O3) or Wachterhaus Cellar",
+            desc: "Oily translucent hag poison that clings cleanly to cold steel and lead tips.",
+            effect: "• <strong>Coat Blade or Rounds (Bonus Action):</strong> Press <strong>Coat</strong> to coat 1 slashing/piercing melee blade (1 min) OR up to 3 loaded rounds. Target makes a <strong>DC 16 CON Save or takes +1d6 Poison damage and becomes Poisoned</strong>."
         },
         {
             match: ['hag heartstone', 'night hag heartstone'],
@@ -1418,24 +1798,24 @@
             effect: "• <strong>Unlocks Firearm Specialty Load:</strong> Carrying this sling in your Backpack lets you safely carry multiple specialty bullet types (<em>Silvered, Incendiary, Poisoned, Sunburst, Necrotic</em>) and unlocks the <strong>Load</strong> button on your firearms.<br>• <em>(Standard brass clips &amp; speedloaders still use your starting Gunslinger Bandolier).</em>"
         },
         {
-            match: ['rictavio\'s silvered crossbow bolts'],
-            name: "Rictavio's Silvered Crossbow Bolts (x20)",
+            match: ['rictavio\'s silvered bolts', 'rictavio\'s silvered crossbow bolts'],
+            name: "Rictavio's Silvered Bolts",
             category: "UNCOMMON SILVERED AMMUNITION • Area N5",
             origin: "Rictavio's Carnival Wagon Secret Chest (Vallaki Area N5)",
-            desc: "Twenty needle-pointed bolts sheathed in pure sterling silver.",
-            effect: "• <strong>Ammunition (20 Bolts):</strong> Click <strong>Load</strong> to load into any Crossbow to fire Silvered shots that bypass Werewolf, Vampire Spawn &amp; Night Hag nonmagical damage resistances."
+            desc: "Needle-pointed crossbow bolts sheathed cleanly in pure sterling silver.",
+            effect: "• <strong>Load Into Crossbow (Bonus Action):</strong> Shots fired bypass Werewolf, Vampire Spawn &amp; Night Hag nonmagical damage resistances."
         },
         {
-            match: ['silvered crossbow bolts', 'silver bolts'],
-            name: "Silvered Crossbow Bolts (x10)",
+            match: ['silvered bolts', 'silvered crossbow bolts', 'silver bolts'],
+            name: "Silvered Bolts",
             category: "UNCOMMON SILVERED AMMUNITION • Vistani Forge (G) / Arasek (N5)",
             origin: "Tser Pool Vistani Silver Forge (G) & Arasek Stockyard (Vallaki N5)",
-            desc: "Ten crisp-fletched crossbow bolts plated cleanly in hammered Barovian silver.",
-            effect: "• <strong>Ammunition (10 Bolts):</strong> Click <strong>Load</strong> to load into a specific Crossbow to bypass Werewolf, Vampire Spawn &amp; Night Hag resistances."
+            desc: "Crisp-fletched crossbow bolts plated cleanly in hammered Barovian silver.",
+            effect: "• <strong>Load Into Crossbow (Bonus Action):</strong> Shots bypass Werewolf, Vampire Spawn &amp; Night Hag nonmagical damage resistances."
         },
         {
             match: ['cloak of protection'],
-            name: "🧥 Cloak of Protection",
+            name: "Cloak of Protection",
             category: "UNCOMMON WONDROUS CLOAK • Attunement Required",
             origin: "Barovian Vaults / Death House Reliquary (M34)",
             desc: "A heavy, silver-hemmed charcoal wool mantle stitched with abjuration threads.",
@@ -1443,24 +1823,24 @@
         },
         {
             match: ['gold statuette of saint markovia', 'gold statuette'],
-            name: "🗿 Gold Statuette of Saint Markovia (250 GP • +1 Saves)",
+            name: "Gold Statuette of Saint Markovia",
             category: "UNCOMMON HOLY RELIC • Abbey of St. Markovia (S13)",
             origin: "Abbey of Saint Markovia Altar Reliquary (Krezk Area S13)",
-            desc: "A fist-sized solid gold effigy of the sainted priestess Markovia (No Attunement required).",
+            desc: "A fist-sized solid gold effigy of the sainted priestess Markovia (250 GP • No Attunement).",
             effect: "• <strong>Saint's Blessing:</strong> Any Good-aligned creature carrying this statuette gains a <strong>+1 bonus to ALL Saving Throws</strong>!"
         },
         {
             match: ['shard of the heart of sorrow', 'sorrow-crystal core', 'sorrow shard', 'heart of sorrow'],
-            name: "Shard of the Heart of Sorrow (Unique Sorrow-Crystal Core)",
+            name: "Shard of the Heart of Sorrow",
             category: "LEGENDARY UNIQUE CRAFTING RELIC • Strict 1-Per-Campaign Opportunity",
             origin: "Castle Ravenloft North Tower (Recovered ONLY Upon Shattering K20 Heart of Sorrow)",
             desc: "A cold, fist-sized prism of Khazan's blood-forged ruby crystal recovered intact from the shattered ruins of Strahd's 50-HP Heart of Sorrow (Area K20) — entirely distinct from Morgantha's Night Hag Heartstone and the Winery Life-Gems.",
-            effect: "• <strong>Single Campaign Opportunity (1 Only):</strong> Only ONE intact Sorrow-Crystal core can ever be salvaged before the rest dissolves into crimson mist.<br>• <strong>Legendary Recipe Reagent (<code>HEART-ELIXIR</code>):</strong> Combine <code>1x Shard of the Heart of Sorrow</code> with <code>2x Alchemical Catalyst + 1x Svalich Moonpetal Blossom + 1x Pure Spring Water</code> to distill Barovia's sole crafted <strong>Elixir of Health (Legendary Revival)</strong>. Crafting consumes this crystal permanently.",
+            effect: "• <strong>Single Campaign Opportunity (1 Only):</strong> Only ONE intact Sorrow-Crystal core can ever be salvaged before the rest dissolves into crimson mist.<br>• <strong>Legendary Recipe Reagent (<code>HEART-ELIXIR</code>):</strong> Combine <code>1x Shard of the Heart of Sorrow</code> with <code>2x Alchemical Catalyst + 1x Svalich Moonpetal Blossom + 1x Pure Spring Water</code> to distill Barovia's sole crafted <strong>Elixir of Health</strong>. Crafting consumes this crystal permanently.",
             isCraftableReagent: true
         },
         {
             match: ['elixir of health', 'elixir of life'],
-            name: "Elixir of Health (Legendary Revival)",
+            name: "Elixir of Health",
             category: "LEGENDARY REVIVAL POTION • Extra Rare (5,000 GP / 15,000 GP Royal Market)",
             origin: "Martikov Secret Loft (Area N2q) OR Heartstone Transmutation Ritual (HEART-ELIXIR)",
             desc: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—an ultra-rare heirloom either hidden in the Martikov loft (N2q) or distilled once via ancient Barovian alchemy.",
@@ -1468,7 +1848,7 @@
         },
         {
             match: ['antitoxin'],
-            name: "🧪 Barovian Antitoxin Tonic",
+            name: "Barovian Antitoxin Tonic",
             category: "CRAFTED CONSUMABLE • Unlock Code: WOLFBANE",
             origin: "Crafted (2x Medicinal Herbs + 1x Svalich Wolfbane Root) or Apothecary (5 GP)",
             desc: "A sharp, pine-bitter purple draught brewed to neutralize swamp serpents, spider venom, and hag toxins.",
@@ -1476,15 +1856,15 @@
         },
         {
             match: ['liquid silver'],
-            name: "Vial of Liquid Silver Coating",
-            category: "CRAFTED TACTICAL COATING • Unlock Code: SILVER-COAT",
-            origin: "Crafted (1x Powdered Silver Dust + 1x Pine Pitch & Lamp Oil)",
+            name: "Liquid Silver Vial",
+            category: "CRAFTED COATING VIAL • Unlock Code: SILVER-COAT",
+            origin: "Crafted (1x Powdered Silver Dust + 1x Pine Pitch & Lamp Oil) or Bought (25 GP)",
             desc: "A swirling glass phial of pure silver filings suspended in amber pine resin oil.",
-            effect: "• <strong>Bonus Action / Prep (1-Hour Duration):</strong> Coat <strong>1 melee weapon</strong> or load <strong>+10 Silvered Rounds/Arrows/Bolts</strong> into your ranged reserve. Coated strikes count as <strong>Silvered</strong>, bypassing the nonmagical B/P/S resistances &amp; immunities of Vampire Spawn, Werewolves, Wights, and Night Hags!"
+            effect: "• <strong>Coat Melee Blade or Full Magazine (Bonus Action / Free Pre-Combat):</strong> Press <strong>Coat</strong> in Backpack to coat either <strong>1 melee weapon</strong> (1 hour) OR a <strong>full loaded magazine (up to 10 rounds)</strong>. Coated weapons &amp; rounds count as <strong>Silvered</strong> (remaining coated rounds return as Silvered Bullets/Arrows/Bolts on Reload/Unload)."
         },
         {
             match: ['alchemist\'s fire'],
-            name: "🔥 Alchemist's Fire Flask",
+            name: "Alchemist's Fire Flask",
             category: "CRAFTED TACTICAL WEAPON • Unlock Code: BRIMSTONE",
             origin: "Crafted (1x Brimstone Sulfur + 1x Pine Pitch & Lamp Oil) / Area V1",
             desc: "A wax-sealed clay flask packed with volatile sulfur pitch that bursts into clinging flame on impact.",
@@ -1492,7 +1872,7 @@
         },
         {
             match: ['phosphor'],
-            name: "💣 Alchemical Phosphor & Smoke Flash-Bomb",
+            name: "Alchemical Phosphor Flash-Bomb",
             category: "CRAFTED TACTICAL GADGET • Unlock Code: PHOSPHOR / Area V1",
             origin: "Crafted (1x Brimstone + 1x Silver Dust + 1x Catalyst) / Ezmerelda's Wagon V1",
             desc: "A brass-seamed glass sphere packed with white phosphorus, magnesium flakes, and powdered silver.",
@@ -1500,7 +1880,7 @@
         },
         {
             match: ['smoke bomb'],
-            name: "💨 Ash-Cloud Smoke Bomb",
+            name: "Ash-Cloud Smoke Bomb",
             category: "CRAFTED TACTICAL GADGET • Unlock Code: ASH-CLOUD",
             origin: "Crafted (1x Brimstone Sulfur + 1x Medicinal Herbs)",
             desc: "A tight gray clay sphere filled with dry herbs and sulfur dust.",
@@ -1508,108 +1888,140 @@
         },
         {
             match: ['sun-ash'],
-            name: "☀️ Sun-Ash Repellent Balm",
-            category: "CRAFTED SACRED UNGUENT • Unlock Code: SUN-ASH",
+            name: "Sun-Ash Vial",
+            category: "CRAFTED SACRED COATING VIAL • Unlock Code: SUN-ASH",
             origin: "Crafted (1x Moonpetal + 1x Silver Dust + 1x Pure Spring Water)",
             desc: "A luminous pale-gold salve infused with dawn-remembering Moonpetal and consecrated silver.",
-            effect: "• <strong>Bonus Action / Prep (10-Minute Duration):</strong> Coat <strong>1 weapon</strong> or <strong>6 firearm rounds</strong>. Hits deal an extra <strong>+1d4 Radiant damage</strong> for 10 minutes!"
+            effect: "• <strong>Coat Weapon or Front Rounds (Bonus Action / Pre-Combat):</strong> Press <strong>Coat</strong> to coat <strong>1 melee weapon</strong> (10 min) OR front <strong>6 rounds</strong>. Hits deal an extra <strong>+1d4 Radiant damage</strong> (and halt regeneration on Crit)."
         },
         {
             match: ['potion of superior healing'],
-            name: "🧪 Potion of Superior Healing",
+            name: "Potion of Superior Healing",
             category: "RARE HEAL CONSUMABLE • Unlock Code: MOONPETAL",
             origin: "Crafted (4x Herbs + 2x Catalyst + 1x Moonpetal) or Abbey S13 (45 GP)",
             desc: "A glowing scarlet elixir distilled from rare Moonpetal petals and concentrated alembic salts.",
             effect: "• <strong>Bonus Action (Self) / Action (Ally):</strong> Restores <strong>8d4 + 8 Hit Points (Avg 28 HP)</strong>—any overflow above Max HP channels into Temporary HP!"
         },
         {
+            match: ['carved bog-witch runestone', 'bog-witch runestone'],
+            name: "Carved Bog-Witch Runestone",
+            category: "RARE RECIPE SLAB • Code: WITCH-IRON",
+            origin: "Ruins of Berez Marsh Altar (U) or Hut Strongbox (U3)",
+            desc: "A thumb-sized river slate scratched with spiral witch-knots describing how alembic salt, silver dust, and wolfbane bind magic into oil.",
+            effect: "• <strong>Study in Backpack:</strong> Unlocks the <strong>Witch-Iron Oil Vial</strong> recipe permanently on your Crafting Workbench (<code>1x Powdered Silver Dust + 1x Alchemical Catalyst + 1x Wolfbane Root</code>)."
+        },
+        {
+            match: ['charred brimstone ignition slate', 'ignition slate'],
+            name: "Charred Brimstone Ignition Slate",
+            category: "RECIPE FORMULA • Code: INCENDIARY-VIAL",
+            origin: "Arasek Stockyard / Petru Forge / Blinsky Bench (180 GP Investment)",
+            desc: "Soot-smudged tin-and-slate workshop plate etched with ratios for suspended liquid-fire oil.",
+            effect: "• <strong>Study in Backpack:</strong> Unlocks the <strong>Incendiary Oil Vial</strong> recipe permanently on your Crafting Workbench (<code>1x Brimstone Sulfur + 1x Pine Pitch &amp; Lamp Oil</code>)."
+        },
+        {
+            match: ['silver-suspend foundry ledger', 'foundry ledger'],
+            name: "Petru's Silver-Suspend Foundry Ledger",
+            category: "RECIPE FORMULA • Code: SILVER-COAT",
+            origin: "Tser Pool Vistani Forge (G) / Rictavio's Ledger (N5) (200 GP Investment)",
+            desc: "Copper-clasp smithing notebook detailing silver filing suspension in clear pine oil.",
+            effect: "• <strong>Study in Backpack:</strong> Unlocks the <strong>Liquid Silver Vial</strong> recipe permanently on your Crafting Workbench (<code>1x Powdered Silver Dust + 1x Pine Pitch &amp; Lamp Oil</code>)."
+        },
+        {
+            match: ['amber temple heartstone wall-rubbing', 'heartstone wall-rubbing'],
+            name: "Amber Temple Heartstone Wall-Rubbing",
+            category: "LEGENDARY RECIPE TRANSCRIPT • Code: HEART-ELIXIR",
+            origin: "Amber Temple Library Soot Mural (X30) / Exethanter (X27) / Abbot (S13)",
+            desc: "Charcoal-on-parchment rubbing capturing Khazan-era transmutation sigils for shattering a living crystal Heartstone.",
+            effect: "• <strong>Study in Backpack:</strong> Unlocks the <strong>Elixir of Health</strong> recipe permanently on your Crafting Workbench."
+        },
+        {
             match: ['treated pelt', 'dire-pelt', 'waxed canvas'],
-            name: "🐺 Treated Dire-Pelt & Waxed Canvas Bundle",
+            name: "Treated Dire-Pelt & Waxed Canvas Bundle",
             category: "CRAFTING MATERIAL • Hunt (DC 13 Survival) / Shop (4–6 GP)",
             origin: "Dire Wolf Skinning, Ruined Coach Tarps, Bildrath's E1, Tser Pool G & Arasek N5",
             desc: "Heavy double-stitched waxed sailcloth layered with thick gray Dire Wolf hide.",
-            effect: "• <strong>Crafting Ingredient:</strong> Requires <code>2x</code> bundles (plus Pine Pitch, Wolfbane &amp; Silver Dust) to craft a <strong>⛺ Mist-Ward Traveler's Camp Kit</strong> (<code>MIST-CAMP</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Requires <code>2x</code> bundles (plus Pine Pitch, Wolfbane &amp; Silver Dust) to craft a <strong>Mist-Ward Traveler's Camp Kit</strong> (<code>MIST-CAMP</code>).",
             isCraftableReagent: true
         },
         {
             match: ['alchemical catalyst', 'catalyst'],
-            name: "⚗️ Alchemical Catalyst (Distilled Alembic Salt)",
+            name: "Alchemical Catalyst",
             category: "RARE CRAFTING MATERIAL • 25–40 GP / Arcane Labs",
             origin: "Old Bonegrinder Lab, Wachterhaus Cellar, Vallaki Apothecary & Abbey S13",
             desc: "Crystalline crimson alembic salts that violently concentrate ordinary herbal infusions.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>Potion of Superior Healing</strong> (<code>MOONPETAL</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>Witch-Iron Oil Vial</strong> (<code>WITCH-IRON</code>), <strong>Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>Potion of Superior Healing</strong> (<code>MOONPETAL</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
             isCraftableReagent: true
         },
         {
             match: ['silver dust'],
-            name: "✨ Powdered Silver Dust (Pouch)",
+            name: "Powdered Silver Dust",
             category: "UNCOMMON CRAFTING MATERIAL • 15–25 GP (or 25 SP Filed)",
             origin: "Tser Pool Vistani (15 GP), Arasek Stockyard (20 GP), Bildrath's (25+ GP)",
             desc: "Fine moon-bright silver filings sealed inside waxed vellum.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>💧 Holy Water</strong> (<code>MORNINGLORD</code>), <strong>✨ Liquid Silver Coating</strong> (<code>SILVER-COAT</code>), <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>⛺ Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>), and <strong>☀️ Sun-Ash Balm</strong> (<code>SUN-ASH</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Holy Water</strong> (<code>MORNINGLORD</code>), <strong>Liquid Silver Vial</strong> (<code>SILVER-COAT</code>), <strong>Witch-Iron Oil Vial</strong> (<code>WITCH-IRON</code>), <strong>Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>), and <strong>Sun-Ash Vial</strong> (<code>SUN-ASH</code>).",
             isCraftableReagent: true
         },
         {
             match: ['wolfbane'],
-            name: "🌱 Svalich Wolfbane Root",
+            name: "Svalich Wolfbane Root",
             category: "COMMON FORAGE MATERIAL • DC 12 Nature / 2 GP",
             origin: "Svalich Woods Pine Ridges & Werewolf Trails",
             desc: "Pungent purple-hooded wildflower root hung over Barovian barn doors against wolves.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🧪 Barovian Antitoxin Tonic</strong> (<code>WOLFBANE</code>) and <strong>⛺ Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Barovian Antitoxin Tonic</strong> (<code>WOLFBANE</code>), <strong>Witch-Iron Oil Vial</strong> (<code>WITCH-IRON</code>), and <strong>Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>).",
             isCraftableReagent: true
         },
         {
             match: ['sulfur', 'brimstone'],
-            name: "🪨 Brimstone & Pitch Sulfur",
+            name: "Brimstone & Pitch Sulfur",
             category: "COMMON SHOP / SALVAGE MATERIAL • 3–5 GP",
             origin: "Vallaki Smithy, Blinsky's Workshop & Old Bonegrinder Kilns",
             desc: "Sharp yellow brimstone chunks smelling of struck flint and alchemical smoke.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🔥 Alchemist's Fire Flask</strong> (<code>BRIMSTONE</code>), <strong>💨 Ash-Cloud Smoke Bomb</strong> (<code>ASH-CLOUD</code>), and <strong>💣 Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Incendiary Oil Vial</strong> (<code>INCENDIARY-VIAL</code>), <strong>Alchemist's Fire Flask</strong> (<code>BRIMSTONE</code>), <strong>Ash-Cloud Smoke Bomb</strong> (<code>ASH-CLOUD</code>), and <strong>Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>).",
             isCraftableReagent: true
         },
         {
             match: ['pitch oil', 'lamp oil'],
-            name: "🛢️ Pine Pitch & Lamp Oil Flask",
+            name: "Pine Pitch & Lamp Oil Flask",
             category: "COMMON SHOP / FORAGE MATERIAL • 5 SP–1 GP / DC 11 Survival",
             origin: "General Stores & Scarred Svalich Evergreens",
             desc: "Thick amber pine resin blended with lantern oil.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>🔥 Alchemist's Fire</strong> (<code>BRIMSTONE</code>), <strong>✨ Liquid Silver Coating</strong> (<code>SILVER-COAT</code>), and waterproofing <strong>⛺ Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Incendiary Oil Vial</strong> (<code>INCENDIARY-VIAL</code>), <strong>Alchemist's Fire Flask</strong> (<code>BRIMSTONE</code>), <strong>Liquid Silver Vial</strong> (<code>SILVER-COAT</code>), and waterproofing <strong>Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>).",
             isCraftableReagent: true
         },
         {
             match: ['moonpetal'],
-            name: "🌸 Svalich Moonpetal Blossom",
+            name: "Svalich Moonpetal Blossom",
             category: "VERY RARE DUSK FORAGE • DC 15 Nature",
             origin: "Drowned Ruins of Berez, Yester Hill & Lake Baratok at Dusk",
             desc: "Ghost-white luminescent petals that open only in misty twilight.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Potion of Superior Healing</strong> (<code>MOONPETAL</code>), <strong>Sun-Ash Repellent Balm</strong> (<code>SUN-ASH</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Potion of Superior Healing</strong> (<code>MOONPETAL</code>), <strong>Sun-Ash Vial</strong> (<code>SUN-ASH</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
             isCraftableReagent: true
         },
         {
             match: ['spring water', 'mountain spring water'],
-            name: "💧 Pure Mountain Spring Water (Unblessed Reagent)",
+            name: "Pure Mountain Spring Water",
             category: "COMMON FORAGE MATERIAL • DC 10 Survival / 2 SP",
             origin: "Tser Falls, Luna River & White Sun Spring",
             desc: "Crystal-clear glacier melt free of Barovia's bog rot.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Morninglord Holy Water</strong> (<code>MORNINGLORD</code>), <strong>Sun-Ash Balm</strong> (<code>SUN-ASH</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
+            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Morninglord Holy Water</strong> (<code>MORNINGLORD</code>), <strong>Sun-Ash Vial</strong> (<code>SUN-ASH</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
             isCraftableReagent: true
         },
         {
             match: ['linen wrap', 'salve jar'],
-            name: "🧻 Clean Linen Wraps & Salve Jar",
+            name: "Clean Linen Wraps & Salve Jar",
             category: "CAMP MEDICAL SUPPLY • 2 SP",
             origin: "Village Homes, Blue Water Inn & Krezk Cottages",
             desc: "Freshly boiled white cloth strips sealed in beeswax salve.",
-            effect: "• <strong>Camp Medical Utility:</strong> Lets any ally assist with crafting <strong>🩹 Field Bandages</strong> during a Short Rest, or double bandage yield on a <code>DC 14 Medicine</code> check.",
+            effect: "• <strong>Camp Medical Utility:</strong> Lets any ally assist with crafting <strong>Field Healing Bandages</strong> during a Short Rest, or double bandage yield on a <code>DC 14 Medicine</code> check.",
             isCraftableReagent: true
         },
         {
             match: ['monster trophy', 'spawn ash', 'wolf fang'],
-            name: "🦇 Harvested Monster Trophy (Spawn Ash / Dire Wolf Fang)",
+            name: "Harvested Monster Trophy",
             category: "HUNTER HARVEST • DC 13 Survival / 10–25 GP Barter",
             origin: "Slain Vampire Spawn, Dire Wolves, Blights & Night Hags",
             desc: "Dark ichor vials, obsidian wolf fangs, and silver-charred vampire cinders.",
-            effect: "• <strong>Barter Value:</strong> Trade to Vistani, Van Richten/Ezmerelda, or Vallaki occultists for <strong>10–25 GP</strong>, silvered ammo, or <strong>⚗️ Alchemical Catalysts</strong>.",
+            effect: "• <strong>Barter Value:</strong> Trade to Vistani, Van Richten/Ezmerelda, or Vallaki occultists for <strong>10–25 GP</strong>, silvered ammo, or <strong>Alchemical Catalysts</strong>.",
             isCraftableReagent: true
         }
     ];
@@ -1821,15 +2233,15 @@
             saveNote: null,
             note: 'Bypasses Werewolf immunity and Vampire Spawn, Wight & Night Hag nonmagical resistances.',
             packNames: {
-                firearm: 'Silvered Firearm & Sling Bullets',
+                firearm: 'Silvered Bullets',
                 bow: 'Silvered Arrows',
-                crossbow: 'Silvered Crossbow Bolts'
+                crossbow: 'Silvered Bolts'
             }
         },
         incendiary: {
             id: 'incendiary',
             shortName: 'Incendiary',
-            fullName: 'Brimstone Incendiary',
+            fullName: 'Incendiary Flame',
             badge: '+1d4 Fire',
             accent: 'fire',
             atkBonus: 0,
@@ -1842,15 +2254,15 @@
             saveNote: null,
             note: '+1d4 Fire damage on hit; ignites flammable targets & disrupts flame-vulnerable regeneration.',
             packNames: {
-                firearm: 'Brimstone Incendiary Bullets',
-                bow: 'Pitch-Tipped Fire Arrows',
-                crossbow: 'Brimstone Fire Crossbow Bolts'
+                firearm: 'Incendiary Rounds',
+                bow: 'Fire Arrows',
+                crossbow: 'Fire Bolts'
             }
         },
         poison: {
             id: 'poison',
             shortName: 'Venom',
-            fullName: 'Nightshade / Pale Tincture Venom',
+            fullName: 'Poisoned',
             badge: '+1d6 Poison',
             accent: 'poison',
             atkBonus: 0,
@@ -1863,15 +2275,15 @@
             saveNote: 'DC 12 CON Save or Poisoned until end of next turn',
             note: '+1d6 Poison damage; target makes a DC 12 CON Save or becomes Poisoned until the end of its next turn.',
             packNames: {
-                firearm: 'Pale Tincture Poisoned Bullets',
-                bow: 'Nightshade Venom Arrows',
-                crossbow: "Arrigal's Venom-Dipped Crossbow Bolts"
+                firearm: 'Poisoned Bullets',
+                bow: 'Poisoned Arrows',
+                crossbow: 'Poisoned Bolts'
             }
         },
         wyvern_venom: {
             id: 'wyvern_venom',
             shortName: 'Wyvern Venom',
-            fullName: "Arrigal's Assassin Wyvern Venom",
+            fullName: 'Wyvern Venom',
             badge: '+7d6 Poison (DC 15)',
             accent: 'poison',
             atkBonus: 0,
@@ -1884,9 +2296,9 @@
             saveNote: 'DC 15 CON Save for half Venom damage',
             note: 'Assassin toxin: target makes a DC 15 CON Save or takes +7d6 Poison damage (half on success).',
             packNames: {
-                firearm: 'Wyvern-Venom Tipped Bullets',
-                bow: 'Wyvern-Venom Tipped Arrows',
-                crossbow: 'Wyvern-Venom Tipped Crossbow Bolts'
+                firearm: 'Wyvern-Venom Bullets',
+                bow: 'Wyvern-Venom Arrows',
+                crossbow: 'Wyvern-Venom Bolts'
             }
         },
         sunburst: {
@@ -1905,9 +2317,9 @@
             saveNote: null,
             note: '+1 Attack & Damage, +1d6 Radiant, Silvered, and halts Vampire Regeneration for 1 round!',
             packNames: {
-                firearm: "Ezmerelda's Sunburst & Silver Alchemical Cartridges",
-                bow: 'Morninglord Sunburst Arrows',
-                crossbow: 'Morninglord Sunburst Crossbow Bolts'
+                firearm: 'Sunburst Rounds',
+                bow: 'Sunburst Arrows',
+                crossbow: 'Sunburst Bolts'
             }
         },
         sun_ash: {
@@ -1926,15 +2338,15 @@
             saveNote: null,
             note: 'Blessed unguent coating: deals +1d4 Radiant damage (halts undead regen on Crit / DM ruling).',
             packNames: {
-                firearm: 'Sun-Ash Coated Bullets',
-                bow: 'Sun-Ash Coated Arrows',
-                crossbow: 'Sun-Ash Coated Crossbow Bolts'
+                firearm: 'Sun-Ash Bullets',
+                bow: 'Sun-Ash Arrows',
+                crossbow: 'Sun-Ash Bolts'
             }
         },
         necrotic: {
             id: 'necrotic',
             shortName: 'Necrotic',
-            fullName: 'Grave-Salt Necrotic',
+            fullName: 'Necrotic',
             badge: '+1d6 Necrotic',
             accent: 'necrotic',
             atkBonus: 0,
@@ -1947,15 +2359,15 @@
             saveNote: null,
             note: '+1d6 Necrotic damage; struck target cannot regain Hit Points until the start of your next turn.',
             packNames: {
-                firearm: 'Grave-Salt Necrotic Bullets',
-                bow: 'Shadow-Bone Necrotic Arrows',
-                crossbow: 'Grave-Salt Necrotic Crossbow Bolts'
+                firearm: 'Necrotic Bullets',
+                bow: 'Necrotic Arrows',
+                crossbow: 'Necrotic Bolts'
             }
         },
         plus1: {
             id: 'plus1',
-            shortName: '+1 Arcane',
-            fullName: "Baba Lysaga's +1 Round",
+            shortName: '+1 Hex-Iron',
+            fullName: 'Witch-Iron Oil Coated',
             badge: '+1 Hit / +1 Dmg',
             accent: 'magic',
             atkBonus: 1,
@@ -1963,12 +2375,15 @@
             extraDice: null,
             extraType: null,
             isSilvered: false,
+            isMagical: true,
             haltsRegen: false,
             blocksHealing: false,
             saveNote: null,
-            note: 'Mother Night rune-etched bullet: +1 Attack & +1 Magical Damage.',
+            note: 'Witch-Iron Oil enhancement: +1 Attack & +1 Magical Damage (overcomes nonmagical resistances).',
             packNames: {
-                firearm: "Baba Lysaga's +1 Magical Sling / Firearm Bullets"
+                firearm: 'Hex-Iron Bullets',
+                bow: 'Hex-Iron Arrows',
+                crossbow: 'Hex-Iron Bolts'
             }
         },
         sharpness: {
@@ -1982,14 +2397,15 @@
             extraDice: null,
             extraType: null,
             isSilvered: false,
+            isMagical: true,
             haltsRegen: false,
             blocksHealing: false,
             saveNote: null,
             note: 'Ultra-rare Oil of Sharpness coating: +3 Attack & +3 Magical Damage.',
             packNames: {
-                firearm: 'Oil of Sharpness (+3) Bullets',
-                bow: 'Oil of Sharpness (+3) Arrows',
-                crossbow: 'Oil of Sharpness (+3) Crossbow Bolts'
+                firearm: 'Sharpened Bullets (+3)',
+                bow: 'Sharpened Arrows (+3)',
+                crossbow: 'Sharpened Bolts (+3)'
             }
         }
     };
@@ -2169,7 +2585,9 @@
                 ammoDef: AMMO_CATALOG[am.ammoId],
                 ammoKind: am.ammoKind,
                 isCoating: !!am.isCoating,
+                coatingFullMag: !!am.coatingFullMag,
                 coatingRounds: am.coatingRounds || 1,
+                coatMelee: meta.coatMelee || null,
                 unitCount
             });
         });
@@ -2365,6 +2783,376 @@
         return ret;
     }
 
+    function getWeaponModsStorageKey() { return `cos_wpn_mods_${adapter.heroId}_v1`; }
+    function getWeaponCoatingStorageKey() { return `cos_wpn_coat_${adapter.heroId}_v1`; }
+
+    function getWeaponModsStore() {
+        const store = { mods: {} };
+        if (!adapter) return store;
+        try {
+            const raw = localStorage.getItem(getWeaponModsStorageKey());
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object' && parsed.mods && typeof parsed.mods === 'object') {
+                    store.mods = parsed.mods;
+                }
+            }
+        } catch (e) {}
+        return store;
+    }
+
+    function saveWeaponModsStore(store) {
+        if (!adapter) return;
+        try { localStorage.setItem(getWeaponModsStorageKey(), JSON.stringify(store)); } catch (e) {}
+    }
+
+    function getWeaponCoatingStore() {
+        const store = { coatings: {} };
+        if (!adapter) return store;
+        try {
+            const raw = localStorage.getItem(getWeaponCoatingStorageKey());
+            if (raw) {
+                const parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object' && parsed.coatings && typeof parsed.coatings === 'object') {
+                    store.coatings = parsed.coatings;
+                }
+            }
+        } catch (e) {}
+        return store;
+    }
+
+    function saveWeaponCoatingStore(store) {
+        if (!adapter) return;
+        try { localStorage.setItem(getWeaponCoatingStorageKey(), JSON.stringify(store)); } catch (e) {}
+    }
+
+    function classifyWeaponClasses(rawName, meta) {
+        const low = String(rawName || '').toLowerCase();
+        const classes = new Set();
+        const ammoKind = meta && (meta.ammoKind || meta.kind);
+        if (ammoKind === 'firearm' || low.includes('lament') || low.includes('mercy') || low.includes('less') || low.includes('revolver') || low.includes('rifle') || low.includes('musket') || low.includes('pistol')) {
+            classes.add('ranged');
+            classes.add('firearm');
+            return classes;
+        }
+        if (ammoKind === 'bow' || low.includes('longbow') || low.includes('shortbow') || /\bbow\b/.test(low)) {
+            classes.add('ranged');
+            classes.add('bow');
+            return classes;
+        }
+        if (ammoKind === 'crossbow' || low.includes('crossbow')) {
+            classes.add('ranged');
+            classes.add('crossbow');
+            return classes;
+        }
+        classes.add('melee');
+        if (low.includes('sword') || low.includes('axe') || low.includes('treebane') || low.includes('dagger') || low.includes('knife') || low.includes('rapier') || low.includes('scimitar') || low.includes('spear') || /\bfan\b/.test(low)) {
+            classes.add('slashing_piercing');
+        }
+        if (low.includes('mace') || low.includes('staff') || low.includes('thighbone')) {
+            classes.add('blunt');
+        }
+        if (low.includes('staff') || low.includes('quarterstaff') || low.includes('dagger') || low.includes('knife') || low.includes('wand') || low.includes('rod')) {
+            classes.add('caster_weapon');
+        }
+        return classes;
+    }
+
+    function getHeroAllWeapons(includeBag = true) {
+        if (!adapter) return [];
+        const list = [];
+        const seenIds = new Set();
+        const eq = reconcileEquippedWithInventory();
+        const nativeTags = new Set(adapter.nativeWeaponTags || []);
+        const equippedIds = new Set();
+
+        const declared = Array.isArray(adapter.ammoWeapons) ? adapter.ammoWeapons : [];
+        declared.forEach(w => {
+            if (!w || !w.id || seenIds.has(w.id)) return;
+            seenIds.add(w.id);
+            equippedIds.add(w.id);
+            const cls = classifyWeaponClasses(w.label || w.id, { ammoKind: w.kind || 'firearm' });
+            list.push({
+                id: w.id,
+                label: w.label || w.id,
+                kind: w.kind || 'firearm',
+                isRanged: true,
+                classes: cls,
+                maxCap: w.maxCap || null,
+                mount: w.mount || null,
+                isEquipped: true,
+                isNative: true
+            });
+        });
+
+        const addWeaponEntry = (raw, isEq) => {
+            const meta = getItemMeta(raw);
+            if (meta.isShield || meta.category !== 'weapon') return;
+            const id = (meta.weaponTag && nativeTags.has(meta.weaponTag)) ? meta.weaponTag : normKey(raw);
+            if (id === 'revolvers') return; // Covers combined alias; Mercy & Less are listed individually
+            if (seenIds.has(id)) return;
+            seenIds.add(id);
+            const cls = classifyWeaponClasses(raw, meta);
+            const kind = meta.ammoKind || (cls.has('ranged') ? 'ranged' : 'melee');
+            list.push({
+                id,
+                raw,
+                label: isEq ? shortLabel(raw) : `${shortLabel(raw)} (In Bag)`,
+                kind,
+                isRanged: cls.has('ranged'),
+                classes: cls,
+                maxCap: detectWeaponMaxCap(raw, meta),
+                mount: null,
+                isEquipped: isEq,
+                isNative: nativeTags.has(id)
+            });
+        };
+
+        ['ranged', 'mainHand', 'offHand', 'legSheath'].forEach(slotId => {
+            const key = eq[slotId];
+            if (!key) return;
+            const raw = findInventoryRawByKey(key);
+            if (raw) {
+                equippedIds.add(key);
+                addWeaponEntry(raw, true);
+            }
+        });
+
+        if (includeBag) {
+            adapter.getItems().forEach(raw => {
+                addWeaponEntry(raw, false);
+            });
+        }
+        return list;
+    }
+
+    function getWeaponAttachmentInfo(weaponId) {
+        if (!weaponId) return null;
+        const store = getWeaponModsStore();
+        const mod = store.mods[weaponId];
+        if (!mod || !mod.modKey) return null;
+        const tier = mod.tier === 2 && mod.supportsTier2 ? 2 : 1;
+        const atkBonus = (parseInt(mod.atkBonus) || 0) + (tier === 2 ? 1 : 0);
+        const dmgBonus = (parseInt(mod.dmgBonus) || 0) + (tier === 2 ? 1 : 0);
+        let badge = mod.badgeLabel || mod.modName || 'Attached Mod';
+        if (mod.supportsTier2) {
+            badge = `Scope +${tier} / Silvered`;
+        }
+        return {
+            ...mod,
+            tier,
+            atkBonus,
+            dmgBonus,
+            badge
+        };
+    }
+
+    function getWeaponAttachmentBonuses(weaponId) {
+        const mod = getWeaponAttachmentInfo(weaponId);
+        if (!mod) {
+            return { hasMod: false, atkBonus: 0, dmgBonus: 0, extraDice: null, extraType: null, isSilvered: false, isMagical: false, mistSight: false, spellAtkBonus: 0, mod: null };
+        }
+        return {
+            hasMod: true,
+            atkBonus: mod.atkBonus || 0,
+            dmgBonus: mod.dmgBonus || 0,
+            extraDice: mod.extraDice || null,
+            extraType: mod.extraType || null,
+            isSilvered: !!mod.isSilvered,
+            isMagical: !!(mod.isMagical || mod.atkBonus > 0),
+            mistSight: !!mod.mistSight,
+            spellAtkBonus: mod.spellAtkBonus || 0,
+            mod
+        };
+    }
+
+    function getWeaponMeleeCoating(weaponId) {
+        if (!weaponId) return null;
+        const store = getWeaponCoatingStore();
+        return store.coatings[weaponId] || null;
+    }
+
+    function clearWeaponMeleeCoating(weaponId, silent = false) {
+        if (!adapter || !weaponId) return;
+        const store = getWeaponCoatingStore();
+        const prev = store.coatings[weaponId];
+        if (!prev) return;
+        delete store.coatings[weaponId];
+        saveWeaponCoatingStore(store);
+        if (!silent) {
+            adapter.log(`Wiped <strong>${esc(prev.label || prev.vialName)}</strong> coating from weapon.`);
+        }
+        applyEquipmentToSheet(true);
+    }
+
+    function detachWeaponMod(weaponId) {
+        if (!adapter || !weaponId) return;
+        const store = getWeaponModsStore();
+        const prev = store.mods[weaponId];
+        if (!prev) return;
+        delete store.mods[weaponId];
+        saveWeaponModsStore(store);
+        const items = adapter.getItems();
+        addRawItemToList(items, prev.raw || prev.modName, 1);
+        adapter.saveItems(items);
+        adapter.log(`Detached <strong>${esc(shortLabel(prev.raw || prev.modName))}</strong> and returned it to Backpack.`);
+        applyEquipmentToSheet(true);
+    }
+
+    function toggleWeaponModTier(weaponId) {
+        if (!adapter || !weaponId) return;
+        const store = getWeaponModsStore();
+        const mod = store.mods[weaponId];
+        if (!mod || !mod.supportsTier2) return;
+        mod.tier = (mod.tier === 2) ? 1 : 2;
+        store.mods[weaponId] = mod;
+        saveWeaponModsStore(store);
+        adapter.log(`<strong>${esc(shortLabel(mod.raw || mod.modName))}</strong> tuned to <strong>+${mod.tier} (${mod.tier === 2 ? 'Act III Upgrade' : 'Base +1'})</strong>!`);
+        applyEquipmentToSheet(true);
+    }
+
+    function getWeaponCombatMods(weaponId) {
+        const modB = getWeaponAttachmentBonuses(weaponId);
+        const coat = getWeaponMeleeCoating(weaponId);
+        const extras = [];
+        if (modB.extraDice) extras.push({ dice: modB.extraDice, type: modB.extraType || 'Bonus', label: modB.mod?.modName || 'Attachment' });
+        if (coat && coat.extraDice) extras.push({ dice: coat.extraDice, type: coat.extraType || 'Coating', label: coat.label || 'Coating' });
+        const saveNotes = [];
+        if (coat && coat.saveNote) saveNotes.push(coat.saveNote);
+        return {
+            atkBonus: (modB.atkBonus || 0) + (coat ? (coat.atkBonus || 0) : 0),
+            dmgBonus: (modB.dmgBonus || 0) + (coat ? (coat.dmgBonus || 0) : 0),
+            extras,
+            isSilvered: Boolean(modB.isSilvered || (coat && coat.isSilvered)),
+            isMagical: Boolean(modB.isMagical || (coat && coat.isMagical)),
+            mistSight: Boolean(modB.mistSight),
+            spellAtkBonus: modB.spellAtkBonus || 0,
+            saveNotes,
+            mod: modB.mod,
+            coating: coat
+        };
+    }
+
+    let attachModalState = { invIndex: null, targetWeaponId: null };
+
+    function openAttachmentModal({ invIndex = null, targetWeaponId = null } = {}) {
+        if (!adapter) return;
+        const dlg = document.getElementById('rpg-weapon-mod-dialog');
+        if (!dlg) return;
+        const items = adapter.getItems();
+        let chosenIdx = invIndex;
+        if (chosenIdx === null || chosenIdx === undefined) {
+            chosenIdx = items.findIndex(r => Boolean(getItemMeta(r).attachMeta));
+        }
+        const rawMod = (chosenIdx >= 0 && items[chosenIdx]) ? items[chosenIdx] : null;
+        const modMeta = rawMod ? getItemMeta(rawMod).attachMeta : null;
+        if (!rawMod || !modMeta) return;
+
+        const allWeapons = getHeroAllWeapons(true);
+        const compat = allWeapons.filter(w => modMeta.targetClasses.some(cls => w.classes.has(cls)));
+        const chosenWpn = targetWeaponId
+            ? compat.find(w => w.id === targetWeaponId) || compat[0] || null
+            : (compat.find(w => w.isEquipped) || compat[0] || null);
+
+        attachModalState = {
+            invIndex: chosenIdx,
+            weaponId: chosenWpn ? chosenWpn.id : null
+        };
+        renderAttachmentModal();
+        if (!dlg.open) dlg.showModal();
+    }
+
+    function renderAttachmentModal() {
+        const body = document.getElementById('rpg-weapon-mod-body');
+        const confirmBtn = document.getElementById('rpg-weapon-mod-confirm');
+        if (!body) return;
+        const items = adapter.getItems();
+        const rawMod = items[attachModalState.invIndex];
+        const modMeta = rawMod ? getItemMeta(rawMod).attachMeta : null;
+        if (!rawMod || !modMeta) {
+            body.innerHTML = `<div style="font-size:0.76rem; color:#fca5a5;">Attachment not found in Backpack.</div>`;
+            if (confirmBtn) confirmBtn.disabled = true;
+            return;
+        }
+        const modStore = getWeaponModsStore().mods;
+        const allWeapons = getHeroAllWeapons(true);
+        const compat = allWeapons.filter(w => modMeta.targetClasses.some(cls => w.classes.has(cls)));
+        if (!compat.some(w => w.id === attachModalState.weaponId)) {
+            attachModalState.weaponId = compat[0] ? compat[0].id : null;
+        }
+        const activeWpn = compat.find(w => w.id === attachModalState.weaponId) || null;
+        const listHtml = compat.length > 0
+            ? `<div class="rpg-loader-choice-grid">${compat.map(w => {
+                const isSel = activeWpn && w.id === activeWpn.id;
+                const curMod = modStore[w.id];
+                const sub = curMod ? `Mounted: ${shortLabel(curMod.raw || curMod.modName)} (Replaces to Bag)` : (w.isEquipped ? 'Equipped' : 'In Backpack');
+                return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" onclick="COS_RPG.selectAttachTargetWeapon(decodeURIComponent('${encArg(w.id)}'))">
+                    <span><strong>${esc(w.label)}</strong><br><small style="color:#94a3b8;">${esc(sub)}</small></span>
+                    <span class="rpg-loader-cap">${isSel ? 'Selected' : 'Compatible'}</span>
+                </button>`;
+            }).join('')}</div>`
+            : `<div style="font-size:0.74rem; color:#fca5a5;">No compatible weapon owned (requires ${esc(modMeta.targetClasses.join(' / '))}).</div>`;
+
+        body.innerHTML = `
+            <div class="rpg-loader-section">
+                <div class="rpg-loader-label">Attachment</div>
+                <div style="font-size:0.8rem; color:#fde68a; font-weight:700;">${esc(shortLabel(rawMod))}</div>
+                <div style="font-size:0.72rem; color:#cbd5e1; margin-top:2px;">${esc(getItemMeta(rawMod).summary || '')}</div>
+            </div>
+            <div class="rpg-loader-section">
+                <div class="rpg-loader-label">Select Compatible Weapon (1 Attachment Max per Weapon)</div>
+                ${listHtml}
+            </div>
+        `;
+        if (confirmBtn) confirmBtn.disabled = !activeWpn;
+    }
+
+    function confirmAttachWeaponMod() {
+        if (!adapter) return;
+        const items = adapter.getItems();
+        const rawMod = items[attachModalState.invIndex];
+        const fullMeta = rawMod ? getItemMeta(rawMod) : null;
+        const modMeta = fullMeta ? fullMeta.attachMeta : null;
+        const allWeapons = getHeroAllWeapons(true);
+        const wpn = allWeapons.find(w => w.id === attachModalState.weaponId);
+        if (!rawMod || !modMeta || !wpn) return;
+
+        // Deduct 1x attachment from Backpack
+        const p = parseItem(rawMod);
+        const rem = (p.qty || 1) - 1;
+        if (rem <= 0) items.splice(attachModalState.invIndex, 1);
+        else items[attachModalState.invIndex] = `${p.emoji}${rem > 1 ? rem + 'x ' : ''}${p.name}`.trim();
+
+        const store = getWeaponModsStore();
+        if (store.mods[wpn.id] && (store.mods[wpn.id].raw || store.mods[wpn.id].modName)) {
+            addRawItemToList(items, store.mods[wpn.id].raw || store.mods[wpn.id].modName, 1);
+        }
+        adapter.saveItems(items);
+
+        store.mods[wpn.id] = {
+            modKey: modMeta.modKey,
+            raw: shortLabel(rawMod),
+            modName: shortLabel(rawMod),
+            tier: 1,
+            atkBonus: modMeta.atkBonus || 0,
+            dmgBonus: modMeta.dmgBonus || 0,
+            extraDice: modMeta.extraDice || null,
+            extraType: modMeta.extraType || null,
+            isSilvered: !!modMeta.isSilvered,
+            isMagical: !!modMeta.isMagical,
+            mistSight: !!modMeta.mistSight,
+            spellAtkBonus: modMeta.spellAtkBonus || 0,
+            supportsTier2: !!modMeta.supportsTier2,
+            badgeLabel: modMeta.badgeLabel || shortLabel(rawMod)
+        };
+        saveWeaponModsStore(store);
+
+        adapter.log(`Attached <strong>${esc(shortLabel(rawMod))}</strong> onto <strong>${esc(wpn.label)}</strong>!`);
+        closeModal('rpg-weapon-mod-dialog');
+        applyEquipmentToSheet(true);
+        refreshAllAmmoDisplays();
+    }
+
     function getActionEconomyNote(ammoItem, weaponMeta) {
         if (!ammoItem) return 'Bonus action in combat (free pre-combat).';
         if (ammoItem.ammoId === 'sharpness' && ammoItem.isCoating) {
@@ -2380,6 +3168,9 @@
     }
 
     function getWeaponCoatingCeiling(ammoItem, weaponMeta) {
+        if (weaponMeta && !weaponMeta.isRanged && weaponMeta.kind === 'melee') {
+            return ammoItem && ammoItem.isCoating ? 1 : 0;
+        }
         const chamberInfo = (adapter && typeof adapter.getWeaponCurrentChamber === 'function')
             ? adapter.getWeaponCurrentChamber(weaponMeta.id)
             : null;
@@ -2401,20 +3192,39 @@
 
     function computeMaxLoadUnits(ammoItem, weaponMeta) {
         if (!ammoItem || !weaponMeta) return 0;
+        if (!weaponMeta.isRanged && weaponMeta.kind === 'melee') {
+            if (!ammoItem.isCoating || !ammoItem.coatMelee) return 0;
+            const ok = ammoItem.coatMelee.targetClasses.some(cls => weaponMeta.classes && weaponMeta.classes.has(cls));
+            return ok ? Math.min(ammoItem.unitCount, 1) : 0;
+        }
         if ((ammoItem.ammoKind === 'firearm' || weaponMeta.kind === 'firearm') && !hasBulletContainerInBag()) {
             return 0;
         }
         const freeCap = getWeaponCoatingCeiling(ammoItem, weaponMeta);
         if (freeCap <= 0) return 0;
-        if (ammoItem.isCoating && ammoItem.coatingRounds > 1) {
+        if (ammoItem.isCoating && (ammoItem.coatingFullMag || ammoItem.coatingRounds > 1)) {
             return Math.min(ammoItem.unitCount, 1);
         }
         return Math.min(ammoItem.unitCount, freeCap);
     }
 
+    function getCoatableOrLoadableTargets(ammoItem) {
+        const ranged = getHeroWeaponsForAmmo(true).map(w => ({
+            ...w,
+            isRanged: true,
+            classes: classifyWeaponClasses(w.label || w.id, { ammoKind: w.kind })
+        }));
+        if (!ammoItem || !ammoItem.isCoating) {
+            return ranged.filter(w => !ammoItem || w.kind === ammoItem.ammoKind);
+        }
+        const allWpns = getHeroAllWeapons(true);
+        const melee = allWpns.filter(w => !w.isRanged && ammoItem.coatMelee && ammoItem.coatMelee.targetClasses.some(cls => w.classes.has(cls)));
+        return [...ranged, ...melee];
+    }
+
     function openAmmoLoaderModal({ invIndex = null, targetWeaponId = null } = {}) {
         if (!adapter) return;
-        const weapons = getHeroWeaponsForAmmo(true);
+        const weapons = getHeroAllWeapons(true);
         const targetWeapon = targetWeaponId ? weapons.find(w => w.id === targetWeaponId) : null;
         if (targetWeapon && targetWeapon.kind === 'firearm' && !hasBulletContainerInBag()) {
             adapter.log(`<strong>Firearm Load Locked:</strong> Carry a <strong>Partitioned Bullet Sling &amp; Pouch</strong> (15 GP in any shop) in your Backpack first.`);
@@ -2423,7 +3233,7 @@
         if (invIndex !== null && invIndex !== undefined) {
             const rawInv = adapter.getItems()[invIndex];
             const invMeta = rawInv ? getItemMeta(rawInv) : null;
-            if (invMeta && invMeta.ammoMeta && invMeta.ammoMeta.ammoKind === 'firearm' && !hasBulletContainerInBag()) {
+            if (invMeta && invMeta.ammoMeta && !invMeta.ammoMeta.isCoating && invMeta.ammoMeta.ammoKind === 'firearm' && !hasBulletContainerInBag()) {
                 adapter.log(`<strong>Firearm Load Locked:</strong> Buy a <strong>Partitioned Bullet Sling &amp; Pouch</strong> (15 GP in any shop) to carry and load special firearm rounds.`);
                 return;
             }
@@ -2437,17 +3247,17 @@
             : null;
         if (!chosenInv && allItems.length > 0) chosenInv = allItems[0];
 
+        const targets = chosenInv ? getCoatableOrLoadableTargets(chosenInv) : weapons;
         let chosenWeapon = targetWeapon || null;
         if (!chosenWeapon && chosenInv) {
-            const compat = weapons.filter(w => chosenInv.isCoating || w.kind === chosenInv.ammoKind);
-            chosenWeapon = compat.find(w => computeMaxLoadUnits(chosenInv, w) > 0) || compat[0] || null;
+            chosenWeapon = targets.find(w => computeMaxLoadUnits(chosenInv, w) > 0) || targets[0] || null;
         }
-        if (!chosenWeapon && weapons.length > 0) chosenWeapon = weapons[0];
+        if (!chosenWeapon && targets.length > 0) chosenWeapon = targets[0];
 
         const maxQty = (chosenInv && chosenWeapon) ? computeMaxLoadUnits(chosenInv, chosenWeapon) : 0;
         let defQty = 1;
         if (chosenInv && maxQty > 0) {
-            if (chosenInv.isCoating && chosenInv.coatingRounds > 1) defQty = 1;
+            if (chosenInv.isCoating && (chosenInv.coatingFullMag || chosenInv.coatingRounds > 1)) defQty = 1;
             else defQty = Math.min(maxQty, chosenWeapon && chosenWeapon.maxCap ? chosenWeapon.maxCap : Math.min(maxQty, 10));
         }
 
@@ -2465,15 +3275,17 @@
     function renderAmmoLoaderModal() {
         const body = document.getElementById('rpg-ammo-loader-body');
         const confirmBtn = document.getElementById('rpg-ammo-loader-confirm');
+        const titleEl = document.getElementById('rpg-ammo-loader-title');
         if (!body) return;
 
-        const weapons = getHeroWeaponsForAmmo(true);
-        const curWeapon = weapons.find(w => w.id === ammoLoaderState.weaponId) || null;
+        const allAll = getHeroAllWeapons(true);
+        const rangedAll = allAll.filter(w => w.isRanged);
+        const curWeapon = allAll.find(w => w.id === ammoLoaderState.weaponId) || rangedAll[0] || null;
         const loadable = getLoadableAmmoItemsFromBackpack(null);
         const curAmmo = loadable.find(it => it.invIndex === ammoLoaderState.invIndex) || null;
 
         const compatAmmo = curWeapon && !ammoLoaderState.lockedFromInv
-            ? loadable.filter(it => it.isCoating || it.ammoKind === curWeapon.kind)
+            ? loadable.filter(it => (it.isCoating && (!curWeapon.isRanged ? (it.coatMelee && it.coatMelee.targetClasses.some(cls => curWeapon.classes.has(cls))) : true)) || (!it.isCoating && curWeapon.isRanged && it.ammoKind === curWeapon.kind))
             : loadable;
         const activeAmmo = curAmmo && compatAmmo.some(a => a.invIndex === curAmmo.invIndex)
             ? curAmmo
@@ -2481,12 +3293,19 @@
         ammoLoaderState.invIndex = activeAmmo ? activeAmmo.invIndex : null;
 
         const compatWeapons = activeAmmo
-            ? weapons.filter(w => activeAmmo.isCoating || w.kind === activeAmmo.ammoKind)
-            : weapons;
+            ? getCoatableOrLoadableTargets(activeAmmo)
+            : rangedAll;
         const activeWeapon = curWeapon && compatWeapons.some(w => w.id === curWeapon.id)
             ? curWeapon
-            : (compatWeapons[0] || null);
+            : (compatWeapons.find(w => computeMaxLoadUnits(activeAmmo, w) > 0) || compatWeapons[0] || null);
         ammoLoaderState.weaponId = activeWeapon ? activeWeapon.id : null;
+
+        if (titleEl) {
+            titleEl.textContent = (activeAmmo && activeAmmo.isCoating) ? 'Coat Weapon or Ammunition' : 'Load Specialty Ammunition';
+        }
+        if (confirmBtn) {
+            confirmBtn.textContent = (activeAmmo && activeAmmo.isCoating) ? 'Apply Coating' : 'Load into Weapon';
+        }
 
         const maxUnits = (activeAmmo && activeWeapon) ? computeMaxLoadUnits(activeAmmo, activeWeapon) : 0;
         const safeQty = maxUnits > 0 ? Math.max(1, Math.min(maxUnits, parseInt(ammoLoaderState.qty) || 1)) : 0;
@@ -2496,7 +3315,7 @@
             ? `<div class="rpg-loader-choice-grid">${compatAmmo.map(a => {
                 const isSel = activeAmmo && a.invIndex === activeAmmo.invIndex;
                 const stockLabel = a.isCoating
-                    ? (a.coatingRounds > 1 ? `${a.unitCount} vial (coats up to ${a.coatingRounds})` : `${a.unitCount} dose (1 round/dose)`)
+                    ? (a.coatingFullMag ? `${a.unitCount} vial (Full Mag / Blade)` : (a.coatingRounds > 1 ? `${a.unitCount} vial (up to ${a.coatingRounds} rnds / Blade)` : `${a.unitCount} dose (Blade or 1 rnd/dose)`))
                     : `${a.unitCount} rounds left`;
                 return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" onclick="COS_RPG.selectLoaderAmmo(${a.invIndex})">
                     <span><strong>${esc(a.label)}</strong><br><small style="color:#94a3b8;">${esc(a.ammoDef.badge)}</small></span>
@@ -2507,6 +3326,15 @@
 
         const wpnHtml = compatWeapons.length > 0
             ? `<div class="rpg-loader-choice-grid">${compatWeapons.map(w => {
+                const isSel = activeWeapon && w.id === activeWeapon.id;
+                if (!w.isRanged && w.kind === 'melee') {
+                    const curCoat = getWeaponMeleeCoating(w.id);
+                    const tag = curCoat ? `Coated: ${curCoat.label} (Replaces)` : (w.isEquipped ? 'Equipped Melee' : 'In Backpack');
+                    return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" onclick="COS_RPG.selectLoaderWeapon(decodeURIComponent('${encArg(w.id)}'))">
+                        <span><strong>${esc(w.label)}</strong><br><small style="color:#94a3b8;">MELEE BLADE / HEAD</small></span>
+                        <span class="rpg-loader-cap">${esc(tag)}</span>
+                    </button>`;
+                }
                 const entry = getWeaponAmmoEntry(w.id);
                 const chamberInfo = (adapter && typeof adapter.getWeaponCurrentChamber === 'function')
                     ? adapter.getWeaponCurrentChamber(w.id)
@@ -2515,10 +3343,9 @@
                 const needsContainer = (w.kind === 'firearm' && !hasBulletContainerInBag());
                 const isFullSame = Boolean(activeAmmo && entry.loadedId === activeAmmo.ammoId && computeMaxLoadUnits(activeAmmo, w) <= 0);
                 const isDisabled = needsContainer || isCoatingEmpty || isFullSame;
-                const isSel = activeWeapon && w.id === activeWeapon.id;
                 let capText = w.maxCap ? `Max ${w.maxCap} cap` : 'Quiver Ready';
                 if (needsContainer) {
-                    capText = 'Locked (Need Cartridge Rig)';
+                    capText = 'Locked (Need Bullet Sling)';
                 } else if (entry.loadedId && entry.count > 0 && AMMO_CATALOG[entry.loadedId]) {
                     const ed = AMMO_CATALOG[entry.loadedId];
                     capText = `${ed.shortName}: ${entry.count}${w.maxCap ? '/' + w.maxCap : ''}${activeAmmo && activeAmmo.ammoId !== entry.loadedId ? ' (Swaps to Bag)' : ''}`;
@@ -2533,57 +3360,70 @@
                     <span class="rpg-loader-cap">${esc(needsContainer ? 'Need Bullet Sling' : (isCoatingEmpty ? 'Empty Chamber (Reload First)' : capText))}</span>
                 </button>`;
             }).join('')}</div>`
-            : `<div style="font-size:0.74rem; color:#fca5a5;">No compatible weapon available for this ammunition type.</div>`;
+            : `<div style="font-size:0.74rem; color:#fca5a5;">No compatible weapon available for this item.</div>`;
 
         let qtyBlockHtml = '';
         if (activeAmmo && activeWeapon && maxUnits > 0) {
-            const wEntry = getWeaponAmmoEntry(activeWeapon.id);
-            const swappingOther = wEntry.loadedId && wEntry.count > 0 && wEntry.loadedId !== activeAmmo.ammoId;
-            const prevDef = swappingOther ? AMMO_CATALOG[wEntry.loadedId] : null;
-            const swapNote = swappingOther && prevDef
-                ? `<div style="color:#93c5fd; font-size:0.7rem; margin-top:4px;">Loading ${esc(activeAmmo.ammoDef.shortName)} will automatically return your <strong>${wEntry.count}x ${esc(prevDef.shortName)}</strong> rounds back to Backpack (1 specialty type per weapon).</div>`
-                : '';
-
-            const coatCeil = getWeaponCoatingCeiling(activeAmmo, activeWeapon);
             const actionTxt = getActionEconomyNote(activeAmmo, activeWeapon);
-            if (activeAmmo.isCoating && activeAmmo.coatingRounds > 1) {
-                const coatedCount = Math.min(activeAmmo.coatingRounds, coatCeil);
+            if (!activeWeapon.isRanged && activeWeapon.kind === 'melee' && activeAmmo.coatMelee) {
                 qtyBlockHtml = `
                     <div class="rpg-loader-section">
-                        <div class="rpg-loader-label">Vial Coating Effect</div>
+                        <div class="rpg-loader-label">Melee Weapon Coating</div>
                         <div style="font-size:0.74rem; color:#e2e8f0; line-height:1.4;">
-                            Consumes <strong>1 vial</strong> to coat the first <strong>${coatedCount} round${coatedCount === 1 ? '' : 's'}</strong> inside <strong>${esc(activeWeapon.label)}</strong>. Those front rounds become <strong>${esc(activeAmmo.ammoDef.shortName)}</strong> and fire first (cannot switch to Standard until fired, Unloaded, or Reloaded back into Backpack).
-                            ${swapNote}
+                            Consumes <strong>1 vial/dose</strong> to coat <strong>${esc(activeWeapon.label)}</strong> with <strong>${esc(activeAmmo.coatMelee.label)}</strong> (${esc(activeAmmo.coatMelee.duration || '1 Combat')}). Attack &amp; damage rolls will apply this buff automatically!
                         </div>
                         <div class="rpg-loader-action-note">${esc(actionTxt)}</div>
                     </div>
                 `;
             } else {
-                const isDose = activeAmmo.isCoating && activeAmmo.coatingRounds === 1;
-                qtyBlockHtml = `
-                    <div class="rpg-loader-section">
-                        <div class="rpg-loader-label">Quantity (${isDose ? '1 coated round per dose' : `1..${maxUnits}`})</div>
-                        <div class="rpg-loader-qty-row">
-                            <button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.stepLoaderQty(-1)" aria-label="Decrease quantity">-</button>
-                            <input type="number" id="rpg-loader-qty-inp" class="rpg-loader-qty-input" min="1" max="${maxUnits}" value="${safeQty}" oninput="COS_RPG.setLoaderQty(this.value, true)">
-                            <button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.stepLoaderQty(1)" aria-label="Increase quantity">+</button>
-                            <button type="button" class="rpg-ammo-act-btn is-load" onclick="COS_RPG.setLoaderQty(${maxUnits})">Max (${maxUnits})</button>
+                const wEntry = getWeaponAmmoEntry(activeWeapon.id);
+                const swappingOther = wEntry.loadedId && wEntry.count > 0 && wEntry.loadedId !== activeAmmo.ammoId;
+                const prevDef = swappingOther ? AMMO_CATALOG[wEntry.loadedId] : null;
+                const swapNote = swappingOther && prevDef
+                    ? `<div style="color:#93c5fd; font-size:0.7rem; margin-top:4px;">Applying ${esc(activeAmmo.ammoDef.shortName)} will automatically return your <strong>${wEntry.count}x ${esc(prevDef.shortName)}</strong> rounds back to Backpack (1 specialty type per weapon).</div>`
+                    : '';
+
+                const coatCeil = getWeaponCoatingCeiling(activeAmmo, activeWeapon);
+                if (activeAmmo.isCoating && (activeAmmo.coatingFullMag || activeAmmo.coatingRounds > 1)) {
+                    const capLimit = activeAmmo.coatingFullMag ? coatCeil : activeAmmo.coatingRounds;
+                    const coatedCount = Math.min(capLimit, coatCeil);
+                    qtyBlockHtml = `
+                        <div class="rpg-loader-section">
+                            <div class="rpg-loader-label">Vial Coating Effect</div>
+                            <div style="font-size:0.74rem; color:#e2e8f0; line-height:1.4;">
+                                Consumes <strong>1 vial</strong> to coat ${activeAmmo.coatingFullMag ? 'the full magazine (' : 'the first '}<strong>${coatedCount} round${coatedCount === 1 ? '' : 's'}</strong>${activeAmmo.coatingFullMag ? ')' : ''} inside <strong>${esc(activeWeapon.label)}</strong>. Those rounds become <strong>${esc(activeAmmo.ammoDef.shortName)}</strong> and fire first (unspent rounds return to Backpack on Reload/Unload).
+                                ${swapNote}
+                            </div>
+                            <div class="rpg-loader-action-note">${esc(actionTxt)}</div>
                         </div>
-                        ${isDose ? '<div style="font-size:0.7rem; color:#cbd5e1; margin-top:4px;">Coated front rounds fire first and return to Backpack as coated rounds if unloaded/reloaded.</div>' : ''}
-                        ${swapNote}
-                        <div class="rpg-loader-action-note">${esc(actionTxt)}</div>
-                    </div>
-                `;
+                    `;
+                } else {
+                    const isDose = activeAmmo.isCoating && activeAmmo.coatingRounds === 1;
+                    qtyBlockHtml = `
+                        <div class="rpg-loader-section">
+                            <div class="rpg-loader-label">Quantity (${isDose ? '1 coated round per dose' : `1..${maxUnits}`})</div>
+                            <div class="rpg-loader-qty-row">
+                                <button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.stepLoaderQty(-1)" aria-label="Decrease quantity">-</button>
+                                <input type="number" id="rpg-loader-qty-inp" class="rpg-loader-qty-input" min="1" max="${maxUnits}" value="${safeQty}" oninput="COS_RPG.setLoaderQty(this.value, true)">
+                                <button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.stepLoaderQty(1)" aria-label="Increase quantity">+</button>
+                                <button type="button" class="rpg-ammo-act-btn is-load" onclick="COS_RPG.setLoaderQty(${maxUnits})">Max (${maxUnits})</button>
+                            </div>
+                            ${isDose ? '<div style="font-size:0.7rem; color:#cbd5e1; margin-top:4px;">Coated front rounds fire first and return to Backpack as coated rounds if unloaded/reloaded.</div>' : ''}
+                            ${swapNote}
+                            <div class="rpg-loader-action-note">${esc(actionTxt)}</div>
+                        </div>
+                    `;
+                }
             }
         }
 
         body.innerHTML = `
             <div class="rpg-loader-section">
-                <div class="rpg-loader-label">1. Select Ammunition / Coating</div>
+                <div class="rpg-loader-label">1. Select Ammunition / Vial</div>
                 ${ammoHtml}
             </div>
             <div class="rpg-loader-section">
-                <div class="rpg-loader-label">2. Select Target Weapon (1 Specialty Type Max)</div>
+                <div class="rpg-loader-label">2. Select Applicable Weapon</div>
                 ${wpnHtml}
             </div>
             ${qtyBlockHtml}
@@ -2595,9 +3435,35 @@
         if (!adapter) return;
         const loadable = getLoadableAmmoItemsFromBackpack(null);
         const ammoItem = loadable.find(it => it.invIndex === ammoLoaderState.invIndex);
-        const weapons = getHeroWeaponsForAmmo(true);
-        const weaponMeta = weapons.find(w => w.id === ammoLoaderState.weaponId);
+        const allWeapons = getCoatableOrLoadableTargets(ammoItem);
+        const weaponMeta = allWeapons.find(w => w.id === ammoLoaderState.weaponId);
         if (!ammoItem || !weaponMeta) return;
+
+        // Branch A: Applying Vial/Oil Coating onto a Melee Weapon
+        if (!weaponMeta.isRanged && weaponMeta.kind === 'melee') {
+            if (!ammoItem.isCoating || !ammoItem.coatMelee) return;
+            const items = adapter.getItems();
+            const raw = items[ammoItem.invIndex];
+            if (!raw) return;
+            const p = parseItem(raw);
+            const remVials = (p.qty || 1) - 1;
+            if (remVials <= 0) items.splice(ammoItem.invIndex, 1);
+            else items[ammoItem.invIndex] = `${p.emoji}${remVials > 1 ? remVials + 'x ' : ''}${p.name}`.trim();
+            adapter.saveItems(items);
+
+            const coatStore = getWeaponCoatingStore();
+            coatStore.coatings[weaponMeta.id] = {
+                ...ammoItem.coatMelee,
+                vialName: ammoItem.label
+            };
+            saveWeaponCoatingStore(coatStore);
+
+            adapter.log(`Coated <strong>${esc(weaponMeta.label)}</strong> with <strong>${esc(ammoItem.coatMelee.label)}</strong> (${esc(ammoItem.coatMelee.duration || '1 Combat')} &bull; ${esc(getActionEconomyNote(ammoItem, weaponMeta))}).`);
+            closeModal('rpg-ammo-loader-dialog');
+            applyEquipmentToSheet(true);
+            refreshAllAmmoDisplays();
+            return;
+        }
 
         if ((ammoItem.ammoKind === 'firearm' || weaponMeta.kind === 'firearm') && !hasBulletContainerInBag()) {
             adapter.log(`<strong>Firearm Load Locked:</strong> Carry a <strong>Partitioned Bullet Sling &amp; Pouch</strong> (15 GP in any shop) in your Backpack first.`);
@@ -2615,7 +3481,8 @@
         let roundsToAdd = 0;
         let unitsConsumed = reqUnits;
         if (ammoItem.isCoating) {
-            roundsToAdd = Math.min(ammoItem.coatingRounds * unitsConsumed, coatCeil);
+            const perVial = ammoItem.coatingFullMag ? coatCeil : ammoItem.coatingRounds;
+            roundsToAdd = Math.min(perVial * unitsConsumed, coatCeil);
         } else {
             roundsToAdd = Math.min(reqUnits, coatCeil);
             unitsConsumed = roundsToAdd;
@@ -2682,8 +3549,10 @@
         const items = itemsOverride || (adapter ? adapter.getItems() : []);
         const lower = String(spec).toLowerCase().trim();
         if (!lower) return null;
+        const cleanLower = lower.replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim();
         return items.find(r => normKey(r) === lower)
             || items.find(r => r.toLowerCase().includes(lower))
+            || (cleanLower ? items.find(r => normKey(r) === cleanLower || r.toLowerCase().includes(cleanLower)) : null)
             || null;
     }
 
@@ -2813,27 +3682,40 @@
     function isRecipeUnlocked(recipe) {
         if (!recipe) return false;
         if (recipe.unlocked) return true;
-        return getUnlockedRecipeIds().includes(recipe.id) || getFbUnlockedRecipeIds().includes(recipe.id);
+        const idsToCheck = [recipe.id, ...(Array.isArray(recipe.legacyIds) ? recipe.legacyIds : [])];
+        const localIds = getUnlockedRecipeIds();
+        const fbIds = getFbUnlockedRecipeIds();
+        return idsToCheck.some(id => localIds.includes(id) || fbIds.includes(id));
+    }
+
+    function unlockRecipeById(recipeId) {
+        const match = CRAFTING_RECIPES.find(r => r.id === recipeId || (Array.isArray(r.legacyIds) && r.legacyIds.includes(recipeId)));
+        if (!match) return false;
+        const unlocked = getUnlockedRecipeIds();
+        if (!unlocked.includes(match.id)) {
+            unlocked.push(match.id);
+            localStorage.setItem(getUnlockedRecipesKey(), JSON.stringify(unlocked));
+        }
+        adapter.log(`🔓 <strong>Recipe Unlocked: ${esc(match.name)} (${esc(match.badge)})!</strong> Added permanently to your Crafting Workbench.`);
+        applyEquipmentToSheet(true);
+        renderCraftModal();
+        return true;
     }
 
     function unlockRecipeByCode(rawCode) {
         const inp = document.getElementById('rpg-unlock-recipe-input');
         const code = String(rawCode !== undefined ? rawCode : (inp ? inp.value : '')).trim().toUpperCase();
         if (!code) return;
-        const match = CRAFTING_RECIPES.find(r => r.unlockCode && r.unlockCode.toUpperCase() === code);
+        const match = CRAFTING_RECIPES.find(r =>
+            (r.unlockCode && r.unlockCode.toUpperCase() === code) ||
+            (Array.isArray(r.unlockAliases) && r.unlockAliases.some(a => a.toUpperCase() === code))
+        );
         if (!match) {
             adapter.log(`⚠️ <strong>Unknown Recipe Code:</strong> "${esc(code)}". Check the formula code given by the DM.`);
             return;
         }
-        const unlocked = getUnlockedRecipeIds();
-        if (!unlocked.includes(match.id)) {
-            unlocked.push(match.id);
-            localStorage.setItem(getUnlockedRecipesKey(), JSON.stringify(unlocked));
-        }
         if (inp) inp.value = '';
-        adapter.log(`🔓 <strong>Recipe Unlocked: ${esc(match.name)} (${esc(match.badge)})!</strong> Added permanently to your Crafting Workbench.`);
-        applyEquipmentToSheet(true);
-        renderCraftModal();
+        unlockRecipeById(match.id);
     }
 
     function getCustomGearMap() {
@@ -2883,7 +3765,14 @@
     function findInventoryIndexByKey(itemKey) {
         if (!itemKey) return -1;
         const items = adapter.getItems();
-        return items.findIndex(raw => normKey(raw) === itemKey);
+        let idx = items.findIndex(raw => normKey(raw) === itemKey);
+        if (idx === -1) {
+            const cleanTarget = String(itemKey).replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim();
+            if (cleanTarget) {
+                idx = items.findIndex(raw => normKey(raw).replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim() === cleanTarget);
+            }
+        }
+        return idx;
     }
 
     function findInventoryRawByKey(itemKey) {
@@ -3019,6 +3908,14 @@
             if (meta.weaponTag) bonuses.equippedWeaponTags.push({ tag: meta.weaponTag, slot: s.id, grip: s.id === 'mainHand' && bonuses.mainHand2H ? '2h' : '1h', raw, meta });
             if (meta.grantsAbility) bonuses.equippedAbilities.push(meta.grantsAbility);
             if (meta.summary) bonuses.activePerks.push(`<strong>${esc(shortLabel(raw))}:</strong> ${esc(meta.summary)}`);
+            if (['mainHand', 'offHand', 'ranged', 'legSheath'].includes(s.id) && meta.category === 'weapon' && !meta.isShield) {
+                const nativeSet = new Set(adapter.nativeWeaponTags || []);
+                const wId = (meta.weaponTag && nativeSet.has(meta.weaponTag)) ? meta.weaponTag : k;
+                const wCombat = getWeaponCombatMods(wId);
+                if (wCombat.spellAtkBonus) bonuses.spellAtkBonus += wCombat.spellAtkBonus;
+                if (wCombat.mod) bonuses.activePerks.push(`<strong>${esc(shortLabel(raw))} Mod:</strong> ${esc(wCombat.mod.badge || wCombat.mod.modName)}`);
+                if (wCombat.coating) bonuses.activePerks.push(`<strong>${esc(shortLabel(raw))} Coating:</strong> ${esc(wCombat.coating.label)}`);
+            }
         }
 
         return bonuses;
@@ -3093,15 +3990,19 @@
             shotInfo = consumeWeaponAmmo(weaponId);
         }
         const aDef = shotInfo && shotInfo.def ? shotInfo.def : null;
-        const effAtkBonus = st.atkBonus + (aDef ? (aDef.atkBonus || 0) : 0);
-        const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0);
+        const wCombat = getWeaponCombatMods(weaponId);
+        const effAtkBonus = st.atkBonus + (aDef ? (aDef.atkBonus || 0) : 0) + wCombat.atkBonus;
+        const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0) + wCombat.dmgBonus;
         const d20 = Math.floor(Math.random() * 20) + 1;
         const total = d20 + effAtkBonus;
         const name = shortLabel(raw);
         const ammoTag = aDef
             ? ` <span style="color:#e2e8f0; font-size:0.74rem; font-weight:700;">[${esc(aDef.shortName)} &bull; ${shotInfo.remaining} left${shotInfo.exhausted ? ' &mdash; last loaded round fired' : ''}]</span>`
             : '';
-        const effDmgType = (aDef && aDef.isSilvered && !String(st.dmgType).toLowerCase().includes('silver'))
+        const modBadgeTag = wCombat.mod ? ` <span style="color:#93c5fd; font-size:0.72rem;">[${esc(wCombat.mod.badge)}]</span>` : '';
+        const coatBadgeTag = wCombat.coating ? ` <span style="color:#6ee7b7; font-size:0.72rem;">[${esc(wCombat.coating.label)}]</span>` : '';
+        const makeSilver = Boolean((aDef && aDef.isSilvered) || wCombat.isSilvered);
+        const effDmgType = (makeSilver && !String(st.dmgType).toLowerCase().includes('silver'))
             ? `Silvered ${st.dmgType}`
             : st.dmgType;
 
@@ -3119,11 +4020,16 @@
                 critTotal += exA.max + exA.sum;
                 extraHtml += ` + ${exA.max}+[${exA.rolls.join('+')}](${esc(aDef.extraType || aDef.shortName)})`;
             }
-            adapter.log(`<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>] + ${effAtkBonus} = <strong>${total} to Hit</strong>!${ammoTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${effDmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!`);
+            wCombat.extras.forEach(exM => {
+                const exR = rollDiceExpr(exM.dice);
+                critTotal += exR.max + exR.sum;
+                extraHtml += ` + ${exR.max}+[${exR.rolls.join('+')}](${esc(exM.type)})`;
+            });
+            adapter.log(`<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>] + ${effAtkBonus} = <strong>${total} to Hit</strong>!${ammoTag}${modBadgeTag}${coatBadgeTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${effDmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!`);
             return;
         }
         const tag = d20 === 1 ? ' <strong style="color:#f87171;">(NAT 1 MISS!)</strong>' : '';
-        adapter.log(`<strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>] + ${effAtkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}${ammoTag}`);
+        adapter.log(`<strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>] + ${effAtkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}${ammoTag}${modBadgeTag}${coatBadgeTag}`);
     }
 
     function rollDynamicWeaponDamage(invIdx) {
@@ -3133,7 +4039,8 @@
         const st = resolveWeaponCombatStats(raw, meta);
         const weaponId = normKey(raw);
         const aDef = meta.ammoKind ? getWeaponLastShotDef(weaponId) : null;
-        const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0);
+        const wCombat = getWeaponCombatMods(weaponId);
+        const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0) + wCombat.dmgBonus;
         const base = rollDiceExpr(st.dmgDice);
         let total = base.sum + effDmgBonus;
         let breakdown = `${st.dmgDice}[<strong>${base.rolls.join('+')}</strong>]${effDmgBonus ? (effDmgBonus > 0 ? ' + ' + effDmgBonus : ' - ' + Math.abs(effDmgBonus)) : ''}`;
@@ -3147,17 +4054,39 @@
             total += exA.sum;
             breakdown += ` + <span style="color:#fde68a;">${aDef.extraDice}[${exA.rolls.join('+')} ${esc(aDef.extraType || aDef.shortName)}]</span>`;
         }
-        const isSilv = Boolean(aDef && aDef.isSilvered);
+        wCombat.extras.forEach(exM => {
+            const exR = rollDiceExpr(exM.dice);
+            total += exR.sum;
+            breakdown += ` + <span style="color:#fde68a;">${exM.dice}[${exR.rolls.join('+')} ${esc(exM.type)}]</span>`;
+        });
+        const isSilv = Boolean((aDef && aDef.isSilvered) || wCombat.isSilvered);
         const effDmgType = (isSilv && !String(st.dmgType).toLowerCase().includes('silver'))
             ? `Silvered ${st.dmgType}`
             : st.dmgType;
         const notes = [];
         if (isSilv || String(effDmgType).toLowerCase().includes('silver')) notes.push('Bypasses Werewolf, Vampire &amp; Hag resistance');
+        if (wCombat.isMagical) notes.push('Counts as Magical');
         if (aDef && aDef.haltsRegen) notes.push('Halts Vampire Regeneration for 1 round');
         if (aDef && aDef.blocksHealing) notes.push('Target cannot regain HP until start of your next turn');
         if (aDef && aDef.saveNote) notes.push(esc(aDef.saveNote));
+        wCombat.saveNotes.forEach(sn => notes.push(esc(sn)));
         const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.join(' &bull; ')})</small>` : '';
         adapter.log(`<strong>${esc(shortLabel(raw))} Damage:</strong> ${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(effDmgType)} Damage</span>!${noteHtml}`);
+    }
+
+    function buildWeaponModAndCoatingBadgesHtml(weaponId) {
+        const wCombat = getWeaponCombatMods(weaponId);
+        const pills = [];
+        if (wCombat.mod) {
+            const tierBtn = wCombat.mod.supportsTier2
+                ? ` <button type="button" class="rpg-mini-btn" style="min-block-size:18px; padding:0 5px; font-size:0.62rem;" onclick="COS_RPG.toggleWeaponModTier(decodeURIComponent('${encArg(weaponId)}'))" title="Toggle Act II (+1) / Act III (+2)">${wCombat.mod.tier === 2 ? 'Act III +2' : '+1 Tier'}</button>`
+                : '';
+            pills.push(`<span class="rpg-card-equipped-pill" style="background:rgba(59,130,246,0.16); color:#93c5fd; border-color:rgba(59,130,246,0.45);">Attached: ${esc(wCombat.mod.badge)}${tierBtn} <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:18px; padding:0 5px; font-size:0.62rem;" onclick="COS_RPG.detachWeaponMod(decodeURIComponent('${encArg(weaponId)}'))">Detach</button></span>`);
+        }
+        if (wCombat.coating) {
+            pills.push(`<span class="rpg-card-equipped-pill" style="background:rgba(16,185,129,0.16); color:#6ee7b7; border-color:rgba(52,211,153,0.45);">Coated: ${esc(wCombat.coating.label)} <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:18px; padding:0 5px; font-size:0.62rem;" onclick="COS_RPG.clearWeaponMeleeCoating(decodeURIComponent('${encArg(weaponId)}'))">Clear</button></span>`);
+        }
+        return pills.length ? `<div style="display:flex; flex-wrap:wrap; gap:4px; margin:4px 0;">${pills.join('')}</div>` : '';
     }
 
     function renderDynamicWeaponCards(bonuses) {
@@ -3184,13 +4113,19 @@
             const st = resolveWeaponCombatStats(raw, meta);
             const weaponId = normKey(raw);
             const aDef = meta.ammoKind ? getActiveWeaponAmmoDef(weaponId) : null;
-            const effAtk = st.atkBonus + (aDef ? (aDef.atkBonus || 0) : 0);
-            const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0);
+            const wCombat = getWeaponCombatMods(weaponId);
+            const effAtk = st.atkBonus + (aDef ? (aDef.atkBonus || 0) : 0) + wCombat.atkBonus;
+            const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0) + wCombat.dmgBonus;
             const dmgParts = [`${st.dmgDice}${effDmgBonus ? (effDmgBonus > 0 ? '+' + effDmgBonus : effDmgBonus) : ''}`];
             if (st.extraDice) dmgParts.push(`+${st.extraDice}`);
             if (aDef && aDef.extraDice) dmgParts.push(`+${aDef.extraDice}`);
+            wCombat.extras.forEach(exM => dmgParts.push(`+${exM.dice}`));
             const dmgLabel = dmgParts.join(' ');
+            const effDmgType = ((wCombat.isSilvered || (aDef && aDef.isSilvered)) && !String(st.dmgType).toLowerCase().includes('silver'))
+                ? `Silvered ${st.dmgType}`
+                : st.dmgType;
             const ammoStripHtml = meta.ammoKind ? buildWeaponAmmoBarHtml(weaponId, { id: weaponId, kind: meta.ammoKind, maxCap: detectWeaponMaxCap(raw, meta) }) : '';
+            const modCoatHtml = buildWeaponModAndCoatingBadgesHtml(weaponId);
             const card = document.createElement('div');
             card.className = 'action-card rpg-dyn-weapon-card';
             card.style.borderLeft = '3px solid #f59e0b';
@@ -3200,11 +4135,12 @@
                         <div onclick="COS_RPG.openItemDetails(${idx})" style="cursor:pointer; color:#f8fafc;">
                             ${esc(shortLabel(raw))} <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                         </div>
-                        <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Equipped in ${slotObj.label}${slotId === 'mainHand' && bonuses.mainHand2H ? ' (2-Handed)' : ''} • +${effAtk} Hit • ${esc(dmgLabel)} ${esc(st.dmgType)}</div>
+                        <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Equipped in ${slotObj.label}${slotId === 'mainHand' && bonuses.mainHand2H ? ' (2-Handed)' : ''} • +${effAtk} Hit • ${esc(dmgLabel)} ${esc(effDmgType)}</div>
                     </div>
                     <span class="rpg-card-equipped-pill">WORN</span>
                 </div>
                 <div class="action-desc">${esc(meta.summary || 'Equipped weapon from Backpack.')}</div>
+                ${modCoatHtml}
                 ${ammoStripHtml}
                 <div class="action-btn-row" style="flex-wrap:wrap;">
                     <button type="button" class="btn-roll-action" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${effAtk})</button>
@@ -3806,13 +4742,24 @@
         const parsed = parseItem(raw);
         if (!meta.useAction) return;
 
+        const act = meta.useAction;
+        if (act.type === 'learnRecipe' && act.recipeId) {
+            const rec = CRAFTING_RECIPES.find(r => r.id === act.recipeId);
+            if (rec && isRecipeUnlocked(rec)) {
+                adapter.log(`Already learned recipe: <strong>${esc(rec.name)}</strong> (${esc(rec.badge)}).`);
+                return;
+            }
+            if (unlockRecipeById(act.recipeId)) {
+                adapter.log(`Studied <strong>${esc(shortLabel(raw))}</strong> — unlocked <strong>${esc(rec ? rec.name : act.recipeId)}</strong> on your Crafting Workbench.`);
+            }
+            return;
+        }
+
         // Deduct 1 from inventory
         const newQty = parsed.qty - 1;
         if (newQty <= 0) items.splice(invIndex, 1);
         else items[invIndex] = `${parsed.emoji}${newQty > 1 ? newQty + 'x ' : ''}${parsed.name}`.trim();
         adapter.saveItems(items);
-
-        const act = meta.useAction;
         if (act.type === 'heal') {
             let rolls = [], sum = 0;
             for (let i = 0; i < act.dice; i++) {
@@ -3847,6 +4794,8 @@
     // UNIFIED CRAFTING ENGINE
     // =========================================================================
     function matchesIngredient(itemName, keyword) {
+        const meta = getItemMeta(itemName);
+        if (meta && meta.useAction && meta.useAction.type === 'learnRecipe') return false;
         const low = String(itemName || '').toLowerCase();
         if (Array.isArray(keyword)) {
             return keyword.some(k => low.includes(String(k).toLowerCase()));
@@ -4054,6 +5003,8 @@
             notes: notesList,
             weaponAmmo: getWeaponAmmoStore().weapons,
             ammoState: getAmmoState(),
+            weaponMods: getWeaponModsStore().mods,
+            weaponCoatings: getWeaponCoatingStore().coatings,
             dmOverrideActive: isDmOverrideActive(),
             resourcesSummary: resSummary,
             sheetExportStr: sheetStr,
@@ -4078,6 +5029,8 @@
                     it: snap.items,
                     nt: snap.notes,
                     am: snap.ammoState,
+                    wm: snap.weaponMods,
+                    wc: snap.weaponCoatings,
                     ov: snap.dmOverrideActive,
                     rs: snap.resourcesSummary
                 });
@@ -4863,8 +5816,8 @@
                     </div>
                 </dialog>
 
-                <!-- PER-WEAPON SPECIALTY AMMO LOADER MODAL -->
-                <dialog class="rpg-dialog" id="rpg-ammo-loader-dialog" closedby="any" aria-labelledby="rpg-ammo-loader-title" style="max-width:460px;">
+                <!-- PER-WEAPON SPECIALTY AMMO & COATING MODAL -->
+                <dialog class="rpg-dialog" id="rpg-ammo-loader-dialog" closedby="any" aria-labelledby="rpg-ammo-loader-title" style="max-width:480px;">
                     <div class="rpg-modal-shell">
                         <div class="rpg-modal-head">
                             <h2 id="rpg-ammo-loader-title">Load Specialty Ammunition</h2>
@@ -4874,6 +5827,21 @@
                         <div class="rpg-modal-foot">
                             <button type="button" class="rpg-mini-btn" onclick="COS_RPG.closeModal('rpg-ammo-loader-dialog')">Cancel</button>
                             <button type="button" class="rpg-mini-btn btn-use" id="rpg-ammo-loader-confirm" onclick="COS_RPG.confirmLoadSpecialtyAmmo()">Load into Weapon</button>
+                        </div>
+                    </div>
+                </dialog>
+
+                <!-- WEAPON ATTACHMENT PICKER MODAL -->
+                <dialog class="rpg-dialog" id="rpg-weapon-mod-dialog" closedby="any" aria-labelledby="rpg-weapon-mod-title" style="max-width:460px;">
+                    <div class="rpg-modal-shell">
+                        <div class="rpg-modal-head">
+                            <h2 id="rpg-weapon-mod-title">Attach Weapon Upgrade</h2>
+                            <button type="button" class="rpg-modal-close" onclick="COS_RPG.closeModal('rpg-weapon-mod-dialog')" aria-label="Close Weapon Attachment">✕</button>
+                        </div>
+                        <div class="rpg-modal-body" id="rpg-weapon-mod-body"></div>
+                        <div class="rpg-modal-foot">
+                            <button type="button" class="rpg-mini-btn" onclick="COS_RPG.closeModal('rpg-weapon-mod-dialog')">Cancel</button>
+                            <button type="button" class="rpg-mini-btn btn-equip" id="rpg-weapon-mod-confirm" onclick="COS_RPG.confirmAttachWeaponMod()">Attach to Weapon</button>
                         </div>
                     </div>
                 </dialog>
@@ -4974,12 +5942,21 @@
             `);
         }
 
-        // Build Quick-Belt combat consumables
+        // Build Quick-Belt combat consumables & coating vials
         const quickBtns = [];
         items.forEach((raw, idx) => {
             const meta = getItemMeta(raw);
-            if (!meta.quickBelt || !meta.useAction) return;
+            if (!meta.quickBelt) return;
             const p = parseItem(raw);
+            if (meta.coatMelee && !meta.useAction) {
+                quickBtns.push(`
+                    <button type="button" class="rpg-qb-btn" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })" title="Coat Weapon or Magazine (${esc(p.name)})">
+                        Coat: ${esc(meta.coatMelee.label)}${p.qty > 1 ? ` <span style="color:#6ee7b7; font-family:'JetBrains Mono',monospace;">(${p.qty}x)</span>` : ''}
+                    </button>
+                `);
+                return;
+            }
+            if (!meta.useAction) return;
             quickBtns.push(`
                 <button type="button" class="rpg-qb-btn" onclick="COS_RPG.useConsumableByIndex(${idx})" title="1-Tap Combat Use (${esc(p.name)})">
                     ${p.emoji}${esc(meta.useAction.label)}${p.qty > 1 ? ` <span style="color:#6ee7b7; font-family:'JetBrains Mono',monospace;">(${p.qty}x)</span>` : ''}
@@ -5978,7 +6955,10 @@
             const profCheck = canEquip ? checkItemProficiency(raw, meta) : { allowed: true, requirement: '' };
             const isRestricted = canEquip && !profCheck.allowed && !dmOverrideOn;
             const hasLoadableAmmo = Boolean(meta.ammoMeta && AMMO_CATALOG[meta.ammoMeta.ammoId]);
-            const ammoNeedsContainer = Boolean(meta.ammoMeta && meta.ammoMeta.ammoKind === 'firearm' && !hasBulletContainerInBag());
+            const isCoatingVial = Boolean(hasLoadableAmmo && meta.ammoMeta.isCoating);
+            const isAttachMod = Boolean(meta.attachMeta);
+            const ammoNeedsContainer = Boolean(hasLoadableAmmo && !isCoatingVial && meta.ammoMeta.ammoKind === 'firearm' && !hasBulletContainerInBag());
+            const isStudyAction = Boolean(meta.useAction && meta.useAction.type === 'learnRecipe');
             const catLbl = BP_CATS.find(c => c.id === meta.category)?.label || '📦 Gear';
 
             rows.push(`
@@ -6003,12 +6983,15 @@
                                 ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Requires ${esc(profCheck.requirement)} (or enable DM Override)">Restricted</button>`
                                 : `<button type="button" class="rpg-mini-btn ${isEquipped ? 'btn-equipped' : 'btn-equip'}" onclick="COS_RPG.quickToggleEquipByIndex(${idx})">${isEquipped ? 'Unequip' : 'Equip'}</button>`)
                             : ''}
+                        ${isAttachMod ? `<button type="button" class="rpg-mini-btn btn-equip" onclick="COS_RPG.openAttachmentModal({ invIndex: ${idx} })">Attach</button>` : ''}
                         ${hasLoadableAmmo
-                            ? (ammoNeedsContainer
-                                ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Buy a Partitioned Bullet Sling &amp; Pouch (15 GP in any shop) first">Load (Locked)</button>`
-                                : `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })">Load</button>`)
+                            ? (isCoatingVial
+                                ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })">Coat</button>`
+                                : (ammoNeedsContainer
+                                    ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Buy a Partitioned Bullet Sling &amp; Pouch (15 GP in any shop) first">Load (Locked)</button>`
+                                    : `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })">Load</button>`))
                             : ''}
-                        ${meta.useAction ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.useConsumableByIndex(${idx})">Use</button>` : ''}
+                        ${meta.useAction ? `<button type="button" class="rpg-mini-btn ${isStudyAction ? 'btn-equip' : 'btn-use'}" onclick="COS_RPG.useConsumableByIndex(${idx})">${isStudyAction ? 'Study' : 'Use'}</button>` : ''}
                         <button type="button" class="rpg-mini-btn btn-send" onclick="COS_RPG.openSendForItem(${idx})" title="Send to party member">Send</button>
                         <div class="inv-stepper" style="display:inline-flex; align-items:center; gap:3px; background:#090e1a; border:1px solid #334155; border-radius:5px; padding:1px 4px;">
                             ${p.qty > 1 ? `<button type="button" class="rpg-mini-btn" style="min-block-size:22px; padding:0 5px; border:none;" onclick="COS_RPG.stepBackpackQty(${idx}, -1)" aria-label="Decrease quantity">−</button><span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:800; color:#fde68a; min-width:22px; text-align:center;">${p.qty}x</span>` : ''}
@@ -6589,6 +7572,21 @@
         consumeWeaponAmmo,
         buildWeaponAmmoBarHtml,
         refreshAllAmmoDisplays,
+        getHeroAllWeapons,
+        getWeaponModsStore,
+        getWeaponCoatingStore,
+        getWeaponAttachmentInfo,
+        getWeaponAttachmentBonuses,
+        getWeaponMeleeCoating,
+        clearWeaponMeleeCoating,
+        getWeaponCombatMods,
+        buildWeaponModAndCoatingBadgesHtml,
+        openAttachmentModal,
+        selectAttachTargetWeapon: (wid) => { attachModalState.weaponId = wid; renderAttachmentModal(); },
+        confirmAttachWeaponMod,
+        detachWeaponMod,
+        toggleWeaponModTier,
+        rollDiceExpr,
         rollDynamicWeaponAttack,
         rollDynamicWeaponDamage,
         syncHeroStateToFirebase,
@@ -6643,6 +7641,7 @@
             }
         },
         craftRecipe,
+        unlockRecipeById,
         unlockRecipeByCode,
         setTradeTab: (tab) => { tradeActiveTab = tab; renderTradeModal(); },
         setTradeRecipient: (id) => { tradeRecipient = id; renderTradeModal(); },

@@ -1369,9 +1369,10 @@
                                 <span style="font-size:0.64rem; color:#fca5a5; font-weight:700;">SILVERED</span>
                             </div>
                             <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong>. Bypasses nonmagical resistance/immunity of Vampire Spawn, Werewolves &amp; Night Hags!</div>
+                            <div id="piper-mods-kolyan_dagger"></div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" style="background:#475569; border:1px solid #94a3b8;" onclick="rollWeaponAttack('Kolyan\'s Silvered Heirloom Dagger', 2)">🗡️ Attack (+4)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Kolyan\'s Silvered Heirloom Dagger', 4, 2, 'Silvered Piercing')">💥 1d4+2 Silver</button>
+                                <button id="btn-atk-kolyan" type="button" class="btn-roll-action" style="background:#475569; border:1px solid #94a3b8;" onclick="rollWeaponAttack('Kolyan\'s Silvered Heirloom Dagger', 2, 'kolyan_dagger')">🗡️ Attack (+4)</button>
+                                <button id="btn-dmg-kolyan" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Kolyan\'s Silvered Heirloom Dagger', 4, 2, 'Silvered Piercing', 1, 'kolyan_dagger')">💥 1d4+2 Silver</button>
                             </div>
                         </div>
 
@@ -1387,10 +1388,11 @@
                                 <span style="font-size:0.64rem; color:#c4b5fd; font-weight:700;">VERSATILE</span>
                             </div>
                             <div class="action-desc"><strong>+2 to Hit</strong>, <strong>1d6 Bludgeoning (1H)</strong> or <strong>1d8 Bludgeoning (2H)</strong>. Doubles as Piper's theatrical cane &amp; arcane focus.</div>
+                            <div id="piper-mods-staff"></div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" style="background:#334155;" onclick="rollWeaponAttack('Quarterstaff (Magician\'s Cane)', 0)">🪄 Attack (+2)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning')">💥 2H (1d8)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg" style="background:#991b1b;" onclick="rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning')">💥 1H (1d6)</button>
+                                <button id="btn-atk-staff" type="button" class="btn-roll-action" style="background:#334155;" onclick="rollWeaponAttack('Quarterstaff (Magician\'s Cane)', 0, 'staff')">🪄 Attack (+2)</button>
+                                <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning', 1, 'staff')">💥 2H (1d8)</button>
+                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg" style="background:#991b1b;" onclick="rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning', 1, 'staff')">💥 1H (1d6)</button>
                             </div>
                         </div>
 
@@ -1406,10 +1408,11 @@
                                 <span style="font-size:0.64rem; color:#94a3b8; font-weight:700;">LIGHT</span>
                             </div>
                             <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Piercing</strong> (Main-Hand) or <strong>1d4 Piercing</strong> (Off-Hand Bonus Action).</div>
+                            <div id="piper-mods-dagger"></div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" style="background:#334155;" onclick="rollWeaponAttack('Standard Dagger', 2)">🗡️ Attack (+4)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Standard Dagger', 4, 2, 'Piercing')">💥 1d4+2</button>
-                                <button type="button" class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="rollFormulaDamage('Off-Hand Dagger', 4, 0, 'Piercing')">Off-Hand 1d4</button>
+                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" style="background:#334155;" onclick="rollWeaponAttack('Standard Dagger', 2, 'dagger')">🗡️ Attack (+4)</button>
+                                <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Standard Dagger', 4, 2, 'Piercing', 1, 'dagger')">💥 1d4+2</button>
+                                <button id="btn-dmg-dagger-oh" type="button" class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="rollFormulaDamage('Off-Hand Dagger', 4, 0, 'Piercing', 1, 'dagger')">Off-Hand 1d4</button>
                             </div>
                         </div>
                     </div>
@@ -2681,8 +2684,19 @@
         rollD20(label, getSpellAttackMod());
     }
 
-    function rollWeaponAttack(label, statMod) {
-        rollD20(label, statMod + getProfBonus());
+    function getPiperWpnMods(weaponId) {
+        return (weaponId && window.COS_RPG && typeof window.COS_RPG.getWeaponCombatMods === 'function')
+            ? window.COS_RPG.getWeaponCombatMods(weaponId)
+            : { atkBonus: 0, dmgBonus: 0, extras: [], isSilvered: false, isMagical: false, saveNotes: [] };
+    }
+
+    function rollWeaponAttack(label, statMod, weaponId) {
+        const wMods = getPiperWpnMods(weaponId);
+        const modTags = [];
+        if (wMods.mod) modTags.push(wMods.mod.itemName);
+        if (wMods.coating) modTags.push(wMods.coating.itemName);
+        const tagStr = modTags.length ? ` • ${modTags.join(' + ')}` : '';
+        rollD20(`${label}${tagStr}`, statMod + getProfBonus() + (wMods.atkBonus || 0));
     }
 
     function rollFireBoltDamage() {
@@ -3761,7 +3775,8 @@
         rollD20(label, bonus);
     }
 
-    function rollFormulaDamage(label, sides, bonus, type, diceCount = 1) {
+    function rollFormulaDamage(label, sides, bonus, type, diceCount = 1, weaponId = null) {
+        const wMods = getPiperWpnMods(weaponId);
         let total = 0;
         let rolls = [];
         for (let i = 0; i < diceCount; i++) {
@@ -3769,9 +3784,22 @@
             rolls.push(r);
             total += r;
         }
-        total += bonus;
-        const bonusStr = bonus > 0 ? ` + ${bonus}` : '';
-        logRoll(`💥 <strong>${label}:</strong> [${rolls.join('+')}]${bonusStr} = <span style="font-size:1.05rem; color:#f87171; font-weight:700;">${total}</span> ${type} Damage`);
+        const flatBonus = bonus + (wMods.dmgBonus || 0);
+        total += flatBonus;
+        const extraParts = [];
+        if (wMods && Array.isArray(wMods.extras)) {
+            wMods.extras.forEach(ex => {
+                if (ex.dice && window.COS_RPG && typeof window.COS_RPG.rollDiceExpr === 'function') {
+                    const r = window.COS_RPG.rollDiceExpr(ex.dice);
+                    total += r.total;
+                    extraParts.push(` + ${ex.dice}[${r.rolls.join('+')}] ${ex.type || ''}`);
+                }
+            });
+        }
+        const bonusStr = flatBonus > 0 ? ` + ${flatBonus}` : '';
+        const finalType = (wMods.isSilvered && !String(type).toLowerCase().includes('silver')) ? `Silvered ${type}` : type;
+        const notes = wMods.saveNotes && wMods.saveNotes.length ? ` <small style="color:#fde68a;">(${wMods.saveNotes.join(' • ')})</small>` : '';
+        logRoll(`💥 <strong>${label}:</strong> [${rolls.join('+')}]${bonusStr}${extraParts.join('')} = <span style="font-size:1.05rem; color:#f87171; font-weight:700;">${total}</span> ${finalType} Damage${notes}`);
     }
 
     function castUtility(text) {
@@ -3945,49 +3973,49 @@
     // 🎒 INVENTORY, BAROVIAN LOOT VAULT & ⚗️ CRAFTING ENGINE
     // ==========================================
     const defaultItems = [
-        "🃏 The Blank Tarokka Card (Unwritten Vistani Omen — Give to Madam Eva)",
-        "🗡️ Kolyan's Silvered Heirloom Dagger (Curved Blade • 3 Red Gems)",
-        "🧥 Kolyan's Black Robe of Warding (+1 AC & All Saves)",
-        "🧥 Kolyan's Red Robe of Embers (+1d4+1 Fire on Spells)",
-        "🧥 Kolyan's Green Robe of Arcana (Adv on Arcana Checks)",
-        "🧪 2x Potion of Healing",
-        "🌿 4x Medicinal Herbs (Craftable ➔ Healing Potions)",
-        "🕰️ Barnaby's Brass Pocket Watch (Blurred Portrait of Tiefling Parents)",
-        "🎩 False-Bottom Stage Props & Rigged Card Deck",
-        "🪄 Quarterstaff (Magician's Cane & Spellcasting Focus)",
-        "🗡️ 2x Daggers",
-        "👝 Component Pouch",
-        "🎒 Explorer's Pack (Bedroll, Mess Kit, Tinderbox)",
-        "🔥 10x Torches",
-        "🥩 10x Days of Rations",
-        "💧 Waterskin",
-        "🪢 Hempen Rope (50 ft)"
+        "The Blank Tarokka Card",
+        "Kolyan's Silvered Heirloom Dagger",
+        "Kolyan's Black Robe of Warding",
+        "Kolyan's Red Robe of Embers",
+        "Kolyan's Green Robe of Arcana",
+        "2x Potion of Healing",
+        "4x Medicinal Herbs",
+        "Barnaby's Brass Pocket Watch",
+        "False-Bottom Stage Props & Rigged Card Deck",
+        "Quarterstaff",
+        "2x Daggers",
+        "Component Pouch",
+        "Explorer's Pack",
+        "10x Torches",
+        "10x Days of Rations",
+        "Waterskin",
+        "Hempen Rope"
     ];
 
     const worldLootVault = {
         "blank tarokka": {
-            name: "🃏 The Blank Tarokka Card (Unwritten Vistani Omen)",
+            name: "The Blank Tarokka Card",
             category: "MYSTERIOUS OMEN RELIC • Session 1 Vistani Gift",
             origin: "Given by a Deeply Concerned Vistani at Blood on the Vine Tavern",
             desc: "A heavy, velvet-backed Vistani Tarokka card whose painted ink literally bled and faded into nothingness the moment the fortune-teller tried to read Piper's future. Its parchment surface is currently stark, cold, and unwritten.",
             effect: "• <strong>Vistani Warning:</strong> The Vistani in the tavern stared into Piper's eyes with deep concern, warning her to stay safe because they saw gathering misfortune and darkness around her.<br>• <strong>Quest Hook:</strong> Deliver this Blank Tarokka Card directly to the ancient seer <strong>Madam Eva</strong> at the <strong>Tser Pool Encampment</strong>.<br>• <strong>Living Omen:</strong> Sometimes the edges of the blank parchment feel icy to the touch, as if waiting for dark charcoal ink to bleed back into the card as Piper approaches the truth of her awakened magic."
         },
         "tarokka": {
-            name: "🃏 The Blank Tarokka Card (Unwritten Vistani Omen)",
+            name: "The Blank Tarokka Card",
             category: "MYSTERIOUS OMEN RELIC • Session 1 Vistani Gift",
             origin: "Given by a Deeply Concerned Vistani at Blood on the Vine Tavern",
             desc: "A heavy, velvet-backed Vistani Tarokka card whose painted ink literally bled and faded into nothingness the moment the fortune-teller tried to read Piper's future. Its parchment surface is currently stark, cold, and unwritten.",
             effect: "• <strong>Vistani Warning:</strong> The Vistani in the tavern stared into Piper's eyes with deep concern, warning her to stay safe because they saw gathering misfortune and darkness around her.<br>• <strong>Quest Hook:</strong> Deliver this Blank Tarokka Card directly to the ancient seer <strong>Madam Eva</strong> at the <strong>Tser Pool Encampment</strong>."
         },
         "heirloom dagger": {
-            name: "🗡️ Kolyan's Silvered Heirloom Dagger (Curved • 3 Red Gems)",
+            name: "Kolyan's Silvered Heirloom Dagger",
             category: "SILVERED HEIRLOOM WEAPON • High Value (150–250 GP)",
             origin: "House Indirovich Vault (Session 1 Claimed by Piper)",
             desc: "An exquisite curved silvered blade forged generations ago for House Indirovich. Its silver filigree hilt is inlaid with three gleaming blood-red gemstones—both a priceless family treasure and a lethal vampire-slaying sidearm.",
             effect: "• <strong>Silvered Attack (Melee or Thrown 20/60 ft):</strong> <strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong> (Finesse, Light).<br>• <strong>Silvered Edge:</strong> Bypasses nonmagical B/P/S damage resistances and immunities of <strong>Vampire Spawn, Werewolves, and Night Hags</strong>!<br>• <strong>High Value:</strong> Could fetch a fortune from nobles or collectors (<strong>150–250 GP</strong>)."
         },
         "black robe": {
-            name: "🧥 Kolyan's Black Robe of Warding",
+            name: "Kolyan's Black Robe of Warding",
             category: "ENCHANTED ROBE • Session 1 Indirovich Manor",
             origin: "Burgomaster Kolyan Indirovich's Hidden Wizard Wardrobe",
             desc: "A finely tailored raven-black arcane robe hemmed with faint silver sigils of abjuration—currently worn by Piper over her stage magician coat.",
@@ -3995,7 +4023,7 @@
             robeKey: "black"
         },
         "red robe": {
-            name: "🧥 Kolyan's Red Robe of Embers",
+            name: "Kolyan's Red Robe of Embers",
             category: "ENCHANTED ROBE • Session 1 Indirovich Manor",
             origin: "Burgomaster Kolyan Indirovich's Hidden Wizard Wardrobe",
             desc: "A crimson velvet wizard's mantle stitched with gold ember threads that crackle softly whenever arcane power passes through the wearer's palms.",
@@ -4003,7 +4031,7 @@
             robeKey: "red"
         },
         "green robe": {
-            name: "🧥 Kolyan's Green Robe of Arcana",
+            name: "Kolyan's Green Robe of Arcana",
             category: "ENCHANTED ROBE • Session 1 Indirovich Manor",
             origin: "Burgomaster Kolyan Indirovich's Hidden Wizard Wardrobe",
             desc: "An emerald-green scholar's robe embroidered with silver constellations and arcane runes that sharpen the wearer's magical perception.",
@@ -4011,39 +4039,39 @@
             robeKey: "green"
         },
         "medicinal herb": {
-            name: "🌿 Barovian Medicinal Herbs",
+            name: "Barovian Medicinal Herbs",
             category: "CRAFTING REAGENT • Field Alchemy",
             origin: "Foraged / Looted in Session 1 (Barovia)",
             desc: "A fragrant bundle of pale silver-leaf thyme, wild mountain comfrey, and frost-bloom roots native to Barovia's sheltered ravines.",
-            effect: "• <strong>Potion Crafting (Short or Long Rest):</strong> Combine <strong>2x Medicinal Herbs ➔ 1x Potion of Healing (2d6 + 1 HP)</strong>!<br>• <strong>Field Bandage Crafting:</strong> Combine <strong>1x Medicinal Herb ➔ 1x Field Bandage (1d6 + 1 HP)</strong>.<br>• <strong>Barovian Native Boon:</strong> Piper automatically succeeds with zero check required thanks to her Native Nature (+3 ★) &amp; Survival (+2 ★) acumen!",
+            effect: "• <strong>Potion Crafting (Short or Long Rest):</strong> Combine <strong>2x Medicinal Herbs ➔ 1x Potion of Healing (2d4 + 2 HP)</strong>!<br>• <strong>Field Bandage Crafting:</strong> Combine <strong>1x Medicinal Herb ➔ 1x Field Healing Bandages (1d6 + 1 HP)</strong>.<br>• <strong>Barovian Native Boon:</strong> Piper automatically succeeds with zero check required thanks to her Native Nature (+3 ★) &amp; Survival (+2 ★) acumen!",
             isCraftableReagent: true
         },
         "potion of healing": {
-            name: "🧪 Potion of Healing",
-            category: "HEAL • Common Consumable (5 GP)",
+            name: "Potion of Healing",
+            category: "HEAL • Common Consumable (50 GP)",
             origin: "Barovian Apothecary / Crafted from Medicinal Herbs",
             desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
-            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong> (any healing over Max HP channels into Temporary HP!).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
-            healFormula: { dice: 2, sides: 6, bonus: 1, verb: "Drank" }
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d4 + 2 Hit Points</strong> (any healing over Max HP channels into Temporary HP!).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
+            healFormula: { dice: 2, sides: 4, bonus: 2, verb: "Drank" }
         },
         "health potion": {
-            name: "🧪 Potion of Healing",
-            category: "HEAL • Common Consumable (5 GP)",
+            name: "Potion of Healing",
+            category: "HEAL • Common Consumable (50 GP)",
             origin: "Barovian Apothecary / Crafted from Medicinal Herbs",
             desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
-            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong> (any healing over Max HP channels into Temporary HP!).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
-            healFormula: { dice: 2, sides: 6, bonus: 1, verb: "Drank" }
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d4 + 2 Hit Points</strong> (any healing over Max HP channels into Temporary HP!).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
+            healFormula: { dice: 2, sides: 4, bonus: 2, verb: "Drank" }
         },
         "greater healing": {
-            name: "🧪 Potion of Greater Healing",
-            category: "HEAL • Uncommon Consumable (15 GP)",
+            name: "Potion of Greater Healing",
+            category: "HEAL • Uncommon Consumable (150 GP)",
             origin: "Barovian Alchemy / Dungeon Cache",
             desc: "A concentrated crimson restorative gleaming with warm amber flecks.",
             effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>4d4 + 4 Hit Points</strong> (overflow converts into Temporary HP!).<br>• <strong>Action (Ally):</strong> Administer to an ally.",
             healFormula: { dice: 4, sides: 4, bonus: 4, verb: "Drank" }
         },
         "bandage": {
-            name: "🩹 Field Healing Bandages",
+            name: "Field Healing Bandages",
             category: "HEAL • Common Consumable",
             origin: "Barovian Field First-Aid / Crafted from Herbs",
             desc: "Clean linen strips steeped in soothing Barovian herbal salve to stanch bleeding wounds quickly.",
@@ -4051,42 +4079,42 @@
             healFormula: { dice: 1, sides: 6, bonus: 1, verb: "Applied" }
         },
         "pocket watch": {
-            name: "🕰️ Barnaby's Brass Pocket Watch",
+            name: "Barnaby's Brass Pocket Watch",
             category: "PRICELESS PERSONAL RELIC • Prophecy Keepsake",
             origin: "Gifted by Old Barnaby before he passed away",
             desc: "A tarnished brass pocket watch stopped at 11:47 PM containing a blurred, faded portrait of a loving tiefling couple with the same purple-tinted horns as Piper.",
             effect: "• <strong>Barnaby's Final Words:</strong> <em>\"Only you can find them, O prophesied one.\"</em><br>• <strong>Barovian Anomaly:</strong> Warm to the touch and occasionally ticks backward inside Barovia."
         },
         "stage props": {
-            name: "🎩 False-Bottom Stage Props & Rigged Card Deck",
+            name: "False-Bottom Stage Props & Rigged Card Deck",
             category: "MAGICIAN'S KIT • Entertainer Gear",
             origin: "Piper the Incomparable's Travelling Act",
             desc: "An assortment of spring-loaded sleeves, paper roses, flash-coins, and a marked deck of playing cards.",
             effect: "• Used to channel <strong>Tides of Chaos</strong> ('Pick-a-card, any card!') and disguise real Wild Magic explosions as harmless stage theatrics.<br>• <strong>By Popular Demand:</strong> Performing in any tavern or inn grants free modest/comfortable room and board."
         },
         "quarterstaff": {
-            name: "🪄 Quarterstaff (Magician's Cane & Arcane Focus)",
+            name: "Quarterstaff",
             category: "WEAPON & ARCANE FOCUS • Simple Melee",
             origin: "Starting Sorcerer Equipment",
             desc: "A theatrical black-and-brass stage cane that doubles as Piper's arcane spellcasting focus.",
             effect: "• <strong>Melee Attack:</strong> +2 to Hit, 1d6 Bludgeoning (one-handed) or 1d8 Bludgeoning (two-handed).<br>• Channels all Sorcerer spells requiring Material components without a gold cost."
         },
         "dagger": {
-            name: "🗡️ Throwing Daggers",
+            name: "Daggers",
             category: "WEAPON • Simple Melee / Thrown (Finesse, Light)",
             origin: "Starting Sorcerer Equipment",
             desc: "Balanced steel stage-throwing daggers concealed in Piper's green cape.",
             effect: "• <strong>Melee or Thrown (20/60 ft):</strong> +4 to Hit, 1d4 + 2 Piercing damage."
         },
         "holy water": {
-            name: "💧 Flask of St. Andral's Holy Water",
+            name: "Flask of St. Andral's Holy Water",
             category: "ANTI-UNDEAD • Uncommon Consumable",
             origin: "Father Donavich / St. Andral's Church",
             desc: "A crystal vial of water blessed in the name of the Morninglord.",
             effect: "• <strong>Action (Splash / Throw 20 ft):</strong> Deals <strong>2d6 Radiant Damage</strong> to Undead and Fiends, and <strong>halts Vampire Regeneration</strong> for 1 round!"
         },
         "dream pastry": {
-            name: "🥧 Morgantha's Dream Pastry",
+            name: "Morgantha's Dream Pastry",
             category: "CURSED CONSUMABLE • Old Bonegrinder",
             origin: "Peddled by 'Granny' Morgantha",
             desc: "A warm, savory minced-meat hand pie dusted with fragrant spices.",
@@ -4382,8 +4410,11 @@
         const cleanLower = parsed.name.toLowerCase();
 
         let match = null;
-        for (const [k, v] of Object.entries(worldLootVault)) {
-            if (cleanLower.includes(k)) { match = v; break; }
+        const isSharedPriority = cleanLower.includes('ba\'al') || cleanLower.includes('verzi') || cleanLower.includes('counterweight') || cleanLower.includes('edge-guard') || cleanLower.includes('sunstone') || cleanLower.includes('draw-cam') || cleanLower.includes('focusing collar') || cleanLower.includes('witch-iron') || cleanLower.includes('incendiary') || cleanLower.includes('liquid silver') || cleanLower.includes('sun-ash') || cleanLower.includes('oil of sharpness') || cleanLower.includes('wyvern') || cleanLower.includes('tincture') || cleanLower.includes('runestone') || cleanLower.includes('ledger') || cleanLower.includes('slate') || cleanLower.includes('wall-rubbing') || cleanLower.includes('rubric') || cleanLower.includes('folio') || cleanLower.includes('treatise') || cleanLower.includes('chart') || cleanLower.includes('diagram') || cleanLower.includes('pattern') || cleanLower.includes('vellum');
+        if (!isSharedPriority) {
+            for (const [k, v] of Object.entries(worldLootVault)) {
+                if (cleanLower.includes(k)) { match = v; break; }
+            }
         }
         if (!match && window.COS_RPG && typeof window.COS_RPG.lookupSharedItemLore === 'function') {
             match = window.COS_RPG.lookupSharedItemLore(parsed.name);
@@ -4976,8 +5007,8 @@
             openItemModal: openItemDetailsModal,
             defaultEquipped: {
                 head: "false-bottom stage props & rigged card deck",
-                body: "kolyan's black robe of warding (+1 ac & all saves)",
-                mainHand: "kolyan's silvered heirloom dagger (curved blade • 3 red gems)",
+                body: "kolyan's black robe of warding",
+                mainHand: "kolyan's silvered heirloom dagger",
                 _grip: '1h'
             },
             weaponsGridSelector: '#weapons-grid-piper',
@@ -5007,6 +5038,41 @@
                 if (cKolyan) cKolyan.style.display = hasTag('kolyan_dagger') ? '' : 'none';
                 if (cStaff) cStaff.style.display = hasTag('staff') ? '' : 'none';
                 if (cDagger) cDagger.style.display = hasTag('dagger') ? '' : 'none';
+
+                ['kolyan_dagger', 'staff', 'dagger'].forEach(tag => {
+                    const modMount = document.getElementById(`piper-mods-${tag}`);
+                    if (modMount && window.COS_RPG && typeof window.COS_RPG.buildWeaponModAndCoatingBadgesHtml === 'function') {
+                        modMount.innerHTML = window.COS_RPG.buildWeaponModAndCoatingBadgesHtml(tag);
+                    }
+                });
+
+                const pb = getProfBonus();
+                const kMods = getPiperWpnMods('kolyan_dagger');
+                const kEx = (kMods.extras || []).map(e => `+${e.dice}`).join('');
+                const btnAtkKol = document.getElementById('btn-atk-kolyan');
+                const btnDmgKol = document.getElementById('btn-dmg-kolyan');
+                if (btnAtkKol) btnAtkKol.textContent = `🗡️ Attack (+${2 + pb + (kMods.atkBonus || 0)})`;
+                if (btnDmgKol) btnDmgKol.textContent = `💥 1d4+${2 + (kMods.dmgBonus || 0)}${kEx} Silver`;
+
+                const sMods = getPiperWpnMods('staff');
+                const sEx = (sMods.extras || []).map(e => `+${e.dice}`).join('');
+                const sDmgFlat = sMods.dmgBonus ? `+${sMods.dmgBonus}` : '';
+                const btnAtkStaff = document.getElementById('btn-atk-staff');
+                const btnDmgStaff2h = document.getElementById('btn-dmg-staff-2h');
+                const btnDmgStaff1h = document.getElementById('btn-dmg-staff-1h');
+                if (btnAtkStaff) btnAtkStaff.textContent = `🪄 Attack (+${pb + (sMods.atkBonus || 0)})`;
+                if (btnDmgStaff2h) btnDmgStaff2h.textContent = `💥 2H (1d8${sDmgFlat}${sEx})`;
+                if (btnDmgStaff1h) btnDmgStaff1h.textContent = `💥 1H (1d6${sDmgFlat}${sEx})`;
+
+                const dMods = getPiperWpnMods('dagger');
+                const dEx = (dMods.extras || []).map(e => `+${e.dice}`).join('');
+                const dOhFlat = dMods.dmgBonus ? `+${dMods.dmgBonus}` : '';
+                const btnAtkDag = document.getElementById('btn-atk-dagger');
+                const btnDmgDag = document.getElementById('btn-dmg-dagger');
+                const btnDmgDagOh = document.getElementById('btn-dmg-dagger-oh');
+                if (btnAtkDag) btnAtkDag.textContent = `🗡️ Attack (+${2 + pb + (dMods.atkBonus || 0)})`;
+                if (btnDmgDag) btnDmgDag.textContent = `💥 1d4+${2 + (dMods.dmgBonus || 0)}${dEx}`;
+                if (btnDmgDagOh) btnDmgDagOh.textContent = `Off-Hand 1d4${dOhFlat}${dEx}`;
             }
         });
     }

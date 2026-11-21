@@ -1273,10 +1273,11 @@
                             </div>
 
                             <div id="yvaine-ammo-bar-lament"></div>
+                            <div id="yvaine-mods-lament"></div>
 
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" onclick="fireLamentShot()">🎯 Attack (+8)</button>
-                                <button class="btn-roll-action btn-roll-dmg" onclick="rollLamentDamage()">💥 Damage (1d12+4)</button>
+                                <button id="btn-atk-lament" class="btn-roll-action" onclick="fireLamentShot()">🎯 Attack (+8)</button>
+                                <button id="btn-dmg-lament" class="btn-roll-action btn-roll-dmg" onclick="rollLamentDamage()">💥 Damage (1d12+4)</button>
                             </div>
                         </div>
                     </div>
@@ -1310,10 +1311,11 @@
                                 </div>
 
                                 <div id="yvaine-ammo-bar-mercy"></div>
+                                <div id="yvaine-mods-mercy"></div>
 
                                 <div class="action-btn-row">
-                                    <button class="btn-roll-action" onclick="fireMercyShot()">🔴 Attack (+8)</button>
-                                    <button class="btn-roll-action btn-roll-dmg" onclick="rollMercyDamage()">💥 Damage (1d6+4)</button>
+                                    <button id="btn-atk-mercy" class="btn-roll-action" onclick="fireMercyShot()">🔴 Attack (+8)</button>
+                                    <button id="btn-dmg-mercy" class="btn-roll-action btn-roll-dmg" onclick="rollMercyDamage()">💥 Damage (1d6+4)</button>
                                 </div>
                             </div>
 
@@ -1343,10 +1345,11 @@
                                 </div>
 
                                 <div id="yvaine-ammo-bar-less"></div>
+                                <div id="yvaine-mods-less"></div>
 
                                 <div class="action-btn-row" style="flex-wrap:wrap;">
-                                    <button type="button" class="btn-roll-action" style="background:#0284c7;" onclick="fireLessShot()">🔵 Attack (+8)</button>
-                                    <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollLessDamage()">💥 Damage (1d6)</button>
+                                    <button type="button" id="btn-atk-less" class="btn-roll-action" style="background:#0284c7;" onclick="fireLessShot()">🔵 Attack (+8)</button>
+                                    <button type="button" id="btn-dmg-less" class="btn-roll-action btn-roll-dmg" onclick="rollLessDamage()">💥 Damage (1d6)</button>
                                     <button type="button" id="btn-swap-to-leg-dagger" class="btn-act btn-act-pre" style="font-size:0.68rem; color:#fde68a; border-color:rgba(245,158,11,0.45);" onclick="toggleYvaineOffhandDagger()">Swap to Leg Dagger</button>
                                 </div>
                             </div>
@@ -1365,6 +1368,7 @@
                                 <div class="action-desc" id="leg-dagger-desc">
                                     <strong>+6 to Hit</strong>, <strong>1d4 Piercing</strong> (Off-Hand BA / Nick) or <strong>1d4 + 4 Piercing</strong> (Action). Quick-drawn on the fly in place of Less!
                                 </div>
+                                <div id="yvaine-mods-leg-dagger"></div>
 
                                 <div class="action-btn-row" style="flex-wrap:wrap;">
                                     <button type="button" id="btn-leg-dagger-atk" class="btn-roll-action" onclick="rollStrappedDaggerAttack()">🗡️ Attack (+6)</button>
@@ -1402,9 +1406,10 @@
                         <div class="action-desc">
                             <strong>+6 to Hit</strong>, <strong>1d4 + 4 Piercing</strong> (Action) / <strong>1d4 Piercing</strong> (Off-Hand BA). Silent takedowns; never runs out of ammo.
                         </div>
+                        <div id="yvaine-mods-knife"></div>
                         <div class="action-btn-row">
-                            <button class="btn-roll-action" onclick="rollKnifeAttack()">🗡️ Attack (+6)</button>
-                            <button class="btn-roll-action btn-roll-dmg" onclick="rollKnifeDamage(false)">💥 Damage (1d4+4)</button>
+                            <button id="btn-atk-knife" class="btn-roll-action" onclick="rollKnifeAttack()">🗡️ Attack (+6)</button>
+                            <button id="btn-dmg-knife" class="btn-roll-action btn-roll-dmg" onclick="rollKnifeDamage(false)">💥 Damage (1d4+4)</button>
                             <button class="btn-act btn-act-pre" onclick="rollKnifeDamage(true)" style="font-size:0.68rem; color:#cbd5e1;">🗡️ Off-Hand (1d4)</button>
                         </div>
                     </div>
@@ -2080,8 +2085,10 @@
     function fireWeaponWithSpecialty(weaponId, baseLabel, baseAtkBonus) {
         const shot = (window.COS_RPG && COS_RPG.consumeWeaponAmmo) ? COS_RPG.consumeWeaponAmmo(weaponId) : { ammoId: 'standard', def: null, remaining: 0 };
         const aDef = shot && shot.def ? shot.def : null;
-        const effAtk = baseAtkBonus + (aDef ? (aDef.atkBonus || 0) : 0);
-        const tag = aDef ? ` [${aDef.shortName} • ${shot.remaining} left]` : '';
+        const wMods = (window.COS_RPG && COS_RPG.getWeaponCombatMods) ? COS_RPG.getWeaponCombatMods(weaponId) : { atkBonus: 0, dmgBonus: 0, extras: [], mod: null, mistSight: false };
+        const effAtk = baseAtkBonus + (aDef ? (aDef.atkBonus || 0) : 0) + (wMods.atkBonus || 0);
+        const modTag = wMods.mod ? ` [${wMods.mod.badge}]` : '';
+        const tag = (aDef ? ` [${aDef.shortName} • ${shot.remaining} left]` : '') + modTag;
         const res = rollD20(`${baseLabel} (+${effAtk})${tag}`, effAtk);
         lastShotCritByWeapon[weaponId] = Boolean(res && res.isCrit);
         return { shot, res };
@@ -2091,13 +2098,19 @@
         const isCrit = Boolean(lastShotCritByWeapon[weaponId]);
         lastShotCritByWeapon[weaponId] = false;
         const aDef = (window.COS_RPG && COS_RPG.getWeaponLastShotDef) ? COS_RPG.getWeaponLastShotDef(weaponId) : null;
-        const modBonus = dexBonus + (aDef ? (aDef.dmgBonus || 0) : 0);
+        const wMods = (window.COS_RPG && COS_RPG.getWeaponCombatMods) ? COS_RPG.getWeaponCombatMods(weaponId) : { atkBonus: 0, dmgBonus: 0, extras: [], isSilvered: false, mistSight: false };
+        const modExtraDmg = (aDef ? (aDef.dmgBonus || 0) : 0) + (wMods.dmgBonus || 0);
+        const modBonus = dexBonus + modExtraDmg;
 
         const baseRoll = Math.floor(Math.random() * dieSides) + 1;
         let total = isCrit ? (dieSides + baseRoll + modBonus) : (baseRoll + modBonus);
+        const flatBits = [];
+        if (dexBonus) flatBits.push(`${dexBonus} DEX`);
+        if (aDef && aDef.dmgBonus) flatBits.push(`${aDef.dmgBonus} Ammo`);
+        if (wMods.dmgBonus) flatBits.push(`${wMods.dmgBonus} Mod`);
         let breakdown = isCrit
             ? `Brutal Crit [${dieSides} Max + 1d${dieSides}:${baseRoll}]${modBonus ? ' + ' + modBonus : ''}`
-            : `[1d${dieSides}: ${baseRoll}]${modBonus ? (dexBonus ? ' + ' + dexBonus + ' DEX' : '') + (aDef && aDef.dmgBonus ? ' + ' + aDef.dmgBonus + ' Ammo' : '') : ''}`;
+            : `[1d${dieSides}: ${baseRoll}]${flatBits.length ? ' + ' + flatBits.join(' + ') : ''}`;
 
         if (slayersPreyActive) {
             const sp = Math.floor(Math.random() * 6) + 1;
@@ -2120,11 +2133,22 @@
                 ? ` + <span style="color:#fde68a;">${aDef.extraType} [${ex.max} Max + ${ex.rolls.join('+')}]</span>`
                 : ` + <span style="color:#fde68a;">+${ex.sum} ${aDef.extraType} (${aDef.extraDice}: ${ex.rolls.join('+')})</span>`;
         }
+        if (Array.isArray(wMods.extras)) {
+            wMods.extras.forEach(exM => {
+                const exR = rollDiceExprLocal(exM.dice);
+                total += isCrit ? (exR.max + exR.sum) : exR.sum;
+                breakdown += isCrit
+                    ? ` + <span style="color:#93c5fd;">${exM.type} [${exR.max} Max + ${exR.rolls.join('+')}]</span>`
+                    : ` + <span style="color:#93c5fd;">+${exR.sum} ${exM.type} (${exM.dice}: ${exR.rolls.join('+')})</span>`;
+            });
+        }
 
-        const isSilv = Boolean(aDef && aDef.isSilvered);
+        const isSilv = Boolean((aDef && aDef.isSilvered) || wMods.isSilvered);
         const dmgLabel = isSilv ? 'Silvered Piercing Damage' : 'Piercing Damage';
         const notes = [];
         if (isSilv) notes.push('Bypasses Werewolf, Vampire &amp; Hag resistance');
+        if (wMods.isMagical) notes.push('Counts as Magical');
+        if (wMods.mistSight) notes.push('Mist-Piercing Sight (120ft)');
         if (aDef && aDef.haltsRegen) notes.push('Halts Vampire Regeneration for 1 round');
         if (aDef && aDef.blocksHealing) notes.push('Target cannot regain HP until start of your next turn');
         if (aDef && aDef.saveNote) notes.push(aDef.saveNote);
@@ -2292,18 +2316,24 @@
 
         const cleanName = window.COS_RPG ? COS_RPG.shortLabel(chosenRaw) : chosenRaw;
         const low = chosenRaw.toLowerCase();
+        const weaponId = /trench knife|stiletto/i.test(chosenRaw) ? 'knife' : (window.COS_RPG ? chosenRaw.replace(/^[^\w"]+/, '').replace(/^(?:(\d+)\s*[xX]|[xX]\s*(\d+))\s+/, '').toLowerCase().trim() : low.trim());
+        const wMods = (window.COS_RPG && COS_RPG.getWeaponCombatMods) ? COS_RPG.getWeaponCombatMods(weaponId) : { atkBonus: 0, dmgBonus: 0, extras: [], isSilvered: false, saveNotes: [] };
         let magicBonus = 0;
         const mPlus = low.match(/\+(\d+)/);
         if (mPlus) magicBonus = parseInt(mPlus[1]) || 0;
-        const isSilvered = low.includes('silver');
+        const isSilvered = low.includes('silver') || !!wMods.isSilvered;
         const invIndex = items.findIndex(r => r === chosenRaw);
         return {
+            weaponId,
             raw: chosenRaw,
             name: cleanName,
             source: offIsDagger ? 'OFF-HAND' : 'LEG SHEATH',
-            magicBonus,
+            magicBonus: magicBonus + (wMods.dmgBonus || 0),
             isSilvered,
-            atkBonus: 4 + 2 + magicBonus, // DEX (+4) + PB (+2) + Magic
+            atkBonus: 4 + 2 + magicBonus + (wMods.atkBonus || 0), // DEX (+4) + PB (+2) + Magic + Mod/Coat
+            extras: wMods.extras || [],
+            saveNotes: wMods.saveNotes || [],
+            coating: wMods.coating || null,
             dmgType: isSilvered ? 'Silvered Piercing' : 'Piercing',
             invIndex
         };
@@ -2348,7 +2378,7 @@
         const dmgType = info ? info.dmgType : 'Piercing';
         const d4 = Math.floor(Math.random() * 4) + 1;
         let total = d4 + mb + (isOffhand ? 0 : 4);
-        let breakdown = `[1d4: ${d4}]` + (isOffhand ? '' : ' + 4 DEX') + (mb ? ` + ${mb} Magic` : '');
+        let breakdown = `[1d4: ${d4}]` + (isOffhand ? '' : ' + 4 DEX') + (mb ? ` + ${mb} Mod/Coat` : '');
         if (slayersPreyActive) {
             const spD6 = Math.floor(Math.random() * 6) + 1;
             total += spD6;
@@ -2359,7 +2389,18 @@
             total += trD6;
             breakdown += ` + <span style="color:#ef4444;">Hunter's Mark (+${trD6})</span>`;
         }
-        logRoll(`🗡️ <strong>${name} Damage (${isOffhand ? 'Off-Hand / Nick' : 'Main-Hand'}):</strong> ${breakdown} = <span style="font-size:1.15rem; color:#cbd5e1; font-weight:800;">${total} ${dmgType} Damage</span>!`);
+        if (info && Array.isArray(info.extras)) {
+            info.extras.forEach(exM => {
+                const exR = rollDiceExprLocal(exM.dice);
+                total += exR.sum;
+                breakdown += ` + <span style="color:#fde68a;">+${exR.sum} ${exM.type} (${exM.dice}: ${exR.rolls.join('+')})</span>`;
+            });
+        }
+        const notes = [];
+        if (info && info.isSilvered) notes.push('Bypasses Werewolf, Vampire &amp; Hag resistance');
+        if (info && Array.isArray(info.saveNotes)) info.saveNotes.forEach(sn => notes.push(sn));
+        const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.join(' &bull; ')})</small>` : '';
+        logRoll(`🗡️ <strong>${name} Damage (${isOffhand ? 'Off-Hand / Nick' : 'Main-Hand'}):</strong> ${breakdown} = <span style="font-size:1.15rem; color:#cbd5e1; font-weight:800;">${total} ${dmgType} Damage</span>!${noteHtml}`);
     }
 
     function syncYvaineWeaponsUI(bonuses) {
@@ -2401,8 +2442,10 @@
             const aBtn = document.getElementById('btn-leg-dagger-atk');
             const oBtn = document.getElementById('btn-leg-dagger-off');
             const mBtn = document.getElementById('btn-leg-dagger-main');
-            const offFormula = daggerInfo.magicBonus ? `1d4+${daggerInfo.magicBonus}` : '1d4';
-            const mainFormula = `1d4+${4 + daggerInfo.magicBonus}`;
+            const modLegEl = document.getElementById('yvaine-mods-leg-dagger');
+            const extraStr = (daggerInfo.extras || []).map(x => `+${x.dice} ${x.type}`).join(' ');
+            const offFormula = (daggerInfo.magicBonus ? `1d4+${daggerInfo.magicBonus}` : '1d4') + (extraStr ? ' ' + extraStr : '');
+            const mainFormula = `1d4+${4 + daggerInfo.magicBonus}` + (extraStr ? ' ' + extraStr : '');
             if (tEl) tEl.innerText = daggerInfo.name;
             if (sEl) sEl.innerText = `${daggerInfo.source === 'LEG SHEATH' ? 'Leg Sheath Quick-Draw' : 'Equipped Off-Hand'} • Finesse • Light • Nick${daggerInfo.isSilvered ? ' • Silvered' : ''}`;
             if (bEl) bEl.innerText = daggerInfo.source;
@@ -2410,6 +2453,35 @@
             if (aBtn) aBtn.innerText = `🗡️ Attack (+${daggerInfo.atkBonus})`;
             if (oBtn) oBtn.innerText = `💥 Off-Hand (${offFormula})`;
             if (mBtn) mBtn.innerText = `Full (${mainFormula})`;
+            if (modLegEl && window.COS_RPG && COS_RPG.buildWeaponModAndCoatingBadgesHtml) {
+                modLegEl.innerHTML = COS_RPG.buildWeaponModAndCoatingBadgesHtml(daggerInfo.weaponId);
+            }
+        }
+
+        // Sync live firearm & trench knife attachment/coating badges and button labels
+        if (window.COS_RPG && COS_RPG.getWeaponCombatMods && COS_RPG.buildWeaponModAndCoatingBadgesHtml) {
+            const syncGunCard = (wid, atkBtnId, dmgBtnId, mountId, diceStr, baseDmg, icon) => {
+                const wm = COS_RPG.getWeaponCombatMods(wid);
+                const mEl = document.getElementById(mountId);
+                if (mEl) mEl.innerHTML = COS_RPG.buildWeaponModAndCoatingBadgesHtml(wid);
+                const ab = document.getElementById(atkBtnId);
+                if (ab) ab.innerText = `${icon} Attack (+${getRangedAttackBonus() + (wm.atkBonus || 0)})`;
+                const db = document.getElementById(dmgBtnId);
+                const totFlat = baseDmg + (wm.dmgBonus || 0);
+                const exStr = (wm.extras || []).map(x => `+${x.dice}`).join('');
+                if (db) db.innerText = `💥 Damage (${diceStr}${totFlat ? '+' + totFlat : ''}${exStr})`;
+            };
+            syncGunCard('lament', 'btn-atk-lament', 'btn-dmg-lament', 'yvaine-mods-lament', '1d12', 4, '🎯');
+            syncGunCard('mercy', 'btn-atk-mercy', 'btn-dmg-mercy', 'yvaine-mods-mercy', '1d6', 4, '🔴');
+            syncGunCard('less', 'btn-atk-less', 'btn-dmg-less', 'yvaine-mods-less', '1d6', 0, '🔵');
+
+            const km = COS_RPG.getWeaponCombatMods('knife');
+            const kmEl = document.getElementById('yvaine-mods-knife');
+            if (kmEl) kmEl.innerHTML = COS_RPG.buildWeaponModAndCoatingBadgesHtml('knife');
+            const kab = document.getElementById('btn-atk-knife');
+            if (kab) kab.innerText = `🗡️ Attack (+${6 + (km.atkBonus || 0)})`;
+            const kdb = document.getElementById('btn-dmg-knife');
+            if (kdb) kdb.innerText = `💥 Damage (1d4+${4 + (km.dmgBonus || 0)}${(km.extras || []).map(x => '+' + x.dice).join('')})`;
         }
 
         // Main-hand Trench Knife card only shows if she explicitly puts Trench Knife in Main Hand
@@ -2432,14 +2504,25 @@
     }
 
     function rollKnifeAttack() {
-        rollD20('Trench Knife Attack (+6)', 4 + 2); // DEX (+4) + PB (+2) = +6
+        const km = (window.COS_RPG && COS_RPG.getWeaponCombatMods) ? COS_RPG.getWeaponCombatMods('knife') : { atkBonus: 0 };
+        const atk = 4 + 2 + (km.atkBonus || 0);
+        rollD20(`Trench Knife Attack (+${atk})`, atk);
     }
 
     function rollKnifeDamage(isOffhand = false) {
+        const km = (window.COS_RPG && COS_RPG.getWeaponCombatMods) ? COS_RPG.getWeaponCombatMods('knife') : { dmgBonus: 0, extras: [], isSilvered: false, saveNotes: [] };
         const d4 = Math.floor(Math.random() * 4) + 1;
-        const total = isOffhand ? d4 : (d4 + 4);
-        const breakdown = isOffhand ? `[1d4: ${d4}]` : `[1d4: ${d4}] + 4 DEX`;
-        logRoll(`🗡️ <strong>Solmere Trench Knife Damage (${isOffhand ? 'Off-Hand' : 'Main-Hand'}):</strong> ${breakdown} = <span style="font-size:1.15rem; color:#cbd5e1; font-weight:800;">${total} Piercing Damage</span>!`);
+        const flat = (isOffhand ? 0 : 4) + (km.dmgBonus || 0);
+        let total = d4 + flat;
+        let breakdown = `[1d4: ${d4}]` + (isOffhand ? '' : ' + 4 DEX') + (km.dmgBonus ? ` + ${km.dmgBonus} Mod/Coat` : '');
+        (km.extras || []).forEach(exM => {
+            const exR = rollDiceExprLocal(exM.dice);
+            total += exR.sum;
+            breakdown += ` + <span style="color:#fde68a;">+${exR.sum} ${exM.type} (${exM.dice}: ${exR.rolls.join('+')})</span>`;
+        });
+        const dmgLabel = km.isSilvered ? 'Silvered Piercing Damage' : 'Piercing Damage';
+        const noteHtml = (km.saveNotes && km.saveNotes.length) ? ` <small style="color:#cbd5e1;">(${km.saveNotes.join(' &bull; ')})</small>` : '';
+        logRoll(`🗡️ <strong>Solmere Trench Knife Damage (${isOffhand ? 'Off-Hand' : 'Main-Hand'}):</strong> ${breakdown} = <span style="font-size:1.15rem; color:#cbd5e1; font-weight:800;">${total} ${dmgLabel}</span>!${noteHtml}`);
     }
 
     // ==========================================
@@ -3405,29 +3488,29 @@
     // 🎒 TRACKED INVENTORY ENGINE (POST-SESSION 1)
     // ==========================================
     const defaultItems = [
-        "🩸 Amulet of the Whispering Grave (Speak with Dead • 1/LR)",
-        "🗝️ Lockpicks (Permanent Thieves' Tools)",
-        "🍷 Bottle of Expensive Barovian Wine (High Resale Value)",
-        "🥐 3x Fresh Croissants (Heals 1d4 HP)",
-        "🩹 2x Field Bandages (Heals 1d6 + 1 HP)",
-        "🎯 \"Lament\" (Royal Heavy Long Rifle)",
-        "🔴 \"Mercy\" (Main-Hand Six-Shooter Revolver)",
-        "🔵 \"Less\" (Off-Hand Six-Shooter Revolver)",
-        "🗡️ Solmere Royal Trench Knife",
-        "🧥 Studded Leather Coat (AC 16)",
-        "🎖️ Cross-Body Tactical Gunslinger Bandolier",
-        "🔧 Tinker's Gun-Cleaning & Reloading Kit",
-        "💎 Chipped Bloodstone Gem Pendant",
-        "🕰️ Engraved Silver Pocket Watch",
-        "📖 Monster-Hunting Journal (Sketches & Weaknesses)",
-        "🧪 2x Vials of Consecrated Holy Water",
-        "🏮 Hooded Lantern with Black Lens Shutter",
-        "🎒 Dungeoneer's Pack & Crowbar"
+        "Amulet of the Whispering Grave",
+        "Masterwork Lockpicks",
+        "Bottle of Vintage Barovian Wine",
+        "3x Fresh Croissants",
+        "2x Field Healing Bandages",
+        "\"Lament\" Heavy Long Rifle",
+        "\"Mercy\" Six-Shooter Revolver",
+        "\"Less\" Six-Shooter Revolver",
+        "Solmere Royal Trench Knife",
+        "Studded Leather Coat",
+        "Cross-Body Tactical Gunslinger Bandolier",
+        "Tinker's Gun-Cleaning & Reloading Kit",
+        "Chipped Bloodstone Gem Pendant",
+        "Engraved Silver Pocket Watch",
+        "Monster-Hunting Journal",
+        "2x Consecrated Holy Water",
+        "Hooded Lantern with Black Lens Shutter",
+        "Dungeoneer's Pack & Crowbar"
     ];
 
     const worldLootVault = {
         "whispering grave": {
-            name: "🩸 Amulet of the Whispering Grave",
+            name: "Amulet of the Whispering Grave",
             category: "APPRAISED NECROMANTIC RELIC • 1/Long Rest",
             origin: "Appraised Red Amulet (Session 1 Loot)",
             desc: "Formerly an unknown crimson crystal pendant—now appraised as an ancient Barovian grave-speaker relic suspended on tarnished silver chain. The red stone feels faintly warm against the palm, humming quietly whenever blood or fresh corpses lie nearby.",
@@ -3436,7 +3519,7 @@
             customAction: "speak_dead"
         },
         "lockpick": {
-            name: "🗝️ Masterwork Lockpicks (Permanent Thieves' Tools)",
+            name: "Masterwork Lockpicks",
             category: "PERMANENT UTILITY TOOLSET • Thieves' Tools",
             origin: "Session 1 Salvage (Permanent Toolset for Yvaine)",
             desc: "A rolled black-leather slip containing slender tension wrenches, diamond picks, rakes, and slender spring-probes.",
@@ -3445,14 +3528,14 @@
             customAction: "lockpick"
         },
         "expensive wine": {
-            name: "🍷 Bottle of Expensive Barovian Wine",
+            name: "Bottle of Vintage Barovian Wine",
             category: "VALUABLE TRADE TREASURE • High Resale Price",
             origin: "Session 1 Salvage",
             desc: "A dusty, wax-sealed bottle of rare pre-crisis vintage wine—remarkably preserved and far finer than the thin tavern swill poured across the village.",
             effect: "• <strong>High Resale Value:</strong> Can be <strong>sold for a strong gold price</strong> (suggested <strong>15–30 GP</strong>) to Vallaki merchants, nobles (Baron Vargas / Lady Wachter), or the Blue Water Inn—or offered as a high-status diplomatic gift!"
         },
         "croissant": {
-            name: "🥐 Fresh Croissants",
+            name: "Fresh Croissants",
             category: "FOOD CONSUMABLE • Heals 1d4 HP",
             origin: "Session 1 Provisions",
             desc: "Flaky, buttered golden crescents wrapped in clean parchment—safe, wholesome rations with none of Morgantha's dark bone-flour taint.",
@@ -3460,7 +3543,7 @@
             healFormula: { dice: 1, sides: 4, bonus: 0, verb: "Ate" }
         },
         "bandage": {
-            name: "🩹 Field Healing Bandages",
+            name: "Field Healing Bandages",
             category: "HEALING CONSUMABLE • Heals 1d6 + 1 HP",
             origin: "Session 1 First-Aid Loot",
             desc: "Clean sterile linen bandages steeped in soothing Barovian herbal salve for rapid battlefield trauma care.",
@@ -3468,15 +3551,15 @@
             healFormula: { dice: 1, sides: 6, bonus: 1, verb: "Applied" }
         },
         "potion of healing": {
-            name: "🧪 Potion of Healing",
-            category: "HEAL • Common Consumable (5 GP)",
+            name: "Potion of Healing",
+            category: "HEAL • Common Consumable (50 GP)",
             origin: "Barovian Apothecary",
             desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
-            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong> (overflow converts into Temp HP).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
-            healFormula: { dice: 2, sides: 6, bonus: 1, verb: "Drank" }
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d4 + 2 Hit Points</strong> (overflow converts into Temp HP).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
+            healFormula: { dice: 2, sides: 4, bonus: 2, verb: "Drank" }
         },
         "lament": {
-            name: "🎯 \"Lament\" (Royal Heavy Long Rifle)",
+            name: "\"Lament\" Heavy Long Rifle",
             category: "MARTIAL RANGED FIREARM • Two-Handed, Heavy (10 lb • Heirloom)",
             origin: "Personal Royal Armory of Solmere (Father's Rifle)",
             desc: "A 4-foot long rifle of blued cold steel and carved walnut wood, bearing the white-stag crest of Solmere. Engraved with the word 'Lament' across the receiver.",
@@ -3484,7 +3567,7 @@
             wikiUrl: "https://5e.tools/items.html#musket_xdmg"
         },
         "mercy": {
-            name: "🔴 \"Mercy\" (Main-Hand Six-Shooter Revolver)",
+            name: "\"Mercy\" Six-Shooter Revolver",
             category: "MARTIAL RANGED FIREARM • Light, One-Handed (3 lb • Custom)",
             origin: "Crafted in the Undercity of Solmere during Yvaine's Exile",
             desc: "A matte-black break-action six-shooter revolver worn on Yvaine's right hip with a polished hair trigger and ebony grip.",
@@ -3492,7 +3575,7 @@
             wikiUrl: "https://5e.tools/items.html#pistol_xdmg"
         },
         "less": {
-            name: "🔵 \"Less\" (Off-Hand Six-Shooter Revolver)",
+            name: "\"Less\" Six-Shooter Revolver",
             category: "MARTIAL RANGED FIREARM • Light, One-Handed (3 lb • Custom)",
             origin: "Crafted in the Undercity of Solmere during Yvaine's Exile",
             desc: "The matched left-hand twin to Mercy—balanced for lightning-fast cross-draws and seamless on-the-fly swaps with Yvaine's strapped leg dagger.",
@@ -3500,7 +3583,7 @@
             wikiUrl: "https://5e.tools/items.html#pistol_xdmg"
         },
         "revolver": {
-            name: "💥 Twin Revolvers (\"Mercy & Less\")",
+            name: "Twin Revolvers (\"Mercy & Less\")",
             category: "MARTIAL RANGED FIREARMS • Light, One-Handed (6 lb pair • Custom)",
             origin: "Crafted in the Undercity of Solmere during Yvaine's Exile",
             desc: "A matched pair of break-action revolvers with matte-black steel cylinders and cross-hatched ebony grips.",
@@ -3508,7 +3591,7 @@
             wikiUrl: "https://5e.tools/items.html#pistol_xdmg"
         },
         "knife": {
-            name: "🗡️ Solmere Royal Trench Knife / Stiletto",
+            name: "Solmere Royal Trench Knife",
             category: "SIMPLE MELEE WEAPON • Finesse, Light (1 lb • 2 GP)",
             origin: "Royal Solmere Vanguard Boot Dagger",
             desc: "A razor-sharp combat trench knife with an integrated brass-and-steel knuckle duster grip and needle stiletto point, carried inside her riding boot.",
@@ -3516,7 +3599,7 @@
             wikiUrl: "https://5e.tools/items.html#dagger_xphb"
         },
         "studded leather": {
-            name: "🧥 Studded Leather Coat (AC 16)",
+            name: "Studded Leather Coat",
             category: "LIGHT ARMOR • AC 12 + DEX (+4) = 16 AC (13 lb • 45 GP)",
             origin: "Cut and tailored from Yvaine's charred 13th-birthday ballgown",
             desc: "Tough, flexible boiled leather reinforced with close-set blackened steel rivets, tailored into a long high-collared duster coat.",
@@ -3524,15 +3607,15 @@
             wikiUrl: "https://5e.tools/items.html#studded%20leather%20armor_xphb"
         },
         "bandolier": {
-            name: "🎖️ Cross-Body Tactical Gunslinger Bandolier",
+            name: "Cross-Body Tactical Gunslinger Bandolier",
             category: "ADVENTURING GEAR • Tactical Harness (2 lb • 10 GP)",
             origin: "Solmere Royal Marksman Division",
             desc: "A sturdy oiled leather shoulder harness worn diagonally across Yvaine's chest, fitted with custom brass spring-clips and canvas pouches.",
-            effect: "• Holds <strong>40 Heavy Rifle Slugs</strong>, <strong>60 Revolver Cartridges</strong>, and <strong>4 Moon-Clip Speedloaders</strong> for rapid drawing.<br>• Allows drawing and reloading firearms as an effortless Bonus Action.",
+            effect: "• Holds standard slugs, revolver cartridges, and speedloaders for rapid drawing.<br>• Allows drawing and reloading firearms as an effortless Bonus Action.",
             wikiUrl: "https://5e.tools/items.html#bandolier_xdmg"
         },
         "slug": {
-            name: "🎯 40x Heavy Lead Rifle Slugs",
+            name: "Heavy Lead Rifle Slugs",
             category: "AMMUNITION • Firearm Slugs (4 lb • 3 GP per 20)",
             origin: "Hand-cast lead bullets for \"Lament\"",
             desc: "Heavy conical .58-caliber lead bullets with greased wadding, designed for bone-cracking penetration against thick monster hide.",
@@ -3540,15 +3623,15 @@
             wikiUrl: "https://5e.tools/items.html#firearm%20ammunition_xdmg"
         },
         "cartridge": {
-            name: "💥 60x Brass Revolver Cartridges",
+            name: "Brass Revolver Cartridges",
             category: "AMMUNITION • Metallic Cartridges (3 lb • 4 GP per 20)",
             origin: "Precision brass ammunition for \"Mercy & Less\"",
-            desc: "Smokeless brass centerfire cartridges loaded with silver-dusted lead bullets, engineered to avoid fouling the revolver cylinders in wet Barovian rain.",
+            desc: "Smokeless brass centerfire cartridges loaded with precision lead bullets, engineered to avoid fouling the revolver cylinders in wet Barovian rain.",
             effect: "• Ammunition for <strong>Mercy</strong> and <strong>Less</strong> (6 rounds each).<br>• Can be loose-loaded or pre-fitted into moon-clip speedloaders.",
             wikiUrl: "https://5e.tools/items.html#firearm%20ammunition_xdmg"
         },
         "speedloader": {
-            name: "⚡ 4x Moon-Clip Speedloaders",
+            name: "Moon-Clip Speedloaders",
             category: "ADVENTURING GEAR • Tactical Fast-Reload Rigs (1 lb • 5 GP)",
             origin: "Solmere Undercity Engineering",
             desc: "Circular spring-steel clips that hold six revolver rounds together in a rigid circle, allowing an entire cylinder to be emptied and reloaded in a single motion.",
@@ -3556,15 +3639,15 @@
             wikiUrl: "https://5e.tools/items.html#bandolier_xdmg"
         },
         "tinker": {
-            name: "🔧 Tinker's Gun-Cleaning & Reloading Kit",
+            name: "Tinker's Gun-Cleaning & Reloading Kit",
             category: "ARTISAN'S TOOLS • Tinker's / Gunsmith Tools (10 lb • 50 GP)",
             origin: "Yvaine's Field Maintenance Set",
-            desc: "A roll of oiled canvas containing wire bore-brushes, brass rods, powder measures, bullet molds, pliers, and small screwdrivers.",
-            effect: "• Allows maintaining firearms and clearing fouls during short rests.<br>• Used to craft custom ammunition, phosphor canisters, and silvered slugs given raw silver and lead.",
+            desc: "A roll of oiled canvas containing wire bore-brushes, brass rods, powder measures, calipers, pliers, and small precision screwdrivers.",
+            effect: "• Allows maintaining firearms, mounting precision weapon attachments, and clearing fouls during short rests.<br>• Used to brew ammunition coatings/vials when supplied with learned recipes and alchemical reagents.",
             wikiUrl: "https://5e.tools/items.html#tinker's%20tools_xphb"
         },
         "bloodstone": {
-            name: "💎 Chipped Bloodstone Gem Pendant",
+            name: "Chipped Bloodstone Gem Pendant",
             category: "ROYAL HEIRLOOM • Precious Gemstone (50 GP)",
             origin: "Worn by Queen Genevieve of Solmere on the night she was murdered",
             desc: "A dark green chalcedony stone flecked with vivid red jasper spots resembling drops of dried blood, chipped on one edge from a traitor's dagger.",
@@ -3572,7 +3655,7 @@
             wikiUrl: "https://5e.tools/items.html#gemstones_xphb"
         },
         "watch": {
-            name: "🕰️ Engraved Silver Pocket Watch",
+            name: "Engraved Silver Pocket Watch",
             category: "PRECIOUS KEEPSAKE • Timepiece (100 GP)",
             origin: "King Eric of Solmere's Pocket Watch",
             desc: "A delicate sterling silver pocket watch on a chain. The glass is intact, and the back is engraved: 'To Yvaine — May your aim never waver.' It ticks softly even in the dead silence of Barovia.",
@@ -3580,7 +3663,7 @@
             wikiUrl: "https://5e.tools/items.html#clockwork%20timepiece_xdmg"
         },
         "journal": {
-            name: "📖 Monster-Hunting Journal (Sketches & Weaknesses)",
+            name: "Monster-Hunting Journal",
             category: "RESEARCH TOME • Investigator's Field Notebook (3 lb • 25 GP)",
             origin: "7 Years of Undercity Monster Tracking",
             desc: "A thick leather-bound notebook crammed with Yvaine's handwritten anatomical diagrams, autopsies of ghouls, notes on vampire spawn heart placement, and clues about the Solmere traitor.",
@@ -3588,15 +3671,15 @@
             wikiUrl: "https://5e.tools/items.html#book_xphb"
         },
         "holy water": {
-            name: "🧪 Consecrated Holy Water Vial",
+            name: "Consecrated Holy Water",
             category: "CONSUMABLE • Flask / Adventuring Gear (1 lb • 25 GP)",
             origin: "Solmere High Chapel",
-            desc: "A heavy leaded glass vial stamped with a radiant sun sigil, filled with clear sanctified water blessed by holy clerics.",
-            effect: "• As an Action, splash the contents onto a creature within 5 ft or throw it up to 20 ft (improvised ranged attack).<br>• If target is a <strong>Fiend or Undead</strong>, it takes <strong>2d6 Radiant damage</strong>.<br>• Can also be used as the material component for <em>Protection from Evil and Good</em>.",
+            desc: "A heavy leaded glass flask stamped with a radiant sun sigil, filled with clear sanctified water blessed by holy clerics.",
+            effect: "• As an Action, splash onto a creature within 5 ft or throw it up to 20 ft (DEX improvised ranged attack, proficient with Tavern Brawler/Thrower).<br>• If target is a <strong>Fiend or Undead</strong>, it takes <strong>2d8 Radiant damage</strong> (2024 rules) / <strong>2d6 Radiant damage</strong> (2014 rules).",
             wikiUrl: "https://5e.tools/items.html#holy%20water%20(flask)_xphb"
         },
         "lantern": {
-            name: "🏮 Hooded Lantern with Black Lens Shutter",
+            name: "Hooded Lantern with Black Lens Shutter",
             category: "ADVENTURING GEAR • Light Source (2 lb • 5 GP)",
             origin: "Infiltration Gear",
             desc: "A brass lantern with glass panes and a mechanical sliding shutter fitted with a dark tinted lens, allowing the user to narrow the light to a faint directional beam.",
@@ -3604,7 +3687,7 @@
             wikiUrl: "https://5e.tools/items.html#hooded%20lantern_xphb"
         },
         "crowbar": {
-            name: "🎒 Dungeoneer's Pack & Steel Crowbar",
+            name: "Dungeoneer's Pack & Crowbar",
             category: "EQUIPMENT PACK • Gear Bundle (61.5 lb • 12 GP)",
             origin: "Monster Hunter's Standard Exploration Kit",
             desc: "Includes a backpack, crowbar, hammer, 10 pitons, 10 torches, tinderbox, 10 days of rations, and a waterskin. The pack also has 50 feet of hempen rope strapped to the side.",
@@ -3742,7 +3825,7 @@
 
         let vaultKey = null;
         const low = raw.toLowerCase();
-        const isSpecialAmmoOrRig = low.includes('bullet sling') || low.includes('cartridge rig') || low.includes('munitions sling') || low.includes('ammo rig') || low.includes('sunburst') || low.includes('ezmerelda') || low.includes('dawn-powder') || low.includes('silvered') || low.includes('incendiary') || low.includes('necrotic') || low.includes('wyvern') || low.includes('poisoned') || low.includes('oil of sharpness') || low.includes('sun-ash') || low.includes('liquid silver');
+        const isSpecialAmmoOrRig = low.includes('bullet sling') || low.includes('cartridge rig') || low.includes('munitions sling') || low.includes('ammo rig') || low.includes('sunburst') || low.includes('ezmerelda') || low.includes('dawn-powder') || low.includes('silvered') || low.includes('incendiary') || low.includes('necrotic') || low.includes('wyvern') || low.includes('poisoned') || low.includes('oil of sharpness') || low.includes('sun-ash') || low.includes('liquid silver') || low.includes('witch-iron') || low.includes('hex-iron') || low.includes('fire arrow') || low.includes('fire bolt') || low.includes('van richten') || low.includes('scope') || low.includes('counterweight') || low.includes('edge-guard') || low.includes('sunstone') || low.includes('draw-cam') || low.includes('focusing collar') || low.includes('runestone') || low.includes('ledger') || low.includes('slate') || low.includes('wall-rubbing') || low.includes('rubric') || low.includes('folio') || low.includes('treatise') || low.includes('chart') || low.includes('diagram') || low.includes('pattern') || low.includes('vellum');
         if (!isSpecialAmmoOrRig) {
             if (low.includes('whispering grave') || low.includes('amulet')) vaultKey = 'whispering grave';
             else if (low.includes('lockpick') || low.includes('lock pick') || low.includes('thieves')) vaultKey = 'lockpick';
@@ -4719,12 +4802,12 @@
                 log: logRoll,
                 openItemModal: openItemDetailsModal,
                 defaultEquipped: {
-                    body: "studded leather coat (ac 16)",
-                    amulet: "amulet of the whispering grave (speak with dead • 1/lr)",
-                    mainHand: "\"mercy\" (main-hand six-shooter revolver)",
-                    offHand: "\"less\" (off-hand six-shooter revolver)",
+                    body: "studded leather coat",
+                    amulet: "amulet of the whispering grave",
+                    mainHand: "\"mercy\" six-shooter revolver",
+                    offHand: "\"less\" six-shooter revolver",
                     legSheath: "solmere royal trench knife",
-                    ranged: "\"lament\" (royal heavy long rifle)",
+                    ranged: "\"lament\" heavy long rifle",
                     _grip: '1h'
                 },
                 weaponsGridSelector: '#weapons-dyn-yvaine',
