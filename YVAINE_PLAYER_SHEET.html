@@ -897,9 +897,9 @@
                         <span class="vital-mini-lbl">ARMOR CLASS</span>
                         <span class="vital-mini-val" id="ac-disp" style="color:var(--accent-gold);">16</span>
                     </div>
-                    <div class="vital-mini-box clickable-box" onclick="rollInitiative()" style="cursor:pointer;" title="Click to roll Initiative (+6 Alert Feat)">
+                    <div class="vital-mini-box clickable-box" onclick="rollInitiative()" style="cursor:pointer;" title="Click to roll Initiative (Alert Feat + Gear)">
                         <span class="vital-mini-lbl">INITIATIVE 🎲</span>
-                        <span class="vital-mini-val" style="color:var(--accent-blue);">+6 ⚡</span>
+                        <span class="vital-mini-val" id="init-disp" style="color:var(--accent-blue);">+6 ⚡</span>
                     </div>
                     <div class="vital-mini-box" title="Spell Save DC: 8 + PB (+2) + WIS (+2) = 12 | Firearms Attack Bonus: +8">
                         <span class="vital-mini-lbl">SPELL DC / HIT</span>
@@ -2468,8 +2468,9 @@
                 if (ab) ab.innerText = `${icon} Attack (+${getRangedAttackBonus() + (wm.atkBonus || 0)})`;
                 const db = document.getElementById(dmgBtnId);
                 const totFlat = baseDmg + (wm.dmgBonus || 0);
+                const flatStr = totFlat > 0 ? `+${totFlat}` : (totFlat < 0 ? `${totFlat}` : '');
                 const exStr = (wm.extras || []).map(x => `+${x.dice}`).join('');
-                if (db) db.innerText = `💥 Damage (${diceStr}${totFlat ? '+' + totFlat : ''}${exStr})`;
+                if (db) db.innerText = `💥 Damage (${diceStr}${flatStr}${exStr})`;
             };
             syncGunCard('lament', 'btn-atk-lament', 'btn-dmg-lament', 'yvaine-mods-lament', '1d12', 4, '🎯');
             syncGunCard('mercy', 'btn-atk-mercy', 'btn-dmg-mercy', 'yvaine-mods-mercy', '1d6', 4, '🔴');
@@ -3057,12 +3058,15 @@
     // 🎲 INITIATIVE, SAVES & SKILLS
     // ==========================================
     function rollInitiative() {
-        rollD20('Initiative Roll (DEX +4 + Alert Feat +2)', 6);
+        const gb = window.__yvaineGearCache?.initBonus || 0;
+        const tot = 6 + gb;
+        const tag = gb ? ` [Gear ${gb > 0 ? '+' : ''}${gb}]` : '';
+        rollD20(`Initiative Roll (DEX +4 + Alert +2${tag})`, tot);
     }
 
     function rollSave(name, mod, prof) {
         const sb = window.__yvaineGearCache?.saveBonus || 0;
-        rollD20(sb ? `${name} [🛡️ Gear +${sb}]` : name, mod + sb);
+        rollD20(sb ? `${name} [🛡️ Gear ${sb > 0 ? '+' : ''}${sb}]` : name, mod + sb);
     }
 
     function rollSkill(name, mod, prof) {
@@ -3842,7 +3846,7 @@
 
         let vaultKey = null;
         const low = raw.toLowerCase();
-        const isSpecialAmmoOrRig = low.includes('bullet sling') || low.includes('cartridge rig') || low.includes('munitions sling') || low.includes('ammo rig') || low.includes('sunburst') || low.includes('ezmerelda') || low.includes('dawn-powder') || low.includes('silvered') || low.includes('incendiary') || low.includes('necrotic') || low.includes('wyvern') || low.includes('poisoned') || low.includes('oil of sharpness') || low.includes('sun-ash') || low.includes('liquid silver') || low.includes('witch-iron') || low.includes('hex-iron') || low.includes('fire arrow') || low.includes('fire bolt') || low.includes('van richten') || low.includes('scope') || low.includes('barrel') || low.includes('iron sights') || low.includes('dusk-quartz') || low.includes('speed-cylinder') || low.includes('silencer') || low.includes('counterweight') || low.includes('pommel') || low.includes('counter-grip') || low.includes('barbed hilt') || low.includes('edge-guard') || low.includes('crossguard') || low.includes('edge spine') || low.includes('sunstone') || low.includes('draw-cam') || low.includes('focusing collar') || low.includes('chaos-quartz') || low.includes('grip wrap') || low.includes('cane core') || low.includes('runestone') || low.includes('ledger') || low.includes('slate') || low.includes('wall-rubbing') || low.includes('rubric') || low.includes('folio') || low.includes('treatise') || low.includes('chart') || low.includes('diagram') || low.includes('pattern') || low.includes('vellum');
+        const isSpecialAmmoOrRig = low.includes('bullet sling') || low.includes('cartridge rig') || low.includes('munitions sling') || low.includes('ammo rig') || low.includes('sunburst') || low.includes('ezmerelda') || low.includes('dawn-powder') || low.includes('silvered') || low.includes('incendiary') || low.includes('necrotic') || low.includes('wyvern') || low.includes('poisoned') || low.includes('oil of sharpness') || low.includes('sun-ash') || low.includes('liquid silver') || low.includes('witch-iron') || low.includes('hex-iron') || low.includes('fire arrow') || low.includes('fire bolt') || low.includes('van richten') || low.includes('scope') || low.includes('barrel') || low.includes('iron sights') || low.includes('dusk-quartz') || low.includes('speed-cylinder') || low.includes('silencer') || low.includes('counterweight') || low.includes('pommel') || low.includes('counter-grip') || low.includes('barbed hilt') || low.includes('edge-guard') || low.includes('crossguard') || low.includes('edge spine') || low.includes('edge-fuller') || low.includes('hearthguard') || low.includes('dragon-wing') || low.includes('soul-serrated') || low.includes('eclipse-rune') || low.includes('dawn-glass') || low.includes('star-prism') || low.includes('frostveil') || low.includes('bloodmoon') || low.includes('sovereign halo') || low.includes('fulgurite') || low.includes('silver-soul') || low.includes('mist-heart') || low.includes('sunstone') || low.includes('draw-cam') || low.includes('focusing collar') || low.includes('chaos-quartz') || low.includes('grip wrap') || low.includes('cane core') || low.includes('runestone') || low.includes('ledger') || low.includes('slate') || low.includes('wall-rubbing') || low.includes('rubric') || low.includes('folio') || low.includes('treatise') || low.includes('chart') || low.includes('diagram') || low.includes('pattern') || low.includes('vellum');
         if (!isSpecialAmmoOrRig) {
             if (low.includes('whispering grave') || low.includes('amulet')) vaultKey = 'whispering grave';
             else if (low.includes('lockpick') || low.includes('lock pick') || low.includes('thieves')) vaultKey = 'lockpick';
@@ -4881,6 +4885,11 @@
                     window.__yvaineGearCache = bonuses;
                     updateACDisplay();
                     updateSavesUI();
+                    const initEl = document.getElementById('init-disp');
+                    if (initEl) {
+                        const totInit = 6 + (bonuses.initBonus || 0);
+                        initEl.innerText = `${totInit >= 0 ? '+' : ''}${totInit} ⚡`;
+                    }
                     syncYvaineWeaponsUI(bonuses);
                 }
             });

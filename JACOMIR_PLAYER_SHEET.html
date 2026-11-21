@@ -783,9 +783,9 @@
                         <span class="vital-mini-lbl">ARMOR CLASS</span>
                         <span class="vital-mini-val" id="ac-disp" style="color:var(--accent-gold);">17</span>
                     </div>
-                    <div class="vital-mini-box" onclick="rollD20('Initiative Roll (DEX +0)', 0)" style="cursor:pointer;" title="Click to roll Initiative (+0)">
+                    <div class="vital-mini-box" onclick="rollJacomirInitiative()" style="cursor:pointer;" title="Click to roll Initiative">
                         <span class="vital-mini-lbl">INIT 🎲</span>
-                        <span class="vital-mini-val" style="color:var(--accent-blue);">+0</span>
+                        <span class="vital-mini-val" id="init-disp" style="color:var(--accent-blue);">+0</span>
                     </div>
                     <div class="vital-mini-box" title="Maneuver Save DC: 8 + PB (+2) + STR (+3) = 13 | Weapon Attack Bonus: +5">
                         <span class="vital-mini-lbl">MANEUVER DC / HIT</span>
@@ -2815,10 +2815,17 @@
         logRoll(msg);
     }
 
+    function rollJacomirInitiative() {
+        const gb = window.__jacomirGearCache?.initBonus || 0;
+        const tot = 0 + gb;
+        const tag = gb ? ` [Gear ${gb > 0 ? '+' : ''}${gb}]` : '';
+        rollD20(`Initiative Roll (DEX +0${tag})`, tot);
+    }
+
     function rollSave(label, baseStatMod, isProf) {
         const sb = window.__jacomirGearCache?.saveBonus || 0;
         const bonus = baseStatMod + (isProf ? getProfBonus() : 0) + sb;
-        rollD20(sb ? `${label} [🛡️ Gear +${sb}]` : label, bonus);
+        rollD20(sb ? `${label} [🛡️ Gear ${sb > 0 ? '+' : ''}${sb}]` : label, bonus);
     }
 
     function rollSkill(label, baseStatMod, isProf) {
@@ -3246,7 +3253,7 @@
         const cleanLower = parsed.name.toLowerCase();
 
         let match = null;
-        const isSharedPriority = cleanLower.includes('moonlight') || cleanLower.includes('vladimir') || cleanLower.includes('sunblade') || cleanLower.includes('sunsword') || cleanLower.includes('counterweight') || cleanLower.includes('pommel') || cleanLower.includes('counter-grip') || cleanLower.includes('barbed hilt') || cleanLower.includes('edge-guard') || cleanLower.includes('crossguard') || cleanLower.includes('edge spine') || cleanLower.includes('sunstone') || cleanLower.includes('scope') || cleanLower.includes('barrel') || cleanLower.includes('iron sights') || cleanLower.includes('dusk-quartz') || cleanLower.includes('speed-cylinder') || cleanLower.includes('silencer') || cleanLower.includes('draw-cam') || cleanLower.includes('focusing collar') || cleanLower.includes('chaos-quartz') || cleanLower.includes('grip wrap') || cleanLower.includes('cane core') || cleanLower.includes('witch-iron') || cleanLower.includes('incendiary') || cleanLower.includes('liquid silver') || cleanLower.includes('sun-ash') || cleanLower.includes('oil of sharpness') || cleanLower.includes('wyvern') || cleanLower.includes('tincture') || cleanLower.includes('runestone') || cleanLower.includes('ledger') || cleanLower.includes('slate') || cleanLower.includes('wall-rubbing') || cleanLower.includes('rubric') || cleanLower.includes('folio') || cleanLower.includes('treatise') || cleanLower.includes('chart') || cleanLower.includes('diagram') || cleanLower.includes('pattern') || cleanLower.includes('vellum');
+        const isSharedPriority = cleanLower.includes('moonlight') || cleanLower.includes('vladimir') || cleanLower.includes('sunblade') || cleanLower.includes('sunsword') || cleanLower.includes('counterweight') || cleanLower.includes('pommel') || cleanLower.includes('counter-grip') || cleanLower.includes('barbed hilt') || cleanLower.includes('edge-guard') || cleanLower.includes('crossguard') || cleanLower.includes('edge spine') || cleanLower.includes('edge-fuller') || cleanLower.includes('hearthguard') || cleanLower.includes('dragon-wing') || cleanLower.includes('soul-serrated') || cleanLower.includes('eclipse-rune') || cleanLower.includes('dawn-glass') || cleanLower.includes('star-prism') || cleanLower.includes('frostveil') || cleanLower.includes('bloodmoon') || cleanLower.includes('sovereign halo') || cleanLower.includes('fulgurite') || cleanLower.includes('silver-soul') || cleanLower.includes('mist-heart') || cleanLower.includes('sunstone') || cleanLower.includes('scope') || cleanLower.includes('barrel') || cleanLower.includes('iron sights') || cleanLower.includes('dusk-quartz') || cleanLower.includes('speed-cylinder') || cleanLower.includes('silencer') || cleanLower.includes('draw-cam') || cleanLower.includes('focusing collar') || cleanLower.includes('chaos-quartz') || cleanLower.includes('grip wrap') || cleanLower.includes('cane core') || cleanLower.includes('witch-iron') || cleanLower.includes('incendiary') || cleanLower.includes('liquid silver') || cleanLower.includes('sun-ash') || cleanLower.includes('oil of sharpness') || cleanLower.includes('wyvern') || cleanLower.includes('tincture') || cleanLower.includes('runestone') || cleanLower.includes('ledger') || cleanLower.includes('slate') || cleanLower.includes('wall-rubbing') || cleanLower.includes('rubric') || cleanLower.includes('folio') || cleanLower.includes('treatise') || cleanLower.includes('chart') || cleanLower.includes('diagram') || cleanLower.includes('pattern') || cleanLower.includes('vellum');
         if (!isSharedPriority) {
             for (const [k, v] of Object.entries(worldLootVault)) {
                 if (cleanLower.includes(k)) { match = v; break; }
@@ -3825,6 +3832,11 @@
                 window.__jacomirGearCache = bonuses;
                 updateACDisplay();
                 updateSavesUI();
+                const initEl = document.getElementById('init-disp');
+                if (initEl) {
+                    const totInit = 0 + (bonuses.initBonus || 0);
+                    initEl.innerText = totInit >= 0 ? `+${totInit}` : `${totInit}`;
+                }
                 const stealthTag = document.getElementById('stealth-disadv-tag');
                 if (stealthTag) stealthTag.style.display = bonuses.stealthDisadv ? 'inline' : 'none';
                 const syncWpnCard = (cardId, badgeId, tag) => {

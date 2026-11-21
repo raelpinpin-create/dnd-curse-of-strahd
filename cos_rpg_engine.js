@@ -565,13 +565,17 @@
             attachMeta: {
                 modKey: 'van_richten_scope_plus2',
                 slotType: 'optic',
-                targetClasses: ['firearm', 'crossbow'],
-                atkBonus: 2,
+                targetClasses: ['firearm', 'crossbow', 'bow'],
+                atkBonus: 1,
                 dmgBonus: 0,
+                extraDice: '1d4',
+                extraType: 'Radiant',
+                initBonus: -1,
                 mistSight: true,
-                badgeLabel: 'Enhanced Scope (+2 Hit • Mist Sight)'
+                debuffNote: '-1 Initiative (heavy masterwork optic)',
+                badgeLabel: 'Enhanced Scope (+1 Hit +1d4 Rad / -1 Init)'
             },
-            summary: 'Optic Slot (Firearm/Crossbow): +2 Attack & Mist-Piercing Sight'
+            summary: 'Optic Slot (Ranged): +1 Hit, +1d4 Radiant & Mist Sight; Debuff: -1 Init'
         },
         {
             match: ['enhanced clockwork rifled barrel', 'enhanced van richten\'s clockwork'],
@@ -583,11 +587,13 @@
                 targetClasses: ['firearm'],
                 atkBonus: 0,
                 dmgBonus: 2,
+                magCapDelta: -1,
                 isSilvered: true,
                 isMagical: true,
-                badgeLabel: 'Enhanced Barrel (+2 Dmg • Magical)'
+                debuffNote: '-1 Max Magazine Capacity (thick silver-rifled sleeve)',
+                badgeLabel: 'Enhanced Barrel (+2 Dmg • Silvered / -1 Mag)'
             },
-            summary: 'Barrel Slot (Firearm): +2 Damage, Silvered & Magical'
+            summary: 'Barrel Slot (Firearm): +2 Dmg, Silvered & Magical; Debuff: -1 Max Mag'
         },
         {
             match: ['enhanced amber-inlaid focusing collar', 'enhanced focusing collar'],
@@ -647,10 +653,12 @@
                 targetClasses: ['firearm', 'crossbow', 'bow'],
                 atkBonus: 1,
                 dmgBonus: 0,
+                initBonus: -1,
                 mistSight: true,
-                badgeLabel: 'Silver Scope (+1 Hit • Mist Sight)'
+                debuffNote: '-1 Initiative (heavy telescopic sighting tube)',
+                badgeLabel: 'Silver Scope (+1 Hit • Mist Sight / -1 Init)'
             },
-            summary: 'Optic Slot (Firearm/Crossbow/Bow): +1 Attack & Mist-Piercing Sight'
+            summary: 'Optic Slot (Ranged): +1 Attack & Mist-Piercing Sight; Debuff: -1 Init'
         },
         {
             match: ['solmere hair-line iron sights', 'hair-line iron sights', 'iron sights'],
@@ -695,11 +703,13 @@
                 targetClasses: ['firearm'],
                 atkBonus: 0,
                 dmgBonus: 1,
+                magCapDelta: -1,
                 isSilvered: true,
                 isMagical: true,
-                badgeLabel: 'Clockwork Barrel (+1 Dmg • Magical)'
+                debuffNote: '-1 Max Magazine Capacity (heavy silver-rifled sleeve)',
+                badgeLabel: 'Clockwork Barrel (+1 Dmg • Silvered / -1 Mag)'
             },
-            summary: 'Barrel Slot (Firearm): +1 Damage, Silvered & Magical'
+            summary: 'Barrel Slot (Firearm): +1 Dmg, Silvered & Magical; Debuff: -1 Max Mag'
         },
         {
             match: ['overbore siege barrel', 'siege barrel'],
@@ -895,8 +905,123 @@
             },
             summary: 'Edge/Guard Slot (Blade): +1d4 Piercing Damage; Debuff: -1 Attack'
         },
+        {
+            match: ['rime-etched balinok edge-fuller', 'balinok edge-fuller', 'edge-fuller'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'frostbite_silver_fuller',
+                slotType: 'guard',
+                targetClasses: ['slashing_piercing'],
+                atkBonus: 0,
+                dmgBonus: 0,
+                extraDice: '1d4',
+                extraType: 'Cold',
+                isMagical: true,
+                debuffNote: 'Brittle Chill: Nat 1 attack locks wrist (-1 AC until next turn)',
+                badgeLabel: 'Rime Fuller (+1d4 Cold • Magical)'
+            },
+            summary: 'Edge/Guard Slot (Blade): +1d4 Cold & Magical; Debuff: Frost-lock on Nat 1'
+        },
+        {
+            match: ['cinder-forged hearthguard', 'hearthguard'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'ashen_cinder_guard',
+                slotType: 'guard',
+                targetClasses: ['slashing_piercing'],
+                atkBonus: 0,
+                dmgBonus: 0,
+                extraDice: '1d4',
+                extraType: 'Fire',
+                isMagical: true,
+                stealthDisadv: true,
+                debuffNote: 'Ember Glow (10-ft light • Stealth Disadvantage)',
+                badgeLabel: 'Cinder Guard (+1d4 Fire • Magical / Glows)'
+            },
+            summary: 'Edge/Guard Slot (Blade): +1d4 Fire & Magical; Debuff: Glowing Stealth Disadv'
+        },
+        {
+            match: ['argynvost frostfire dragon-wing guard', 'frostfire dragon-wing', 'dragon-wing guard'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'silver_dragon_crossguard',
+                slotType: 'guard',
+                targetClasses: ['slashing_piercing'],
+                atkBonus: 1,
+                dmgBonus: 0,
+                extraDice: '1d4',
+                extraType: 'Radiant',
+                isSilvered: true,
+                isMagical: true,
+                initBonus: -1,
+                debuffNote: '-1 Initiative (ornate silver dragon-wing weight)',
+                badgeLabel: 'Dragon-Wing Guard (+1 Hit +1d4 Rad / -1 Init)'
+            },
+            summary: 'Edge/Guard Slot (Blade): +1 Hit, +1d4 Radiant & Silvered; Debuff: -1 Init'
+        },
+        {
+            match: ['mourning-iron soul-serrated edge', 'soul-serrated edge', 'mourning-iron'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'grave_marrow_edge',
+                slotType: 'guard',
+                targetClasses: ['slashing_piercing'],
+                atkBonus: 0,
+                dmgBonus: 0,
+                extraDice: '1d6',
+                extraType: 'Necrotic',
+                isMagical: true,
+                saveBonus: -1,
+                debuffNote: '-1 to All Saving Throws (grave chill curse)',
+                badgeLabel: 'Soul-Serrated Edge (+1d6 Nec / -1 Saves)'
+            },
+            summary: 'Edge/Guard Slot (Blade): +1d6 Necrotic & Magical; Debuff: -1 All Saves'
+        },
+        {
+            match: ['amber temple eclipse-rune crossguard', 'eclipse-rune crossguard', 'eclipse-rune'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'amber_eclipse_guard',
+                slotType: 'guard',
+                targetClasses: ['slashing_piercing'],
+                atkBonus: 1,
+                dmgBonus: 1,
+                extraDice: '1d6',
+                extraType: 'Force',
+                isMagical: true,
+                acBonus: -1,
+                debuffNote: '-1 AC while wielding (dark amber drains wards)',
+                badgeLabel: 'Eclipse Guard (+1/+1 +1d6 Force / -1 AC)'
+            },
+            summary: 'Edge/Guard Slot (Endgame Blade): +1/+1 & +1d6 Force; Debuff: -1 AC'
+        },
+        {
+            match: ['consecrated dawn-glass edge rail', 'dawn-glass edge rail', 'dawn-glass'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'dawnshard_blade_rail',
+                slotType: 'guard',
+                targetClasses: ['slashing_piercing'],
+                atkBonus: 1,
+                dmgBonus: 0,
+                extraDice: '1d6',
+                extraType: 'Radiant',
+                isSilvered: true,
+                isMagical: true,
+                stealthDisadv: true,
+                debuffNote: 'Blazing Beacon (20-ft Bright Light • Stealth Disadvantage)',
+                badgeLabel: 'Dawn-Glass Rail (+1 Hit +1d6 Rad • Silvered / Bright)'
+            },
+            summary: 'Edge/Guard Slot (Endgame Blade): +1 Hit, +1d6 Rad & Silvered; Debuff: Bright Light'
+        },
 
-        // --- QUARTERSTAFF / CASTER FOCUS CROWN & GRIP ATTACHMENTS ---
+        // --- QUARTERSTAFF / CASTER FOCUS CROWN & CORE ATTACHMENTS ---
         {
             match: ['amber-inlaid focusing collar', 'focusing collar'],
             category: 'gear',
@@ -912,6 +1037,81 @@
                 badgeLabel: 'Amber Collar (+1 Hit / +1 Spell)'
             },
             summary: 'Crown/Hilt Slot (Staff/Dagger): +1 Weapon Hit & +1 Spell Attack'
+        },
+        {
+            match: ['vistani tarokka star-prism finial', 'star-prism finial', 'star-prism'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'starlight_tarokka_finial',
+                slotType: 'crown',
+                slotTypes: ['crown', 'hilt'],
+                targetClasses: ['caster_weapon'],
+                atkBonus: -1,
+                dmgBonus: 0,
+                spellAtkBonus: 1,
+                initBonus: 1,
+                debuffNote: '-1 Melee Attack (delicate orbiting brass rings)',
+                badgeLabel: 'Star-Prism Finial (+1 Spell +1 Init / -1 Melee)'
+            },
+            summary: 'Crown Slot (Staff/Focus): +1 Spell Atk & +1 Init; Debuff: -1 Melee Hit'
+        },
+        {
+            match: ['balinok frostveil resonator crown', 'frostveil resonator', 'frostveil'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'frostveil_crystal_crown',
+                slotType: 'crown',
+                targetClasses: ['caster_weapon'],
+                atkBonus: -1,
+                dmgBonus: 0,
+                spellDcBonus: 1,
+                debuffNote: '-1 Weapon Attack (numbing frost aura)',
+                badgeLabel: 'Frostveil Crown (+1 Spell DC / -1 Wpn Hit)'
+            },
+            summary: 'Crown Slot (Staff): +1 Spell Save DC; Debuff: -1 Weapon Attack'
+        },
+        {
+            match: ['crimson bloodmoon conduit crown', 'bloodmoon conduit', 'bloodmoon'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'bloodmoon_ruby_crown',
+                slotType: 'crown',
+                slotTypes: ['crown', 'hilt'],
+                targetClasses: ['caster_weapon'],
+                atkBonus: 0,
+                dmgBonus: 0,
+                spellDcBonus: 1,
+                spellAtkBonus: 1,
+                extraDice: '1d4',
+                extraType: 'Necrotic',
+                acBonus: -1,
+                debuffNote: '-1 AC while equipped (blood tithe siphons wards)',
+                badgeLabel: 'Bloodmoon Crown (+1 DC/+1 Spell +1d4 Nec / -1 AC)'
+            },
+            summary: 'Crown Slot (Staff/Dagger): +1 Spell DC/Atk & +1d4 Nec; Debuff: -1 AC'
+        },
+        {
+            match: ['amber temple sovereign halo crown', 'sovereign halo crown', 'sovereign halo'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'amber_sovereign_crown',
+                slotType: 'crown',
+                targetClasses: ['caster_weapon'],
+                atkBonus: 0,
+                dmgBonus: 0,
+                spellDcBonus: 2,
+                spellAtkBonus: 1,
+                extraDice: '1d6',
+                extraType: 'Force',
+                acBonus: -2,
+                debuffNote: '-2 AC while equipped (glass-cannon arcane overcharge)',
+                badgeLabel: 'Sovereign Halo (+2 DC/+1 Spell +1d6 Force / -2 AC)'
+            },
+            summary: 'Crown Slot (Endgame Staff): +2 Spell DC, +1 Spell Atk & +1d6 Force; Debuff: -2 AC'
         },
         {
             match: ['cracked chaos-quartz staff crown', 'chaos-quartz'],
@@ -963,7 +1163,63 @@
                 debuffNote: 'Stealth Disadvantage (audible brass rattle)',
                 badgeLabel: 'Brass Core (+2 Dmg • Silvered / Loud)'
             },
-            summary: 'Grip Slot (Staff): +2 Melee Damage & Silvered; Debuff: Stealth Disadv'
+            summary: 'Grip/Core Slot (Staff): +2 Melee Dmg & Silvered; Debuff: Stealth Disadv'
+        },
+        {
+            match: ['storm-glass fulgurite staff core', 'fulgurite staff core', 'fulgurite'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'lightning_fulgurite_core',
+                slotType: 'grip',
+                targetClasses: ['caster_weapon'],
+                atkBonus: 0,
+                dmgBonus: 0,
+                spellAtkBonus: 1,
+                extraDice: '1d4',
+                extraType: 'Lightning',
+                stealthDisadv: true,
+                debuffNote: 'Static Hum (Stealth Disadvantage)',
+                badgeLabel: 'Fulgurite Core (+1 Spell +1d4 Lightn / Loud)'
+            },
+            summary: 'Core Slot (Staff): +1 Spell Atk & +1d4 Lightning; Debuff: Stealth Disadv'
+        },
+        {
+            match: ['argynvost silver-soul resonance core', 'silver-soul resonance core', 'silver-soul'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'silver_dragon_heartcore',
+                slotType: 'grip',
+                targetClasses: ['caster_weapon'],
+                atkBonus: 0,
+                dmgBonus: 0,
+                acBonus: 1,
+                saveBonus: 1,
+                isSilvered: true,
+                initBonus: -1,
+                debuffNote: '-1 Initiative (heavy silver-dragon resonance core)',
+                badgeLabel: 'Silver-Soul Core (+1 AC/+1 Saves • Silvered / -1 Init)'
+            },
+            summary: 'Core Slot (Staff): +1 AC, +1 All Saves & Silvered; Debuff: -1 Init'
+        },
+        {
+            match: ['svalich mist-heart hollow core', 'mist-heart hollow core', 'mist-heart'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'fey_mistweave_core',
+                slotType: 'grip',
+                targetClasses: ['caster_weapon'],
+                atkBonus: 0,
+                dmgBonus: -2,
+                spellDcBonus: 1,
+                saveBonus: 1,
+                mistSight: true,
+                debuffNote: '-2 Melee Damage (fragile hollow glass-mist core)',
+                badgeLabel: 'Mist-Heart Core (+1 DC/+1 Saves • Mist Sight / -2 Dmg)'
+            },
+            summary: 'Core Slot (Endgame Staff): +1 Spell DC, +1 Saves & Mist Sight; Debuff: -2 Melee Dmg'
         },
 
         // --- WEAPONS & SHIELDS ---
@@ -2063,54 +2319,6 @@
             effect: "• <strong>Load Into Crossbow (Bonus Action):</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and the target <strong>cannot regain Hit Points</strong> until the start of your next turn."
         },
         {
-            match: ['van richten', 'silver-runed scope', 'clockwork barrel'],
-            name: "Van Richten's Silver-Runed Scope & Clockwork Barrel",
-            category: "RARE WEAPON ATTACHMENT • Firearms & Crossbows",
-            origin: "Rictavio's Wagon (Vallaki N5) or Ezmerelda's Wagon (V1)",
-            desc: "Precision crystal optics paired with a silver-lined rifled barrel sleeve crafted by master monster hunters.",
-            effect: "• <strong>Attach to Firearm / Crossbow (Backpack):</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong> (upgradable to <strong>+2</strong> in Act III), renders standard shots <strong>Silvered</strong>, ignores lightly obscured mist up to 120 ft, and highlights invisible/ethereal foes within 30 ft."
-        },
-        {
-            match: ['silver-runed hilt', 'hilt counterweight'],
-            name: "Silver-Runed Hilt Counterweight",
-            category: "UNCOMMON WEAPON ATTACHMENT • Melee Weapons",
-            origin: "Tser Pool Vistani Forge (G), Ismark's Armory (E4), or Bildrath's (120 GP)",
-            desc: "Stamped sterling-silver pommel collar and crossguard filigree balanced cleanly for swords, axes, maces, and spears.",
-            effect: "• <strong>Attach to Melee Weapon (Backpack):</strong> Makes the weapon count as <strong>Silvered</strong> (bypassing Werewolf, Vampire Spawn &amp; Hag nonmagical resistances) and grants <strong>+1 Damage</strong>."
-        },
-        {
-            match: ['counterbalance edge-guard', 'honed counterbalance', 'edge-guard'],
-            name: "Honed Counterbalance Edge-Guard",
-            category: "RARE WEAPON ATTACHMENT • Slashing / Piercing Melee",
-            origin: "Vallaki Smithy or Arasek Stockyard Secret Stock (N5 — 450 GP)",
-            desc: "Micro-serrated tungsten spine guard and weight-tuned tang clamp engineered for clean follow-through.",
-            effect: "• <strong>Attach to Sword, Axe, Dagger, or Spear (Backpack):</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong> (counts as magical against nonmagical resistances)."
-        },
-        {
-            match: ['sunstone pommel', 'pommel gem'],
-            name: "Morninglord Sunstone Pommel Gem",
-            category: "RARE SACRED ATTACHMENT • Melee Weapons",
-            origin: "Abbey of Saint Markovia (Krezk S13) or Argynvostholt (Q)",
-            desc: "A warm, facets-cut sunburst ruby set inside a brass pommel socket blessed at Saint Markovia's altar.",
-            effect: "• <strong>Attach to Melee Weapon (Backpack):</strong> Deals an extra <strong>+1d4 Radiant damage</strong> on hits and sheds 10-ft dim golden light on command."
-        },
-        {
-            match: ['clockwork draw-cam', 'draw-cam', 'hair trigger'],
-            name: "Clockwork Draw-Cam & Hair Trigger",
-            category: "UNCOMMON WEAPON ATTACHMENT • Bows, Crossbows & Firearms",
-            origin: "Blinsky's Workshop (N7) or Arasek Stockyard (N5 — 200 GP)",
-            desc: "Taut torsion cam & hair-spring sear assembly fitted to bows, crossbows, or firearm triggers.",
-            effect: "• <strong>Attach to Bow, Crossbow, or Firearm (Backpack):</strong> Grants <strong>+1 Attack &amp; +1 Damage</strong> via crisp release timing."
-        },
-        {
-            match: ['amber-inlaid focusing collar', 'focusing collar'],
-            name: "Amber-Inlaid Focusing Collar",
-            category: "RARE CASTER ATTACHMENT • Quarterstaffs & Daggers",
-            origin: "Van Richten's Tower Study (V) or Amber Temple Wizard Quarters (X5a)",
-            desc: "Octagonal bronze ring set with warm Barovian amber shards that channel spell weave through an arcane weapon.",
-            effect: "• <strong>Attach to Quarterstaff or Dagger (Backpack):</strong> Grants <strong>+1 to Weapon Attacks</strong> AND <strong>+1 to Spell Attack Rolls</strong> while wielded!"
-        },
-        {
             match: ['oil of sharpness'],
             name: "Oil of Sharpness",
             category: "VERY RARE COATING VIAL • Area U3",
@@ -2376,144 +2584,40 @@
             effect: "• <strong>Barter Value:</strong> Trade to apothecaries, hunters, or occultists for gold, silvered ammo, or alchemical reagents.",
             isCraftableReagent: true
         },
-        // --- NEW & SPLIT WEAPON ATTACHMENTS (ZERO LOCATION SPOILERS!) ---
+        // --- NEW, REBALANCED & SPLIT WEAPON ATTACHMENTS (ZERO LOCATION SPOILERS!) ---
+        // DM-Upgraded Enhanced Attachments FIRST so they never match base entries!
         {
             match: ['enhanced van richten\'s silver-runed scope', 'enhanced silver-runed scope'],
             name: "Enhanced Van Richten's Silver-Runed Scope",
-            category: "WEAPON ATTACHMENT • Optic / Sight Slot",
-            desc: "A masterwork etched brass telescopic sight recalibrated with silver filigree lenses.",
-            effect: "• <strong>Optic Slot (Firearm / Crossbow):</strong> Grants <strong>+2 to Attack rolls</strong> and <strong>Mist-Piercing Sight</strong> (ignores light/heavy mist and fog obscurity)."
+            category: "VERY RARE WEAPON ATTACHMENT • Optic / Sight Slot",
+            desc: "A masterwork etched brass telescopic sight recalibrated with consecrated silver-crystal lenses that burn away mist and shadow.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>, <strong>+1d4 Radiant damage</strong> on every hit, and <strong>Mist-Piercing Sight</strong> (ignores mist and fog obscurity).<br>• <strong>Trade-Off:</strong> <strong>-1 to Initiative</strong> while equipped (heavy masterwork brass sighting tube)."
         },
         {
             match: ['enhanced clockwork rifled barrel', 'enhanced van richten\'s clockwork'],
             name: "Enhanced Clockwork Rifled Barrel",
-            category: "WEAPON ATTACHMENT • Barrel / Mechanism Slot",
-            desc: "A precision-lapped silver-lined rifled barrel tuned to peak chamber pressure.",
-            effect: "• <strong>Barrel Slot (Firearm):</strong> Grants <strong>+2 to Damage rolls</strong> and treats all shots fired as <strong>Magical &amp; Silvered</strong>."
-        },
-        {
-            match: ['van richten\'s silver-runed scope', 'silver-runed scope'],
-            name: "Van Richten's Silver-Runed Scope",
-            category: "WEAPON ATTACHMENT • Optic / Sight Slot",
-            desc: "An etched brass telescopic sight ground with silver-dusted lenses designed to pierce thick fog.",
-            effect: "• <strong>Optic Slot (Firearm / Crossbow / Bow):</strong> Grants <strong>+1 to Attack rolls</strong> and <strong>Mist-Piercing Sight</strong> (ignores mist and fog obscurity)."
-        },
-        {
-            match: ['clockwork rifled barrel', 'van richten\'s clockwork barrel', 'clockwork barrel'],
-            name: "Van Richten's Clockwork Rifled Barrel",
-            category: "WEAPON ATTACHMENT • Barrel / Mechanism Slot",
-            desc: "A fluted cold-steel rifled barrel lined with silver threading to spin heavy slugs cleanly.",
-            effect: "• <strong>Barrel Slot (Firearm):</strong> Grants <strong>+1 to Damage rolls</strong> and treats all shots fired as <strong>Magical &amp; Silvered</strong>."
-        },
-        {
-            match: ['solmere hair-line iron sights', 'hair-line iron sights', 'iron sights'],
-            name: "Solmere Hair-Line Iron Sights",
-            category: "WEAPON ATTACHMENT • Optic / Sight Slot",
-            desc: "Ultra-fine notched steel iron sights built for deliberate precision marksmanship.",
-            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Damage rolls</strong> (requires lighter powder loads to hold tight sight alignment)."
-        },
-        {
-            match: ['dusk-quartz night scope', 'dusk-quartz'],
-            name: "Dusk-Quartz Night Scope",
-            category: "WEAPON ATTACHMENT • Optic / Sight Slot",
-            desc: "A smoky twilight-quartz lens that amplifies faint starlight through fog and gloom.",
-            effect: "• <strong>Bonus:</strong> Grants <strong>Mist-Piercing Sight</strong> and negates Dim Light / Darkness penalties out to <strong>60 feet</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> if firing in Bright Sunlight (lens glare)."
-        },
-        {
-            match: ['overbore siege barrel', 'siege barrel'],
-            name: "Overbore Siege Barrel",
-            category: "WEAPON ATTACHMENT • Barrel / Mechanism Slot",
-            desc: "A thick-walled heavy-gauge cannon barrel bored for brutal stopping power.",
-            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>.<br>• <strong>Trade-Off:</strong> Reduces weapon <strong>Max Magazine Capacity by -2</strong>."
-        },
-        {
-            match: ['extended brass speed-cylinder', 'speed-cylinder', 'extended magazine'],
-            name: "Extended Brass Speed-Cylinder",
-            category: "WEAPON ATTACHMENT • Barrel / Mechanism Slot",
-            desc: "An oversized machined brass drum/clip assembly that holds extra rounds ready.",
-            effect: "• <strong>Bonus:</strong> Increases weapon <strong>Max Magazine Capacity by +2</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> from front-heavy balance."
-        },
-        {
-            match: ['ash-steel silencer shroud', 'silencer shroud'],
-            name: "Vistani Ash-Steel Silencer Shroud",
-            category: "WEAPON ATTACHMENT • Barrel / Mechanism Slot",
-            desc: "A baffled dark-steel suppressor tube packed with silver mesh to deaden gunfire.",
-            effect: "• <strong>Bonus:</strong> <strong>Silences gunfire</strong> (no 300-ft audible boom) and treats shots as <strong>Silvered</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Damage rolls</strong> from reduced muzzle velocity."
-        },
-        {
-            match: ['lead-core breaker pommel', 'breaker pommel'],
-            name: "Heavy Lead-Core Breaker Pommel",
-            category: "WEAPON ATTACHMENT • Hilt / Pommel Slot",
-            desc: "A dense lead-weighted steel pommel forged to turn every strike into a bone-crushing cleave.",
-            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> (heavier swing inertia)."
-        },
-        {
-            match: ['vistani suede counter-grip', 'suede counter-grip'],
-            name: "Vistani Suede Counter-Grip",
-            category: "WEAPON ATTACHMENT • Hilt / Pommel Slot",
-            desc: "Supple cross-stitched leather grip wrap balanced for lightning-quick blade control.",
-            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Damage rolls</strong> (lightened finesse leverage)."
-        },
-        {
-            match: ['blood-thorn barbed hilt', 'barbed hilt'],
-            name: "Blood-Thorn Barbed Hilt",
-            category: "WEAPON ATTACHMENT • Hilt / Pommel Slot",
-            desc: "Dark iron brambles coiled around the grip that drink drops of blood to empower every blow.",
-            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong> and <strong>+1d4 Necrotic damage</strong> on hit.<br>• <strong>Trade-Off (Self-Bite):</strong> Whenever you roll a natural <strong>1–3</strong> on an attack roll with this weapon, the thorns bite your palm for <strong>1 HP</strong>."
-        },
-        {
-            match: ['argynvost bastion crossguard', 'bastion crossguard'],
-            name: "Argynvost Bastion Crossguard",
-            category: "WEAPON ATTACHMENT • Edge / Guard Slot",
-            desc: "A wide fluted steel basket-guard forged to turn aside vampire claws and warhammers.",
-            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Armor Class</strong> while wielding this weapon.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> from the bulky guard."
-        },
-        {
-            match: ['barbed wolf-tooth edge spine', 'wolf-tooth edge spine', 'edge spine'],
-            name: "Barbed Wolf-Tooth Edge Spine",
-            category: "WEAPON ATTACHMENT • Edge / Guard Slot",
-            desc: "A serrated steel spine bolted along the back of a blade with wicked jagged hooks.",
-            effect: "• <strong>Bonus:</strong> Adds <strong>+1d4 Piercing damage</strong> on every hit.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> (barbs snag on loose swings)."
-        },
-        {
-            match: ['cracked chaos-quartz staff crown', 'chaos-quartz'],
-            name: "Cracked Chaos-Quartz Staff Crown",
-            category: "WEAPON ATTACHMENT • Staff Crown Slot",
-            desc: "A humming fractured prism of wild-magic crystal mounted in brass claws.",
-            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Spell Attack rolls</strong> and adds <strong>+1d4 Force damage</strong> to weapon strikes.<br>• <strong>Trade-Off:</strong> <strong>-1 to Armor Class</strong> while equipped (volatile arcana disrupts personal wards)."
-        },
-        {
-            match: ['warding silk grip wrap', 'warding silk grip', 'silk grip wrap'],
-            name: "Warding Silk Grip Wrap",
-            category: "WEAPON ATTACHMENT • Shaft Grip Slot",
-            desc: "Silver-threaded silk ribbons woven tightly around a staff or focus grip.",
-            effect: "• <strong>Grip Slot (Staff / Focus):</strong> Grants <strong>+1 to all Saving Throws</strong> (including Concentration CON saves) while equipped."
-        },
-        {
-            match: ['weighted brass stage-cane core', 'brass stage-cane core', 'cane core'],
-            name: "Weighted Brass Stage-Cane Core",
-            category: "WEAPON ATTACHMENT • Shaft Grip Slot",
-            desc: "A solid silver-plated brass rod hidden inside a hollow magician's cane.",
-            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Melee Damage rolls</strong> and treats strikes as <strong>Silvered</strong>.<br>• <strong>Trade-Off:</strong> Imposes <strong>Disadvantage on Stealth checks</strong> while equipped (audible metallic clink)."
+            category: "VERY RARE WEAPON ATTACHMENT • Barrel / Mechanism Slot",
+            desc: "A precision-lapped silver-lined rifled barrel tuned to peak chamber velocity with reinforced silver-steel walls.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong> and treats all shots fired as <strong>Magical &amp; Silvered</strong>.<br>• <strong>Trade-Off:</strong> Reduces weapon <strong>Max Magazine Capacity by -1</strong> (thick silver-rifled sleeve)."
         },
         {
             match: ['enhanced amber-inlaid focusing collar', 'enhanced focusing collar'],
             name: "Enhanced Amber-Inlaid Focusing Collar",
-            category: "WEAPON ATTACHMENT • Staff Crown / Hilt Slot",
+            category: "VERY RARE WEAPON ATTACHMENT • Staff Crown / Hilt Slot",
             desc: "A masterwork amber-and-brass focusing collar harmonized to channel intense spellcraft.",
             effect: "• <strong>Crown/Hilt Slot (Staff / Dagger):</strong> Grants <strong>+2 to Weapon Attack rolls</strong> and <strong>+2 to Spell Attack rolls</strong> while equipped."
         },
         {
             match: ['masterwork silver-runed hilt', 'masterwork hilt counterweight'],
             name: "Masterwork Silver-Runed Hilt Counterweight",
-            category: "WEAPON ATTACHMENT • Hilt / Pommel Slot",
+            category: "RARE WEAPON ATTACHMENT • Hilt / Pommel Slot",
             desc: "A perfected sterling counterweight pommel inlaid with wolf-ward silver sigils.",
             effect: "• <strong>Hilt Slot (Melee):</strong> Grants <strong>+1 to Attack and Damage rolls</strong> and treats strikes as <strong>Silvered</strong>."
         },
         {
             match: ['reforged counterbalance edge-guard', 'reforged edge-guard'],
             name: "Reforged Counterbalance Edge-Guard",
-            category: "WEAPON ATTACHMENT • Edge / Guard Slot",
+            category: "VERY RARE WEAPON ATTACHMENT • Edge / Guard Slot",
             desc: "A master-forged edge clamp tempered for devastating accuracy and bite.",
             effect: "• <strong>Edge/Guard Slot (Blade):</strong> Grants <strong>+2 to Attack rolls</strong>, <strong>+1 to Damage rolls</strong>, and treats strikes as <strong>Magical</strong>."
         },
@@ -2523,6 +2627,241 @@
             category: "VERY RARE SORCERER FOCUS • Attunement",
             desc: "An awakened crimson glass vial resonating deeply with innate sorcerous blood.",
             effect: "• <strong>Spellcasting Focus (Attunement):</strong> Grants <strong>+2 to Spell Save DC and Spell Attack rolls</strong>, and restores <strong>5 Sorcery Points</strong> when spending Hit Dice on a Short Rest (1/dawn)."
+        },
+        // Base Ranged Optic & Barrel Attachments
+        {
+            match: ['van richten\'s silver-runed scope', 'silver-runed scope'],
+            name: "Van Richten's Silver-Runed Scope",
+            category: "RARE WEAPON ATTACHMENT • Optic / Sight Slot",
+            desc: "An etched brass telescopic sight ground with silver-dusted lenses designed to pierce thick Barovian fog.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong> and <strong>Mist-Piercing Sight</strong> (ignores mist and fog obscurity).<br>• <strong>Trade-Off:</strong> <strong>-1 to Initiative</strong> while equipped (heavy telescopic sighting tube)."
+        },
+        {
+            match: ['clockwork rifled barrel', 'van richten\'s clockwork barrel', 'clockwork barrel'],
+            name: "Van Richten's Clockwork Rifled Barrel",
+            category: "RARE WEAPON ATTACHMENT • Barrel / Mechanism Slot",
+            desc: "A fluted cold-steel rifled barrel lined with silver threading to spin heavy slugs cleanly.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Damage rolls</strong> and treats all shots fired as <strong>Magical &amp; Silvered</strong>.<br>• <strong>Trade-Off:</strong> Reduces weapon <strong>Max Magazine Capacity by -1</strong> (heavy silver-rifled sleeve)."
+        },
+        {
+            match: ['solmere hair-line iron sights', 'hair-line iron sights', 'iron sights'],
+            name: "Solmere Hair-Line Iron Sights",
+            category: "UNCOMMON WEAPON ATTACHMENT • Optic / Sight Slot",
+            desc: "Ultra-fine notched steel iron sights built for deliberate precision marksmanship.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Damage rolls</strong> (requires lighter powder loads to hold tight sight alignment)."
+        },
+        {
+            match: ['dusk-quartz night scope', 'dusk-quartz'],
+            name: "Dusk-Quartz Night Scope",
+            category: "UNCOMMON WEAPON ATTACHMENT • Optic / Sight Slot",
+            desc: "A smoky twilight-quartz lens that amplifies faint starlight through fog and gloom.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>Mist-Piercing Sight</strong> and negates Dim Light / Darkness penalties out to <strong>60 feet</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> if firing in Bright Sunlight (lens glare)."
+        },
+        {
+            match: ['overbore siege barrel', 'siege barrel'],
+            name: "Overbore Siege Barrel",
+            category: "RARE WEAPON ATTACHMENT • Barrel / Mechanism Slot",
+            desc: "A thick-walled heavy-gauge cannon barrel bored for brutal stopping power.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>.<br>• <strong>Trade-Off:</strong> Reduces weapon <strong>Max Magazine Capacity by -2</strong>."
+        },
+        {
+            match: ['extended brass speed-cylinder', 'speed-cylinder', 'extended magazine'],
+            name: "Extended Brass Speed-Cylinder",
+            category: "UNCOMMON WEAPON ATTACHMENT • Barrel / Mechanism Slot",
+            desc: "An oversized machined brass drum/clip assembly that holds extra rounds ready.",
+            effect: "• <strong>Bonus:</strong> Increases weapon <strong>Max Magazine Capacity by +2</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> from front-heavy balance."
+        },
+        {
+            match: ['clockwork draw-cam', 'draw-cam', 'hair trigger'],
+            name: "Clockwork Draw-Cam & Hair Trigger",
+            category: "UNCOMMON WEAPON ATTACHMENT • Barrel / Mechanism Slot",
+            desc: "A taut torsion cam and heavy sear assembly engineered for snapping high-impact ranged shots.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> (heavy trigger/draw tension)."
+        },
+        {
+            match: ['ash-steel silencer shroud', 'silencer shroud'],
+            name: "Vistani Ash-Steel Silencer Shroud",
+            category: "RARE WEAPON ATTACHMENT • Barrel / Mechanism Slot",
+            desc: "A baffled dark-steel suppressor tube packed with silver mesh to deaden gunfire.",
+            effect: "• <strong>Bonus:</strong> <strong>Silences gunfire</strong> (no 300-ft audible boom) and treats shots as <strong>Silvered</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Damage rolls</strong> from reduced muzzle velocity."
+        },
+        // Melee Hilt / Pommel Attachments
+        {
+            match: ['silver-runed hilt', 'hilt counterweight'],
+            name: "Silver-Runed Hilt Counterweight",
+            category: "UNCOMMON WEAPON ATTACHMENT • Hilt / Pommel Slot",
+            desc: "Stamped sterling-silver pommel collar and crossguard filigree balanced cleanly for swords, axes, maces, and spears.",
+            effect: "• <strong>Hilt Slot (Melee):</strong> Makes the weapon count as <strong>Silvered</strong> (bypassing Werewolf, Vampire Spawn &amp; Hag nonmagical resistances) and grants <strong>+1 Damage</strong>."
+        },
+        {
+            match: ['sunstone pommel', 'pommel gem'],
+            name: "Morninglord Sunstone Pommel Gem",
+            category: "RARE SACRED ATTACHMENT • Hilt / Pommel Slot",
+            desc: "A warm, facet-cut sunburst ruby set inside a brass pommel socket consecrated with dawn prayers.",
+            effect: "• <strong>Hilt Slot (Melee):</strong> Deals an extra <strong>+1d4 Radiant damage</strong> on every hit and sheds 10-ft dim golden light on command."
+        },
+        {
+            match: ['lead-core breaker pommel', 'breaker pommel'],
+            name: "Heavy Lead-Core Breaker Pommel",
+            category: "UNCOMMON WEAPON ATTACHMENT • Hilt / Pommel Slot",
+            desc: "A dense lead-weighted steel pommel forged to turn every strike into a bone-crushing cleave.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> (heavier swing inertia)."
+        },
+        {
+            match: ['vistani suede counter-grip', 'suede counter-grip'],
+            name: "Vistani Suede Counter-Grip",
+            category: "UNCOMMON WEAPON ATTACHMENT • Hilt / Pommel Slot",
+            desc: "Supple cross-stitched leather grip wrap balanced for lightning-quick blade control.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Damage rolls</strong> (lightened finesse leverage)."
+        },
+        {
+            match: ['blood-thorn barbed hilt', 'barbed hilt'],
+            name: "Blood-Thorn Barbed Hilt",
+            category: "RARE WEAPON ATTACHMENT • Hilt / Pommel Slot",
+            desc: "Dark iron brambles coiled around the grip that drink drops of blood to empower every blow.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong> and <strong>+1d4 Necrotic damage</strong> on hit.<br>• <strong>Trade-Off (Self-Bite):</strong> Whenever you roll a natural <strong>1–3</strong> on an attack roll with this weapon, the thorns bite your palm for <strong>1 HP</strong>."
+        },
+        // Melee Edge / Guard Attachments (Including Magical & Endgame Aura Guards!)
+        {
+            match: ['counterbalance edge-guard', 'honed counterbalance', 'edge-guard'],
+            name: "Honed Counterbalance Edge-Guard",
+            category: "RARE WEAPON ATTACHMENT • Edge / Guard Slot",
+            desc: "Micro-serrated tungsten spine guard and weight-tuned tang clamp engineered for clean blade follow-through.",
+            effect: "• <strong>Edge/Guard Slot (Blade):</strong> Grants <strong>+1 to Attack rolls</strong> and treats strikes as <strong>Magical</strong>."
+        },
+        {
+            match: ['argynvost bastion crossguard', 'bastion crossguard'],
+            name: "Argynvost Bastion Crossguard",
+            category: "UNCOMMON WEAPON ATTACHMENT • Edge / Guard Slot",
+            desc: "A wide fluted steel basket-guard forged to turn aside vampire claws and warhammers.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Armor Class</strong> while wielding this weapon.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> from the bulky guard."
+        },
+        {
+            match: ['barbed wolf-tooth edge spine', 'wolf-tooth edge spine', 'edge spine'],
+            name: "Barbed Wolf-Tooth Edge Spine",
+            category: "UNCOMMON WEAPON ATTACHMENT • Edge / Guard Slot",
+            desc: "A serrated steel spine bolted along the back of a blade with wicked jagged hooks.",
+            effect: "• <strong>Bonus:</strong> Adds <strong>+1d4 Piercing damage</strong> on every hit.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> (barbs snag on loose swings)."
+        },
+        {
+            match: ['rime-etched balinok edge-fuller', 'balinok edge-fuller', 'edge-fuller'],
+            name: "Rime-Etched Balinok Edge-Fuller",
+            category: "UNCOMMON MAGICAL ATTACHMENT • Edge / Guard Slot",
+            desc: "A pale steel fuller-rail engraved with frost runes that trails icy vapor along the flat of the blade.",
+            effect: "• <strong>Bonus:</strong> Adds <strong>+1d4 Cold damage</strong> on every hit and counts as <strong>Magical</strong>.<br>• <strong>Trade-Off (Brittle Chill):</strong> On a <strong>Natural 1</strong> attack roll, rime locks your wrist, imposing <strong>-1 AC</strong> until the start of your next turn."
+        },
+        {
+            match: ['cinder-forged hearthguard', 'hearthguard'],
+            name: "Cinder-Forged Hearthguard",
+            category: "UNCOMMON MAGICAL ATTACHMENT • Edge / Guard Slot",
+            desc: "A blackened iron quillon collar inlaid with slow-burning ember veins that ignite the blade's edge on impact.",
+            effect: "• <strong>Bonus:</strong> Adds <strong>+1d4 Fire damage</strong> on every hit and counts as <strong>Magical</strong>.<br>• <strong>Trade-Off (Ember Glow):</strong> Sheds dim fiery light (10 ft) and imposes <strong>Disadvantage on Stealth checks</strong> while equipped."
+        },
+        {
+            match: ['argynvost frostfire dragon-wing guard', 'frostfire dragon-wing', 'dragon-wing guard'],
+            name: "Argynvost Frostfire Dragon-Wing Guard",
+            category: "RARE MAGICAL ATTACHMENT • Edge / Guard Slot",
+            desc: "Swept silver dragon-wing crossguards blazing with pale blue-white starlight forged by paladin bladesmiths.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>, adds <strong>+1d4 Radiant damage</strong> on hit, and treats strikes as <strong>Silvered &amp; Magical</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Initiative</strong> while equipped (heavy ornate silver wings)."
+        },
+        {
+            match: ['mourning-iron soul-serrated edge', 'soul-serrated edge', 'mourning-iron'],
+            name: "Mourning-Iron Soul-Serrated Edge",
+            category: "RARE MAGICAL ATTACHMENT • Edge / Guard Slot",
+            desc: "A dark-violet etched edge-clamp humming with shadow-cold necrotic whispers that shear through flesh and spirit.",
+            effect: "• <strong>Bonus:</strong> Adds <strong>+1d6 Necrotic damage</strong> on every hit and counts as <strong>Magical</strong>.<br>• <strong>Trade-Off (Grave Chill):</strong> Imposes <strong>-1 to all Saving Throws</strong> while equipped."
+        },
+        {
+            match: ['amber temple eclipse-rune crossguard', 'eclipse-rune crossguard', 'eclipse-rune'],
+            name: "Amber Temple Eclipse-Rune Crossguard",
+            category: "VERY RARE ENDGAME ATTACHMENT • Edge / Guard Slot",
+            desc: "A dark obsidian-and-amber crossguard crowned with a hovering golden eclipse ring that bends gravity around the blade.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>, <strong>+1 to Damage rolls</strong>, adds <strong>+1d6 Force damage</strong> on hit, and counts as <strong>Magical</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Armor Class</strong> while equipped (dark amber drains defensive wards)."
+        },
+        {
+            match: ['consecrated dawn-glass edge rail', 'dawn-glass edge rail', 'dawn-glass'],
+            name: "Consecrated Dawn-Glass Edge Rail",
+            category: "VERY RARE ENDGAME ATTACHMENT • Edge / Guard Slot",
+            desc: "A slender lattice of sun-crystal prisms locked along the blade spine, burning with golden dawn radiance.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>, adds <strong>+1d6 Radiant damage</strong> on hit, and treats strikes as <strong>Silvered &amp; Magical</strong>.<br>• <strong>Trade-Off (Blazing Beacon):</strong> Sheds 20-ft Bright Light and imposes <strong>Disadvantage on Stealth checks</strong> while equipped."
+        },
+        // Caster Crown & Staff Core Attachments
+        {
+            match: ['amber-inlaid focusing collar', 'focusing collar'],
+            name: "Amber-Inlaid Focusing Collar",
+            category: "RARE CASTER ATTACHMENT • Staff Crown / Hilt Slot",
+            desc: "An octagonal bronze ring set with warm amber shards that channel arcane weave cleanly through a staff or dagger.",
+            effect: "• <strong>Crown/Hilt Slot (Staff / Dagger):</strong> Grants <strong>+1 to Weapon Attack rolls</strong> and <strong>+1 to Spell Attack rolls</strong> while equipped."
+        },
+        {
+            match: ['vistani tarokka star-prism finial', 'star-prism finial', 'star-prism'],
+            name: "Vistani Tarokka Star-Prism Finial",
+            category: "UNCOMMON CASTER ATTACHMENT • Staff Crown / Hilt Slot",
+            desc: "Miniature brass astrolabe rings orbiting a star-cut crystal prism that quickens arcane reflexes.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Spell Attack rolls</strong> and <strong>+1 to Initiative</strong> while equipped.<br>• <strong>Trade-Off:</strong> <strong>-1 to Melee Weapon Attack rolls</strong> (delicate orbiting rings)."
+        },
+        {
+            match: ['balinok frostveil resonator crown', 'frostveil resonator', 'frostveil'],
+            name: "Balinok Frostveil Resonator Crown",
+            category: "RARE CASTER ATTACHMENT • Staff Crown Slot",
+            desc: "A jagged crown of glacial quartz that sharpens spell geometry and freezes hostile resistance.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Spell Save DC</strong> while equipped.<br>• <strong>Trade-Off:</strong> <strong>-1 to Weapon Attack rolls</strong> (numbing frost aura)."
+        },
+        {
+            match: ['crimson bloodmoon conduit crown', 'bloodmoon conduit', 'bloodmoon'],
+            name: "Crimson Bloodmoon Conduit Crown",
+            category: "RARE CASTER ATTACHMENT • Staff Crown / Hilt Slot",
+            desc: "A ruby-veined crescent finial that feeds raw crimson energy into spellcraft at the expense of personal armor.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Spell Save DC</strong>, <strong>+1 to Spell Attack rolls</strong>, and adds <strong>+1d4 Necrotic damage</strong> to weapon strikes.<br>• <strong>Trade-Off:</strong> <strong>-1 to Armor Class</strong> while equipped (blood tithe siphons wards)."
+        },
+        {
+            match: ['amber temple sovereign halo crown', 'sovereign halo crown', 'sovereign halo'],
+            name: "Amber Temple Sovereign Halo Crown",
+            category: "VERY RARE ENDGAME CASTER ATTACHMENT • Staff Crown Slot",
+            desc: "A floating halo of cracked amber runes and violet lightning suspended above the staff head—pure glass-cannon arcane authority.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Spell Save DC</strong>, <strong>+1 to Spell Attack rolls</strong>, and adds <strong>+1d6 Force damage</strong> to weapon strikes.<br>• <strong>Trade-Off:</strong> <strong>-2 to Armor Class</strong> while equipped (intense arcane overcharge shreds personal defenses)."
+        },
+        {
+            match: ['cracked chaos-quartz staff crown', 'chaos-quartz'],
+            name: "Cracked Chaos-Quartz Staff Crown",
+            category: "RARE CASTER ATTACHMENT • Staff Crown Slot",
+            desc: "A humming fractured prism of wild-magic crystal mounted in brass claws.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Spell Attack rolls</strong> and adds <strong>+1d4 Force damage</strong> to weapon strikes.<br>• <strong>Trade-Off:</strong> <strong>-1 to Armor Class</strong> while equipped (volatile arcana disrupts personal wards)."
+        },
+        {
+            match: ['warding silk grip wrap', 'warding silk grip', 'silk grip wrap'],
+            name: "Warding Silk Grip Wrap",
+            category: "UNCOMMON CASTER ATTACHMENT • Shaft Grip / Core Slot",
+            desc: "Silver-threaded silk ribbons woven tightly around a staff or focus grip.",
+            effect: "• <strong>Grip Slot (Staff / Focus):</strong> Grants <strong>+1 to all Saving Throws</strong> (including Concentration CON saves) while equipped."
+        },
+        {
+            match: ['weighted brass stage-cane core', 'brass stage-cane core', 'cane core'],
+            name: "Weighted Brass Stage-Cane Core",
+            category: "UNCOMMON CASTER ATTACHMENT • Shaft Grip / Core Slot",
+            desc: "A solid silver-plated brass rod hidden inside a hollow magician's cane.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Melee Damage rolls</strong> and treats strikes as <strong>Silvered</strong>.<br>• <strong>Trade-Off:</strong> Imposes <strong>Disadvantage on Stealth checks</strong> while equipped (audible metallic clink)."
+        },
+        {
+            match: ['storm-glass fulgurite staff core', 'fulgurite staff core', 'fulgurite'],
+            name: "Storm-Glass Fulgurite Staff Core",
+            category: "RARE CASTER ATTACHMENT • Shaft Grip / Core Slot",
+            desc: "A lightning-fused crystal rod threaded straight down the center of a staff, humming audibly with bottled storm static.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Spell Attack rolls</strong> and adds <strong>+1d4 Lightning damage</strong> to weapon strikes.<br>• <strong>Trade-Off (Static Hum):</strong> Imposes <strong>Disadvantage on Stealth checks</strong> while equipped."
+        },
+        {
+            match: ['argynvost silver-soul resonance core', 'silver-soul resonance core', 'silver-soul'],
+            name: "Argynvost Silver-Soul Resonance Core",
+            category: "RARE CASTER ATTACHMENT • Shaft Grip / Core Slot",
+            desc: "A dense core of tempered silver dragonbone woven through the staff shaft, anchoring the caster inside a shimmering bastion aura.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Armor Class</strong>, <strong>+1 to all Saving Throws</strong> (including Concentration), and treats weapon strikes as <strong>Silvered</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Initiative</strong> while equipped (heavy silver core)."
+        },
+        {
+            match: ['svalich mist-heart hollow core', 'mist-heart hollow core', 'mist-heart'],
+            name: "Svalich Mist-Heart Hollow Core",
+            category: "VERY RARE ENDGAME CASTER ATTACHMENT • Shaft Grip / Core Slot",
+            desc: "A translucent blown-glass core swirling with living silver fog that pierces mist and steadies high-tier spellcasting.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Spell Save DC</strong>, <strong>+1 to all Saving Throws</strong>, and <strong>Mist-Piercing Sight</strong>.<br>• <strong>Trade-Off:</strong> <strong>-2 to Melee Weapon Damage</strong> (fragile hollow glass-mist shaft)."
         }
     ];
 
@@ -3512,7 +3851,9 @@
         const magCapDelta = am ? (am.magCapDelta || 0) : (parseInt(modObj.magCapDelta) || 0);
         const acBonus = am ? (am.acBonus || 0) : (parseInt(modObj.acBonus) || 0);
         const saveBonus = am ? (am.saveBonus || 0) : (parseInt(modObj.saveBonus) || 0);
+        const spellDcBonus = am ? (am.spellDcBonus || 0) : (parseInt(modObj.spellDcBonus) || 0);
         const spellAtkBonus = am ? (am.spellAtkBonus || 0) : (parseInt(modObj.spellAtkBonus) || 0);
+        const initBonus = am ? (am.initBonus || 0) : (parseInt(modObj.initBonus) || 0);
         const extraDice = am ? (am.extraDice || null) : (modObj.extraDice || null);
         const extraType = am ? (am.extraType || null) : (modObj.extraType || null);
         const isSilvered = am ? !!am.isSilvered : !!modObj.isSilvered;
@@ -3530,7 +3871,9 @@
             magCapDelta,
             acBonus,
             saveBonus,
+            spellDcBonus,
             spellAtkBonus,
+            initBonus,
             extraDice,
             extraType,
             isSilvered,
@@ -3559,7 +3902,9 @@
         let magCapDelta = 0;
         let acBonus = 0;
         let saveBonus = 0;
+        let spellDcBonus = 0;
         let spellAtkBonus = 0;
+        let initBonus = 0;
         let isSilvered = false;
         let isMagical = false;
         let mistSight = false;
@@ -3578,7 +3923,9 @@
             magCapDelta += (h.magCapDelta || 0);
             acBonus += (h.acBonus || 0);
             saveBonus += (h.saveBonus || 0);
+            spellDcBonus += (h.spellDcBonus || 0);
             spellAtkBonus += (h.spellAtkBonus || 0);
+            initBonus += (h.initBonus || 0);
             if (h.isSilvered) isSilvered = true;
             if (h.isMagical) isMagical = true;
             if (h.mistSight) mistSight = true;
@@ -3595,7 +3942,9 @@
             magCapDelta,
             acBonus,
             saveBonus,
+            spellDcBonus,
             spellAtkBonus,
+            initBonus,
             extras,
             extraDice: extras[0] ? extras[0].dice : null,
             extraType: extras[0] ? extras[0].type : null,
@@ -3672,7 +4021,9 @@
             magCapDelta: modB.magCapDelta || 0,
             acBonus: modB.acBonus || 0,
             saveBonus: modB.saveBonus || 0,
+            spellDcBonus: modB.spellDcBonus || 0,
             spellAtkBonus: modB.spellAtkBonus || 0,
+            initBonus: modB.initBonus || 0,
             extras,
             isSilvered: Boolean(modB.isSilvered || (coat && coat.isSilvered)),
             isMagical: Boolean(modB.isMagical || (coat && coat.isMagical)),
@@ -3839,7 +4190,9 @@
             magCapDelta: modMeta.magCapDelta || 0,
             acBonus: modMeta.acBonus || 0,
             saveBonus: modMeta.saveBonus || 0,
+            spellDcBonus: modMeta.spellDcBonus || 0,
             spellAtkBonus: modMeta.spellAtkBonus || 0,
+            initBonus: modMeta.initBonus || 0,
             extraDice: modMeta.extraDice || null,
             extraType: modMeta.extraType || null,
             isSilvered: !!modMeta.isSilvered,
@@ -4782,7 +5135,9 @@
                 const wCombat = getWeaponCombatMods(wId);
                 if (wCombat.acBonus) bonuses.acBonus += wCombat.acBonus;
                 if (wCombat.saveBonus) bonuses.saveBonus += wCombat.saveBonus;
+                if (wCombat.spellDcBonus) bonuses.spellDcBonus += wCombat.spellDcBonus;
                 if (wCombat.spellAtkBonus) bonuses.spellAtkBonus += wCombat.spellAtkBonus;
+                if (wCombat.initBonus) bonuses.initBonus += wCombat.initBonus;
                 if (wCombat.stealthDisadv) bonuses.stealthDisadv = true;
                 (wCombat.mods || []).forEach(m => {
                     bonuses.activePerks.push(`<strong>${esc(shortLabel(raw))} Mod:</strong> ${esc(m.badge || m.modName)}`);
@@ -6168,7 +6523,9 @@
                         magCapDelta: am ? (am.magCapDelta || 0) : (modObj.magCapDelta || 0),
                         acBonus: am ? (am.acBonus || 0) : (modObj.acBonus || 0),
                         saveBonus: am ? (am.saveBonus || 0) : (modObj.saveBonus || 0),
+                        spellDcBonus: am ? (am.spellDcBonus || 0) : (modObj.spellDcBonus || 0),
                         spellAtkBonus: am ? (am.spellAtkBonus || 0) : (modObj.spellAtkBonus || 0),
+                        initBonus: am ? (am.initBonus || 0) : (modObj.initBonus || 0),
                         extraDice: am ? (am.extraDice || null) : (modObj.extraDice || null),
                         extraType: am ? (am.extraType || null) : (modObj.extraType || null),
                         isSilvered: am ? !!am.isSilvered : !!modObj.isSilvered,
@@ -7712,8 +8069,10 @@
                 <div class="rpg-stat-pills">
                     <span class="rpg-stat-pill gold">Live AC: ${esc(acTxt)}</span>
                     <span class="rpg-stat-pill" style="border-color:#60a5fa; color:#bfdbfe;">Preset: ${esc(activePreset.label)}${!activePreset.isMatch && activePreset.contextPreset ? ` (from ${esc(activePreset.contextPreset.label)})` : ''}</span>
-                    ${bonuses.saveBonus ? `<span class="rpg-stat-pill blue">Saves: +${bonuses.saveBonus}</span>` : ''}
-                    ${bonuses.spellDcBonus ? `<span class="rpg-stat-pill purple">Spell DC/Hit: +${bonuses.spellDcBonus}</span>` : ''}
+                    ${bonuses.saveBonus ? `<span class="rpg-stat-pill blue">Saves: ${bonuses.saveBonus > 0 ? '+' : ''}${bonuses.saveBonus}</span>` : ''}
+                    ${bonuses.spellDcBonus ? `<span class="rpg-stat-pill purple">Spell DC: ${bonuses.spellDcBonus > 0 ? '+' : ''}${bonuses.spellDcBonus}</span>` : ''}
+                    ${bonuses.spellAtkBonus ? `<span class="rpg-stat-pill purple">Spell Atk: ${bonuses.spellAtkBonus > 0 ? '+' : ''}${bonuses.spellAtkBonus}</span>` : ''}
+                    ${bonuses.initBonus ? `<span class="rpg-stat-pill gold">Init: ${bonuses.initBonus > 0 ? '+' : ''}${bonuses.initBonus}</span>` : ''}
                     ${bonuses.spellFireBonus ? `<span class="rpg-stat-pill" style="border-color:#ef4444; color:#fca5a5;">Spell Fire: +${esc(bonuses.spellFireBonus)}</span>` : ''}
                     ${bonuses.skillAdv.length ? `<span class="rpg-stat-pill green">Adv: ${esc(bonuses.skillAdv.join(', '))}</span>` : ''}
                     <span class="rpg-stat-pill purple" title="D&D 5e Attunement Limit: You can bond with at most 3 powerful magic items at the same time (e.g. Cloak of Protection, Sunsword, Bloodwell Vial).">Attuned: ${bonuses.attunedCount} / 3</span>
