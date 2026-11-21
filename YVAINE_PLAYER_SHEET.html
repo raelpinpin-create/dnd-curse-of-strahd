@@ -2161,6 +2161,7 @@
         }
 
         lamentReloadReserves--;
+        if (window.COS_RPG && COS_RPG.onWeaponReloaded) COS_RPG.onWeaponReloaded('lament');
         lamentChamber = maxLamentChamber;
         updateLamentAmmoUI();
         logRoll(`🔄 <strong>Lament Reloaded (Bonus Action):</strong> Yvaine ejects the empty stripper rack and slaps a fresh 10-round clip into the breach. <strong>Chamber Full (10/10)</strong>! <em>(${lamentReloadReserves}/2 reserve clips left in tactical bandolier).</em>`);
@@ -2262,6 +2263,12 @@
         }
 
         revolverReloadReserves--;
+        const reloadMercy = mercyChamber < maxMercyChamber;
+        const reloadLess = lessChamber < maxLessChamber;
+        if (window.COS_RPG && COS_RPG.onWeaponReloaded) {
+            if (reloadMercy) COS_RPG.onWeaponReloaded('mercy');
+            if (reloadLess) COS_RPG.onWeaponReloaded('less');
+        }
         mercyChamber = maxMercyChamber;
         lessChamber = maxLessChamber;
         updateRevolversAmmoUI();
@@ -4729,16 +4736,24 @@
                     { id: 'mercy', label: '"Mercy" (Main-Hand Revolver)', kind: 'firearm', maxCap: 6, mount: '#yvaine-ammo-bar-mercy' },
                     { id: 'less', label: '"Less" (Off-Hand Revolver)', kind: 'firearm', maxCap: 6, mount: '#yvaine-ammo-bar-less' }
                 ],
-                onAmmoLoaded: (weaponId, addRounds) => {
-                    if (weaponId === 'lament') {
-                        lamentChamber = Math.min(maxLamentChamber, lamentChamber + (parseInt(addRounds) || 0));
-                        updateLamentAmmoUI();
-                    } else if (weaponId === 'mercy') {
-                        mercyChamber = Math.min(maxMercyChamber, mercyChamber + (parseInt(addRounds) || 0));
-                        updateRevolversAmmoUI();
-                    } else if (weaponId === 'less') {
-                        lessChamber = Math.min(maxLessChamber, lessChamber + (parseInt(addRounds) || 0));
-                        updateRevolversAmmoUI();
+                getWeaponCurrentChamber: (weaponId) => {
+                    if (weaponId === 'lament') return { cur: lamentChamber, max: maxLamentChamber };
+                    if (weaponId === 'mercy') return { cur: mercyChamber, max: maxMercyChamber };
+                    if (weaponId === 'less') return { cur: lessChamber, max: maxLessChamber };
+                    return null;
+                },
+                onAmmoLoaded: (weaponId, addRounds, ammoId, isCoating) => {
+                    if (!isCoating) {
+                        if (weaponId === 'lament') {
+                            lamentChamber = Math.min(maxLamentChamber, lamentChamber + (parseInt(addRounds) || 0));
+                            updateLamentAmmoUI();
+                        } else if (weaponId === 'mercy') {
+                            mercyChamber = Math.min(maxMercyChamber, mercyChamber + (parseInt(addRounds) || 0));
+                            updateRevolversAmmoUI();
+                        } else if (weaponId === 'less') {
+                            lessChamber = Math.min(maxLessChamber, lessChamber + (parseInt(addRounds) || 0));
+                            updateRevolversAmmoUI();
+                        }
                     }
                     syncWeaponAmmoVisuals();
                 },

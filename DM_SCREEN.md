@@ -275,12 +275,13 @@ flowchart TD
     * 🪄 **Silver-Capped Quarterstaff** *(`102 GP` • Versatile `1d6/1d8` Silvered Bludgeoning, Topple — Piper / Cael)*
     * **Silvered Firearm & Sling Bullets (`x10`)** *(`5 GP` Vistani Forge `G` / `E4` / `N5` — Yvaine)*
     * **Silvered Arrows (`x10`)** & **Silvered Crossbow Bolts (`x10`)** *(`50–100 GP` Vistani Forge `G` / Arasek `N5` / Dusk Elves `N9a`)*
-11a. **CoS Specialty Ammunition Catalog *(Load Per-Weapon with Exact Quantity via `Load` on Player Sheets)*:**
+11a. **CoS Specialty Ammunition Catalog *(Max 1 Specialty Type Per Weapon • Bonus Action to Load / Swap on Firearms)*:**
+    * **Table Action & Reload Rules:** **Bonus Action** in combat to load specialty bullets into a firearm *(Free pre-combat)*. Physical specialty rounds can toggle between `Standard` and the loaded specialty type; reloading (`Reload Clip` / `Speedload`) returns any unfired specialty rounds (including Vial-coated bullets!) straight to Backpack.
     * **Brimstone Incendiary Bullets / Pitch-Tipped Fire Arrows / Fire Crossbow Bolts (`x10`):** **`+1d4` Fire damage** on hit (ignites targets & stops flame-vulnerable regen; bullets craftable via `INCENDIARY-ROUNDS`).
     * **Pale Tincture Poisoned Bullets / Nightshade Venom Arrows / Arrigal's Venom-Dipped Crossbow Bolts (`x10`):** **`+1d6` Poison damage** + **DC 12 CON Save or Poisoned** until end of next turn.
     * **Ezmerelda's Sunburst Cartridges / Morninglord Sunburst Arrows & Crossbow Bolts (`x10`):** **`+1` Hit/Dmg, `+1d6` Radiant, Silvered, and halts Vampire Regeneration for 1 round**!
     * **Grave-Salt Necrotic Bullets / Shadow-Bone Necrotic Arrows / Necrotic Crossbow Bolts (`x10`):** **`+1d6` Necrotic damage** + struck target **cannot regain Hit Points** until start of your next turn (`Berez U3 / Amber Temple X40`).
-    * **Tactical Coatings (Apply Per-Weapon or Melee Blade):** **Liquid Silver** (`+10` rounds), **Sun-Ash Balm** (`+6` rounds, `+1d4` Radiant), **Oil of Sharpness** (`+5` rounds, `+3` Hit/Dmg), & **Arrigal's Wyvern Venom** (`1` round/dose, `7d6` Poison `DC 15 CON`).
+    * **Tactical Coatings *(Coat Front Rounds of Mag — Cannot Switch to Standard Until Fired / Reloaded)*:** **Liquid Silver** (`Bonus Action`, top `10` rounds turn into Silvered bullets/arrows/bolts), **Sun-Ash Balm** (`Bonus Action`, top `6` rounds, `+1d4` Radiant), **Arrigal's Wyvern Venom** (`Bonus Action`, `1` front round/dose, `7d6` Poison `DC 15 CON`), & **Oil of Sharpness** (`1 Full Action`, top `5` rounds, `+3` Hit/Dmg). Unfired coated bullets return to Backpack as coated projectiles if Reloaded or Unloaded!
 12. 🩸 **The Blood Spear of Kavan (`+2 Vampiric Spear`)** *(Rare Magic Spear • Attunement • Book Area Y4)*:
     * **Location:** Yester Hill Burial Cairn (`Area Y4` — Session 8 • **Best for King Jacomir**).
     * **Mechanics:** **`+2 Spear`** (`1d6+2` / `1d8+2` versatile, *Sap Mastery*). Whenever you hit and reduce a hostile creature to 0 HP, you siphon their blood and gain **`2d6` Temporary HP**!

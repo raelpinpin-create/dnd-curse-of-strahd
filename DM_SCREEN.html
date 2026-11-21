@@ -11282,7 +11282,7 @@ const LOOT_DATA = {
     oil_of_sharpness: {
         cat: "weapon", name: "🧪 Oil of Sharpness (+3 Weapon / Ammunition Coating)", rarity: "Very Rare Consumable • Book Area U3",
         location: "Act III • Baba Lysaga's Creeping Hut in Berez (Area U3 — Session 14) • Jacomir / Yvaine",
-        mechanics: "• <strong>Apex Boss-Killer Coating:</strong> Click <strong>Use</strong> on a slashing/piercing melee blade OR click <strong>Load</strong> in Backpack to coat up to <strong>5 rounds</strong> in a specific firearm, bow, or crossbow for a massive <strong>+3 bonus to attack and damage rolls</strong>!",
+        mechanics: "• <strong>Apex Boss-Killer Coating (1 Action in Combat / Free Pre-Combat):</strong> Click <strong>Use</strong> on a slashing/piercing melee blade OR click <strong>Load</strong> in Backpack to coat the front <strong>5 rounds</strong> of a loaded firearm, bow, or crossbow for <strong>+3 Attack and +3 Damage</strong>! Coated rounds fire first (locked until spent or ejected back to Backpack as Oil of Sharpness rounds on Reload/Unload).",
         lore: "A clear, gelatinous vial of oil flecked with tiny, razor-sharp shards of pure silver, hidden inside Baba Lysaga's treasure chest."
     },
     baal_verzi_dagger: {
@@ -11312,7 +11312,7 @@ const LOOT_DATA = {
     liquid_silver_coating: {
         cat: "weapon", name: "✨ Vial of Liquid Silver Coating (Silvered 1 hr)", rarity: "Uncommon Tactical Coating • Craftable / 10 GP",
         location: "Act I–IV • Craftable (SILVER-COAT) or Vistani / Ezmerelda Supply • Jacomir & Yvaine",
-        mechanics: "• <strong>Bonus Action / Prep (1 Hour Duration):</strong> Click <strong>Use</strong> on a melee blade OR click <strong>Load</strong> in Backpack to coat up to <strong>10 bullets, arrows, or bolts</strong> inside a specific firearm/bow/crossbow. Coated strikes count as <strong>Silvered</strong>—bypassing the nonmagical B/P/S resistances and immunities of <strong>Vampire Spawn, Werewolves, Wights, and Night Hags</strong>!<br>• <strong>Craftable Formula (Unlock Code <code>SILVER-COAT</code>):</strong> <code>1x Powdered Silver Dust + 1x Pine Pitch &amp; Lamp Oil</code>.",
+        mechanics: "• <strong>Bonus Action / Pre-Combat (1 Hour Blade or Front Mag Coat):</strong> Click <strong>Use</strong> on a melee blade OR click <strong>Load</strong> in Backpack to coat the first <strong>10 bullets, arrows, or bolts</strong> currently in a weapon. Those front rounds turn into <strong>Silvered rounds</strong> (fire first; cannot toggle Standard early, though any unspent rounds return to Backpack as <em>Silvered Bullets/Arrows/Bolts</em> if Reloaded or Unloaded!).<br>• <strong>Craftable Formula (Unlock Code <code>SILVER-COAT</code>):</strong> <code>1x Powdered Silver Dust + 1x Pine Pitch &amp; Lamp Oil</code>.",
         lore: "Suspended silver powder bound in refined pine oil, keeping blades gleaming like frost against Barovia's beasts."
     },
     alchemists_fire: {
@@ -11330,7 +11330,7 @@ const LOOT_DATA = {
     sun_ash_balm: {
         cat: "weapon", name: "☀️ Sun-Ash Repellent Balm (+1d4 Radiant Coat 10m)", rarity: "Rare Sacred Unguent • Craftable (Act III)",
         location: "Act III–IV • Craftable (SUN-ASH) • Jacomir, Yvaine & Party",
-        mechanics: "• <strong>Bonus Action / Prep (10-Minute Duration):</strong> Click <strong>Use</strong> on a melee weapon OR click <strong>Load</strong> in Backpack to coat up to <strong>6 rounds</strong> in a chosen firearm, bow, or crossbow. Hits deal an extra <strong>+1d4 Radiant damage</strong> and briefly sear Undead flesh (disrupts regeneration on Crit or DM discretion!).<br>• <strong>Craftable Formula (Unlock Code <code>SUN-ASH</code>):</strong> <code>1x Svalich Moonpetal Blossom + 1x Powdered Silver Dust + 1x Pure Mountain Spring Water</code>.",
+        mechanics: "• <strong>Bonus Action / Pre-Combat:</strong> Click <strong>Use</strong> on a melee weapon OR click <strong>Load</strong> in Backpack to coat the first <strong>6 rounds</strong> inside a loaded weapon. Those top rounds deal <strong>+1d4 Radiant damage</strong> (and halt regeneration on Crit) and fire first until spent or returned to Backpack as coated rounds on Reload/Unload.<br>• <strong>Craftable Formula (Unlock Code <code>SUN-ASH</code>):</strong> <code>1x Svalich Moonpetal Blossom + 1x Powdered Silver Dust + 1x Pure Mountain Spring Water</code>.",
         lore: "Consecrated dawn-petal unguent mixed with silver ash—shining like ember-gold in dark crypts when the Sun itself cannot breach the clouds."
     },
 
@@ -11785,7 +11785,7 @@ const LOOT_DATA = {
     arrigal_wyvern_venom: {
         cat: "weapon", name: "☠️ Arrigal's Assassin Wyvern Venom (3 Doses)", rarity: "Rare Deadly Poison • Act II (Book Area N9)",
         location: "Act II • Vallaki Vistani Camp (Arrigal — Area N9)",
-        mechanics: "• <strong>Bonus Action Blade/Ammo Coating (3 Doses):</strong> Click <strong>Use</strong> on 1 blade OR click <strong>Load</strong> in Backpack to coat individual bullets, arrows, or bolts (1 dose = 1 coated round). Next hit forces a <strong>DC 15 CON Save</strong> or inflicts <strong>7d6 (24) Poison damage</strong> (half on success)!",
+        mechanics: "• <strong>Bonus Action Blade/Ammo Coating (3 Doses):</strong> Click <strong>Use</strong> on 1 blade OR click <strong>Load</strong> in Backpack to coat the front bullets/arrows/bolts of a loaded weapon (1 dose = 1 front coated round; fires first and returns to Backpack if Reloaded). Next hit forces a <strong>DC 15 CON Save</strong> or inflicts <strong>7d6 (24) Poison damage</strong> (half on success)!",
         lore: "Five drops of black mountain venom stop a treasonous whisper in two heartbeats."
     },
     vistani_treasure_wagon: {
@@ -14202,7 +14202,13 @@ function renderDmDropModalBody() {
                 ${(() => {
                     const wa = st.weaponAmmo && typeof st.weaponAmmo === 'object' ? st.weaponAmmo : {};
                     const lines = Object.entries(wa).map(([wid, wobj]) => {
-                        const pools = wobj && wobj.pools ? Object.entries(wobj.pools).filter(([, c]) => c > 0) : [];
+                        if (!wobj || typeof wobj !== 'object') return '';
+                        if (wobj.loadedId && wobj.count > 0) {
+                            const actMark = (wobj.fromCoating || wobj.active === wobj.loadedId) ? '*' : '';
+                            const coatMark = wobj.fromCoating ? ' [coated]' : '';
+                            return `${wid}: ${actMark}${wobj.loadedId}${coatMark} (${wobj.count})`;
+                        }
+                        const pools = wobj.pools ? Object.entries(wobj.pools).filter(([, c]) => c > 0) : [];
                         if (!pools.length) return '';
                         const act = wobj.active || 'standard';
                         const parts = pools.map(([aid, cnt]) => `${aid === act ? '*' : ''}${aid} (${cnt})`).join(', ');

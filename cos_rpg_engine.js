@@ -435,6 +435,69 @@
             summary: 'Silvered Crossbow Bolts (Bypasses Resist)'
         },
         {
+            match: ['sun-ash coated bullets'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'sun_ash', ammoKind: 'firearm', packSizeDefault: 1 },
+            summary: '+1d4 Radiant Coated Firearm Bullets'
+        },
+        {
+            match: ['sun-ash coated arrows'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'sun_ash', ammoKind: 'bow', packSizeDefault: 1 },
+            summary: '+1d4 Radiant Coated Arrows'
+        },
+        {
+            match: ['sun-ash coated crossbow bolts', 'sun-ash coated bolts'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'sun_ash', ammoKind: 'crossbow', packSizeDefault: 1 },
+            summary: '+1d4 Radiant Coated Bolts'
+        },
+        {
+            match: ['oil of sharpness (+3) bullets'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'sharpness', ammoKind: 'firearm', packSizeDefault: 1 },
+            summary: '+3 Hit / +3 Dmg Coated Firearm Bullets'
+        },
+        {
+            match: ['oil of sharpness (+3) arrows'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'sharpness', ammoKind: 'bow', packSizeDefault: 1 },
+            summary: '+3 Hit / +3 Dmg Coated Arrows'
+        },
+        {
+            match: ['oil of sharpness (+3) crossbow bolts', 'oil of sharpness (+3) bolts'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'sharpness', ammoKind: 'crossbow', packSizeDefault: 1 },
+            summary: '+3 Hit / +3 Dmg Coated Crossbow Bolts'
+        },
+        {
+            match: ['wyvern-venom tipped bullets'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'wyvern_venom', ammoKind: 'firearm', packSizeDefault: 1 },
+            summary: '+7d6 Poison (DC 15 CON) Bullets'
+        },
+        {
+            match: ['wyvern-venom tipped arrows'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'wyvern_venom', ammoKind: 'bow', packSizeDefault: 1 },
+            summary: '+7d6 Poison (DC 15 CON) Arrows'
+        },
+        {
+            match: ['wyvern-venom tipped crossbow bolts', 'wyvern-venom tipped bolts'],
+            category: 'gear',
+            slots: [],
+            ammoMeta: { ammoId: 'wyvern_venom', ammoKind: 'crossbow', packSizeDefault: 1 },
+            summary: '+7d6 Poison (DC 15 CON) Bolts'
+        },
+        {
             match: ['poisoned darts', 'crossbow bolts', 'arrows', 'bullets'],
             category: 'gear',
             slots: [],
@@ -836,8 +899,8 @@
             slots: [],
             quickBelt: true,
             ammoMeta: { ammoId: 'silvered', ammoKind: 'coating', isCoating: true, coatingRounds: 10 },
-            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Liquid Silver (1h Blade)', effect: 'Coated 1 melee weapon in gleaming silver for 1 hour (or click Load in Backpack to coat up to 10 rounds in a specific ranged weapon!).' },
-            summary: 'Coats Blade (1h) or Load +10 Silvered Rounds'
+            useAction: { type: 'utilityLog', verb: 'Applied (Bonus Action)', label: 'Liquid Silver (1h Blade)', effect: 'Coated 1 melee weapon in gleaming silver for 1 hour (Bonus Action) — or click Load in Backpack to coat the first 10 rounds of a loaded weapon (turning them into Silvered rounds!).' },
+            summary: 'Bonus Action: Coat Blade (1h) or Top 10 Rounds Silvered'
         },
         {
             match: ['sun-ash'],
@@ -845,8 +908,8 @@
             slots: [],
             quickBelt: true,
             ammoMeta: { ammoId: 'sun_ash', ammoKind: 'coating', isCoating: true, coatingRounds: 6 },
-            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Sun-Ash (+1d4 Rad Blade)', effect: 'Coated 1 melee weapon for +1d4 Radiant damage for 10 minutes (or click Load in Backpack to coat up to 6 rounds!).' },
-            summary: 'Coats Blade or Load +6 Sun-Ash Rounds (+1d4 Rad)'
+            useAction: { type: 'utilityLog', verb: 'Applied (Bonus Action)', label: 'Sun-Ash (+1d4 Rad Blade)', effect: 'Coated 1 melee weapon for +1d4 Radiant damage for 10 minutes (Bonus Action) — or click Load in Backpack to coat the first 6 loaded rounds!' },
+            summary: 'Bonus Action: Coat Blade or Top 6 Rounds (+1d4 Rad)'
         },
         {
             match: ['oil of sharpness'],
@@ -854,8 +917,8 @@
             slots: [],
             quickBelt: true,
             ammoMeta: { ammoId: 'sharpness', ammoKind: 'coating', isCoating: true, coatingRounds: 5 },
-            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Oil of Sharpness (+3 Blade)', effect: 'Coated 1 slashing/piercing melee weapon for +3 Attack & +3 Damage for 1 hour (or click Load in Backpack to coat up to 5 rounds!).' },
-            summary: 'Coats Blade or Load +5 Rounds (+3 Hit / +3 Dmg)'
+            useAction: { type: 'utilityLog', verb: 'Applied (1 Action)', label: 'Oil of Sharpness (+3 Blade)', effect: 'Coated 1 slashing/piercing melee weapon for +3 Attack & +3 Damage for 1 hour (1 Action in combat / Free pre-combat) — or click Load to coat the first 5 loaded rounds!' },
+            summary: '1 Action: Coat Blade or Top 5 Rounds (+3 Hit / +3 Dmg)'
         },
         {
             match: ['wyvern venom'],
@@ -863,8 +926,8 @@
             slots: [],
             quickBelt: true,
             ammoMeta: { ammoId: 'wyvern_venom', ammoKind: 'coating', isCoating: true, coatingRounds: 1 },
-            useAction: { type: 'utilityLog', verb: 'Applied', label: 'Wyvern Venom (7d6 Blade)', effect: 'Coated 1 melee weapon with assassin Wyvern Venom (next hit DC 15 CON Save or +7d6 Poison; or click Load in Backpack to tip individual rounds!).' },
-            summary: 'Coats Blade or Load 1 Round/Dose (7d6 Poison, DC 15 CON)'
+            useAction: { type: 'utilityLog', verb: 'Applied (Bonus Action)', label: 'Wyvern Venom (7d6 Blade)', effect: 'Coated 1 melee weapon with assassin Wyvern Venom (Bonus Action; next hit DC 15 CON Save or +7d6 Poison) — or click Load in Backpack to tip front rounds (1 dose = 1 round)!' },
+            summary: 'Bonus Action: Coat Blade or 1 Front Round/Dose (7d6 Poison)'
         },
         {
             match: ['alchemist\'s fire'],
@@ -1324,7 +1387,7 @@
             effect: "• <strong>Load Ammo or Coat Blade:</strong> Coat 1 slashing/piercing melee blade OR click <strong>Load</strong> in Backpack to coat up to <strong>5 rounds</strong> in a chosen weapon for <strong>+3 Attack and +3 Damage</strong>!"
         },
         {
-            match: ['wyvern venom'],
+            match: ['wyvern venom', 'wyvern-venom'],
             name: "Arrigal's Assassin Wyvern Venom",
             category: "RARE LETHAL VENOM COATING • Area N9",
             origin: "Arrigal's Assassin Belt (Vallaki Vistani Camp Area N9)",
@@ -1803,9 +1866,13 @@
             isSilvered: false,
             haltsRegen: false,
             blocksHealing: false,
-            isCoatingOnly: true,
             saveNote: 'DC 15 CON Save for half Venom damage',
-            note: 'Assassin toxin: target makes a DC 15 CON Save or takes +7d6 Poison damage (half on success).'
+            note: 'Assassin toxin: target makes a DC 15 CON Save or takes +7d6 Poison damage (half on success).',
+            packNames: {
+                firearm: 'Wyvern-Venom Tipped Bullets',
+                bow: 'Wyvern-Venom Tipped Arrows',
+                crossbow: 'Wyvern-Venom Tipped Crossbow Bolts'
+            }
         },
         sunburst: {
             id: 'sunburst',
@@ -1841,9 +1908,13 @@
             isSilvered: false,
             haltsRegen: false,
             blocksHealing: false,
-            isCoatingOnly: true,
             saveNote: null,
-            note: 'Blessed unguent coating: deals +1d4 Radiant damage (halts undead regen on Crit / DM ruling).'
+            note: 'Blessed unguent coating: deals +1d4 Radiant damage (halts undead regen on Crit / DM ruling).',
+            packNames: {
+                firearm: 'Sun-Ash Coated Bullets',
+                bow: 'Sun-Ash Coated Arrows',
+                crossbow: 'Sun-Ash Coated Crossbow Bolts'
+            }
         },
         necrotic: {
             id: 'necrotic',
@@ -1898,9 +1969,13 @@
             isSilvered: false,
             haltsRegen: false,
             blocksHealing: false,
-            isCoatingOnly: true,
             saveNote: null,
-            note: 'Ultra-rare Oil of Sharpness coating: +3 Attack & +3 Magical Damage.'
+            note: 'Ultra-rare Oil of Sharpness coating: +3 Attack & +3 Magical Damage.',
+            packNames: {
+                firearm: 'Oil of Sharpness (+3) Bullets',
+                bow: 'Oil of Sharpness (+3) Arrows',
+                crossbow: 'Oil of Sharpness (+3) Crossbow Bolts'
+            }
         }
     };
 
@@ -1922,6 +1997,42 @@
         return null;
     }
 
+    function normalizeWeaponAmmoEntry(wst) {
+        const empty = { loadedId: null, count: 0, fromCoating: false, active: 'standard', lastShot: null };
+        if (!wst || typeof wst !== 'object') return empty;
+
+        let loadedId = (typeof wst.loadedId === 'string' && AMMO_CATALOG[wst.loadedId]) ? wst.loadedId : null;
+        let count = Math.max(0, parseInt(wst.count) || 0);
+        let fromCoating = Boolean(wst.fromCoating);
+
+        // Migrate any legacy multi-pool record cleanly to the active/primary 1-type model
+        if (!loadedId && wst.pools && typeof wst.pools === 'object') {
+            const nonZero = Object.entries(wst.pools).filter(([aid, c]) => AMMO_CATALOG[aid] && (parseInt(c) || 0) > 0);
+            if (nonZero.length > 0) {
+                const matchAct = nonZero.find(([aid]) => aid === wst.active);
+                const chosen = matchAct || nonZero[0];
+                loadedId = chosen[0];
+                count = parseInt(chosen[1]) || 0;
+            }
+        }
+
+        if (!loadedId || count <= 0) {
+            return {
+                loadedId: null,
+                count: 0,
+                fromCoating: false,
+                active: 'standard',
+                lastShot: (wst.lastShot === 'standard' || AMMO_CATALOG[wst.lastShot]) ? wst.lastShot : null
+            };
+        }
+
+        const active = fromCoating
+            ? loadedId
+            : (wst.active === loadedId ? loadedId : 'standard');
+        const lastShot = (wst.lastShot === 'standard' || AMMO_CATALOG[wst.lastShot]) ? wst.lastShot : null;
+        return { loadedId, count, fromCoating, active, lastShot };
+    }
+
     function getWeaponAmmoStore() {
         const store = { weapons: {} };
         if (!adapter) return store;
@@ -1931,17 +2042,7 @@
             const parsed = JSON.parse(raw);
             if (parsed && typeof parsed === 'object' && parsed.weapons && typeof parsed.weapons === 'object') {
                 Object.entries(parsed.weapons).forEach(([wid, wst]) => {
-                    if (!wst || typeof wst !== 'object') return;
-                    const pools = {};
-                    if (wst.pools && typeof wst.pools === 'object') {
-                        Object.entries(wst.pools).forEach(([aid, cnt]) => {
-                            const n = Math.max(0, parseInt(cnt) || 0);
-                            if (n > 0 && AMMO_CATALOG[aid]) pools[aid] = n;
-                        });
-                    }
-                    let active = typeof wst.active === 'string' && pools[wst.active] > 0 ? wst.active : 'standard';
-                    const lastShot = typeof wst.lastShot === 'string' && (wst.lastShot === 'standard' || AMMO_CATALOG[wst.lastShot]) ? wst.lastShot : null;
-                    store.weapons[wid] = { pools, active, lastShot };
+                    store.weapons[wid] = normalizeWeaponAmmoEntry(wst);
                 });
             }
         } catch (e) {}
@@ -1955,12 +2056,11 @@
 
     function getWeaponAmmoEntry(weaponId) {
         const store = getWeaponAmmoStore();
-        return store.weapons[weaponId] || { pools: {}, active: 'standard', lastShot: null };
+        return store.weapons[weaponId] || normalizeWeaponAmmoEntry(null);
     }
 
     function getTotalLoadedSpecialty(entry) {
-        if (!entry || !entry.pools) return 0;
-        return Object.values(entry.pools).reduce((s, n) => s + (parseInt(n) || 0), 0);
+        return (entry && entry.loadedId && entry.count > 0) ? (parseInt(entry.count) || 0) : 0;
     }
 
     function getAmmoState() {
@@ -2063,8 +2163,9 @@
 
     function getActiveWeaponAmmoDef(weaponId) {
         const entry = getWeaponAmmoEntry(weaponId);
-        if (!entry || entry.active === 'standard' || !(entry.pools[entry.active] > 0)) return null;
-        return AMMO_CATALOG[entry.active] || null;
+        if (!entry || !entry.loadedId || entry.count <= 0) return null;
+        if (entry.active === 'standard' && !entry.fromCoating) return null;
+        return AMMO_CATALOG[entry.loadedId] || null;
     }
 
     function getWeaponLastShotDef(weaponId) {
@@ -2077,32 +2178,40 @@
 
     function buildWeaponAmmoBarHtml(weaponId, weaponMeta) {
         const entry = getWeaponAmmoEntry(weaponId);
-        const totalSpec = getTotalLoadedSpecialty(entry);
-        const activeId = (entry.active && entry.pools[entry.active] > 0) ? entry.active : 'standard';
+        const hasLoaded = Boolean(entry.loadedId && entry.count > 0 && AMMO_CATALOG[entry.loadedId]);
+        const loadedDef = hasLoaded ? AMMO_CATALOG[entry.loadedId] : null;
+        const activeId = (hasLoaded && (entry.fromCoating || entry.active === entry.loadedId)) ? entry.loadedId : 'standard';
         const activeDef = activeId !== 'standard' ? AMMO_CATALOG[activeId] : null;
         const accentCls = activeDef ? `accent-${activeDef.accent}` : '';
-        const capTxt = (weaponMeta && weaponMeta.maxCap)
-            ? ` <span style="color:#64748b; font-weight:600;">(${totalSpec}/${weaponMeta.maxCap} cap)</span>`
-            : (totalSpec > 0 ? ` <span style="color:#64748b; font-weight:600;">(${totalSpec} specialty)</span>` : '');
 
-        const statusTxt = activeDef
-            ? `Chamber: <strong style="color:#f8fafc;">${esc(activeDef.shortName)} (${entry.pools[activeId]})</strong>${capTxt}`
-            : `Chamber: <strong>Standard</strong>${capTxt}`;
+        const capTxt = (weaponMeta && weaponMeta.maxCap && hasLoaded)
+            ? ` <span style="color:#64748b; font-weight:600;">(${entry.count}/${weaponMeta.maxCap} cap)</span>`
+            : '';
 
-        const loadedEntries = Object.entries(entry.pools).filter(([aid, c]) => c > 0 && AMMO_CATALOG[aid]);
+        let statusTxt = `Chamber: <strong>Standard</strong>`;
+        if (hasLoaded && activeDef) {
+            statusTxt = entry.fromCoating
+                ? `Coated Front: <strong style="color:#f8fafc;">${esc(activeDef.shortName)} (${entry.count})</strong>${capTxt}`
+                : `Active: <strong style="color:#f8fafc;">${esc(activeDef.shortName)} (${entry.count})</strong>${capTxt}`;
+        } else if (hasLoaded && loadedDef) {
+            statusTxt = `Chamber: <strong>Standard</strong> <span style="color:#94a3b8;">(${esc(loadedDef.shortName)}: ${entry.count} ready)</span>`;
+        }
+
+        const stdLocked = Boolean(hasLoaded && entry.fromCoating);
         const pillsHtml = [
-            `<button type="button" class="rpg-ammo-pill ${activeId === 'standard' ? 'is-active' : ''}" onclick="COS_RPG.selectWeaponAmmo(decodeURIComponent('${encArg(weaponId)}'), 'standard')">Standard</button>`,
-            ...loadedEntries.map(([aid, cnt]) => {
-                const def = AMMO_CATALOG[aid];
-                const isAct = activeId === aid;
-                return `<button type="button" class="rpg-ammo-pill accent-${def.accent} ${isAct ? 'is-active' : ''}" onclick="COS_RPG.selectWeaponAmmo(decodeURIComponent('${encArg(weaponId)}'), '${aid}')">${esc(def.shortName)} (${cnt})</button>`;
-            })
+            `<button type="button" class="rpg-ammo-pill ${activeId === 'standard' ? 'is-active' : ''}" ${stdLocked ? 'disabled title="Vial-coated rounds sit at the front of the magazine — fire them or Reload/Unload first"' : `onclick="COS_RPG.selectWeaponAmmo(decodeURIComponent('${encArg(weaponId)}'), 'standard')"`}>Standard${stdLocked ? ' (Locked)' : ''}</button>`,
+            ...(hasLoaded && loadedDef ? [
+                `<button type="button" class="rpg-ammo-pill accent-${loadedDef.accent} ${activeId === loadedDef.id ? 'is-active' : ''}" onclick="COS_RPG.selectWeaponAmmo(decodeURIComponent('${encArg(weaponId)}'), '${loadedDef.id}')">${esc(loadedDef.shortName)} (${entry.count})</button>`
+            ] : [])
         ].join('');
 
-        const canUnload = !!activeDef && (entry.pools[activeId] > 0);
-        const unloadBtn = canUnload
-            ? `<button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.unloadWeaponAmmo(decodeURIComponent('${encArg(weaponId)}'), '${activeId}')" title="${activeDef.isCoatingOnly ? 'Clear remaining coated rounds' : 'Return unused rounds to Backpack'}">${activeDef.isCoatingOnly ? 'Clear' : 'Unload'}</button>`
+        const unloadBtn = hasLoaded
+            ? `<button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.unloadWeaponAmmo(decodeURIComponent('${encArg(weaponId)}'))" title="Return unused rounds to Backpack">Unload</button>`
             : '';
+
+        const hintParts = [];
+        if (activeDef) hintParts.push(esc(activeDef.note));
+        if (stdLocked) hintParts.push('Coated rounds fire first before Standard ammo underneath.');
 
         return `
             <div class="rpg-wpn-ammo-bar ${accentCls}">
@@ -2110,11 +2219,11 @@
                     <span class="rpg-ammo-status">${statusTxt}</span>
                     <span class="rpg-ammo-act-group">
                         ${unloadBtn}
-                        <button type="button" class="rpg-ammo-act-btn is-load" onclick="COS_RPG.openAmmoLoaderModal({ targetWeaponId: decodeURIComponent('${encArg(weaponId)}') })">Load</button>
+                        <button type="button" class="rpg-ammo-act-btn is-load" onclick="COS_RPG.openAmmoLoaderModal({ targetWeaponId: decodeURIComponent('${encArg(weaponId)}') })">${hasLoaded ? 'Swap / Load' : 'Load'}</button>
                     </span>
                 </div>
                 <div class="rpg-ammo-pills">${pillsHtml}</div>
-                ${activeDef ? `<div class="rpg-ammo-effect-hint">${esc(activeDef.note)}</div>` : ''}
+                ${hintParts.length ? `<div class="rpg-ammo-effect-hint">${hintParts.join(' ')}</div>` : ''}
             </div>
         `;
     }
@@ -2134,11 +2243,33 @@
         }
     }
 
+    function returnLoadedAmmoToBackpack(weaponId, ammoId, count, silentLog = false) {
+        if (!adapter || !ammoId || count <= 0) return null;
+        const def = AMMO_CATALOG[ammoId];
+        if (!def) return null;
+        const weapons = getHeroWeaponsForAmmo(true);
+        const wMeta = weapons.find(w => w.id === weaponId) || { label: weaponId, kind: 'firearm' };
+        const packName = (def.packNames && def.packNames[wMeta.kind])
+            || (def.packNames && Object.values(def.packNames)[0])
+            || `${def.shortName} Rounds`;
+        const items = adapter.getItems();
+        addRawItemToList(items, `${count}x ${packName}`, 1);
+        adapter.saveItems(items);
+        if (!silentLog) {
+            adapter.log(`Returned <strong>${count}x ${esc(packName)}</strong> from ${esc(wMeta.label)} back into Backpack.`);
+        }
+        return { count, packName, weaponLabel: wMeta.label };
+    }
+
     function selectWeaponAmmo(weaponId, ammoId) {
         if (!adapter || !weaponId) return;
         const store = getWeaponAmmoStore();
-        const entry = store.weapons[weaponId] || { pools: {}, active: 'standard', lastShot: null };
-        if (ammoId !== 'standard' && !(entry.pools[ammoId] > 0)) return;
+        const entry = store.weapons[weaponId] || normalizeWeaponAmmoEntry(null);
+        if (entry.fromCoating && entry.count > 0 && ammoId === 'standard') {
+            adapter.log(`<strong>Coated Top Rounds Active:</strong> Fire remaining coated rounds first, or click <strong>Unload / Reload</strong> to return them to Backpack.`);
+            return;
+        }
+        if (ammoId !== 'standard' && (entry.loadedId !== ammoId || entry.count <= 0)) return;
         entry.active = ammoId;
         entry.lastShot = null;
         store.weapons[weaponId] = entry;
@@ -2150,15 +2281,18 @@
 
     function consumeWeaponAmmo(weaponId) {
         const store = getWeaponAmmoStore();
-        const entry = store.weapons[weaponId] || { pools: {}, active: 'standard', lastShot: null };
-        const actId = entry.active;
-        if (actId && actId !== 'standard' && (entry.pools[actId] || 0) > 0 && AMMO_CATALOG[actId]) {
-            entry.pools[actId] -= 1;
-            const remaining = entry.pools[actId];
+        const entry = store.weapons[weaponId] || normalizeWeaponAmmoEntry(null);
+        const useSpecialty = entry.loadedId && entry.count > 0 && (entry.fromCoating || entry.active === entry.loadedId) && AMMO_CATALOG[entry.loadedId];
+        if (useSpecialty) {
+            const actId = entry.loadedId;
+            entry.count -= 1;
+            const remaining = entry.count;
             entry.lastShot = actId;
             let exhausted = false;
             if (remaining <= 0) {
-                delete entry.pools[actId];
+                entry.loadedId = null;
+                entry.count = 0;
+                entry.fromCoating = false;
                 entry.active = 'standard';
                 exhausted = true;
             }
@@ -2175,42 +2309,72 @@
         return { ammoId: 'standard', def: null, remaining: 0, exhausted: false };
     }
 
-    function unloadWeaponAmmo(weaponId, ammoId) {
-        if (!adapter || !weaponId || !ammoId || ammoId === 'standard') return;
+    function unloadWeaponAmmo(weaponId) {
+        if (!adapter || !weaponId) return;
         const store = getWeaponAmmoStore();
         const entry = store.weapons[weaponId];
-        if (!entry || !(entry.pools[ammoId] > 0)) return;
-        const count = entry.pools[ammoId];
-        const def = AMMO_CATALOG[ammoId];
-        const weapons = getHeroWeaponsForAmmo(true);
-        const wMeta = weapons.find(w => w.id === weaponId) || { label: weaponId, kind: 'firearm' };
-
-        delete entry.pools[ammoId];
-        const remKeys = Object.keys(entry.pools).filter(k => entry.pools[k] > 0);
-        entry.active = remKeys.length > 0 ? remKeys[0] : 'standard';
-        entry.lastShot = null;
-        store.weapons[weaponId] = entry;
+        if (!entry || !entry.loadedId || entry.count <= 0) return;
+        const ret = returnLoadedAmmoToBackpack(weaponId, entry.loadedId, entry.count, false);
+        store.weapons[weaponId] = { loadedId: null, count: 0, fromCoating: false, active: 'standard', lastShot: null };
         saveWeaponAmmoStore(store);
+        applyEquipmentToSheet(true);
+        refreshAllAmmoDisplays();
+        return ret;
+    }
 
-        if (def && !def.isCoatingOnly) {
-            const packName = (def.packNames && def.packNames[wMeta.kind]) || (def.packNames && Object.values(def.packNames)[0]) || `${def.shortName} Rounds`;
-            const items = adapter.getItems();
-            addRawItemToList(items, `${count}x ${packName}`, 1);
-            adapter.saveItems(items);
-            adapter.log(`Unloaded <strong>${count}x ${esc(def.shortName)}</strong> from ${esc(wMeta.label)} back into Backpack.`);
-        } else {
-            adapter.log(`Cleared remaining coated <strong>${esc(def ? def.shortName : ammoId)}</strong> rounds from ${esc(wMeta.label)}.`);
+    function onWeaponReloaded(weaponId) {
+        if (!adapter || !weaponId) return null;
+        const store = getWeaponAmmoStore();
+        const entry = store.weapons[weaponId];
+        if (!entry || !entry.loadedId || entry.count <= 0) return null;
+        const ret = returnLoadedAmmoToBackpack(weaponId, entry.loadedId, entry.count, true);
+        store.weapons[weaponId] = { loadedId: null, count: 0, fromCoating: false, active: 'standard', lastShot: null };
+        saveWeaponAmmoStore(store);
+        if (ret) {
+            adapter.log(`Reload returned <strong>${ret.count}x ${esc(ret.packName)}</strong> from ${esc(ret.weaponLabel)} back into Backpack.`);
         }
         applyEquipmentToSheet(true);
         refreshAllAmmoDisplays();
+        return ret;
+    }
+
+    function getActionEconomyNote(ammoItem, weaponMeta) {
+        if (!ammoItem) return 'Bonus Action in combat (Free pre-combat)';
+        if (ammoItem.ammoId === 'sharpness' && ammoItem.isCoating) {
+            return '1 Full Action in combat (Free pre-combat)';
+        }
+        if (ammoItem.isCoating) {
+            return 'Bonus Action in combat (Free pre-combat)';
+        }
+        if (weaponMeta && (weaponMeta.kind === 'bow' || weaponMeta.kind === 'crossbow')) {
+            return 'Bonus Action to ready quiver / Free per Attack';
+        }
+        return 'Bonus Action to load into firearm (Free pre-combat)';
+    }
+
+    function getWeaponCoatingCeiling(ammoItem, weaponMeta) {
+        const chamberInfo = (adapter && typeof adapter.getWeaponCurrentChamber === 'function')
+            ? adapter.getWeaponCurrentChamber(weaponMeta.id)
+            : null;
+        const entry = getWeaponAmmoEntry(weaponMeta.id);
+        const sameLoaded = (entry.loadedId === ammoItem.ammoId && entry.count > 0);
+        const alreadyCount = sameLoaded ? entry.count : 0;
+
+        if (ammoItem.isCoating) {
+            if (chamberInfo && chamberInfo.cur <= 0) return 0;
+            const totalRoundsPresent = chamberInfo ? chamberInfo.cur : (weaponMeta.maxCap || ammoItem.coatingRounds || 10);
+            return Math.max(0, totalRoundsPresent - alreadyCount);
+        }
+
+        if (weaponMeta.maxCap) {
+            return Math.max(0, weaponMeta.maxCap - alreadyCount);
+        }
+        return Infinity;
     }
 
     function computeMaxLoadUnits(ammoItem, weaponMeta) {
         if (!ammoItem || !weaponMeta) return 0;
-        const entry = getWeaponAmmoEntry(weaponMeta.id);
-        const freeCap = weaponMeta.maxCap
-            ? Math.max(0, weaponMeta.maxCap - getTotalLoadedSpecialty(entry))
-            : Infinity;
+        const freeCap = getWeaponCoatingCeiling(ammoItem, weaponMeta);
         if (freeCap <= 0) return 0;
         if (ammoItem.isCoating && ammoItem.coatingRounds > 1) {
             return Math.min(ammoItem.unitCount, 1);
@@ -2235,10 +2399,7 @@
         let chosenWeapon = targetWeapon || null;
         if (!chosenWeapon && chosenInv) {
             const compat = weapons.filter(w => chosenInv.isCoating || w.kind === chosenInv.ammoKind);
-            chosenWeapon = compat.find(w => {
-                const free = w.maxCap ? w.maxCap - getTotalLoadedSpecialty(getWeaponAmmoEntry(w.id)) : 1;
-                return free > 0;
-            }) || compat[0] || null;
+            chosenWeapon = compat.find(w => computeMaxLoadUnits(chosenInv, w) > 0) || compat[0] || null;
         }
         if (!chosenWeapon && weapons.length > 0) chosenWeapon = weapons[0];
 
@@ -2294,7 +2455,7 @@
             ? `<div class="rpg-loader-choice-grid">${compatAmmo.map(a => {
                 const isSel = activeAmmo && a.invIndex === activeAmmo.invIndex;
                 const stockLabel = a.isCoating
-                    ? (a.coatingRounds > 1 ? `${a.unitCount} vial (${a.coatingRounds} rounds/vial)` : `${a.unitCount} dose (1 round/dose)`)
+                    ? (a.coatingRounds > 1 ? `${a.unitCount} vial (coats up to ${a.coatingRounds})` : `${a.unitCount} dose (1 round/dose)`)
                     : `${a.unitCount} rounds left`;
                 return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" onclick="COS_RPG.selectLoaderAmmo(${a.invIndex})">
                     <span><strong>${esc(a.label)}</strong><br><small style="color:#94a3b8;">${esc(a.ammoDef.badge)}</small></span>
@@ -2306,14 +2467,23 @@
         const wpnHtml = compatWeapons.length > 0
             ? `<div class="rpg-loader-choice-grid">${compatWeapons.map(w => {
                 const entry = getWeaponAmmoEntry(w.id);
-                const loaded = getTotalLoadedSpecialty(entry);
-                const free = w.maxCap ? Math.max(0, w.maxCap - loaded) : Infinity;
-                const isFull = w.maxCap && free <= 0;
+                const chamberInfo = (adapter && typeof adapter.getWeaponCurrentChamber === 'function')
+                    ? adapter.getWeaponCurrentChamber(w.id)
+                    : null;
+                const isCoatingEmpty = Boolean(activeAmmo && activeAmmo.isCoating && chamberInfo && chamberInfo.cur <= 0);
+                const isFullSame = Boolean(activeAmmo && entry.loadedId === activeAmmo.ammoId && computeMaxLoadUnits(activeAmmo, w) <= 0);
+                const isDisabled = isCoatingEmpty || isFullSame;
                 const isSel = activeWeapon && w.id === activeWeapon.id;
-                const capText = w.maxCap ? `${loaded}/${w.maxCap} (${free} free)` : `Quiver (${loaded} spec)`;
-                return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" ${isFull ? 'disabled title="Chamber capacity full — Unload or fire rounds first"' : ''} onclick="COS_RPG.selectLoaderWeapon(decodeURIComponent('${encArg(w.id)}'))">
+                let capText = w.maxCap ? `Max ${w.maxCap} cap` : 'Quiver Ready';
+                if (entry.loadedId && entry.count > 0 && AMMO_CATALOG[entry.loadedId]) {
+                    const ed = AMMO_CATALOG[entry.loadedId];
+                    capText = `${ed.shortName}: ${entry.count}${w.maxCap ? '/' + w.maxCap : ''}${activeAmmo && activeAmmo.ammoId !== entry.loadedId ? ' (Swaps to Bag)' : ''}`;
+                } else if (chamberInfo) {
+                    capText = `Chamber: ${chamberInfo.cur}/${chamberInfo.max}`;
+                }
+                return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" ${isDisabled ? `disabled title="${isCoatingEmpty ? 'Chamber empty — Reload standard bullets first before coating' : 'Capacity full'}"` : ''} onclick="COS_RPG.selectLoaderWeapon(decodeURIComponent('${encArg(w.id)}'))">
                     <span><strong>${esc(w.label)}</strong><br><small style="color:#94a3b8;">${esc(w.kind.toUpperCase())}</small></span>
-                    <span class="rpg-loader-cap">${esc(capText)}</span>
+                    <span class="rpg-loader-cap">${esc(isCoatingEmpty ? 'Empty Chamber (Reload First)' : capText)}</span>
                 </button>`;
             }).join('')}</div>`
             : `<div style="font-size:0.74rem; color:#fca5a5;">No compatible weapon available for this ammunition type.</div>`;
@@ -2321,15 +2491,22 @@
         let qtyBlockHtml = '';
         if (activeAmmo && activeWeapon && maxUnits > 0) {
             const wEntry = getWeaponAmmoEntry(activeWeapon.id);
-            const wFree = activeWeapon.maxCap ? Math.max(0, activeWeapon.maxCap - getTotalLoadedSpecialty(wEntry)) : Infinity;
+            const swappingOther = wEntry.loadedId && wEntry.count > 0 && wEntry.loadedId !== activeAmmo.ammoId;
+            const prevDef = swappingOther ? AMMO_CATALOG[wEntry.loadedId] : null;
+            const swapNote = swappingOther && prevDef
+                ? `<div style="color:#93c5fd; font-size:0.7rem; margin-top:4px;">Loading ${esc(activeAmmo.ammoDef.shortName)} will automatically return your <strong>${wEntry.count}x ${esc(prevDef.shortName)}</strong> rounds back to Backpack (1 specialty type per weapon).</div>`
+                : '';
+
+            const coatCeil = getWeaponCoatingCeiling(activeAmmo, activeWeapon);
+            const actionTxt = getActionEconomyNote(activeAmmo, activeWeapon);
             if (activeAmmo.isCoating && activeAmmo.coatingRounds > 1) {
-                const coatedCount = Math.min(activeAmmo.coatingRounds, wFree);
+                const coatedCount = Math.min(activeAmmo.coatingRounds, coatCeil);
                 qtyBlockHtml = `
                     <div class="rpg-loader-section">
-                        <div class="rpg-loader-label">Application Summary</div>
-                        <div style="font-size:0.75rem; color:#e2e8f0; line-height:1.4;">
-                            Consumes <strong>1 vial</strong> from Backpack to coat <strong>+${coatedCount} rounds</strong> in <strong>${esc(activeWeapon.label)}</strong>.
-                            ${wFree < activeAmmo.coatingRounds ? `<div style="color:#fde68a; font-size:0.7rem; margin-top:3px;">Capacity note: this weapon holds up to ${wFree} more specialty rounds (vial capacity: ${activeAmmo.coatingRounds}).</div>` : ''}
+                        <div class="rpg-loader-label">Vial Coating Effect &bull; <span style="color:#fde68a;">${esc(actionTxt)}</span></div>
+                        <div style="font-size:0.74rem; color:#e2e8f0; line-height:1.4;">
+                            Consumes <strong>1 vial</strong> to coat the first <strong>${coatedCount} round${coatedCount === 1 ? '' : 's'}</strong> inside <strong>${esc(activeWeapon.label)}</strong>. Those front rounds become <strong>${esc(activeAmmo.ammoDef.shortName)}</strong> and fire first (cannot switch to Standard until fired, Unloaded, or Reloaded back into Backpack).
+                            ${swapNote}
                         </div>
                     </div>
                 `;
@@ -2340,7 +2517,7 @@
                 ).join('');
                 qtyBlockHtml = `
                     <div class="rpg-loader-section">
-                        <div class="rpg-loader-label">Quantity to Load (${isDose ? '1 round per dose' : '1..Max'})</div>
+                        <div class="rpg-loader-label">Quantity (${isDose ? '1 coated round per dose' : '1..Max'}) &bull; <span style="color:#fde68a;">${esc(actionTxt)}</span></div>
                         <div class="rpg-loader-qty-row">
                             <button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.setLoaderQty(${Math.max(1, safeQty - 1)})">-</button>
                             <input type="number" id="rpg-loader-qty-inp" class="rpg-loader-qty-input" min="1" max="${maxUnits}" value="${safeQty}" oninput="COS_RPG.setLoaderQty(this.value, true)">
@@ -2348,6 +2525,8 @@
                             ${quickPills}
                             <button type="button" class="rpg-ammo-act-btn is-load" onclick="COS_RPG.setLoaderQty(${maxUnits})">Max (${maxUnits})</button>
                         </div>
+                        ${isDose ? '<div style="font-size:0.7rem; color:#cbd5e1; margin-top:4px;">Coated front rounds fire first and return to Backpack as coated rounds if unloaded/reloaded.</div>' : ''}
+                        ${swapNote}
                     </div>
                 `;
             }
@@ -2359,7 +2538,7 @@
                 ${ammoHtml}
             </div>
             <div class="rpg-loader-section">
-                <div class="rpg-loader-label">2. Select Target Weapon</div>
+                <div class="rpg-loader-label">2. Select Target Weapon (1 Specialty Type Max)</div>
                 ${wpnHtml}
             </div>
             ${qtyBlockHtml}
@@ -2377,26 +2556,23 @@
 
         const maxUnits = computeMaxLoadUnits(ammoItem, weaponMeta);
         if (maxUnits <= 0) {
-            adapter.log(`<strong>Weapon Full:</strong> ${esc(weaponMeta.label)} has no room for more specialty rounds.`);
+            adapter.log(`<strong>Cannot Load:</strong> ${esc(weaponMeta.label)} is empty for coating or full for this ammo type.`);
             return;
         }
         const reqUnits = Math.max(1, Math.min(maxUnits, parseInt(ammoLoaderState.qty) || 1));
 
-        const store = getWeaponAmmoStore();
-        const entry = store.weapons[weaponMeta.id] || { pools: {}, active: 'standard', lastShot: null };
-        const freeCap = weaponMeta.maxCap ? Math.max(0, weaponMeta.maxCap - getTotalLoadedSpecialty(entry)) : Infinity;
-
+        const coatCeil = getWeaponCoatingCeiling(ammoItem, weaponMeta);
         let roundsToAdd = 0;
         let unitsConsumed = reqUnits;
         if (ammoItem.isCoating) {
-            roundsToAdd = Math.min(ammoItem.coatingRounds * unitsConsumed, freeCap);
+            roundsToAdd = Math.min(ammoItem.coatingRounds * unitsConsumed, coatCeil);
         } else {
-            roundsToAdd = Math.min(reqUnits, freeCap);
+            roundsToAdd = Math.min(reqUnits, coatCeil);
             unitsConsumed = roundsToAdd;
         }
         if (roundsToAdd <= 0) return;
 
-        // Deduct exact stack count from Backpack (preserve unconsumed stack cleanly)
+        // Deduct exact stack count from Backpack first using exact invIndex
         const items = adapter.getItems();
         const raw = items[ammoItem.invIndex];
         if (!raw) return;
@@ -2413,17 +2589,34 @@
         }
         adapter.saveItems(items);
 
-        entry.pools[ammoItem.ammoId] = (entry.pools[ammoItem.ammoId] || 0) + roundsToAdd;
-        entry.active = ammoItem.ammoId;
-        entry.lastShot = null;
-        store.weapons[weaponMeta.id] = entry;
+        const store = getWeaponAmmoStore();
+        const prevEntry = store.weapons[weaponMeta.id] || normalizeWeaponAmmoEntry(null);
+
+        // Enforce 1 specialty ammo type per weapon: eject previous unused type cleanly back to Backpack!
+        if (prevEntry.loadedId && prevEntry.count > 0 && prevEntry.loadedId !== ammoItem.ammoId) {
+            returnLoadedAmmoToBackpack(weaponMeta.id, prevEntry.loadedId, prevEntry.count, false);
+            prevEntry.loadedId = null;
+            prevEntry.count = 0;
+            prevEntry.fromCoating = false;
+        }
+
+        const nextCount = (prevEntry.loadedId === ammoItem.ammoId ? prevEntry.count : 0) + roundsToAdd;
+        const isCoatedEntry = Boolean(ammoItem.isCoating || (prevEntry.loadedId === ammoItem.ammoId && prevEntry.fromCoating));
+        store.weapons[weaponMeta.id] = {
+            loadedId: ammoItem.ammoId,
+            count: nextCount,
+            fromCoating: isCoatedEntry,
+            active: ammoItem.ammoId,
+            lastShot: null
+        };
         saveWeaponAmmoStore(store);
 
         if (typeof adapter.onAmmoLoaded === 'function') {
-            try { adapter.onAmmoLoaded(weaponMeta.id, roundsToAdd, ammoItem.ammoId); } catch (e) {}
+            try { adapter.onAmmoLoaded(weaponMeta.id, roundsToAdd, ammoItem.ammoId, !!ammoItem.isCoating); } catch (e) {}
         }
 
-        adapter.log(`Loaded <strong>+${roundsToAdd} ${esc(ammoItem.ammoDef.shortName)}</strong> into <strong>${esc(weaponMeta.label)}</strong> (${entry.pools[ammoItem.ammoId]} ${esc(ammoItem.ammoDef.shortName)} active).`);
+        const verb = ammoItem.isCoating ? 'Coated first' : 'Loaded';
+        adapter.log(`${verb} <strong>${roundsToAdd} ${esc(ammoItem.ammoDef.shortName)}</strong> in <strong>${esc(weaponMeta.label)}</strong> (${nextCount} ready &bull; ${esc(getActionEconomyNote(ammoItem, weaponMeta))}).`);
         closeModal('rpg-ammo-loader-dialog');
         applyEquipmentToSheet(true);
         refreshAllAmmoDisplays();
@@ -6325,6 +6518,7 @@
         confirmLoadSpecialtyAmmo,
         selectWeaponAmmo,
         unloadWeaponAmmo,
+        onWeaponReloaded,
         consumeWeaponAmmo,
         buildWeaponAmmoBarHtml,
         refreshAllAmmoDisplays,

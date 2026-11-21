@@ -962,9 +962,13 @@ dialog::backdrop {
     min-block-size: 22px;
     transition: all 0.14s ease;
 }
-.rpg-ammo-pill:hover {
+.rpg-ammo-pill:hover:not(:disabled) {
     border-color: #64748b;
     color: #f8fafc;
+}
+.rpg-ammo-pill:disabled {
+    opacity: 0.42;
+    cursor: not-allowed;
 }
 .rpg-ammo-pill.is-active {
     background: #1e293b;
