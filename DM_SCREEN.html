@@ -11242,7 +11242,7 @@ const LOOT_DATA = {
         lore: "Blackened steel quarrels etched with hunger runes that choke off cellular healing."
     },
     specialty_cartridge_rig: {
-        cat: "weapon", name: "Partitioned Specialty Cartridge Rig (Unlocks Firearm Load)", rarity: "Common Munitions Container • 15 GP (Any Shop)",
+        cat: "weapon", name: "Partitioned Bullet Sling & Pouch (Unlocks Firearm Load)", rarity: "Common Munitions Container • 15 GP (Any Shop)",
         location: "Act I–IV • Any Barovian Shop (Bildrath E1, Petru G, Arasek N5, Krezk Supply S3) • Best for Yvaine",
         mechanics: "• <strong>Stores Multiple Specialty Bullet Types:</strong> Oiled leather sling fitted with five numbered waterproof brass compartments keeping volatile specialty slugs (<em>Silvered, Incendiary, Poisoned, Sunburst, Necrotic</em>) safely sorted.<br>• <strong>Unlocks Firearm Load:</strong> While kept in Yvaine's Backpack, unlocks the <strong>Load</strong> button on her firearms (max 1 specialty bullet type loaded per gun; Bonus Action to swap/load).",
         lore: "Stitched with stamped caliber tabs and wax-lined brass tubes so incendiary brimstone, grave salt, and silver slugs never foul one another inside a pack."
@@ -13383,11 +13383,52 @@ function dmSendLootDrop(toId, toName, itemRaw, qty = 1, gp = 0, sp = 0, note = '
     }
 }
 
-function dmQuickDropByKey(lootKey, toId, toName, ev) {
+function dmParseDropItemAndQty(rawName) {
+    const clean = String(rawName || '').trim();
+    if (!clean) return { itemRaw: '', defaultQty: 1, isStackedPack: false };
+    const packMatch = clean.match(/^(.*?)\s*\(\s*(?:[xX]\s*(\d+)|(\d+)\s*[xX])\s*(?:in [^)]*)?\)\s*!?\s*$/);
+    if (packMatch) {
+        const qty = Math.max(1, parseInt(packMatch[2] || packMatch[3]) || 1);
+        return { itemRaw: packMatch[1].trim(), defaultQty: qty, isStackedPack: true };
+    }
+    const doseMatch = clean.match(/^(.*?)\s*\(\s*(\d+)\s*Doses?\s*\)\s*$/i);
+    if (doseMatch) {
+        const qty = Math.max(1, parseInt(doseMatch[2]) || 1);
+        return { itemRaw: doseMatch[1].trim(), defaultQty: qty, isStackedPack: true };
+    }
+    return { itemRaw: clean, defaultQty: 1, isStackedPack: false };
+}
+
+function dmStepInputQty(inputId, delta, maxVal = 999) {
+    const inp = document.getElementById(inputId);
+    if (!inp) return 1;
+    const cur = parseInt(inp.value) || 1;
+    const next = Math.max(1, Math.min(maxVal, cur + (parseInt(delta) || 0)));
+    inp.value = String(next);
+    return next;
+}
+
+function dmOnVaultPickChange(selectedName) {
+    if (!selectedName) return;
+    const spec = dmParseDropItemAndQty(selectedName);
+    const itemInp = document.getElementById('dm-drop-item');
+    const qtyInp = document.getElementById('dm-drop-qty');
+    if (itemInp) itemInp.value = spec.itemRaw;
+    if (qtyInp) qtyInp.value = String(spec.defaultQty);
+}
+
+function dmQuickDropByKey(lootKey, toId, toName, ev, explicitQty = null) {
     if (ev) ev.stopPropagation();
     const it = LOOT_DATA[lootKey];
     if (!it) return;
-    dmSendLootDrop(toId, toName, it.name, 1, 0, 0, `From ${it.location.split('•')[1]?.trim() || 'Barovia'}`, it.customMeta || null, false);
+    const spec = dmParseDropItemAndQty(it.name);
+    let sendQty = explicitQty !== null && explicitQty !== undefined ? parseInt(explicitQty) : null;
+    if (!sendQty || Number.isNaN(sendQty)) {
+        const rowInp = document.getElementById(`dm-row-qty-${lootKey}`);
+        sendQty = rowInp ? (parseInt(rowInp.value) || spec.defaultQty) : spec.defaultQty;
+    }
+    sendQty = Math.max(1, Math.min(999, sendQty));
+    dmSendLootDrop(toId, toName, spec.itemRaw, sendQty, 0, 0, `From ${it.location.split('•')[1]?.trim() || 'Barovia'}`, it.customMeta || null, false);
 }
 
 function dmToggleRecipeUnlock(recipeId, recipeTitle, unlockNow = true) {
@@ -13800,7 +13841,7 @@ function renderDmDropModalBody() {
                 </label>
                 <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#93c5fd; font-weight:700; grid-column:span 2;">
                     Quick-Pick from World Loot Vault or Crafting Materials
-                    <select id="dm-drop-vault-pick" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.82rem;" onchange="if(this.value) document.getElementById('dm-drop-item').value = this.value;">
+                    <select id="dm-drop-vault-pick" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.82rem;" onchange="dmOnVaultPickChange(this.value)">
                         ${vaultOpts}
                     </select>
                 </label>
@@ -13808,10 +13849,14 @@ function renderDmDropModalBody() {
                     Item Name to Send (or leave blank if sending Gold only)
                     <input type="text" id="dm-drop-item" placeholder="e.g. 🌿 Barovian Medicinal Herbs, 🩸 Vistani Bloodwell Vial..." style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
                 </label>
-                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#cbd5e1; font-weight:700;">
-                    Item Quantity
-                    <input type="number" id="dm-drop-qty" value="1" min="1" max="99" style="padding:7px 9px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;">
-                </label>
+                <div style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#cbd5e1; font-weight:700;">
+                    <label for="dm-drop-qty">Item Quantity</label>
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <button type="button" class="btn-modal-mini" style="padding:6px 11px; font-size:0.85rem; font-weight:800;" onclick="dmStepInputQty('dm-drop-qty', -1, 999)" aria-label="Decrease send quantity">-</button>
+                        <input type="number" id="dm-drop-qty" value="1" min="1" max="999" style="width:74px; text-align:center; padding:7px 6px; background:#111827; border:1px solid #475569; border-radius:6px; color:#fde68a; font-family:'JetBrains Mono',monospace; font-size:0.86rem; font-weight:800;">
+                        <button type="button" class="btn-modal-mini" style="padding:6px 11px; font-size:0.85rem; font-weight:800;" onclick="dmStepInputQty('dm-drop-qty', 1, 999)" aria-label="Increase send quantity">+</button>
+                    </div>
+                </div>
                 <label style="display:flex; flex-direction:column; gap:4px; font-size:0.76rem; color:#fde68a; font-weight:700;">
                     OR Send Gold (GP) / Silver (SP)
                     <div style="display:flex; gap:6px;">
@@ -14741,12 +14786,22 @@ function openItemModal(key, fromNav = false) {
             ` : ''}
         </div>
         <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(52,211,153,0.35); border-radius:7px; padding:8px 11px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-            <span style="font-size:0.76rem; font-weight:800; color:#6ee7b7;">🎁 Send Direct Loot Drop to Hero:</span>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span style="font-size:0.76rem; font-weight:800; color:#6ee7b7;">🎁 Send Direct Loot Drop:</span>
+                ${(() => {
+                    const dropSpec = dmParseDropItemAndQty(it.name);
+                    return `<div style="display:inline-flex; align-items:center; gap:3px; background:#090e1a; border:1px solid #334155; border-radius:5px; padding:1px 4px;">
+                        <button type="button" class="btn-modal-mini" style="padding:1px 7px; font-weight:800;" onclick="dmStepInputQty('dm-modal-drop-qty', -1, 999)" aria-label="Decrease send quantity">-</button>
+                        <input type="number" id="dm-modal-drop-qty" value="${dropSpec.defaultQty}" min="1" max="999" aria-label="Quantity to send" style="width:44px; text-align:center; background:transparent; border:none; color:#fde68a; font-family:'JetBrains Mono',monospace; font-size:0.78rem; font-weight:800;">
+                        <button type="button" class="btn-modal-mini" style="padding:1px 7px; font-weight:800;" onclick="dmStepInputQty('dm-modal-drop-qty', 1, 999)" aria-label="Increase send quantity">+</button>
+                    </div>`;
+                })()}
+            </div>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button type="button" class="btn-modal-mini" style="background:#3b0764; border-color:#a855f7; color:#f3e8ff;" onclick="dmQuickDropByKey('${key}', 'piper', '🎩 Piper')">🎩 Send to Piper</button>
-                <button type="button" class="btn-modal-mini" style="background:#78350f; border-color:#f59e0b; color:#fef3c7;" onclick="dmQuickDropByKey('${key}', 'jacomir', '👑 Jacomir')">👑 Send to Jacomir</button>
-                <button type="button" class="btn-modal-mini" style="background:#7f1d1d; border-color:#ef4444; color:#fee2e2;" onclick="dmQuickDropByKey('${key}', 'yvaine', '🔫 Yvaine')">🔫 Send to Yvaine</button>
-                <button type="button" class="btn-modal-mini" style="background:#064e3b; border-color:#34d399; color:#ecfdf5;" onclick="dmQuickDropByKey('${key}', 'all', '👥 Entire Party')">👥 All 3</button>
+                <button type="button" class="btn-modal-mini" style="background:#3b0764; border-color:#a855f7; color:#f3e8ff;" onclick="dmQuickDropByKey('${key}', 'piper', '🎩 Piper', event, document.getElementById('dm-modal-drop-qty')?.value)">🎩 Send to Piper</button>
+                <button type="button" class="btn-modal-mini" style="background:#78350f; border-color:#f59e0b; color:#fef3c7;" onclick="dmQuickDropByKey('${key}', 'jacomir', '👑 Jacomir', event, document.getElementById('dm-modal-drop-qty')?.value)">👑 Send to Jacomir</button>
+                <button type="button" class="btn-modal-mini" style="background:#7f1d1d; border-color:#ef4444; color:#fee2e2;" onclick="dmQuickDropByKey('${key}', 'yvaine', '🔫 Yvaine', event, document.getElementById('dm-modal-drop-qty')?.value)">🔫 Send to Yvaine</button>
+                <button type="button" class="btn-modal-mini" style="background:#064e3b; border-color:#34d399; color:#ecfdf5;" onclick="dmQuickDropByKey('${key}', 'all', '👥 Entire Party', event, document.getElementById('dm-modal-drop-qty')?.value)">👥 All 3</button>
                 ${it.isCustomForged ? `<button type="button" class="btn-modal-mini" style="background:#450a0a; border-color:#ef4444; color:#fca5a5;" onclick="dmDeleteCustomLoot('${key}')">🗑️ Delete Custom</button>` : ''}
             </div>
         </div>
@@ -16202,6 +16257,7 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
                     ? ` <span class="pill blue" style="font-size:0.62rem; padding:1px 6px; vertical-align:middle;" title="Edited in World Loot Vault">✏️ EDITED</span>`
                     : '';
                 const escItemAttr = escapeEncounterHtml(it.name);
+                const rowDropSpec = dmParseDropItemAndQty(it.name);
                 const inlineFormHtml = (dmEditingLootKey === k) ? `
                     <form class="dm-loot-rename-form" onsubmit="dmSaveInlineLootRename(event, '${k}')" novalidate>
                         <label for="dm-loot-rename-${k}" class="visually-hidden">Edit name of ${escItemAttr}</label>
@@ -16217,10 +16273,15 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
                         <td>
                             <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
                                 <span><button type="button" class="link-btn" onclick="openItemModal('${k}')">${escapeEncounterHtml(it.name)}</button>${craftBadge}${customBadge}${renamedBadge}</span>
-                                <span style="display:inline-flex; gap:3px; flex-shrink:0;" title="1-Click Live Drop or Edit Name">
-                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'piper', '🎩 Piper', event)" title="Drop 1x to Piper" aria-label="Drop 1x ${escItemAttr} to Piper">🎩</button>
-                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'jacomir', '👑 Jacomir', event)" title="Drop 1x to Jacomir" aria-label="Drop 1x ${escItemAttr} to Jacomir">👑</button>
-                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'yvaine', '🔫 Yvaine', event)" title="Drop 1x to Yvaine" aria-label="Drop 1x ${escItemAttr} to Yvaine">🔫</button>
+                                <span style="display:inline-flex; align-items:center; gap:3px; flex-shrink:0;" title="Set quantity then click a hero to live-drop">
+                                    <span style="display:inline-flex; align-items:center; background:#090e1a; border:1px solid #334155; border-radius:4px; padding:0 2px;" onclick="event.stopPropagation()">
+                                        <button type="button" class="btn-modal-mini" style="padding:0 5px; font-size:0.65rem; border:none;" onclick="event.stopPropagation(); dmStepInputQty('dm-row-qty-${k}', -1, 999)" aria-label="Decrease quantity of ${escItemAttr}">-</button>
+                                        <input type="number" id="dm-row-qty-${k}" value="${rowDropSpec.defaultQty}" min="1" max="999" aria-label="Quantity for ${escItemAttr}" onclick="event.stopPropagation()" style="width:28px; text-align:center; background:transparent; border:none; color:#fde68a; font-family:'JetBrains Mono',monospace; font-size:0.68rem; font-weight:800; padding:1px 0;">
+                                        <button type="button" class="btn-modal-mini" style="padding:0 5px; font-size:0.65rem; border:none;" onclick="event.stopPropagation(); dmStepInputQty('dm-row-qty-${k}', 1, 999)" aria-label="Increase quantity of ${escItemAttr}">+</button>
+                                    </span>
+                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'piper', '🎩 Piper', event)" title="Drop to Piper" aria-label="Drop ${escItemAttr} to Piper">🎩</button>
+                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'jacomir', '👑 Jacomir', event)" title="Drop to Jacomir" aria-label="Drop ${escItemAttr} to Jacomir">👑</button>
+                                    <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.65rem;" onclick="dmQuickDropByKey('${k}', 'yvaine', '🔫 Yvaine', event)" title="Drop ${escItemAttr} to Yvaine" aria-label="Drop ${escItemAttr} to Yvaine">🔫</button>
                                     <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.65rem;" data-loot-edit-btn="${k}" onclick="dmStartInlineLootRename('${k}', event)" title="Edit item name" aria-label="Edit name of ${escItemAttr}">✏️</button>
                                 </span>
                             </div>

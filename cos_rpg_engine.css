@@ -1101,6 +1101,14 @@ dialog::backdrop {
     outline: none;
     border-color: #f59e0b;
 }
+.rpg-loader-action-note {
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: #94a3b8;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-top: 2px;
+}
 .rpg-picker-item-top {
     display: flex;
     justify-content: space-between;

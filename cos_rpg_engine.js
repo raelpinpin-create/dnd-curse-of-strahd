@@ -503,6 +503,13 @@
             slots: [],
             summary: 'Standard Ammunition Bundle'
         },
+        {
+            match: ['specialty bullet sling', 'bullet sling', 'specialty cartridge rig', 'cartridge rig', 'munitions sling', 'specialty bullet', 'ammo rig', 'cartridge case', 'munitions belt'],
+            category: 'gear',
+            slots: [],
+            isBulletContainer: true,
+            summary: 'Stores Multiple Specialty Bullet Types (Unlocks Firearm Load)'
+        },
 
         // --- WEAPONS & SHIELDS ---
         {
@@ -974,13 +981,6 @@
             summary: 'Story Clue / Key Relic'
         },
         {
-            match: ['specialty cartridge rig', 'cartridge rig', 'munitions sling', 'specialty bullet', 'bullet sling', 'ammo rig', 'cartridge case', 'munitions belt'],
-            category: 'gear',
-            slots: [],
-            isBulletContainer: true,
-            summary: 'Stores Multiple Specialty Bullet Types (Unlocks Firearm Load)'
-        },
-        {
             match: ['lockpick', 'thieves', 'wine', 'pipe', 'dragonchess', 'bandolier', 'slug', 'cartridge', 'speedloader', 'tinker', 'lantern', 'crowbar', 'pack', 'pouch', 'torch', 'ration', 'rope', 'waterskin'],
             category: 'gear',
             slots: [],
@@ -1410,12 +1410,12 @@
             effect: "• <strong>Purifying Touch (1/Day Action):</strong> Cure any 1 disease, poison, or hag nightmare curse.<br>• <strong>Soul-Tether Ward:</strong> Grants <strong>Advantage on Death Saving Throws</strong> while carried."
         },
         {
-            match: ['specialty cartridge rig', 'cartridge rig', 'munitions sling', 'ammo rig', 'cartridge case', 'munitions belt'],
-            name: "Partitioned Specialty Cartridge Rig",
+            match: ['specialty bullet sling', 'bullet sling', 'specialty cartridge rig', 'cartridge rig', 'munitions sling', 'ammo rig', 'cartridge case', 'munitions belt'],
+            name: "Partitioned Bullet Sling & Pouch",
             category: "FIREARM STORAGE GEAR • 15 GP (Any Shop)",
             origin: "Bildrath's (E1), Tser Pool Outfitters (G), Arasek Stockyard (N5), or Krezk Supply (S3)",
-            desc: "A rugged oiled-leather cross-strap sling fitted with five numbered waterproof brass compartments for keeping volatile specialty ammunition safely separated by type.",
-            effect: "• <strong>Unlocks Firearm Specialty Load:</strong> Carrying this container in your Backpack lets you safely carry multiple specialty bullet types (<em>Silvered, Incendiary, Poisoned, Sunburst, Necrotic</em>) and unlocks the <strong>Load</strong> button on your firearms.<br>• <em>(Standard brass clips &amp; speedloaders still use your normal Gunslinger Bandolier).</em>"
+            desc: "A rugged oiled-leather cross-body bullet sling fitted with five numbered waterproof brass compartments for storing multiple specialty bullet types safely separated.",
+            effect: "• <strong>Unlocks Firearm Specialty Load:</strong> Carrying this sling in your Backpack lets you safely carry multiple specialty bullet types (<em>Silvered, Incendiary, Poisoned, Sunburst, Necrotic</em>) and unlocks the <strong>Load</strong> button on your firearms.<br>• <em>(Standard brass clips &amp; speedloaders still use your starting Gunslinger Bandolier).</em>"
         },
         {
             match: ['rictavio\'s silvered crossbow bolts'],
@@ -2232,13 +2232,13 @@
         const needsContainer = (weaponMeta && weaponMeta.kind === 'firearm');
         const containerLocked = needsContainer && !hasBulletContainerInBag();
         const loadBtn = containerLocked
-            ? `<button type="button" class="rpg-ammo-act-btn is-load" disabled title="Locked — Buy a Partitioned Specialty Cartridge Rig (15 GP in any shop) to carry &amp; load specialty rounds">${hasLoaded ? 'Swap / Load' : 'Load'}</button>`
+            ? `<button type="button" class="rpg-ammo-act-btn is-load" disabled title="Locked — Buy a Partitioned Bullet Sling &amp; Pouch (15 GP in any shop) to carry &amp; load specialty rounds">${hasLoaded ? 'Swap / Load' : 'Load'}</button>`
             : `<button type="button" class="rpg-ammo-act-btn is-load" onclick="COS_RPG.openAmmoLoaderModal({ targetWeaponId: decodeURIComponent('${encArg(weaponId)}') })">${hasLoaded ? 'Swap / Load' : 'Load'}</button>`;
 
         const hintParts = [];
         if (activeDef) hintParts.push(esc(activeDef.note));
         if (stdLocked) hintParts.push('Coated rounds fire first before Standard ammo underneath.');
-        if (containerLocked) hintParts.push('Load Locked — Carry a Partitioned Specialty Cartridge Rig (15 GP in any shop) to store &amp; load special rounds.');
+        if (containerLocked) hintParts.push('Load Locked — Buy a Partitioned Bullet Sling &amp; Pouch (15 GP in any shop) to store &amp; load special rounds.');
 
         return `
             <div class="rpg-wpn-ammo-bar ${accentCls}">
@@ -2366,17 +2366,17 @@
     }
 
     function getActionEconomyNote(ammoItem, weaponMeta) {
-        if (!ammoItem) return 'Bonus Action in combat (Free pre-combat)';
+        if (!ammoItem) return 'Bonus action in combat (free pre-combat).';
         if (ammoItem.ammoId === 'sharpness' && ammoItem.isCoating) {
-            return '1 Full Action in combat (Free pre-combat)';
+            return '1 full action in combat (free pre-combat).';
         }
         if (ammoItem.isCoating) {
-            return 'Bonus Action in combat (Free pre-combat)';
+            return 'Bonus action in combat (free pre-combat).';
         }
         if (weaponMeta && (weaponMeta.kind === 'bow' || weaponMeta.kind === 'crossbow')) {
-            return 'Bonus Action to ready quiver / Free per Attack';
+            return 'Bonus action to organize quiver (free per attack).';
         }
-        return 'Bonus Action to load into firearm (Free pre-combat)';
+        return 'Bonus action to load into firearm in combat (free pre-combat).';
     }
 
     function getWeaponCoatingCeiling(ammoItem, weaponMeta) {
@@ -2417,14 +2417,14 @@
         const weapons = getHeroWeaponsForAmmo(true);
         const targetWeapon = targetWeaponId ? weapons.find(w => w.id === targetWeaponId) : null;
         if (targetWeapon && targetWeapon.kind === 'firearm' && !hasBulletContainerInBag()) {
-            adapter.log(`<strong>Firearm Load Locked:</strong> Carry a <strong>Partitioned Specialty Cartridge Rig</strong> (15 GP in any shop) in your Backpack first.`);
+            adapter.log(`<strong>Firearm Load Locked:</strong> Carry a <strong>Partitioned Bullet Sling &amp; Pouch</strong> (15 GP in any shop) in your Backpack first.`);
             return;
         }
         if (invIndex !== null && invIndex !== undefined) {
             const rawInv = adapter.getItems()[invIndex];
             const invMeta = rawInv ? getItemMeta(rawInv) : null;
             if (invMeta && invMeta.ammoMeta && invMeta.ammoMeta.ammoKind === 'firearm' && !hasBulletContainerInBag()) {
-                adapter.log(`<strong>Firearm Load Locked:</strong> Buy a <strong>Partitioned Specialty Cartridge Rig</strong> (15 GP in any shop) to carry and load special firearm rounds.`);
+                adapter.log(`<strong>Firearm Load Locked:</strong> Buy a <strong>Partitioned Bullet Sling &amp; Pouch</strong> (15 GP in any shop) to carry and load special firearm rounds.`);
                 return;
             }
         }
@@ -2526,11 +2526,11 @@
                     capText = `Chamber: ${chamberInfo.cur}/${chamberInfo.max}`;
                 }
                 const disabledTitle = needsContainer
-                    ? 'Buy a Partitioned Specialty Cartridge Rig (15 GP in any shop) first'
+                    ? 'Buy a Partitioned Bullet Sling &amp; Pouch (15 GP in any shop) first'
                     : (isCoatingEmpty ? 'Chamber empty — Reload standard bullets first before coating' : 'Capacity full');
                 return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" ${isDisabled ? `disabled title="${disabledTitle}"` : ''} onclick="COS_RPG.selectLoaderWeapon(decodeURIComponent('${encArg(w.id)}'))">
                     <span><strong>${esc(w.label)}</strong><br><small style="color:#94a3b8;">${esc(w.kind.toUpperCase())}</small></span>
-                    <span class="rpg-loader-cap">${esc(needsContainer ? 'Need Cartridge Rig' : (isCoatingEmpty ? 'Empty Chamber (Reload First)' : capText))}</span>
+                    <span class="rpg-loader-cap">${esc(needsContainer ? 'Need Bullet Sling' : (isCoatingEmpty ? 'Empty Chamber (Reload First)' : capText))}</span>
                 </button>`;
             }).join('')}</div>`
             : `<div style="font-size:0.74rem; color:#fca5a5;">No compatible weapon available for this ammunition type.</div>`;
@@ -2550,30 +2550,28 @@
                 const coatedCount = Math.min(activeAmmo.coatingRounds, coatCeil);
                 qtyBlockHtml = `
                     <div class="rpg-loader-section">
-                        <div class="rpg-loader-label">Vial Coating Effect &bull; <span style="color:#fde68a;">${esc(actionTxt)}</span></div>
+                        <div class="rpg-loader-label">Vial Coating Effect</div>
                         <div style="font-size:0.74rem; color:#e2e8f0; line-height:1.4;">
                             Consumes <strong>1 vial</strong> to coat the first <strong>${coatedCount} round${coatedCount === 1 ? '' : 's'}</strong> inside <strong>${esc(activeWeapon.label)}</strong>. Those front rounds become <strong>${esc(activeAmmo.ammoDef.shortName)}</strong> and fire first (cannot switch to Standard until fired, Unloaded, or Reloaded back into Backpack).
                             ${swapNote}
                         </div>
+                        <div class="rpg-loader-action-note">${esc(actionTxt)}</div>
                     </div>
                 `;
             } else {
                 const isDose = activeAmmo.isCoating && activeAmmo.coatingRounds === 1;
-                const quickPills = [1, 3, 6].filter(n => n < maxUnits).map(n =>
-                    `<button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.setLoaderQty(${n})">${n}</button>`
-                ).join('');
                 qtyBlockHtml = `
                     <div class="rpg-loader-section">
-                        <div class="rpg-loader-label">Quantity (${isDose ? '1 coated round per dose' : '1..Max'}) &bull; <span style="color:#fde68a;">${esc(actionTxt)}</span></div>
+                        <div class="rpg-loader-label">Quantity (${isDose ? '1 coated round per dose' : `1..${maxUnits}`})</div>
                         <div class="rpg-loader-qty-row">
-                            <button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.setLoaderQty(${Math.max(1, safeQty - 1)})">-</button>
+                            <button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.stepLoaderQty(-1)" aria-label="Decrease quantity">-</button>
                             <input type="number" id="rpg-loader-qty-inp" class="rpg-loader-qty-input" min="1" max="${maxUnits}" value="${safeQty}" oninput="COS_RPG.setLoaderQty(this.value, true)">
-                            <button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.setLoaderQty(${Math.min(maxUnits, safeQty + 1)})">+</button>
-                            ${quickPills}
+                            <button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.stepLoaderQty(1)" aria-label="Increase quantity">+</button>
                             <button type="button" class="rpg-ammo-act-btn is-load" onclick="COS_RPG.setLoaderQty(${maxUnits})">Max (${maxUnits})</button>
                         </div>
                         ${isDose ? '<div style="font-size:0.7rem; color:#cbd5e1; margin-top:4px;">Coated front rounds fire first and return to Backpack as coated rounds if unloaded/reloaded.</div>' : ''}
                         ${swapNote}
+                        <div class="rpg-loader-action-note">${esc(actionTxt)}</div>
                     </div>
                 `;
             }
@@ -2602,7 +2600,7 @@
         if (!ammoItem || !weaponMeta) return;
 
         if ((ammoItem.ammoKind === 'firearm' || weaponMeta.kind === 'firearm') && !hasBulletContainerInBag()) {
-            adapter.log(`<strong>Firearm Load Locked:</strong> Carry a <strong>Partitioned Specialty Cartridge Rig</strong> (15 GP in any shop) in your Backpack first.`);
+            adapter.log(`<strong>Firearm Load Locked:</strong> Carry a <strong>Partitioned Bullet Sling &amp; Pouch</strong> (15 GP in any shop) in your Backpack first.`);
             return;
         }
 
@@ -6007,7 +6005,7 @@
                             : ''}
                         ${hasLoadableAmmo
                             ? (ammoNeedsContainer
-                                ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Buy a Partitioned Specialty Cartridge Rig (15 GP in any shop) first">Load (Locked)</button>`
+                                ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Buy a Partitioned Bullet Sling &amp; Pouch (15 GP in any shop) first">Load (Locked)</button>`
                                 : `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })">Load</button>`)
                             : ''}
                         ${meta.useAction ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.useConsumableByIndex(${idx})">Use</button>` : ''}
@@ -6561,6 +6559,17 @@
         openAmmoLoaderModal,
         selectLoaderAmmo: (idx) => { ammoLoaderState.invIndex = idx; renderAmmoLoaderModal(); },
         selectLoaderWeapon: (wid) => { ammoLoaderState.weaponId = wid; renderAmmoLoaderModal(); },
+        stepLoaderQty: (delta) => {
+            const loadable = getLoadableAmmoItemsFromBackpack(null);
+            const a = loadable.find(it => it.invIndex === ammoLoaderState.invIndex);
+            const w = getHeroWeaponsForAmmo(true).find(x => x.id === ammoLoaderState.weaponId);
+            const mx = (a && w) ? computeMaxLoadUnits(a, w) : 1;
+            const inp = document.getElementById('rpg-loader-qty-inp');
+            const cur = inp ? (parseInt(inp.value) || ammoLoaderState.qty || 1) : (ammoLoaderState.qty || 1);
+            const n = Math.max(1, Math.min(mx || 1, cur + (parseInt(delta) || 0)));
+            ammoLoaderState.qty = n;
+            if (inp) inp.value = String(n);
+        },
         setLoaderQty: (val, skipInputDom = false) => {
             const loadable = getLoadableAmmoItemsFromBackpack(null);
             const a = loadable.find(it => it.invIndex === ammoLoaderState.invIndex);

@@ -3742,27 +3742,30 @@
 
         let vaultKey = null;
         const low = raw.toLowerCase();
-        if (low.includes('whispering grave') || low.includes('amulet')) vaultKey = 'whispering grave';
-        else if (low.includes('lockpick') || low.includes('lock pick') || low.includes('thieves')) vaultKey = 'lockpick';
-        else if (low.includes('expensive wine') || low.includes('barovian wine')) vaultKey = 'expensive wine';
-        else if (low.includes('croissant')) vaultKey = 'croissant';
-        else if (low.includes('bandage')) vaultKey = 'bandage';
-        else if (low.includes('potion of healing') || low.includes('health potion')) vaultKey = 'potion of healing';
-        else if (low.includes('lament')) vaultKey = 'lament';
-        else if (low.includes('revolver') || low.includes('mercy')) vaultKey = 'revolver';
-        else if (low.includes('knife') || low.includes('stiletto')) vaultKey = 'knife';
-        else if (low.includes('studded leather')) vaultKey = 'studded leather';
-        else if (low.includes('bandolier')) vaultKey = 'bandolier';
-        else if (low.includes('slug')) vaultKey = 'slug';
-        else if (low.includes('cartridge')) vaultKey = 'cartridge';
-        else if (low.includes('speedloader')) vaultKey = 'speedloader';
-        else if (low.includes('tinker')) vaultKey = 'tinker';
-        else if (low.includes('bloodstone')) vaultKey = 'bloodstone';
-        else if (low.includes('watch')) vaultKey = 'watch';
-        else if (low.includes('journal')) vaultKey = 'journal';
-        else if (low.includes('holy water')) vaultKey = 'holy water';
-        else if (low.includes('lantern')) vaultKey = 'lantern';
-        else if (low.includes('crowbar') || low.includes('dungeoneer')) vaultKey = 'crowbar';
+        const isSpecialAmmoOrRig = low.includes('bullet sling') || low.includes('cartridge rig') || low.includes('munitions sling') || low.includes('ammo rig') || low.includes('sunburst') || low.includes('ezmerelda') || low.includes('dawn-powder') || low.includes('silvered') || low.includes('incendiary') || low.includes('necrotic') || low.includes('wyvern') || low.includes('poisoned') || low.includes('oil of sharpness') || low.includes('sun-ash') || low.includes('liquid silver');
+        if (!isSpecialAmmoOrRig) {
+            if (low.includes('whispering grave') || low.includes('amulet')) vaultKey = 'whispering grave';
+            else if (low.includes('lockpick') || low.includes('lock pick') || low.includes('thieves')) vaultKey = 'lockpick';
+            else if (low.includes('expensive wine') || low.includes('barovian wine')) vaultKey = 'expensive wine';
+            else if (low.includes('croissant')) vaultKey = 'croissant';
+            else if (low.includes('bandage')) vaultKey = 'bandage';
+            else if (low.includes('potion of healing') || low.includes('health potion')) vaultKey = 'potion of healing';
+            else if (low.includes('lament')) vaultKey = 'lament';
+            else if (low.includes('revolver') || low.includes('mercy')) vaultKey = 'revolver';
+            else if (low.includes('knife') || low.includes('stiletto')) vaultKey = 'knife';
+            else if (low.includes('studded leather')) vaultKey = 'studded leather';
+            else if (low.includes('bandolier')) vaultKey = 'bandolier';
+            else if (low.includes('slug')) vaultKey = 'slug';
+            else if (low.includes('brass revolver') || low.includes('cartridge')) vaultKey = 'cartridge';
+            else if (low.includes('speedloader')) vaultKey = 'speedloader';
+            else if (low.includes('tinker')) vaultKey = 'tinker';
+            else if (low.includes('bloodstone')) vaultKey = 'bloodstone';
+            else if (low.includes('watch')) vaultKey = 'watch';
+            else if (low.includes('journal')) vaultKey = 'journal';
+            else if (low.includes('holy water')) vaultKey = 'holy water';
+            else if (low.includes('lantern')) vaultKey = 'lantern';
+            else if (low.includes('crowbar') || low.includes('dungeoneer')) vaultKey = 'crowbar';
+        }
 
         const sharedFallback = (!vaultKey && window.COS_RPG && typeof window.COS_RPG.lookupSharedItemLore === 'function')
             ? window.COS_RPG.lookupSharedItemLore(raw)
