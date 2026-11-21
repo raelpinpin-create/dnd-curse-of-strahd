@@ -940,9 +940,16 @@ dialog::backdrop {
     border-color: rgba(245, 158, 11, 0.6);
     color: #fde68a;
 }
-.rpg-ammo-act-btn.is-load:hover {
+.rpg-ammo-act-btn.is-load:hover:not(:disabled) {
     border-color: #f59e0b;
     background: rgba(180, 83, 9, 0.25);
+}
+.rpg-ammo-act-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-color: #334155;
+    color: #64748b;
+    background: #090e1a;
 }
 .rpg-ammo-pills {
     display: flex;

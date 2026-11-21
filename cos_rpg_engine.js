@@ -974,6 +974,13 @@
             summary: 'Story Clue / Key Relic'
         },
         {
+            match: ['specialty cartridge rig', 'cartridge rig', 'munitions sling', 'specialty bullet', 'bullet sling', 'ammo rig', 'cartridge case', 'munitions belt'],
+            category: 'gear',
+            slots: [],
+            isBulletContainer: true,
+            summary: 'Stores Multiple Specialty Bullet Types (Unlocks Firearm Load)'
+        },
+        {
             match: ['lockpick', 'thieves', 'wine', 'pipe', 'dragonchess', 'bandolier', 'slug', 'cartridge', 'speedloader', 'tinker', 'lantern', 'crowbar', 'pack', 'pouch', 'torch', 'ration', 'rope', 'waterskin'],
             category: 'gear',
             slots: [],
@@ -1401,6 +1408,14 @@
             origin: "Old Bonegrinder Windmill (Morgantha — Session 3)",
             desc: "A lustrous jet-black stone veined with deep internal fractures, braided onto blacksinew cord.",
             effect: "• <strong>Purifying Touch (1/Day Action):</strong> Cure any 1 disease, poison, or hag nightmare curse.<br>• <strong>Soul-Tether Ward:</strong> Grants <strong>Advantage on Death Saving Throws</strong> while carried."
+        },
+        {
+            match: ['specialty cartridge rig', 'cartridge rig', 'munitions sling', 'ammo rig', 'cartridge case', 'munitions belt'],
+            name: "Partitioned Specialty Cartridge Rig",
+            category: "FIREARM STORAGE GEAR • 15 GP (Any Shop)",
+            origin: "Bildrath's (E1), Tser Pool Outfitters (G), Arasek Stockyard (N5), or Krezk Supply (S3)",
+            desc: "A rugged oiled-leather cross-strap sling fitted with five numbered waterproof brass compartments for keeping volatile specialty ammunition safely separated by type.",
+            effect: "• <strong>Unlocks Firearm Specialty Load:</strong> Carrying this container in your Backpack lets you safely carry multiple specialty bullet types (<em>Silvered, Incendiary, Poisoned, Sunburst, Necrotic</em>) and unlocks the <strong>Load</strong> button on your firearms.<br>• <em>(Standard brass clips &amp; speedloaders still use your normal Gunslinger Bandolier).</em>"
         },
         {
             match: ['rictavio\'s silvered crossbow bolts'],
@@ -2161,6 +2176,11 @@
         return out;
     }
 
+    function hasBulletContainerInBag() {
+        if (!adapter) return false;
+        return adapter.getItems().some(raw => Boolean(getItemMeta(raw).isBulletContainer));
+    }
+
     function getActiveWeaponAmmoDef(weaponId) {
         const entry = getWeaponAmmoEntry(weaponId);
         if (!entry || !entry.loadedId || entry.count <= 0) return null;
@@ -2209,9 +2229,16 @@
             ? `<button type="button" class="rpg-ammo-act-btn" onclick="COS_RPG.unloadWeaponAmmo(decodeURIComponent('${encArg(weaponId)}'))" title="Return unused rounds to Backpack">Unload</button>`
             : '';
 
+        const needsContainer = (weaponMeta && weaponMeta.kind === 'firearm');
+        const containerLocked = needsContainer && !hasBulletContainerInBag();
+        const loadBtn = containerLocked
+            ? `<button type="button" class="rpg-ammo-act-btn is-load" disabled title="Locked — Buy a Partitioned Specialty Cartridge Rig (15 GP in any shop) to carry &amp; load specialty rounds">${hasLoaded ? 'Swap / Load' : 'Load'}</button>`
+            : `<button type="button" class="rpg-ammo-act-btn is-load" onclick="COS_RPG.openAmmoLoaderModal({ targetWeaponId: decodeURIComponent('${encArg(weaponId)}') })">${hasLoaded ? 'Swap / Load' : 'Load'}</button>`;
+
         const hintParts = [];
         if (activeDef) hintParts.push(esc(activeDef.note));
         if (stdLocked) hintParts.push('Coated rounds fire first before Standard ammo underneath.');
+        if (containerLocked) hintParts.push('Load Locked — Carry a Partitioned Specialty Cartridge Rig (15 GP in any shop) to store &amp; load special rounds.');
 
         return `
             <div class="rpg-wpn-ammo-bar ${accentCls}">
@@ -2219,7 +2246,7 @@
                     <span class="rpg-ammo-status">${statusTxt}</span>
                     <span class="rpg-ammo-act-group">
                         ${unloadBtn}
-                        <button type="button" class="rpg-ammo-act-btn is-load" onclick="COS_RPG.openAmmoLoaderModal({ targetWeaponId: decodeURIComponent('${encArg(weaponId)}') })">${hasLoaded ? 'Swap / Load' : 'Load'}</button>
+                        ${loadBtn}
                     </span>
                 </div>
                 <div class="rpg-ammo-pills">${pillsHtml}</div>
@@ -2374,6 +2401,9 @@
 
     function computeMaxLoadUnits(ammoItem, weaponMeta) {
         if (!ammoItem || !weaponMeta) return 0;
+        if ((ammoItem.ammoKind === 'firearm' || weaponMeta.kind === 'firearm') && !hasBulletContainerInBag()) {
+            return 0;
+        }
         const freeCap = getWeaponCoatingCeiling(ammoItem, weaponMeta);
         if (freeCap <= 0) return 0;
         if (ammoItem.isCoating && ammoItem.coatingRounds > 1) {
@@ -2384,11 +2414,22 @@
 
     function openAmmoLoaderModal({ invIndex = null, targetWeaponId = null } = {}) {
         if (!adapter) return;
-        const dlg = document.getElementById('rpg-ammo-loader-dialog');
-        if (!dlg) return;
-
         const weapons = getHeroWeaponsForAmmo(true);
         const targetWeapon = targetWeaponId ? weapons.find(w => w.id === targetWeaponId) : null;
+        if (targetWeapon && targetWeapon.kind === 'firearm' && !hasBulletContainerInBag()) {
+            adapter.log(`<strong>Firearm Load Locked:</strong> Carry a <strong>Partitioned Specialty Cartridge Rig</strong> (15 GP in any shop) in your Backpack first.`);
+            return;
+        }
+        if (invIndex !== null && invIndex !== undefined) {
+            const rawInv = adapter.getItems()[invIndex];
+            const invMeta = rawInv ? getItemMeta(rawInv) : null;
+            if (invMeta && invMeta.ammoMeta && invMeta.ammoMeta.ammoKind === 'firearm' && !hasBulletContainerInBag()) {
+                adapter.log(`<strong>Firearm Load Locked:</strong> Buy a <strong>Partitioned Specialty Cartridge Rig</strong> (15 GP in any shop) to carry and load special firearm rounds.`);
+                return;
+            }
+        }
+        const dlg = document.getElementById('rpg-ammo-loader-dialog');
+        if (!dlg) return;
         const allItems = getLoadableAmmoItemsFromBackpack(targetWeapon && !invIndex ? targetWeapon.kind : null);
 
         let chosenInv = (invIndex !== null && invIndex !== undefined)
@@ -2471,19 +2512,25 @@
                     ? adapter.getWeaponCurrentChamber(w.id)
                     : null;
                 const isCoatingEmpty = Boolean(activeAmmo && activeAmmo.isCoating && chamberInfo && chamberInfo.cur <= 0);
+                const needsContainer = (w.kind === 'firearm' && !hasBulletContainerInBag());
                 const isFullSame = Boolean(activeAmmo && entry.loadedId === activeAmmo.ammoId && computeMaxLoadUnits(activeAmmo, w) <= 0);
-                const isDisabled = isCoatingEmpty || isFullSame;
+                const isDisabled = needsContainer || isCoatingEmpty || isFullSame;
                 const isSel = activeWeapon && w.id === activeWeapon.id;
                 let capText = w.maxCap ? `Max ${w.maxCap} cap` : 'Quiver Ready';
-                if (entry.loadedId && entry.count > 0 && AMMO_CATALOG[entry.loadedId]) {
+                if (needsContainer) {
+                    capText = 'Locked (Need Cartridge Rig)';
+                } else if (entry.loadedId && entry.count > 0 && AMMO_CATALOG[entry.loadedId]) {
                     const ed = AMMO_CATALOG[entry.loadedId];
                     capText = `${ed.shortName}: ${entry.count}${w.maxCap ? '/' + w.maxCap : ''}${activeAmmo && activeAmmo.ammoId !== entry.loadedId ? ' (Swaps to Bag)' : ''}`;
                 } else if (chamberInfo) {
                     capText = `Chamber: ${chamberInfo.cur}/${chamberInfo.max}`;
                 }
-                return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" ${isDisabled ? `disabled title="${isCoatingEmpty ? 'Chamber empty — Reload standard bullets first before coating' : 'Capacity full'}"` : ''} onclick="COS_RPG.selectLoaderWeapon(decodeURIComponent('${encArg(w.id)}'))">
+                const disabledTitle = needsContainer
+                    ? 'Buy a Partitioned Specialty Cartridge Rig (15 GP in any shop) first'
+                    : (isCoatingEmpty ? 'Chamber empty — Reload standard bullets first before coating' : 'Capacity full');
+                return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" ${isDisabled ? `disabled title="${disabledTitle}"` : ''} onclick="COS_RPG.selectLoaderWeapon(decodeURIComponent('${encArg(w.id)}'))">
                     <span><strong>${esc(w.label)}</strong><br><small style="color:#94a3b8;">${esc(w.kind.toUpperCase())}</small></span>
-                    <span class="rpg-loader-cap">${esc(isCoatingEmpty ? 'Empty Chamber (Reload First)' : capText)}</span>
+                    <span class="rpg-loader-cap">${esc(needsContainer ? 'Need Cartridge Rig' : (isCoatingEmpty ? 'Empty Chamber (Reload First)' : capText))}</span>
                 </button>`;
             }).join('')}</div>`
             : `<div style="font-size:0.74rem; color:#fca5a5;">No compatible weapon available for this ammunition type.</div>`;
@@ -2553,6 +2600,11 @@
         const weapons = getHeroWeaponsForAmmo(true);
         const weaponMeta = weapons.find(w => w.id === ammoLoaderState.weaponId);
         if (!ammoItem || !weaponMeta) return;
+
+        if ((ammoItem.ammoKind === 'firearm' || weaponMeta.kind === 'firearm') && !hasBulletContainerInBag()) {
+            adapter.log(`<strong>Firearm Load Locked:</strong> Carry a <strong>Partitioned Specialty Cartridge Rig</strong> (15 GP in any shop) in your Backpack first.`);
+            return;
+        }
 
         const maxUnits = computeMaxLoadUnits(ammoItem, weaponMeta);
         if (maxUnits <= 0) {
@@ -5928,6 +5980,7 @@
             const profCheck = canEquip ? checkItemProficiency(raw, meta) : { allowed: true, requirement: '' };
             const isRestricted = canEquip && !profCheck.allowed && !dmOverrideOn;
             const hasLoadableAmmo = Boolean(meta.ammoMeta && AMMO_CATALOG[meta.ammoMeta.ammoId]);
+            const ammoNeedsContainer = Boolean(meta.ammoMeta && meta.ammoMeta.ammoKind === 'firearm' && !hasBulletContainerInBag());
             const catLbl = BP_CATS.find(c => c.id === meta.category)?.label || '📦 Gear';
 
             rows.push(`
@@ -5952,7 +6005,11 @@
                                 ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Requires ${esc(profCheck.requirement)} (or enable DM Override)">Restricted</button>`
                                 : `<button type="button" class="rpg-mini-btn ${isEquipped ? 'btn-equipped' : 'btn-equip'}" onclick="COS_RPG.quickToggleEquipByIndex(${idx})">${isEquipped ? 'Unequip' : 'Equip'}</button>`)
                             : ''}
-                        ${hasLoadableAmmo ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })">Load</button>` : ''}
+                        ${hasLoadableAmmo
+                            ? (ammoNeedsContainer
+                                ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Buy a Partitioned Specialty Cartridge Rig (15 GP in any shop) first">Load (Locked)</button>`
+                                : `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })">Load</button>`)
+                            : ''}
                         ${meta.useAction ? `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.useConsumableByIndex(${idx})">Use</button>` : ''}
                         <button type="button" class="rpg-mini-btn btn-send" onclick="COS_RPG.openSendForItem(${idx})" title="Send to party member">Send</button>
                         <div class="inv-stepper" style="display:inline-flex; align-items:center; gap:3px; background:#090e1a; border:1px solid #334155; border-radius:5px; padding:1px 4px;">
@@ -6500,6 +6557,7 @@
         getHeroWeaponsForAmmo,
         getActiveWeaponAmmoDef,
         getWeaponLastShotDef,
+        hasBulletContainerInBag,
         openAmmoLoaderModal,
         selectLoaderAmmo: (idx) => { ammoLoaderState.invIndex = idx; renderAmmoLoaderModal(); },
         selectLoaderWeapon: (wid) => { ammoLoaderState.weaponId = wid; renderAmmoLoaderModal(); },

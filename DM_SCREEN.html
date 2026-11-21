@@ -10327,6 +10327,7 @@ const BIOME_DATA = {
             { key: "fresh_croissants", note: "3x Claimed S1 (1d4)" },
             { key: "medicinal_herbs", note: "4x Claimed S1 (Piper)" },
             { key: "mist_ward_camp_kit", note: "Bildrath Shop E1 (45 GP)" },
+            { key: "specialty_cartridge_rig", note: "Bildrath Shop E1 (15–30 GP)" },
             { key: "blinsky_ireena_doll", note: "Gertruda's Blinsky Doll (Mad Mary E3)" },
             { key: "healing_potion", note: "Bildrath Shelf (500 GP E1)" },
             { key: "purple_grapemash", note: "Blood on the Vine E2" }
@@ -10439,6 +10440,7 @@ const BIOME_DATA = {
             { key: "bloodwell_vial", note: "Treasure Wagon G" },
             { key: "blank_tarokka", note: "Stage 1 Ink Bleed" },
             { key: "mist_ward_camp_kit", note: "Petru Wagon Trade (25–30 GP)" },
+            { key: "specialty_cartridge_rig", note: "Petru Outfitters G (15 GP)" },
             { key: "healing_potion", note: "Vistani Apothecary" },
             { key: "silvered_bullets", note: "Petru Forge (5 GP / 10 Rounds)" },
             { key: "incendiary_bullets", note: "Petru Forge (10 GP / 10 Rounds)" },
@@ -10517,6 +10519,7 @@ const BIOME_DATA = {
             { key: "fire_bolts", note: "Arasek Stockyard N5 (x10)" },
             { key: "poison_bolts", note: "Arrigal Assassin Quiver N9 (x10)" },
             { key: "sunburst_bolts", note: "St. Andral Sanctuary N1 (x10)" },
+            { key: "specialty_cartridge_rig", note: "Arasek Stockyard N5 (15 GP)" },
             { key: "mist_ward_camp_kit", note: "Arasek Stockyard N5 (25 GP)" },
             { key: "scroll_raise_dead", note: "Raise Dead Scroll N5" },
             { key: "scroll_prot_undead_fiends", note: "Prot. Undead & Fiends N5" },
@@ -10762,6 +10765,7 @@ const BIOME_DATA = {
         lootLinks: [
             { key: "purple_grapemash", note: "Entry Wine Trade S1" },
             { key: "mist_ward_camp_kit", note: "Commune Outfitter S3 (25 GP)" },
+            { key: "specialty_cartridge_rig", note: "Krezk Supply S3 (15 GP)" },
             { key: "healing_potion", note: "Krezkov Supplies S3" },
             { key: "holy_water", note: "White Sun Spring S4" }
         ],
@@ -11236,6 +11240,12 @@ const LOOT_DATA = {
         location: "Act III–IV • Amber Temple Sealed Treasury (X40) & Ravenloft Catacombs • Yvaine / Jacomir",
         mechanics: "• <strong>Load Into Chosen Crossbow:</strong> Deals an extra <strong>+1d6 Necrotic damage</strong> on hit, and struck targets <strong>cannot regain Hit Points</strong> until the start of your next turn.",
         lore: "Blackened steel quarrels etched with hunger runes that choke off cellular healing."
+    },
+    specialty_cartridge_rig: {
+        cat: "weapon", name: "Partitioned Specialty Cartridge Rig (Unlocks Firearm Load)", rarity: "Common Munitions Container • 15 GP (Any Shop)",
+        location: "Act I–IV • Any Barovian Shop (Bildrath E1, Petru G, Arasek N5, Krezk Supply S3) • Best for Yvaine",
+        mechanics: "• <strong>Stores Multiple Specialty Bullet Types:</strong> Oiled leather sling fitted with five numbered waterproof brass compartments keeping volatile specialty slugs (<em>Silvered, Incendiary, Poisoned, Sunburst, Necrotic</em>) safely sorted.<br>• <strong>Unlocks Firearm Load:</strong> While kept in Yvaine's Backpack, unlocks the <strong>Load</strong> button on her firearms (max 1 specialty bullet type loaded per gun; Bonus Action to swap/load).",
+        lore: "Stitched with stamped caliber tabs and wax-lined brass tubes so incendiary brimstone, grave salt, and silver slugs never foul one another inside a pack."
     },
     blood_spear: {
         cat: "weapon", name: "🩸 The Blood Spear of Kavan (+2 Vampiric Spear)", rarity: "Rare Magic Spear • Attunement (Jacomir)",

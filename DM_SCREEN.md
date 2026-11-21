@@ -275,7 +275,8 @@ flowchart TD
     * 🪄 **Silver-Capped Quarterstaff** *(`102 GP` • Versatile `1d6/1d8` Silvered Bludgeoning, Topple — Piper / Cael)*
     * **Silvered Firearm & Sling Bullets (`x10`)** *(`5 GP` Vistani Forge `G` / `E4` / `N5` — Yvaine)*
     * **Silvered Arrows (`x10`)** & **Silvered Crossbow Bolts (`x10`)** *(`50–100 GP` Vistani Forge `G` / Arasek `N5` / Dusk Elves `N9a`)*
-11a. **CoS Specialty Ammunition Catalog *(Max 1 Specialty Type Per Weapon • Bonus Action to Load / Swap on Firearms)*:**
+11a. **CoS Specialty Ammunition Catalog *(Requires `Partitioned Specialty Cartridge Rig` for Firearms • Max 1 Specialty Type Per Weapon • Bonus Action to Load / Swap)*:**
+    * **Partitioned Specialty Cartridge Rig (`15 GP` — Any Barovian Shop: `Bildrath E1`, `Petru G`, `Arasek N5`, `Krezk S3`):** Waterproof partitioned sling/case storing multiple specialty bullet types safely separated in the Backpack; **required in inventory to unlock the `Load` button on Yvaine's firearms**.
     * **Table Action & Reload Rules:** **Bonus Action** in combat to load specialty bullets into a firearm *(Free pre-combat)*. Physical specialty rounds can toggle between `Standard` and the loaded specialty type; reloading (`Reload Clip` / `Speedload`) returns any unfired specialty rounds (including Vial-coated bullets!) straight to Backpack.
     * **Brimstone Incendiary Bullets / Pitch-Tipped Fire Arrows / Fire Crossbow Bolts (`x10`):** **`+1d4` Fire damage** on hit (ignites targets & stops flame-vulnerable regen; bullets craftable via `INCENDIARY-ROUNDS`).
     * **Pale Tincture Poisoned Bullets / Nightshade Venom Arrows / Arrigal's Venom-Dipped Crossbow Bolts (`x10`):** **`+1d6` Poison damage** + **DC 12 CON Save or Poisoned** until end of next turn.
