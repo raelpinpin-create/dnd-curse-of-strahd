@@ -2197,6 +2197,15 @@
         const actionsContainer = document.getElementById('spell-modal-actions');
         actionsContainer.innerHTML = '';
 
+        const wpnMap = { greatsword_jacomir: 'greatsword', silvered_longsword_jacomir: 'silvered_longsword', handaxe_jacomir: 'handaxe' };
+        if (wpnMap[spellId] && window.COS_RPG && typeof COS_RPG.buildWeaponModalActionButtonsHtml === 'function') {
+            const wrap = document.createElement('span');
+            wrap.style.display = 'inline-flex';
+            wrap.style.gap = '6px';
+            wrap.innerHTML = COS_RPG.buildWeaponModalActionButtonsHtml(wpnMap[spellId]);
+            actionsContainer.appendChild(wrap);
+        }
+
         if (sp.modalButtons) {
             sp.modalButtons.forEach(btn => {
                 const b = document.createElement('button');
@@ -3237,7 +3246,7 @@
         const cleanLower = parsed.name.toLowerCase();
 
         let match = null;
-        const isSharedPriority = cleanLower.includes('moonlight') || cleanLower.includes('vladimir') || cleanLower.includes('sunblade') || cleanLower.includes('sunsword') || cleanLower.includes('counterweight') || cleanLower.includes('edge-guard') || cleanLower.includes('sunstone') || cleanLower.includes('draw-cam') || cleanLower.includes('focusing collar') || cleanLower.includes('witch-iron') || cleanLower.includes('incendiary') || cleanLower.includes('liquid silver') || cleanLower.includes('sun-ash') || cleanLower.includes('oil of sharpness') || cleanLower.includes('wyvern') || cleanLower.includes('tincture') || cleanLower.includes('runestone') || cleanLower.includes('ledger') || cleanLower.includes('slate') || cleanLower.includes('wall-rubbing') || cleanLower.includes('rubric') || cleanLower.includes('folio') || cleanLower.includes('treatise') || cleanLower.includes('chart') || cleanLower.includes('diagram') || cleanLower.includes('pattern') || cleanLower.includes('vellum');
+        const isSharedPriority = cleanLower.includes('moonlight') || cleanLower.includes('vladimir') || cleanLower.includes('sunblade') || cleanLower.includes('sunsword') || cleanLower.includes('counterweight') || cleanLower.includes('pommel') || cleanLower.includes('counter-grip') || cleanLower.includes('barbed hilt') || cleanLower.includes('edge-guard') || cleanLower.includes('crossguard') || cleanLower.includes('edge spine') || cleanLower.includes('sunstone') || cleanLower.includes('scope') || cleanLower.includes('barrel') || cleanLower.includes('iron sights') || cleanLower.includes('dusk-quartz') || cleanLower.includes('speed-cylinder') || cleanLower.includes('silencer') || cleanLower.includes('draw-cam') || cleanLower.includes('focusing collar') || cleanLower.includes('chaos-quartz') || cleanLower.includes('grip wrap') || cleanLower.includes('cane core') || cleanLower.includes('witch-iron') || cleanLower.includes('incendiary') || cleanLower.includes('liquid silver') || cleanLower.includes('sun-ash') || cleanLower.includes('oil of sharpness') || cleanLower.includes('wyvern') || cleanLower.includes('tincture') || cleanLower.includes('runestone') || cleanLower.includes('ledger') || cleanLower.includes('slate') || cleanLower.includes('wall-rubbing') || cleanLower.includes('rubric') || cleanLower.includes('folio') || cleanLower.includes('treatise') || cleanLower.includes('chart') || cleanLower.includes('diagram') || cleanLower.includes('pattern') || cleanLower.includes('vellum');
         if (!isSharedPriority) {
             for (const [k, v] of Object.entries(worldLootVault)) {
                 if (cleanLower.includes(k)) { match = v; break; }
@@ -3259,6 +3268,12 @@
         `;
         const act = document.getElementById('item-modal-actions');
         let btns = [];
+        const modalWeaponId = (window.COS_RPG && typeof COS_RPG.resolveWeaponIdFromRaw === 'function')
+            ? COS_RPG.resolveWeaponIdFromRaw(items[index])
+            : null;
+        if (modalWeaponId && window.COS_RPG && typeof COS_RPG.buildWeaponModalActionButtonsHtml === 'function') {
+            btns.push(COS_RPG.buildWeaponModalActionButtonsHtml(modalWeaponId));
+        }
         if (match && match.isSilverLongsword) {
             btns.push(`<button type="button" class="btn-roll-action" style="background:#475569; border:1px solid #cbd5e1;" onclick="closeItemModal(); rollWeaponAttack('Silvered Longsword (+5 • Sap)', 5);">⚔️ Attack (+5)</button>`);
             btns.push(`<button type="button" class="btn-roll-action btn-roll-dmg" onclick="closeItemModal(); rollSavageLongswordDamage(true);">💥 2H 1d10+3</button>`);

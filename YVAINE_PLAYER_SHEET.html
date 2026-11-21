@@ -1822,14 +1822,14 @@
     let activeStance = 'revolvers';
 
     // Firearms & Reload Engine State (Session 1 State)
-    const maxLamentChamber = 10;
+    let maxLamentChamber = 10;
     let lamentChamber = 8;
     const maxLamentReloadReserves = 2;
     let lamentReloadReserves = 2;
 
-    const maxMercyChamber = 6;
+    let maxMercyChamber = 6;
     let mercyChamber = 5;
-    const maxLessChamber = 6;
+    let maxLessChamber = 6;
     let lessChamber = 5;
     const maxRevolverReloadReserves = 2;
     let revolverReloadReserves = 2;
@@ -2474,6 +2474,23 @@
             syncGunCard('lament', 'btn-atk-lament', 'btn-dmg-lament', 'yvaine-mods-lament', '1d12', 4, '🎯');
             syncGunCard('mercy', 'btn-atk-mercy', 'btn-dmg-mercy', 'yvaine-mods-mercy', '1d6', 4, '🔴');
             syncGunCard('less', 'btn-atk-less', 'btn-dmg-less', 'yvaine-mods-less', '1d6', 0, '🔵');
+
+            // Sync live Max Magazine Capacity with Barrel / Speed-Cylinder attachments (+2 / -2 Mag)
+            const nextLamentMax = Math.max(1, 10 + (COS_RPG.getWeaponCombatMods('lament').magCapDelta || 0));
+            const nextMercyMax = Math.max(1, 6 + (COS_RPG.getWeaponCombatMods('mercy').magCapDelta || 0));
+            const nextLessMax = Math.max(1, 6 + (COS_RPG.getWeaponCombatMods('less').magCapDelta || 0));
+            if (nextLamentMax !== maxLamentChamber) {
+                maxLamentChamber = nextLamentMax;
+                if (lamentChamber > maxLamentChamber) lamentChamber = maxLamentChamber;
+                updateLamentAmmoUI();
+            }
+            if (nextMercyMax !== maxMercyChamber || nextLessMax !== maxLessChamber) {
+                maxMercyChamber = nextMercyMax;
+                maxLessChamber = nextLessMax;
+                if (mercyChamber > maxMercyChamber) mercyChamber = maxMercyChamber;
+                if (lessChamber > maxLessChamber) lessChamber = maxLessChamber;
+                updateRevolversAmmoUI();
+            }
 
             const km = COS_RPG.getWeaponCombatMods('knife');
             const kmEl = document.getElementById('yvaine-mods-knife');
@@ -3825,7 +3842,7 @@
 
         let vaultKey = null;
         const low = raw.toLowerCase();
-        const isSpecialAmmoOrRig = low.includes('bullet sling') || low.includes('cartridge rig') || low.includes('munitions sling') || low.includes('ammo rig') || low.includes('sunburst') || low.includes('ezmerelda') || low.includes('dawn-powder') || low.includes('silvered') || low.includes('incendiary') || low.includes('necrotic') || low.includes('wyvern') || low.includes('poisoned') || low.includes('oil of sharpness') || low.includes('sun-ash') || low.includes('liquid silver') || low.includes('witch-iron') || low.includes('hex-iron') || low.includes('fire arrow') || low.includes('fire bolt') || low.includes('van richten') || low.includes('scope') || low.includes('counterweight') || low.includes('edge-guard') || low.includes('sunstone') || low.includes('draw-cam') || low.includes('focusing collar') || low.includes('runestone') || low.includes('ledger') || low.includes('slate') || low.includes('wall-rubbing') || low.includes('rubric') || low.includes('folio') || low.includes('treatise') || low.includes('chart') || low.includes('diagram') || low.includes('pattern') || low.includes('vellum');
+        const isSpecialAmmoOrRig = low.includes('bullet sling') || low.includes('cartridge rig') || low.includes('munitions sling') || low.includes('ammo rig') || low.includes('sunburst') || low.includes('ezmerelda') || low.includes('dawn-powder') || low.includes('silvered') || low.includes('incendiary') || low.includes('necrotic') || low.includes('wyvern') || low.includes('poisoned') || low.includes('oil of sharpness') || low.includes('sun-ash') || low.includes('liquid silver') || low.includes('witch-iron') || low.includes('hex-iron') || low.includes('fire arrow') || low.includes('fire bolt') || low.includes('van richten') || low.includes('scope') || low.includes('barrel') || low.includes('iron sights') || low.includes('dusk-quartz') || low.includes('speed-cylinder') || low.includes('silencer') || low.includes('counterweight') || low.includes('pommel') || low.includes('counter-grip') || low.includes('barbed hilt') || low.includes('edge-guard') || low.includes('crossguard') || low.includes('edge spine') || low.includes('sunstone') || low.includes('draw-cam') || low.includes('focusing collar') || low.includes('chaos-quartz') || low.includes('grip wrap') || low.includes('cane core') || low.includes('runestone') || low.includes('ledger') || low.includes('slate') || low.includes('wall-rubbing') || low.includes('rubric') || low.includes('folio') || low.includes('treatise') || low.includes('chart') || low.includes('diagram') || low.includes('pattern') || low.includes('vellum');
         if (!isSpecialAmmoOrRig) {
             if (low.includes('whispering grave') || low.includes('amulet')) vaultKey = 'whispering grave';
             else if (low.includes('lockpick') || low.includes('lock pick') || low.includes('thieves')) vaultKey = 'lockpick';
@@ -3867,7 +3884,6 @@
         body.innerHTML = `
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
                 <span class="pill-badge pill-gold" style="font-size:0.65rem;">${itemData.category}</span>
-                ${itemData.origin ? `<span class="pill-badge pill-neutral" style="font-size:0.65rem;">📍 ${itemData.origin}</span>` : ''}
             </div>
             <div style="background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:10px 12px; font-size:0.8rem; line-height:1.5; color:#f8fafc;">
                 ${itemData.desc}
@@ -3885,6 +3901,12 @@
         const parsed = parseItemInfo(raw);
         const actions = document.getElementById('item-modal-actions');
         let btns = [];
+        const modalWeaponId = (window.COS_RPG && typeof COS_RPG.resolveWeaponIdFromRaw === 'function')
+            ? COS_RPG.resolveWeaponIdFromRaw(raw)
+            : null;
+        if (modalWeaponId && window.COS_RPG && typeof COS_RPG.buildWeaponModalActionButtonsHtml === 'function') {
+            btns.push(COS_RPG.buildWeaponModalActionButtonsHtml(modalWeaponId));
+        }
         if (itemData.customAction === 'speak_dead') {
             btns.push(`<button type="button" class="btn-act btn-act-dmg" onclick="castSpeakWithDeadAmulet(); closeItemModal();" style="font-size:0.74rem;">💀 Cast Speak with Dead (${speakWithDeadReady ? '1/1 Ready' : '0/1 Used'})</button>`);
         } else if (itemData.customAction === 'lockpick') {
@@ -4707,6 +4729,14 @@
 
         if (actContainer) {
             actContainer.innerHTML = '';
+            const wpnMap = { lament: 'lament', mercy: 'mercy', less: 'less', knife: 'knife' };
+            if (wpnMap[spellId] && window.COS_RPG && typeof COS_RPG.buildWeaponModalActionButtonsHtml === 'function') {
+                const wrap = document.createElement('span');
+                wrap.style.display = 'inline-flex';
+                wrap.style.gap = '6px';
+                wrap.innerHTML = COS_RPG.buildWeaponModalActionButtonsHtml(wpnMap[spellId]);
+                actContainer.appendChild(wrap);
+            }
             if (sp.modalButtons) {
                 sp.modalButtons.forEach(btn => {
                     const b = document.createElement('button');

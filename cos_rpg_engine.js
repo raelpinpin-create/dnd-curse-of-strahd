@@ -94,6 +94,28 @@
             summary: 'Base AC 16 (Heavy • Stealth Disadv)'
         },
         {
+            match: ['reforged silvered dragonplate', 'dragonplate +2'],
+            category: 'armor',
+            slots: ['body'],
+            reqArmor: 'heavy',
+            baseAC: 20,
+            armorWorn: true,
+            heavyArmor: true,
+            stealthDisadv: true,
+            summary: 'Base AC 20 (+2 Heavy Armor • Cold Resist)'
+        },
+        {
+            match: ['silvered dragonplate'],
+            category: 'armor',
+            slots: ['body'],
+            reqArmor: 'heavy',
+            baseAC: 19,
+            armorWorn: true,
+            heavyArmor: true,
+            stealthDisadv: true,
+            summary: 'Base AC 19 (+1 Heavy Armor • Cold Resist)'
+        },
+        {
             match: ['dragonplate', 'plate armor', 'full plate'],
             category: 'armor',
             slots: ['body'],
@@ -190,7 +212,7 @@
             summary: 'Radiant Gems & Fire Resist (Attune)'
         },
         {
-            match: ['obsidian barovian crown', 'crown'],
+            match: ['obsidian barovian crown', 'barovian crown', 'royal crown'],
             category: 'armor',
             slots: ['head'],
             summary: 'Royal Crown Regalia'
@@ -302,6 +324,15 @@
             category: 'accessory',
             slots: ['ring1', 'ring2'],
             summary: 'Signet / Worn Ring'
+        },
+        {
+            match: ['awakened vistani bloodwell', 'awakened bloodwell', 'bloodwell vial +2'],
+            category: 'accessory',
+            slots: ['amulet', 'offHand'],
+            spellDcBonus: 2,
+            spellAtkBonus: 2,
+            attune: true,
+            summary: '+2 Spell DC & Hit • +5 SP/SR (Attune)'
         },
         {
             match: ['bloodwell vial'],
@@ -525,65 +556,182 @@
             summary: 'Stores Multiple Specialty Bullet Types (Unlocks Firearm Load)'
         },
 
-        // --- WEAPON ATTACHMENTS (Attach to Firearms, Bows, Crossbows, or Melee Weapons!) ---
+        // --- WEAPON ATTACHMENTS (2 Dedicated Slots per Weapon • Legendary Artifacts = 0 Slots!) ---
+        // DM-Upgraded Enhanced Attachments (Must appear BEFORE base matchers!)
         {
-            match: ['van richten', 'silver-runed scope', 'clockwork barrel'],
+            match: ['enhanced van richten\'s silver-runed scope', 'enhanced silver-runed scope'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'van_richten_scope_plus2',
+                slotType: 'optic',
+                targetClasses: ['firearm', 'crossbow'],
+                atkBonus: 2,
+                dmgBonus: 0,
+                mistSight: true,
+                badgeLabel: 'Enhanced Scope (+2 Hit • Mist Sight)'
+            },
+            summary: 'Optic Slot (Firearm/Crossbow): +2 Attack & Mist-Piercing Sight'
+        },
+        {
+            match: ['enhanced clockwork rifled barrel', 'enhanced van richten\'s clockwork'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'van_richten_barrel_plus2',
+                slotType: 'barrel',
+                targetClasses: ['firearm'],
+                atkBonus: 0,
+                dmgBonus: 2,
+                isSilvered: true,
+                isMagical: true,
+                badgeLabel: 'Enhanced Barrel (+2 Dmg • Magical)'
+            },
+            summary: 'Barrel Slot (Firearm): +2 Damage, Silvered & Magical'
+        },
+        {
+            match: ['enhanced amber-inlaid focusing collar', 'enhanced focusing collar'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'amber_focus_collar_plus2',
+                slotType: 'crown',
+                slotTypes: ['crown', 'hilt'],
+                targetClasses: ['caster_weapon'],
+                atkBonus: 2,
+                dmgBonus: 0,
+                spellAtkBonus: 2,
+                badgeLabel: 'Enhanced Amber Collar (+2 Hit/+2 Spell)'
+            },
+            summary: 'Crown/Hilt Slot (Staff/Dagger): +2 Weapon Hit & +2 Spell Attack'
+        },
+        {
+            match: ['masterwork silver-runed hilt', 'masterwork hilt counterweight'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'silver_runed_pommel_plus2',
+                slotType: 'hilt',
+                targetClasses: ['melee'],
+                atkBonus: 1,
+                dmgBonus: 1,
+                isSilvered: true,
+                badgeLabel: 'Masterwork Silver Hilt (+1/+1 • Silvered)'
+            },
+            summary: 'Hilt Slot (Melee): +1 Attack, +1 Damage & Silvered'
+        },
+        {
+            match: ['reforged counterbalance edge-guard', 'reforged edge-guard'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'serrated_bloodgroove_edge_plus2',
+                slotType: 'guard',
+                targetClasses: ['slashing_piercing'],
+                atkBonus: 2,
+                dmgBonus: 1,
+                isMagical: true,
+                badgeLabel: 'Reforged Edge-Guard (+2/+1 • Magical)'
+            },
+            summary: 'Edge/Guard Slot (Blade): +2 Attack, +1 Damage (Magical)'
+        },
+
+        // --- BASE OPTIC / SIGHT ATTACHMENTS (Firearms, Crossbows & Bows) ---
+        {
+            match: ['van richten\'s silver-runed scope', 'silver-runed scope'],
             category: 'gear',
             slots: [],
             attachMeta: {
                 modKey: 'van_richten_scope',
+                slotType: 'optic',
+                targetClasses: ['firearm', 'crossbow', 'bow'],
+                atkBonus: 1,
+                dmgBonus: 0,
+                mistSight: true,
+                badgeLabel: 'Silver Scope (+1 Hit • Mist Sight)'
+            },
+            summary: 'Optic Slot (Firearm/Crossbow/Bow): +1 Attack & Mist-Piercing Sight'
+        },
+        {
+            match: ['solmere hair-line iron sights', 'hair-line iron sights', 'iron sights'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'duelist_iron_sights',
+                slotType: 'optic',
                 targetClasses: ['firearm', 'crossbow'],
                 atkBonus: 1,
-                dmgBonus: 1,
-                isSilvered: true,
-                mistSight: true,
-                supportsTier2: true,
-                badgeLabel: 'Scope +1 / Silvered'
+                dmgBonus: -1,
+                debuffNote: '-1 Damage (light precision sight calibration)',
+                badgeLabel: 'Iron Sights (+1 Hit / -1 Dmg)'
             },
-            summary: 'Attach to Firearm/Crossbow: +1 Hit/Dmg (+2 Act III), Silvered & Mist Sight'
+            summary: 'Optic Slot (Firearm/Crossbow): +1 Attack, Debuff: -1 Damage'
         },
         {
-            match: ['silver-runed hilt', 'hilt counterweight'],
+            match: ['dusk-quartz night scope', 'dusk-quartz'],
             category: 'gear',
             slots: [],
             attachMeta: {
-                modKey: 'silver_runed_pommel',
-                targetClasses: ['melee'],
-                atkBonus: 0,
-                dmgBonus: 1,
-                isSilvered: true,
-                badgeLabel: 'Silvered Hilt (+1 Dmg)'
-            },
-            summary: 'Attach to Melee Weapon: Counts as Silvered & +1 Damage'
-        },
-        {
-            match: ['counterbalance edge-guard', 'honed counterbalance', 'edge-guard'],
-            category: 'gear',
-            slots: [],
-            attachMeta: {
-                modKey: 'serrated_bloodgroove_edge',
-                targetClasses: ['slashing_piercing'],
-                atkBonus: 1,
-                dmgBonus: 1,
-                isMagical: true,
-                badgeLabel: 'Honed Edge (+1/+1)'
-            },
-            summary: 'Attach to Slashing/Piercing Blade: +1 Attack & +1 Damage (Magical)'
-        },
-        {
-            match: ['sunstone pommel', 'pommel gem'],
-            category: 'gear',
-            slots: [],
-            attachMeta: {
-                modKey: 'sun_ruby_pommel_stone',
-                targetClasses: ['melee'],
+                modKey: 'dusk_prism_lens',
+                slotType: 'optic',
+                targetClasses: ['firearm', 'crossbow', 'bow'],
                 atkBonus: 0,
                 dmgBonus: 0,
-                extraDice: '1d4',
-                extraType: 'Radiant',
-                badgeLabel: 'Sunstone (+1d4 Radiant)'
+                mistSight: true,
+                debuffNote: '-1 Attack if firing in Bright Sunlight',
+                badgeLabel: 'Dusk Scope (Mist/Dark Sight • -1 in Sun)'
             },
-            summary: 'Attach to Melee Weapon: +1d4 Radiant Damage & 10-ft Light'
+            summary: 'Optic Slot (Ranged): Mist & 60-ft Dark Sight; Debuff: -1 Hit in Bright Sun'
+        },
+
+        // --- BARREL / MAGAZINE / MECHANISM ATTACHMENTS (Firearms, Crossbows & Bows) ---
+        {
+            match: ['clockwork rifled barrel', 'van richten\'s clockwork barrel', 'clockwork barrel'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'van_richten_barrel',
+                slotType: 'barrel',
+                targetClasses: ['firearm'],
+                atkBonus: 0,
+                dmgBonus: 1,
+                isSilvered: true,
+                isMagical: true,
+                badgeLabel: 'Clockwork Barrel (+1 Dmg • Magical)'
+            },
+            summary: 'Barrel Slot (Firearm): +1 Damage, Silvered & Magical'
+        },
+        {
+            match: ['overbore siege barrel', 'siege barrel'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'heavy_bore_barrel',
+                slotType: 'barrel',
+                targetClasses: ['firearm'],
+                atkBonus: 0,
+                dmgBonus: 2,
+                magCapDelta: -2,
+                debuffNote: '-2 Max Magazine Capacity',
+                badgeLabel: 'Siege Barrel (+2 Dmg / -2 Mag)'
+            },
+            summary: 'Barrel Slot (Firearm): +2 Damage, Debuff: -2 Max Magazine Capacity'
+        },
+        {
+            match: ['extended brass speed-cylinder', 'speed-cylinder', 'extended magazine'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'extended_speed_clip',
+                slotType: 'barrel',
+                targetClasses: ['firearm'],
+                atkBonus: -1,
+                dmgBonus: 0,
+                magCapDelta: 2,
+                debuffNote: '-1 Attack (heavy front balance)',
+                badgeLabel: 'Speed-Cylinder (+2 Mag / -1 Hit)'
+            },
+            summary: 'Barrel/Mag Slot (Firearm): +2 Max Mag Capacity, Debuff: -1 Attack'
         },
         {
             match: ['clockwork draw-cam', 'draw-cam', 'hair trigger'],
@@ -591,26 +739,231 @@
             slots: [],
             attachMeta: {
                 modKey: 'quick_release_crossbow_cam',
+                slotType: 'barrel',
                 targetClasses: ['bow', 'crossbow', 'firearm'],
-                atkBonus: 1,
-                dmgBonus: 1,
-                badgeLabel: 'Draw-Cam (+1/+1)'
+                atkBonus: -1,
+                dmgBonus: 2,
+                debuffNote: '-1 Attack (heavy trigger/draw tension)',
+                badgeLabel: 'Draw-Cam (+2 Dmg / -1 Hit)'
             },
-            summary: 'Attach to Bow/Crossbow/Firearm: +1 Attack & +1 Damage'
+            summary: 'Mechanism Slot (Ranged): +2 Damage, Debuff: -1 Attack'
         },
+        {
+            match: ['ash-steel silencer shroud', 'silencer shroud'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'whisper_muzzle_shroud',
+                slotType: 'barrel',
+                targetClasses: ['firearm'],
+                atkBonus: 0,
+                dmgBonus: -1,
+                isSilvered: true,
+                silenced: true,
+                debuffNote: '-1 Damage (baffled muzzle velocity)',
+                badgeLabel: 'Silencer Shroud (Silent • Silvered / -1 Dmg)'
+            },
+            summary: 'Barrel Slot (Firearm): Silenced Gunfire & Silvered; Debuff: -1 Damage'
+        },
+
+        // --- MELEE HILT / POMMEL ATTACHMENTS ---
+        {
+            match: ['silver-runed hilt', 'hilt counterweight'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'silver_runed_pommel',
+                slotType: 'hilt',
+                targetClasses: ['melee'],
+                atkBonus: 0,
+                dmgBonus: 1,
+                isSilvered: true,
+                badgeLabel: 'Silvered Hilt (+1 Dmg • Silvered)'
+            },
+            summary: 'Hilt Slot (Melee): Counts as Silvered & +1 Damage'
+        },
+        {
+            match: ['sunstone pommel', 'pommel gem'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'sun_ruby_pommel_stone',
+                slotType: 'hilt',
+                targetClasses: ['melee'],
+                atkBonus: 0,
+                dmgBonus: 0,
+                extraDice: '1d4',
+                extraType: 'Radiant',
+                badgeLabel: 'Sunstone Pommel (+1d4 Radiant)'
+            },
+            summary: 'Hilt Slot (Melee): +1d4 Radiant Damage & 10-ft Light'
+        },
+        {
+            match: ['lead-core breaker pommel', 'breaker pommel'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'lead_breaker_pommel',
+                slotType: 'hilt',
+                targetClasses: ['melee'],
+                atkBonus: -1,
+                dmgBonus: 2,
+                debuffNote: '-1 Attack (heavy momentum)',
+                badgeLabel: 'Breaker Pommel (+2 Dmg / -1 Hit)'
+            },
+            summary: 'Hilt Slot (Melee): +2 Damage, Debuff: -1 Attack'
+        },
+        {
+            match: ['vistani suede counter-grip', 'suede counter-grip'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'duelist_feather_wrap',
+                slotType: 'hilt',
+                targetClasses: ['melee'],
+                atkBonus: 1,
+                dmgBonus: -1,
+                debuffNote: '-1 Damage (light agile balance)',
+                badgeLabel: 'Suede Grip (+1 Hit / -1 Dmg)'
+            },
+            summary: 'Hilt Slot (Melee): +1 Attack, Debuff: -1 Damage'
+        },
+        {
+            match: ['blood-thorn barbed hilt', 'barbed hilt'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'vampiric_thorn_grip',
+                slotType: 'hilt',
+                targetClasses: ['melee'],
+                atkBonus: 1,
+                dmgBonus: 0,
+                extraDice: '1d4',
+                extraType: 'Necrotic',
+                debuffNote: 'Self-Bite: lose 1 HP if attack rolls natural 1-3',
+                badgeLabel: 'Blood-Thorn Hilt (+1 Hit +1d4 Nec / Bite)'
+            },
+            summary: 'Hilt Slot (Melee): +1 Hit & +1d4 Necrotic; Debuff: 1 HP bite on Nat 1-3'
+        },
+
+        // --- MELEE EDGE / GUARD ATTACHMENTS ---
+        {
+            match: ['counterbalance edge-guard', 'honed counterbalance', 'edge-guard'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'serrated_bloodgroove_edge',
+                slotType: 'guard',
+                targetClasses: ['slashing_piercing'],
+                atkBonus: 1,
+                dmgBonus: 0,
+                isMagical: true,
+                badgeLabel: 'Honed Edge-Guard (+1 Hit • Magical)'
+            },
+            summary: 'Edge/Guard Slot (Blade): +1 Attack & Magical'
+        },
+        {
+            match: ['argynvost bastion crossguard', 'bastion crossguard'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'iron_bastion_crossguard',
+                slotType: 'guard',
+                targetClasses: ['slashing_piercing'],
+                atkBonus: -1,
+                dmgBonus: 0,
+                acBonus: 1,
+                debuffNote: '-1 Attack (heavy steel basket-guard)',
+                badgeLabel: 'Bastion Guard (+1 AC / -1 Hit)'
+            },
+            summary: 'Edge/Guard Slot (Blade): +1 AC while equipped; Debuff: -1 Attack'
+        },
+        {
+            match: ['barbed wolf-tooth edge spine', 'wolf-tooth edge spine', 'edge spine'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'jagged_hook_spine',
+                slotType: 'guard',
+                targetClasses: ['slashing_piercing'],
+                atkBonus: -1,
+                dmgBonus: 0,
+                extraDice: '1d4',
+                extraType: 'Piercing',
+                debuffNote: '-1 Attack (snagging hooks)',
+                badgeLabel: 'Wolf-Tooth Spine (+1d4 Prc / -1 Hit)'
+            },
+            summary: 'Edge/Guard Slot (Blade): +1d4 Piercing Damage; Debuff: -1 Attack'
+        },
+
+        // --- QUARTERSTAFF / CASTER FOCUS CROWN & GRIP ATTACHMENTS ---
         {
             match: ['amber-inlaid focusing collar', 'focusing collar'],
             category: 'gear',
             slots: [],
             attachMeta: {
                 modKey: 'amber_focus_collar',
+                slotType: 'crown',
+                slotTypes: ['crown', 'hilt'],
                 targetClasses: ['caster_weapon'],
                 atkBonus: 1,
                 dmgBonus: 0,
                 spellAtkBonus: 1,
-                badgeLabel: 'Amber Collar (+1 Hit / +1 Spell Atk)'
+                badgeLabel: 'Amber Collar (+1 Hit / +1 Spell)'
             },
-            summary: 'Attach to Staff/Dagger: +1 Weapon Hit & +1 Spell Attack'
+            summary: 'Crown/Hilt Slot (Staff/Dagger): +1 Weapon Hit & +1 Spell Attack'
+        },
+        {
+            match: ['cracked chaos-quartz staff crown', 'chaos-quartz'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'volatile_wild_prism',
+                slotType: 'crown',
+                targetClasses: ['caster_weapon'],
+                atkBonus: 0,
+                dmgBonus: 0,
+                spellAtkBonus: 1,
+                extraDice: '1d4',
+                extraType: 'Force',
+                acBonus: -1,
+                debuffNote: '-1 AC while equipped (unstable wild arcana)',
+                badgeLabel: 'Chaos Crown (+1 Spell +1d4 Force / -1 AC)'
+            },
+            summary: 'Crown Slot (Staff): +1 Spell Atk & +1d4 Force; Debuff: -1 AC'
+        },
+        {
+            match: ['warding silk grip wrap', 'warding silk grip', 'silk grip wrap'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'warding_silk_grip',
+                slotType: 'grip',
+                slotTypes: ['grip', 'hilt'],
+                targetClasses: ['caster_weapon'],
+                atkBonus: 0,
+                dmgBonus: 0,
+                saveBonus: 1,
+                badgeLabel: 'Warding Grip (+1 All Saves / Conc)'
+            },
+            summary: 'Grip Slot (Staff/Focus): +1 to Saving Throws (incl. Concentration)'
+        },
+        {
+            match: ['weighted brass stage-cane core', 'brass stage-cane core', 'cane core'],
+            category: 'gear',
+            slots: [],
+            attachMeta: {
+                modKey: 'ironwood_brass_core',
+                slotType: 'grip',
+                targetClasses: ['caster_weapon'],
+                atkBonus: 0,
+                dmgBonus: 2,
+                isSilvered: true,
+                stealthDisadv: true,
+                debuffNote: 'Stealth Disadvantage (audible brass rattle)',
+                badgeLabel: 'Brass Core (+2 Dmg • Silvered / Loud)'
+            },
+            summary: 'Grip Slot (Staff): +2 Melee Damage & Silvered; Debuff: Stealth Disadv'
         },
 
         // --- WEAPONS & SHIELDS ---
@@ -2018,11 +2371,158 @@
         {
             match: ['monster trophy', 'spawn ash', 'wolf fang'],
             name: "Harvested Monster Trophy",
-            category: "HUNTER HARVEST • DC 13 Survival / 10–25 GP Barter",
-            origin: "Slain Vampire Spawn, Dire Wolves, Blights & Night Hags",
+            category: "HUNTER HARVEST • Barter Material",
             desc: "Dark ichor vials, obsidian wolf fangs, and silver-charred vampire cinders.",
-            effect: "• <strong>Barter Value:</strong> Trade to Vistani, Van Richten/Ezmerelda, or Vallaki occultists for <strong>10–25 GP</strong>, silvered ammo, or <strong>Alchemical Catalysts</strong>.",
+            effect: "• <strong>Barter Value:</strong> Trade to apothecaries, hunters, or occultists for gold, silvered ammo, or alchemical reagents.",
             isCraftableReagent: true
+        },
+        // --- NEW & SPLIT WEAPON ATTACHMENTS (ZERO LOCATION SPOILERS!) ---
+        {
+            match: ['enhanced van richten\'s silver-runed scope', 'enhanced silver-runed scope'],
+            name: "Enhanced Van Richten's Silver-Runed Scope",
+            category: "WEAPON ATTACHMENT • Optic / Sight Slot",
+            desc: "A masterwork etched brass telescopic sight recalibrated with silver filigree lenses.",
+            effect: "• <strong>Optic Slot (Firearm / Crossbow):</strong> Grants <strong>+2 to Attack rolls</strong> and <strong>Mist-Piercing Sight</strong> (ignores light/heavy mist and fog obscurity)."
+        },
+        {
+            match: ['enhanced clockwork rifled barrel', 'enhanced van richten\'s clockwork'],
+            name: "Enhanced Clockwork Rifled Barrel",
+            category: "WEAPON ATTACHMENT • Barrel / Mechanism Slot",
+            desc: "A precision-lapped silver-lined rifled barrel tuned to peak chamber pressure.",
+            effect: "• <strong>Barrel Slot (Firearm):</strong> Grants <strong>+2 to Damage rolls</strong> and treats all shots fired as <strong>Magical &amp; Silvered</strong>."
+        },
+        {
+            match: ['van richten\'s silver-runed scope', 'silver-runed scope'],
+            name: "Van Richten's Silver-Runed Scope",
+            category: "WEAPON ATTACHMENT • Optic / Sight Slot",
+            desc: "An etched brass telescopic sight ground with silver-dusted lenses designed to pierce thick fog.",
+            effect: "• <strong>Optic Slot (Firearm / Crossbow / Bow):</strong> Grants <strong>+1 to Attack rolls</strong> and <strong>Mist-Piercing Sight</strong> (ignores mist and fog obscurity)."
+        },
+        {
+            match: ['clockwork rifled barrel', 'van richten\'s clockwork barrel', 'clockwork barrel'],
+            name: "Van Richten's Clockwork Rifled Barrel",
+            category: "WEAPON ATTACHMENT • Barrel / Mechanism Slot",
+            desc: "A fluted cold-steel rifled barrel lined with silver threading to spin heavy slugs cleanly.",
+            effect: "• <strong>Barrel Slot (Firearm):</strong> Grants <strong>+1 to Damage rolls</strong> and treats all shots fired as <strong>Magical &amp; Silvered</strong>."
+        },
+        {
+            match: ['solmere hair-line iron sights', 'hair-line iron sights', 'iron sights'],
+            name: "Solmere Hair-Line Iron Sights",
+            category: "WEAPON ATTACHMENT • Optic / Sight Slot",
+            desc: "Ultra-fine notched steel iron sights built for deliberate precision marksmanship.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Damage rolls</strong> (requires lighter powder loads to hold tight sight alignment)."
+        },
+        {
+            match: ['dusk-quartz night scope', 'dusk-quartz'],
+            name: "Dusk-Quartz Night Scope",
+            category: "WEAPON ATTACHMENT • Optic / Sight Slot",
+            desc: "A smoky twilight-quartz lens that amplifies faint starlight through fog and gloom.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>Mist-Piercing Sight</strong> and negates Dim Light / Darkness penalties out to <strong>60 feet</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> if firing in Bright Sunlight (lens glare)."
+        },
+        {
+            match: ['overbore siege barrel', 'siege barrel'],
+            name: "Overbore Siege Barrel",
+            category: "WEAPON ATTACHMENT • Barrel / Mechanism Slot",
+            desc: "A thick-walled heavy-gauge cannon barrel bored for brutal stopping power.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>.<br>• <strong>Trade-Off:</strong> Reduces weapon <strong>Max Magazine Capacity by -2</strong>."
+        },
+        {
+            match: ['extended brass speed-cylinder', 'speed-cylinder', 'extended magazine'],
+            name: "Extended Brass Speed-Cylinder",
+            category: "WEAPON ATTACHMENT • Barrel / Mechanism Slot",
+            desc: "An oversized machined brass drum/clip assembly that holds extra rounds ready.",
+            effect: "• <strong>Bonus:</strong> Increases weapon <strong>Max Magazine Capacity by +2</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> from front-heavy balance."
+        },
+        {
+            match: ['ash-steel silencer shroud', 'silencer shroud'],
+            name: "Vistani Ash-Steel Silencer Shroud",
+            category: "WEAPON ATTACHMENT • Barrel / Mechanism Slot",
+            desc: "A baffled dark-steel suppressor tube packed with silver mesh to deaden gunfire.",
+            effect: "• <strong>Bonus:</strong> <strong>Silences gunfire</strong> (no 300-ft audible boom) and treats shots as <strong>Silvered</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Damage rolls</strong> from reduced muzzle velocity."
+        },
+        {
+            match: ['lead-core breaker pommel', 'breaker pommel'],
+            name: "Heavy Lead-Core Breaker Pommel",
+            category: "WEAPON ATTACHMENT • Hilt / Pommel Slot",
+            desc: "A dense lead-weighted steel pommel forged to turn every strike into a bone-crushing cleave.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Damage rolls</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> (heavier swing inertia)."
+        },
+        {
+            match: ['vistani suede counter-grip', 'suede counter-grip'],
+            name: "Vistani Suede Counter-Grip",
+            category: "WEAPON ATTACHMENT • Hilt / Pommel Slot",
+            desc: "Supple cross-stitched leather grip wrap balanced for lightning-quick blade control.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong>.<br>• <strong>Trade-Off:</strong> <strong>-1 to Damage rolls</strong> (lightened finesse leverage)."
+        },
+        {
+            match: ['blood-thorn barbed hilt', 'barbed hilt'],
+            name: "Blood-Thorn Barbed Hilt",
+            category: "WEAPON ATTACHMENT • Hilt / Pommel Slot",
+            desc: "Dark iron brambles coiled around the grip that drink drops of blood to empower every blow.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Attack rolls</strong> and <strong>+1d4 Necrotic damage</strong> on hit.<br>• <strong>Trade-Off (Self-Bite):</strong> Whenever you roll a natural <strong>1–3</strong> on an attack roll with this weapon, the thorns bite your palm for <strong>1 HP</strong>."
+        },
+        {
+            match: ['argynvost bastion crossguard', 'bastion crossguard'],
+            name: "Argynvost Bastion Crossguard",
+            category: "WEAPON ATTACHMENT • Edge / Guard Slot",
+            desc: "A wide fluted steel basket-guard forged to turn aside vampire claws and warhammers.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Armor Class</strong> while wielding this weapon.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> from the bulky guard."
+        },
+        {
+            match: ['barbed wolf-tooth edge spine', 'wolf-tooth edge spine', 'edge spine'],
+            name: "Barbed Wolf-Tooth Edge Spine",
+            category: "WEAPON ATTACHMENT • Edge / Guard Slot",
+            desc: "A serrated steel spine bolted along the back of a blade with wicked jagged hooks.",
+            effect: "• <strong>Bonus:</strong> Adds <strong>+1d4 Piercing damage</strong> on every hit.<br>• <strong>Trade-Off:</strong> <strong>-1 to Attack rolls</strong> (barbs snag on loose swings)."
+        },
+        {
+            match: ['cracked chaos-quartz staff crown', 'chaos-quartz'],
+            name: "Cracked Chaos-Quartz Staff Crown",
+            category: "WEAPON ATTACHMENT • Staff Crown Slot",
+            desc: "A humming fractured prism of wild-magic crystal mounted in brass claws.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Spell Attack rolls</strong> and adds <strong>+1d4 Force damage</strong> to weapon strikes.<br>• <strong>Trade-Off:</strong> <strong>-1 to Armor Class</strong> while equipped (volatile arcana disrupts personal wards)."
+        },
+        {
+            match: ['warding silk grip wrap', 'warding silk grip', 'silk grip wrap'],
+            name: "Warding Silk Grip Wrap",
+            category: "WEAPON ATTACHMENT • Shaft Grip Slot",
+            desc: "Silver-threaded silk ribbons woven tightly around a staff or focus grip.",
+            effect: "• <strong>Grip Slot (Staff / Focus):</strong> Grants <strong>+1 to all Saving Throws</strong> (including Concentration CON saves) while equipped."
+        },
+        {
+            match: ['weighted brass stage-cane core', 'brass stage-cane core', 'cane core'],
+            name: "Weighted Brass Stage-Cane Core",
+            category: "WEAPON ATTACHMENT • Shaft Grip Slot",
+            desc: "A solid silver-plated brass rod hidden inside a hollow magician's cane.",
+            effect: "• <strong>Bonus:</strong> Grants <strong>+2 to Melee Damage rolls</strong> and treats strikes as <strong>Silvered</strong>.<br>• <strong>Trade-Off:</strong> Imposes <strong>Disadvantage on Stealth checks</strong> while equipped (audible metallic clink)."
+        },
+        {
+            match: ['enhanced amber-inlaid focusing collar', 'enhanced focusing collar'],
+            name: "Enhanced Amber-Inlaid Focusing Collar",
+            category: "WEAPON ATTACHMENT • Staff Crown / Hilt Slot",
+            desc: "A masterwork amber-and-brass focusing collar harmonized to channel intense spellcraft.",
+            effect: "• <strong>Crown/Hilt Slot (Staff / Dagger):</strong> Grants <strong>+2 to Weapon Attack rolls</strong> and <strong>+2 to Spell Attack rolls</strong> while equipped."
+        },
+        {
+            match: ['masterwork silver-runed hilt', 'masterwork hilt counterweight'],
+            name: "Masterwork Silver-Runed Hilt Counterweight",
+            category: "WEAPON ATTACHMENT • Hilt / Pommel Slot",
+            desc: "A perfected sterling counterweight pommel inlaid with wolf-ward silver sigils.",
+            effect: "• <strong>Hilt Slot (Melee):</strong> Grants <strong>+1 to Attack and Damage rolls</strong> and treats strikes as <strong>Silvered</strong>."
+        },
+        {
+            match: ['reforged counterbalance edge-guard', 'reforged edge-guard'],
+            name: "Reforged Counterbalance Edge-Guard",
+            category: "WEAPON ATTACHMENT • Edge / Guard Slot",
+            desc: "A master-forged edge clamp tempered for devastating accuracy and bite.",
+            effect: "• <strong>Edge/Guard Slot (Blade):</strong> Grants <strong>+2 to Attack rolls</strong>, <strong>+1 to Damage rolls</strong>, and treats strikes as <strong>Magical</strong>."
+        },
+        {
+            match: ['awakened vistani bloodwell', 'awakened bloodwell'],
+            name: "Awakened Vistani Bloodwell Vial",
+            category: "VERY RARE SORCERER FOCUS • Attunement",
+            desc: "An awakened crimson glass vial resonating deeply with innate sorcerous blood.",
+            effect: "• <strong>Spellcasting Focus (Attunement):</strong> Grants <strong>+2 to Spell Save DC and Spell Attack rolls</strong>, and restores <strong>5 Sorcery Points</strong> when spending Hit Dice on a Short Rest (1/dawn)."
         }
     ];
 
@@ -2031,7 +2531,7 @@
         const low = String(rawName).toLowerCase();
         for (const entry of SHARED_ITEM_LORE) {
             if (entry.match.some(m => low.includes(m))) {
-                return entry;
+                return { ...entry, origin: '' };
             }
         }
         return null;
@@ -2059,6 +2559,9 @@
     let firebaseReady = false;
     let incomingTrades = [];
     let outgoingTrades = [];
+    let msgThreads = {}; // { [threadId]: { participants: [...], updatedAt, messages: { id: { senderId, senderName, text, ts } } } }
+    let msgSelectedRecips = new Set(); // recipient IDs checked in Messages tab
+    let msgActiveThreadId = null;
     let unsubRtdbRef = null;
     let unsubRtdbHandler = null;
     let unsubIncoming = null;
@@ -2872,13 +3375,14 @@
             seenIds.add(w.id);
             equippedIds.add(w.id);
             const cls = classifyWeaponClasses(w.label || w.id, { ammoKind: w.kind || 'firearm' });
+            const magDelta = getWeaponAttachmentBonuses(w.id).magCapDelta || 0;
             list.push({
                 id: w.id,
                 label: w.label || w.id,
                 kind: w.kind || 'firearm',
                 isRanged: true,
                 classes: cls,
-                maxCap: w.maxCap || null,
+                maxCap: w.maxCap ? Math.max(1, w.maxCap + magDelta) : null,
                 mount: w.mount || null,
                 isEquipped: true,
                 isNative: true
@@ -2926,43 +3430,184 @@
         return list;
     }
 
-    function getWeaponAttachmentInfo(weaponId) {
-        if (!weaponId) return null;
-        const store = getWeaponModsStore();
-        const mod = store.mods[weaponId];
-        if (!mod || !mod.modKey) return null;
-        const tier = mod.tier === 2 && mod.supportsTier2 ? 2 : 1;
-        const atkBonus = (parseInt(mod.atkBonus) || 0) + (tier === 2 ? 1 : 0);
-        const dmgBonus = (parseInt(mod.dmgBonus) || 0) + (tier === 2 ? 1 : 0);
-        let badge = mod.badgeLabel || mod.modName || 'Attached Mod';
-        if (mod.supportsTier2) {
-            badge = `Scope +${tier} / Silvered`;
+    const LEGENDARY_ARTIFACT_KEYWORDS = [
+        'sunsword', 'sun blade', 'staff of power', 'staff of frost', 'blood spear',
+        'luck blade', 'gulthias staff', 'icon of ravenloft', 'holy symbol of ravenkind',
+        'thighbone', 'treebane', 'mace of terror'
+    ];
+
+    function isLegendaryArtifactWeapon(rawName) {
+        const low = String(rawName || '').toLowerCase();
+        return LEGENDARY_ARTIFACT_KEYWORDS.some(k => low.includes(k));
+    }
+
+    function getWeaponSlotSchema(weaponMeta) {
+        if (!weaponMeta) return [];
+        if (isLegendaryArtifactWeapon(weaponMeta.raw || weaponMeta.label || weaponMeta.id)) {
+            return [];
         }
+        const cls = weaponMeta.classes || classifyWeaponClasses(weaponMeta.raw || weaponMeta.label || weaponMeta.id, weaponMeta);
+        if (cls.has('firearm')) {
+            return [
+                { id: 'optic', label: 'Optic / Sight' },
+                { id: 'barrel', label: 'Barrel / Magazine' }
+            ];
+        }
+        if (cls.has('crossbow') || cls.has('bow')) {
+            return [
+                { id: 'optic', label: 'Sight / Frame' },
+                { id: 'barrel', label: 'Draw-Cam / String' }
+            ];
+        }
+        if (cls.has('caster_weapon') && !cls.has('slashing_piercing')) {
+            return [
+                { id: 'crown', label: 'Staff Crown / Collar' },
+                { id: 'grip', label: 'Shaft Grip / Core' }
+            ];
+        }
+        return [
+            { id: 'hilt', label: 'Hilt / Pommel' },
+            { id: 'guard', label: 'Edge / Guard' }
+        ];
+    }
+
+    function modFitsWeaponSlot(attachMeta, weaponMeta, slotId) {
+        if (!attachMeta || !weaponMeta || !slotId) return false;
+        const schema = getWeaponSlotSchema(weaponMeta);
+        if (!schema.some(s => s.id === slotId)) return false;
+        const allowedSlots = Array.isArray(attachMeta.slotTypes) && attachMeta.slotTypes.length
+            ? attachMeta.slotTypes
+            : [attachMeta.slotType || 'hilt'];
+        if (!allowedSlots.includes(slotId)) return false;
+        const cls = weaponMeta.classes || classifyWeaponClasses(weaponMeta.raw || weaponMeta.label || weaponMeta.id, weaponMeta);
+        return (attachMeta.targetClasses || []).some(c => cls.has(c));
+    }
+
+    function getWeaponSlotsMap(weaponId) {
+        if (!weaponId) return {};
+        const store = getWeaponModsStore();
+        const entry = store.mods[weaponId];
+        if (!entry || typeof entry !== 'object') return {};
+        if (entry.slots && typeof entry.slots === 'object') {
+            return entry.slots;
+        }
+        // Seamless migration for legacy single-mod records
+        if (entry.modKey) {
+            const inferredSlot = entry.slotType
+                || (entry.modKey.includes('scope') ? 'optic'
+                : (entry.modKey.includes('barrel') || entry.modKey.includes('cam') ? 'barrel'
+                : (entry.modKey.includes('edge') || entry.modKey.includes('guard') ? 'guard'
+                : (entry.modKey.includes('collar') || entry.modKey.includes('crown') ? 'crown' : 'hilt'))));
+            return { [inferredSlot]: entry };
+        }
+        return {};
+    }
+
+    function hydrateSlottedMod(slotId, modObj) {
+        if (!modObj || !modObj.modKey) return null;
+        const meta = getItemMeta(modObj.raw || modObj.modName || '');
+        const am = meta && meta.attachMeta ? meta.attachMeta : null;
+        const atkBonus = am ? (am.atkBonus || 0) : (parseInt(modObj.atkBonus) || 0);
+        const dmgBonus = am ? (am.dmgBonus || 0) : (parseInt(modObj.dmgBonus) || 0);
+        const magCapDelta = am ? (am.magCapDelta || 0) : (parseInt(modObj.magCapDelta) || 0);
+        const acBonus = am ? (am.acBonus || 0) : (parseInt(modObj.acBonus) || 0);
+        const saveBonus = am ? (am.saveBonus || 0) : (parseInt(modObj.saveBonus) || 0);
+        const spellAtkBonus = am ? (am.spellAtkBonus || 0) : (parseInt(modObj.spellAtkBonus) || 0);
+        const extraDice = am ? (am.extraDice || null) : (modObj.extraDice || null);
+        const extraType = am ? (am.extraType || null) : (modObj.extraType || null);
+        const isSilvered = am ? !!am.isSilvered : !!modObj.isSilvered;
+        const isMagical = am ? !!am.isMagical : !!modObj.isMagical;
+        const mistSight = am ? !!am.mistSight : !!modObj.mistSight;
+        const silenced = am ? !!am.silenced : !!modObj.silenced;
+        const stealthDisadv = am ? !!am.stealthDisadv : !!modObj.stealthDisadv;
+        const debuffNote = am ? (am.debuffNote || null) : (modObj.debuffNote || null);
+        const badge = (am && am.badgeLabel) || modObj.badgeLabel || modObj.modName || 'Attachment';
         return {
-            ...mod,
-            tier,
+            ...modObj,
+            slotId,
             atkBonus,
             dmgBonus,
+            magCapDelta,
+            acBonus,
+            saveBonus,
+            spellAtkBonus,
+            extraDice,
+            extraType,
+            isSilvered,
+            isMagical,
+            mistSight,
+            silenced,
+            stealthDisadv,
+            debuffNote,
             badge
         };
     }
 
+    function getWeaponAttachmentInfo(weaponId) {
+        const slots = getWeaponSlotsMap(weaponId);
+        const keys = Object.keys(slots);
+        if (keys.length === 0) return null;
+        return hydrateSlottedMod(keys[0], slots[keys[0]]);
+    }
+
     function getWeaponAttachmentBonuses(weaponId) {
-        const mod = getWeaponAttachmentInfo(weaponId);
-        if (!mod) {
-            return { hasMod: false, atkBonus: 0, dmgBonus: 0, extraDice: null, extraType: null, isSilvered: false, isMagical: false, mistSight: false, spellAtkBonus: 0, mod: null };
-        }
+        const slotsRaw = getWeaponSlotsMap(weaponId);
+        const mods = [];
+        const slotsMap = {};
+        let atkBonus = 0;
+        let dmgBonus = 0;
+        let magCapDelta = 0;
+        let acBonus = 0;
+        let saveBonus = 0;
+        let spellAtkBonus = 0;
+        let isSilvered = false;
+        let isMagical = false;
+        let mistSight = false;
+        let silenced = false;
+        let stealthDisadv = false;
+        const extras = [];
+        const debuffNotes = [];
+
+        Object.entries(slotsRaw).forEach(([slotId, rawMod]) => {
+            const h = hydrateSlottedMod(slotId, rawMod);
+            if (!h) return;
+            mods.push(h);
+            slotsMap[slotId] = h;
+            atkBonus += (h.atkBonus || 0);
+            dmgBonus += (h.dmgBonus || 0);
+            magCapDelta += (h.magCapDelta || 0);
+            acBonus += (h.acBonus || 0);
+            saveBonus += (h.saveBonus || 0);
+            spellAtkBonus += (h.spellAtkBonus || 0);
+            if (h.isSilvered) isSilvered = true;
+            if (h.isMagical) isMagical = true;
+            if (h.mistSight) mistSight = true;
+            if (h.silenced) silenced = true;
+            if (h.stealthDisadv) stealthDisadv = true;
+            if (h.extraDice) extras.push({ dice: h.extraDice, type: h.extraType || 'Bonus', label: h.modName || 'Attachment' });
+            if (h.debuffNote) debuffNotes.push(h.debuffNote);
+        });
+
         return {
-            hasMod: true,
-            atkBonus: mod.atkBonus || 0,
-            dmgBonus: mod.dmgBonus || 0,
-            extraDice: mod.extraDice || null,
-            extraType: mod.extraType || null,
-            isSilvered: !!mod.isSilvered,
-            isMagical: !!(mod.isMagical || mod.atkBonus > 0),
-            mistSight: !!mod.mistSight,
-            spellAtkBonus: mod.spellAtkBonus || 0,
-            mod
+            hasMod: mods.length > 0,
+            atkBonus,
+            dmgBonus,
+            magCapDelta,
+            acBonus,
+            saveBonus,
+            spellAtkBonus,
+            extras,
+            extraDice: extras[0] ? extras[0].dice : null,
+            extraType: extras[0] ? extras[0].type : null,
+            isSilvered,
+            isMagical,
+            mistSight,
+            silenced,
+            stealthDisadv,
+            debuffNotes,
+            mods,
+            slotsMap,
+            mod: mods[0] || null
         };
     }
 
@@ -2985,57 +3630,145 @@
         applyEquipmentToSheet(true);
     }
 
-    function detachWeaponMod(weaponId) {
+    function detachWeaponMod(weaponId, slotId = null) {
         if (!adapter || !weaponId) return;
         const store = getWeaponModsStore();
-        const prev = store.mods[weaponId];
+        const slots = { ...getWeaponSlotsMap(weaponId) };
+        const keys = Object.keys(slots);
+        if (keys.length === 0) return;
+        const targetSlot = (slotId && slots[slotId]) ? slotId : keys[0];
+        const prev = slots[targetSlot];
         if (!prev) return;
-        delete store.mods[weaponId];
+        delete slots[targetSlot];
+        if (Object.keys(slots).length === 0) {
+            delete store.mods[weaponId];
+        } else {
+            store.mods[weaponId] = { slots };
+        }
         saveWeaponModsStore(store);
         const items = adapter.getItems();
         addRawItemToList(items, prev.raw || prev.modName, 1);
         adapter.saveItems(items);
         adapter.log(`Detached <strong>${esc(shortLabel(prev.raw || prev.modName))}</strong> and returned it to Backpack.`);
         applyEquipmentToSheet(true);
-    }
-
-    function toggleWeaponModTier(weaponId) {
-        if (!adapter || !weaponId) return;
-        const store = getWeaponModsStore();
-        const mod = store.mods[weaponId];
-        if (!mod || !mod.supportsTier2) return;
-        mod.tier = (mod.tier === 2) ? 1 : 2;
-        store.mods[weaponId] = mod;
-        saveWeaponModsStore(store);
-        adapter.log(`<strong>${esc(shortLabel(mod.raw || mod.modName))}</strong> tuned to <strong>+${mod.tier} (${mod.tier === 2 ? 'Act III Upgrade' : 'Base +1'})</strong>!`);
-        applyEquipmentToSheet(true);
+        if (document.getElementById('rpg-weapon-mod-dialog')?.open) {
+            renderAttachmentModal();
+        }
     }
 
     function getWeaponCombatMods(weaponId) {
         const modB = getWeaponAttachmentBonuses(weaponId);
         const coat = getWeaponMeleeCoating(weaponId);
-        const extras = [];
-        if (modB.extraDice) extras.push({ dice: modB.extraDice, type: modB.extraType || 'Bonus', label: modB.mod?.modName || 'Attachment' });
+        const extras = [...(modB.extras || [])];
         if (coat && coat.extraDice) extras.push({ dice: coat.extraDice, type: coat.extraType || 'Coating', label: coat.label || 'Coating' });
         const saveNotes = [];
         if (coat && coat.saveNote) saveNotes.push(coat.saveNote);
+        if (modB.debuffNotes && modB.debuffNotes.length) {
+            modB.debuffNotes.forEach(n => saveNotes.push(n));
+        }
         return {
             atkBonus: (modB.atkBonus || 0) + (coat ? (coat.atkBonus || 0) : 0),
             dmgBonus: (modB.dmgBonus || 0) + (coat ? (coat.dmgBonus || 0) : 0),
+            magCapDelta: modB.magCapDelta || 0,
+            acBonus: modB.acBonus || 0,
+            saveBonus: modB.saveBonus || 0,
+            spellAtkBonus: modB.spellAtkBonus || 0,
             extras,
             isSilvered: Boolean(modB.isSilvered || (coat && coat.isSilvered)),
             isMagical: Boolean(modB.isMagical || (coat && coat.isMagical)),
             mistSight: Boolean(modB.mistSight),
-            spellAtkBonus: modB.spellAtkBonus || 0,
+            silenced: Boolean(modB.silenced),
+            stealthDisadv: Boolean(modB.stealthDisadv),
             saveNotes,
+            debuffNotes: modB.debuffNotes || [],
+            mods: modB.mods || [],
+            slotsMap: modB.slotsMap || {},
             mod: modB.mod,
             coating: coat
         };
     }
 
-    let attachModalState = { invIndex: null, targetWeaponId: null };
+    function resolveWeaponIdFromRaw(raw) {
+        if (!raw) return null;
+        const meta = getItemMeta(raw);
+        if (meta.isShield || meta.category !== 'weapon') return null;
+        const nativeTags = new Set((adapter && adapter.nativeWeaponTags) || []);
+        const low = String(raw).toLowerCase();
+        if (nativeTags.has('lament') && low.includes('lament')) return 'lament';
+        if (nativeTags.has('mercy') && low.includes('mercy')) return 'mercy';
+        if (nativeTags.has('less') && low.includes('less')) return 'less';
+        if (meta.weaponTag && nativeTags.has(meta.weaponTag)) return meta.weaponTag;
+        return normKey(raw);
+    }
 
-    function openAttachmentModal({ invIndex = null, targetWeaponId = null } = {}) {
+    function buildWeaponModalActionButtonsHtml(weaponId) {
+        if (!adapter || !weaponId) return '';
+        const allWpns = getHeroAllWeapons(true);
+        const wpn = allWpns.find(w => w.id === weaponId);
+        if (!wpn) return '';
+        const schema = getWeaponSlotSchema(wpn);
+        const slots = getWeaponSlotsMap(weaponId);
+        const usedCnt = Object.keys(slots).length;
+        const encId = encArg(weaponId);
+        const attachBtn = schema.length > 0
+            ? `<button type="button" class="btn-act btn-act-pre" style="border-color:#3b82f6; color:#93c5fd;" onclick="COS_RPG.openWeaponWorkbench(decodeURIComponent('${encId}'))">Attachments (${usedCnt}/${schema.length})</button>`
+            : `<button type="button" class="btn-act btn-act-pre" disabled style="opacity:0.55; border-color:#475569; color:#94a3b8;" title="Legendary Artifacts are complete and have 0 attachment slots">Legendary (0 Slots)</button>`;
+        const coatBtn = `<button type="button" class="btn-act btn-act-pre" style="border-color:#10b981; color:#6ee7b7;" onclick="COS_RPG.openCoatWeaponModal(decodeURIComponent('${encId}'))">Coat Weapon</button>`;
+        return `${attachBtn} ${coatBtn}`;
+    }
+
+    let attachModalState = { mode: 'mod', invIndex: null, weaponId: null, activeSlotId: null };
+
+    function openWeaponWorkbench(weaponId) {
+        if (!adapter || !weaponId) return;
+        const dlg = document.getElementById('rpg-weapon-mod-dialog');
+        if (!dlg) return;
+        const allWeapons = getHeroAllWeapons(true);
+        const wpn = allWeapons.find(w => w.id === weaponId);
+        if (!wpn) return;
+        const schema = getWeaponSlotSchema(wpn);
+        attachModalState = {
+            mode: 'weapon',
+            invIndex: null,
+            weaponId: wpn.id,
+            activeSlotId: schema[0] ? schema[0].id : null
+        };
+        renderAttachmentModal();
+        if (!dlg.open) dlg.showModal();
+    }
+
+    function openCoatWeaponModal(weaponId) {
+        if (!adapter || !weaponId) return;
+        const allWeapons = getHeroAllWeapons(true);
+        const wpn = allWeapons.find(w => w.id === weaponId);
+        if (!wpn) return;
+        if (wpn.kind === 'firearm' && !hasBulletContainerInBag()) {
+            adapter.log(`<strong>Firearm Coating Locked:</strong> Carry a <strong>Bullet Sling</strong> (15 GP in any shop) in your Backpack first.`);
+            return;
+        }
+        const dlg = document.getElementById('rpg-ammo-loader-dialog');
+        if (!dlg) return;
+        const allCoats = getLoadableAmmoItemsFromBackpack(null).filter(it => {
+            if (!it.isCoating) return false;
+            if (!wpn.isRanged) {
+                return Boolean(it.coatMelee && it.coatMelee.targetClasses.some(cls => wpn.classes && wpn.classes.has(cls)));
+            }
+            return true;
+        });
+        const chosenInv = allCoats[0] || null;
+        ammoLoaderState = {
+            invIndex: chosenInv ? chosenInv.invIndex : null,
+            weaponId: wpn.id,
+            qty: 1,
+            lockedFromInv: false,
+            lockedWeaponId: wpn.id,
+            coatOnly: true
+        };
+        renderAmmoLoaderModal();
+        if (!dlg.open) dlg.showModal();
+    }
+
+    function openAttachmentModal({ invIndex = null, targetWeaponId = null, slotId = null } = {}) {
         if (!adapter) return;
         const dlg = document.getElementById('rpg-weapon-mod-dialog');
         if (!dlg) return;
@@ -3049,23 +3782,179 @@
         if (!rawMod || !modMeta) return;
 
         const allWeapons = getHeroAllWeapons(true);
-        const compat = allWeapons.filter(w => modMeta.targetClasses.some(cls => w.classes.has(cls)));
+        const compat = allWeapons.filter(w => {
+            const schema = getWeaponSlotSchema(w);
+            return schema.some(s => modFitsWeaponSlot(modMeta, w, s.id));
+        });
         const chosenWpn = targetWeaponId
             ? compat.find(w => w.id === targetWeaponId) || compat[0] || null
             : (compat.find(w => w.isEquipped) || compat[0] || null);
+        let chosenSlot = slotId;
+        if (chosenWpn && (!chosenSlot || !modFitsWeaponSlot(modMeta, chosenWpn, chosenSlot))) {
+            const schema = getWeaponSlotSchema(chosenWpn);
+            const fit = schema.find(s => modFitsWeaponSlot(modMeta, chosenWpn, s.id));
+            chosenSlot = fit ? fit.id : null;
+        }
 
         attachModalState = {
+            mode: 'mod',
             invIndex: chosenIdx,
-            weaponId: chosenWpn ? chosenWpn.id : null
+            weaponId: chosenWpn ? chosenWpn.id : null,
+            activeSlotId: chosenSlot
         };
         renderAttachmentModal();
         if (!dlg.open) dlg.showModal();
     }
 
+    function installAttachmentIntoSlot(weaponId, slotId, invIndex) {
+        if (!adapter) return;
+        const items = adapter.getItems();
+        const rawMod = items[invIndex];
+        const fullMeta = rawMod ? getItemMeta(rawMod) : null;
+        const modMeta = fullMeta ? fullMeta.attachMeta : null;
+        const allWeapons = getHeroAllWeapons(true);
+        const wpn = allWeapons.find(w => w.id === weaponId);
+        if (!rawMod || !modMeta || !wpn || !modFitsWeaponSlot(modMeta, wpn, slotId)) return;
+
+        // Deduct 1x attachment from Backpack
+        const p = parseItem(rawMod);
+        const rem = (p.qty || 1) - 1;
+        if (rem <= 0) items.splice(invIndex, 1);
+        else items[invIndex] = `${p.emoji}${rem > 1 ? rem + 'x ' : ''}${p.name}`.trim();
+
+        const store = getWeaponModsStore();
+        const curSlots = { ...getWeaponSlotsMap(wpn.id) };
+        if (curSlots[slotId] && (curSlots[slotId].raw || curSlots[slotId].modName)) {
+            addRawItemToList(items, curSlots[slotId].raw || curSlots[slotId].modName, 1);
+        }
+        adapter.saveItems(items);
+
+        curSlots[slotId] = {
+            modKey: modMeta.modKey,
+            slotType: slotId,
+            raw: shortLabel(rawMod),
+            modName: shortLabel(rawMod),
+            atkBonus: modMeta.atkBonus || 0,
+            dmgBonus: modMeta.dmgBonus || 0,
+            magCapDelta: modMeta.magCapDelta || 0,
+            acBonus: modMeta.acBonus || 0,
+            saveBonus: modMeta.saveBonus || 0,
+            spellAtkBonus: modMeta.spellAtkBonus || 0,
+            extraDice: modMeta.extraDice || null,
+            extraType: modMeta.extraType || null,
+            isSilvered: !!modMeta.isSilvered,
+            isMagical: !!modMeta.isMagical,
+            mistSight: !!modMeta.mistSight,
+            silenced: !!modMeta.silenced,
+            stealthDisadv: !!modMeta.stealthDisadv,
+            debuffNote: modMeta.debuffNote || null,
+            badgeLabel: modMeta.badgeLabel || shortLabel(rawMod)
+        };
+        store.mods[wpn.id] = { slots: curSlots };
+        saveWeaponModsStore(store);
+
+        adapter.log(`Attached <strong>${esc(shortLabel(rawMod))}</strong> to <strong>${esc(wpn.label)}</strong>.`);
+        applyEquipmentToSheet(true);
+        refreshAllAmmoDisplays();
+        if (attachModalState.mode === 'weapon') {
+            renderAttachmentModal();
+        } else {
+            closeModal('rpg-weapon-mod-dialog');
+        }
+    }
+
     function renderAttachmentModal() {
         const body = document.getElementById('rpg-weapon-mod-body');
         const confirmBtn = document.getElementById('rpg-weapon-mod-confirm');
+        const titleEl = document.getElementById('rpg-weapon-mod-title');
         if (!body) return;
+
+        // MODE A: Weapon-First Slot Workbench (Opened by clicking "Attachments" inside any Weapon window!)
+        if (attachModalState.mode === 'weapon') {
+            const allWeapons = getHeroAllWeapons(true);
+            const wpn = allWeapons.find(w => w.id === attachModalState.weaponId);
+            if (!wpn) {
+                body.innerHTML = `<div style="font-size:0.76rem; color:#fca5a5;">Weapon not found.</div>`;
+                if (confirmBtn) confirmBtn.style.display = 'none';
+                return;
+            }
+            if (titleEl) titleEl.textContent = `${wpn.label} — Weapon Attachments`;
+            if (confirmBtn) confirmBtn.style.display = 'none';
+
+            const schema = getWeaponSlotSchema(wpn);
+            if (schema.length === 0) {
+                body.innerHTML = `
+                    <div class="rpg-loader-section">
+                        <div style="font-size:0.82rem; color:#fde68a; font-weight:700;">Legendary Artifact — 0 Attachment Slots</div>
+                        <div style="font-size:0.74rem; color:#cbd5e1; margin-top:4px;">Named legendary relics are already complete artifacts and cannot be modified with weapon attachments.</div>
+                    </div>
+                `;
+                return;
+            }
+
+            if (!attachModalState.activeSlotId || !schema.some(s => s.id === attachModalState.activeSlotId)) {
+                attachModalState.activeSlotId = schema[0].id;
+            }
+
+            const slotsMap = getWeaponSlotsMap(wpn.id);
+            const items = adapter.getItems();
+
+            const slotsHtml = schema.map(s => {
+                const mounted = slotsMap[s.id] ? hydrateSlottedMod(s.id, slotsMap[s.id]) : null;
+                const isSel = attachModalState.activeSlotId === s.id;
+                const encW = encArg(wpn.id);
+                return `
+                    <div class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" style="cursor:pointer; align-items:center;" onclick="COS_RPG.selectWorkbenchSlot('${s.id}')">
+                        <span>
+                            <small style="color:#93c5fd; font-weight:800; text-transform:uppercase; font-size:0.62rem;">${esc(s.label)}</small><br>
+                            <strong style="color:${mounted ? '#fde68a' : '#94a3b8'};">${mounted ? esc(mounted.raw || mounted.modName) : 'Empty Slot'}</strong>
+                            ${mounted ? `<br><small style="color:#cbd5e1;">${esc(mounted.badge)}</small>` : ''}
+                        </span>
+                        <span style="display:flex; gap:4px; align-items:center;">
+                            ${mounted ? `<button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:24px; padding:0 7px; font-size:0.66rem;" onclick="event.stopPropagation(); COS_RPG.detachWeaponMod(decodeURIComponent('${encW}'), '${s.id}')">Detach</button>` : `<span class="rpg-loader-cap">${isSel ? 'Selected' : 'Slot'}</span>`}
+                        </span>
+                    </div>
+                `;
+            }).join('');
+
+            const activeSlotObj = schema.find(s => s.id === attachModalState.activeSlotId) || schema[0];
+            const compatBagMods = [];
+            items.forEach((raw, idx) => {
+                const m = getItemMeta(raw);
+                if (m && m.attachMeta && modFitsWeaponSlot(m.attachMeta, wpn, activeSlotObj.id)) {
+                    compatBagMods.push({ idx, raw, meta: m });
+                }
+            });
+
+            const encW = encArg(wpn.id);
+            const bagHtml = compatBagMods.length > 0
+                ? `<div class="rpg-loader-choice-grid">${compatBagMods.map(item => `
+                    <button type="button" class="rpg-loader-choice" onclick="COS_RPG.installAttachmentIntoSlot(decodeURIComponent('${encW}'), '${activeSlotObj.id}', ${item.idx})">
+                        <span>
+                            <strong>${esc(shortLabel(item.raw))}</strong><br>
+                            <small style="color:#cbd5e1;">${esc(item.meta.summary || '')}</small>
+                        </span>
+                        <span class="rpg-loader-cap" style="color:#6ee7b7; border-color:rgba(52,211,153,0.45);">Install</span>
+                    </button>
+                `).join('')}</div>`
+                : `<div style="font-size:0.74rem; color:#94a3b8; padding:6px 0;">No compatible <strong>${esc(activeSlotObj.label)}</strong> attachments currently in your Backpack.</div>`;
+
+            body.innerHTML = `
+                <div class="rpg-loader-section">
+                    <div class="rpg-loader-label">Weapon Attachment Slots (${Object.keys(slotsMap).length}/${schema.length} Filled)</div>
+                    <div class="rpg-loader-choice-grid">${slotsHtml}</div>
+                </div>
+                <div class="rpg-loader-section">
+                    <div class="rpg-loader-label">Available in Backpack for ${esc(activeSlotObj.label)}</div>
+                    ${bagHtml}
+                </div>
+            `;
+            return;
+        }
+
+        // MODE B: Attachment-First Picker (Opened by clicking "Attach" on an attachment item in Backpack)
+        if (titleEl) titleEl.textContent = 'Attach Weapon Upgrade';
+        if (confirmBtn) confirmBtn.style.display = '';
         const items = adapter.getItems();
         const rawMod = items[attachModalState.invIndex];
         const modMeta = rawMod ? getItemMeta(rawMod).attachMeta : null;
@@ -3074,24 +3963,38 @@
             if (confirmBtn) confirmBtn.disabled = true;
             return;
         }
-        const modStore = getWeaponModsStore().mods;
         const allWeapons = getHeroAllWeapons(true);
-        const compat = allWeapons.filter(w => modMeta.targetClasses.some(cls => w.classes.has(cls)));
+        const compat = allWeapons.filter(w => {
+            const schema = getWeaponSlotSchema(w);
+            return schema.some(s => modFitsWeaponSlot(modMeta, w, s.id));
+        });
         if (!compat.some(w => w.id === attachModalState.weaponId)) {
             attachModalState.weaponId = compat[0] ? compat[0].id : null;
         }
         const activeWpn = compat.find(w => w.id === attachModalState.weaponId) || null;
+        if (activeWpn) {
+            const schema = getWeaponSlotSchema(activeWpn);
+            if (!attachModalState.activeSlotId || !modFitsWeaponSlot(modMeta, activeWpn, attachModalState.activeSlotId)) {
+                const fit = schema.find(s => modFitsWeaponSlot(modMeta, activeWpn, s.id));
+                attachModalState.activeSlotId = fit ? fit.id : null;
+            }
+        }
         const listHtml = compat.length > 0
             ? `<div class="rpg-loader-choice-grid">${compat.map(w => {
                 const isSel = activeWpn && w.id === activeWpn.id;
-                const curMod = modStore[w.id];
-                const sub = curMod ? `Mounted: ${shortLabel(curMod.raw || curMod.modName)} (Replaces to Bag)` : (w.isEquipped ? 'Equipped' : 'In Backpack');
+                const schema = getWeaponSlotSchema(w);
+                const fitSlot = schema.find(s => modFitsWeaponSlot(modMeta, w, s.id));
+                const slotsMap = getWeaponSlotsMap(w.id);
+                const curInSlot = fitSlot ? slotsMap[fitSlot.id] : null;
+                const sub = curInSlot
+                    ? `${fitSlot.label}: Replaces ${shortLabel(curInSlot.raw || curInSlot.modName)} to Bag`
+                    : `${fitSlot ? fitSlot.label : 'Slot'} Open • ${w.isEquipped ? 'Equipped' : 'In Backpack'}`;
                 return `<button type="button" class="rpg-loader-choice ${isSel ? 'is-selected' : ''}" onclick="COS_RPG.selectAttachTargetWeapon(decodeURIComponent('${encArg(w.id)}'))">
                     <span><strong>${esc(w.label)}</strong><br><small style="color:#94a3b8;">${esc(sub)}</small></span>
                     <span class="rpg-loader-cap">${isSel ? 'Selected' : 'Compatible'}</span>
                 </button>`;
             }).join('')}</div>`
-            : `<div style="font-size:0.74rem; color:#fca5a5;">No compatible weapon owned (requires ${esc(modMeta.targetClasses.join(' / '))}).</div>`;
+            : `<div style="font-size:0.74rem; color:#fca5a5;">No compatible non-legendary weapon owned (Legendary artifacts have 0 slots).</div>`;
 
         body.innerHTML = `
             <div class="rpg-loader-section">
@@ -3100,57 +4003,16 @@
                 <div style="font-size:0.72rem; color:#cbd5e1; margin-top:2px;">${esc(getItemMeta(rawMod).summary || '')}</div>
             </div>
             <div class="rpg-loader-section">
-                <div class="rpg-loader-label">Select Compatible Weapon (1 Attachment Max per Weapon)</div>
+                <div class="rpg-loader-label">Select Compatible Weapon (Max 2 Slots per Weapon)</div>
                 ${listHtml}
             </div>
         `;
-        if (confirmBtn) confirmBtn.disabled = !activeWpn;
+        if (confirmBtn) confirmBtn.disabled = !(activeWpn && attachModalState.activeSlotId);
     }
 
     function confirmAttachWeaponMod() {
-        if (!adapter) return;
-        const items = adapter.getItems();
-        const rawMod = items[attachModalState.invIndex];
-        const fullMeta = rawMod ? getItemMeta(rawMod) : null;
-        const modMeta = fullMeta ? fullMeta.attachMeta : null;
-        const allWeapons = getHeroAllWeapons(true);
-        const wpn = allWeapons.find(w => w.id === attachModalState.weaponId);
-        if (!rawMod || !modMeta || !wpn) return;
-
-        // Deduct 1x attachment from Backpack
-        const p = parseItem(rawMod);
-        const rem = (p.qty || 1) - 1;
-        if (rem <= 0) items.splice(attachModalState.invIndex, 1);
-        else items[attachModalState.invIndex] = `${p.emoji}${rem > 1 ? rem + 'x ' : ''}${p.name}`.trim();
-
-        const store = getWeaponModsStore();
-        if (store.mods[wpn.id] && (store.mods[wpn.id].raw || store.mods[wpn.id].modName)) {
-            addRawItemToList(items, store.mods[wpn.id].raw || store.mods[wpn.id].modName, 1);
-        }
-        adapter.saveItems(items);
-
-        store.mods[wpn.id] = {
-            modKey: modMeta.modKey,
-            raw: shortLabel(rawMod),
-            modName: shortLabel(rawMod),
-            tier: 1,
-            atkBonus: modMeta.atkBonus || 0,
-            dmgBonus: modMeta.dmgBonus || 0,
-            extraDice: modMeta.extraDice || null,
-            extraType: modMeta.extraType || null,
-            isSilvered: !!modMeta.isSilvered,
-            isMagical: !!modMeta.isMagical,
-            mistSight: !!modMeta.mistSight,
-            spellAtkBonus: modMeta.spellAtkBonus || 0,
-            supportsTier2: !!modMeta.supportsTier2,
-            badgeLabel: modMeta.badgeLabel || shortLabel(rawMod)
-        };
-        saveWeaponModsStore(store);
-
-        adapter.log(`Attached <strong>${esc(shortLabel(rawMod))}</strong> onto <strong>${esc(wpn.label)}</strong>!`);
-        closeModal('rpg-weapon-mod-dialog');
-        applyEquipmentToSheet(true);
-        refreshAllAmmoDisplays();
+        if (!adapter || !attachModalState.weaponId || !attachModalState.activeSlotId) return;
+        installAttachmentIntoSlot(attachModalState.weaponId, attachModalState.activeSlotId, attachModalState.invIndex);
     }
 
     function getActionEconomyNote(ammoItem, weaponMeta) {
@@ -3265,7 +4127,9 @@
             invIndex: chosenInv ? chosenInv.invIndex : null,
             weaponId: chosenWeapon ? chosenWeapon.id : null,
             qty: Math.max(1, defQty || 1),
-            lockedFromInv: invIndex !== null && invIndex !== undefined
+            lockedFromInv: invIndex !== null && invIndex !== undefined,
+            lockedWeaponId: null,
+            coatOnly: false
         };
 
         renderAmmoLoaderModal();
@@ -3280,31 +4144,35 @@
 
         const allAll = getHeroAllWeapons(true);
         const rangedAll = allAll.filter(w => w.isRanged);
-        const curWeapon = allAll.find(w => w.id === ammoLoaderState.weaponId) || rangedAll[0] || null;
+        const targetId = ammoLoaderState.lockedWeaponId || ammoLoaderState.weaponId;
+        const curWeapon = allAll.find(w => w.id === targetId) || rangedAll[0] || null;
         const loadable = getLoadableAmmoItemsFromBackpack(null);
         const curAmmo = loadable.find(it => it.invIndex === ammoLoaderState.invIndex) || null;
 
-        const compatAmmo = curWeapon && !ammoLoaderState.lockedFromInv
-            ? loadable.filter(it => (it.isCoating && (!curWeapon.isRanged ? (it.coatMelee && it.coatMelee.targetClasses.some(cls => curWeapon.classes.has(cls))) : true)) || (!it.isCoating && curWeapon.isRanged && it.ammoKind === curWeapon.kind))
+        let compatAmmo = curWeapon && !ammoLoaderState.lockedFromInv
+            ? loadable.filter(it => (it.isCoating && (!curWeapon.isRanged ? (it.coatMelee && it.coatMelee.targetClasses.some(cls => curWeapon.classes.has(cls))) : true)) || (!it.isCoating && !ammoLoaderState.coatOnly && curWeapon.isRanged && it.ammoKind === curWeapon.kind))
             : loadable;
+        if (ammoLoaderState.coatOnly) {
+            compatAmmo = compatAmmo.filter(it => it.isCoating);
+        }
         const activeAmmo = curAmmo && compatAmmo.some(a => a.invIndex === curAmmo.invIndex)
             ? curAmmo
             : (compatAmmo[0] || null);
         ammoLoaderState.invIndex = activeAmmo ? activeAmmo.invIndex : null;
 
-        const compatWeapons = activeAmmo
-            ? getCoatableOrLoadableTargets(activeAmmo)
-            : rangedAll;
+        const compatWeapons = ammoLoaderState.lockedWeaponId && curWeapon
+            ? [curWeapon]
+            : (activeAmmo ? getCoatableOrLoadableTargets(activeAmmo) : rangedAll);
         const activeWeapon = curWeapon && compatWeapons.some(w => w.id === curWeapon.id)
             ? curWeapon
             : (compatWeapons.find(w => computeMaxLoadUnits(activeAmmo, w) > 0) || compatWeapons[0] || null);
         ammoLoaderState.weaponId = activeWeapon ? activeWeapon.id : null;
 
         if (titleEl) {
-            titleEl.textContent = (activeAmmo && activeAmmo.isCoating) ? 'Coat Weapon or Ammunition' : 'Load Specialty Ammunition';
+            titleEl.textContent = (ammoLoaderState.coatOnly || (activeAmmo && activeAmmo.isCoating)) ? 'Coat Weapon or Ammunition' : 'Load Specialty Ammunition';
         }
         if (confirmBtn) {
-            confirmBtn.textContent = (activeAmmo && activeAmmo.isCoating) ? 'Apply Coating' : 'Load into Weapon';
+            confirmBtn.textContent = (ammoLoaderState.coatOnly || (activeAmmo && activeAmmo.isCoating)) ? 'Apply Coating' : 'Load into Weapon';
         }
 
         const maxUnits = (activeAmmo && activeWeapon) ? computeMaxLoadUnits(activeAmmo, activeWeapon) : 0;
@@ -3912,8 +4780,13 @@
                 const nativeSet = new Set(adapter.nativeWeaponTags || []);
                 const wId = (meta.weaponTag && nativeSet.has(meta.weaponTag)) ? meta.weaponTag : k;
                 const wCombat = getWeaponCombatMods(wId);
+                if (wCombat.acBonus) bonuses.acBonus += wCombat.acBonus;
+                if (wCombat.saveBonus) bonuses.saveBonus += wCombat.saveBonus;
                 if (wCombat.spellAtkBonus) bonuses.spellAtkBonus += wCombat.spellAtkBonus;
-                if (wCombat.mod) bonuses.activePerks.push(`<strong>${esc(shortLabel(raw))} Mod:</strong> ${esc(wCombat.mod.badge || wCombat.mod.modName)}`);
+                if (wCombat.stealthDisadv) bonuses.stealthDisadv = true;
+                (wCombat.mods || []).forEach(m => {
+                    bonuses.activePerks.push(`<strong>${esc(shortLabel(raw))} Mod:</strong> ${esc(m.badge || m.modName)}`);
+                });
                 if (wCombat.coating) bonuses.activePerks.push(`<strong>${esc(shortLabel(raw))} Coating:</strong> ${esc(wCombat.coating.label)}`);
             }
         }
@@ -4077,14 +4950,12 @@
     function buildWeaponModAndCoatingBadgesHtml(weaponId) {
         const wCombat = getWeaponCombatMods(weaponId);
         const pills = [];
-        if (wCombat.mod) {
-            const tierBtn = wCombat.mod.supportsTier2
-                ? ` <button type="button" class="rpg-mini-btn" style="min-block-size:18px; padding:0 5px; font-size:0.62rem;" onclick="COS_RPG.toggleWeaponModTier(decodeURIComponent('${encArg(weaponId)}'))" title="Toggle Act II (+1) / Act III (+2)">${wCombat.mod.tier === 2 ? 'Act III +2' : '+1 Tier'}</button>`
-                : '';
-            pills.push(`<span class="rpg-card-equipped-pill" style="background:rgba(59,130,246,0.16); color:#93c5fd; border-color:rgba(59,130,246,0.45);">Attached: ${esc(wCombat.mod.badge)}${tierBtn} <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:18px; padding:0 5px; font-size:0.62rem;" onclick="COS_RPG.detachWeaponMod(decodeURIComponent('${encArg(weaponId)}'))">Detach</button></span>`);
-        }
+        const encW = encArg(weaponId);
+        (wCombat.mods || []).forEach(m => {
+            pills.push(`<span class="rpg-card-equipped-pill" style="background:rgba(59,130,246,0.16); color:#93c5fd; border-color:rgba(59,130,246,0.45);">Attached: ${esc(m.badge)} <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:18px; padding:0 5px; font-size:0.62rem;" onclick="COS_RPG.detachWeaponMod(decodeURIComponent('${encW}'), '${esc(m.slotId || '')}')">Detach</button></span>`);
+        });
         if (wCombat.coating) {
-            pills.push(`<span class="rpg-card-equipped-pill" style="background:rgba(16,185,129,0.16); color:#6ee7b7; border-color:rgba(52,211,153,0.45);">Coated: ${esc(wCombat.coating.label)} <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:18px; padding:0 5px; font-size:0.62rem;" onclick="COS_RPG.clearWeaponMeleeCoating(decodeURIComponent('${encArg(weaponId)}'))">Clear</button></span>`);
+            pills.push(`<span class="rpg-card-equipped-pill" style="background:rgba(16,185,129,0.16); color:#6ee7b7; border-color:rgba(52,211,153,0.45);">Coated: ${esc(wCombat.coating.label)} <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:18px; padding:0 5px; font-size:0.62rem;" onclick="COS_RPG.clearWeaponMeleeCoating(decodeURIComponent('${encW}'))">Clear</button></span>`);
         }
         return pills.length ? `<div style="display:flex; flex-wrap:wrap; gap:4px; margin:4px 0;">${pills.join('')}</div>` : '';
     }
@@ -4145,6 +5016,7 @@
                 <div class="action-btn-row" style="flex-wrap:wrap;">
                     <button type="button" class="btn-roll-action" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${effAtk})</button>
                     <button type="button" class="btn-roll-action btn-roll-dmg" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${esc(dmgLabel)})</button>
+                    ${buildWeaponModalActionButtonsHtml(weaponId)}
                     <button type="button" class="btn-act btn-act-pre" onclick="COS_RPG.unequipSlot('${slotId}')">Unequip</button>
                 </div>
             `;
@@ -5053,6 +5925,9 @@
         };
 
         if (firebaseReady && rtdb) {
+            if (!silentToast) {
+                clearAllMyWhisperThreads();
+            }
             campaignRtdbRef(`heroes/${adapter.heroId}/state`).set(snap).catch(() => {});
             campaignRtdbRef(`heroes/${adapter.heroId}/synced_checkpoint`).set(checkpointPayload).then(() => {
                 const btn = document.getElementById('rpg-hdr-sync-btn');
@@ -5073,12 +5948,13 @@
                     if (combined && navigator.clipboard && navigator.clipboard.writeText) {
                         navigator.clipboard.writeText(combined).catch(() => {});
                     }
-                    adapter.log(`☁️ <strong>Synced Official Checkpoint to DM via Firebase (${esc(timeStr)})!</strong><br><small style="color:#86efac;">Your live Sheet State, Equipped Gear, Saved Presets &amp; Player Notes are now saved directly on the DM Screen (no copy-paste required!).</small>`);
+                    adapter.log(`☁️ <strong>Synced Official Checkpoint to DM (${esc(timeStr)})!</strong><br><small style="color:#86efac;">Sheet state saved to DM Screen &amp; session message threads automatically cleared.</small>`);
                 }
             }).catch(err => {
                 if (!silentToast) adapter.log(`⚠️ Cloud Sync failed: ${esc(err.message)}`);
             });
         } else if (!silentToast) {
+            clearAllMyWhisperThreads();
             const combined = [snap.sheetExportStr, snap.notesExportStr].filter(Boolean).join('\n');
             if (combined && navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(combined).then(() => {
@@ -5214,6 +6090,8 @@
                             applyEquipmentToSheet(true);
                             adapter.log(`🛡️ <strong>DM Removed Item:</strong> ${esc(shortLabel(removed[0]))}`);
                         }
+                    } else if (cmd.action === 'upgrade_item' && cmd.upgradedName) {
+                        applyRemoteItemUpgrade(cmd);
                     } else if (cmd.action === 'request_checkpoint') {
                         pushSyncedCheckpoint(true);
                     } else if (cmd.action === 'reset_sheet_baseline') {
@@ -5222,6 +6100,285 @@
                 }).catch(() => {});
             });
         });
+
+        // 4. Discreet Multi-Recipient Messages Listener (ONLY loads threads where this hero is a participant!)
+        startMessagesListener();
+    }
+
+    function applyRemoteItemUpgrade(cmd) {
+        if (!adapter || !cmd || !cmd.upgradedName) return false;
+        const matchList = Array.isArray(cmd.matchKeywords) ? cmd.matchKeywords.map(k => String(k).toLowerCase()) : [];
+        const upgradedName = String(cmd.upgradedName).trim();
+        const upgradedLow = upgradedName.toLowerCase();
+        const matchesBase = (rawStr) => {
+            const low = String(rawStr || '').toLowerCase();
+            if (!low || low.includes(upgradedLow)) return false;
+            return matchList.some(k => k && low.includes(k));
+        };
+
+        let upgradedSomething = false;
+        let oldDisplay = '';
+
+        // 1. Check Backpack items & keep equipped slot pointer synchronized!
+        const items = adapter.getItems();
+        const eq = getEquippedState();
+        let eqChanged = false;
+        for (let i = 0; i < items.length; i++) {
+            if (matchesBase(items[i])) {
+                const p = parseItem(items[i]);
+                const oldKey = normKey(items[i]);
+                oldDisplay = shortLabel(items[i]);
+                const nextRaw = `${p.qty > 1 ? p.qty + 'x ' : ''}${upgradedName}`.trim();
+                const nextKey = normKey(nextRaw);
+                items[i] = nextRaw;
+                Object.keys(eq).forEach(slotId => {
+                    if (slotId !== '_grip' && eq[slotId] === oldKey) {
+                        eq[slotId] = nextKey;
+                        eqChanged = true;
+                    }
+                });
+                upgradedSomething = true;
+                break;
+            }
+        }
+        if (upgradedSomething) {
+            adapter.saveItems(items);
+            if (eqChanged) saveEquippedState(eq);
+        }
+
+        // 2. Also check mounted weapon attachment slots in case the attachment is already slotted on a weapon!
+        const modStore = getWeaponModsStore();
+        let modChanged = false;
+        Object.keys(modStore.mods).forEach(wid => {
+            const slots = { ...getWeaponSlotsMap(wid) };
+            let localHit = false;
+            Object.entries(slots).forEach(([slotId, modObj]) => {
+                if (!modObj) return;
+                if (matchesBase(modObj.raw || modObj.modName || '')) {
+                    oldDisplay = oldDisplay || shortLabel(modObj.raw || modObj.modName);
+                    const upgMeta = getItemMeta(upgradedName);
+                    const am = upgMeta && upgMeta.attachMeta ? upgMeta.attachMeta : null;
+                    slots[slotId] = {
+                        ...modObj,
+                        modKey: am ? am.modKey : modObj.modKey,
+                        raw: upgradedName,
+                        modName: upgradedName,
+                        atkBonus: am ? (am.atkBonus || 0) : (modObj.atkBonus || 0),
+                        dmgBonus: am ? (am.dmgBonus || 0) : (modObj.dmgBonus || 0),
+                        magCapDelta: am ? (am.magCapDelta || 0) : (modObj.magCapDelta || 0),
+                        acBonus: am ? (am.acBonus || 0) : (modObj.acBonus || 0),
+                        saveBonus: am ? (am.saveBonus || 0) : (modObj.saveBonus || 0),
+                        spellAtkBonus: am ? (am.spellAtkBonus || 0) : (modObj.spellAtkBonus || 0),
+                        extraDice: am ? (am.extraDice || null) : (modObj.extraDice || null),
+                        extraType: am ? (am.extraType || null) : (modObj.extraType || null),
+                        isSilvered: am ? !!am.isSilvered : !!modObj.isSilvered,
+                        isMagical: am ? !!am.isMagical : !!modObj.isMagical,
+                        mistSight: am ? !!am.mistSight : !!modObj.mistSight,
+                        silenced: am ? !!am.silenced : !!modObj.silenced,
+                        stealthDisadv: am ? !!am.stealthDisadv : !!modObj.stealthDisadv,
+                        debuffNote: am ? (am.debuffNote || null) : (modObj.debuffNote || null),
+                        badgeLabel: (am && am.badgeLabel) || upgradedName
+                    };
+                    localHit = true;
+                    modChanged = true;
+                    upgradedSomething = true;
+                }
+            });
+            if (localHit) {
+                modStore.mods[wid] = { slots };
+            }
+        });
+        if (modChanged) {
+            saveWeaponModsStore(modStore);
+        }
+
+        if (upgradedSomething) {
+            applyEquipmentToSheet(true);
+            refreshAllAmmoDisplays();
+            syncHeroStateToFirebase(true);
+            adapter.log(`⬆️ <strong>DM Upgraded Gear:</strong> ${esc(oldDisplay || 'Item')} ➔ <strong>${esc(upgradedName)}</strong>${cmd.bonusSummary ? ` (${esc(cmd.bonusSummary)})` : ''}!`);
+        } else {
+            adapter.log(`⚠️ <strong>DM Upgrade Notice:</strong> Could not find base item for <strong>${esc(upgradedName)}</strong> in Backpack or mounted slots.`);
+        }
+        return upgradedSomething;
+    }
+
+    // =========================================================================
+    // DISCREET PRIVATE & GROUP MESSAGING ENGINE (IN TRADE MODAL)
+    // =========================================================================
+    function getMsgReadStorageKey() { return `cos_msg_read_${adapter ? adapter.heroId : 'hero'}_v1`; }
+
+    function getMsgReadMap() {
+        try {
+            const raw = localStorage.getItem(getMsgReadStorageKey());
+            return raw ? (JSON.parse(raw) || {}) : {};
+        } catch (e) { return {}; }
+    }
+
+    function saveMsgReadMap(map) {
+        try { localStorage.setItem(getMsgReadStorageKey(), JSON.stringify(map)); } catch (e) {}
+    }
+
+    function computeThreadId(participantIds) {
+        return [...new Set((participantIds || []).map(x => String(x).toLowerCase().trim()).filter(Boolean))].sort().join('_');
+    }
+
+    function formatThreadTitle(participants) {
+        if (!Array.isArray(participants) || !adapter) return 'Conversation';
+        const others = participants.filter(id => id !== adapter.heroId);
+        if (others.length === 0) return 'Notes';
+        return others.map(id => {
+            if (id === 'dm') return 'DM';
+            const m = PARTY_MEMBERS.find(p => p.id === id);
+            return m ? m.name : id;
+        }).join(' + ');
+    }
+
+    function getThreadMessagesList(threadObj) {
+        if (!threadObj || !threadObj.messages || typeof threadObj.messages !== 'object') return [];
+        return Object.entries(threadObj.messages)
+            .map(([id, m]) => ({ id, ...(m || {}) }))
+            .sort((a, b) => (a.ts || 0) - (b.ts || 0));
+    }
+
+    function getThreadUnreadCount(threadId) {
+        if (!adapter) return 0;
+        const t = msgThreads[threadId];
+        if (!t) return 0;
+        const readTs = getMsgReadMap()[threadId] || 0;
+        return getThreadMessagesList(t).filter(m => m.senderId !== adapter.heroId && (m.ts || 0) > readTs).length;
+    }
+
+    function getTotalUnreadMessages() {
+        return Object.keys(msgThreads).reduce((sum, tid) => sum + getThreadUnreadCount(tid), 0);
+    }
+
+    function markThreadRead(threadId) {
+        if (!threadId) return;
+        const map = getMsgReadMap();
+        map[threadId] = Date.now();
+        saveMsgReadMap(map);
+        renderHubPanel();
+        renderHeaderBadges();
+    }
+
+    function startMessagesListener() {
+        if (!firebaseReady || !rtdb || !adapter) return;
+        campaignRtdbRef('messages').on('value', snap => {
+            const val = snap.val() || {};
+            const myId = adapter.heroId;
+            const filtered = {};
+            Object.entries(val).forEach(([tid, tObj]) => {
+                if (!tObj || typeof tObj !== 'object') return;
+                const parts = Array.isArray(tObj.participants) ? tObj.participants : tid.split('_');
+                if (parts.includes(myId)) {
+                    filtered[tid] = {
+                        participants: parts,
+                        updatedAt: tObj.updatedAt || 0,
+                        messages: tObj.messages || {}
+                    };
+                }
+            });
+            msgThreads = filtered;
+            if (tradeActiveTab === 'messages' && msgActiveThreadId && document.getElementById('rpg-trade-modal')?.open) {
+                markThreadRead(msgActiveThreadId);
+                renderTradeModal();
+            } else {
+                renderHubPanel();
+                renderHeaderBadges();
+            }
+        });
+    }
+
+    function toggleMsgRecipient(recipId) {
+        if (!recipId || (adapter && recipId === adapter.heroId)) return;
+        if (msgSelectedRecips.has(recipId)) msgSelectedRecips.delete(recipId);
+        else msgSelectedRecips.add(recipId);
+        if (msgSelectedRecips.size > 0 && adapter) {
+            msgActiveThreadId = computeThreadId([adapter.heroId, ...Array.from(msgSelectedRecips)]);
+            markThreadRead(msgActiveThreadId);
+        } else {
+            msgActiveThreadId = null;
+        }
+        renderTradeModal();
+    }
+
+    function selectMsgThread(threadId) {
+        if (!threadId || !adapter) return;
+        msgActiveThreadId = threadId;
+        const t = msgThreads[threadId];
+        const parts = (t && Array.isArray(t.participants)) ? t.participants : threadId.split('_');
+        msgSelectedRecips = new Set(parts.filter(id => id !== adapter.heroId));
+        markThreadRead(threadId);
+        renderTradeModal();
+    }
+
+    function sendWhisperMessage(overrideText = null) {
+        if (!adapter) return false;
+        const inp = document.getElementById('rpg-msg-input');
+        const text = String(overrideText !== null ? overrideText : (inp ? inp.value : '')).trim();
+        if (!text) return false;
+        const recips = Array.from(msgSelectedRecips).filter(id => id && id !== adapter.heroId);
+        if (recips.length === 0) return false;
+        const participants = [...new Set([adapter.heroId, ...recips])].sort();
+        const tid = computeThreadId(participants);
+        msgActiveThreadId = tid;
+        const msgObj = {
+            senderId: adapter.heroId,
+            senderName: adapter.heroName,
+            text,
+            ts: Date.now()
+        };
+        if (inp && overrideText === null) inp.value = '';
+
+        if (firebaseReady && rtdb) {
+            const tRef = campaignRtdbRef(`messages/${tid}`);
+            tRef.child('participants').set(participants).catch(() => {});
+            tRef.child('updatedAt').set(msgObj.ts).catch(() => {});
+            tRef.child('messages').push(msgObj).catch(() => {});
+        } else {
+            if (!msgThreads[tid]) msgThreads[tid] = { participants, updatedAt: msgObj.ts, messages: {} };
+            msgThreads[tid].updatedAt = msgObj.ts;
+            msgThreads[tid].messages['loc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6)] = msgObj;
+        }
+        markThreadRead(tid);
+        renderTradeModal();
+        return true;
+    }
+
+    function clearWhisperThread(threadId = null) {
+        const tid = threadId || msgActiveThreadId;
+        if (!tid) return;
+        delete msgThreads[tid];
+        if (msgActiveThreadId === tid) msgActiveThreadId = null;
+        if (firebaseReady && rtdb) {
+            campaignRtdbRef(`messages/${tid}`).remove().catch(() => {});
+        }
+        renderHubPanel();
+        renderHeaderBadges();
+        if (document.getElementById('rpg-trade-modal')?.open) renderTradeModal();
+    }
+
+    function clearAllMyWhisperThreads() {
+        if (!adapter) return;
+        const myId = adapter.heroId;
+        const myThreadIds = Object.keys(msgThreads).filter(tid => {
+            const parts = msgThreads[tid]?.participants || tid.split('_');
+            return parts.includes(myId);
+        });
+        myThreadIds.forEach(tid => {
+            delete msgThreads[tid];
+            if (firebaseReady && rtdb) {
+                campaignRtdbRef(`messages/${tid}`).remove().catch(() => {});
+            }
+        });
+        msgActiveThreadId = null;
+        saveMsgReadMap({});
+        renderHubPanel();
+        renderHeaderBadges();
+        if (document.getElementById('rpg-trade-modal')?.open && tradeActiveTab === 'messages') {
+            renderTradeModal();
+        }
     }
 
     function resetSheetToOfficialBaseline(skipConfirm = false) {
@@ -5997,12 +7154,12 @@
                     <span class="rpg-hub-tile-sub">Brew potions &amp; bandages</span>
                 </button>
 
-                <button type="button" class="rpg-hub-tile tile-trade" onclick="COS_RPG.openTradeModal(${pendingCnt > 0 ? "'inbox'" : "'send'"})">
+                <button type="button" class="rpg-hub-tile tile-trade" onclick="COS_RPG.openTradeModal(${pendingCnt > 0 ? "'inbox'" : (getTotalUnreadMessages() > 0 ? "'messages'" : "'send'")})">
                     <div class="rpg-hub-tile-top">
-                        <span>🤝 Trade</span>
-                        <span class="rpg-badge-count ${pendingCnt > 0 ? 'pulse-alert' : ''}">${pendingCnt > 0 ? pendingCnt + ' new' : 'Send'}</span>
+                        <span>🤝 Trade &amp; Chat</span>
+                        <span class="rpg-badge-count ${(pendingCnt + getTotalUnreadMessages()) > 0 ? 'pulse-alert' : ''}">${pendingCnt > 0 ? pendingCnt + ' drop' : (getTotalUnreadMessages() > 0 ? getTotalUnreadMessages() + ' msg' : 'Open')}</span>
                     </div>
-                    <span class="rpg-hub-tile-sub">Give items/gold to party</span>
+                    <span class="rpg-hub-tile-sub">Trade items, gold &amp; private whispers</span>
                 </button>
             </div>
 
@@ -7337,12 +8494,86 @@
             </div>
         `;
 
+        const unreadTotal = getTotalUnreadMessages();
+        const msgPeers = PARTY_MEMBERS.filter(m => m.id !== adapter.heroId).map(m => ({
+            id: m.id,
+            label: m.id === 'dm' ? 'DM' : m.name
+        }));
+        const myThreadsList = Object.entries(msgThreads)
+            .map(([tid, t]) => ({ tid, ...t, unread: getThreadUnreadCount(tid) }))
+            .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+        const activeThreadObj = msgActiveThreadId ? msgThreads[msgActiveThreadId] : null;
+        const activeMsgs = getThreadMessagesList(activeThreadObj);
+        const selArr = Array.from(msgSelectedRecips).filter(id => id !== adapter.heroId);
+        const activeLabel = selArr.length > 0
+            ? formatThreadTitle([adapter.heroId, ...selArr])
+            : 'Select 1 or more recipients above';
+        const isDmInThread = selArr.includes('dm');
+
+        const messagesTabHtml = `
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <div>
+                    <div style="font-size:0.68rem; font-weight:800; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">
+                        Pick Recipients (1-on-1 or Group Chat — Player-only chats stay hidden from DM)
+                    </div>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                        ${msgPeers.map(peer => {
+                            const checked = msgSelectedRecips.has(peer.id);
+                            return `<button type="button" class="rpg-tab-btn" style="padding:5px 10px; font-size:0.74rem;" aria-pressed="${checked ? 'true' : 'false'}" onclick="COS_RPG.toggleMsgRecipient('${peer.id}')">${checked ? '✓ ' : ''}${esc(peer.label)}</button>`;
+                        }).join('')}
+                    </div>
+                </div>
+
+                ${myThreadsList.length > 0 ? `
+                    <div style="display:flex; flex-wrap:wrap; gap:5px; align-items:center;">
+                        <span style="font-size:0.66rem; color:#94a3b8; font-weight:700;">Active Threads:</span>
+                        ${myThreadsList.map(th => {
+                            const isCur = th.tid === msgActiveThreadId;
+                            return `<button type="button" class="rpg-mini-btn ${isCur ? 'btn-equip' : ''}" style="min-block-size:24px; padding:2px 8px; font-size:0.68rem;" onclick="COS_RPG.selectMsgThread('${esc(th.tid)}')">${esc(formatThreadTitle(th.participants))}${th.unread > 0 ? ` <strong style="color:#fde68a;">(${th.unread})</strong>` : ''}</button>`;
+                        }).join('')}
+                    </div>
+                ` : ''}
+
+                <div style="background:#080d18; border:1px solid #26344b; border-radius:8px; padding:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; border-bottom:1px solid #1e293b; padding-bottom:6px; margin-bottom:8px;">
+                        <div>
+                            <div style="font-size:0.76rem; font-weight:700; color:#f8fafc;">${esc(activeLabel)}</div>
+                            ${selArr.length > 0 ? `<div style="font-size:0.65rem; color:${isDmInThread ? '#93c5fd' : '#6ee7b7'};">${isDmInThread ? 'Includes DM (Discreet DM Whisper)' : 'Private Party Chat (Hidden from DM)'}</div>` : ''}
+                        </div>
+                        ${msgActiveThreadId && activeMsgs.length > 0 ? `<button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:24px; padding:2px 8px; font-size:0.66rem;" onclick="COS_RPG.clearWhisperThread('${esc(msgActiveThreadId)}')">Clear Thread</button>` : ''}
+                    </div>
+                    <div id="rpg-msg-log" style="max-height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-right:4px; margin-bottom:8px;">
+                        ${selArr.length === 0
+                            ? `<div style="font-size:0.74rem; color:#64748b; text-align:center; padding:16px;">Tick one or more names above to start a private message or group chat.</div>`
+                            : (activeMsgs.length === 0
+                                ? `<div style="font-size:0.74rem; color:#64748b; text-align:center; padding:16px;">No messages yet. Say something discreet!</div>`
+                                : activeMsgs.map(m => {
+                                    const mine = m.senderId === adapter.heroId;
+                                    const timeStr = m.ts ? new Date(m.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+                                    return `
+                                        <div style="align-self:${mine ? 'flex-end' : 'flex-start'}; max-width:84%; background:${mine ? '#1e3a5f' : '#141f35'}; border:1px solid ${mine ? '#3b82f6' : '#334155'}; border-radius:8px; padding:6px 9px;">
+                                            <div style="font-size:0.64rem; color:${mine ? '#93c5fd' : '#fde68a'}; font-weight:700; margin-bottom:2px;">${esc(m.senderName || m.senderId)} <span style="color:#64748b; font-weight:400;">${esc(timeStr)}</span></div>
+                                            <div style="font-size:0.78rem; color:#f8fafc; line-height:1.35; word-break:break-word;">${esc(m.text)}</div>
+                                        </div>
+                                    `;
+                                }).join(''))}
+                    </div>
+                    <div style="display:flex; gap:6px;">
+                        <input type="text" id="rpg-msg-input" class="rpg-input" style="flex:1;" placeholder="${selArr.length > 0 ? 'Type a discreet message...' : 'Select recipients first...'}" ${selArr.length === 0 ? 'disabled' : ''} onkeydown="if(event.key==='Enter'){event.preventDefault();COS_RPG.sendWhisperMessage();}">
+                        <button type="button" class="rpg-mini-btn btn-use" style="padding:6px 14px; font-size:0.76rem;" ${selArr.length === 0 ? 'disabled' : ''} onclick="COS_RPG.sendWhisperMessage()">Send</button>
+                    </div>
+                    <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">Messages automatically clear when you click <strong>Sync to DM</strong> at session end.</div>
+                </div>
+            </div>
+        `;
+
         body.innerHTML = `
             <div class="rpg-tab-bar">
                 <button type="button" class="rpg-tab-btn" aria-pressed="${tradeActiveTab === 'send' ? 'true' : 'false'}" onclick="COS_RPG.setTradeTab('send')">Send Item / Gold</button>
                 <button type="button" class="rpg-tab-btn" aria-pressed="${tradeActiveTab === 'inbox' ? 'true' : 'false'}" onclick="COS_RPG.setTradeTab('inbox')">Inbox &amp; Claim Code ${incomingTrades.length > 0 ? `(${incomingTrades.length})` : ''}</button>
+                <button type="button" class="rpg-tab-btn" aria-pressed="${tradeActiveTab === 'messages' ? 'true' : 'false'}" onclick="COS_RPG.setTradeTab('messages')">Messages ${unreadTotal > 0 ? `(${unreadTotal})` : ''}</button>
             </div>
-            ${tradeActiveTab === 'send' ? sendTabHtml : inboxTabHtml}
+            ${tradeActiveTab === 'send' ? sendTabHtml : (tradeActiveTab === 'messages' ? messagesTabHtml : inboxTabHtml)}
         `;
     }
 
@@ -7573,6 +8804,11 @@
         buildWeaponAmmoBarHtml,
         refreshAllAmmoDisplays,
         getHeroAllWeapons,
+        isLegendaryArtifactWeapon,
+        getWeaponSlotSchema,
+        getWeaponSlotsMap,
+        resolveWeaponIdFromRaw,
+        buildWeaponModalActionButtonsHtml,
         getWeaponModsStore,
         getWeaponCoatingStore,
         getWeaponAttachmentInfo,
@@ -7581,11 +8817,23 @@
         clearWeaponMeleeCoating,
         getWeaponCombatMods,
         buildWeaponModAndCoatingBadgesHtml,
+        openWeaponWorkbench,
+        openCoatWeaponModal,
         openAttachmentModal,
-        selectAttachTargetWeapon: (wid) => { attachModalState.weaponId = wid; renderAttachmentModal(); },
+        installAttachmentIntoSlot,
+        selectWorkbenchSlot: (slotId) => { attachModalState.activeSlotId = slotId; renderAttachmentModal(); },
+        selectAttachTargetWeapon: (wid) => { attachModalState.weaponId = wid; attachModalState.activeSlotId = null; renderAttachmentModal(); },
         confirmAttachWeaponMod,
         detachWeaponMod,
-        toggleWeaponModTier,
+        applyRemoteItemUpgrade,
+        computeThreadId,
+        toggleMsgRecipient,
+        selectMsgThread,
+        sendWhisperMessage,
+        clearWhisperThread,
+        clearAllMyWhisperThreads,
+        getTotalUnreadMessages,
+        getMsgThreads: () => msgThreads,
         rollDiceExpr,
         rollDynamicWeaponAttack,
         rollDynamicWeaponDamage,
@@ -7643,7 +8891,11 @@
         craftRecipe,
         unlockRecipeById,
         unlockRecipeByCode,
-        setTradeTab: (tab) => { tradeActiveTab = tab; renderTradeModal(); },
+        setTradeTab: (tab) => {
+            tradeActiveTab = tab;
+            if (tab === 'messages' && msgActiveThreadId) markThreadRead(msgActiveThreadId);
+            renderTradeModal();
+        },
         setTradeRecipient: (id) => { tradeRecipient = id; renderTradeModal(); },
         setTradeMode: (mode) => { tradeMode = mode; renderTradeModal(); },
         onTradeItemChange,
@@ -7657,6 +8909,7 @@
         claimOfflineTradeCode,
         saveBrowserFirebaseConfig,
         encodeTradeCode,
-        lookupSharedItemLore
+        lookupSharedItemLore,
+        getItemMeta
     };
 })();
