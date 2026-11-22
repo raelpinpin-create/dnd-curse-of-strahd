@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="color-scheme" content="light dark">
     <script>
         (function () {
@@ -16,6 +16,8 @@
                 } else {
                     if (m) m.content = 'light dark';
                 }
+                var vm = localStorage.getItem('cos_sheet_view_mode_v1');
+                document.documentElement.dataset.viewMode = (vm === 'mobile' || vm === 'tablet') ? vm : 'pc';
             } catch (e) {}
         })();
     </script>
@@ -23,8 +25,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v10">
-    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v10">
+    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v11">
+    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v11">
     <style>
         @layer legacy {
         :root {
@@ -1706,7 +1708,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261122v10"></script>
+<script src="cos_rpg_engine.js?v=20261122v11"></script>
 <script>
     // ==========================================
     // 🧙‍♂️ CHARACTER BASELINE STATE (LEVEL 3 RANGER)

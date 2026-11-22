@@ -2405,9 +2405,17 @@ header.header-banner .pill-badge-group {
     pointer-events: auto;
     opacity: 1;
     transform: translateY(0) scale(1);
-    max-height: 320px;
+    max-height: 520px;
     overflow: visible;
     padding-bottom: 2px;
+}
+.rpg-mobile-tabs,
+.rpg-mobile-combat-belt,
+.rpg-mobile-dossier-bar {
+    display: none;
+}
+.rpg-mobile-tab-hidden {
+    display: none !important;
 }
 .rpg-fab-bubble {
     min-block-size: 36px;
