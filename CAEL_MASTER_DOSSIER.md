@@ -259,5 +259,5 @@ to his knees: "I... guess I got lucky." (The Dark Powers refuse to lose their ve
 
 ## 📌 MASTER INTEGRATION & FILE SYNC INSTRUCTIONS
 * **NPC Registry Link:** Cross-referenced in Section 2 of `NPC_REGISTRY.md`.
-* **Interactive Player Card:** Generated as `CAEL_PLAYER_SHEET.html` (built on the gold-standard `PIPER_PLAYER_SHEET.html` caster template).
+* **Interactive Player Card:** [`CAEL_PLAYER_SHEET.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/CAEL_PLAYER_SHEET.html) (built on the gold-standard `PIPER_PLAYER_SHEET.html` caster template + `cos_sheet_theme.css` v4.1 + `cos_rpg_engine.js`).
 * **DM Screen Hook:** Referenced in Section 0 (Party Vitals & Allies) and Section 2 of `DM_SCREEN.html` and `DM_SCREEN.md`.

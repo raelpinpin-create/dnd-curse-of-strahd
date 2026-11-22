@@ -258,6 +258,14 @@
             summary: 'Consecrated Morninglord Rosary'
         },
         {
+            match: ['starlit bone star chart', 'bone star chart'],
+            category: 'accessory',
+            slots: ['amulet'],
+            spellDcBonus: 1,
+            spellAtkBonus: 1,
+            summary: 'Druidic Star Map (+1 Spell DC & Hit)'
+        },
+        {
             match: ['skull-mask charm', 'volenta'],
             category: 'accessory',
             slots: ['amulet'],
@@ -3288,6 +3296,11 @@
             armor: ['light', 'medium', 'shield'],
             weapons: ['simple', 'martial', 'firearm'],
             label: 'Monster Slayer Ranger + Gunner (Light/Medium Armor, Shields, Simple/Martial & Firearms)'
+        },
+        cael: {
+            armor: ['light', 'medium', 'shield'],
+            weapons: ['simple'],
+            label: 'Circle of the Stars Druid (Light/Medium Armor, Shields & Simple Weapons)'
         }
     };
 
@@ -10423,6 +10436,10 @@
                 p.dataset.mobileOrder = '30';
             } else if (titleTxt.includes('wild magic')) {
                 p.dataset.rpgCats = 'magic';
+                p.dataset.mobileCats = 'combat magic';
+                p.dataset.mobileOrder = '28';
+            } else if (titleTxt.includes('starry form') || titleTxt.includes('circle of the stars')) {
+                p.dataset.rpgCats = 'combat magic';
                 p.dataset.mobileCats = 'combat magic';
                 p.dataset.mobileOrder = '28';
             } else if (titleTxt.includes('maneuver') || titleTxt.includes('monster slayer')) {

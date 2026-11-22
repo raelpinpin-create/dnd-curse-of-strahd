@@ -173,6 +173,11 @@
         --hero-accent-soft: rgba(109, 168, 204, 0.12);
         --hero-glow: rgba(109, 168, 204, 0.09);
     }
+    body[data-hero="cael"] {
+        --hero-accent: #5eb88a;
+        --hero-accent-soft: rgba(94, 184, 138, 0.13);
+        --hero-glow: rgba(94, 184, 138, 0.09);
+    }
 
     /* =====================================================================
        THEME 2: MIDNIGHT SLATE (Deep Ravenloft Indigo-Blue)
@@ -508,6 +513,11 @@
         --hero-accent-soft: rgba(36, 95, 133, 0.12);
         --hero-glow: rgba(36, 95, 133, 0.08);
     }
+    :root[data-theme="parchment"] body[data-hero="cael"] {
+        --hero-accent: #1f6a4b;
+        --hero-accent-soft: rgba(31, 106, 75, 0.12);
+        --hero-glow: rgba(31, 106, 75, 0.08);
+    }
 
     /* Follow OS Light Mode automatically when user hasn't pinned a theme (System) */
     @media (prefers-color-scheme: light) {
@@ -633,6 +643,11 @@
             --hero-accent: #245f85;
             --hero-accent-soft: rgba(36, 95, 133, 0.12);
             --hero-glow: rgba(36, 95, 133, 0.08);
+        }
+        :root:not([data-theme]) body[data-hero="cael"] {
+            --hero-accent: #1f6a4b;
+            --hero-accent-soft: rgba(31, 106, 75, 0.12);
+            --hero-glow: rgba(31, 106, 75, 0.08);
         }
     }
 }

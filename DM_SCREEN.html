@@ -2283,34 +2283,117 @@
             border-bottom: 1px solid var(--border-color);
             padding: 9px 12px;
             flex-direction: column;
-            gap: 7px;
+            gap: 8px;
         }
         .enc-drawer-bar.is-open {
             display: flex;
+        }
+        .enc-preset-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .enc-preset-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
         }
         .enc-preset-pills {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
         }
-        .btn-enc-preset {
+        .enc-preset-chip {
+            display: inline-flex;
+            align-items: stretch;
             background: var(--bg-card);
             border: 1px solid var(--border-highlight);
-            color: var(--text-bright);
             border-radius: 6px;
-            padding: 5px 10px;
+            overflow: hidden;
+            transition: border-color 0.14s ease, box-shadow 0.14s ease;
+        }
+        .enc-preset-chip:hover {
+            border-color: var(--accent-gold);
+        }
+        .enc-preset-chip.is-custom-preset {
+            border-color: rgba(93, 169, 221, 0.55);
+        }
+        .enc-preset-chip.is-custom-preset:hover {
+            border-color: var(--accent-gold);
+        }
+        .btn-enc-preset {
+            background: transparent;
+            border: none;
+            color: var(--text-bright);
+            padding: 5px 9px;
             font-size: 0.74rem;
             font-weight: 600;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            transition: all 0.14s ease;
+            transition: background-color 0.14s ease, color 0.14s ease;
         }
         .btn-enc-preset:hover {
-            border-color: var(--accent-gold);
             background: var(--bg-card-header);
             color: var(--accent-gold-soft);
+        }
+        .btn-enc-preset-icon {
+            background: transparent;
+            border: none;
+            border-left: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            padding: 0 7px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.14s ease, color 0.14s ease;
+        }
+        .btn-enc-preset-icon:hover {
+            background: var(--bg-card-header);
+            color: var(--accent-gold-soft);
+        }
+        .btn-enc-preset-icon.is-del:hover,
+        .btn-enc-preset-icon.is-del.is-armed {
+            background: rgba(185, 28, 28, 0.28);
+            color: #fecaca;
+        }
+        .btn-enc-preset-icon.is-armed {
+            padding: 0 8px;
+            font-size: 0.67rem;
+            background: rgba(185, 28, 28, 0.85);
+            color: #fff;
+        }
+        .enc-preset-editor-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .enc-preset-editor-box {
+            background: var(--bg-card-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 11px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .enc-preset-unit-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 7px 10px;
         }
         .enc-custom-form {
             display: flex;
@@ -2540,10 +2623,10 @@
             <!-- CAEL -->
             <div class="dm-hero-strip-card" style="border-top-color:#34d399;">
                 <div class="dm-hero-strip-top">
-                    <button type="button" class="dm-hero-strip-name" onclick="openAllyCharacterWindow('cael')" title="Open Cael's Companion Dossier">🌟 Caelum Jude ("Cael" — Stars Druid)</button>
-                    <span class="pill green">HP 38/38 • AC 14</span>
+                    <button type="button" class="dm-hero-strip-name" onclick="openAllyCharacterWindow('cael')" title="Open Cael's Interactive Character Sheet">🌟 Caelum Jude ("Cael" — Stars Druid)</button>
+                    <span class="pill green" id="dm-sec0-vitals-cael">HP 38/38 • AC 14</span>
                 </div>
-                <div style="font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--accent-green-soft);">
+                <div id="dm-sec0-res-cael" style="font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--accent-green-soft);">
                     ✨ Chalice (Dual Heals 1d8+3) • 🏹 Archer (+6, 1d8+3) • ⚡ Guiding Bolt 2/2
                 </div>
                 <div style="font-size:0.73rem; color:var(--text-muted);">Main Party Healer • Vow of Dark Powers: Stabilizes at 1 HP (cannot die before Act IV)</div>
@@ -2551,6 +2634,7 @@
                     <span class="pill gold" style="font-size:0.65rem;">Inside Shepherd (Card #4)</span>
                     <div style="display:inline-flex; gap:4px;">
                         <button type="button" class="btn-modal-mini" onclick="openNpcModal('cael')">📄 Dossier &amp; Rolls</button>
+                        <button type="button" class="btn-modal-mini" onclick="openAllyCharacterWindow('cael')">📄 Sheet</button>
                     </div>
                 </div>
             </div>
@@ -2932,11 +3016,16 @@
 
             <!-- 1-CLICK SCENE ENCOUNTER PRESETS DRAWER -->
             <div id="enc-preset-drawer" class="enc-drawer-bar">
-                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
-                    <span style="font-family:'Cinzel',serif; font-size:0.76rem; font-weight:700; color:var(--accent-gold);">⚡ 1-Click Scene Encounter Presets (Spawns Enemies + Party &amp; Rolls Enemy Initiatives):</span>
-                    <label style="font-size:0.72rem; color:var(--text-muted); display:inline-flex; align-items:center; gap:5px; cursor:pointer;">
-                        <input type="checkbox" id="enc-preset-replace-chk" checked> Replace existing enemies
-                    </label>
+                <div class="enc-preset-toolbar">
+                    <span style="font-family:'Cinzel',serif; font-size:0.76rem; font-weight:700; color:var(--accent-gold);">⚡ Encounter Presets (1-Click Spawn • Edit ✏️ • Delete ✕):</span>
+                    <div class="enc-preset-actions">
+                        <label style="font-size:0.72rem; color:var(--text-muted); display:inline-flex; align-items:center; gap:5px; cursor:pointer; margin-right:4px;">
+                            <input type="checkbox" id="enc-preset-replace-chk" checked> Replace existing enemies
+                        </label>
+                        <button type="button" class="btn-step btn-heal" onclick="openPresetEditorFromBoard()" title="Capture all enemies currently on the Active Encounter Board into a named preset">💾 Save Board as Preset</button>
+                        <button type="button" class="btn-roll" onclick="openPresetEditorModal(null)" title="Create and name a brand-new combat encounter preset">+ New Preset</button>
+                        <button type="button" id="enc-preset-restore-btn" class="btn-step" style="display:none;" onclick="restoreDefaultEncounterPresets()" title="Restore built-in campaign scene presets">↺ Restore Defaults</button>
+                    </div>
                 </div>
                 <div class="enc-preset-pills" id="enc-preset-pills"></div>
             </div>
@@ -4142,7 +4231,7 @@ const PARTY_INIT_PRESETS = [
     { allyKey: 'piper', name: '🎭 Piper', initBonus: 2, defaultCurHp: 17, defaultMaxHp: 17, defaultAc: '13', sheetUrl: 'PIPER_PLAYER_SHEET.html', fullTitle: '🎭 Piper ("The Incomparable") — Level 3 Sorcerer' },
     { allyKey: 'jacomir', name: '👑 Jacomir', initBonus: 0, defaultCurHp: 23, defaultMaxHp: 31, defaultAc: '17', sheetUrl: 'JACOMIR_PLAYER_SHEET.html', fullTitle: '👑 Jacomir Yulle ("King of Oakenshire") — Level 3 Fighter' },
     { allyKey: 'yvaine', name: '🎯 Yvaine', initBonus: 6, defaultCurHp: 28, defaultMaxHp: 28, defaultAc: '16', sheetUrl: 'YVAINE_PLAYER_SHEET.html', fullTitle: '🎯 Eclipsa "Yvaine" — Level 3 Monster Slayer Ranger' },
-    { allyKey: 'cael', name: '🌟 Cael', initBonus: 2, defaultCurHp: 38, defaultMaxHp: 38, defaultAc: '14', npcKey: 'cael', fullTitle: '🌟 Caelum Jude ("Cael") — Level 3 Circle of the Stars Druid' }
+    { allyKey: 'cael', name: '🌟 Cael', initBonus: 2, defaultCurHp: 38, defaultMaxHp: 38, defaultAc: '14', sheetUrl: 'CAEL_PLAYER_SHEET.html', npcKey: 'cael', fullTitle: '🌟 Caelum Jude ("Cael") — Level 3 Circle of the Stars Druid' }
 ];
 let encounterEntries = [];
 let encounterBoardCollapsed = false;
@@ -17152,6 +17241,14 @@ function initDmFirebaseSync() {
         }
     });
 
+    // 4b. Cross-device live sync for Custom/Edited Encounter Presets
+    rtdb.ref(`campaigns/${room}/heroes/_dm_state/encounter_presets`).on('value', snap => {
+        const val = snap.val();
+        if (!val || typeof val !== 'object') return;
+        if (val.clientId === DM_CLIENT_ID) return;
+        applyRemoteEncounterPresetsState(val);
+    });
+
     // 5. Cross-device live sync for Section 3 Monster/Boss HP, Spell Slots & Tactical State Toggles
     rtdb.ref(`campaigns/${room}/heroes/_dm_state/boss_engine`).on('value', snap => {
         const val = snap.val();
@@ -20543,18 +20640,575 @@ function toggleEncounterDrawer(which) {
     }
 }
 
+const DM_ENCOUNTER_PRESETS_STORAGE_KEY = 'cos_dm_encounter_presets_v1';
+let dmEncounterPresetStore = { custom: [], overrides: {}, deletedIds: [] };
+let dmPresetDeleteArmedId = null;
+let dmPresetDeleteArmTimer = null;
+let presetEditorState = null;
+
+function normalizePresetUnits(units) {
+    if (!Array.isArray(units)) return [];
+    return units.map(u => {
+        if (!u || typeof u !== 'object') return null;
+        const count = Math.max(1, Math.min(20, parseInt(u.count, 10) || 1));
+        if (u.kind === 'custom') {
+            return {
+                kind: 'custom',
+                name: String(u.name || 'Custom Enemy').trim().slice(0, 60) || 'Custom Enemy',
+                hp: Math.max(1, Math.min(999, parseInt(u.hp, 10) || 22)),
+                ac: Math.max(1, Math.min(35, parseInt(u.ac, 10) || 14)),
+                initBonus: parseInt(u.initBonus, 10) || 0,
+                wpn: String(u.wpn || 'Strike').trim().slice(0, 40) || 'Strike',
+                hitBonus: parseInt(u.hitBonus, 10) || 4,
+                dmgDice: String(u.dmgDice || '1d8+2').trim().slice(0, 24) || '1d8+2',
+                count
+            };
+        }
+        const key = String(u.key || '').trim();
+        if (!key || !MONSTER_DATA[key]) return null;
+        return {
+            kind: 'monster',
+            key,
+            count,
+            customLabel: typeof u.customLabel === 'string' ? u.customLabel.trim().slice(0, 60) : ''
+        };
+    }).filter(Boolean);
+}
+
+function normalizePresetRecord(p, fallbackId = '') {
+    if (!p || typeof p !== 'object') return null;
+    const id = String(p.id || fallbackId || '').trim();
+    const label = String(p.label || '').trim().slice(0, 64);
+    if (!id || !label) return null;
+    return {
+        id,
+        label,
+        desc: String(p.desc || '').trim().slice(0, 180),
+        units: normalizePresetUnits(p.units)
+    };
+}
+
+function loadEncounterPresetsStore() {
+    try {
+        const raw = localStorage.getItem(DM_ENCOUNTER_PRESETS_STORAGE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== 'object') return;
+        const nextOverrides = {};
+        if (parsed.overrides && typeof parsed.overrides === 'object') {
+            Object.entries(parsed.overrides).forEach(([id, rec]) => {
+                const norm = normalizePresetRecord(rec, id);
+                if (norm) nextOverrides[id] = norm;
+            });
+        }
+        dmEncounterPresetStore = {
+            custom: Array.isArray(parsed.custom) ? parsed.custom.map(c => normalizePresetRecord(c)).filter(Boolean) : [],
+            overrides: nextOverrides,
+            deletedIds: Array.isArray(parsed.deletedIds) ? [...new Set(parsed.deletedIds.map(String))] : []
+        };
+    } catch (_) {}
+}
+
+function saveEncounterPresetsStore(skipCloud = false) {
+    try {
+        localStorage.setItem(DM_ENCOUNTER_PRESETS_STORAGE_KEY, JSON.stringify(dmEncounterPresetStore));
+    } catch (_) {}
+    if (skipCloud || isApplyingRemoteDmState) return;
+    const rtdb = typeof dmGetRtdb === 'function' ? dmGetRtdb() : null;
+    if (!rtdb) return;
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    rtdb.ref(`campaigns/${room}/heroes/_dm_state/encounter_presets`).set({
+        custom: dmEncounterPresetStore.custom,
+        overrides: dmEncounterPresetStore.overrides,
+        deletedIds: dmEncounterPresetStore.deletedIds,
+        clientId: DM_CLIENT_ID,
+        updatedAt: Date.now()
+    }).catch(() => {});
+}
+
+function applyRemoteEncounterPresetsState(val) {
+    if (!val || typeof val !== 'object') return;
+    const nextOverrides = {};
+    if (val.overrides && typeof val.overrides === 'object') {
+        Object.entries(val.overrides).forEach(([id, rec]) => {
+            const norm = normalizePresetRecord(rec, id);
+            if (norm) nextOverrides[id] = norm;
+        });
+    }
+    dmEncounterPresetStore = {
+        custom: Array.isArray(val.custom) ? val.custom.map(c => normalizePresetRecord(c)).filter(Boolean) : [],
+        overrides: nextOverrides,
+        deletedIds: Array.isArray(val.deletedIds) ? [...new Set(val.deletedIds.map(String))] : []
+    };
+    saveEncounterPresetsStore(true);
+    renderEncounterPresetButtons();
+}
+
+function getEffectiveEncounterPresets() {
+    const deleted = new Set(dmEncounterPresetStore.deletedIds || []);
+    const builtIns = ENCOUNTER_SCENE_PRESETS
+        .filter(p => !deleted.has(p.id))
+        .map(p => {
+            const ov = dmEncounterPresetStore.overrides && dmEncounterPresetStore.overrides[p.id];
+            if (ov) {
+                return { ...ov, isBuiltIn: true, isEditedBuiltIn: true };
+            }
+            return { ...p, isBuiltIn: true, isEditedBuiltIn: false };
+        });
+    const customs = (dmEncounterPresetStore.custom || []).map(c => ({
+        ...c,
+        isBuiltIn: false,
+        isCustomPreset: true
+    }));
+    return [...builtIns, ...customs];
+}
+
+function summarizePresetUnits(units) {
+    return (units || []).map(u => {
+        if (u.kind === 'custom') return `${u.count > 1 ? u.count + 'x ' : ''}${u.name} (Custom)`;
+        const m = MONSTER_DATA[u.key];
+        const base = u.customLabel || (m ? m.name : u.key);
+        return `${u.count > 1 ? u.count + 'x ' : ''}${base}`;
+    }).join(', ');
+}
+
 function renderEncounterPresetButtons() {
     const wrap = document.getElementById('enc-preset-pills');
+    const restoreBtn = document.getElementById('enc-preset-restore-btn');
+    if (restoreBtn) {
+        const hasModDefaults = (dmEncounterPresetStore.deletedIds && dmEncounterPresetStore.deletedIds.length > 0)
+            || (dmEncounterPresetStore.overrides && Object.keys(dmEncounterPresetStore.overrides).length > 0);
+        restoreBtn.style.display = hasModDefaults ? 'inline-flex' : 'none';
+    }
     if (!wrap) return;
-    wrap.innerHTML = ENCOUNTER_SCENE_PRESETS.map(p => `
-        <button type="button" class="btn-enc-preset" onclick="loadEncounterScenePreset('${p.id}')" title="${escapeEncounterHtml(p.desc)}">
-            ${escapeEncounterHtml(p.label)}
-        </button>
-    `).join('');
+    const list = getEffectiveEncounterPresets();
+    if (!list.length) {
+        wrap.innerHTML = `<div style="font-size:0.74rem; color:var(--text-muted); padding:6px 4px;">No presets yet — click <strong>+ New Preset</strong> or <strong>💾 Save Board as Preset</strong> above, or <strong>↺ Restore Defaults</strong>.</div>`;
+        return;
+    }
+    wrap.innerHTML = list.map(p => {
+        const isArmed = dmPresetDeleteArmedId === p.id;
+        const unitsNote = summarizePresetUnits(p.units);
+        const fullTip = [p.desc, unitsNote ? `Spawns: ${unitsNote}` : 'Empty roster'].filter(Boolean).join(' — ');
+        const isCustom = !p.isBuiltIn || p.isEditedBuiltIn;
+        return `
+            <div class="enc-preset-chip ${isCustom ? 'is-custom-preset' : ''}" data-preset-id="${escapeEncounterHtml(p.id)}">
+                <button type="button" class="btn-enc-preset" onclick="loadEncounterScenePreset('${escapeEncounterHtml(p.id)}')" title="${escapeEncounterHtml(fullTip)}">
+                    ${p.isCustomPreset ? '✨ ' : ''}${escapeEncounterHtml(p.label)}
+                </button>
+                <button type="button" class="btn-enc-preset-icon" onclick="openPresetEditorModal('${escapeEncounterHtml(p.id)}')" title="Edit, rename, or customize preset">✏️</button>
+                <button type="button" class="btn-enc-preset-icon is-del ${isArmed ? 'is-armed' : ''}" onclick="${isArmed ? `deleteEncounterPreset('${escapeEncounterHtml(p.id)}')` : `armDeleteEncounterPreset('${escapeEncounterHtml(p.id)}')`}" title="${isArmed ? 'Click again to permanently delete this preset' : 'Delete preset'}">${isArmed ? 'Sure?' : '✕'}</button>
+            </div>
+        `;
+    }).join('');
+}
+
+function armDeleteEncounterPreset(presetId) {
+    dmPresetDeleteArmedId = presetId;
+    clearTimeout(dmPresetDeleteArmTimer);
+    dmPresetDeleteArmTimer = setTimeout(() => {
+        dmPresetDeleteArmedId = null;
+        renderEncounterPresetButtons();
+    }, 3500);
+    renderEncounterPresetButtons();
+}
+
+function deleteEncounterPreset(presetId) {
+    const preset = getEffectiveEncounterPresets().find(p => p.id === presetId);
+    if (!preset) return;
+    dmPresetDeleteArmedId = null;
+    clearTimeout(dmPresetDeleteArmTimer);
+
+    const isBuiltIn = ENCOUNTER_SCENE_PRESETS.some(p => p.id === presetId);
+    if (isBuiltIn) {
+        if (!dmEncounterPresetStore.deletedIds.includes(presetId)) {
+            dmEncounterPresetStore.deletedIds.push(presetId);
+        }
+        if (dmEncounterPresetStore.overrides && dmEncounterPresetStore.overrides[presetId]) {
+            delete dmEncounterPresetStore.overrides[presetId];
+        }
+    } else {
+        dmEncounterPresetStore.custom = (dmEncounterPresetStore.custom || []).filter(c => c.id !== presetId);
+    }
+    saveEncounterPresetsStore();
+    renderEncounterPresetButtons();
+    if (activeModalKind === 'dm_preset_editor' && presetEditorState && presetEditorState.id === presetId) {
+        closeDmModal();
+    }
+    logRoll(`🗑️ <strong>Deleted Encounter Preset:</strong> ${escapeEncounterHtml(preset.label)}.`);
+}
+
+function restoreDefaultEncounterPresets() {
+    dmEncounterPresetStore.deletedIds = [];
+    dmEncounterPresetStore.overrides = {};
+    dmPresetDeleteArmedId = null;
+    saveEncounterPresetsStore();
+    renderEncounterPresetButtons();
+    logRoll(`↺ <strong>Restored All ${ENCOUNTER_SCENE_PRESETS.length} Default Campaign Presets!</strong> (Custom presets preserved.)`);
+}
+
+function captureCurrentBoardUnitsForPreset() {
+    const grouped = new Map();
+    const out = [];
+    encounterEntries.forEach(entry => {
+        if (!entry || entry.kind === 'ally') return;
+        if (entry.kind === 'custom') {
+            const tgt = (Array.isArray(entry.targets) && entry.targets[0]) ? entry.targets[0] : { max: 22, ac: 14 };
+            const baseName = String(entry.customLabel || 'Custom Enemy').replace(/\s+#\d+$/, '').trim() || 'Custom Enemy';
+            const sig = `custom|${baseName}|${tgt.max}|${tgt.ac}|${entry.initBonus || 0}|${entry.customWpn || 'Strike'}|${entry.customHit || 4}|${entry.customDmg || '1d8+2'}`;
+            if (grouped.has(sig)) {
+                grouped.get(sig).count++;
+            } else {
+                const rec = {
+                    kind: 'custom',
+                    name: baseName,
+                    hp: Math.max(1, parseInt(tgt.max, 10) || 22),
+                    ac: Math.max(1, parseInt(tgt.ac, 10) || 14),
+                    initBonus: parseInt(entry.initBonus, 10) || 0,
+                    wpn: entry.customWpn || 'Strike',
+                    hitBonus: parseInt(entry.customHit, 10) || 4,
+                    dmgDice: entry.customDmg || '1d8+2',
+                    count: 1
+                };
+                grouped.set(sig, rec);
+                out.push(rec);
+            }
+            return;
+        }
+        if (MONSTER_DATA[entry.key]) {
+            const cLabel = (entry.customLabel || '').trim();
+            const sig = `monster|${entry.key}|${cLabel}`;
+            if (grouped.has(sig)) {
+                grouped.get(sig).count++;
+            } else {
+                const rec = { kind: 'monster', key: entry.key, count: 1, customLabel: cLabel };
+                grouped.set(sig, rec);
+                out.push(rec);
+            }
+        }
+    });
+    return out;
+}
+
+function openPresetEditorModal(presetId = null, seedFromBoard = false) {
+    const modal = resetDmModalChrome();
+    if (!modal) return;
+    activeModalKind = 'dm_preset_editor';
+    modalNavStack = [];
+    dmPresetDeleteArmedId = null;
+
+    if (presetId) {
+        const existing = getEffectiveEncounterPresets().find(p => p.id === presetId);
+        if (!existing) return;
+        presetEditorState = {
+            mode: 'edit',
+            id: existing.id,
+            isBuiltIn: ENCOUNTER_SCENE_PRESETS.some(b => b.id === existing.id),
+            origLabel: existing.label,
+            label: existing.label,
+            desc: existing.desc || '',
+            units: normalizePresetUnits(existing.units),
+            filterText: '',
+            errorMsg: ''
+        };
+        document.getElementById('modal-title').innerHTML = `✏️ Edit Encounter Preset`;
+    } else {
+        const boardUnits = seedFromBoard ? captureCurrentBoardUnitsForPreset() : [];
+        presetEditorState = {
+            mode: 'new',
+            id: null,
+            isBuiltIn: false,
+            label: seedFromBoard && boardUnits.length ? `⚔️ ${summarizePresetUnits(boardUnits).split(',')[0].slice(0, 32)}` : '',
+            desc: seedFromBoard && boardUnits.length ? summarizePresetUnits(boardUnits).slice(0, 120) : '',
+            units: boardUnits,
+            filterText: '',
+            errorMsg: ''
+        };
+        document.getElementById('modal-title').innerHTML = seedFromBoard ? `💾 Save Current Encounter Board as Preset` : `➕ Create New Encounter Preset`;
+    }
+
+    renderPresetEditorModalBody();
+    setModalLogsHtml('Name your preset, add or adjust monsters/custom enemies, and click Save Preset.');
+    if (!modal.open) modal.showModal();
+    requestAnimationFrame(() => document.getElementById('enc-preset-ed-name')?.focus());
+}
+
+function openPresetEditorFromBoard() {
+    const boardEnemies = encounterEntries.filter(e => e && e.kind !== 'ally');
+    if (!boardEnemies.length) {
+        logRoll('⚠️ Encounter Board has no enemies yet — add enemies first, or click <strong>+ New Preset</strong> to build one directly.');
+        openPresetEditorModal(null, false);
+        return;
+    }
+    openPresetEditorModal(null, true);
+}
+
+function syncPresetEditorHeaderInputs() {
+    if (!presetEditorState) return;
+    const nameEl = document.getElementById('enc-preset-ed-name');
+    const descEl = document.getElementById('enc-preset-ed-desc');
+    if (nameEl) presetEditorState.label = nameEl.value;
+    if (descEl) presetEditorState.desc = descEl.value;
+}
+
+function renderPresetEditorModalBody() {
+    const contentEl = document.getElementById('modal-content');
+    if (!contentEl || !presetEditorState) return;
+    const st = presetEditorState;
+    const filterLow = (st.filterText || '').toLowerCase().trim();
+    const monsterOpts = Object.entries(MONSTER_DATA)
+        .filter(([, m]) => {
+            if (!filterLow) return true;
+            return `${m.name} ${m.cr || ''} ${m.role || ''}`.toLowerCase().includes(filterLow);
+        })
+        .sort((a, b) => a[1].name.localeCompare(b[1].name));
+
+    const unitsHtml = st.units.length === 0
+        ? `<div style="font-size:0.78rem; color:var(--text-muted); text-align:center; padding:16px; border:1px dashed var(--border-color); border-radius:6px;">No enemies in this preset yet. Pick from Bestiary below, add a Custom Enemy, or click <strong>📥 Pull Current Board</strong>.</div>`
+        : st.units.map((u, idx) => {
+            if (u.kind === 'custom') {
+                return `
+                    <div class="enc-preset-unit-row">
+                        <div style="display:flex; flex-direction:column; gap:2px; min-width:200px; flex:1;">
+                            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                                <input type="text" value="${escapeEncounterHtml(u.name)}" oninput="presetEditorUpdateUnitLabel(${idx}, this.value)" class="enc-custom-input" style="font-weight:700; width:190px;" aria-label="Custom Enemy Name">
+                                <span class="pill" style="font-size:0.65rem;">Custom • HP ${u.hp} • AC ${u.ac} • ${u.dmgDice}</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:5px;">
+                            <button type="button" class="btn-enc-step" onclick="presetEditorStepUnitQty(${idx}, -1)" title="Decrease Quantity">−</button>
+                            <span style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:0.82rem; min-width:26px; text-align:center;">${u.count}x</span>
+                            <button type="button" class="btn-enc-step is-heal" onclick="presetEditorStepUnitQty(${idx}, 1)" title="Increase Quantity">+</button>
+                            <button type="button" class="btn-enc-step is-kill" onclick="presetEditorRemoveUnit(${idx})" title="Remove Unit">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            }
+            const m = MONSTER_DATA[u.key];
+            const mTitle = m ? m.name : u.key;
+            const crHp = m ? `CR ${m.cr} • ${m.isDualTarget ? 'Dual Target' : m.maxHp + ' HP • AC ' + m.ac}` : '';
+            return `
+                <div class="enc-preset-unit-row">
+                    <div style="display:flex; flex-direction:column; gap:3px; min-width:220px; flex:1;">
+                        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                            <strong style="font-size:0.84rem; color:var(--text-bright);">${escapeEncounterHtml(mTitle)}</strong>
+                            ${crHp ? `<span class="pill" style="font-size:0.64rem;">${escapeEncounterHtml(crHp)}</span>` : ''}
+                        </div>
+                        <input type="text" value="${escapeEncounterHtml(u.customLabel || '')}" oninput="presetEditorUpdateUnitLabel(${idx}, this.value)" placeholder="Optional custom card name (e.g. Bella Sunbane)" class="enc-custom-input" style="font-size:0.74rem; width:100%; max-width:300px;">
+                    </div>
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <button type="button" class="btn-enc-step" onclick="presetEditorStepUnitQty(${idx}, -1)" title="Decrease Quantity">−</button>
+                        <span style="font-family:'JetBrains Mono',monospace; font-weight:800; font-size:0.82rem; min-width:26px; text-align:center;">${u.count}x</span>
+                        <button type="button" class="btn-enc-step is-heal" onclick="presetEditorStepUnitQty(${idx}, 1)" title="Increase Quantity">+</button>
+                        <button type="button" class="btn-enc-step is-kill" onclick="presetEditorRemoveUnit(${idx})" title="Remove Unit">🗑️</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+    contentEl.innerHTML = `
+        <div class="enc-preset-editor-card">
+            ${st.errorMsg ? `<div class="nbox nbox-crimson" style="font-size:0.78rem;">⚠️ ${escapeEncounterHtml(st.errorMsg)}</div>` : ''}
+            <div class="enc-preset-editor-box">
+                <div style="display:grid; grid-template-columns:1fr 1.2fr; gap:10px;">
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.74rem; color:var(--accent-gold); font-weight:700;">
+                        Preset Name *
+                        <input type="text" id="enc-preset-ed-name" class="enc-custom-input" value="${escapeEncounterHtml(st.label)}" placeholder="e.g. 🐺 Forest Wolf Ambush" maxlength="64" oninput="presetEditorState.label=this.value">
+                    </label>
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.74rem; color:var(--text-muted); font-weight:700;">
+                        Scene Note / Description (Optional)
+                        <input type="text" id="enc-preset-ed-desc" class="enc-custom-input" value="${escapeEncounterHtml(st.desc)}" placeholder="e.g. Svalich Road — 1 Alpha Wolf + 4 Dire Wolves" maxlength="160" oninput="presetEditorState.desc=this.value">
+                    </label>
+                </div>
+            </div>
+
+            <div class="enc-preset-editor-box">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                    <span style="font-family:'Cinzel',serif; font-size:0.8rem; font-weight:700; color:var(--accent-gold);">⚔️ Preset Enemies (${st.units.reduce((s, u) => s + (u.count || 1), 0)} Total Units)</span>
+                    <button type="button" class="btn-step" onclick="presetEditorPullBoard()" title="Load enemies currently on the Active Encounter Board into this preset">📥 Pull Current Board</button>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:6px; max-height:220px; overflow-y:auto; padding-right:2px;">
+                    ${unitsHtml}
+                </div>
+            </div>
+
+            <div class="enc-preset-editor-box">
+                <div style="font-family:'Cinzel',serif; font-size:0.76rem; font-weight:700; color:var(--text-bright);">📖 Add Enemy from Bestiary (57 Enemies)</div>
+                <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+                    <input type="search" id="enc-preset-ed-msearch" class="enc-custom-input" value="${escapeEncounterHtml(st.filterText)}" placeholder="Filter enemies..." style="width:140px;" oninput="syncPresetEditorHeaderInputs(); presetEditorState.filterText=this.value; renderPresetEditorModalBody(); document.getElementById('enc-preset-ed-msearch')?.focus();">
+                    <select id="enc-preset-ed-mselect" class="enc-custom-input" style="flex:1; min-width:210px;">
+                        ${monsterOpts.map(([k, m]) => `<option value="${escapeEncounterHtml(k)}">${escapeEncounterHtml(m.name)} (CR ${escapeEncounterHtml(m.cr)} • ${m.maxHp || '?'} HP)</option>`).join('')}
+                    </select>
+                    <input type="text" id="enc-preset-ed-mlabel" class="enc-custom-input" placeholder="Optional Alias" style="width:125px;">
+                    <input type="number" id="enc-preset-ed-mqty" class="enc-custom-input" value="1" min="1" max="12" style="width:56px;" title="Quantity">
+                    <button type="button" class="btn-step btn-heal" onclick="presetEditorAddBestiaryUnit()">+ Add Enemy</button>
+                </div>
+
+                <div style="border-top:1px solid var(--border-subtle); padding-top:8px; margin-top:2px;">
+                    <div style="font-family:'Cinzel',serif; font-size:0.76rem; font-weight:700; color:var(--accent-green-soft); margin-bottom:5px;">➕ Or Add Custom Enemy</div>
+                    <div class="enc-custom-form">
+                        <input type="text" id="enc-preset-ed-cname" class="enc-custom-input" placeholder="Custom Name" style="width:140px;">
+                        <input type="number" id="enc-preset-ed-chp" class="enc-custom-input" placeholder="HP" value="22" min="1" max="999" style="width:62px;" title="Max HP">
+                        <input type="number" id="enc-preset-ed-cac" class="enc-custom-input" placeholder="AC" value="14" min="1" max="35" style="width:56px;" title="AC">
+                        <input type="number" id="enc-preset-ed-cinit" class="enc-custom-input" placeholder="+Init" value="1" min="-10" max="25" style="width:58px;" title="Init Bonus">
+                        <input type="text" id="enc-preset-ed-cwpn" class="enc-custom-input" placeholder="Attack" value="Strike" style="width:105px;" title="Attack Name">
+                        <input type="number" id="enc-preset-ed-chit" class="enc-custom-input" placeholder="+Hit" value="4" min="-5" max="25" style="width:56px;" title="Attack Bonus">
+                        <input type="text" id="enc-preset-ed-cdmg" class="enc-custom-input" placeholder="Dmg" value="1d8+2" style="width:82px;" title="Damage Formula">
+                        <input type="number" id="enc-preset-ed-cqty" class="enc-custom-input" placeholder="Qty" value="1" min="1" max="12" style="width:52px;" title="Quantity">
+                        <button type="button" class="btn-step btn-heal" onclick="presetEditorAddCustomUnit()">+ Add Custom</button>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; padding-top:4px;">
+                <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    ${st.mode === 'edit' ? `<button type="button" class="btn-step" style="border-color:#ef4444; color:#fca5a5;" onclick="deleteEncounterPreset('${escapeEncounterHtml(st.id)}')">🗑️ Delete Preset</button>` : ''}
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-left:auto;">
+                    <button type="button" class="btn-step" onclick="closeDmModal()">Cancel</button>
+                    ${st.mode === 'edit' ? `<button type="button" class="btn-step" onclick="saveEncounterPresetFromEditor(true)">📄 Save as Copy</button>` : ''}
+                    <button type="button" class="btn-roll" style="padding:6px 16px;" onclick="saveEncounterPresetFromEditor(false)">💾 Save Preset</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function presetEditorPullBoard() {
+    if (!presetEditorState) return;
+    syncPresetEditorHeaderInputs();
+    const pulled = captureCurrentBoardUnitsForPreset();
+    if (!pulled.length) {
+        presetEditorState.errorMsg = 'Active Encounter Board currently has no enemies to pull.';
+        renderPresetEditorModalBody();
+        return;
+    }
+    presetEditorState.units = pulled;
+    presetEditorState.errorMsg = '';
+    if (!presetEditorState.label.trim()) {
+        presetEditorState.label = `⚔️ ${summarizePresetUnits(pulled).split(',')[0].slice(0, 32)}`;
+    }
+    renderPresetEditorModalBody();
+}
+
+function presetEditorAddBestiaryUnit() {
+    if (!presetEditorState) return;
+    syncPresetEditorHeaderInputs();
+    const key = document.getElementById('enc-preset-ed-mselect')?.value;
+    const customLabel = (document.getElementById('enc-preset-ed-mlabel')?.value || '').trim().slice(0, 60);
+    const count = Math.max(1, Math.min(12, parseInt(document.getElementById('enc-preset-ed-mqty')?.value, 10) || 1));
+    if (!key || !MONSTER_DATA[key]) return;
+    const existing = presetEditorState.units.find(u => u.kind !== 'custom' && u.key === key && (u.customLabel || '') === customLabel);
+    if (existing) {
+        existing.count = Math.min(20, (existing.count || 1) + count);
+    } else {
+        presetEditorState.units.push({ kind: 'monster', key, count, customLabel });
+    }
+    presetEditorState.errorMsg = '';
+    renderPresetEditorModalBody();
+}
+
+function presetEditorAddCustomUnit() {
+    if (!presetEditorState) return;
+    syncPresetEditorHeaderInputs();
+    const name = (document.getElementById('enc-preset-ed-cname')?.value || '').trim() || 'Custom Enemy';
+    const hp = Math.max(1, Math.min(999, parseInt(document.getElementById('enc-preset-ed-chp')?.value, 10) || 22));
+    const ac = Math.max(1, Math.min(35, parseInt(document.getElementById('enc-preset-ed-cac')?.value, 10) || 14));
+    const initBonus = parseInt(document.getElementById('enc-preset-ed-cinit')?.value, 10) || 0;
+    const wpn = (document.getElementById('enc-preset-ed-cwpn')?.value || '').trim() || 'Strike';
+    const hitBonus = parseInt(document.getElementById('enc-preset-ed-chit')?.value, 10) || 4;
+    const dmgDice = (document.getElementById('enc-preset-ed-cdmg')?.value || '').trim() || '1d8+2';
+    const count = Math.max(1, Math.min(12, parseInt(document.getElementById('enc-preset-ed-cqty')?.value, 10) || 1));
+    presetEditorState.units.push({ kind: 'custom', name, hp, ac, initBonus, wpn, hitBonus, dmgDice, count });
+    presetEditorState.errorMsg = '';
+    renderPresetEditorModalBody();
+}
+
+function presetEditorStepUnitQty(idx, delta) {
+    if (!presetEditorState || !presetEditorState.units[idx]) return;
+    syncPresetEditorHeaderInputs();
+    const u = presetEditorState.units[idx];
+    const next = (u.count || 1) + delta;
+    if (next <= 0) {
+        presetEditorState.units.splice(idx, 1);
+    } else {
+        u.count = Math.min(20, next);
+    }
+    renderPresetEditorModalBody();
+}
+
+function presetEditorUpdateUnitLabel(idx, val) {
+    if (!presetEditorState || !presetEditorState.units[idx]) return;
+    const u = presetEditorState.units[idx];
+    if (u.kind === 'custom') u.name = String(val || '').slice(0, 60);
+    else u.customLabel = String(val || '').slice(0, 60);
+}
+
+function presetEditorRemoveUnit(idx) {
+    if (!presetEditorState) return;
+    syncPresetEditorHeaderInputs();
+    presetEditorState.units.splice(idx, 1);
+    renderPresetEditorModalBody();
+}
+
+function saveEncounterPresetFromEditor(saveAsCopy = false) {
+    if (!presetEditorState) return;
+    syncPresetEditorHeaderInputs();
+    const label = String(presetEditorState.label || '').trim().slice(0, 64);
+    const desc = String(presetEditorState.desc || '').trim().slice(0, 160);
+    if (!label) {
+        presetEditorState.errorMsg = 'Please enter a Preset Name before saving.';
+        renderPresetEditorModalBody();
+        document.getElementById('enc-preset-ed-name')?.focus();
+        return;
+    }
+    const cleanUnits = normalizePresetUnits(presetEditorState.units);
+    if (!cleanUnits.length) {
+        presetEditorState.errorMsg = 'Add at least 1 enemy (from Bestiary or Custom Enemy) before saving.';
+        renderPresetEditorModalBody();
+        return;
+    }
+
+    const isBuiltInEdit = !saveAsCopy && presetEditorState.mode === 'edit' && ENCOUNTER_SCENE_PRESETS.some(b => b.id === presetEditorState.id);
+    if (isBuiltInEdit) {
+        dmEncounterPresetStore.deletedIds = (dmEncounterPresetStore.deletedIds || []).filter(id => id !== presetEditorState.id);
+        dmEncounterPresetStore.overrides[presetEditorState.id] = {
+            id: presetEditorState.id,
+            label,
+            desc: desc || summarizePresetUnits(cleanUnits),
+            units: cleanUnits
+        };
+    } else if (!saveAsCopy && presetEditorState.mode === 'edit' && presetEditorState.id) {
+        const idx = (dmEncounterPresetStore.custom || []).findIndex(c => c.id === presetEditorState.id);
+        const rec = {
+            id: presetEditorState.id,
+            label,
+            desc: desc || summarizePresetUnits(cleanUnits),
+            units: cleanUnits
+        };
+        if (idx >= 0) dmEncounterPresetStore.custom[idx] = rec;
+        else dmEncounterPresetStore.custom.push(rec);
+    } else {
+        const newId = `cp_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+        const finalLabel = (saveAsCopy && label === (presetEditorState.origLabel || '')) ? `${label} (Copy)`.slice(0, 64) : label;
+        dmEncounterPresetStore.custom.push({
+            id: newId,
+            label: finalLabel,
+            desc: desc || summarizePresetUnits(cleanUnits),
+            units: cleanUnits
+        });
+    }
+
+    saveEncounterPresetsStore();
+    renderEncounterPresetButtons();
+    closeDmModal();
+    const drawer = document.getElementById('enc-preset-drawer');
+    if (drawer && !drawer.classList.contains('is-open')) drawer.classList.add('is-open');
+    logRoll(`💾 <strong>Saved Encounter Preset — ${escapeEncounterHtml(label)}:</strong> ${escapeEncounterHtml(desc || summarizePresetUnits(cleanUnits))}`);
 }
 
 function loadEncounterScenePreset(presetId) {
-    const preset = ENCOUNTER_SCENE_PRESETS.find(p => p.id === presetId);
+    const preset = getEffectiveEncounterPresets().find(p => p.id === presetId);
     if (!preset) return;
     const replaceEnemies = document.getElementById('enc-preset-replace-chk') ? document.getElementById('enc-preset-replace-chk').checked : true;
     if (replaceEnemies) {
@@ -20563,8 +21217,38 @@ function loadEncounterScenePreset(presetId) {
     // Ensure party is on the board
     addPartyToEncounter();
 
-    preset.units.forEach(u => {
-        const count = u.count || 1;
+    (preset.units || []).forEach(u => {
+        const count = Math.max(1, parseInt(u.count, 10) || 1);
+        if (u.kind === 'custom') {
+            for (let i = 0; i < count; i++) {
+                const num = i + 1;
+                const uid = `cust_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}_${i}`;
+                const hp = Math.max(1, parseInt(u.hp, 10) || 22);
+                const ac = Math.max(1, parseInt(u.ac, 10) || 14);
+                const initMod = parseInt(u.initBonus, 10) || 0;
+                const label = count > 1 ? `${u.name || 'Custom Enemy'} #${num}` : (u.name || 'Custom Enemy');
+                encounterEntries.push({
+                    uid,
+                    kind: 'custom',
+                    key: 'custom_enemy',
+                    num,
+                    customLabel: label,
+                    variantTag: 'Custom',
+                    init: null,
+                    initBonus: initMod,
+                    customWpn: u.wpn || 'Strike',
+                    customHit: parseInt(u.hitBonus, 10) || 4,
+                    customDmg: u.dmgDice || '1d8+2',
+                    visibleToPlayers: false,
+                    masked: false,
+                    playerAlias: '',
+                    hideTier: false,
+                    conditions: [],
+                    targets: [{ subKey: 'main', label: null, cur: hp, max: hp, ac: String(ac) }]
+                });
+            }
+            return;
+        }
         for (let i = 0; i < count; i++) {
             const beforeLen = encounterEntries.length;
             addToEncounter(u.key, 1);
@@ -20577,7 +21261,7 @@ function loadEncounterScenePreset(presetId) {
     rollAllEncounterInits();
     const presetDrawer = document.getElementById('enc-preset-drawer');
     if (presetDrawer) presetDrawer.classList.remove('is-open');
-    logRoll(`⚡ <strong>Loaded Scene Preset — ${escapeEncounterHtml(preset.label)}:</strong> ${escapeEncounterHtml(preset.desc)} (Party added &amp; Enemy Initiatives rolled!).`);
+    logRoll(`⚡ <strong>Loaded Scene Preset — ${escapeEncounterHtml(preset.label)}:</strong> ${escapeEncounterHtml(preset.desc || summarizePresetUnits(preset.units))} (Party added &amp; Enemy Initiatives rolled!).`);
 }
 
 function spawnCustomEncounterEnemy() {
@@ -20739,6 +21423,7 @@ document.addEventListener('keydown', (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     loadDmCockpitPrefs();
+    loadEncounterPresetsStore();
     decorateDmSectionCollapseHeaders();
     renderEncounterPresetButtons();
     applyPinEncounterBoardPosition();
