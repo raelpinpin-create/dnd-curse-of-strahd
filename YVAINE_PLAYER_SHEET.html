@@ -899,11 +899,12 @@
                     
                     <div style="display:flex; flex-direction:column; gap:5px; margin-top:2px;">
                         <div style="display:flex; align-items:center; gap:4px; width:100%;">
-                            <button class="btn-act btn-act-dmg" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
-                            <input type="number" id="hp-input" class="hp-input-num" value="" placeholder="Amt" min="1" max="999" style="width:46px; height:26px; font-size:0.86rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage or healing amount">
-                            <button class="btn-act btn-act-heal" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(1)">+1</button>
-                            <button class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">⚔️ Dmg</button>
-                            <button class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">💚 Heal</button>
+                            <button type="button" class="btn-act btn-act-dmg" style="padding: 4px 7px; font-size: 0.76rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
+                            <input type="number" id="hp-input" class="hp-input-num" value="" placeholder="Amt" min="1" max="999" style="width:44px; height:26px; font-size:0.84rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage, healing, or Temp HP amount">
+                            <button type="button" class="btn-act btn-act-heal" style="padding: 4px 7px; font-size: 0.76rem; font-weight:700;" onclick="stepHP(1)">+1</button>
+                            <button type="button" class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 6px; font-size:0.72rem; font-weight:700; flex:1;">⚔️ Dmg</button>
+                            <button type="button" class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 6px; font-size:0.72rem; font-weight:700; flex:1;" title="Restore HP up to Max HP (no Temp HP overflow)">💚 Heal</button>
+                            <button type="button" class="btn-act btn-act-temp" onclick="applyTempHP()" style="padding:4px 7px; font-size:0.72rem; font-weight:700;" title="Grant Temporary HP (5e non-stacking: keeps the higher value)">🛡️ Temp</button>
                         </div>
                         <div style="display:flex; align-items:center; justify-content:space-between; margin-top:1px;">
                             <div style="display:flex; gap:4px;">
@@ -2883,31 +2884,36 @@
 
     function applyHeal() {
         const input = document.getElementById('hp-input');
-        const val = parseInt(input.value);
+        const val = parseInt(input.value) || 1;
         if (isNaN(val) || val <= 0) return;
 
-        if (curHP + val > maxHP) {
-            const overflow = (curHP + val) - maxHP;
-            curHP = maxHP;
-            tempHP += overflow;
-            logRoll(`💚 <strong>Healing Applied:</strong> +${val} HP. Max HP reached! Overflow added to Temp HP: <strong>${curHP}/${maxHP} (+${tempHP} Temp)</strong>.`);
-        } else {
-            curHP += val;
-            logRoll(`💚 <strong>Healing Applied:</strong> +${val} HP. Current: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ` (+${tempHP} Temp)` : ''}.`);
-        }
+        const before = curHP;
+        curHP = Math.min(maxHP, curHP + val);
+        const actual = curHP - before;
+        logRoll(`💚 <strong>Healing Applied:</strong> +${actual} HP${actual < val ? ` <small style="color:#94a3b8;">(capped at Max HP)</small>` : ''}. Current: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ` (+${tempHP} Temp)` : ''}.`);
         if (input) input.value = '';
         updateHPUI();
     }
 
+    function applyTempHP() {
+        const input = document.getElementById('hp-input');
+        const val = parseInt(input.value) || 1;
+        if (input) input.value = '';
+        if (isNaN(val) || val <= 0) return;
+        const prev = tempHP;
+        tempHP = Math.max(tempHP, val);
+        updateHPUI();
+        if (val > prev) {
+            logRoll(`🛡️ <strong>Temporary HP Gained:</strong> <span style="color:#38bdf8; font-weight:700;">+${val} Temp HP</span>. Current: <strong>${curHP}/${maxHP} (+${tempHP} Temp)</strong>.`);
+        } else {
+            logRoll(`🛡️ <strong>Temp HP Unchanged:</strong> Entered +${val} Temp HP, kept existing higher <span style="color:#38bdf8; font-weight:700;">+${prev} Temp HP</span> <small style="color:#94a3b8;">(5e Temp HP does not stack)</small>.`);
+        }
+    }
+
     function stepHP(delta) {
         if (delta > 0) {
-            if (curHP + delta > maxHP) {
-                const overflow = (curHP + delta) - maxHP;
-                curHP = maxHP;
-                tempHP += overflow;
-                logRoll(`💚 <strong>HP Increased:</strong> +${delta} HP. Overflow added to Temp HP: <strong>${curHP}/${maxHP} (+${tempHP} Temp)</strong>.`);
-            } else {
-                curHP += delta;
+            if (curHP < maxHP) {
+                curHP = Math.min(maxHP, curHP + delta);
                 logRoll(`💚 <strong>HP Increased:</strong> +${delta} HP. Current: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ` (+${tempHP} Temp)` : ''}.`);
             }
         } else {
@@ -2948,13 +2954,7 @@
 
     function takeShortRest() {
         const healAmt = Math.round(maxHP * 0.25);
-        if (curHP + healAmt > maxHP) {
-            const overflow = (curHP + healAmt) - maxHP;
-            curHP = maxHP;
-            tempHP += overflow;
-        } else {
-            curHP += healAmt;
-        }
+        curHP = Math.min(maxHP, curHP + healAmt);
         helpTokens = Math.min(maxHelpTokens, helpTokens + 1);
 
         lamentChamber = maxLamentChamber;
@@ -3550,7 +3550,7 @@
             category: "FOOD CONSUMABLE • Heals 1d4 HP",
             origin: "Session 1 Provisions",
             desc: "Flaky, buttered golden crescents wrapped in clean parchment—safe, wholesome rations with none of Morgantha's dark bone-flour taint.",
-            effect: "• <strong>Consume (Bonus Action / Action):</strong> Restores <strong>1d4 Hit Points</strong> (any overflow above Max HP converts into Temp HP per table rules).",
+            effect: "• <strong>Consume (Bonus Action / Action):</strong> Restores <strong>1d4 Hit Points</strong> (caps at Max HP — food never grants Temporary HP).",
             healFormula: { dice: 1, sides: 4, bonus: 0, verb: "Ate" }
         },
         "bandage": {
@@ -3558,16 +3558,16 @@
             category: "HEALING CONSUMABLE • Heals 1d6 + 1 HP",
             origin: "Session 1 First-Aid Loot",
             desc: "Clean sterile linen bandages steeped in soothing Barovian herbal salve for rapid battlefield trauma care.",
-            effect: "• <strong>1 Action (Self or Adjacent Ally):</strong> Bind wounds tightly to restore <strong>1d6 + 1 Hit Points</strong> (any overflow above Max HP converts into Temp HP per table rules).",
+            effect: "• <strong>1 Action (Self or Adjacent Ally):</strong> Bind wounds tightly to restore <strong>1d6 + 1 Hit Points</strong> (caps at Max HP — does not grant Temporary HP).",
             healFormula: { dice: 1, sides: 6, bonus: 1, verb: "Applied" }
         },
         "potion of healing": {
             name: "Potion of Healing",
-            category: "HEAL • Common Consumable (50 GP)",
+            category: "HEAL • Common Consumable (5 GP)",
             origin: "Barovian Apothecary",
             desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
-            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d4 + 2 Hit Points</strong> (overflow converts into Temp HP).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
-            healFormula: { dice: 2, sides: 4, bonus: 2, verb: "Drank" }
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong> (caps at Max HP — does not grant Temporary HP).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
+            healFormula: { dice: 2, sides: 6, bonus: 1, verb: "Drank" }
         },
         "lament": {
             name: "\"Lament\" Heavy Long Rifle",
@@ -3751,16 +3751,12 @@
         }
         const healAmt = sum + bonus;
         stepItemQty(index, -1);
-        if (curHP + healAmt > maxHP) {
-            const overflow = (curHP + healAmt) - maxHP;
-            curHP = maxHP;
-            tempHP += overflow;
-        } else {
-            curHP += healAmt;
-        }
+        const before = curHP;
+        curHP = Math.min(maxHP, curHP + healAmt);
+        const actual = curHP - before;
         updateHPUI();
         const bonusStr = bonus > 0 ? ` + ${bonus}` : '';
-        logRoll(`💚 <strong>${verb} ${itemName}:</strong> [${rolls.join('+')}]${bonusStr} = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${healAmt} HP</span> (Current HP: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ` (+${tempHP} Temp)` : ''})!`);
+        logRoll(`💚 <strong>${verb} ${itemName}:</strong> [${rolls.join('+')}]${bonusStr} = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${healAmt} HP</span>${actual < healAmt ? ` <small style="color:#94a3b8;">(+${actual} restored, capped at Max HP)</small>` : ''} (Current HP: <strong>${curHP}/${maxHP}</strong>${tempHP > 0 ? ` (+${tempHP} Temp)` : ''})!`);
     }
 
     function getAggregatedInventory(itemStrings) {
@@ -3906,6 +3902,10 @@
         } else if (itemData.customAction === 'lockpick') {
             btns.push(`<button type="button" class="btn-act btn-act-temp" onclick="rollD20('Thieves\' Tools / Lockpick Check (DEX +4)', 4); closeItemModal();" style="font-size:0.74rem;">🗝️ Pick Lock (DEX +4)</button>`);
             btns.push(`<button type="button" class="btn-act btn-act-pre" onclick="rollD20('Thieves\' Tools w/ Prof (+6)', 6); closeItemModal();" style="font-size:0.74rem; color:#fde68a;">🗝️ Pick Lock (+6 Prof)</button>`);
+        } else if (itemData.useViaRpg) {
+            const btnCls = itemData.useBtnClass || 'btn-act-temp';
+            const btnLbl = itemData.useBtnLabel || `🧪 Drink 1`;
+            btns.push(`<button type="button" class="btn-act ${btnCls}" onclick="if(window.COS_RPG){COS_RPG.useConsumableByIndex(${index});} closeItemModal();" style="font-size:0.74rem;">${btnLbl}</button>`);
         } else if (itemData.healFormula) {
             const hf = itemData.healFormula;
             const formulaStr = `${hf.dice}d${hf.sides}${hf.bonus ? '+' + hf.bonus : ''}`;
@@ -4814,14 +4814,27 @@
                     updateGoldUI();
                     logGoldTx('spend', memo || 'Trade Sent', `-${gp || 0} GP${sp ? ', -' + sp + ' SP' : ''}`, `${curGP} GP, ${curSilver} SP`);
                 },
-                healHP: (amt, isTemp) => {
-                    if (isTemp) { tempHP = Math.max(tempHP, amt); }
-                    else {
-                        const space = maxHP - curHP;
-                        if (amt <= space) curHP += amt;
-                        else { curHP = maxHP; tempHP += (amt - space); }
+                healHP: (amt, mode) => {
+                    const prevTemp = tempHP;
+                    if (mode === true || mode === 'temp') {
+                        tempHP = Math.max(tempHP, amt);
+                        updateHPUI();
+                        return { healed: 0, overflowTemp: 0, appliedTemp: tempHP, keptExisting: amt <= prevTemp, prevTemp, curHP, maxHP, tempHP };
+                    } else if (mode === 'overheal') {
+                        const space = Math.max(0, maxHP - curHP);
+                        const healed = Math.min(amt, space);
+                        const excess = Math.max(0, amt - space);
+                        curHP = Math.min(maxHP, curHP + healed);
+                        if (excess > 0) tempHP = Math.max(tempHP, excess);
+                        updateHPUI();
+                        return { healed, overflowTemp: excess, appliedTemp: tempHP, keptExisting: excess > 0 && excess <= prevTemp, prevTemp, curHP, maxHP, tempHP };
+                    } else {
+                        const space = Math.max(0, maxHP - curHP);
+                        const healed = Math.min(amt, space);
+                        curHP = Math.min(maxHP, curHP + healed);
+                        updateHPUI();
+                        return { healed, overflowTemp: 0, curHP, maxHP, tempHP };
                     }
-                    updateHPUI();
                 },
                 log: logRoll,
                 openItemModal: openItemDetailsModal,

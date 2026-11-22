@@ -889,7 +889,7 @@
                     </div>
                 </div>
 
-                <!-- COMPACT HP & OVERHEAL TEMP HP CONTROLLER -->
+                <!-- COMPACT HP & TEMP HP CONTROLLER -->
                 <div class="hp-ctrl-container">
                     <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.7rem; font-weight:700; margin-bottom:2px;">
                         <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.3px;">HIT POINTS</span>
@@ -905,11 +905,12 @@
                     
                     <div style="display:flex; flex-direction:column; gap:5px; margin-top:2px;">
                         <div style="display:flex; align-items:center; gap:4px; width:100%;">
-                            <button class="btn-act btn-act-dmg" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
-                            <input type="number" id="hp-input" class="hp-input-num" value="" placeholder="Amt" min="1" max="999" style="width:46px; height:26px; font-size:0.86rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage or healing amount">
-                            <button class="btn-act btn-act-heal" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(1)">+1</button>
-                            <button class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">⚔️ Dmg</button>
-                            <button class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">💚 Heal</button>
+                            <button type="button" class="btn-act btn-act-dmg" style="padding: 4px 7px; font-size: 0.76rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
+                            <input type="number" id="hp-input" class="hp-input-num" value="" placeholder="Amt" min="1" max="999" style="width:44px; height:26px; font-size:0.84rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage, healing, or Temp HP amount">
+                            <button type="button" class="btn-act btn-act-heal" style="padding: 4px 7px; font-size: 0.76rem; font-weight:700;" onclick="stepHP(1)">+1</button>
+                            <button type="button" class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 6px; font-size:0.72rem; font-weight:700; flex:1;">⚔️ Dmg</button>
+                            <button type="button" class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 6px; font-size:0.72rem; font-weight:700; flex:1;" title="Restore HP up to Max HP (no Temp HP overflow)">💚 Heal</button>
+                            <button type="button" class="btn-act btn-act-temp" onclick="applyTempHP()" style="padding:4px 7px; font-size:0.72rem; font-weight:700;" title="Grant Temporary HP (5e non-stacking: keeps the higher value)">🛡️ Temp</button>
                         </div>
                         <div style="display:flex; align-items:center; justify-content:space-between; margin-top:1px;">
                             <div style="display:flex; gap:4px;">
@@ -3076,8 +3077,7 @@
 
     function stepHP(delta) {
         if (delta > 0) {
-            if (curHP < maxHP) curHP += 1;
-            else tempHP += 1;
+            if (curHP < maxHP) curHP = Math.min(maxHP, curHP + 1);
         } else {
             if (tempHP > 0) tempHP -= 1;
             else if (curHP > 0) curHP -= 1;
@@ -3103,11 +3103,26 @@
         const input = document.getElementById('hp-input');
         const heal = parseInt(input.value) || 1;
         input.value = '';
-        const space = maxHP - curHP;
-        if (heal <= space) curHP += heal;
-        else { curHP = maxHP; tempHP += (heal - space); }
+        const before = curHP;
+        curHP = Math.min(maxHP, curHP + heal);
+        const actual = curHP - before;
         updateHPUI();
-        logRoll(`💚 <strong>Healed:</strong> <span style="color:#86efac; font-weight:700;">+${heal} HP</span> (Current HP: ${curHP}/${maxHP}${tempHP > 0 ? ' +' + tempHP + ' Temp' : ''})`);
+        logRoll(`💚 <strong>Healed:</strong> <span style="color:#86efac; font-weight:700;">+${actual} HP</span>${actual < heal ? ` <small style="color:#94a3b8;">(capped at Max HP)</small>` : ''} (Current HP: ${curHP}/${maxHP}${tempHP > 0 ? ' +' + tempHP + ' Temp' : ''})`);
+    }
+
+    function applyTempHP() {
+        const input = document.getElementById('hp-input');
+        const amt = parseInt(input.value) || 1;
+        input.value = '';
+        if (amt <= 0) return;
+        const prev = tempHP;
+        tempHP = Math.max(tempHP, amt);
+        updateHPUI();
+        if (amt > prev) {
+            logRoll(`🛡️ <strong>Temporary HP Gained:</strong> <span style="color:#38bdf8; font-weight:700;">+${amt} Temp HP</span> (Current HP: ${curHP}/${maxHP} +${tempHP} Temp)`);
+        } else {
+            logRoll(`🛡️ <strong>Temp HP Unchanged:</strong> Entered +${amt} Temp HP, kept existing higher <span style="color:#38bdf8; font-weight:700;">+${prev} Temp HP</span> <small style="color:#94a3b8;">(5e Temp HP does not stack)</small>.`);
+        }
     }
 
     function clearTempHP() {
@@ -4118,31 +4133,31 @@
             category: "CRAFTING REAGENT • Field Alchemy",
             origin: "Foraged / Looted in Session 1 (Barovia)",
             desc: "A fragrant bundle of pale silver-leaf thyme, wild mountain comfrey, and frost-bloom roots native to Barovia's sheltered ravines.",
-            effect: "• <strong>Potion Crafting (Short or Long Rest):</strong> Combine <strong>2x Medicinal Herbs ➔ 1x Potion of Healing (2d4 + 2 HP)</strong>!<br>• <strong>Field Bandage Crafting:</strong> Combine <strong>1x Medicinal Herb ➔ 1x Field Healing Bandages (1d6 + 1 HP)</strong>.<br>• <strong>Barovian Native Boon:</strong> Piper automatically succeeds with zero check required thanks to her Native Nature (+3 ★) &amp; Survival (+2 ★) acumen!",
+            effect: "• <strong>Potion Crafting (Short or Long Rest):</strong> Combine <strong>2x Medicinal Herbs ➔ 1x Potion of Healing (2d6 + 1 HP)</strong>!<br>• <strong>Field Bandage Crafting:</strong> Combine <strong>1x Medicinal Herb ➔ 1x Field Healing Bandages (1d6 + 1 HP)</strong>.<br>• <strong>Barovian Native Boon:</strong> Piper automatically succeeds with zero check required thanks to her Native Nature (+3 ★) &amp; Survival (+2 ★) acumen!",
             isCraftableReagent: true
         },
         "potion of healing": {
             name: "Potion of Healing",
-            category: "HEAL • Common Consumable (50 GP)",
+            category: "HEAL • Common Consumable (5 GP)",
             origin: "Barovian Apothecary / Crafted from Medicinal Herbs",
             desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
-            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d4 + 2 Hit Points</strong> (any healing over Max HP channels into Temporary HP!).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
-            healFormula: { dice: 2, sides: 4, bonus: 2, verb: "Drank" }
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong> (caps at Max HP — does not grant Temporary HP).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
+            healFormula: { dice: 2, sides: 6, bonus: 1, verb: "Drank" }
         },
         "health potion": {
             name: "Potion of Healing",
-            category: "HEAL • Common Consumable (50 GP)",
+            category: "HEAL • Common Consumable (5 GP)",
             origin: "Barovian Apothecary / Crafted from Medicinal Herbs",
             desc: "A ruby-red draught that glimmers faintly in Barovia's gloom.",
-            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d4 + 2 Hit Points</strong> (any healing over Max HP channels into Temporary HP!).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
-            healFormula: { dice: 2, sides: 4, bonus: 2, verb: "Drank" }
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>2d6 + 1 Hit Points</strong> (caps at Max HP — does not grant Temporary HP).<br>• <strong>Action (Ally):</strong> Administer to a downed companion.",
+            healFormula: { dice: 2, sides: 6, bonus: 1, verb: "Drank" }
         },
         "greater healing": {
             name: "Potion of Greater Healing",
-            category: "HEAL • Uncommon Consumable (150 GP)",
+            category: "HEAL • Uncommon Consumable (15 GP)",
             origin: "Barovian Alchemy / Dungeon Cache",
             desc: "A concentrated crimson restorative gleaming with warm amber flecks.",
-            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>4d4 + 4 Hit Points</strong> (overflow converts into Temporary HP!).<br>• <strong>Action (Ally):</strong> Administer to an ally.",
+            effect: "• <strong>Bonus Action (Self):</strong> Restores <strong>4d4 + 4 Hit Points</strong> (caps at Max HP — does not grant Temporary HP).<br>• <strong>Action (Ally):</strong> Administer to an ally.",
             healFormula: { dice: 4, sides: 4, bonus: 4, verb: "Drank" }
         },
         "bandage": {
@@ -4150,7 +4165,7 @@
             category: "HEAL • Common Consumable",
             origin: "Barovian Field First-Aid / Crafted from Herbs",
             desc: "Clean linen strips steeped in soothing Barovian herbal salve to stanch bleeding wounds quickly.",
-            effect: "• <strong>1 Action (Self or Adjacent Ally):</strong> Bind wounds to restore <strong>1d6 + 1 Hit Points</strong> (overflow above Max HP channels into Temporary HP).",
+            effect: "• <strong>1 Action (Self or Adjacent Ally):</strong> Bind wounds to restore <strong>1d6 + 1 Hit Points</strong> (caps at Max HP — does not grant Temporary HP).",
             healFormula: { dice: 1, sides: 6, bonus: 1, verb: "Applied" }
         },
         "pocket watch": {
@@ -4414,12 +4429,12 @@
         }
         const healAmt = sum + bonus;
         stepItemQty(index, -1);
-        const space = maxHP - curHP;
-        if (healAmt <= space) curHP += healAmt;
-        else { curHP = maxHP; tempHP += (healAmt - space); }
+        const before = curHP;
+        curHP = Math.min(maxHP, curHP + healAmt);
+        const actual = curHP - before;
         updateHPUI();
         const bonusStr = bonus > 0 ? ` + ${bonus}` : '';
-        logRoll(`💚 <strong>${verb} ${itemName}:</strong> [${rolls.join('+')}]${bonusStr} = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${healAmt} HP</span> (Current HP: ${curHP}/${maxHP}${tempHP > 0 ? ' +' + tempHP + ' Temp' : ''})!`);
+        logRoll(`💚 <strong>${verb} ${itemName}:</strong> [${rolls.join('+')}]${bonusStr} = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${healAmt} HP</span>${actual < healAmt ? ` <small style="color:#94a3b8;">(+${actual} restored, capped at Max HP)</small>` : ''} (Current HP: ${curHP}/${maxHP}${tempHP > 0 ? ' +' + tempHP + ' Temp' : ''})!`);
     }
 
     function parseItemInfo(itemStr) {
@@ -4520,7 +4535,11 @@
         if (match && match.isCraftableReagent) {
             btns.push(`<button type="button" class="btn-act btn-act-heal" onclick="closeItemModal(); openCraftModal();" style="background:linear-gradient(135deg,#065f46,#047857); border:1px solid #34d399; color:#ecfdf5;">⚗️ Open Potion Crafting</button>`);
         }
-        if (match && match.healFormula) {
+        if (match && match.useViaRpg) {
+            const btnCls = match.useBtnClass || 'btn-act-temp';
+            const btnLbl = match.useBtnLabel || `🧪 Drink 1`;
+            btns.push(`<button type="button" class="btn-act ${btnCls}" onclick="if(window.COS_RPG){COS_RPG.useConsumableByIndex(${index});} closeItemModal();">${btnLbl}</button>`);
+        } else if (match && match.healFormula) {
             const hf = match.healFormula;
             const formulaStr = `${hf.dice}d${hf.sides}${hf.bonus ? '+' + hf.bonus : ''}`;
             const safeName = match.name.replace(/'/g, "\\'");
@@ -5075,14 +5094,27 @@
                 updateGoldUI();
                 logGoldTx('spend', memo || 'Trade Sent', `-${gp || 0} GP${sp ? ', -' + sp + ' SP' : ''}`, `${curGP} GP, ${curSilver} SP`);
             },
-            healHP: (amt, isTemp) => {
-                if (isTemp) { tempHP = Math.max(tempHP, amt); }
-                else {
-                    const space = maxHP - curHP;
-                    if (amt <= space) curHP += amt;
-                    else { curHP = maxHP; tempHP += (amt - space); }
+            healHP: (amt, mode) => {
+                const prevTemp = tempHP;
+                if (mode === true || mode === 'temp') {
+                    tempHP = Math.max(tempHP, amt);
+                    updateHPUI();
+                    return { healed: 0, overflowTemp: 0, appliedTemp: tempHP, keptExisting: amt <= prevTemp, prevTemp, curHP, maxHP, tempHP };
+                } else if (mode === 'overheal') {
+                    const space = Math.max(0, maxHP - curHP);
+                    const healed = Math.min(amt, space);
+                    const excess = Math.max(0, amt - space);
+                    curHP = Math.min(maxHP, curHP + healed);
+                    if (excess > 0) tempHP = Math.max(tempHP, excess);
+                    updateHPUI();
+                    return { healed, overflowTemp: excess, appliedTemp: tempHP, keptExisting: excess > 0 && excess <= prevTemp, prevTemp, curHP, maxHP, tempHP };
+                } else {
+                    const space = Math.max(0, maxHP - curHP);
+                    const healed = Math.min(amt, space);
+                    curHP = Math.min(maxHP, curHP + healed);
+                    updateHPUI();
+                    return { healed, overflowTemp: 0, curHP, maxHP, tempHP };
                 }
-                updateHPUI();
             },
             log: logRoll,
             openItemModal: openItemDetailsModal,

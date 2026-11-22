@@ -1804,7 +1804,7 @@
             slots: [],
             quickBelt: true,
             useAction: { type: 'heal', dice: 4, sides: 4, bonus: 4, verb: 'Drank', label: 'Greater Potion (4d4+4)' },
-            summary: 'Heal 4d4+4 HP (Bonus Action)'
+            summary: 'Heal 4d4+4 HP (Bonus Action • Caps at Max HP)'
         },
         {
             match: ['potion of superior healing'],
@@ -1812,7 +1812,39 @@
             slots: [],
             quickBelt: true,
             useAction: { type: 'heal', dice: 8, sides: 4, bonus: 8, verb: 'Drank', label: 'Superior Potion (8d4+8)' },
-            summary: 'Heal 8d4+8 HP (Bonus Action)'
+            summary: 'Heal 8d4+8 HP (Bonus Action • Caps at Max HP)'
+        },
+        {
+            match: ['potion of false vitality', 'false vitality'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'tempHp', dice: 1, sides: 6, bonus: 4, verb: 'Drank', duration: '1 hour', label: 'False Vitality (+1d6+4 Temp)' },
+            summary: 'Grant 1d6+4 Temp HP for 1 hr (Bonus Action • Non-Stacking)'
+        },
+        {
+            match: ['vistani stag-blood tonic', 'stag-blood tonic', 'stag blood tonic'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'tempHp', dice: 2, sides: 6, bonus: 4, verb: 'Drank', duration: '1 hour', extraNote: 'Advantage on your next STR or CON Saving Throw within 1 hour!', label: 'Stag-Blood (+2d6+4 Temp)' },
+            summary: 'Grant 2d6+4 Temp HP (1 hr) + Adv next STR/CON Save (Bonus Action)'
+        },
+        {
+            match: ["morninglord's overflow elixir", 'morninglord overflow elixir', 'overflow elixir'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'overheal', dice: 2, sides: 6, bonus: 2, verb: 'Drank', duration: '1 hour', label: 'Overflow Elixir (2d6+2➔Temp)' },
+            summary: 'Heal 2d6+2 HP; excess over Max HP converts to Temp HP for 1 hr (Bonus Action)'
+        },
+        {
+            match: ['sun-spun aegis draught', 'sun spun aegis draught', 'aegis draught'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'overheal', dice: 4, sides: 4, bonus: 4, verb: 'Drank', duration: '1 hour', label: 'Aegis Draught (4d4+4➔Temp)' },
+            summary: 'Heal 4d4+4 HP; excess over Max HP converts to Temp HP for 1 hr (Bonus Action)'
         },
         {
             match: ['potion of healing', 'health potion'],
@@ -1820,26 +1852,26 @@
             slots: [],
             quickBelt: true,
             useAction: { type: 'heal', dice: 2, sides: 6, bonus: 1, verb: 'Drank', label: 'Potion (2d6+1)' },
-            summary: 'Heal 2d6+1 HP (Bonus Action)'
+            summary: 'Heal 2d6+1 HP (Bonus Action • Caps at Max HP)'
         },
         {
             match: ['bandage'],
             category: 'consumable',
             slots: [],
             quickBelt: true,
-            useAction: { type: 'heal', dice: 1, sides: 6, bonus: 1, verb: 'Applied', label: 'Bandage (1d6+1)' },
-            summary: 'Heal 1d6+1 HP (Action)'
+            useAction: { type: 'heal', dice: 1, sides: 6, bonus: 1, verb: 'Applied', actionCost: 'action', label: 'Bandage (1d6+1)' },
+            summary: 'Heal 1d6+1 HP (Action • Caps at Max HP)'
         },
         {
             match: ['croissant'],
             category: 'consumable',
             slots: [],
             quickBelt: true,
-            useAction: { type: 'heal', dice: 1, sides: 4, bonus: 0, verb: 'Ate', label: 'Croissant (1d4)' },
-            summary: 'Heal 1d4 HP (Action)'
+            useAction: { type: 'heal', dice: 1, sides: 4, bonus: 0, verb: 'Ate', actionCost: 'action', label: 'Croissant (1d4)' },
+            summary: 'Heal 1d4 HP (Action • Caps at Max HP)'
         },
         {
-            match: ['holy water', 'blessed by the morninglord', 'morninglord'],
+            match: ['holy water', 'blessed by the morninglord', 'morninglord spring water'],
             category: 'consumable',
             slots: [],
             quickBelt: true,
@@ -2625,7 +2657,51 @@
             category: "RARE HEAL CONSUMABLE • Unlock Code: MOONPETAL",
             origin: "Crafted (4x Herbs + 2x Catalyst + 1x Moonpetal) or Abbey S13 (45 GP)",
             desc: "A glowing scarlet elixir distilled from rare Moonpetal petals and concentrated alembic salts.",
-            effect: "• <strong>Bonus Action (Self) / Action (Ally):</strong> Restores <strong>8d4 + 8 Hit Points (Avg 28 HP)</strong>—any overflow above Max HP channels into Temporary HP!"
+            effect: "• <strong>Bonus Action (Self) / Action (Ally):</strong> Restores <strong>8d4 + 8 Hit Points (Avg 28 HP)</strong> — caps strictly at Max HP (does not grant Temporary HP)."
+        },
+        {
+            match: ['potion of false vitality', 'false vitality'],
+            name: "Potion of False Vitality",
+            category: "TEMP HP CONSUMABLE • Common/Uncommon (6 GP)",
+            origin: "Tser Pool Vistani Apothecary (G) / Vallaki Arasek Stockyard (N5)",
+            desc: "A chill cobalt-silver vial swirling with ghostly frost-motes reminiscent of the False Life spell.",
+            effect: "• <strong>Bonus Action (Self) / Action (Ally):</strong> Grants <strong>1d6 + 4 Temporary Hit Points (Avg 7.5)</strong> lasting <strong>1 hour</strong>.<br>• <strong>Standard 5e Rule:</strong> Does not restore actual HP and <strong>does not stack</strong> with existing Temporary HP (keeps whichever pool is higher).",
+            useViaRpg: true,
+            useBtnClass: "btn-act-temp",
+            useBtnLabel: "🛡️ Drink 1 (+1d6+4 Temp HP)"
+        },
+        {
+            match: ['vistani stag-blood tonic', 'stag-blood tonic', 'stag blood tonic'],
+            name: "Vistani Stag-Blood Tonic",
+            category: "TEMP HP CONSUMABLE • Uncommon (18 GP)",
+            origin: "Vistani Encampments (G / N9) / Ezmerelda's Wagon (V1)",
+            desc: "A hot, spiced crimson-amber cordial brewed from mountain pine resin, wild heart-root, and winter stag vigor.",
+            effect: "• <strong>Bonus Action (Self) / Action (Ally):</strong> Grants <strong>2d6 + 4 Temporary Hit Points (Avg 11)</strong> for <strong>1 hour</strong> (5e non-stacking — keeps the higher pool) AND <strong>Advantage on your next Strength or Constitution Saving Throw</strong> within the hour.<br>• Does not restore missing HP.",
+            useViaRpg: true,
+            useBtnClass: "btn-act-temp",
+            useBtnLabel: "🩸 Drink 1 (+2d6+4 Temp HP)"
+        },
+        {
+            match: ["morninglord's overflow elixir", 'morninglord overflow elixir', 'overflow elixir'],
+            name: "Morninglord's Overflow Elixir",
+            category: "OVERHEAL CONSUMABLE • Uncommon (12 GP)",
+            origin: "Church of the Morninglord (E5) / St. Andral's (N1) / Blue Water Inn (N2q)",
+            desc: "A warm rose-gold draught flecked with liquid dawn-amber that seals wounds and wraps surplus vitality into a shimmering ward.",
+            effect: "• <strong>Bonus Action (Self) / Action (Ally):</strong> Restores <strong>2d6 + 2 Hit Points (Avg 9 HP)</strong>.<br>• <strong>Overheal Ward (1 Hour):</strong> Any healing beyond your Max HP converts into <strong>Temporary Hit Points</strong> lasting <strong>1 hour</strong> (5e non-stacking — replaces lower Temp HP, never stacks).",
+            useViaRpg: true,
+            useBtnClass: "btn-act-heal",
+            useBtnLabel: "✨ Drink 1 (2d6+2 HP ➔ Temp)"
+        },
+        {
+            match: ['sun-spun aegis draught', 'sun spun aegis draught', 'aegis draught'],
+            name: "Sun-Spun Aegis Draught",
+            category: "OVERHEAL CONSUMABLE • Rare (38 GP)",
+            origin: "Abbey of St. Markovia (S13) / Argynvostholt (Q28) / Amber Temple (X)",
+            desc: "An iridescent golden-crimson phial infused with consecrated dawn-salts, bottled for sieges against Barovia's apex predators.",
+            effect: "• <strong>Bonus Action (Self) / Action (Ally):</strong> Restores <strong>4d4 + 4 Hit Points (Avg 14 HP)</strong>.<br>• <strong>Overheal Aegis (1 Hour):</strong> Any healing beyond your Max HP converts into <strong>Temporary Hit Points</strong> lasting <strong>1 hour</strong> (5e non-stacking — keeps whichever Temp HP pool is higher).",
+            useViaRpg: true,
+            useBtnClass: "btn-act-heal",
+            useBtnLabel: "🌟 Drink 1 (4d4+4 HP ➔ Temp)"
         },
         {
             match: ['carved bog-witch runestone', 'bog-witch runestone'],
@@ -6255,15 +6331,53 @@
         else items[invIndex] = `${parsed.emoji}${newQty > 1 ? newQty + 'x ' : ''}${parsed.name}`.trim();
         adapter.saveItems(items);
         if (act.type === 'heal') {
-            spendTurnAction('bonus');
+            spendTurnAction(act.actionCost || 'bonus');
             let rolls = [], sum = 0;
             for (let i = 0; i < act.dice; i++) {
                 const r = Math.floor(Math.random() * act.sides) + 1;
                 rolls.push(r); sum += r;
             }
             const total = sum + (act.bonus || 0);
-            adapter.healHP(total, false);
-            adapter.log(`💚 <strong>${act.verb} ${esc(shortLabel(raw))}:</strong> [${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span> restored!`);
+            const res = adapter.healHP(total, false);
+            const capNote = (res && typeof res.healed === 'number' && res.healed < total)
+                ? ` <small style="color:#94a3b8;">(+${res.healed} restored, capped at Max HP — no Temp HP)</small>`
+                : '';
+            adapter.log(`💚 <strong>${act.verb} ${esc(shortLabel(raw))}:</strong> [${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span>${capNote}`);
+        } else if (act.type === 'tempHp') {
+            spendTurnAction(act.actionCost || 'bonus');
+            let rolls = [], sum = 0;
+            for (let i = 0; i < act.dice; i++) {
+                const r = Math.floor(Math.random() * act.sides) + 1;
+                rolls.push(r); sum += r;
+            }
+            const total = sum + (act.bonus || 0);
+            const res = adapter.healHP(total, 'temp');
+            const durTxt = act.duration ? ` (${esc(act.duration)})` : '';
+            const keptTxt = (res && res.keptExisting)
+                ? ` <small style="color:#94a3b8;">(kept higher existing +${res.prevTemp} Temp HP — 5e non-stacking)</small>`
+                : '';
+            const extraTxt = act.extraNote ? `<br><small style="color:#fde68a;">✨ ${esc(act.extraNote)}</small>` : '';
+            adapter.log(`🛡️ <strong>${act.verb || 'Drank'} ${esc(shortLabel(raw))}:</strong> [${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = <span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${total} Temp HP</span>${durTxt}!${keptTxt}${extraTxt}`);
+        } else if (act.type === 'overheal') {
+            spendTurnAction(act.actionCost || 'bonus');
+            let rolls = [], sum = 0;
+            for (let i = 0; i < act.dice; i++) {
+                const r = Math.floor(Math.random() * act.sides) + 1;
+                rolls.push(r); sum += r;
+            }
+            const total = sum + (act.bonus || 0);
+            const res = adapter.healHP(total, 'overheal');
+            const durTxt = act.duration ? ` for ${esc(act.duration)}` : '';
+            let detailTxt = `<span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span> restored!`;
+            if (res && typeof res.overflowTemp === 'number' && res.overflowTemp > 0) {
+                const tempPart = res.keptExisting
+                    ? `<span style="color:#94a3b8;">${res.overflowTemp} excess (kept higher +${res.prevTemp} Temp HP)</span>`
+                    : `<span style="color:#38bdf8; font-weight:800;">+${res.overflowTemp} Temp HP</span>${durTxt}`;
+                detailTxt = res.healed > 0
+                    ? `<span style="color:#4ade80; font-weight:800;">+${res.healed} HP</span> + Overheal ➔ ${tempPart}!`
+                    : `Full HP — Overheal ➔ ${tempPart}!`;
+            }
+            adapter.log(`✨ <strong>${act.verb || 'Drank'} ${esc(shortLabel(raw))}:</strong> [${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} (${total}) ➔ ${detailTxt}`);
         } else if (act.type === 'holyWater') {
             spendTurnAction('action');
             const d1 = Math.floor(Math.random() * 6) + 1;
@@ -8331,9 +8445,11 @@
                 <div class="rpg-form-grid">
                     <label class="rpg-field-lbl">Consumable Effect
                         <select id="rpg-tag-cons-type" class="rpg-select">
-                            <option value="heal">Restore Hit Points (Heal)</option>
+                            <option value="heal">Restore Hit Points (Standard Heal — Caps at Max HP)</option>
+                            <option value="tempHp">Pure Temporary HP Potion (Non-Stacking)</option>
+                            <option value="overheal">Overheal Elixir (Heal + Excess ➔ Temp HP)</option>
                             <option value="holyWater">Radiant / Fire Splash Damage</option>
-                            <option value="dreamPastry">Grant Temporary HP</option>
+                            <option value="dreamPastry">Dream Pastry (+1d6 Temp HP + Hag Trance)</option>
                         </select>
                     </label>
                     <label class="rpg-field-lbl">Dice Rolled
@@ -8683,16 +8799,28 @@
             const qb = document.getElementById('rpg-tag-cons-qb')?.value !== 'no';
             const fStr = `${diceCnt}d${diceSides}${bonus ? '+' + bonus : ''}`;
             const sLbl = shortLabel(raw).replace(/^[^\w"]+/, '').split(' ').slice(0, 2).join(' ') || 'Item';
+            const actObj = cType === 'heal'
+                ? { type: 'heal', dice: diceCnt, sides: diceSides, bonus, verb: 'Used', label: `${sLbl} (${fStr})` }
+                : (cType === 'tempHp'
+                    ? { type: 'tempHp', dice: diceCnt, sides: diceSides, bonus, verb: 'Drank', duration: '1 hour', label: `${sLbl} (+${fStr} Temp)` }
+                    : (cType === 'overheal'
+                        ? { type: 'overheal', dice: diceCnt, sides: diceSides, bonus, verb: 'Drank', duration: '1 hour', label: `${sLbl} (${fStr}➔Temp)` }
+                        : (cType === 'holyWater'
+                            ? { type: 'holyWater', label: `${sLbl} (2d6 Rad)` }
+                            : { type: 'dreamPastry', label: `${sLbl} (+1d6 Temp)` })));
+            const baseSum = cType === 'heal'
+                ? `Heal ${fStr} HP (Caps at Max HP)`
+                : (cType === 'tempHp'
+                    ? `Grant ${fStr} Temp HP (1 hr • Non-Stacking)`
+                    : (cType === 'overheal'
+                        ? `Heal ${fStr} HP; excess ➔ Temp HP (1 hr)`
+                        : (cType === 'holyWater' ? '2d6 Radiant Splash' : '+1d6 Temp HP (Hag Trance)')));
             meta = {
                 category: 'consumable',
                 slots: [],
                 quickBelt: qb,
-                useAction: cType === 'heal'
-                    ? { type: 'heal', dice: diceCnt, sides: diceSides, bonus, verb: 'Used', label: `${sLbl} (${fStr})` }
-                    : (cType === 'holyWater'
-                        ? { type: 'holyWater', label: `${sLbl} (2d6 Rad)` }
-                        : { type: 'dreamPastry', label: `${sLbl} (+1d6 Temp)` }),
-                summary: `${cType === 'heal' ? `Heal ${fStr} HP` : (cType === 'holyWater' ? '2d6 Radiant Splash' : '+1d6 Temp HP')}${note ? ' • ' + note : ''}`
+                useAction: actObj,
+                summary: `${baseSum}${note ? ' • ' + note : ''}`
             };
         } else {
             // 'armor' or 'accessory'

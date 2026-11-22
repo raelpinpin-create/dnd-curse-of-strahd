@@ -12606,7 +12606,7 @@ const LOOT_DATA = {
         "rarity": "Common Consumable",
         "cost": "5 GP",
         "location": "Act I–IV • Ismark's Cache, Vistani Camp, Blue Water Inn & Dungeon Caches",
-        "mechanics": "<strong>Bonus Action</strong> to drink yourself or <strong>Action</strong> to feed a downed ally: restores <strong>2d6 + 1 HP</strong> (any healing above Max HP automatically channels into Temporary HP!).",
+        "mechanics": "<strong>Bonus Action</strong> to drink yourself or <strong>Action</strong> to feed a downed ally: restores <strong>2d6 + 1 HP</strong> (caps strictly at Max HP — does not grant Temporary HP).",
         "lore": "A crystal vial of glowing crimson liquid smelling of mountain herbs."
     },
     "greater_healing": {
@@ -12615,7 +12615,7 @@ const LOOT_DATA = {
         "rarity": "Uncommon Consumable",
         "cost": "15 GP",
         "location": "Act II–III • Blue Water Inn Stash (N2q), Ezmerelda's Wagon & Argynvostholt",
-        "mechanics": "<strong>Bonus Action</strong> self / <strong>Action</strong> ally: restores <strong>4d4 + 4 HP</strong> (overflow above Max HP converts to Temp HP!).",
+        "mechanics": "<strong>Bonus Action</strong> self / <strong>Action</strong> ally: restores <strong>4d4 + 4 HP</strong> (caps strictly at Max HP — does not grant Temporary HP).",
         "lore": "A heavy, wax-stoppered flask of concentrated ruby restorative."
     },
     "superior_healing": {
@@ -12624,8 +12624,48 @@ const LOOT_DATA = {
         "rarity": "Rare Consumable",
         "cost": "45 GP",
         "location": "Act III–IV • Abbey of St. Markovia (S13), Amber Temple & Castle Ravenloft",
-        "mechanics": "<strong>Bonus Action</strong> self / <strong>Action</strong> ally: restores a massive <strong>8d4 + 8 HP (Avg 28 HP!)</strong>.",
+        "mechanics": "<strong>Bonus Action</strong> self / <strong>Action</strong> ally: restores a massive <strong>8d4 + 8 HP (Avg 28 HP!)</strong> (caps strictly at Max HP — does not grant Temporary HP).",
         "lore": "Distilled by the Deva Abbot in Krezk using blessed spring water from the Shrine of the White Sun."
+    },
+    "potion_false_vitality": {
+        "cat": "heal",
+        "name": "Potion of False Vitality",
+        "rarity": "Common/Uncommon Temp HP Potion",
+        "cost": "6 GP",
+        "location": "Act I–IV • Tser Pool Vistani Apothecary (G), Vallaki Arasek Stockyard (N5) & Dungeon Caches",
+        "mechanics": "• <strong>Bonus Action (Self) / Action (Ally):</strong> Grants <strong>1d6 + 4 Temporary Hit Points (Avg 7.5)</strong> lasting <strong>1 hour</strong>.<br>• <strong>Pure Temp HP (5e Non-Stacking):</strong> Does not restore missing HP and replaces lower Temp HP rather than stacking.",
+        "lore": "A chill cobalt-silver vial swirling with ghostly frost-motes reminiscent of the False Life spell.",
+        "actTag": "Act I"
+    },
+    "vistani_stag_tonic": {
+        "cat": "heal",
+        "name": "Vistani Stag-Blood Tonic",
+        "rarity": "Uncommon Temp HP Potion",
+        "cost": "18 GP",
+        "location": "Act II–IV • Tser Pool / Vallaki Vistani Camp (G / N9), Ezmerelda's Wagon (V1) & Argynvostholt",
+        "mechanics": "• <strong>Bonus Action (Self) / Action (Ally):</strong> Grants <strong>2d6 + 4 Temporary Hit Points (Avg 11)</strong> for <strong>1 hour</strong> (5e non-stacking) AND <strong>Advantage on your next STR or CON Saving Throw</strong> within the hour.<br>• Does not restore missing HP.",
+        "lore": "A hot, spiced crimson-amber cordial brewed from mountain pine resin, wild heart-root, and winter stag vigor.",
+        "actTag": "Act II"
+    },
+    "morninglord_overflow_elixir": {
+        "cat": "heal",
+        "name": "Morninglord's Overflow Elixir",
+        "rarity": "Uncommon Overheal-to-Temp Potion",
+        "cost": "12 GP",
+        "location": "Act I–IV • Church of the Morninglord (E5), St. Andral's (N1), Blue Water Inn (N2q) & Abbey (S13)",
+        "mechanics": "• <strong>Bonus Action (Self) / Action (Ally):</strong> Restores <strong>2d6 + 2 Hit Points (Avg 9 HP)</strong>.<br>• <strong>Overheal Ward (1 Hour):</strong> Any healing beyond your Max HP converts into <strong>Temporary Hit Points</strong> for <strong>1 hour</strong> (5e non-stacking — keeps the higher Temp HP pool).",
+        "lore": "A warm rose-gold draught flecked with liquid dawn-amber that seals wounds and wraps surplus vitality into a shimmering ward.",
+        "actTag": "Act I"
+    },
+    "sun_spun_aegis_draught": {
+        "cat": "heal",
+        "name": "Sun-Spun Aegis Draught",
+        "rarity": "Rare Overheal-to-Temp Potion",
+        "cost": "38 GP",
+        "location": "Act III–IV • Abbey of St. Markovia (S13), Argynvostholt (Q28), Amber Temple & Castle Ravenloft (K41)",
+        "mechanics": "• <strong>Bonus Action (Self) / Action (Ally):</strong> Restores <strong>4d4 + 4 Hit Points (Avg 14 HP)</strong>.<br>• <strong>Overheal Aegis (1 Hour):</strong> Any healing beyond your Max HP converts into <strong>Temporary Hit Points</strong> for <strong>1 hour</strong> (5e non-stacking — replaces lower Temp HP, never stacks).",
+        "lore": "An iridescent golden-crimson phial infused with consecrated dawn-salts, bottled for sieges against Barovia's apex predators.",
+        "actTag": "Act III"
     },
     "potion_invulnerability": {
         "cat": "heal",
@@ -13335,7 +13375,7 @@ const LOOT_DATA = {
         "rarity": "Common Consumable • 2x Claimed S1 (Yvaine)",
         "cost": "5 SP (or Craftable)",
         "location": "Act I • Barovia Village Supplies / Craftable from Herbs (Session 1) • Yvaine & Party",
-        "mechanics": "• <strong>1 Action (Self or Adjacent Ally):</strong> Bind bleeding wounds to restore <strong>1d6 + 1 Hit Points</strong> (any healing above Max HP channels into Temporary HP per table rules).<br>• Can also be field-crafted by Piper from <code>1x Medicinal Herb</code>!",
+        "mechanics": "• <strong>1 Action (Self or Adjacent Ally):</strong> Bind bleeding wounds to restore <strong>1d6 + 1 Hit Points</strong> (caps strictly at Max HP — does not grant Temporary HP).<br>• Can also be field-crafted by Piper from <code>1x Medicinal Herb</code>!",
         "lore": "Clean rolled linen strips steeped in bitter Barovian astringent salve."
     },
     "fresh_croissants": {
@@ -13344,7 +13384,7 @@ const LOOT_DATA = {
         "rarity": "Common Food Consumable • 3x Claimed S1 (Yvaine)",
         "cost": "2 CP each",
         "location": "Act I • Village of Barovia Provisions (Session 1) • Yvaine",
-        "mechanics": "• <strong>Bonus Action / Action to Eat:</strong> Restores <strong>1d4 Hit Points</strong> (safe, wholesome pastry with zero hag bone-flour curse!).",
+        "mechanics": "• <strong>Bonus Action / Action to Eat:</strong> Restores <strong>1d4 Hit Points</strong> (caps strictly at Max HP — food never grants Temporary HP; safe, wholesome pastry with zero hag bone-flour curse!).",
         "lore": "Buttered golden crescents wrapped in parchment—a rare warm comfort beneath Barovia's gray skies."
     },
     "expensive_wine": {
@@ -16457,9 +16497,11 @@ function renderDmDropModalBody() {
                 <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#6ee7b7; font-weight:700;">
                     Consumable Action Type
                     <select id="dm-forge-cons-type" style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
-                        <option value="heal">💚 Restore Hit Points (Healing Potion / Food / Bandage)</option>
+                        <option value="heal">💚 Restore Hit Points (Standard Heal — Caps at Max HP)</option>
+                        <option value="tempHp">🛡️ Pure Temporary HP Potion (Non-Stacking • 1 hr)</option>
+                        <option value="overheal">✨ Overheal Elixir (Heal HP + Excess ➔ Temp HP • 1 hr)</option>
                         <option value="holyWater">💥 Radiant / Fire Throwable Bomb or Holy Water</option>
-                        <option value="dreamPastry">🛡️ Grant Temporary Hit Points</option>
+                        <option value="dreamPastry">🥧 Dream Pastry (+1d6 Temp HP + Hag Trance)</option>
                     </select>
                 </label>
                 <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#6ee7b7; font-weight:700;">
@@ -16894,7 +16936,14 @@ function submitDmForgeItem(andSendToHero = true) {
         const qb = document.getElementById('dm-forge-cons-qb')?.value !== 'no';
         const fStr = `${diceCnt}d${diceSides}${bonus ? '+' + bonus : ''}`;
         const shortN = name.replace(/^[^\w"]+/, '').split(' ').slice(0, 2).join(' ') || 'Potion';
-        const sumTxt = `${cType === 'heal' ? `Heal ${fStr} HP` : (cType === 'holyWater' ? '2d6 Radiant Splash' : '+1d6 Temp HP')}${note ? ' • ' + note : ''}`;
+        const baseSumTxt = cType === 'heal'
+            ? `Heal ${fStr} HP (Caps at Max HP)`
+            : (cType === 'tempHp'
+                ? `Grant ${fStr} Temp HP (1 hr • Non-Stacking)`
+                : (cType === 'overheal'
+                    ? `Heal ${fStr} HP; excess over Max HP ➔ Temp HP (1 hr)`
+                    : (cType === 'holyWater' ? '2d6 Radiant Splash' : '+1d6 Temp HP (Hag Trance)')));
+        const sumTxt = `${baseSumTxt}${note ? ' • ' + note : ''}`;
         rarity = `Custom Consumable • ${fStr}`;
         mechanicsHtml = `• <strong>Consumable Use:</strong> ${sumTxt}`;
         customMeta = {
@@ -16903,9 +16952,13 @@ function submitDmForgeItem(andSendToHero = true) {
             quickBelt: qb,
             useAction: cType === 'heal'
                 ? { type: 'heal', dice: diceCnt, sides: diceSides, bonus, verb: 'Used', label: `${shortN} (${fStr})` }
-                : (cType === 'holyWater'
-                    ? { type: 'holyWater', label: `${shortN} (2d6 Rad)` }
-                    : { type: 'dreamPastry', label: `${shortN} (+1d6 Temp)` }),
+                : (cType === 'tempHp'
+                    ? { type: 'tempHp', dice: diceCnt, sides: diceSides, bonus, verb: 'Drank', duration: '1 hour', label: `${shortN} (+${fStr} Temp)` }
+                    : (cType === 'overheal'
+                        ? { type: 'overheal', dice: diceCnt, sides: diceSides, bonus, verb: 'Drank', duration: '1 hour', label: `${shortN} (${fStr}➔Temp)` }
+                        : (cType === 'holyWater'
+                            ? { type: 'holyWater', label: `${shortN} (2d6 Rad)` }
+                            : { type: 'dreamPastry', label: `${shortN} (+1d6 Temp)` }))),
             summary: sumTxt
         };
     } else if (dmForgeKind === 'material') {

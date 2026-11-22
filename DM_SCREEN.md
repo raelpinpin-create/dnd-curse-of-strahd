@@ -355,10 +355,14 @@ flowchart TD
 
 ---
 
-### 🧪 4.5 Potions, Elixirs, Holy Water & Barovian Vintages (11 Items)
-48. 🧪 **Potion of Healing** *(Common • 5 GP)*: **Bonus Action** self (`2d6 + 1 HP`, overflow becomes Temp HP!) | **Action** ally.
-49. 🧪 **Potion of Greater Healing** *(Uncommon • 15 GP • Book Area N2q)*: Restores **`4d4 + 4 HP`**.
-50. 🧪 **Potion of Superior Healing** *(Rare • 45 GP • Book Area S13 Abbey)*: Restores **`8d4 + 8 HP (Avg 28 HP)`**.
+### 🧪 4.5 Potions, Elixirs, Holy Water & Barovian Vintages (15 Items)
+48. 🧪 **Potion of Healing** *(Common • 5 GP)*: **Bonus Action** self (`2d6 + 1 HP`, caps strictly at Max HP — no Temp HP!) | **Action** ally.
+49. 🧪 **Potion of Greater Healing** *(Uncommon • 15 GP • Book Area N2q)*: Restores **`4d4 + 4 HP`** (caps strictly at Max HP — no Temp HP).
+50. 🧪 **Potion of Superior Healing** *(Rare • 45 GP • Book Area S13 Abbey)*: Restores **`8d4 + 8 HP (Avg 28 HP)`** (caps strictly at Max HP — no Temp HP).
+50a. 🛡️ **Potion of False Vitality** *(Common/Uncommon Pure Temp HP Potion • `6 GP` • Act I–IV • Tser Pool G / Arasek N5)*: **Bonus Action** self / **Action** ally; grants **`1d6 + 4` Temporary HP** for **1 hour** (5e non-stacking; does not restore actual HP).
+50b. 🩸 **Vistani Stag-Blood Tonic** *(Uncommon Pure Temp HP Potion • `18 GP` • Act II–IV • Vistani Camps G/N9 / Ezmerelda V1)*: **Bonus Action** self / **Action** ally; grants **`2d6 + 4` Temporary HP** for **1 hour** (5e non-stacking) + **Advantage on next STR/CON Save** within the hour.
+50c. ✨ **Morninglord's Overflow Elixir** *(Uncommon Overheal-to-Temp Potion • `12 GP` • Act I–IV • Church E5 / St. Andral N1 / Blue Water N2q)*: **Bonus Action** self / **Action** ally; restores **`2d6 + 2 HP`** — **any healing above Max HP converts into Temporary HP** for **1 hour** (5e non-stacking).
+50d. 🌟 **Sun-Spun Aegis Draught** *(Rare Overheal-to-Temp Potion • `38 GP` • Act III–IV • Abbey S13 / Argynvostholt Q28 / Amber Temple X)*: **Bonus Action** self / **Action** ally; restores **`4d4 + 4 HP`** — **any healing above Max HP converts into Temporary HP** for **1 hour** (5e non-stacking).
 51. 🛡️ **Potion of Invulnerability (x4)** *(Rare Consumable • Book Area Q28 Knights' Quarters)*: For **1 minute**, grants **Resistance to ALL damage types**! *(Note: Reloaded swaps these for Potions of Greater Healing).*
 52. **Elixir of Health (Legendary Revival)** *(Legendary Consumable • Extra Rare `5,000 GP` Base / `15,000 GP` Royal Market • Book Area N2q Blue Water Inn OR Heartstone Transmutation `HEART-ELIXIR`)*: **Action (Within 1 Minute of Death):** Administer to a creature that has died within the last minute; returns to life with **`50% Max HP`** and knits severed limbs back together. Suffers a **`-2 penalty`** to all attack rolls, saving throws, and ability checks until finishing a Long Rest. Formula stays hidden until discovered in **Amber Temple Master Library (`X30` carved wall mural)**, **Exethanter (`X27`)**, or **Fallen Abbot (`S13`) / Van Richten**, and sacrifices EITHER **Strahd's Shard of the Heart of Sorrow (`K20`)** OR **Morgantha's Cracked Night Hag Heartstone**.
 52a. 🧪 **Barovian Antitoxin Tonic** *(Common/Uncommon Consumable • Craftable `WOLFBANE` / `5 GP`)*: Grants **Advantage on Saving Throws vs. Poison** for 1 full hour.
