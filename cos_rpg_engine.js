@@ -6704,13 +6704,12 @@
                 const btn = document.getElementById('rpg-hdr-sync-btn');
                 if (btn) {
                     btn.innerHTML = `✅ Synced (${timeStr})`;
-                    btn.style.borderColor = '#22c55e';
-                    btn.style.color = '#86efac';
+                    btn.style.borderColor = 'var(--accent-green)';
                     setTimeout(() => {
                         if (btn) {
                             btn.innerHTML = `☁️ Sync`;
-                            btn.style.borderColor = 'rgba(63, 185, 128, 0.48)';
-                            btn.style.color = '#86efac';
+                            btn.style.borderColor = '';
+                            btn.style.color = '';
                         }
                     }, 4000);
                 }
@@ -6719,7 +6718,7 @@
                     if (combined && navigator.clipboard && navigator.clipboard.writeText) {
                         navigator.clipboard.writeText(combined).catch(() => {});
                     }
-                    adapter.log(`☁️ <strong>Synced Official Checkpoint to DM (${esc(timeStr)})!</strong><br><small style="color:#86efac;">Sheet state saved to DM Screen &amp; set as your 🔄 Reset restore point.</small>`);
+                    adapter.log(`☁️ <strong>Synced Official Checkpoint to DM (${esc(timeStr)})!</strong><br><small style="color:var(--accent-green);">Sheet state saved to DM Screen &amp; set as your 🔄 Reset restore point.</small>`);
                 }
             }).catch(err => {
                 if (!silentToast) adapter.log(`⚠️ Cloud Sync failed: ${esc(err.message)}`);
@@ -7822,8 +7821,7 @@
             const syncBtn = document.createElement('button');
             syncBtn.type = 'button';
             syncBtn.id = 'rpg-hdr-sync-btn';
-            syncBtn.className = 'rpg-header-btn';
-            syncBtn.style.cssText = 'background:linear-gradient(180deg, rgba(94, 184, 138, 0.2) 0%, #1c2224 100%); border-color:rgba(94, 184, 138, 0.42); color:#a3dec0;';
+            syncBtn.className = 'rpg-header-btn rpg-btn-sync';
             syncBtn.title = 'Save official Session Checkpoint (Vitals, Slots, Gear, Presets, Notes & Live Party preference) directly to DM via Firebase';
             syncBtn.onclick = () => pushSyncedCheckpoint(false);
             syncBtn.innerHTML = `☁️ Sync`;
@@ -10610,18 +10608,129 @@
         announceStatus(hudState.showPartyHud ? 'Live Party vitals bar shown.' : 'Live Party vitals bar hidden.');
     }
 
+    const THEME_STORAGE_KEY = 'cos_sheet_theme_v1';
+    const THEME_CATALOG = [
+        {
+            id: 'obsidian',
+            name: 'Obsidian Brass',
+            desc: 'Smoked charcoal & antique brass',
+            scheme: 'dark',
+            swatches: ['#0c0d10', '#c8a45c', '#5eb88a']
+        },
+        {
+            id: 'midnight',
+            name: 'Midnight Slate',
+            desc: 'Deep indigo Ravenloft twilight',
+            scheme: 'dark',
+            swatches: ['#0c1220', '#7ea8dc', '#c8a45c']
+        },
+        {
+            id: 'velvet',
+            name: 'Barovian Velvet',
+            desc: 'Smoked plum & candlelight gold',
+            scheme: 'dark',
+            swatches: ['#150d14', '#d48b9c', '#c8a45c']
+        },
+        {
+            id: 'pine',
+            name: 'Pine Forest Slate',
+            desc: 'Svalich evergreen & moss brass',
+            scheme: 'dark',
+            swatches: ['#0c1512', '#6fa884', '#c2a65c']
+        },
+        {
+            id: 'parchment',
+            name: 'Warm Parchment',
+            desc: 'Soft aged vellum (Light Mode)',
+            scheme: 'light',
+            swatches: ['#f1eadc', '#8a5d1c', '#9c3333']
+        }
+    ];
+
+    function getStoredThemeId() {
+        try {
+            const raw = localStorage.getItem(THEME_STORAGE_KEY);
+            return THEME_CATALOG.some(t => t.id === raw) ? raw : null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function syncThemeTrayUI() {
+        const currentId = getStoredThemeId();
+        const sysDark = typeof window.matchMedia === 'function'
+            ? window.matchMedia('(prefers-color-scheme: dark)').matches
+            : true;
+        document.querySelectorAll('#rpg-theme-list .rpg-theme-option').forEach(btn => {
+            const active = btn.dataset.themeId === currentId;
+            btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+        });
+        const sysBtn = document.getElementById('rpg-theme-system-btn');
+        if (sysBtn) {
+            sysBtn.setAttribute('aria-pressed', currentId === null ? 'true' : 'false');
+        }
+        const sysLabel = document.getElementById('rpg-theme-system-mode');
+        if (sysLabel) {
+            sysLabel.textContent = sysDark ? 'Currently Dark' : 'Currently Light';
+        }
+    }
+
+    function applySheetTheme(themeId, persist = true) {
+        const root = document.documentElement;
+        const meta = document.querySelector('meta[name="color-scheme"]');
+        const entry = THEME_CATALOG.find(t => t.id === themeId) || null;
+        if (entry) {
+            root.setAttribute('data-theme', entry.id);
+            if (meta) meta.setAttribute('content', entry.scheme);
+            if (persist) {
+                try { localStorage.setItem(THEME_STORAGE_KEY, entry.id); } catch (e) {}
+            }
+        } else {
+            root.removeAttribute('data-theme');
+            if (meta) meta.setAttribute('content', 'light dark');
+            if (persist) {
+                try { localStorage.removeItem(THEME_STORAGE_KEY); } catch (e) {}
+            }
+        }
+        syncThemeTrayUI();
+    }
+
+    function setSheetTheme(themeId) {
+        applySheetTheme(themeId === 'system' ? null : themeId, true);
+    }
+
+    function initThemeListeners() {
+        applySheetTheme(getStoredThemeId(), false);
+        if (window.__cosThemeListenersAttached) return;
+        window.__cosThemeListenersAttached = true;
+        window.addEventListener('storage', (e) => {
+            if (e.key === THEME_STORAGE_KEY) {
+                applySheetTheme(e.newValue, false);
+            }
+        });
+        if (typeof window.matchMedia === 'function') {
+            const mql = window.matchMedia('(prefers-color-scheme: dark)');
+            const onSysChange = () => syncThemeTrayUI();
+            if (typeof mql.addEventListener === 'function') mql.addEventListener('change', onSysChange);
+            else if (typeof mql.addListener === 'function') mql.addListener(onSysChange);
+        }
+    }
+
     function toggleFabMenu(forceState) {
         const bubbles = document.getElementById('rpg-fab-bubbles');
         const mainBtn = document.getElementById('rpg-dice-fab-btn');
         const tray = document.getElementById('rpg-dice-tray');
+        const themeTray = document.getElementById('rpg-theme-tray');
         if (!bubbles) return;
-        if (typeof forceState !== 'boolean' && tray && tray.classList.contains('is-open')) {
+        if (typeof forceState !== 'boolean' && ((tray && tray.classList.contains('is-open')) || (themeTray && themeTray.classList.contains('is-open')))) {
             toggleDiceTray(false);
+            toggleThemeTray(false);
             return;
         }
         const next = typeof forceState === 'boolean' ? forceState : !bubbles.classList.contains('is-open');
         bubbles.classList.toggle('is-open', next);
         if (next && tray) tray.classList.remove('is-open');
+        if (next && themeTray) themeTray.classList.remove('is-open');
         if (mainBtn) {
             mainBtn.classList.toggle('is-open', next);
             mainBtn.setAttribute('aria-expanded', next ? 'true' : 'false');
@@ -10631,17 +10740,39 @@
 
     function toggleDiceTray(forceState) {
         const tray = document.getElementById('rpg-dice-tray');
+        const themeTray = document.getElementById('rpg-theme-tray');
         const bubbles = document.getElementById('rpg-fab-bubbles');
         const mainBtn = document.getElementById('rpg-dice-fab-btn');
         if (!tray) return;
         const next = typeof forceState === 'boolean' ? forceState : !tray.classList.contains('is-open');
         tray.classList.toggle('is-open', next);
         if (next && bubbles) bubbles.classList.remove('is-open');
+        if (next && themeTray) themeTray.classList.remove('is-open');
         if (mainBtn) {
-            mainBtn.classList.toggle('is-open', next || (bubbles && bubbles.classList.contains('is-open')));
-            mainBtn.setAttribute('aria-expanded', (next || (bubbles && bubbles.classList.contains('is-open'))) ? 'true' : 'false');
+            const anyOpen = next || Boolean(bubbles && bubbles.classList.contains('is-open')) || Boolean(themeTray && themeTray.classList.contains('is-open'));
+            mainBtn.classList.toggle('is-open', anyOpen);
+            mainBtn.setAttribute('aria-expanded', anyOpen ? 'true' : 'false');
         }
         syncDiceFabBadge();
+    }
+
+    function toggleThemeTray(forceState) {
+        const themeTray = document.getElementById('rpg-theme-tray');
+        const tray = document.getElementById('rpg-dice-tray');
+        const bubbles = document.getElementById('rpg-fab-bubbles');
+        const mainBtn = document.getElementById('rpg-dice-fab-btn');
+        if (!themeTray) return;
+        const next = typeof forceState === 'boolean' ? forceState : !themeTray.classList.contains('is-open');
+        themeTray.classList.toggle('is-open', next);
+        if (next && bubbles) bubbles.classList.remove('is-open');
+        if (next && tray) tray.classList.remove('is-open');
+        if (next) syncThemeTrayUI();
+        syncDiceFabBadge();
+        if (mainBtn) {
+            const anyOpen = next || Boolean(bubbles && bubbles.classList.contains('is-open')) || Boolean(tray && tray.classList.contains('is-open'));
+            mainBtn.classList.toggle('is-open', anyOpen);
+            mainBtn.setAttribute('aria-expanded', anyOpen ? 'true' : 'false');
+        }
     }
 
     function syncDiceFabBadge() {
@@ -10914,32 +11045,61 @@
                         </div>
                     </div>
                 </div>
+                <div id="rpg-theme-tray" class="rpg-theme-tray" role="region" aria-label="Sheet Color Themes">
+                    <div class="rpg-dice-tray-head">
+                        <span>🎨 Sheet Theme</span>
+                        <button type="button" class="btn-act btn-act-pre" style="padding:1px 6px; font-size:0.66rem;" onclick="COS_RPG.toggleThemeTray(false)" aria-label="Close Theme Picker">✕</button>
+                    </div>
+                    <div id="rpg-theme-list" class="rpg-theme-list">
+                        ${THEME_CATALOG.map(t => `
+                            <button type="button" class="rpg-theme-option" data-theme-id="${esc(t.id)}" aria-pressed="false" onclick="COS_RPG.setSheetTheme('${esc(t.id)}')">
+                                <span class="rpg-theme-opt-left">
+                                    <span class="rpg-theme-swatches">${t.swatches.map(c => `<span class="rpg-theme-dot" style="background:${c};"></span>`).join('')}</span>
+                                    <span class="rpg-theme-meta">
+                                        <span class="rpg-theme-name">${esc(t.name)}</span>
+                                        <span class="rpg-theme-desc">${esc(t.desc)}</span>
+                                    </span>
+                                </span>
+                                <span class="rpg-theme-check" aria-hidden="true">✓</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                    <button type="button" id="rpg-theme-system-btn" class="rpg-theme-option rpg-theme-system-btn" aria-pressed="false" onclick="COS_RPG.setSheetTheme('system')">
+                        <span>🌓 Follow System</span>
+                        <span id="rpg-theme-system-mode" class="rpg-theme-desc">Currently Dark</span>
+                    </button>
+                </div>
                 <div id="rpg-fab-bubbles" class="rpg-fab-bubbles" role="menu" aria-label="Quick Utility Menu">
                     <a href="index.html" class="rpg-fab-bubble bubble-portal" role="menuitem" title="Back to Campaign Portal">🏰 Portal</a>
                     <button type="button" class="rpg-fab-bubble bubble-reset" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.resetSheetToOfficialBaseline(false);" title="Undo unsaved changes &amp; restore last ☁️ Sync checkpoint">🔄 Reset</button>
                     <button type="button" class="rpg-fab-bubble bubble-rules" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.openRulesModal();" title="Open Combat Controls &amp; Table House Rules">❓ Rules</button>
+                    <button type="button" id="rpg-fab-theme-btn" class="rpg-fab-bubble bubble-theme" role="menuitem" onclick="COS_RPG.toggleThemeTray(true)" title="Choose Sheet Color Theme (Obsidian, Midnight, Velvet, Pine Forest, Parchment, System)">🎨 Theme</button>
                     <button type="button" id="rpg-fab-dice-btn" class="rpg-fab-bubble bubble-dice" role="menuitem" onclick="COS_RPG.toggleDiceTray(true)" title="Open Quick Dice Roller &amp; Adv/Dis Modifiers">🎲 Quick Dice</button>
                     <button type="button" id="rpg-fab-trade-btn" class="rpg-fab-bubble bubble-trade" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.openTradeModal('messages');" title="Open Party Chat, Whispers &amp; Item/Gold Trade">💬 Chat <span id="rpg-fab-trade-badge" class="rpg-badge-count pulse-alert" style="display:none;"></span></button>
                     <button type="button" id="rpg-fab-party-btn" class="rpg-fab-bubble bubble-party" role="menuitemcheckbox" aria-pressed="false" onclick="COS_RPG.togglePartyHud()" title="Toggle Live Teammate HP &amp; Status Row">👥 Live Party</button>
                 </div>
-                <button type="button" id="rpg-dice-fab-btn" class="rpg-dice-fab" aria-expanded="false" aria-controls="rpg-fab-bubbles" onclick="COS_RPG.toggleFabMenu()" title="Open Quick Menu (Live Party, Chat, Dice, Rules, Reset &amp; Portal)"><span id="rpg-fab-label">✦ Menu</span> <span id="rpg-fab-alert-dot" class="rpg-fab-dot" style="display:none;"></span></button>
+                <button type="button" id="rpg-dice-fab-btn" class="rpg-dice-fab" aria-expanded="false" aria-controls="rpg-fab-bubbles" onclick="COS_RPG.toggleFabMenu()" title="Open Quick Menu (Live Party, Chat, Dice, Theme, Rules, Reset &amp; Portal)"><span id="rpg-fab-label">✦ Menu</span> <span id="rpg-fab-alert-dot" class="rpg-fab-dot" style="display:none;"></span></button>
             `;
             document.body.appendChild(fabWrap);
+            syncThemeTrayUI();
 
-            // Light-dismiss floating speed-dial & dice tray on outside click or Escape
+            // Light-dismiss floating speed-dial, theme tray & dice tray on outside click or Escape
             document.addEventListener('click', (e) => {
                 const tray = document.getElementById('rpg-dice-tray');
+                const themeTray = document.getElementById('rpg-theme-tray');
                 const bubbles = document.getElementById('rpg-fab-bubbles');
-                const openAny = (tray && tray.classList.contains('is-open')) || (bubbles && bubbles.classList.contains('is-open'));
+                const openAny = (tray && tray.classList.contains('is-open')) || (themeTray && themeTray.classList.contains('is-open')) || (bubbles && bubbles.classList.contains('is-open'));
                 if (!openAny) return;
                 if (!fabWrap.contains(e.target)) {
                     toggleDiceTray(false);
+                    toggleThemeTray(false);
                     toggleFabMenu(false);
                 }
             });
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     toggleDiceTray(false);
+                    toggleThemeTray(false);
                     toggleFabMenu(false);
                 }
             });
@@ -12157,6 +12317,7 @@
 
     function init(sheetAdapter) {
         adapter = sheetAdapter;
+        initThemeListeners();
         injectDialogsAndBanner();
         mountVideoGameHudWidgets();
         mountPlayerNotesJournal();
@@ -12377,6 +12538,8 @@
         toggleFabMenu,
         togglePartyHud,
         toggleDiceTray,
+        toggleThemeTray,
+        setSheetTheme,
         syncDiceFabBadge,
         consumeTempRollMode,
         setRollFollowup,

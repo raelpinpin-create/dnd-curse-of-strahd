@@ -3,13 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('cos_sheet_theme_v1');
+                var m = document.querySelector('meta[name="color-scheme"]');
+                var map = { obsidian: 'dark', midnight: 'dark', velvet: 'dark', pine: 'dark', parchment: 'light' };
+                if (t && map[t]) {
+                    document.documentElement.dataset.theme = t;
+                    if (m) m.content = map[t];
+                } else {
+                    if (m) m.content = 'light dark';
+                }
+            } catch (e) {}
+        })();
+    </script>
     <title>Jacomir Yulle (King of Oakenshire) — Battle Master Fighter Sheet (Curse of Strahd)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v5">
-    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v7">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v9">
+    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v9">
     <style>
         @layer legacy {
         :root {
@@ -1351,21 +1366,21 @@
 
     <!-- 🎲 FLOATING BOTTOM ROLL RESULT HUD DRAWER -->
     <div class="floating-roll-hud" id="floating-roll-hud" role="status" aria-live="polite">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--card-border); padding-bottom:6px;">
             <div style="display:flex; align-items:center; gap:8px;">
                 <span style="font-size:0.78rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.5px;">🎲 Live Roll &amp; Action Result</span>
                 <span id="floating-roll-time" style="font-size:0.72rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;"></span>
             </div>
-            <button class="btn-act btn-act-pre" onclick="dismissFloatingHud()" style="padding:3px 10px; font-size:0.74rem; color:#cbd5e1;" title="Dismiss floating roll drawer">✕ Dismiss</button>
+            <button class="btn-act btn-act-pre" onclick="dismissFloatingHud()" style="padding:3px 10px; font-size:0.74rem; color:var(--text-dim);" title="Dismiss floating roll drawer">✕ Dismiss</button>
         </div>
-        <div id="floating-roll-body" style="font-size:0.98rem; color:#f8fafc; line-height:1.5; display:flex; align-items:center; flex-wrap:wrap; gap:8px;"></div>
+        <div id="floating-roll-body" style="font-size:0.98rem; color:var(--text-light); line-height:1.5; display:flex; align-items:center; flex-wrap:wrap; gap:8px;"></div>
     </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261122v5"></script>
+<script src="cos_rpg_engine.js?v=20261122v8"></script>
 <script>
     // ==========================================
     // 👑 JACOMIR YULLE MASTER STATE VARIABLES
@@ -2639,7 +2654,7 @@
         const tag = document.getElementById('saves-gear-tag');
         if (tag) {
             tag.innerText = sb ? `Prof: +${pb} • Gear +${sb}` : `Proficiency: +${pb}`;
-            tag.style.color = sb ? '#93c5fd' : 'var(--text-dim)';
+            tag.style.color = sb ? 'var(--accent-blue)' : 'var(--text-dim)';
         }
     }
 

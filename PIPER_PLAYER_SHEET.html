@@ -3,13 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('cos_sheet_theme_v1');
+                var m = document.querySelector('meta[name="color-scheme"]');
+                var map = { obsidian: 'dark', midnight: 'dark', velvet: 'dark', pine: 'dark', parchment: 'light' };
+                if (t && map[t]) {
+                    document.documentElement.dataset.theme = t;
+                    if (m) m.content = map[t];
+                } else {
+                    if (m) m.content = 'light dark';
+                }
+            } catch (e) {}
+        })();
+    </script>
     <title>Piper — Wild Magic Sorcerer Sheet (Curse of Strahd)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v5">
-    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v7">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v9">
+    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v9">
     <style>
         @layer legacy {
         :root {
@@ -1663,20 +1678,20 @@
 
     <!-- 🎲 FLOATING BOTTOM ROLL RESULT HUD DRAWER -->
     <div class="floating-roll-hud" id="floating-roll-hud" role="status" aria-live="polite">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--card-border); padding-bottom:6px;">
             <div style="display:flex; align-items:center; gap:8px;">
                 <span style="font-size:0.78rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.5px;">🎲 Live Roll &amp; Action Result</span>
                 <span id="floating-roll-time" style="font-size:0.72rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;"></span>
             </div>
-            <button class="btn-act btn-act-pre" onclick="dismissFloatingHud()" style="padding:3px 10px; font-size:0.74rem; color:#cbd5e1;" title="Dismiss floating roll drawer">✕ Dismiss</button>
+            <button class="btn-act btn-act-pre" onclick="dismissFloatingHud()" style="padding:3px 10px; font-size:0.74rem; color:var(--text-dim);" title="Dismiss floating roll drawer">✕ Dismiss</button>
         </div>
-        <div id="floating-roll-body" style="font-size:0.98rem; color:#f8fafc; line-height:1.5; display:flex; align-items:center; flex-wrap:wrap; gap:8px;"></div>
+        <div id="floating-roll-body" style="font-size:0.98rem; color:var(--text-light); line-height:1.5; display:flex; align-items:center; flex-wrap:wrap; gap:8px;"></div>
     </div>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261122v5"></script>
+<script src="cos_rpg_engine.js?v=20261122v8"></script>
 <script>
     // ==========================================
     // 🎩 PIPER MASTER STATE VARIABLES (POST-SESSION 1)
@@ -1790,21 +1805,21 @@
         if (tidesOfChaosReady) {
             badge.innerHTML = '🟢 READY (1/LR)';
             badge.style.background = 'rgba(34,197,94,0.16)';
-            badge.style.color = '#4ade80';
-            badge.style.borderColor = '#22c55e';
+            badge.style.color = 'var(--accent-green)';
+            badge.style.borderColor = 'var(--accent-green)';
             btn.disabled = false;
             btn.style.opacity = '1';
             btn.innerHTML = '🃏 Use Tides (+Advantage)';
-            card.style.borderColor = '#334155';
+            card.style.borderColor = 'var(--card-border)';
             desc.innerHTML = 'Spend to gain <strong>Advantage</strong> on any Attack, Check, or Save. Once spent, your next 1st+ level spell <strong>automatically triggers a Wild Magic Surge</strong> &amp; recharges Tides of Chaos!';
         } else {
             badge.innerHTML = '⚡ SURGE PRIMED (AUTO-SURGE ON NEXT SPELL)';
             badge.style.background = 'rgba(245,158,11,0.16)';
-            badge.style.color = '#fbbf24';
-            badge.style.borderColor = '#d97706';
+            badge.style.color = 'var(--accent-gold)';
+            badge.style.borderColor = 'var(--accent-gold)';
             btn.disabled = false;
             btn.innerHTML = '💥 Surge Primed (Cast Spell or Click)';
-            card.style.borderColor = '#d97706';
+            card.style.borderColor = 'var(--accent-gold)';
             desc.innerHTML = '⚡ <strong>Cosmic Payback Primed!</strong> The universe caught onto your rigged card trick—your next 1st+ level spell will <strong>automatically roll a d100 Wild Magic Surge</strong> and restore Tides of Chaos!';
         }
     }
@@ -2085,13 +2100,13 @@
         if (!badge) return;
         if (fiernaCharmReady) {
             badge.innerHTML = '💖 Fierna Charm: 1/1 Ready';
-            badge.style.color = '#f472b6';
-            badge.style.borderColor = '#f472b6';
+            badge.style.color = 'var(--accent-pink)';
+            badge.style.borderColor = 'var(--accent-pink)';
             badge.style.background = 'rgba(244,114,182,0.14)';
         } else {
             badge.innerHTML = '💖 Fierna Charm: 0/1 Used';
-            badge.style.color = '#64748b';
-            badge.style.borderColor = '#475569';
+            badge.style.color = 'var(--text-muted)';
+            badge.style.borderColor = 'var(--border-med)';
             badge.style.background = 'rgba(100,116,139,0.14)';
         }
     }
@@ -3188,7 +3203,7 @@
         const tag = document.getElementById('saves-robe-tag');
         if (tag) {
             tag.innerText = saveBonus ? `Prof: +${pb} • Gear +${saveBonus}` : `Proficiency: +${pb}`;
-            tag.style.color = saveBonus ? '#93c5fd' : 'var(--text-dim)';
+            tag.style.color = saveBonus ? 'var(--accent-blue)' : 'var(--text-dim)';
         }
     }
 
@@ -3209,13 +3224,13 @@
         if (desc) {
             if (activeRobe === 'black') {
                 desc.innerText = 'Black: +1 AC & All Saves';
-                desc.style.color = '#93c5fd';
+                desc.style.color = 'var(--accent-blue)';
             } else if (activeRobe === 'red') {
                 desc.innerText = 'Red: +1d4+1 Fire on Spells';
-                desc.style.color = '#fca5a5';
+                desc.style.color = 'var(--accent-red)';
             } else if (activeRobe === 'green') {
                 desc.innerText = 'Green: Advantage on Arcana';
-                desc.style.color = '#86efac';
+                desc.style.color = 'var(--accent-green)';
             } else {
                 desc.innerText = 'No Robe Equipped';
                 desc.style.color = 'var(--text-dim)';
@@ -4360,7 +4375,7 @@
                 banner.style.display = 'block';
                 banner.style.background = 'rgba(239, 68, 68, 0.14)';
                 banner.style.borderColor = '#ef4444';
-                banner.style.color = '#fecaca';
+                banner.style.color = 'var(--badge-crimson-ink)';
                 banner.textContent = msg;
             }
             return;
@@ -4378,7 +4393,7 @@
             banner.style.display = 'block';
             banner.style.background = 'rgba(34, 197, 94, 0.14)';
             banner.style.borderColor = '#22c55e';
-            banner.style.color = '#bbf7d0';
+            banner.style.color = 'var(--toggle-on-ink)';
             banner.textContent = `✅ Crafted ${recipe.outputQty}x ${recipe.name}! Consumed ${usedText} and added to inventory.`;
         }
         logRoll(`⚗️ <strong>Crafted ${recipe.outputQty}x ${recipe.name}:</strong> Used ${usedText} ➔ Added to Piper's inventory!`);

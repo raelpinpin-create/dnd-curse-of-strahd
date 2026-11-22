@@ -1,18 +1,29 @@
 /* =========================================================================
-   UNIVERSAL OBSIDIAN & BURNISHED BRASS RPG CHARACTER SHEET SYSTEM (v4.0)
-   Smoked Obsidian, Warm Stone & Antique Brass — Calm, Cohesive, Easy on Eyes
+   UNIVERSAL MULTI-THEME RPG CHARACTER SHEET DESIGN SYSTEM (v4.1)
+   5 Curated Themes: Obsidian Brass · Midnight Slate · Barovian Velvet
+                     Pine Forest Slate · Warm Parchment (Light Mode)
+   Sculpted RPG Cinzel Numerals + Full System / Light / Dark Mode Integration
    ========================================================================= */
 
 @layer legacy, engine, tokens, base, layout, components, hud-unify, responsive;
 
 @layer tokens {
     :root {
-        /* Mandatory Dark Mode UA Integration (scrollbars, inputs, dialogs) */
-        color-scheme: dark;
+        /* Base MUST remain light dark; <meta> override maps back via :has() */
+        color-scheme: light dark;
+        &:has(> head > meta[name="color-scheme"][content="dark"]) {
+            color-scheme: dark;
+        }
+        &:has(> head > meta[name="color-scheme"][content="light"]) {
+            color-scheme: light;
+        }
+
         accent-color: #d8b268;
 
-        /* Tier 1 — Smoked Obsidian & Warm Charcoal Surface Ladder (Zero Blue Cast) */
+        /* Default Dark Surface Ladder (Obsidian Brass) */
         --bg-page: #0c0d10;
+        --bg-page-top: #0f1116;
+        --bg-page-bot: #0a0b0e;
         --bg-sheet: #12141a;
         --panel-bg: #171a22;
         --panel-bg-end: #14171f;
@@ -21,7 +32,40 @@
         --bg-well: #0f1117;
         --bg-elevated: #232834;
 
-        /* Tier 2 — Warm Stone Hairline Borders & Subtle Tactile Depth */
+        /* Semantic Sub-Surfaces */
+        --header-bg-top: color-mix(in oklab, var(--hero-accent) 11%, #1b1e28);
+        --header-bg-bot: #14171f;
+        --vitals-bg-top: #1d2029;
+        --vitals-bg-bot: #151820;
+        --gold-bg-top: #1d1c19;
+        --gold-bg-bot: #15161c;
+        --sidebar-bg: #101218;
+        --modal-head-bg: #1a1d26;
+        --modal-foot-bg: #101218;
+        --track-bg: #0a0c10;
+        --party-bg: #14171f;
+        --card-hover-end: #1d212b;
+        --stance-active-end: #20242f;
+        --tab-active-top: #272b36;
+        --tab-active-bot: #1f232c;
+        --combat-bg-top: #1b171b;
+        --combat-bg-bot: #13161e;
+        --combat-turn-top: #241f18;
+        --combat-turn-bot: #151820;
+        --conc-bg-end: #181a24;
+        --fab-bg-top: #272b36;
+        --fab-bg-bot: #191c24;
+        --fab-open-top: #312922;
+        --fab-open-bot: #1c1a1c;
+        --fab-bubble-bg: rgba(26, 29, 38, 0.96);
+        --tray-bg-top: rgba(25, 28, 36, 0.98);
+        --tray-bg-bot: rgba(16, 18, 24, 0.99);
+        --hud-glass-bg: rgba(20, 23, 31, 0.96);
+        --backdrop-bg: rgba(6, 7, 10, 0.78);
+        --stripe-bg: rgba(255, 248, 236, 0.02);
+        --chip-bg: rgba(255, 248, 236, 0.045);
+
+        /* Warm Hairline Borders & Tactile Shadows */
         --card-border: rgba(232, 224, 210, 0.085);
         --border-med: rgba(232, 224, 210, 0.155);
         --border-strong: rgba(232, 224, 210, 0.24);
@@ -31,15 +75,19 @@
         --shadow-sheet: 0 28px 72px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(255, 248, 236, 0.04);
         --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.34);
 
-        /* Tier 3 — Warm Ivory Ink (High Readability, Zero Harsh Glare) */
+        /* Ink Scale */
         --text-light: #edeae4;
         --text-dim: #b4b0a8;
         --text-muted: #938f88;
+        --selection-bg: rgba(216, 178, 104, 0.28);
+        --selection-ink: #f5f2ec;
 
-        /* Tier 4 — Muted Mineral & Precious-Metal Semantic Accents (Zero Neon) */
+        /* Harmonized Muted Mineral & Precious-Metal Semantic Palette */
         --accent-gold: #d8b268;
         --accent-gold-bright: #ebd29c;
         --accent-gold-soft: rgba(216, 178, 104, 0.11);
+        --gp-val-color: #e5c176;
+        --sp-val-color: #d5d3cd;
         --accent-green: #5eb88a;
         --accent-green-bg: #1e5740;
         --accent-green-hover: #266b4f;
@@ -57,26 +105,59 @@
         --bonus-col: var(--accent-bonus);
         --react-col: var(--accent-purple);
 
+        /* Semantic Button & Badge Ink Tokens */
+        --btn-base-top: #272c38;
+        --btn-base-bot: #20242e;
+        --btn-base-hover-top: #303645;
+        --btn-base-hover-bot: #272c38;
+        --btn-dmg-top: #752a34;
+        --btn-dmg-bot: #5c2028;
+        --btn-dmg-hover-top: #88323e;
+        --btn-dmg-hover-bot: #6d2630;
+        --btn-heal-top: #25644a;
+        --btn-heal-bot: #1c4e39;
+        --btn-heal-hover-top: #2d7758;
+        --btn-heal-hover-bot: #225e45;
+        --btn-temp-top: #295678;
+        --btn-temp-bot: #1f445f;
+        --btn-temp-hover-top: #326890;
+        --btn-temp-hover-bot: #265273;
+        --btn-solid-ink: #f7f4ee;
+        --btn-pre-bg: rgba(255, 248, 236, 0.05);
+        --btn-pre-hover-bg: rgba(255, 248, 236, 0.1);
+        --loot-btn-top: rgba(216, 178, 104, 0.25);
+        --loot-btn-bot: rgba(168, 132, 66, 0.2);
+        --loot-btn-ink: #f3e4c3;
+        --toggle-on-ink: #93d6b4;
+        --badge-crimson-ink: #eab3b7;
+        --badge-blue-ink: #a9cfe6;
+        --badge-purple-ink: #d2c2ef;
+        --accent-mix-base-top: #242834;
+        --accent-mix-base-bot: #1c202a;
+        --accent-mix-hover-top: #2a2f3d;
+        --accent-mix-hover-bot: #212531;
+
         /* Uniform 95% Canvas + Signature 5% Per-Hero Accent */
         --hero-accent: #d8b268;
         --hero-accent-soft: rgba(216, 178, 104, 0.12);
         --hero-glow: rgba(216, 178, 104, 0.09);
 
-        /* Typography & Geometry Scale */
+        /* Sculpted RPG Numerals + Typography Scale */
         --font-display: 'Cinzel', Georgia, serif;
         --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        --font-num: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-num: 'Cinzel', Georgia, serif;
         --font-mono: 'JetBrains Mono', ui-monospace, monospace;
         --radius-sm: 7px;
         --radius-md: 11px;
         --radius-lg: 15px;
 
-        /* Scrollbar Tokens (Contrast >= 3.2:1 against track; never animated!) */
+        /* Scrollbar Tokens (Contrast >= 3.2:1; never animated!) */
         --scrollbar-thumb: #6d7382;
         --scrollbar-track: #12141a;
         scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
     }
 
+    /* Per-Hero Dark Accents */
     body[data-hero="jacomir"] {
         --hero-accent: #d8b268;
         --hero-accent-soft: rgba(216, 178, 104, 0.12);
@@ -91,6 +172,468 @@
         --hero-accent: #6da8cc;
         --hero-accent-soft: rgba(109, 168, 204, 0.12);
         --hero-glow: rgba(109, 168, 204, 0.09);
+    }
+
+    /* =====================================================================
+       THEME 2: MIDNIGHT SLATE (Deep Ravenloft Indigo-Blue)
+       ===================================================================== */
+    :root[data-theme="midnight"] {
+        color-scheme: dark;
+        accent-color: #dfc078;
+        --bg-page: #090e19;
+        --bg-page-top: #0d1424;
+        --bg-page-bot: #070b14;
+        --bg-sheet: #101726;
+        --panel-bg: #162033;
+        --panel-bg-end: #131c2d;
+        --panel-sub: #1c283e;
+        --panel-sub-end: #172135;
+        --bg-well: #0d1320;
+        --bg-elevated: #24334e;
+        --header-bg-top: color-mix(in oklab, var(--hero-accent) 12%, #1a263e);
+        --header-bg-bot: #121a2b;
+        --vitals-bg-top: #1b273e;
+        --vitals-bg-bot: #131c2e;
+        --gold-bg-top: #1c2539;
+        --gold-bg-bot: #131b2b;
+        --sidebar-bg: #0c121e;
+        --modal-head-bg: #182338;
+        --modal-foot-bg: #0c121e;
+        --track-bg: #090e18;
+        --party-bg: #121a2b;
+        --card-hover-end: #1c283f;
+        --stance-active-end: #1f2d47;
+        --tab-active-top: #263654;
+        --tab-active-bot: #1d2a42;
+        --combat-bg-top: #1a192a;
+        --combat-bg-bot: #101726;
+        --combat-turn-top: #222638;
+        --combat-turn-bot: #131c2e;
+        --conc-bg-end: #161f33;
+        --fab-bg-top: #24334e;
+        --fab-bg-bot: #162033;
+        --fab-open-top: #2e3b58;
+        --fab-open-bot: #1a2336;
+        --fab-bubble-bg: rgba(20, 29, 47, 0.96);
+        --tray-bg-top: rgba(22, 32, 51, 0.98);
+        --tray-bg-bot: rgba(13, 19, 32, 0.99);
+        --hud-glass-bg: rgba(18, 26, 42, 0.96);
+        --backdrop-bg: rgba(4, 8, 16, 0.8);
+        --card-border: rgba(186, 208, 240, 0.11);
+        --border-med: rgba(186, 208, 240, 0.19);
+        --border-strong: rgba(186, 208, 240, 0.28);
+        --border-gold: rgba(223, 192, 120, 0.4);
+        --card-border-hover: rgba(223, 192, 120, 0.56);
+        --text-light: #eaf0f8;
+        --text-dim: #aebcd1;
+        --text-muted: #8a9bb5;
+        --accent-gold: #dfc078;
+        --accent-gold-bright: #f0d79c;
+        --gp-val-color: #ead08d;
+        --sp-val-color: #d6e0ee;
+        --btn-base-top: #24334e;
+        --btn-base-bot: #1c283e;
+        --btn-base-hover-top: #2c3e5e;
+        --btn-base-hover-bot: #23324c;
+        --accent-mix-base-top: #23314a;
+        --accent-mix-base-bot: #1a2538;
+        --accent-mix-hover-top: #2a3a57;
+        --accent-mix-hover-bot: #202d44;
+        --scrollbar-thumb: #5c7091;
+        --scrollbar-track: #101726;
+    }
+
+    /* =====================================================================
+       THEME 3: BAROVIAN VELVET (Smoked Plum-Burgundy & Candlelight)
+       ===================================================================== */
+    :root[data-theme="velvet"] {
+        color-scheme: dark;
+        accent-color: #dfb470;
+        --bg-page: #100b0f;
+        --bg-page-top: #150e14;
+        --bg-page-bot: #0c080b;
+        --bg-sheet: #181116;
+        --panel-bg: #20171e;
+        --panel-bg-end: #1b131a;
+        --panel-sub: #281d26;
+        --panel-sub-end: #221820;
+        --bg-well: #130d12;
+        --bg-elevated: #332530;
+        --header-bg-top: color-mix(in oklab, var(--hero-accent) 12%, #291c25);
+        --header-bg-bot: #191117;
+        --vitals-bg-top: #281c25;
+        --vitals-bg-bot: #1d141b;
+        --gold-bg-top: #261d1e;
+        --gold-bg-bot: #1b1317;
+        --sidebar-bg: #120c11;
+        --modal-head-bg: #241922;
+        --modal-foot-bg: #120c11;
+        --track-bg: #0e090d;
+        --party-bg: #1a1218;
+        --card-hover-end: #271b24;
+        --stance-active-end: #2b1e28;
+        --tab-active-top: #352632;
+        --tab-active-bot: #281c25;
+        --combat-bg-top: #26141d;
+        --combat-bg-bot: #181116;
+        --combat-turn-top: #2e1e21;
+        --combat-turn-bot: #1c1319;
+        --conc-bg-end: #221723;
+        --fab-bg-top: #332530;
+        --fab-bg-bot: #20171e;
+        --fab-open-top: #402b36;
+        --fab-open-bot: #251921;
+        --fab-bubble-bg: rgba(32, 23, 30, 0.96);
+        --tray-bg-top: rgba(34, 24, 32, 0.98);
+        --tray-bg-bot: rgba(20, 14, 18, 0.99);
+        --hud-glass-bg: rgba(27, 19, 25, 0.96);
+        --backdrop-bg: rgba(10, 6, 9, 0.8);
+        --card-border: rgba(236, 210, 222, 0.1);
+        --border-med: rgba(236, 210, 222, 0.18);
+        --border-strong: rgba(236, 210, 222, 0.27);
+        --border-gold: rgba(223, 180, 112, 0.4);
+        --card-border-hover: rgba(223, 180, 112, 0.56);
+        --text-light: #f1e9ed;
+        --text-dim: #c3b2ba;
+        --text-muted: #9e8c95;
+        --accent-gold: #dfb470;
+        --accent-gold-bright: #f0cf99;
+        --gp-val-color: #eac689;
+        --sp-val-color: #ddd2d8;
+        --btn-base-top: #332530;
+        --btn-base-bot: #271c25;
+        --btn-base-hover-top: #3e2d3b;
+        --btn-base-hover-bot: #30222d;
+        --accent-mix-base-top: #30232d;
+        --accent-mix-base-bot: #241922;
+        --accent-mix-hover-top: #3b2b37;
+        --accent-mix-hover-bot: #2d1f2a;
+        --scrollbar-thumb: #7a6170;
+        --scrollbar-track: #181116;
+    }
+
+    /* =====================================================================
+       THEME 4: PINE FOREST SLATE (Misty Svalich Evergreen)
+       ===================================================================== */
+    :root[data-theme="pine"] {
+        color-scheme: dark;
+        accent-color: #d6b86e;
+        --bg-page: #0a110f;
+        --bg-page-top: #0e1714;
+        --bg-page-bot: #070d0b;
+        --bg-sheet: #111a17;
+        --panel-bg: #17231f;
+        --panel-bg-end: #141e1a;
+        --panel-sub: #1e2d28;
+        --panel-sub-end: #192622;
+        --bg-well: #0d1512;
+        --bg-elevated: #273933;
+        --header-bg-top: color-mix(in oklab, var(--hero-accent) 11%, #1b2a24);
+        --header-bg-bot: #131e1a;
+        --vitals-bg-top: #1c2c26;
+        --vitals-bg-bot: #14201c;
+        --gold-bg-top: #1d2922;
+        --gold-bg-bot: #141d19;
+        --sidebar-bg: #0d1412;
+        --modal-head-bg: #1a2722;
+        --modal-foot-bg: #0d1412;
+        --track-bg: #09100d;
+        --party-bg: #131e1a;
+        --card-hover-end: #1d2c27;
+        --stance-active-end: #20312b;
+        --tab-active-top: #263932;
+        --tab-active-bot: #1d2c27;
+        --combat-bg-top: #1d1a1c;
+        --combat-bg-bot: #111a17;
+        --combat-turn-top: #232821;
+        --combat-turn-bot: #14201c;
+        --conc-bg-end: #162420;
+        --fab-bg-top: #273933;
+        --fab-bg-bot: #17231f;
+        --fab-open-top: #31443c;
+        --fab-open-bot: #1b2823;
+        --fab-bubble-bg: rgba(21, 32, 28, 0.96);
+        --tray-bg-top: rgba(23, 35, 31, 0.98);
+        --tray-bg-bot: rgba(13, 21, 18, 0.99);
+        --hud-glass-bg: rgba(18, 28, 24, 0.96);
+        --backdrop-bg: rgba(5, 10, 8, 0.8);
+        --card-border: rgba(206, 228, 216, 0.1);
+        --border-med: rgba(206, 228, 216, 0.18);
+        --border-strong: rgba(206, 228, 216, 0.26);
+        --border-gold: rgba(214, 184, 110, 0.4);
+        --card-border-hover: rgba(214, 184, 110, 0.56);
+        --text-light: #e9f0eb;
+        --text-dim: #b0c2b8;
+        --text-muted: #8a9e93;
+        --accent-gold: #d6b86e;
+        --accent-gold-bright: #ebd295;
+        --gp-val-color: #e4c882;
+        --sp-val-color: #d3dfd7;
+        --btn-base-top: #263832;
+        --btn-base-bot: #1e2d28;
+        --btn-base-hover-top: #2f453d;
+        --btn-base-hover-bot: #24362f;
+        --accent-mix-base-top: #24362f;
+        --accent-mix-base-bot: #1a2823;
+        --accent-mix-hover-top: #2c4239;
+        --accent-mix-hover-bot: #21322b;
+        --scrollbar-thumb: #5c756b;
+        --scrollbar-track: #111a17;
+    }
+
+    /* =====================================================================
+       THEME 5: WARM PARCHMENT (Soft Aged Vellum Light Mode)
+       ===================================================================== */
+    :root[data-theme="parchment"] {
+        color-scheme: light;
+        accent-color: #8f651d;
+        --bg-page: #e5dccb;
+        --bg-page-top: #ebe3d4;
+        --bg-page-bot: #dfd5c2;
+        --bg-sheet: #f6f1e6;
+        --panel-bg: #fbf8f1;
+        --panel-bg-end: #f5efe2;
+        --panel-sub: #efe8d9;
+        --panel-sub-end: #e9e0ce;
+        --bg-well: #eae2d1;
+        --bg-elevated: #e2d8c4;
+        --header-bg-top: color-mix(in oklab, var(--hero-accent) 10%, #efe7d6);
+        --header-bg-bot: #f6f1e6;
+        --vitals-bg-top: #f7f1e4;
+        --vitals-bg-bot: #ede5d4;
+        --gold-bg-top: #f6efde;
+        --gold-bg-bot: #ece3ce;
+        --sidebar-bg: #ece4d4;
+        --modal-head-bg: #efe8d8;
+        --modal-foot-bg: #e8e0cf;
+        --track-bg: #ddd3bf;
+        --party-bg: #efe8d9;
+        --card-hover-end: #e5dcc9;
+        --stance-active-end: #e9dfc9;
+        --tab-active-top: #f9f5eb;
+        --tab-active-bot: #ede4d1;
+        --combat-bg-top: #f3e4e2;
+        --combat-bg-bot: #efe8d9;
+        --combat-turn-top: #f5ebd4;
+        --combat-turn-bot: #efe6d0;
+        --conc-bg-end: #ede4f2;
+        --fab-bg-top: #f6efe2;
+        --fab-bg-bot: #e8decb;
+        --fab-open-top: #efe3cc;
+        --fab-open-bot: #e3d4b8;
+        --fab-bubble-bg: rgba(249, 244, 234, 0.97);
+        --tray-bg-top: rgba(251, 248, 241, 0.99);
+        --tray-bg-bot: rgba(240, 233, 218, 0.99);
+        --hud-glass-bg: rgba(249, 244, 234, 0.97);
+        --backdrop-bg: rgba(42, 33, 21, 0.56);
+        --stripe-bg: rgba(68, 52, 32, 0.035);
+        --chip-bg: rgba(68, 52, 32, 0.055);
+        --card-border: rgba(68, 52, 32, 0.14);
+        --border-med: rgba(68, 52, 32, 0.24);
+        --border-strong: rgba(68, 52, 32, 0.34);
+        --border-gold: rgba(143, 101, 29, 0.44);
+        --card-border-hover: rgba(143, 101, 29, 0.65);
+        --inner-sheen: inset 0 1px 0 rgba(255, 255, 255, 0.68);
+        --shadow-sheet: 0 22px 54px rgba(54, 41, 24, 0.16), 0 0 0 1px rgba(68, 52, 32, 0.12);
+        --shadow-card: 0 2px 8px rgba(54, 41, 24, 0.08);
+        --text-light: #231e18;
+        --text-dim: #4c4338;
+        --text-muted: #675c4f;
+        --selection-bg: rgba(143, 101, 29, 0.22);
+        --selection-ink: #231e18;
+        --accent-gold: #8f651d;
+        --accent-gold-bright: #6e4b10;
+        --accent-gold-soft: rgba(143, 101, 29, 0.12);
+        --gp-val-color: #7c5412;
+        --sp-val-color: #48423a;
+        --accent-green: #1f6e4b;
+        --accent-green-bg: #266b4c;
+        --accent-green-hover: #1d573d;
+        --accent-red: #9e2e39;
+        --accent-red-bg: #8c2c36;
+        --accent-red-hover: #73222b;
+        --accent-blue: #245f85;
+        --accent-cyan: #245f85;
+        --accent-temp-bg: #2b648a;
+        --accent-temp-hover: #215070;
+        --accent-purple: #66489c;
+        --accent-pink: #944466;
+        --accent-bonus: #9e5921;
+        --btn-base-top: #ebe3d3;
+        --btn-base-bot: #e0d6c2;
+        --btn-base-hover-top: #e2d7c2;
+        --btn-base-hover-bot: #d5c7ae;
+        --btn-dmg-top: #9e323d;
+        --btn-dmg-bot: #822730;
+        --btn-dmg-hover-top: #b33b47;
+        --btn-dmg-hover-bot: #942e38;
+        --btn-heal-top: #276e4f;
+        --btn-heal-bot: #1f593f;
+        --btn-heal-hover-top: #2e805c;
+        --btn-heal-hover-bot: #24684a;
+        --btn-temp-top: #2c678d;
+        --btn-temp-bot: #225373;
+        --btn-temp-hover-top: #3477a3;
+        --btn-temp-hover-bot: #286085;
+        --btn-solid-ink: #fbf8f1;
+        --btn-pre-bg: rgba(68, 52, 32, 0.065);
+        --btn-pre-hover-bg: rgba(68, 52, 32, 0.13);
+        --loot-btn-top: rgba(143, 101, 29, 0.24);
+        --loot-btn-bot: rgba(143, 101, 29, 0.15);
+        --loot-btn-ink: #5b3d0a;
+        --toggle-on-ink: #17593c;
+        --badge-crimson-ink: #82222c;
+        --badge-blue-ink: #1b4f70;
+        --badge-purple-ink: #513582;
+        --accent-mix-base-top: #ede4d2;
+        --accent-mix-base-bot: #e3d8c2;
+        --accent-mix-hover-top: #e5dac3;
+        --accent-mix-hover-bot: #dacbb0;
+        --scrollbar-thumb: #847765;
+        --scrollbar-track: #e8e0cf;
+    }
+
+    :root[data-theme="parchment"] body[data-hero="jacomir"] {
+        --hero-accent: #8f651d;
+        --hero-accent-soft: rgba(143, 101, 29, 0.12);
+        --hero-glow: rgba(143, 101, 29, 0.08);
+    }
+    :root[data-theme="parchment"] body[data-hero="piper"] {
+        --hero-accent: #66489c;
+        --hero-accent-soft: rgba(102, 72, 156, 0.12);
+        --hero-glow: rgba(102, 72, 156, 0.08);
+    }
+    :root[data-theme="parchment"] body[data-hero="yvaine"] {
+        --hero-accent: #245f85;
+        --hero-accent-soft: rgba(36, 95, 133, 0.12);
+        --hero-glow: rgba(36, 95, 133, 0.08);
+    }
+
+    /* Follow OS Light Mode automatically when user hasn't pinned a theme (System) */
+    @media (prefers-color-scheme: light) {
+        :root:not([data-theme]) {
+            color-scheme: light;
+            accent-color: #8f651d;
+            --bg-page: #e5dccb;
+            --bg-page-top: #ebe3d4;
+            --bg-page-bot: #dfd5c2;
+            --bg-sheet: #f6f1e6;
+            --panel-bg: #fbf8f1;
+            --panel-bg-end: #f5efe2;
+            --panel-sub: #efe8d9;
+            --panel-sub-end: #e9e0ce;
+            --bg-well: #eae2d1;
+            --bg-elevated: #e2d8c4;
+            --header-bg-top: color-mix(in oklab, var(--hero-accent) 10%, #efe7d6);
+            --header-bg-bot: #f6f1e6;
+            --vitals-bg-top: #f7f1e4;
+            --vitals-bg-bot: #ede5d4;
+            --gold-bg-top: #f6efde;
+            --gold-bg-bot: #ece3ce;
+            --sidebar-bg: #ece4d4;
+            --modal-head-bg: #efe8d8;
+            --modal-foot-bg: #e8e0cf;
+            --track-bg: #ddd3bf;
+            --party-bg: #efe8d9;
+            --card-hover-end: #e5dcc9;
+            --stance-active-end: #e9dfc9;
+            --tab-active-top: #f9f5eb;
+            --tab-active-bot: #ede4d1;
+            --combat-bg-top: #f3e4e2;
+            --combat-bg-bot: #efe8d9;
+            --combat-turn-top: #f5ebd4;
+            --combat-turn-bot: #efe6d0;
+            --conc-bg-end: #ede4f2;
+            --fab-bg-top: #f6efe2;
+            --fab-bg-bot: #e8decb;
+            --fab-open-top: #efe3cc;
+            --fab-open-bot: #e3d4b8;
+            --fab-bubble-bg: rgba(249, 244, 234, 0.97);
+            --tray-bg-top: rgba(251, 248, 241, 0.99);
+            --tray-bg-bot: rgba(240, 233, 218, 0.99);
+            --hud-glass-bg: rgba(249, 244, 234, 0.97);
+            --backdrop-bg: rgba(42, 33, 21, 0.56);
+            --stripe-bg: rgba(68, 52, 32, 0.035);
+            --chip-bg: rgba(68, 52, 32, 0.055);
+            --card-border: rgba(68, 52, 32, 0.14);
+            --border-med: rgba(68, 52, 32, 0.24);
+            --border-strong: rgba(68, 52, 32, 0.34);
+            --border-gold: rgba(143, 101, 29, 0.44);
+            --card-border-hover: rgba(143, 101, 29, 0.65);
+            --inner-sheen: inset 0 1px 0 rgba(255, 255, 255, 0.68);
+            --shadow-sheet: 0 22px 54px rgba(54, 41, 24, 0.16), 0 0 0 1px rgba(68, 52, 32, 0.12);
+            --shadow-card: 0 2px 8px rgba(54, 41, 24, 0.08);
+            --text-light: #231e18;
+            --text-dim: #4c4338;
+            --text-muted: #675c4f;
+            --selection-bg: rgba(143, 101, 29, 0.22);
+            --selection-ink: #231e18;
+            --accent-gold: #8f651d;
+            --accent-gold-bright: #6e4b10;
+            --accent-gold-soft: rgba(143, 101, 29, 0.12);
+            --gp-val-color: #7c5412;
+            --sp-val-color: #48423a;
+            --accent-green: #1f6e4b;
+            --accent-green-bg: #266b4c;
+            --accent-green-hover: #1d573d;
+            --accent-red: #9e2e39;
+            --accent-red-bg: #8c2c36;
+            --accent-red-hover: #73222b;
+            --accent-blue: #245f85;
+            --accent-cyan: #245f85;
+            --accent-temp-bg: #2b648a;
+            --accent-temp-hover: #215070;
+            --accent-purple: #66489c;
+            --accent-pink: #944466;
+            --accent-bonus: #9e5921;
+            --btn-base-top: #ebe3d3;
+            --btn-base-bot: #e0d6c2;
+            --btn-base-hover-top: #e2d7c2;
+            --btn-base-hover-bot: #d5c7ae;
+            --btn-dmg-top: #9e323d;
+            --btn-dmg-bot: #822730;
+            --btn-dmg-hover-top: #b33b47;
+            --btn-dmg-hover-bot: #942e38;
+            --btn-heal-top: #276e4f;
+            --btn-heal-bot: #1f593f;
+            --btn-heal-hover-top: #2e805c;
+            --btn-heal-hover-bot: #24684a;
+            --btn-temp-top: #2c678d;
+            --btn-temp-bot: #225373;
+            --btn-temp-hover-top: #3477a3;
+            --btn-temp-hover-bot: #286085;
+            --btn-solid-ink: #fbf8f1;
+            --btn-pre-bg: rgba(68, 52, 32, 0.065);
+            --btn-pre-hover-bg: rgba(68, 52, 32, 0.13);
+            --loot-btn-top: rgba(143, 101, 29, 0.24);
+            --loot-btn-bot: rgba(143, 101, 29, 0.15);
+            --loot-btn-ink: #5b3d0a;
+            --toggle-on-ink: #17593c;
+            --badge-crimson-ink: #82222c;
+            --badge-blue-ink: #1b4f70;
+            --badge-purple-ink: #513582;
+            --accent-mix-base-top: #ede4d2;
+            --accent-mix-base-bot: #e3d8c2;
+            --accent-mix-hover-top: #e5dac3;
+            --accent-mix-hover-bot: #dacbb0;
+            --scrollbar-thumb: #847765;
+            --scrollbar-track: #e8e0cf;
+        }
+        :root:not([data-theme]) body[data-hero="jacomir"] {
+            --hero-accent: #8f651d;
+            --hero-accent-soft: rgba(143, 101, 29, 0.12);
+            --hero-glow: rgba(143, 101, 29, 0.08);
+        }
+        :root:not([data-theme]) body[data-hero="piper"] {
+            --hero-accent: #66489c;
+            --hero-accent-soft: rgba(102, 72, 156, 0.12);
+            --hero-glow: rgba(102, 72, 156, 0.08);
+        }
+        :root:not([data-theme]) body[data-hero="yvaine"] {
+            --hero-accent: #245f85;
+            --hero-accent-soft: rgba(36, 95, 133, 0.12);
+            --hero-glow: rgba(36, 95, 133, 0.08);
+        }
     }
 }
 
@@ -107,14 +650,14 @@
         padding: 16px;
         background-image:
             radial-gradient(ellipse 80% 38% at 50% 0%, var(--hero-glow), transparent 68%),
-            radial-gradient(ellipse 65% 40% at 85% 100%, rgba(216, 178, 104, 0.045), transparent 65%),
-            linear-gradient(180deg, #0f1116 0%, #0a0b0e 100%);
+            radial-gradient(ellipse 65% 40% at 85% 100%, var(--accent-gold-soft), transparent 65%),
+            linear-gradient(180deg, var(--bg-page-top) 0%, var(--bg-page-bot) 100%);
         background-attachment: fixed;
     }
 
     ::selection {
-        background: rgba(216, 178, 104, 0.28);
-        color: #f5f2ec;
+        background: var(--selection-bg);
+        color: var(--selection-ink);
     }
 
     :where(a:any-link, button, input, select, textarea):focus-visible {
@@ -204,9 +747,8 @@
         overflow: hidden;
     }
 
-    /* SLIM OBSIDIAN HEADER PLATE */
     header.header-banner {
-        background: linear-gradient(180deg, color-mix(in oklab, var(--hero-accent) 11%, #1b1e28) 0%, #14171f 100%) !important;
+        background: linear-gradient(180deg, var(--header-bg-top) 0%, var(--header-bg-bot) 100%) !important;
         border-bottom: 1px solid var(--card-border);
         border-top: 2px solid var(--hero-accent);
         box-shadow: var(--inner-sheen);
@@ -238,7 +780,6 @@
         flex-wrap: wrap;
         gap: 9px;
         margin: 0;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
     }
 
     header.header-banner .header-title h1 span {
@@ -261,7 +802,7 @@
         font-size: 0.69rem;
         font-weight: 500;
         color: var(--text-dim);
-        background: rgba(255, 248, 236, 0.045);
+        background: var(--chip-bg);
         border: 1px solid var(--card-border);
         border-radius: 999px;
         padding: 2px 10px;
@@ -315,7 +856,7 @@
 
 @layer components {
     /* =====================================================================
-       UNIFIED CARDS & PANELS (Smoked Obsidian Elevation)
+       UNIFIED CARDS & PANELS
        ===================================================================== */
     .panel {
         background: linear-gradient(180deg, var(--panel-bg) 0%, var(--panel-bg-end) 100%);
@@ -352,10 +893,10 @@
     }
 
     /* =====================================================================
-       MODULE 1 (LEFT): UNIFIED HERO VITALS & HEALTH PLATE (OUTFIT NUMERALS)
+       MODULE 1 (LEFT): VITALS & HEALTH PLATE (SCULPTED CINZEL NUMERALS)
        ===================================================================== */
     .vitals-plate {
-        background: linear-gradient(180deg, #1d2029 0%, #151820 100%);
+        background: linear-gradient(180deg, var(--vitals-bg-top) 0%, var(--vitals-bg-bot) 100%);
         border: 1px solid var(--border-med);
         border-radius: var(--radius-md);
         padding: 13px 14px;
@@ -405,13 +946,13 @@
         color: var(--text-muted);
     }
 
-    /* Sleek Geometric Numerals (Outfit) */
+    /* Sculpted Cinzel RPG Numerals */
     .vital-mini-val {
         font-family: var(--font-num);
-        font-variant-numeric: tabular-nums lining-nums;
-        font-size: 1.2rem;
-        font-weight: 600;
-        letter-spacing: -0.02em;
+        font-variant-numeric: lining-nums tabular-nums;
+        font-size: 1.18rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
         line-height: 1.15;
         color: var(--text-light);
     }
@@ -440,13 +981,12 @@
         flex-wrap: wrap;
     }
 
-    /* Balanced Sleek HP Readout */
     .hp-plate-readout .hp-main-num {
         font-family: var(--font-num);
-        font-variant-numeric: tabular-nums lining-nums;
-        font-size: 1.28rem;
-        font-weight: 600;
-        letter-spacing: -0.025em;
+        font-variant-numeric: lining-nums tabular-nums;
+        font-size: 1.26rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
         color: var(--accent-green);
         line-height: 1;
     }
@@ -461,10 +1001,10 @@
 
     #hp-status-header {
         font-family: var(--font-num) !important;
-        font-variant-numeric: tabular-nums;
+        font-variant-numeric: lining-nums tabular-nums;
         font-size: 0.74rem !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.01em;
+        font-weight: 700 !important;
+        letter-spacing: 0.02em;
     }
 
     .hp-plate-right {
@@ -474,7 +1014,7 @@
     }
 
     .hp-rest-trigger {
-        background: rgba(255, 248, 236, 0.055);
+        background: var(--btn-pre-bg);
         border: 1px solid var(--border-med);
         color: var(--text-light);
         border-radius: 999px;
@@ -501,13 +1041,13 @@
     .hp-health-bar-bg {
         width: 100%;
         height: 8px;
-        background: #0a0c10;
+        background: var(--track-bg);
         border-radius: 999px;
         overflow: hidden;
         border: 1px solid var(--card-border);
         position: relative;
         margin: 0;
-        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.55);
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.28);
     }
 
     .hp-health-bar-fill {
@@ -518,12 +1058,12 @@
 
     .hp-health-bar-temp {
         height: 100%;
-        background: linear-gradient(90deg, rgba(109, 168, 204, 0.85), rgba(162, 207, 235, 0.94));
+        background: linear-gradient(90deg, var(--accent-blue), color-mix(in oklab, var(--accent-blue) 60%, #fff));
         position: absolute;
         top: 0;
         left: 0;
         border-radius: 999px;
-        opacity: 0.8;
+        opacity: 0.82;
         transition: width 0.28s ease;
         pointer-events: none;
     }
@@ -546,7 +1086,7 @@
         border: 1px solid var(--border-med);
         border-radius: var(--radius-sm);
         color: var(--text-light);
-        font-family: var(--font-num);
+        font-family: var(--font-sans);
         font-variant-numeric: tabular-nums;
         outline: none;
     }
@@ -564,7 +1104,7 @@
     }
 
     /* =====================================================================
-       HARMONIZED MUTED BUTTON SYSTEM (NO NEON SATURATION)
+       HARMONIZED TOKENIZED BUTTON SYSTEM
        ===================================================================== */
     .btn-act {
         min-block-size: 29px;
@@ -586,52 +1126,52 @@
     .btn-act:active:not(:disabled):not(.rpg-turn-locked) { transform: scale(0.97); }
 
     .btn-act-dmg {
-        background: linear-gradient(180deg, #752a34 0%, #5c2028 100%);
+        background: linear-gradient(180deg, var(--btn-dmg-top) 0%, var(--btn-dmg-bot) 100%);
         border-color: rgba(214, 101, 108, 0.36);
-        color: #f6e4e5;
+        color: var(--btn-solid-ink);
     }
     @media (hover: hover) {
         .btn-act-dmg:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #88323e 0%, #6d2630 100%);
+            background: linear-gradient(180deg, var(--btn-dmg-hover-top) 0%, var(--btn-dmg-hover-bot) 100%);
             border-color: rgba(214, 101, 108, 0.56);
             color: #fff;
         }
     }
 
     .btn-act-heal {
-        background: linear-gradient(180deg, #25644a 0%, #1c4e39 100%);
+        background: linear-gradient(180deg, var(--btn-heal-top) 0%, var(--btn-heal-bot) 100%);
         border-color: rgba(94, 184, 138, 0.36);
-        color: #e4f4ec;
+        color: var(--btn-solid-ink);
     }
     @media (hover: hover) {
         .btn-act-heal:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #2d7758 0%, #225e45 100%);
+            background: linear-gradient(180deg, var(--btn-heal-hover-top) 0%, var(--btn-heal-hover-bot) 100%);
             border-color: rgba(94, 184, 138, 0.56);
             color: #fff;
         }
     }
 
     .btn-act-temp {
-        background: linear-gradient(180deg, #295678 0%, #1f445f 100%);
+        background: linear-gradient(180deg, var(--btn-temp-top) 0%, var(--btn-temp-bot) 100%);
         border-color: rgba(109, 168, 204, 0.38);
-        color: #e6f2fa;
+        color: var(--btn-solid-ink);
     }
     @media (hover: hover) {
         .btn-act-temp:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #326890 0%, #265273 100%);
+            background: linear-gradient(180deg, var(--btn-temp-hover-top) 0%, var(--btn-temp-hover-bot) 100%);
             border-color: rgba(109, 168, 204, 0.58);
             color: #fff;
         }
     }
 
     .btn-act-pre {
-        background: rgba(255, 248, 236, 0.05);
+        background: var(--btn-pre-bg);
         border-color: var(--card-border);
         color: var(--text-dim);
     }
     @media (hover: hover) {
         .btn-act-pre:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: rgba(255, 248, 236, 0.1);
+            background: var(--btn-pre-hover-bg);
             border-color: var(--border-med);
             color: var(--text-light);
         }
@@ -647,45 +1187,44 @@
         letter-spacing: 0.01em;
         cursor: pointer;
         border: 1px solid var(--border-med);
-        background: linear-gradient(180deg, #272c38 0%, #20242e 100%);
+        background: linear-gradient(180deg, var(--btn-base-top) 0%, var(--btn-base-bot) 100%);
         color: var(--text-light);
         display: inline-flex;
         align-items: center;
         gap: 5px;
-        box-shadow: var(--inner-sheen), 0 2px 6px rgba(0, 0, 0, 0.25);
+        box-shadow: var(--inner-sheen), 0 2px 6px rgba(0, 0, 0, 0.14);
         transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease, transform 0.12s ease;
     }
     @media (hover: hover) {
         .btn-roll-action:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #303645 0%, #272c38 100%);
+            background: linear-gradient(180deg, var(--btn-base-hover-top) 0%, var(--btn-base-hover-bot) 100%);
             border-color: var(--border-gold);
-            color: #fff;
             transform: translateY(-1px);
         }
     }
     .btn-roll-action:active:not(:disabled):not(.rpg-turn-locked) { transform: scale(0.97); }
 
     .btn-roll-action.btn-roll-dmg {
-        background: linear-gradient(180deg, #772a34 0%, #5e2129 100%);
+        background: linear-gradient(180deg, var(--btn-dmg-top) 0%, var(--btn-dmg-bot) 100%);
         border-color: rgba(214, 101, 108, 0.38);
-        color: #f7e6e7;
+        color: var(--btn-solid-ink);
     }
     @media (hover: hover) {
         .btn-roll-action.btn-roll-dmg:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #8b323e 0%, #6f2731 100%);
+            background: linear-gradient(180deg, var(--btn-dmg-hover-top) 0%, var(--btn-dmg-hover-bot) 100%);
             border-color: rgba(214, 101, 108, 0.65);
             color: #fff;
         }
     }
 
     .btn-roll-action.btn-roll-heal {
-        background: linear-gradient(180deg, #25644a 0%, #1c4e39 100%);
+        background: linear-gradient(180deg, var(--btn-heal-top) 0%, var(--btn-heal-bot) 100%);
         border-color: rgba(94, 184, 138, 0.38);
-        color: #e4f4ec;
+        color: var(--btn-solid-ink);
     }
     @media (hover: hover) {
         .btn-roll-action.btn-roll-heal:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #2d7859 0%, #225e45 100%);
+            background: linear-gradient(180deg, var(--btn-heal-hover-top) 0%, var(--btn-heal-hover-bot) 100%);
             border-color: rgba(94, 184, 138, 0.65);
             color: #fff;
         }
@@ -694,7 +1233,7 @@
     .btn-roll-action.btn-roll-martial,
     .btn-roll-action.btn-roll-wild,
     .btn-roll-action.btn-roll-accent {
-        background: linear-gradient(180deg, color-mix(in oklab, var(--hero-accent) 22%, #242834) 0%, color-mix(in oklab, var(--hero-accent) 13%, #1c202a) 100%);
+        background: linear-gradient(180deg, color-mix(in oklab, var(--hero-accent) 22%, var(--accent-mix-base-top)) 0%, color-mix(in oklab, var(--hero-accent) 13%, var(--accent-mix-base-bot)) 100%);
         border-color: color-mix(in oklab, var(--hero-accent) 46%, transparent);
         color: var(--text-light);
     }
@@ -702,14 +1241,13 @@
         .btn-roll-action.btn-roll-martial:hover:not(:disabled):not(.rpg-turn-locked),
         .btn-roll-action.btn-roll-wild:hover:not(:disabled):not(.rpg-turn-locked),
         .btn-roll-action.btn-roll-accent:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, color-mix(in oklab, var(--hero-accent) 30%, #2a2f3d) 0%, color-mix(in oklab, var(--hero-accent) 20%, #212531) 100%);
+            background: linear-gradient(180deg, color-mix(in oklab, var(--hero-accent) 30%, var(--accent-mix-hover-top)) 0%, color-mix(in oklab, var(--hero-accent) 20%, var(--accent-mix-hover-bot)) 100%);
             border-color: var(--hero-accent);
-            color: #fff;
         }
     }
 
     .btn-roll-action.btn-roll-reload {
-        background: rgba(255, 248, 236, 0.06);
+        background: var(--btn-pre-bg);
         border-color: var(--border-med);
         color: var(--text-light);
     }
@@ -765,16 +1303,15 @@
     }
     .toggle-badge.on {
         background: rgba(94, 184, 138, 0.15);
-        color: #93d6b4;
+        color: var(--toggle-on-ink);
         border: 1px solid rgba(94, 184, 138, 0.38);
     }
     .toggle-badge.off {
-        background: rgba(255, 248, 236, 0.045);
+        background: var(--chip-bg);
         color: var(--text-muted);
         border: 1px solid var(--card-border);
     }
 
-    /* Kolyan Robe Selector & Pills (Piper) */
     .robe-selector-card {
         background: var(--bg-well) !important;
         border-color: var(--card-border) !important;
@@ -805,15 +1342,15 @@
 
     .help-inline-count {
         font-family: var(--font-num);
-        font-variant-numeric: tabular-nums;
-        font-size: 0.9rem;
-        font-weight: 600;
-        letter-spacing: -0.015em;
+        font-variant-numeric: lining-nums tabular-nums;
+        font-size: 0.88rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
         color: var(--accent-gold-bright);
     }
 
     /* =====================================================================
-       MODULE 3 (LEFT): UNIFIED CHECKS CARD (SAVING THROWS + CLEAN SKILLS)
+       MODULE 3 (LEFT): UNIFIED CHECKS CARD (SAVING THROWS + SKILLS)
        ===================================================================== */
     .saves-grid-2x3 {
         display: grid;
@@ -851,11 +1388,11 @@
     }
     .save-box.prof .save-lbl { color: var(--accent-gold-bright); font-weight: 600; }
     .save-val {
-        font-size: 0.88rem;
-        font-weight: 600;
+        font-size: 0.84rem;
+        font-weight: 700;
         font-family: var(--font-num);
-        font-variant-numeric: tabular-nums;
-        letter-spacing: -0.015em;
+        font-variant-numeric: lining-nums tabular-nums;
+        letter-spacing: 0.02em;
     }
 
     .checks-divider {
@@ -888,14 +1425,14 @@
         transition: background-color 0.12s ease, border-color 0.12s ease;
     }
     .stat-row-item:nth-child(even) {
-        background: rgba(255, 248, 236, 0.02);
+        background: var(--stripe-bg);
     }
     .stat-row-item.prof-item {
-        background: rgba(216, 178, 104, 0.065);
+        background: rgba(216, 178, 104, 0.08);
         border-inline-start: 2.5px solid var(--accent-gold);
     }
     .stat-row-item.exp-item {
-        background: rgba(109, 168, 204, 0.085);
+        background: rgba(109, 168, 204, 0.1);
         border-inline-start: 3px solid var(--accent-blue);
     }
     @media (hover: hover) {
@@ -907,14 +1444,14 @@
 
     .stat-row-item .prof-skill-val {
         font-family: var(--font-num) !important;
-        font-variant-numeric: tabular-nums;
-        font-weight: 500 !important;
-        font-size: 0.84rem;
-        letter-spacing: -0.015em;
+        font-variant-numeric: lining-nums tabular-nums;
+        font-weight: 600 !important;
+        font-size: 0.82rem;
+        letter-spacing: 0.02em;
     }
     .stat-row-item.prof-item .prof-skill-val,
     .stat-row-item.exp-item .prof-skill-val {
-        font-weight: 600 !important;
+        font-weight: 700 !important;
     }
 
     .btn-info-tiny {
@@ -946,10 +1483,10 @@
     }
 
     /* =====================================================================
-       MODULE 4 (LEFT): WARM BRASS-ACCENTED COIN POUCH (OUTFIT NUMERALS)
+       MODULE 4 (LEFT): COIN POUCH (SCULPTED CINZEL NUMERALS)
        ===================================================================== */
     .rpg-gold-panel {
-        background: linear-gradient(180deg, #1d1c19 0%, #15161c 100%) !important;
+        background: linear-gradient(180deg, var(--gold-bg-top) 0%, var(--gold-bg-bot) 100%) !important;
         border: 1px solid var(--card-border) !important;
         border-top: 2px solid var(--border-gold) !important;
         border-radius: var(--radius-md);
@@ -959,7 +1496,7 @@
 
     .rpg-gold-balance-btn {
         font-family: var(--font-num) !important;
-        font-variant-numeric: tabular-nums lining-nums;
+        font-variant-numeric: lining-nums tabular-nums;
         align-items: baseline !important;
         gap: 5px !important;
     }
@@ -967,9 +1504,9 @@
     .rpg-gold-gp-val {
         font-family: var(--font-num) !important;
         font-size: 1.18rem !important;
-        font-weight: 600 !important;
-        letter-spacing: -0.025em;
-        color: #e5c176 !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.02em;
+        color: var(--gp-val-color) !important;
         line-height: 1;
     }
 
@@ -984,10 +1521,10 @@
 
     .rpg-gold-sp-val {
         font-family: var(--font-num) !important;
-        font-size: 1.02rem !important;
-        font-weight: 500 !important;
-        letter-spacing: -0.02em;
-        color: #d5d3cd !important;
+        font-size: 1.0rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.02em;
+        color: var(--sp-val-color) !important;
         line-height: 1;
     }
 
@@ -1016,13 +1553,13 @@
     .rpg-gold-send-btn {
         font-size: 0.68rem;
         padding: 3px 8px;
-        color: #93d6b4;
-        border-color: rgba(94, 184, 138, 0.35);
+        color: var(--toggle-on-ink);
+        border-color: rgba(94, 184, 138, 0.38);
     }
 
     .rpg-gold-unit-btn {
         font-family: var(--font-num) !important;
-        font-weight: 600 !important;
+        font-weight: 700 !important;
         font-size: 0.72rem !important;
         background: var(--bg-well) !important;
         border: 1px solid var(--border-gold) !important;
@@ -1031,12 +1568,12 @@
     }
 
     .rpg-gold-panel #gold-input {
-        font-family: var(--font-num) !important;
+        font-family: var(--font-sans) !important;
         font-variant-numeric: tabular-nums;
         font-weight: 500 !important;
         width: 58px;
         height: 28px;
-        font-size: 0.84rem;
+        font-size: 0.82rem;
         text-align: center;
         padding: 2px 5px;
         background: var(--bg-well) !important;
@@ -1065,21 +1602,20 @@
         height: 28px;
     }
     .rpg-gold-bar .btn-act-heal {
-        background: linear-gradient(180deg, rgba(216, 178, 104, 0.25) 0%, rgba(168, 132, 66, 0.2) 100%) !important;
+        background: linear-gradient(180deg, var(--loot-btn-top) 0%, var(--loot-btn-bot) 100%) !important;
         border: 1px solid var(--border-gold) !important;
-        color: #f3e4c3 !important;
+        color: var(--loot-btn-ink) !important;
     }
     @media (hover: hover) {
         .rpg-gold-bar .btn-act-heal:hover {
-            background: linear-gradient(180deg, rgba(216, 178, 104, 0.36) 0%, rgba(168, 132, 66, 0.3) 100%) !important;
-            color: #fff !important;
+            background: linear-gradient(180deg, rgba(216, 178, 104, 0.36) 0%, rgba(168, 132, 66, 0.28) 100%) !important;
         }
     }
 
     .rpg-gold-quick-pills button {
         font-family: var(--font-num) !important;
-        font-variant-numeric: tabular-nums;
-        font-weight: 500 !important;
+        font-variant-numeric: lining-nums tabular-nums;
+        font-weight: 700 !important;
         font-size: 0.72rem !important;
     }
 
@@ -1089,7 +1625,7 @@
     .notes-panel {
         padding: 11px 13px;
         gap: 8px;
-        border-top: 2px solid rgba(216, 178, 104, 0.32);
+        border-top: 2px solid var(--border-gold);
     }
 
     .notes-panel-head {
@@ -1124,7 +1660,7 @@
     .notes-count-pill {
         font-family: var(--font-num);
         font-size: 0.68rem;
-        font-weight: 600;
+        font-weight: 700;
         padding: 1px 7px;
         border-radius: 999px;
         background: var(--accent-gold-soft);
@@ -1133,7 +1669,7 @@
     }
 
     .notes-quick-add-btn {
-        background: rgba(255, 248, 236, 0.055);
+        background: var(--btn-pre-bg);
         border: 1px solid var(--border-med);
         color: var(--text-light);
         border-radius: 999px;
@@ -1177,8 +1713,8 @@
         transition: border-color 0.14s ease, background-color 0.14s ease;
     }
     .notes-mini-card.is-pinned {
-        border-color: rgba(216, 178, 104, 0.28);
-        background: rgba(216, 178, 104, 0.045);
+        border-color: var(--border-gold);
+        background: var(--accent-gold-soft);
     }
     @media (hover: hover) {
         .notes-mini-card:hover {
@@ -1226,14 +1762,14 @@
         height: 7px;
         border-radius: 999px;
         flex-shrink: 0;
-        background: #938f88;
+        background: var(--text-muted);
     }
     .notes-cat-dot.cat-quest   { background: var(--accent-gold); }
     .notes-cat-dot.cat-npc     { background: var(--accent-blue); }
     .notes-cat-dot.cat-clue    { background: var(--accent-purple); }
     .notes-cat-dot.cat-lore    { background: var(--accent-bonus); }
     .notes-cat-dot.cat-loot    { background: var(--accent-green); }
-    .notes-cat-dot.cat-session { background: #a7a39c; }
+    .notes-cat-dot.cat-session { background: var(--text-dim); }
 
     .notes-pin-mark {
         color: var(--accent-gold);
@@ -1247,7 +1783,7 @@
         padding: 0 5px;
         border-radius: 999px;
         background: rgba(94, 184, 138, 0.14);
-        color: #93d6b4;
+        color: var(--toggle-on-ink);
         border: 1px solid rgba(94, 184, 138, 0.35);
         flex-shrink: 0;
     }
@@ -1261,16 +1797,16 @@
         border-radius: 999px;
         border: 1px solid var(--card-border);
         color: var(--text-dim);
-        background: rgba(255, 248, 236, 0.04);
+        background: var(--chip-bg);
         white-space: nowrap;
         flex-shrink: 0;
     }
-    .notes-cat-tag.cat-quest   { color: #ebd29c; border-color: rgba(216, 178, 104, 0.35); background: rgba(216, 178, 104, 0.1); }
-    .notes-cat-tag.cat-npc     { color: #9fc7e0; border-color: rgba(109, 168, 204, 0.35); background: rgba(109, 168, 204, 0.1); }
-    .notes-cat-tag.cat-clue    { color: #c7b5ea; border-color: rgba(166, 141, 214, 0.35); background: rgba(166, 141, 214, 0.1); }
-    .notes-cat-tag.cat-lore    { color: #e2b58e; border-color: rgba(207, 145, 92, 0.35); background: rgba(207, 145, 92, 0.1); }
-    .notes-cat-tag.cat-loot    { color: #93d6b4; border-color: rgba(94, 184, 138, 0.35); background: rgba(94, 184, 138, 0.1); }
-    .notes-cat-tag.cat-session { color: #cbc7bf; border-color: rgba(167, 163, 156, 0.32); background: rgba(167, 163, 156, 0.09); }
+    .notes-cat-tag.cat-quest   { color: var(--accent-gold-bright); border-color: var(--border-gold); background: var(--accent-gold-soft); }
+    .notes-cat-tag.cat-npc     { color: var(--badge-blue-ink); border-color: rgba(109, 168, 204, 0.35); background: rgba(109, 168, 204, 0.12); }
+    .notes-cat-tag.cat-clue    { color: var(--badge-purple-ink); border-color: rgba(166, 141, 214, 0.35); background: rgba(166, 141, 214, 0.12); }
+    .notes-cat-tag.cat-lore    { color: var(--accent-bonus); border-color: rgba(207, 145, 92, 0.35); background: rgba(207, 145, 92, 0.12); }
+    .notes-cat-tag.cat-loot    { color: var(--toggle-on-ink); border-color: rgba(94, 184, 138, 0.35); background: rgba(94, 184, 138, 0.12); }
+    .notes-cat-tag.cat-session { color: var(--text-dim); border-color: var(--border-med); background: var(--chip-bg); }
 
     .notes-quick-jot-form {
         display: flex;
@@ -1313,19 +1849,15 @@
     @media (hover: hover) {
         .notes-quick-jot-btn:hover {
             background: rgba(216, 178, 104, 0.24);
-            color: #fff;
         }
     }
 
-    /* Split-Pane Campaign Journal Dialog */
     dialog.sheet-dialog.notes-journal-dialog {
         width: min(920px, 95vw);
         max-width: min(920px, 95vw);
     }
 
-    .notes-journal-card {
-        max-height: 88vh;
-    }
+    .notes-journal-card { max-height: 88vh; }
 
     .notes-journal-head-actions {
         display: inline-flex;
@@ -1342,7 +1874,7 @@
     }
 
     .notes-sidebar {
-        background: #101218;
+        background: var(--sidebar-bg);
         border-inline-end: 1px solid var(--card-border);
         display: flex;
         flex-direction: column;
@@ -1367,9 +1899,7 @@
         border-radius: 8px;
         padding: 3px 8px;
     }
-    .notes-search-wrap:focus-within {
-        border-color: var(--accent-gold);
-    }
+    .notes-search-wrap:focus-within { border-color: var(--accent-gold); }
 
     .notes-search-input {
         flex: 1;
@@ -1402,7 +1932,7 @@
     }
 
     .notes-filter-pill {
-        background: rgba(255, 248, 236, 0.04);
+        background: var(--chip-bg);
         border: 1px solid var(--card-border);
         color: var(--text-dim);
         border-radius: 999px;
@@ -1460,7 +1990,7 @@
     @media (hover: hover) {
         .notes-list-card:hover {
             border-color: var(--border-med);
-            background: #1f232e;
+            background: var(--bg-elevated);
         }
     }
 
@@ -1601,14 +2131,14 @@
         gap: 8px;
         padding: 4px 8px;
         border-radius: 6px;
-        background: rgba(255, 248, 236, 0.03);
+        background: var(--chip-bg);
         border: 1px solid var(--card-border);
         cursor: pointer;
         transition: border-color 0.14s ease, background-color 0.14s ease;
     }
     .note-check-line:hover {
         border-color: var(--border-med);
-        background: rgba(255, 248, 236, 0.055);
+        background: var(--bg-elevated);
     }
     .note-check-line input[type="checkbox"] {
         margin-top: 3px;
@@ -1623,7 +2153,6 @@
         color: var(--text-muted);
     }
 
-    /* Reserved-Space Confirmation Strip (Prevents controls jumping under pointer) */
     .notes-confirm-strip {
         display: flex;
         align-items: center;
@@ -1633,9 +2162,9 @@
         min-block-size: 38px;
         padding: 6px 10px;
         border-radius: 8px;
-        background: rgba(214, 101, 108, 0.1);
+        background: rgba(214, 101, 108, 0.12);
         border: 1px solid rgba(214, 101, 108, 0.38);
-        color: #f4d3d5;
+        color: var(--badge-crimson-ink);
         font-size: 0.75rem;
     }
     .notes-confirm-strip.is-hidden {
@@ -1709,7 +2238,7 @@
     }
 
     .notes-tool-btn {
-        background: rgba(255, 248, 236, 0.05);
+        background: var(--chip-bg);
         border: 1px solid var(--card-border);
         color: var(--text-dim);
         border-radius: 5px;
@@ -1759,7 +2288,7 @@
         min-block-size: 36px;
         padding: 6px 10px;
         border-radius: 8px;
-        background: rgba(216, 178, 104, 0.1);
+        background: var(--accent-gold-soft);
         border: 1px solid var(--border-gold);
         color: var(--accent-gold-bright);
         font-size: 0.74rem;
@@ -1782,12 +2311,12 @@
 
     .notes-error-msg {
         font-size: 0.74rem;
-        color: #f3b5b9;
+        color: var(--accent-red);
         min-height: 1.1em;
     }
 
     .notes-modal-foot {
-        background: #101218;
+        background: var(--modal-foot-bg);
         border-top: 1px solid var(--card-border);
         padding: 9px 14px;
         display: flex;
@@ -1831,9 +2360,9 @@
     @media (hover: hover) {
         .action-card:hover {
             border-color: var(--border-med);
-            background: linear-gradient(180deg, var(--bg-elevated) 0%, #1d212b 100%);
+            background: linear-gradient(180deg, var(--bg-elevated) 0%, var(--card-hover-end) 100%);
             transform: translateY(-1px);
-            box-shadow: var(--inner-sheen), 0 8px 20px rgba(0, 0, 0, 0.36);
+            box-shadow: var(--inner-sheen), 0 8px 20px rgba(0, 0, 0, 0.16);
         }
     }
 
@@ -1875,7 +2404,7 @@
         letter-spacing: 0.045em;
         text-transform: uppercase;
         white-space: nowrap;
-        background: rgba(255, 248, 236, 0.06);
+        background: var(--chip-bg);
         color: var(--text-dim);
         border: 1px solid var(--card-border);
     }
@@ -1886,17 +2415,17 @@
     }
     .pill-crimson {
         background: rgba(214, 101, 108, 0.14);
-        color: #eab3b7;
+        color: var(--badge-crimson-ink);
         border-color: rgba(214, 101, 108, 0.35);
     }
     .pill-blue {
         background: rgba(109, 168, 204, 0.14);
-        color: #a9cfe6;
+        color: var(--badge-blue-ink);
         border-color: rgba(109, 168, 204, 0.35);
     }
     .pill-purple {
         background: rgba(166, 141, 214, 0.14);
-        color: #d2c2ef;
+        color: var(--badge-purple-ink);
         border-color: rgba(166, 141, 214, 0.36);
     }
 
@@ -1922,28 +2451,24 @@
         border-radius: 3px;
         display: inline-block;
         border: 1px solid var(--border-med);
-        background: rgba(255, 248, 236, 0.05);
+        background: var(--chip-bg);
         transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .rpg-pip-gem.is-filled.gem-gold {
         background: var(--accent-gold);
         border-color: var(--accent-gold-bright);
-        box-shadow: 0 0 6px rgba(216, 178, 104, 0.35);
     }
     .rpg-pip-gem.is-filled.gem-blue {
         background: var(--accent-blue);
-        border-color: #a9cfe6;
-        box-shadow: 0 0 6px rgba(109, 168, 204, 0.35);
+        border-color: var(--badge-blue-ink);
     }
     .rpg-pip-gem.is-filled.gem-purple {
         background: var(--accent-purple);
-        border-color: #d2c2ef;
-        box-shadow: 0 0 6px rgba(166, 141, 214, 0.35);
+        border-color: var(--badge-purple-ink);
     }
     .rpg-pip-gem.is-filled.gem-green {
         background: var(--accent-green);
-        border-color: #93d6b4;
-        box-shadow: 0 0 6px rgba(94, 184, 138, 0.35);
+        border-color: var(--toggle-on-ink);
     }
 
     /* Firearm Stance Switcher (Yvaine) */
@@ -1975,7 +2500,7 @@
         }
     }
     .stance-tab-btn.active {
-        background: linear-gradient(180deg, rgba(216, 178, 104, 0.14) 0%, #20242f 100%);
+        background: linear-gradient(180deg, var(--accent-gold-soft) 0%, var(--stance-active-end) 100%);
         border-color: var(--border-gold);
         color: var(--text-light);
         box-shadow: var(--inner-sheen);
@@ -2012,7 +2537,7 @@
     }
 
     /* =====================================================================
-       NATIVE <dialog> MODALS & TOP-LAYER ANIMATION (sheet-dialog + rpg-dialog)
+       NATIVE <dialog> MODALS & TOP-LAYER ANIMATION
        ===================================================================== */
     dialog:modal {
         overscroll-behavior: contain;
@@ -2069,7 +2594,7 @@
 
     dialog.sheet-dialog::backdrop,
     dialog.rpg-dialog::backdrop {
-        background: rgba(6, 7, 10, 0.78);
+        background: var(--backdrop-bg);
         backdrop-filter: blur(5px);
         transition-property: background-color, display, overlay;
         transition-duration: 0.22s;
@@ -2082,13 +2607,13 @@
         color: var(--text-light);
         border: 1px solid var(--border-med);
         border-radius: var(--radius-lg);
-        box-shadow: 0 28px 72px rgba(0, 0, 0, 0.86);
+        box-shadow: var(--shadow-sheet);
     }
     .modal-card.is-accent-sage { border-color: rgba(94, 184, 138, 0.38); }
     .modal-card.is-accent-arcane { border-color: rgba(166, 141, 214, 0.38); }
 
     .modal-header {
-        background: #1a1d26;
+        background: var(--modal-head-bg);
         border-bottom: 1px solid var(--card-border);
         padding: 11px 15px;
     }
@@ -2099,7 +2624,7 @@
         color: var(--accent-gold-bright);
     }
     .modal-close-btn {
-        background: rgba(255, 248, 236, 0.05);
+        background: var(--btn-pre-bg);
         border: 1px solid var(--card-border);
         color: var(--text-dim);
         border-radius: 7px;
@@ -2120,35 +2645,37 @@
     .craft-recipe-card {
         background: var(--panel-bg);
         border-color: var(--card-border);
+        color: var(--text-light);
     }
 
     #modal-gold-disp {
         font-family: var(--font-num);
-        font-variant-numeric: tabular-nums lining-nums;
-        color: #e5c176;
+        font-variant-numeric: lining-nums tabular-nums;
+        color: var(--gp-val-color);
     }
     #modal-silver-disp {
         font-family: var(--font-num);
-        font-variant-numeric: tabular-nums lining-nums;
-        color: #d5d3cd;
+        font-variant-numeric: lining-nums tabular-nums;
+        color: var(--sp-val-color);
     }
 
-    /* Floating Roll HUD — Smoked Obsidian Glass */
+    /* Floating Roll HUD */
     .floating-roll-hud {
-        background: rgba(20, 23, 31, 0.96);
+        background: var(--hud-glass-bg);
         backdrop-filter: blur(14px);
         border: 1px solid var(--border-gold);
         border-radius: 13px;
-        box-shadow: 0 20px 52px rgba(0, 0, 0, 0.82), 0 0 20px rgba(216, 178, 104, 0.1);
+        color: var(--text-light);
+        box-shadow: var(--shadow-sheet);
     }
 }
 
 @layer hud-unify {
     /* =====================================================================
-       ALIGN ALL cos_rpg_engine.css WIDGETS TO OBSIDIAN & BURNISHED BRASS
+       UNIFY ENGINE WIDGETS + THEME PICKER TRAY + LIGHT MODE PARITY
        ===================================================================== */
     .rpg-header-btn {
-        background: rgba(255, 248, 236, 0.06);
+        background: var(--btn-pre-bg);
         border: 1px solid var(--border-med);
         color: var(--text-light);
         border-radius: 8px;
@@ -2169,7 +2696,7 @@
         min-block-size: 34px;
         border-width: 1px;
         border-color: var(--border-gold);
-        background: linear-gradient(180deg, rgba(216, 178, 104, 0.18) 0%, #232630 100%);
+        background: linear-gradient(180deg, var(--accent-gold-soft) 0%, var(--panel-sub) 100%);
         color: var(--accent-gold-bright);
         font-weight: 600;
     }
@@ -2177,10 +2704,16 @@
         border-color: var(--border-med);
         color: var(--text-light);
     }
+    .rpg-header-btn.rpg-btn-sync {
+        background: linear-gradient(180deg, color-mix(in oklab, var(--accent-green) 16%, var(--panel-sub)) 0%, var(--panel-sub) 100%);
+        border-color: color-mix(in oklab, var(--accent-green) 48%, transparent);
+        color: var(--toggle-on-ink);
+        font-weight: 600;
+    }
 
     .rpg-badge-count {
         font-family: var(--font-num);
-        background: rgba(216, 178, 104, 0.16);
+        background: var(--accent-gold-soft);
         color: var(--accent-gold-bright);
         border-color: var(--border-gold);
     }
@@ -2208,51 +2741,51 @@
         transition: background-color 0.14s ease, color 0.14s ease, border-color 0.14s ease;
     }
     .rpg-view-tab[aria-pressed="true"] {
-        background: linear-gradient(180deg, #272b36 0%, #1f232c 100%);
+        background: linear-gradient(180deg, var(--tab-active-top) 0%, var(--tab-active-bot) 100%);
         border-color: var(--border-gold);
         color: var(--accent-gold-bright);
         font-weight: 600;
-        box-shadow: var(--inner-sheen), 0 2px 8px rgba(0, 0, 0, 0.35);
+        box-shadow: var(--inner-sheen), var(--shadow-card);
     }
 
     /* Live Party Teammate Bar */
     .rpg-party-hud {
-        background: #14171f;
+        background: var(--party-bg);
         border-bottom: 1px solid var(--card-border);
         padding: 8px 20px;
     }
+    .rpg-party-hud-lbl { color: var(--text-muted); }
     .rpg-party-chip {
         background: var(--panel-bg);
         border: 1px solid var(--card-border);
+        color: var(--text-light);
         border-radius: 9px;
         padding: 6px 11px;
         max-width: 320px;
         box-shadow: var(--inner-sheen);
     }
-    .rpg-party-chip-stats {
-        font-family: var(--font-num);
-    }
-    .rpg-party-hp-track {
-        background: var(--bg-well);
-    }
+    .rpg-party-chip-stats { font-family: var(--font-num); }
+    .rpg-party-hp-track { background: var(--bg-well); }
+    .rpg-party-meta-tags { color: var(--text-dim); }
 
     /* Combat Turn-Order Strip */
     .rpg-combat-strip {
-        background: linear-gradient(180deg, #1b171b 0%, #13161e 100%);
+        background: linear-gradient(180deg, var(--combat-bg-top) 0%, var(--combat-bg-bot) 100%);
         border-bottom: 1px solid rgba(214, 101, 108, 0.36);
     }
     .rpg-combat-strip.is-my-turn {
-        background: linear-gradient(180deg, #241f18 0%, #151820 100%);
+        background: linear-gradient(180deg, var(--combat-turn-top) 0%, var(--combat-turn-bot) 100%);
         border-bottom-color: var(--accent-gold);
     }
     .rpg-combat-tile {
         background: var(--panel-bg);
         border-color: var(--card-border);
     }
+    .rpg-combat-tile-top { color: var(--text-light); }
 
     /* Action Economy Combat Bar */
     .rpg-action-bar-wrap {
-        background: linear-gradient(180deg, #1d2029 0%, #151820 100%);
+        background: linear-gradient(180deg, var(--vitals-bg-top) 0%, var(--vitals-bg-bot) 100%);
         border: 1px solid var(--border-gold);
         border-radius: var(--radius-md);
         padding: 9px 12px;
@@ -2267,13 +2800,24 @@
 
     /* Concentration & Quick Status Strip */
     .rpg-conc-bar {
-        background: linear-gradient(135deg, rgba(166, 141, 214, 0.16) 0%, #181a24 100%);
+        background: linear-gradient(135deg, rgba(166, 141, 214, 0.16) 0%, var(--conc-bg-end) 100%);
         border-color: rgba(166, 141, 214, 0.48);
     }
+    .rpg-conc-title { color: var(--text-light); }
     .rpg-status-chip {
         background: var(--panel-sub);
         border-color: var(--border-med);
         color: var(--text-light);
+    }
+    .rpg-status-chip.is-buff {
+        background: rgba(94, 184, 138, 0.15);
+        border-color: var(--accent-green);
+        color: var(--toggle-on-ink);
+    }
+    .rpg-status-chip.is-debuff {
+        background: rgba(214, 101, 108, 0.15);
+        border-color: var(--accent-red);
+        color: var(--badge-crimson-ink);
     }
     .rpg-status-add-btn {
         background: var(--bg-well);
@@ -2287,6 +2831,12 @@
     .rpg-status-opt {
         background: var(--panel-bg);
         border-color: var(--card-border);
+        color: var(--text-dim);
+    }
+    .rpg-status-rule-box {
+        background: var(--panel-bg);
+        border-color: var(--border-med);
+        color: var(--text-light);
     }
 
     /* Skills Quick-Filter Bar */
@@ -2295,9 +2845,7 @@
         border-color: var(--border-med);
         color: var(--text-light);
     }
-    .rpg-skills-search:focus {
-        border-color: var(--accent-gold);
-    }
+    .rpg-skills-search:focus { border-color: var(--accent-gold); }
     .rpg-skills-mode-btn {
         background: var(--bg-well);
         border-color: var(--card-border);
@@ -2309,7 +2857,7 @@
         color: var(--accent-gold-bright);
     }
 
-    /* Rest Chooser Cards inside #rpg-rest-modal */
+    /* Rest Chooser Cards */
     .rpg-rest-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2344,45 +2892,47 @@
         flex: 1;
     }
 
-    /* Speed-Dial Floating Bubbles — Smoked Obsidian & Brass */
-    .rpg-fab-bubbles.is-open {
-        max-height: 380px;
-    }
+    /* Speed-Dial Floating Bubbles & Theme Tray */
+    .rpg-fab-bubbles.is-open { max-height: 440px; }
     .rpg-dice-fab {
-        background: linear-gradient(180deg, #272b36 0%, #191c24 100%);
+        background: linear-gradient(180deg, var(--fab-bg-top) 0%, var(--fab-bg-bot) 100%);
         border: 1.5px solid var(--border-gold);
         color: var(--accent-gold-bright);
         font-weight: 600;
-        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.72), var(--inner-sheen);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.36), var(--inner-sheen);
     }
     .rpg-dice-fab.is-open {
-        background: linear-gradient(180deg, #312922 0%, #1c1a1c 100%);
+        background: linear-gradient(180deg, var(--fab-open-top) 0%, var(--fab-open-bot) 100%);
         border-color: var(--accent-gold);
-        color: #fff;
+        color: var(--text-light);
     }
     .rpg-fab-bubble {
-        background: rgba(26, 29, 38, 0.96);
+        background: var(--fab-bubble-bg);
         border: 1px solid var(--border-med);
         color: var(--text-light);
         font-weight: 500;
         backdrop-filter: blur(10px);
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.56), var(--inner-sheen);
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25), var(--inner-sheen);
     }
     .rpg-fab-bubble.bubble-dice {
         border-color: var(--border-gold);
         color: var(--accent-gold-bright);
     }
+    .rpg-fab-bubble.bubble-theme {
+        border-color: var(--border-gold);
+        color: var(--accent-gold-bright);
+    }
     .rpg-fab-bubble.bubble-rules {
-        border-color: rgba(109, 168, 204, 0.36);
-        color: #c2ddec;
+        border-color: rgba(109, 168, 204, 0.38);
+        color: var(--badge-blue-ink);
     }
     .rpg-fab-bubble.bubble-reset {
-        border-color: rgba(214, 101, 108, 0.38);
-        color: #e9b9bd;
+        border-color: rgba(214, 101, 108, 0.4);
+        color: var(--badge-crimson-ink);
     }
     .rpg-fab-bubble.bubble-trade {
-        border-color: rgba(166, 141, 214, 0.4);
-        color: #d6c8f0;
+        border-color: rgba(166, 141, 214, 0.42);
+        color: var(--badge-purple-ink);
     }
     .rpg-fab-bubble.bubble-portal {
         border-color: var(--border-med);
@@ -2393,17 +2943,144 @@
         height: 8px;
         border-radius: 999px;
         background: var(--accent-green);
-        box-shadow: 0 0 6px rgba(94, 184, 138, 0.6);
         display: inline-block;
     }
 
-    .rpg-dice-tray {
-        background: linear-gradient(180deg, rgba(25, 28, 36, 0.98) 0%, rgba(16, 18, 24, 0.99) 100%);
+    .rpg-dice-tray,
+    .rpg-theme-tray {
+        background: linear-gradient(180deg, var(--tray-bg-top) 0%, var(--tray-bg-bot) 100%);
         border: 1px solid var(--border-gold);
-        box-shadow: 0 18px 46px rgba(0, 0, 0, 0.8);
+        box-shadow: var(--shadow-sheet);
+        backdrop-filter: blur(12px);
     }
     .rpg-dice-tray-head {
         color: var(--accent-gold-bright);
+        border-bottom-color: var(--card-border);
+    }
+    .rpg-dice-tray-modrow {
+        border-top-color: var(--card-border);
+    }
+    .rpg-dice-tray-grid .dice-btn {
+        background: var(--panel-bg);
+        border: 1px solid var(--border-med);
+        color: var(--text-light);
+    }
+
+    /* Compact 5-Theme Picker Tray inside #rpg-dice-fab-wrap */
+    .rpg-theme-tray {
+        display: none;
+        flex-direction: column;
+        gap: 8px;
+        width: min(290px, calc(100vw - 28px));
+        padding: 10px 12px;
+        border-radius: 12px;
+    }
+    .rpg-theme-tray.is-open { display: flex; }
+
+    .rpg-theme-list {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .rpg-theme-option {
+        width: 100%;
+        text-align: left;
+        background: var(--panel-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 7px 9px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 9px;
+        cursor: pointer;
+        color: var(--text-light);
+        font-family: var(--font-sans);
+        transition: border-color 0.14s ease, background-color 0.14s ease;
+    }
+    @media (hover: hover) {
+        .rpg-theme-option:hover {
+            border-color: var(--border-med);
+            background: var(--bg-elevated);
+        }
+    }
+    .rpg-theme-option[aria-pressed="true"] {
+        border-color: var(--accent-gold);
+        background: var(--accent-gold-soft);
+    }
+
+    .rpg-theme-opt-left {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .rpg-theme-swatches {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        padding: 3px 4px;
+        border-radius: 6px;
+        background: var(--bg-well);
+        border: 1px solid var(--card-border);
+        flex-shrink: 0;
+    }
+
+    .rpg-theme-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        display: inline-block;
+        border: 1px solid rgba(128, 128, 128, 0.35);
+    }
+
+    .rpg-theme-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        min-width: 0;
+    }
+    .rpg-theme-name {
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: var(--text-light);
+        line-height: 1.2;
+    }
+    .rpg-theme-desc {
+        font-size: 0.65rem;
+        color: var(--text-muted);
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .rpg-theme-check {
+        font-size: 0.76rem;
+        font-weight: 700;
+        color: var(--accent-gold-bright);
+        opacity: 0;
+        flex-shrink: 0;
+    }
+    .rpg-theme-option[aria-pressed="true"] .rpg-theme-check {
+        opacity: 1;
+    }
+
+    .rpg-theme-system-btn {
+        width: 100%;
+        justify-content: space-between;
+        padding: 5px 9px;
+        font-size: 0.71rem;
+        border-radius: 7px;
+    }
+    .rpg-theme-system-btn[aria-pressed="true"] {
+        border-color: var(--accent-gold);
+        background: var(--accent-gold-soft);
+        color: var(--accent-gold-bright);
+        font-weight: 600;
     }
 
     /* Engine Modals (Paper-Doll, Backpack, Craft, Trade, Rules, Rest) */
@@ -2416,10 +3093,10 @@
         background: var(--bg-sheet);
         border: 1px solid var(--border-med);
         border-radius: var(--radius-lg);
-        box-shadow: 0 28px 72px rgba(0, 0, 0, 0.85);
+        box-shadow: var(--shadow-sheet);
     }
     .rpg-modal-head {
-        background: #1a1d26;
+        background: var(--modal-head-bg);
         border-bottom: 1px solid var(--card-border);
     }
     .rpg-modal-head h2 {
@@ -2429,16 +3106,15 @@
         color: var(--accent-gold-bright);
     }
     .rpg-modal-close {
-        background: rgba(255, 248, 236, 0.05);
+        background: var(--btn-pre-bg);
         border-color: var(--card-border);
         color: var(--text-dim);
     }
     .rpg-modal-foot {
-        background: #101218;
+        background: var(--modal-foot-bg);
         border-top: 1px solid var(--card-border);
     }
 
-    /* Paper-Doll, Backpack, Craft, Trade, Rules Interiors */
     .rpg-equip-topstats,
     .rpg-paperdoll-board,
     .rpg-slot-picker,
@@ -2447,7 +3123,8 @@
     .rpg-loader-section,
     .rpg-search-wrap,
     .rpg-wpn-ammo-bar,
-    .rpg-equipped-strip {
+    .rpg-equipped-strip,
+    .rpg-code-box {
         background: var(--bg-well);
         border-color: var(--card-border);
     }
@@ -2468,40 +3145,83 @@
         color: var(--text-light);
     }
 
+    .rpg-bp-name-btn,
+    .rpg-slot-item-name,
+    .rpg-picker-item-name,
+    .rpg-ammo-status strong {
+        color: var(--text-light);
+    }
+    .rpg-bp-tags,
+    .rpg-bp-cat-tag,
+    .rpg-slot-hdr,
+    .rpg-ammo-status,
+    .rpg-ammo-effect-hint,
+    .rpg-loader-cap,
+    .rpg-field-lbl {
+        color: var(--text-dim);
+    }
+    .rpg-bp-cat-tag {
+        background: var(--bg-well);
+        border-color: var(--card-border);
+    }
+
     .rpg-slot-box.slot-filled {
         border-color: var(--border-gold);
-        background: linear-gradient(135deg, rgba(216, 178, 104, 0.08) 0%, var(--panel-bg) 100%);
+        background: linear-gradient(135deg, var(--accent-gold-soft) 0%, var(--panel-bg) 100%);
     }
     .rpg-slot-box.slot-selected {
         border-color: var(--accent-blue);
         box-shadow: 0 0 0 2px rgba(109, 168, 204, 0.28);
-        background: #1d2430;
+        background: var(--bg-elevated);
     }
 
-    .rpg-mini-btn {
+    .rpg-mini-btn,
+    .rpg-ammo-act-btn,
+    .rpg-ammo-pill,
+    .rpg-override-btn {
         background: var(--panel-sub);
         border-color: var(--border-med);
         color: var(--text-light);
     }
-    .rpg-mini-btn:hover {
+    .rpg-mini-btn:hover,
+    .rpg-ammo-act-btn:hover {
         border-color: var(--border-gold);
     }
-
-    .rpg-craft-card {
-        border-left-color: var(--accent-green);
+    .rpg-mini-btn.btn-equip,
+    .rpg-ammo-act-btn.is-load {
+        background: var(--accent-gold-soft);
+        border-color: var(--border-gold);
+        color: var(--accent-gold-bright);
     }
+    .rpg-mini-btn.btn-use,
+    .rpg-mini-btn.btn-equipped {
+        background: rgba(94, 184, 138, 0.16);
+        border-color: rgba(94, 184, 138, 0.45);
+        color: var(--toggle-on-ink);
+    }
+    .rpg-mini-btn.btn-send {
+        background: rgba(166, 141, 214, 0.15);
+        border-color: rgba(166, 141, 214, 0.42);
+        color: var(--badge-purple-ink);
+    }
+    .rpg-mini-btn.btn-danger {
+        color: var(--badge-crimson-ink);
+        border-color: rgba(214, 101, 108, 0.4);
+    }
+
+    .rpg-craft-card { border-left-color: var(--accent-green); }
 
     .rpg-rules-card h3 {
         font-family: var(--font-sans);
         color: var(--accent-gold-bright);
     }
 
-    /* Adventure Gear Hub Tiles */
     .rpg-hub-tile {
         background: var(--panel-sub);
         border: 1px solid var(--card-border);
         border-radius: 9px;
         box-shadow: var(--inner-sheen);
+        color: var(--text-light);
     }
     @media (hover: hover) {
         .rpg-hub-tile:hover {
@@ -2509,10 +3229,157 @@
             background: var(--bg-elevated);
         }
     }
+    .rpg-hub-tile-sub { color: var(--text-dim); }
     .rpg-eq-chip {
         background: var(--panel-bg);
         border-color: var(--card-border);
         color: var(--text-light);
+    }
+    .rpg-qb-btn {
+        background: var(--panel-bg);
+        border-color: rgba(94, 184, 138, 0.42);
+        color: var(--text-light);
+    }
+    .rpg-quickbelt-lbl { color: var(--toggle-on-ink); }
+
+    /* =====================================================================
+       WARM PARCHMENT (LIGHT MODE) LEGACY INLINE-COLOR READABILITY ADAPTER
+       Remaps dark-coded inline styles in dynamic modals/HUDs cleanly
+       ===================================================================== */
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#f8fafc"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #f8fafc"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#f1f5f9"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #f1f5f9"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#e2e8f0"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #e2e8f0"] {
+        color: var(--text-light) !important;
+    }
+
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#cbd5e1"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #cbd5e1"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#94a3b8"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #94a3b8"] {
+        color: var(--text-dim) !important;
+    }
+
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#fde68a"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #fde68a"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#fbbf24"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #fbbf24"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#fef08a"] {
+        color: var(--accent-gold-bright) !important;
+    }
+
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#86efac"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #86efac"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#6ee7b7"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #6ee7b7"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#4ade80"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #4ade80"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#bbf7d0"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #bbf7d0"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#a7f3d0"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #a7f3d0"] {
+        color: var(--accent-green) !important;
+    }
+
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#f87171"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #f87171"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#fca5a5"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #fca5a5"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#fecaca"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #fecaca"] {
+        color: var(--accent-red) !important;
+    }
+
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#38bdf8"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #38bdf8"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#60a5fa"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #60a5fa"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#93c5fd"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #93c5fd"] {
+        color: var(--accent-blue) !important;
+    }
+
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#d8b4fe"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #d8b4fe"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#c4b5fd"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #c4b5fd"] {
+        color: var(--accent-purple) !important;
+    }
+
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:#090e1a"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:#0b1120"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:#0f172a"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:#111827"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:#1e293b"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:rgba(15,23,42"],
+    :root[data-theme="parchment"] :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:rgba(15, 23, 42"] {
+        background: var(--bg-well) !important;
+        border-color: var(--card-border) !important;
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#f8fafc"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#f1f5f9"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#e2e8f0"] {
+            color: var(--text-light) !important;
+        }
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#cbd5e1"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#94a3b8"] {
+            color: var(--text-dim) !important;
+        }
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#fde68a"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #fde68a"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#fbbf24"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #fbbf24"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#fef08a"] {
+            color: var(--accent-gold-bright) !important;
+        }
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#86efac"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #86efac"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#6ee7b7"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #6ee7b7"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#4ade80"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #4ade80"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#bbf7d0"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #bbf7d0"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#a7f3d0"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #a7f3d0"] {
+            color: var(--accent-green) !important;
+        }
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#f87171"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #f87171"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#fca5a5"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #fca5a5"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#fecaca"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #fecaca"] {
+            color: var(--accent-red) !important;
+        }
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#38bdf8"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #38bdf8"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#60a5fa"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #60a5fa"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#93c5fd"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #93c5fd"] {
+            color: var(--accent-blue) !important;
+        }
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#d8b4fe"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #d8b4fe"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color:#c4b5fd"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog, .floating-roll-hud) [style*="color: #c4b5fd"] {
+            color: var(--accent-purple) !important;
+        }
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:#090e1a"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:#0b1120"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:#0f172a"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:#111827"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:#1e293b"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:rgba(15,23,42"],
+        :root:not([data-theme]) :is(.sheet-container, dialog.sheet-dialog, dialog.rpg-dialog) [style*="background:rgba(15, 23, 42"] {
+            background: var(--bg-well) !important;
+            border-color: var(--card-border) !important;
+        }
     }
 
     /* Forced Colors Mode (Windows High Contrast Accessibility) */
@@ -2525,6 +3392,8 @@
         .rpg-view-tab,
         .rpg-fab-bubble,
         .rpg-dice-fab,
+        .rpg-theme-option,
+        .rpg-theme-system-btn,
         .notes-mini-card,
         .notes-list-card,
         .notes-reader-canvas,
@@ -2532,6 +3401,8 @@
             border: 1px solid CanvasText;
         }
         .rpg-view-tab[aria-pressed="true"],
+        .rpg-theme-option[aria-pressed="true"],
+        .rpg-theme-system-btn[aria-pressed="true"],
         .save-box.prof,
         .stat-row-item.prof-item,
         .notes-list-card.is-active,
