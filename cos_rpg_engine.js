@@ -6696,9 +6696,6 @@
         } catch (e) {}
 
         if (firebaseReady && rtdb) {
-            if (!silentToast) {
-                clearAllMyWhisperThreads();
-            }
             campaignRtdbRef(`heroes/${adapter.heroId}/state`).set(snap).catch(() => {});
             campaignRtdbRef(`heroes/${adapter.heroId}/synced_checkpoint`).set(checkpointPayload).then(() => {
                 const btn = document.getElementById('rpg-hdr-sync-btn');
@@ -6724,7 +6721,6 @@
                 if (!silentToast) adapter.log(`⚠️ Cloud Sync failed: ${esc(err.message)}`);
             });
         } else if (!silentToast) {
-            clearAllMyWhisperThreads();
             const combined = [snap.sheetExportStr, snap.notesExportStr].filter(Boolean).join('\n');
             if (combined && navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(combined).then(() => {
@@ -6998,7 +6994,14 @@
     // =========================================================================
     // DISCREET PRIVATE & GROUP MESSAGING ENGINE (IN TRADE MODAL)
     // =========================================================================
+    const WHISPER_RTDB_SUBPATH = 'dm_state/whispers';
+    let hasLoadedCloudWhispers = false;
+
     function getMsgReadStorageKey() { return `cos_msg_read_${adapter ? adapter.heroId : 'hero'}_v1`; }
+    function getMsgThreadsStorageKey() {
+        const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+        return `cos_whisper_threads_${room}_${adapter ? adapter.heroId : 'hero'}_v1`;
+    }
 
     function getMsgReadMap() {
         try {
@@ -7011,6 +7014,37 @@
         try { localStorage.setItem(getMsgReadStorageKey(), JSON.stringify(map)); } catch (e) {}
     }
 
+    function loadCachedMsgThreads() {
+        if (!adapter) return;
+        try {
+            const raw = localStorage.getItem(getMsgThreadsStorageKey());
+            if (!raw) return;
+            const parsed = JSON.parse(raw);
+            if (!parsed || typeof parsed !== 'object') return;
+            const myId = adapter.heroId;
+            const clean = {};
+            Object.entries(parsed).forEach(([tid, tObj]) => {
+                if (!tObj || typeof tObj !== 'object') return;
+                const parts = Array.isArray(tObj.participants) ? tObj.participants : tid.split('_');
+                if (parts.includes(myId)) {
+                    clean[tid] = {
+                        participants: parts,
+                        updatedAt: tObj.updatedAt || 0,
+                        messages: (tObj.messages && typeof tObj.messages === 'object') ? tObj.messages : {}
+                    };
+                }
+            });
+            msgThreads = clean;
+        } catch (e) {}
+    }
+
+    function saveCachedMsgThreads() {
+        if (!adapter) return;
+        try {
+            localStorage.setItem(getMsgThreadsStorageKey(), JSON.stringify(msgThreads || {}));
+        } catch (e) {}
+    }
+
     function computeThreadId(participantIds) {
         return [...new Set((participantIds || []).map(x => String(x).toLowerCase().trim()).filter(Boolean))].sort().join('_');
     }
@@ -7020,9 +7054,9 @@
         const others = participants.filter(id => id !== adapter.heroId);
         if (others.length === 0) return 'Notes';
         return others.map(id => {
-            if (id === 'dm') return 'DM';
+            if (id === 'dm') return '🏰 DM';
             const m = PARTY_MEMBERS.find(p => p.id === id);
-            return m ? m.name : id;
+            return m ? `${m.emoji ? m.emoji + ' ' : ''}${m.name}` : id;
         }).join(' + ');
     }
 
@@ -7030,6 +7064,7 @@
         if (!threadObj || !threadObj.messages || typeof threadObj.messages !== 'object') return [];
         return Object.entries(threadObj.messages)
             .map(([id, m]) => ({ id, ...(m || {}) }))
+            .filter(m => m && typeof m.text === 'string' && m.text.trim().length > 0)
             .sort((a, b) => (a.ts || 0) - (b.ts || 0));
     }
 
@@ -7054,11 +7089,58 @@
         renderHeaderBadges();
     }
 
+    function ensureDefaultMsgSelection(markRead = true) {
+        if (!adapter) return;
+        const cleanSel = Array.from(msgSelectedRecips).filter(id => id && id !== adapter.heroId);
+        if (msgActiveThreadId && cleanSel.length > 0) {
+            if (markRead) markThreadRead(msgActiveThreadId);
+            return;
+        }
+        const sortedThreads = Object.entries(msgThreads)
+            .map(([tid, t]) => ({
+                tid,
+                participants: Array.isArray(t?.participants) ? t.participants : tid.split('_'),
+                updatedAt: t?.updatedAt || 0,
+                unread: getThreadUnreadCount(tid),
+                msgCount: getThreadMessagesList(t).length
+            }))
+            .filter(t => t.participants.includes(adapter.heroId) && t.participants.some(id => id !== adapter.heroId))
+            .sort((a, b) => {
+                if (b.unread !== a.unread) return b.unread - a.unread;
+                if ((b.updatedAt || 0) !== (a.updatedAt || 0)) return (b.updatedAt || 0) - (a.updatedAt || 0);
+                return b.msgCount - a.msgCount;
+            });
+
+        if (sortedThreads.length > 0) {
+            const best = sortedThreads[0];
+            msgActiveThreadId = best.tid;
+            msgSelectedRecips = new Set(best.participants.filter(id => id !== adapter.heroId));
+        } else {
+            msgSelectedRecips = new Set(['dm']);
+            msgActiveThreadId = computeThreadId([adapter.heroId, 'dm']);
+        }
+        if (markRead && msgActiveThreadId) {
+            markThreadRead(msgActiveThreadId);
+        }
+    }
+
+    function scrollMsgLogToBottom(focusInput = false) {
+        requestAnimationFrame(() => {
+            const logEl = document.getElementById('rpg-msg-log');
+            if (logEl) logEl.scrollTop = logEl.scrollHeight;
+            if (focusInput) {
+                const inp = document.getElementById('rpg-msg-input');
+                if (inp && !inp.disabled) inp.focus();
+            }
+        });
+    }
+
     function startMessagesListener() {
         if (!firebaseReady || !rtdb || !adapter) return;
-        campaignRtdbRef('messages').on('value', snap => {
+        campaignRtdbRef(WHISPER_RTDB_SUBPATH).on('value', snap => {
             const val = snap.val() || {};
             const myId = adapter.heroId;
+            const now = Date.now();
             const filtered = {};
             Object.entries(val).forEach(([tid, tObj]) => {
                 if (!tObj || typeof tObj !== 'object') return;
@@ -7067,19 +7149,55 @@
                     filtered[tid] = {
                         participants: parts,
                         updatedAt: tObj.updatedAt || 0,
-                        messages: tObj.messages || {}
+                        messages: (tObj.messages && typeof tObj.messages === 'object') ? { ...tObj.messages } : {}
                     };
                 }
             });
+
+            // Preserve any brand-new optimistic messages (<8s old) or unsynced offline threads on first connect
+            Object.entries(msgThreads).forEach(([tid, localThread]) => {
+                if (!localThread || !localThread.messages) return;
+                const parts = Array.isArray(localThread.participants) ? localThread.participants : tid.split('_');
+                if (!parts.includes(myId)) return;
+                Object.entries(localThread.messages).forEach(([mid, mObj]) => {
+                    if (!mObj) return;
+                    const isRecentOptimistic = (now - (mObj.ts || 0)) < 8000;
+                    const missingInCloud = !filtered[tid] || !filtered[tid].messages || !filtered[tid].messages[mid];
+                    if (missingInCloud && (isRecentOptimistic || !hasLoadedCloudWhispers)) {
+                        if (!filtered[tid]) {
+                            filtered[tid] = {
+                                participants: parts,
+                                updatedAt: localThread.updatedAt || mObj.ts || now,
+                                messages: {}
+                            };
+                        }
+                        filtered[tid].messages[mid] = mObj;
+                        if ((mObj.ts || 0) > (filtered[tid].updatedAt || 0)) {
+                            filtered[tid].updatedAt = mObj.ts;
+                        }
+                        if (!hasLoadedCloudWhispers) {
+                            campaignRtdbRef(`${WHISPER_RTDB_SUBPATH}/${tid}`).update({
+                                participants: parts,
+                                updatedAt: filtered[tid].updatedAt,
+                                [`messages/${mid}`]: mObj
+                            }).catch(() => {});
+                        }
+                    }
+                });
+            });
+
+            hasLoadedCloudWhispers = true;
             msgThreads = filtered;
-            if (tradeActiveTab === 'messages' && msgActiveThreadId && document.getElementById('rpg-trade-modal')?.open) {
-                markThreadRead(msgActiveThreadId);
+            saveCachedMsgThreads();
+
+            if (tradeActiveTab === 'messages' && document.getElementById('rpg-trade-modal')?.open) {
+                ensureDefaultMsgSelection(true);
                 renderTradeModal();
             } else {
                 renderHubPanel();
                 renderHeaderBadges();
             }
-        });
+        }, err => console.warn('[COS_RPG] Whispers RTDB listener error:', err));
     }
 
     function toggleMsgRecipient(recipId) {
@@ -7091,6 +7209,26 @@
             markThreadRead(msgActiveThreadId);
         } else {
             msgActiveThreadId = null;
+        }
+        renderTradeModal();
+    }
+
+    function setQuickMsgThread(preset) {
+        if (!adapter) return;
+        const myId = adapter.heroId;
+        const partyPeers = PARTY_MEMBERS.map(m => m.id).filter(id => id !== myId && id !== 'dm');
+        if (preset === 'dm') {
+            msgSelectedRecips = new Set(['dm']);
+        } else if (preset === 'party') {
+            msgSelectedRecips = new Set(partyPeers);
+        } else if (preset === 'all') {
+            msgSelectedRecips = new Set([...partyPeers, 'dm']);
+        } else if (preset && preset !== myId) {
+            msgSelectedRecips = new Set([preset]);
+        }
+        if (msgSelectedRecips.size > 0) {
+            msgActiveThreadId = computeThreadId([myId, ...Array.from(msgSelectedRecips)]);
+            markThreadRead(msgActiveThreadId);
         }
         renderTradeModal();
     }
@@ -7115,26 +7253,41 @@
         const participants = [...new Set([adapter.heroId, ...recips])].sort();
         const tid = computeThreadId(participants);
         msgActiveThreadId = tid;
+        const now = Date.now();
+        const msgId = `m_${now}_${Math.random().toString(36).slice(2, 7)}`;
         const msgObj = {
             senderId: adapter.heroId,
             senderName: adapter.heroName,
             text,
-            ts: Date.now()
+            ts: now
         };
         if (inp && overrideText === null) inp.value = '';
 
-        if (firebaseReady && rtdb) {
-            const tRef = campaignRtdbRef(`messages/${tid}`);
-            tRef.child('participants').set(participants).catch(() => {});
-            tRef.child('updatedAt').set(msgObj.ts).catch(() => {});
-            tRef.child('messages').push(msgObj).catch(() => {});
-        } else {
-            if (!msgThreads[tid]) msgThreads[tid] = { participants, updatedAt: msgObj.ts, messages: {} };
-            msgThreads[tid].updatedAt = msgObj.ts;
-            msgThreads[tid].messages['loc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6)] = msgObj;
+        // 1. Optimistic local state + localStorage persistence immediately
+        if (!msgThreads[tid]) {
+            msgThreads[tid] = { participants, updatedAt: now, messages: {} };
         }
+        msgThreads[tid].participants = participants;
+        msgThreads[tid].updatedAt = now;
+        if (!msgThreads[tid].messages || typeof msgThreads[tid].messages !== 'object') {
+            msgThreads[tid].messages = {};
+        }
+        msgThreads[tid].messages[msgId] = msgObj;
+        saveCachedMsgThreads();
+
+        // 2. Atomic multi-path push to live Firebase RTDB (dm_state/whispers)
+        if (firebaseReady && rtdb) {
+            const tRef = campaignRtdbRef(`${WHISPER_RTDB_SUBPATH}/${tid}`);
+            tRef.update({
+                participants,
+                updatedAt: now,
+                [`messages/${msgId}`]: msgObj
+            }).catch(err => console.warn('[COS_RPG] Whisper send failed:', err));
+        }
+
         markThreadRead(tid);
         renderTradeModal();
+        scrollMsgLogToBottom(true);
         return true;
     }
 
@@ -7142,9 +7295,9 @@
         const tid = threadId || msgActiveThreadId;
         if (!tid) return;
         delete msgThreads[tid];
-        if (msgActiveThreadId === tid) msgActiveThreadId = null;
+        saveCachedMsgThreads();
         if (firebaseReady && rtdb) {
-            campaignRtdbRef(`messages/${tid}`).remove().catch(() => {});
+            campaignRtdbRef(`${WHISPER_RTDB_SUBPATH}/${tid}`).remove().catch(() => {});
         }
         renderHubPanel();
         renderHeaderBadges();
@@ -7161,10 +7314,10 @@
         myThreadIds.forEach(tid => {
             delete msgThreads[tid];
             if (firebaseReady && rtdb) {
-                campaignRtdbRef(`messages/${tid}`).remove().catch(() => {});
+                campaignRtdbRef(`${WHISPER_RTDB_SUBPATH}/${tid}`).remove().catch(() => {});
             }
         });
-        msgActiveThreadId = null;
+        saveCachedMsgThreads();
         saveMsgReadMap({});
         renderHubPanel();
         renderHeaderBadges();
@@ -9559,14 +9712,31 @@
             </div>
         `;
 
+        if (tradeActiveTab === 'messages') {
+            ensureDefaultMsgSelection(true);
+        }
         const unreadTotal = getTotalUnreadMessages();
         const msgPeers = PARTY_MEMBERS.filter(m => m.id !== adapter.heroId).map(m => ({
             id: m.id,
-            label: m.id === 'dm' ? 'DM' : m.name
+            label: m.id === 'dm' ? '🏰 DM' : `${m.emoji ? m.emoji + ' ' : ''}${m.name}`
         }));
         const myThreadsList = Object.entries(msgThreads)
-            .map(([tid, t]) => ({ tid, ...t, unread: getThreadUnreadCount(tid) }))
-            .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+            .map(([tid, t]) => {
+                const mList = getThreadMessagesList(t);
+                const lastMsg = mList.length > 0 ? mList[mList.length - 1] : null;
+                return {
+                    tid,
+                    ...t,
+                    msgCount: mList.length,
+                    lastMsg,
+                    unread: getThreadUnreadCount(tid)
+                };
+            })
+            .filter(th => th.msgCount > 0 || th.tid === msgActiveThreadId)
+            .sort((a, b) => {
+                if (b.unread !== a.unread) return b.unread - a.unread;
+                return (b.updatedAt || 0) - (a.updatedAt || 0);
+            });
         const activeThreadObj = msgActiveThreadId ? msgThreads[msgActiveThreadId] : null;
         const activeMsgs = getThreadMessagesList(activeThreadObj);
         const selArr = Array.from(msgSelectedRecips).filter(id => id !== adapter.heroId);
@@ -9574,12 +9744,23 @@
             ? formatThreadTitle([adapter.heroId, ...selArr])
             : 'Select 1 or more recipients above';
         const isDmInThread = selArr.includes('dm');
+        const partyOnlyIds = PARTY_MEMBERS.map(m => m.id).filter(id => id !== adapter.heroId && id !== 'dm');
+        const isDmOnly = selArr.length === 1 && selArr[0] === 'dm';
+        const isPartyOnly = selArr.length === partyOnlyIds.length && partyOnlyIds.every(id => msgSelectedRecips.has(id)) && !msgSelectedRecips.has('dm');
+        const isAllTable = selArr.length === (partyOnlyIds.length + 1) && partyOnlyIds.every(id => msgSelectedRecips.has(id)) && msgSelectedRecips.has('dm');
 
         const messagesTabHtml = `
             <div style="display:flex; flex-direction:column; gap:10px;">
-                <div>
-                    <div style="font-size:0.68rem; font-weight:800; color:#94a3b8; text-transform:uppercase; margin-bottom:5px;">
-                        Pick Recipients (1-on-1 or Group Chat — Player-only chats stay hidden from DM)
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                        <span style="font-size:0.68rem; font-weight:800; color:var(--text-muted, #94a3b8); text-transform:uppercase;">
+                            1-Tap Channels &amp; Multi-Select Recipients
+                        </span>
+                        <div style="display:flex; flex-wrap:wrap; gap:4px;">
+                            <button type="button" class="rpg-mini-btn ${isDmOnly ? 'btn-equip' : ''}" style="min-block-size:23px; padding:2px 8px; font-size:0.68rem;" onclick="COS_RPG.setQuickMsgThread('dm')">🏰 DM Only</button>
+                            <button type="button" class="rpg-mini-btn ${isPartyOnly ? 'btn-equip' : ''}" style="min-block-size:23px; padding:2px 8px; font-size:0.68rem;" onclick="COS_RPG.setQuickMsgThread('party')" title="Secret party chat hidden from DM">🕵️ Party (No DM)</button>
+                            <button type="button" class="rpg-mini-btn ${isAllTable ? 'btn-equip' : ''}" style="min-block-size:23px; padding:2px 8px; font-size:0.68rem;" onclick="COS_RPG.setQuickMsgThread('all')">🌐 Whole Table</button>
+                        </div>
                     </div>
                     <div style="display:flex; flex-wrap:wrap; gap:6px;">
                         ${msgPeers.map(peer => {
@@ -9589,45 +9770,49 @@
                     </div>
                 </div>
 
-                ${myThreadsList.length > 0 ? `
-                    <div style="display:flex; flex-wrap:wrap; gap:5px; align-items:center;">
-                        <span style="font-size:0.66rem; color:#94a3b8; font-weight:700;">Active Threads:</span>
-                        ${myThreadsList.map(th => {
-                            const isCur = th.tid === msgActiveThreadId;
-                            return `<button type="button" class="rpg-mini-btn ${isCur ? 'btn-equip' : ''}" style="min-block-size:24px; padding:2px 8px; font-size:0.68rem;" onclick="COS_RPG.selectMsgThread('${esc(th.tid)}')">${esc(formatThreadTitle(th.participants))}${th.unread > 0 ? ` <strong style="color:#fde68a;">(${th.unread})</strong>` : ''}</button>`;
-                        }).join('')}
+                <div style="display:flex; flex-direction:column; gap:4px; background:var(--bg-card, rgba(15,23,42,0.55)); border:1px solid var(--border-subtle, #26344b); border-radius:7px; padding:7px 9px;">
+                    <div style="font-size:0.65rem; color:var(--text-muted, #94a3b8); font-weight:800; text-transform:uppercase;">
+                        📜 Message History (${myThreadsList.filter(t => t.msgCount > 0).length} Saved Conversation${myThreadsList.filter(t => t.msgCount > 0).length === 1 ? '' : 's'})
                     </div>
-                ` : ''}
+                    ${myThreadsList.filter(t => t.msgCount > 0).length > 0 ? `
+                        <div style="display:flex; flex-wrap:wrap; gap:5px; align-items:center;">
+                            ${myThreadsList.filter(t => t.msgCount > 0).map(th => {
+                                const isCur = th.tid === msgActiveThreadId;
+                                return `<button type="button" class="rpg-mini-btn ${isCur ? 'btn-equip' : ''}" style="min-block-size:25px; padding:3px 9px; font-size:0.7rem;" onclick="COS_RPG.selectMsgThread('${esc(th.tid)}')">${esc(formatThreadTitle(th.participants))} <span style="opacity:0.75; font-size:0.64rem;">(${th.msgCount})</span>${th.unread > 0 ? ` <strong style="color:var(--accent-gold-bright, #fde68a);">• ${th.unread} new</strong>` : ''}</button>`;
+                            }).join('')}
+                        </div>
+                    ` : `<div style="font-size:0.7rem; color:var(--text-dim, #64748b);">No saved conversations yet — send a whisper below to start your message history.</div>`}
+                </div>
 
-                <div style="background:#080d18; border:1px solid #26344b; border-radius:8px; padding:10px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; border-bottom:1px solid #1e293b; padding-bottom:6px; margin-bottom:8px;">
+                <div style="background:var(--bg-input, #080d18); border:1px solid var(--border-card, #26344b); border-radius:8px; padding:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; border-bottom:1px solid var(--border-subtle, #1e293b); padding-bottom:6px; margin-bottom:8px;">
                         <div>
-                            <div style="font-size:0.76rem; font-weight:700; color:#f8fafc;">${esc(activeLabel)}</div>
-                            ${selArr.length > 0 ? `<div style="font-size:0.65rem; color:${isDmInThread ? '#93c5fd' : '#6ee7b7'};">${isDmInThread ? 'Includes DM (Discreet DM Whisper)' : 'Private Party Chat (Hidden from DM)'}</div>` : ''}
+                            <div style="font-size:0.78rem; font-weight:700; color:var(--text-main, #f8fafc);">💬 ${esc(activeLabel)} <span style="font-size:0.68rem; color:var(--text-dim, #94a3b8); font-weight:500;">(${activeMsgs.length} msg${activeMsgs.length === 1 ? '' : 's'})</span></div>
+                            ${selArr.length > 0 ? `<div style="font-size:0.65rem; color:${isDmInThread ? 'var(--accent-blue, #93c5fd)' : 'var(--accent-green, #6ee7b7)'};">${isDmInThread ? '🏰 Includes DM (Discreet DM Whisper)' : '🕵️ Private Party Chat (Hidden from DM)'}</div>` : ''}
                         </div>
                         ${msgActiveThreadId && activeMsgs.length > 0 ? `<button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:24px; padding:2px 8px; font-size:0.66rem;" onclick="COS_RPG.clearWhisperThread('${esc(msgActiveThreadId)}')">Clear Thread</button>` : ''}
                     </div>
-                    <div id="rpg-msg-log" style="max-height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-right:4px; margin-bottom:8px;">
+                    <div id="rpg-msg-log" style="max-height:250px; min-height:110px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; padding-right:4px; margin-bottom:8px;">
                         ${selArr.length === 0
-                            ? `<div style="font-size:0.74rem; color:#64748b; text-align:center; padding:16px;">Tick one or more names above to start a private message or group chat.</div>`
+                            ? `<div style="font-size:0.74rem; color:var(--text-dim, #64748b); text-align:center; padding:22px 12px;">Tick one or more names above to start a private message or group chat.</div>`
                             : (activeMsgs.length === 0
-                                ? `<div style="font-size:0.74rem; color:#64748b; text-align:center; padding:16px;">No messages yet. Say something discreet!</div>`
+                                ? `<div style="font-size:0.74rem; color:var(--text-dim, #64748b); text-align:center; padding:22px 12px;">No messages in <strong>${esc(activeLabel)}</strong> yet. Type a whisper below!</div>`
                                 : activeMsgs.map(m => {
                                     const mine = m.senderId === adapter.heroId;
                                     const timeStr = m.ts ? new Date(m.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
                                     return `
-                                        <div style="align-self:${mine ? 'flex-end' : 'flex-start'}; max-width:84%; background:${mine ? '#1e3a5f' : '#141f35'}; border:1px solid ${mine ? '#3b82f6' : '#334155'}; border-radius:8px; padding:6px 9px;">
-                                            <div style="font-size:0.64rem; color:${mine ? '#93c5fd' : '#fde68a'}; font-weight:700; margin-bottom:2px;">${esc(m.senderName || m.senderId)} <span style="color:#64748b; font-weight:400;">${esc(timeStr)}</span></div>
-                                            <div style="font-size:0.78rem; color:#f8fafc; line-height:1.35; word-break:break-word;">${esc(m.text)}</div>
+                                        <div style="align-self:${mine ? 'flex-end' : 'flex-start'}; max-width:85%; background:${mine ? 'rgba(37, 99, 235, 0.22)' : 'var(--bg-card, #141f35)'}; border:1px solid ${mine ? 'rgba(96, 165, 250, 0.55)' : 'var(--border-card, #334155)'}; border-radius:8px; padding:6px 10px;">
+                                            <div style="font-size:0.65rem; color:${mine ? 'var(--accent-blue, #93c5fd)' : 'var(--accent-gold, #fde68a)'}; font-weight:700; margin-bottom:2px;">${esc(m.senderName || m.senderId)} <span style="color:var(--text-dim, #64748b); font-weight:400; margin-left:4px;">${esc(timeStr)}</span></div>
+                                            <div style="font-size:0.8rem; color:var(--text-main, #f8fafc); line-height:1.4; word-break:break-word;">${esc(m.text)}</div>
                                         </div>
                                     `;
                                 }).join(''))}
                     </div>
                     <div style="display:flex; gap:6px;">
-                        <input type="text" id="rpg-msg-input" class="rpg-input" style="flex:1;" placeholder="${selArr.length > 0 ? 'Type a discreet message...' : 'Select recipients first...'}" ${selArr.length === 0 ? 'disabled' : ''} onkeydown="if(event.key==='Enter'){event.preventDefault();COS_RPG.sendWhisperMessage();}">
+                        <input type="text" id="rpg-msg-input" class="rpg-input" style="flex:1;" placeholder="${selArr.length > 0 ? `Whisper to ${activeLabel.replace(/^[^\w]+/, '')}...` : 'Select recipients first...'}" ${selArr.length === 0 ? 'disabled' : ''} onkeydown="if(event.key==='Enter'){event.preventDefault();COS_RPG.sendWhisperMessage();}">
                         <button type="button" class="rpg-mini-btn btn-use" style="padding:6px 14px; font-size:0.76rem;" ${selArr.length === 0 ? 'disabled' : ''} onclick="COS_RPG.sendWhisperMessage()">Send</button>
                     </div>
-                    <div style="font-size:0.65rem; color:#64748b; margin-top:5px;">Messages automatically clear when you click <strong>Sync to DM</strong> at session end.</div>
+                    <div style="font-size:0.65rem; color:var(--text-dim, #64748b); margin-top:5px;">Whisper history is saved automatically across sessions &amp; synced live with your recipients.</div>
                 </div>
             </div>
         `;
@@ -9640,6 +9825,9 @@
             </div>
             ${tradeActiveTab === 'send' ? sendTabHtml : (tradeActiveTab === 'messages' ? messagesTabHtml : inboxTabHtml)}
         `;
+        if (tradeActiveTab === 'messages') {
+            scrollMsgLogToBottom(false);
+        }
     }
 
     // =========================================================================
@@ -12727,6 +12915,7 @@
 
     function init(sheetAdapter) {
         adapter = sheetAdapter;
+        loadCachedMsgThreads();
         initThemeListeners();
         injectDialogsAndBanner();
         mountVideoGameHudWidgets();
@@ -12835,6 +13024,7 @@
         applyRemoteItemUpgrade,
         computeThreadId,
         toggleMsgRecipient,
+        setQuickMsgThread,
         selectMsgThread,
         sendWhisperMessage,
         clearWhisperThread,

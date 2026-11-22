@@ -16,6 +16,12 @@
           ".read": true,
           ".write": true
         },
+        "messages": {
+          ".read": true,
+          "$threadId": {
+            ".write": true
+          }
+        },
         "custom_loot": {
           ".read": true,
           "$lootKey": {

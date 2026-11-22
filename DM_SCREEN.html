@@ -16407,6 +16407,8 @@ function dmSendItemUpgrade(lootKey, toId, toName, ev) {
 // =========================================================
 // 💬 DM DISCREET WHISPERS ENGINE (STRICTLY DM-PARTICIPANT THREADS ONLY!)
 // =========================================================
+const DM_WHISPER_RTDB_SUBPATH = 'dm_state/whispers';
+let dmHasLoadedCloudWhispers = false;
 let dmWhisperThreads = {};
 let dmWhisperSelectedRecips = new Set(['jacomir']);
 let dmWhisperActiveThreadId = 'dm_jacomir';
@@ -16414,6 +16416,41 @@ let dmWhisperReadMap = {};
 try {
     dmWhisperReadMap = JSON.parse(localStorage.getItem('COS_DM_WHISPER_READ_V1') || '{}') || {};
 } catch (e) { dmWhisperReadMap = {}; }
+
+function dmGetWhisperThreadsStorageKey() {
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    return `COS_DM_WHISPER_THREADS_V1_${room}`;
+}
+
+function dmLoadCachedWhisperThreads() {
+    try {
+        const raw = localStorage.getItem(dmGetWhisperThreadsStorageKey());
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== 'object') return;
+        const clean = {};
+        Object.entries(parsed).forEach(([tid, tObj]) => {
+            if (!tObj || typeof tObj !== 'object') return;
+            const parts = Array.isArray(tObj.participants) ? tObj.participants : tid.split('_');
+            if (parts.includes('dm')) {
+                clean[tid] = {
+                    participants: parts,
+                    updatedAt: tObj.updatedAt || 0,
+                    messages: (tObj.messages && typeof tObj.messages === 'object') ? tObj.messages : {}
+                };
+            }
+        });
+        dmWhisperThreads = clean;
+    } catch (e) {}
+}
+
+function dmSaveCachedWhisperThreads() {
+    try {
+        localStorage.setItem(dmGetWhisperThreadsStorageKey(), JSON.stringify(dmWhisperThreads || {}));
+    } catch (e) {}
+}
+
+dmLoadCachedWhisperThreads();
 
 function dmSaveWhisperReadMap() {
     try { localStorage.setItem('COS_DM_WHISPER_READ_V1', JSON.stringify(dmWhisperReadMap)); } catch (e) {}
@@ -16427,6 +16464,7 @@ function dmGetWhisperList(tObj) {
     if (!tObj || !tObj.messages || typeof tObj.messages !== 'object') return [];
     return Object.entries(tObj.messages)
         .map(([id, m]) => ({ id, ...(m || {}) }))
+        .filter(m => m && typeof m.text === 'string' && m.text.trim().length > 0)
         .sort((a, b) => (a.ts || 0) - (b.ts || 0));
 }
 
@@ -16453,10 +16491,23 @@ function dmUpdateWhisperHeaderBadge() {
     btn.innerHTML = total > 0 ? `💬 Whispers <span class="pill gold" style="padding:0 6px; margin-left:4px; font-size:0.68rem;">${total} new</span>` : `💬 Whispers`;
 }
 
+function dmScrollWhisperLogToBottom(focusInput = false) {
+    requestAnimationFrame(() => {
+        const logEl = document.getElementById('dm-whisper-log');
+        if (logEl) logEl.scrollTop = logEl.scrollHeight;
+        if (focusInput) {
+            const inp = document.getElementById('dm-whisper-input');
+            if (inp && !inp.disabled) inp.focus();
+        }
+    });
+}
+
 function dmStartWhisperListener(rtdb, room) {
+    dmUpdateWhisperHeaderBadge();
     if (!rtdb) return;
-    rtdb.ref(`campaigns/${room}/messages`).on('value', snap => {
+    rtdb.ref(`campaigns/${room}/${DM_WHISPER_RTDB_SUBPATH}`).on('value', snap => {
         const val = snap.val() || {};
+        const now = Date.now();
         const onlyDm = {};
         Object.entries(val).forEach(([tid, tObj]) => {
             if (!tObj || typeof tObj !== 'object') return;
@@ -16466,11 +16517,46 @@ function dmStartWhisperListener(rtdb, room) {
                 onlyDm[tid] = {
                     participants: parts,
                     updatedAt: tObj.updatedAt || 0,
-                    messages: tObj.messages || {}
+                    messages: (tObj.messages && typeof tObj.messages === 'object') ? { ...tObj.messages } : {}
                 };
             }
         });
+
+        // Merge any recent optimistic messages (<8s old) or unsynced offline DM threads on first connect
+        Object.entries(dmWhisperThreads).forEach(([tid, localThread]) => {
+            if (!localThread || !localThread.messages) return;
+            const parts = Array.isArray(localThread.participants) ? localThread.participants : tid.split('_');
+            if (!parts.includes('dm')) return;
+            Object.entries(localThread.messages).forEach(([mid, mObj]) => {
+                if (!mObj) return;
+                const isRecentOptimistic = (now - (mObj.ts || 0)) < 8000;
+                const missingInCloud = !onlyDm[tid] || !onlyDm[tid].messages || !onlyDm[tid].messages[mid];
+                if (missingInCloud && (isRecentOptimistic || !dmHasLoadedCloudWhispers)) {
+                    if (!onlyDm[tid]) {
+                        onlyDm[tid] = {
+                            participants: parts,
+                            updatedAt: localThread.updatedAt || mObj.ts || now,
+                            messages: {}
+                        };
+                    }
+                    onlyDm[tid].messages[mid] = mObj;
+                    if ((mObj.ts || 0) > (onlyDm[tid].updatedAt || 0)) {
+                        onlyDm[tid].updatedAt = mObj.ts;
+                    }
+                    if (!dmHasLoadedCloudWhispers) {
+                        rtdb.ref(`campaigns/${room}/${DM_WHISPER_RTDB_SUBPATH}/${tid}`).update({
+                            participants: parts,
+                            updatedAt: onlyDm[tid].updatedAt,
+                            [`messages/${mid}`]: mObj
+                        }).catch(() => {});
+                    }
+                }
+            });
+        });
+
+        dmHasLoadedCloudWhispers = true;
         dmWhisperThreads = onlyDm;
+        dmSaveCachedWhisperThreads();
         dmUpdateWhisperHeaderBadge();
         if (activeModalKind === 'dm_whispers' && document.getElementById('dm-modal')?.open) {
             if (dmWhisperActiveThreadId) {
@@ -16480,15 +16566,49 @@ function dmStartWhisperListener(rtdb, room) {
             }
             renderDmWhisperModalBody();
         }
-    });
+    }, err => console.warn('[DM_WHISPERS] RTDB listener error:', err));
 }
 
-function openDmWhisperModal() {
+function openDmWhisperModal(targetHeroId = null) {
     const modal = resetDmModalChrome();
     if (!modal) return;
     activeModalKind = 'dm_whispers';
     modalNavStack = [];
     document.getElementById('modal-title').innerHTML = `💬 Discreet DM Whispers (Private &amp; Subset Group Chats)`;
+
+    if (targetHeroId === 'all') {
+        dmWhisperSelectedRecips = new Set(DM_PARTY_TARGETS.map(t => t.id));
+        dmWhisperActiveThreadId = dmComputeThreadId(['dm', ...Array.from(dmWhisperSelectedRecips)]);
+    } else if (targetHeroId && DM_PARTY_TARGETS.some(t => t.id === targetHeroId)) {
+        dmWhisperSelectedRecips = new Set([targetHeroId]);
+        dmWhisperActiveThreadId = dmComputeThreadId(['dm', targetHeroId]);
+    } else {
+        // When opened from top command bar with no explicit heroId, jump to unread thread or latest thread with messages
+        const sorted = Object.entries(dmWhisperThreads)
+            .map(([tid, t]) => ({
+                tid,
+                participants: Array.isArray(t?.participants) ? t.participants : tid.split('_'),
+                updatedAt: t?.updatedAt || 0,
+                unread: dmGetWhisperUnreadCount(tid),
+                msgCount: dmGetWhisperList(t).length
+            }))
+            .filter(t => t.participants.includes('dm') && t.participants.some(id => id !== 'dm'))
+            .sort((a, b) => {
+                if (b.unread !== a.unread) return b.unread - a.unread;
+                if ((b.updatedAt || 0) !== (a.updatedAt || 0)) return (b.updatedAt || 0) - (a.updatedAt || 0);
+                return b.msgCount - a.msgCount;
+            });
+        const curMsgs = dmWhisperActiveThreadId ? dmGetWhisperList(dmWhisperThreads[dmWhisperActiveThreadId]).length : 0;
+        if (sorted.length > 0 && (sorted[0].unread > 0 || curMsgs === 0 || !dmWhisperActiveThreadId)) {
+            const best = sorted[0];
+            dmWhisperActiveThreadId = best.tid;
+            dmWhisperSelectedRecips = new Set(best.participants.filter(id => id !== 'dm'));
+        } else if (!dmWhisperActiveThreadId || dmWhisperSelectedRecips.size === 0) {
+            dmWhisperSelectedRecips = new Set(['jacomir']);
+            dmWhisperActiveThreadId = dmComputeThreadId(['dm', 'jacomir']);
+        }
+    }
+
     if (dmWhisperActiveThreadId) {
         dmWhisperReadMap[dmWhisperActiveThreadId] = Date.now();
         dmSaveWhisperReadMap();
@@ -16497,6 +16617,23 @@ function openDmWhisperModal() {
     renderDmWhisperModalBody();
     setModalLogsHtml('Discreet DM Whispers • Player-only scheming threads stay hidden from DM');
     if (!modal.open) modal.showModal();
+    dmScrollWhisperLogToBottom(true);
+}
+
+function dmSetQuickWhisperTarget(heroId) {
+    if (heroId === 'all') {
+        dmWhisperSelectedRecips = new Set(DM_PARTY_TARGETS.map(t => t.id));
+    } else if (heroId && DM_PARTY_TARGETS.some(t => t.id === heroId)) {
+        dmWhisperSelectedRecips = new Set([heroId]);
+    }
+    if (dmWhisperSelectedRecips.size > 0) {
+        dmWhisperActiveThreadId = dmComputeThreadId(['dm', ...Array.from(dmWhisperSelectedRecips)]);
+        dmWhisperReadMap[dmWhisperActiveThreadId] = Date.now();
+        dmSaveWhisperReadMap();
+        dmUpdateWhisperHeaderBadge();
+    }
+    renderDmWhisperModalBody();
+    dmScrollWhisperLogToBottom(true);
 }
 
 function dmToggleWhisperRecip(heroId) {
@@ -16516,6 +16653,7 @@ function dmToggleWhisperRecip(heroId) {
         dmWhisperActiveThreadId = null;
     }
     renderDmWhisperModalBody();
+    dmScrollWhisperLogToBottom(false);
 }
 
 function dmSelectWhisperThread(tid) {
@@ -16527,6 +16665,7 @@ function dmSelectWhisperThread(tid) {
     dmSaveWhisperReadMap();
     dmUpdateWhisperHeaderBadge();
     renderDmWhisperModalBody();
+    dmScrollWhisperLogToBottom(true);
 }
 
 function dmSendWhisperMessage(overrideText = null) {
@@ -16538,25 +16677,40 @@ function dmSendWhisperMessage(overrideText = null) {
     const participants = [...new Set(['dm', ...recips])].sort();
     const tid = dmComputeThreadId(participants);
     dmWhisperActiveThreadId = tid;
-    const msgObj = { senderId: 'dm', senderName: 'Dungeon Master', text, ts: Date.now() };
+    const now = Date.now();
+    const msgId = `m_${now}_${Math.random().toString(36).slice(2, 7)}`;
+    const msgObj = { senderId: 'dm', senderName: 'Dungeon Master', text, ts: now };
     if (inp && overrideText === null) inp.value = '';
 
+    // 1. Optimistic local state + localStorage persistence immediately
+    if (!dmWhisperThreads[tid]) {
+        dmWhisperThreads[tid] = { participants, updatedAt: now, messages: {} };
+    }
+    dmWhisperThreads[tid].participants = participants;
+    dmWhisperThreads[tid].updatedAt = now;
+    if (!dmWhisperThreads[tid].messages || typeof dmWhisperThreads[tid].messages !== 'object') {
+        dmWhisperThreads[tid].messages = {};
+    }
+    dmWhisperThreads[tid].messages[msgId] = msgObj;
+    dmSaveCachedWhisperThreads();
+
+    // 2. Atomic multi-path push to live Firebase RTDB (dm_state/whispers)
     const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
     const rtdb = dmGetRtdb();
     if (rtdb) {
-        const ref = rtdb.ref(`campaigns/${room}/messages/${tid}`);
-        ref.child('participants').set(participants).catch(() => {});
-        ref.child('updatedAt').set(msgObj.ts).catch(() => {});
-        ref.child('messages').push(msgObj).catch(() => {});
-    } else {
-        if (!dmWhisperThreads[tid]) dmWhisperThreads[tid] = { participants, updatedAt: msgObj.ts, messages: {} };
-        dmWhisperThreads[tid].updatedAt = msgObj.ts;
-        dmWhisperThreads[tid].messages['loc_' + Date.now()] = msgObj;
+        const ref = rtdb.ref(`campaigns/${room}/${DM_WHISPER_RTDB_SUBPATH}/${tid}`);
+        ref.update({
+            participants,
+            updatedAt: now,
+            [`messages/${msgId}`]: msgObj
+        }).catch(err => console.warn('[DM_WHISPERS] Whisper send failed:', err));
     }
-    dmWhisperReadMap[tid] = Date.now();
+
+    dmWhisperReadMap[tid] = now;
     dmSaveWhisperReadMap();
     dmUpdateWhisperHeaderBadge();
     renderDmWhisperModalBody();
+    dmScrollWhisperLogToBottom(true);
     return true;
 }
 
@@ -16564,9 +16718,10 @@ function dmClearWhisperThread(tid) {
     const targetTid = tid || dmWhisperActiveThreadId;
     if (!targetTid) return;
     delete dmWhisperThreads[targetTid];
+    dmSaveCachedWhisperThreads();
     const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
     const rtdb = dmGetRtdb();
-    if (rtdb) rtdb.ref(`campaigns/${room}/messages/${targetTid}`).remove().catch(() => {});
+    if (rtdb) rtdb.ref(`campaigns/${room}/${DM_WHISPER_RTDB_SUBPATH}/${targetTid}`).remove().catch(() => {});
     dmUpdateWhisperHeaderBadge();
     renderDmWhisperModalBody();
 }
@@ -16575,64 +16730,91 @@ function renderDmWhisperModalBody() {
     const contentEl = document.getElementById('modal-content');
     if (!contentEl) return;
     const threadsList = Object.entries(dmWhisperThreads)
-        .map(([tid, t]) => ({ tid, ...t, unread: dmGetWhisperUnreadCount(tid) }))
-        .sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+        .map(([tid, t]) => {
+            const mList = dmGetWhisperList(t);
+            return {
+                tid,
+                ...t,
+                msgCount: mList.length,
+                unread: dmGetWhisperUnreadCount(tid)
+            };
+        })
+        .filter(th => th.msgCount > 0 || th.tid === dmWhisperActiveThreadId)
+        .sort((a, b) => {
+            if (b.unread !== a.unread) return b.unread - a.unread;
+            return (b.updatedAt || 0) - (a.updatedAt || 0);
+        });
+    const savedThreadsWithMsgs = threadsList.filter(t => t.msgCount > 0);
     const selArr = Array.from(dmWhisperSelectedRecips);
     const activeObj = dmWhisperActiveThreadId ? dmWhisperThreads[dmWhisperActiveThreadId] : null;
     const msgs = dmGetWhisperList(activeObj);
     const activeHeading = selArr.length > 0 ? dmFormatWhisperTitle(['dm', ...selArr]) : 'Select 1 or more players below';
+    const isAllSelected = DM_PARTY_TARGETS.every(t => dmWhisperSelectedRecips.has(t.id));
 
     contentEl.innerHTML = `
         <div class="nbox nbox-cyan" style="margin-bottom:10px; font-size:0.78rem;">
-            Send private whispers to <strong>1 player</strong>, a <strong>specific subset</strong> (e.g. Jacomir + Yvaine), or <strong>All 3</strong>. Player-only group chats stay completely hidden from this DM panel so players can scheme freely.
+            Send private whispers to <strong>1 player</strong> (1-click below), a <strong>custom subset</strong> (tick multiple names, e.g. Jacomir + Yvaine), or <strong>All 3 Players</strong>. Player-only group chats stay hidden from this DM panel.
         </div>
-        <div style="margin-bottom:10px;">
-            <div style="font-size:0.72rem; color:#94a3b8; font-weight:700; text-transform:uppercase; margin-bottom:5px;">Select Whisper Recipients:</div>
+        <div style="margin-bottom:10px; display:flex; flex-direction:column; gap:6px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+                <span style="font-size:0.72rem; color:var(--text-muted, #94a3b8); font-weight:700; text-transform:uppercase;">1-Click Direct Whisper &amp; Multi-Select Subset:</span>
+                <div style="display:flex; flex-wrap:wrap; gap:4px;">
+                    ${DM_PARTY_TARGETS.map(t => {
+                        const isSolo = selArr.length === 1 && selArr[0] === t.id;
+                        return `<button type="button" class="btn-modal-mini" style="padding:3px 9px; font-size:0.72rem; border-color:${isSolo ? '#f59e0b' : '#334155'}; background:${isSolo ? 'rgba(245,158,11,0.18)' : 'transparent'}; color:${isSolo ? '#fde68a' : '#cbd5e1'};" onclick="dmSetQuickWhisperTarget('${t.id}')">1-on-1 ${escapeEncounterHtml(t.label)}</button>`;
+                    }).join('')}
+                    <button type="button" class="btn-modal-mini" style="padding:3px 9px; font-size:0.72rem; border-color:${isAllSelected ? '#34d399' : '#334155'}; background:${isAllSelected ? 'rgba(16,185,129,0.2)' : 'transparent'}; color:${isAllSelected ? '#a7f3d0' : '#cbd5e1'};" onclick="dmSetQuickWhisperTarget('all')">👥 All 3 Players</button>
+                </div>
+            </div>
             <div style="display:flex; flex-wrap:wrap; gap:6px;">
                 ${DM_PARTY_TARGETS.map(t => {
                     const checked = dmWhisperSelectedRecips.has(t.id);
-                    return `<button type="button" class="btn-modal-mini" style="padding:5px 10px; font-size:0.76rem; border-color:${checked ? '#60a5fa' : '#334155'}; background:${checked ? 'rgba(59,130,246,0.22)' : '#0f172a'}; color:${checked ? '#eff6ff' : '#94a3b8'};" onclick="dmToggleWhisperRecip('${t.id}')">${checked ? '✓ ' : ''}${escapeEncounterHtml(t.label)}</button>`;
+                    return `<button type="button" class="btn-modal-mini" style="padding:5px 10px; font-size:0.76rem; border-color:${checked ? '#60a5fa' : '#334155'}; background:${checked ? 'rgba(59,130,246,0.22)' : 'var(--bg-panel, #0f172a)'}; color:${checked ? '#eff6ff' : 'var(--text-muted, #94a3b8)'};" onclick="dmToggleWhisperRecip('${t.id}')">${checked ? '✓ ' : ''}${escapeEncounterHtml(t.label)}</button>`;
                 }).join('')}
-                <button type="button" class="btn-modal-mini" style="padding:5px 10px; font-size:0.76rem; border-color:#34d399; color:#a7f3d0;" onclick="dmToggleWhisperRecip('all')">👥 All 3 Players</button>
             </div>
         </div>
-        ${threadsList.length > 0 ? `
-            <div style="display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin-bottom:10px;">
-                <span style="font-size:0.7rem; color:#94a3b8; font-weight:700;">Active DM Threads:</span>
-                ${threadsList.map(th => `
-                    <button type="button" class="btn-modal-mini" style="padding:3px 9px; font-size:0.72rem; border-color:${th.tid === dmWhisperActiveThreadId ? '#f59e0b' : '#334155'}; color:${th.tid === dmWhisperActiveThreadId ? '#fde68a' : '#cbd5e1'};" onclick="dmSelectWhisperThread('${th.tid}')">
-                        ${escapeEncounterHtml(dmFormatWhisperTitle(th.participants))}${th.unread > 0 ? ` <strong style="color:#4ade80;">(${th.unread})</strong>` : ''}
-                    </button>
-                `).join('')}
+        <div style="background:var(--bg-card, rgba(15,23,42,0.65)); border:1px solid var(--border-dim, #26344b); border-radius:8px; padding:8px 10px; margin-bottom:10px;">
+            <div style="font-size:0.68rem; color:var(--text-muted, #94a3b8); font-weight:800; text-transform:uppercase; margin-bottom:5px;">
+                📜 DM Whisper History (${savedThreadsWithMsgs.length} Saved Conversation${savedThreadsWithMsgs.length === 1 ? '' : 's'})
             </div>
-        ` : ''}
-        <div style="background:#080d18; border:1px solid #26344b; border-radius:8px; padding:12px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e293b; padding-bottom:7px; margin-bottom:9px;">
-                <strong style="color:#fde68a; font-size:0.84rem;">Whisper Thread: ${escapeEncounterHtml(activeHeading)}</strong>
+            ${savedThreadsWithMsgs.length > 0 ? `
+                <div style="display:flex; flex-wrap:wrap; gap:5px; align-items:center;">
+                    ${savedThreadsWithMsgs.map(th => `
+                        <button type="button" class="btn-modal-mini" style="padding:4px 10px; font-size:0.73rem; border-color:${th.tid === dmWhisperActiveThreadId ? '#f59e0b' : '#334155'}; background:${th.tid === dmWhisperActiveThreadId ? 'rgba(245,158,11,0.16)' : 'transparent'}; color:${th.tid === dmWhisperActiveThreadId ? '#fde68a' : 'var(--text-main, #cbd5e1)'};" onclick="dmSelectWhisperThread('${th.tid}')">
+                            ${escapeEncounterHtml(dmFormatWhisperTitle(th.participants))} <span style="opacity:0.75; font-size:0.66rem;">(${th.msgCount})</span>${th.unread > 0 ? ` <strong style="color:#4ade80;">• ${th.unread} new</strong>` : ''}
+                        </button>
+                    `).join('')}
+                </div>
+            ` : `<div style="font-size:0.73rem; color:var(--text-dim, #64748b);">No saved DM whisper conversations yet — send a whisper below to start history.</div>`}
+        </div>
+        <div style="background:var(--bg-panel, #080d18); border:1px solid var(--border-dim, #26344b); border-radius:8px; padding:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-dim, #1e293b); padding-bottom:7px; margin-bottom:9px;">
+                <strong style="color:var(--accent-gold, #fde68a); font-size:0.84rem;">💬 Whisper Thread: ${escapeEncounterHtml(activeHeading)} <span style="font-size:0.72rem; color:var(--text-muted, #94a3b8); font-weight:500;">(${msgs.length} msg${msgs.length === 1 ? '' : 's'})</span></strong>
                 ${dmWhisperActiveThreadId && msgs.length > 0 ? `<button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5; font-size:0.7rem;" onclick="dmClearWhisperThread('${dmWhisperActiveThreadId}')">Clear Thread</button>` : ''}
             </div>
-            <div style="max-height:260px; overflow-y:auto; display:flex; flex-direction:column; gap:7px; margin-bottom:10px;">
+            <div id="dm-whisper-log" style="max-height:270px; min-height:120px; overflow-y:auto; display:flex; flex-direction:column; gap:7px; margin-bottom:10px; padding-right:4px;">
                 ${selArr.length === 0
-                    ? `<div style="color:#64748b; text-align:center; padding:18px; font-size:0.8rem;">Tick one or more players above to start whispering.</div>`
+                    ? `<div style="color:var(--text-dim, #64748b); text-align:center; padding:22px 12px; font-size:0.8rem;">Tick one or more players above to start whispering.</div>`
                     : (msgs.length === 0
-                        ? `<div style="color:#64748b; text-align:center; padding:18px; font-size:0.8rem;">No whispers sent in this thread yet.</div>`
+                        ? `<div style="color:var(--text-dim, #64748b); text-align:center; padding:22px 12px; font-size:0.8rem;">No whispers in <strong>${escapeEncounterHtml(activeHeading)}</strong> yet. Type a whisper below!</div>`
                         : msgs.map(m => {
                             const isDm = m.senderId === 'dm';
                             const tStr = m.ts ? new Date(m.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
                             return `
-                                <div style="align-self:${isDm ? 'flex-end' : 'flex-start'}; max-width:82%; background:${isDm ? '#1e3a5f' : '#141f35'}; border:1px solid ${isDm ? '#3b82f6' : '#334155'}; border-radius:8px; padding:7px 10px;">
-                                    <div style="font-size:0.68rem; color:${isDm ? '#93c5fd' : '#fde68a'}; font-weight:700; margin-bottom:2px;">${escapeEncounterHtml(m.senderName || m.senderId)} <span style="color:#64748b; font-weight:400;">${escapeEncounterHtml(tStr)}</span></div>
-                                    <div style="font-size:0.82rem; color:#f8fafc; line-height:1.4; word-break:break-word;">${escapeEncounterHtml(m.text)}</div>
+                                <div style="align-self:${isDm ? 'flex-end' : 'flex-start'}; max-width:84%; background:${isDm ? 'rgba(37, 99, 235, 0.22)' : 'var(--bg-card, #141f35)'}; border:1px solid ${isDm ? 'rgba(96, 165, 250, 0.55)' : 'var(--border-dim, #334155)'}; border-radius:8px; padding:7px 10px;">
+                                    <div style="font-size:0.68rem; color:${isDm ? '#93c5fd' : 'var(--accent-gold, #fde68a)'}; font-weight:700; margin-bottom:2px;">${escapeEncounterHtml(m.senderName || m.senderId)} <span style="color:var(--text-dim, #64748b); font-weight:400; margin-left:4px;">${escapeEncounterHtml(tStr)}</span></div>
+                                    <div style="font-size:0.83rem; color:var(--text-main, #f8fafc); line-height:1.4; word-break:break-word;">${escapeEncounterHtml(m.text)}</div>
                                 </div>
                             `;
                         }).join(''))}
             </div>
             <div style="display:flex; gap:8px;">
-                <input type="text" id="dm-whisper-input" placeholder="${selArr.length > 0 ? 'Write secret whisper...' : 'Select players first...'}" ${selArr.length === 0 ? 'disabled' : ''} style="flex:1; padding:8px 10px; background:#0f172a; border:1px solid #475569; border-radius:6px; color:#f8fafc; font-size:0.84rem;" onkeydown="if(event.key==='Enter'){event.preventDefault();dmSendWhisperMessage();}">
+                <input type="text" id="dm-whisper-input" placeholder="${selArr.length > 0 ? `Write secret whisper to ${activeHeading}...` : 'Select players first...'}" ${selArr.length === 0 ? 'disabled' : ''} style="flex:1; padding:8px 10px; background:var(--bg-card, #0f172a); border:1px solid var(--border-dim, #475569); border-radius:6px; color:var(--text-main, #f8fafc); font-size:0.84rem;" onkeydown="if(event.key==='Enter'){event.preventDefault();dmSendWhisperMessage();}">
                 <button type="button" class="btn-roll" style="background:linear-gradient(135deg,#1d4ed8,#1e40af); border-color:#60a5fa; color:#eff6ff; padding:8px 16px;" ${selArr.length === 0 ? 'disabled' : ''} onclick="dmSendWhisperMessage()">Send Whisper</button>
             </div>
         </div>
     `;
+    dmScrollWhisperLogToBottom(false);
 }
 
 function dmToggleRecipeUnlock(recipeId, recipeTitle, unlockNow = true) {
