@@ -7792,12 +7792,14 @@
             header.insertAdjacentElement('afterend', banner);
         }
 
-        // Inject Header Quick Gear, Backpack (slightly bigger), followed by Cloud Sync to DM, Reset, and Portal on the very right
+        // Inject ultra-clean right-header bar: ONLY [🛡️ Gear] [🎒 Bag] [☁️ Sync to DM] [🔄 Reset]
+        // (❓ Rules, 🏰 Portal, 👥 Live Party toggle, and 🎲 Quick Dice live cleanly in the Bottom-Right Speed-Dial!)
         const badgeGroup = document.querySelector('.pill-badge-group');
         if (badgeGroup && !document.getElementById('rpg-hdr-equip-btn')) {
             badgeGroup.style.marginLeft = 'auto';
             badgeGroup.style.justifyContent = 'flex-end';
             const portalLink = badgeGroup.querySelector('a[href*="index.html"]');
+            if (portalLink) portalLink.remove();
 
             const equipBtn = document.createElement('button');
             equipBtn.type = 'button';
@@ -7822,15 +7824,6 @@
             syncBtn.onclick = () => pushSyncedCheckpoint(false);
             syncBtn.innerHTML = `☁️ Sync to DM`;
 
-            const rulesBtn = document.createElement('button');
-            rulesBtn.type = 'button';
-            rulesBtn.id = 'rpg-hdr-rules-btn';
-            rulesBtn.className = 'rpg-header-btn';
-            rulesBtn.style.cssText = 'background:#131d33; border-color:rgba(147,197,253,0.45); color:#bae6fd;';
-            rulesBtn.title = 'Open Combat Controls & Table House Rules Cheat-Sheet';
-            rulesBtn.onclick = () => openRulesModal();
-            rulesBtn.innerHTML = `❓ Rules`;
-
             const resetBtn = document.createElement('button');
             resetBtn.type = 'button';
             resetBtn.id = 'rpg-hdr-reset-btn';
@@ -7840,17 +7833,11 @@
             resetBtn.onclick = () => resetSheetToOfficialBaseline(false);
             resetBtn.innerHTML = `🔄 Reset`;
 
-            // Order left-to-right: [🛡️ Gear] [🎒 Bag] [☁️ Sync to DM] [🔄 Reset] [🏰 Portal] [❓ Rules (very right)]
+            // Order left-to-right on right side of header: [🛡️ Gear] [🎒 Bag] [☁️ Sync to DM] [🔄 Reset]
             badgeGroup.insertBefore(resetBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(syncBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(bpBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(equipBtn, badgeGroup.firstChild);
-            if (portalLink) {
-                portalLink.className = 'rpg-header-btn';
-                portalLink.style.cssText = 'background:#0f172a; border-color:#334155; color:#cbd5e1; text-decoration:none;';
-                badgeGroup.appendChild(portalLink);
-            }
-            badgeGroup.appendChild(rulesBtn);
         }
 
         // Mount 👥 Live Party Mini-HUD & ⚔️ Fog-of-War Combat Turn Strip right under Header / Incoming Banner
@@ -9774,7 +9761,8 @@
         turn: { action: true, bonus: true, reaction: true, move: true },
         advLocked: false,
         rightTab: 'all',
-        skillsTrainedOnly: false
+        skillsTrainedOnly: false,
+        showPartyHud: false
     };
     let statusPickerOpen = false;
     let inspectedStatusId = null;
@@ -9815,6 +9803,7 @@
             hudState.advLocked = Boolean(p.advLocked);
             hudState.rightTab = typeof p.rightTab === 'string' ? p.rightTab : 'all';
             hudState.skillsTrainedOnly = Boolean(p.skillsTrainedOnly);
+            hudState.showPartyHud = Boolean(p.showPartyHud);
         } catch (e) {}
     }
 
@@ -10582,25 +10571,86 @@
         applySkillsFilter();
     }
 
-    // 🔒 ADVANTAGE / DISADVANTAGE AUTO-RESET WITH PIN LOCK
+    // 🎮 BOTTOM-RIGHT RPG SPEED-DIAL (FLOATING BUBBLES + DICE TRAY + LIVE PARTY TOGGLE)
+    function syncPartyHudVisibility() {
+        const host = document.getElementById('rpg-party-hud');
+        const btn = document.getElementById('rpg-fab-party-btn');
+        const visible = Boolean(hudState.showPartyHud);
+        if (host) host.classList.toggle('is-visible', visible);
+        if (btn) {
+            btn.setAttribute('aria-pressed', visible ? 'true' : 'false');
+            btn.innerHTML = visible ? `👥 Live Party <span style="color:#6ee7b7; font-size:0.64rem;">ON</span>` : `👥 Live Party`;
+        }
+    }
+
+    function togglePartyHud(forceState) {
+        hudState.showPartyHud = typeof forceState === 'boolean' ? forceState : !hudState.showPartyHud;
+        saveHudState();
+        syncPartyHudVisibility();
+        if (hudState.showPartyHud) renderPartyMiniHud();
+        announceStatus(hudState.showPartyHud ? 'Live Party vitals bar shown.' : 'Live Party vitals bar hidden.');
+    }
+
+    function toggleFabMenu(forceState) {
+        const bubbles = document.getElementById('rpg-fab-bubbles');
+        const mainBtn = document.getElementById('rpg-dice-fab-btn');
+        const tray = document.getElementById('rpg-dice-tray');
+        if (!bubbles) return;
+        if (typeof forceState !== 'boolean' && tray && tray.classList.contains('is-open')) {
+            toggleDiceTray(false);
+            return;
+        }
+        const next = typeof forceState === 'boolean' ? forceState : !bubbles.classList.contains('is-open');
+        bubbles.classList.toggle('is-open', next);
+        if (next && tray) tray.classList.remove('is-open');
+        if (mainBtn) {
+            mainBtn.classList.toggle('is-open', next);
+            mainBtn.setAttribute('aria-expanded', next ? 'true' : 'false');
+        }
+        syncDiceFabBadge();
+    }
+
     function toggleDiceTray(forceState) {
         const tray = document.getElementById('rpg-dice-tray');
-        const btn = document.getElementById('rpg-dice-fab-btn');
+        const bubbles = document.getElementById('rpg-fab-bubbles');
+        const mainBtn = document.getElementById('rpg-dice-fab-btn');
         if (!tray) return;
         const next = typeof forceState === 'boolean' ? forceState : !tray.classList.contains('is-open');
         tray.classList.toggle('is-open', next);
-        if (btn) btn.setAttribute('aria-expanded', next ? 'true' : 'false');
+        if (next && bubbles) bubbles.classList.remove('is-open');
+        if (mainBtn) {
+            mainBtn.classList.toggle('is-open', next || (bubbles && bubbles.classList.contains('is-open')));
+            mainBtn.setAttribute('aria-expanded', (next || (bubbles && bubbles.classList.contains('is-open'))) ? 'true' : 'false');
+        }
+        syncDiceFabBadge();
     }
 
     function syncDiceFabBadge() {
-        const btn = document.getElementById('rpg-dice-fab-btn');
-        if (!btn) return;
+        const mainBtn = document.getElementById('rpg-dice-fab-btn');
+        const diceBubble = document.getElementById('rpg-fab-dice-btn');
+        const bubblesOpen = Boolean(document.getElementById('rpg-fab-bubbles')?.classList.contains('is-open'));
+        const trayOpen = Boolean(document.getElementById('rpg-dice-tray')?.classList.contains('is-open'));
         const mode = (typeof window.rollMode === 'string') ? window.rollMode : 'norm';
-        btn.classList.toggle('is-adv', mode === 'adv');
-        btn.classList.toggle('is-dis', mode === 'dis');
-        if (mode === 'adv') btn.textContent = hudState.advLocked ? '🎲 ADV 🔒' : '🎲 ADV';
-        else if (mode === 'dis') btn.textContent = hudState.advLocked ? '🎲 DIS 🔒' : '🎲 DIS';
-        else btn.textContent = '🎲 Dice';
+        if (diceBubble) {
+            diceBubble.classList.toggle('is-adv', mode === 'adv');
+            diceBubble.classList.toggle('is-dis', mode === 'dis');
+            if (mode === 'adv') diceBubble.textContent = hudState.advLocked ? '🎲 Quick Dice (ADV 🔒)' : '🎲 Quick Dice (ADV)';
+            else if (mode === 'dis') diceBubble.textContent = hudState.advLocked ? '🎲 Quick Dice (DIS 🔒)' : '🎲 Quick Dice (DIS)';
+            else diceBubble.textContent = '🎲 Quick Dice';
+        }
+        if (mainBtn) {
+            mainBtn.classList.toggle('is-adv', mode === 'adv');
+            mainBtn.classList.toggle('is-dis', mode === 'dis');
+            if (bubblesOpen || trayOpen) {
+                mainBtn.textContent = mode === 'adv' ? '✕ ADV' : (mode === 'dis' ? '✕ DIS' : '✕ Close');
+            } else if (mode === 'adv') {
+                mainBtn.textContent = hudState.advLocked ? '✦ ADV 🔒' : '✦ ADV';
+            } else if (mode === 'dis') {
+                mainBtn.textContent = hudState.advLocked ? '✦ DIS 🔒' : '✦ DIS';
+            } else {
+                mainBtn.textContent = '✦ Menu';
+            }
+        }
     }
 
     function toggleAdvLock() {
@@ -10741,7 +10791,7 @@
             skillsList.insertAdjacentElement('beforebegin', fBar);
         }
 
-        // 5. Mount Bottom-Right Floating Quick-Roll Dice FAB & Popup Tray (replaces cluttered top dice row!)
+        // 5. Mount Bottom-Right Video-Game Speed-Dial (Floating Bubbles: Dice, Live Party Toggle, Rules, Portal)
         if (!document.getElementById('rpg-dice-fab-wrap')) {
             const specialDieBtn = adapter.heroId === 'piper'
                 ? `<button type="button" class="dice-btn" style="grid-column: span 4; border-color:#7c3aed; color:#fde68a; background:#1e1633;" onclick="triggerWildMagicSurge('Manual d100 Surge Roll')">💥 Wild Surge (d100)</button>`
@@ -10782,20 +10832,35 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" id="rpg-dice-fab-btn" class="rpg-dice-fab" aria-expanded="false" aria-controls="rpg-dice-tray" onclick="COS_RPG.toggleDiceTray()" title="Open Quick Dice Roller &amp; Adv/Dis Modifiers">🎲 Dice</button>
+                <div id="rpg-fab-bubbles" class="rpg-fab-bubbles" role="menu" aria-label="Quick Utility Menu">
+                    <a href="index.html" class="rpg-fab-bubble bubble-portal" role="menuitem" title="Back to Curse of Strahd Campaign Portal">🏰 Portal</a>
+                    <button type="button" class="rpg-fab-bubble bubble-rules" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.openRulesModal();" title="Open Combat Controls &amp; Table House Rules">❓ Rules</button>
+                    <button type="button" id="rpg-fab-party-btn" class="rpg-fab-bubble bubble-party" role="menuitemcheckbox" aria-pressed="false" onclick="COS_RPG.togglePartyHud()" title="Toggle Live Teammate HP &amp; Status Row">👥 Live Party</button>
+                    <button type="button" id="rpg-fab-dice-btn" class="rpg-fab-bubble bubble-dice" role="menuitem" onclick="COS_RPG.toggleDiceTray(true)" title="Open Quick Dice Roller &amp; Adv/Dis Modifiers">🎲 Quick Dice</button>
+                </div>
+                <button type="button" id="rpg-dice-fab-btn" class="rpg-dice-fab" aria-expanded="false" aria-controls="rpg-fab-bubbles" onclick="COS_RPG.toggleFabMenu()" title="Open Quick Menu (Dice, Live Party, Rules &amp; Portal)">✦ Menu</button>
             `;
             document.body.appendChild(fabWrap);
 
-            // Light-dismiss floating dice tray on outside click or Escape
+            // Light-dismiss floating speed-dial & dice tray on outside click or Escape
             document.addEventListener('click', (e) => {
                 const tray = document.getElementById('rpg-dice-tray');
-                if (!tray || !tray.classList.contains('is-open')) return;
-                if (!fabWrap.contains(e.target)) toggleDiceTray(false);
+                const bubbles = document.getElementById('rpg-fab-bubbles');
+                const openAny = (tray && tray.classList.contains('is-open')) || (bubbles && bubbles.classList.contains('is-open'));
+                if (!openAny) return;
+                if (!fabWrap.contains(e.target)) {
+                    toggleDiceTray(false);
+                    toggleFabMenu(false);
+                }
             });
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') toggleDiceTray(false);
+                if (e.key === 'Escape') {
+                    toggleDiceTray(false);
+                    toggleFabMenu(false);
+                }
             });
         }
+        syncPartyHudVisibility();
         syncDiceFabBadge();
 
         renderActionEconomyBar();
@@ -11161,6 +11226,8 @@
         applySkillsFilter,
         toggleSkillsTrainedFilter,
         toggleAdvLock,
+        toggleFabMenu,
+        togglePartyHud,
         toggleDiceTray,
         syncDiceFabBadge,
         consumeTempRollMode,

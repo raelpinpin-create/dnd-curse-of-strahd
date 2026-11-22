@@ -1485,9 +1485,9 @@ header.header-banner .pill-badge-group {
     font-family: 'JetBrains Mono', monospace;
 }
 
-/* 👥 LIVE PARTY MINI-HUD BAR (Compact Single Row) */
+/* 👥 LIVE PARTY MINI-HUD BAR (Hidden by default — toggled from Bottom-Right Speed-Dial!) */
 .rpg-party-hud {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 8px;
     padding: 6px 18px;
@@ -1496,6 +1496,9 @@ header.header-banner .pill-badge-group {
     overflow-x: auto;
     scrollbar-width: none;
     scroll-snap-type: x proximity;
+}
+.rpg-party-hud.is-visible {
+    display: flex;
 }
 .rpg-party-hud::-webkit-scrollbar { display: none; }
 .rpg-party-hud-lbl {
@@ -2373,34 +2376,114 @@ header.header-banner .pill-badge-group {
     }
 }
 
-/* 🎲 BOTTOM-RIGHT FLOATING QUICK-ROLL FAB & POPUP TRAY */
+/* 🎮 BOTTOM-RIGHT RPG SPEED-DIAL (FLOATING BUBBLES: DICE, LIVE PARTY, RULES, PORTAL) */
 .rpg-dice-fab-wrap {
     position: fixed;
     bottom: 18px;
     right: 18px;
-    z-index: 920;
+    z-index: 940;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 8px;
 }
-.rpg-dice-fab {
-    min-inline-size: 46px;
-    min-block-size: 40px;
-    padding: 7px 14px;
+.rpg-fab-bubbles {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 7px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px) scale(0.94);
+    transition: opacity 0.18s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+    max-height: 0;
+    overflow: hidden;
+}
+.rpg-fab-bubbles.is-open {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    max-height: 320px;
+    overflow: visible;
+    padding-bottom: 2px;
+}
+.rpg-fab-bubble {
+    min-block-size: 36px;
+    padding: 6px 13px;
     border-radius: 999px;
-    background: linear-gradient(135deg, #172036 0%, #0b1120 100%);
-    border: 1.5px solid rgba(245, 158, 11, 0.65);
-    color: #fde68a;
+    background: linear-gradient(135deg, rgba(22, 31, 52, 0.97) 0%, rgba(11, 17, 32, 0.98) 100%);
+    border: 1.5px solid rgba(148, 163, 184, 0.42);
+    color: #e2e8f0;
     font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     font-weight: 800;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+    gap: 7px;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.72);
+    transition: transform 0.16s ease, border-color 0.16s ease, background-color 0.16s ease, color 0.16s ease;
+}
+.rpg-fab-bubble.bubble-dice {
+    border-color: rgba(245, 158, 11, 0.65);
+    color: #fde68a;
+}
+.rpg-fab-bubble.bubble-party[aria-pressed="true"] {
+    background: linear-gradient(135deg, rgba(6, 78, 59, 0.96) 0%, rgba(12, 74, 110, 0.96) 100%);
+    border-color: #34d399;
+    color: #ecfdf5;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.72), 0 0 12px rgba(52, 211, 153, 0.35);
+}
+.rpg-fab-bubble.bubble-rules {
+    border-color: rgba(147, 197, 253, 0.5);
+    color: #bae6fd;
+}
+.rpg-fab-bubble.bubble-portal {
+    border-color: rgba(148, 163, 184, 0.45);
+    color: #cbd5e1;
+}
+.rpg-fab-bubble.is-adv {
+    background: linear-gradient(135deg, #065f46 0%, #064e3b 100%);
+    border-color: #4ade80;
+    color: #ecfdf5;
+}
+.rpg-fab-bubble.is-dis {
+    background: linear-gradient(135deg, #991b1b 0%, #7f1d1d 100%);
+    border-color: #f87171;
+    color: #fef2f2;
+}
+@media (hover: hover) {
+    .rpg-fab-bubble:hover {
+        border-color: #fbbf24;
+        color: #fff;
+        transform: translateX(-3px);
+    }
+}
+.rpg-dice-fab {
+    min-inline-size: 48px;
+    min-block-size: 44px;
+    padding: 8px 15px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #1b2540 0%, #0b1120 100%);
+    border: 1.5px solid rgba(245, 158, 11, 0.72);
+    color: #fde68a;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.79rem;
+    font-weight: 800;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     gap: 6px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.72), 0 0 12px rgba(245, 158, 11, 0.18);
-    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.78), 0 0 14px rgba(245, 158, 11, 0.22);
+    transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+}
+.rpg-dice-fab.is-open {
+    background: linear-gradient(135deg, #3b1d2e 0%, #171022 100%);
+    border-color: #fbbf24;
+    color: #fef3c7;
 }
 .rpg-dice-fab.is-adv {
     background: linear-gradient(135deg, #065f46 0%, #064e3b 100%);
@@ -2418,6 +2501,11 @@ header.header-banner .pill-badge-group {
     .rpg-dice-fab:hover {
         border-color: #fbbf24;
         transform: translateY(-1px);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .rpg-fab-bubbles, .rpg-fab-bubble, .rpg-dice-fab {
+        transition: none !important;
     }
 }
 .rpg-dice-tray {
