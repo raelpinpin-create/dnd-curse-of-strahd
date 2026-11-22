@@ -7823,7 +7823,7 @@
             syncBtn.type = 'button';
             syncBtn.id = 'rpg-hdr-sync-btn';
             syncBtn.className = 'rpg-header-btn';
-            syncBtn.style.cssText = 'background:linear-gradient(135deg,#133528,#151c24); border-color:rgba(63,185,128,0.48); color:#86efac;';
+            syncBtn.style.cssText = 'background:linear-gradient(180deg, rgba(94, 184, 138, 0.2) 0%, #1c2224 100%); border-color:rgba(94, 184, 138, 0.42); color:#a3dec0;';
             syncBtn.title = 'Save official Session Checkpoint (Vitals, Slots, Gear, Presets, Notes & Live Party preference) directly to DM via Firebase';
             syncBtn.onclick = () => pushSyncedCheckpoint(false);
             syncBtn.innerHTML = `☁️ Sync`;
@@ -10919,11 +10919,10 @@
                     <button type="button" class="rpg-fab-bubble bubble-reset" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.resetSheetToOfficialBaseline(false);" title="Undo unsaved changes &amp; restore last ☁️ Sync checkpoint">🔄 Reset</button>
                     <button type="button" class="rpg-fab-bubble bubble-rules" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.openRulesModal();" title="Open Combat Controls &amp; Table House Rules">❓ Rules</button>
                     <button type="button" id="rpg-fab-dice-btn" class="rpg-fab-bubble bubble-dice" role="menuitem" onclick="COS_RPG.toggleDiceTray(true)" title="Open Quick Dice Roller &amp; Adv/Dis Modifiers">🎲 Quick Dice</button>
-                    <button type="button" id="rpg-fab-craft-btn" class="rpg-fab-bubble bubble-craft" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.openCraftModal();" title="Open Field Crafting &amp; Alchemy Workbench">⚗️ Craft</button>
                     <button type="button" id="rpg-fab-trade-btn" class="rpg-fab-bubble bubble-trade" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.openTradeModal('messages');" title="Open Party Chat, Whispers &amp; Item/Gold Trade">💬 Chat <span id="rpg-fab-trade-badge" class="rpg-badge-count pulse-alert" style="display:none;"></span></button>
                     <button type="button" id="rpg-fab-party-btn" class="rpg-fab-bubble bubble-party" role="menuitemcheckbox" aria-pressed="false" onclick="COS_RPG.togglePartyHud()" title="Toggle Live Teammate HP &amp; Status Row">👥 Live Party</button>
                 </div>
-                <button type="button" id="rpg-dice-fab-btn" class="rpg-dice-fab" aria-expanded="false" aria-controls="rpg-fab-bubbles" onclick="COS_RPG.toggleFabMenu()" title="Open Quick Menu (Live Party, Chat, Craft, Dice, Rules, Reset &amp; Portal)"><span id="rpg-fab-label">✦ Menu</span> <span id="rpg-fab-alert-dot" class="rpg-fab-dot" style="display:none;"></span></button>
+                <button type="button" id="rpg-dice-fab-btn" class="rpg-dice-fab" aria-expanded="false" aria-controls="rpg-fab-bubbles" onclick="COS_RPG.toggleFabMenu()" title="Open Quick Menu (Live Party, Chat, Dice, Rules, Reset &amp; Portal)"><span id="rpg-fab-label">✦ Menu</span> <span id="rpg-fab-alert-dot" class="rpg-fab-dot" style="display:none;"></span></button>
             `;
             document.body.appendChild(fabWrap);
 
@@ -11094,10 +11093,1073 @@
         }, 2500);
     }
 
+    // =========================================================================
+    // 📓 CAMPAIGN JOURNAL & ENHANCED PLAYER NOTES WORKSPACE
+    // =========================================================================
+    const JOURNAL_CATEGORIES = [
+        { id: 'all', label: 'All' },
+        { id: 'pinned', label: '★ Pinned' },
+        { id: 'quest', label: 'Quest' },
+        { id: 'npc', label: 'NPC' },
+        { id: 'clue', label: 'Clue' },
+        { id: 'lore', label: 'Lore' },
+        { id: 'loot', label: 'Loot' },
+        { id: 'session', label: 'Session' },
+        { id: 'general', label: 'General' }
+    ];
+    const JOURNAL_EDIT_TAGS = JOURNAL_CATEGORIES.filter(c => c.id !== 'all' && c.id !== 'pinned');
+    const MAX_JOURNAL_TITLE = 80;
+    const MAX_JOURNAL_BODY = 1500;
+
+    let supportsDisplayTransCache;
+    function canTransitionDialogDisplay() {
+        if (supportsDisplayTransCache !== undefined) return supportsDisplayTransCache;
+        if (!window.CSS?.supports?.('transition-behavior', 'allow-discrete') || !document.body) {
+            return false;
+        }
+        const probe = document.createElement('div');
+        probe.style.cssText = 'transition: display 1s allow-discrete !important; display: block;';
+        document.body.appendChild(probe);
+        getComputedStyle(probe).display;
+        probe.style.display = 'none';
+        supportsDisplayTransCache = getComputedStyle(probe).display === 'block';
+        probe.remove();
+        return supportsDisplayTransCache;
+    }
+
+    function supportsDialogTopLayerExit() {
+        return Boolean(window.CSS?.supports?.('overlay', 'auto')) && canTransitionDialogDisplay();
+    }
+
+    async function closeDialogTopLayer(dialog) {
+        if (!dialog || !dialog.open) return;
+        if (!supportsDialogTopLayerExit()) {
+            dialog.setAttribute('data-closing', '');
+            const animations = typeof dialog.getAnimations === 'function' ? dialog.getAnimations({ subtree: true }) : [];
+            if (animations.length > 0) {
+                await Promise.race([
+                    Promise.allSettled(animations.map(a => a.finished)),
+                    new Promise(r => setTimeout(r, 400))
+                ]);
+            }
+            if (!dialog.hasAttribute('data-closing')) return;
+            dialog.removeAttribute('data-closing');
+        }
+        if (dialog.open) dialog.close();
+    }
+
+    const journalState = {
+        mounted: false,
+        mode: 'read', // 'read' | 'edit'
+        selectedId: null,
+        editingId: null,
+        editTag: 'general',
+        editPinned: false,
+        search: '',
+        filter: 'all',
+        mobileDetailOpen: false,
+        snapshot: null,
+        pendingDiscardAction: null,
+        confirmDeleteId: null,
+        resetArmed: false,
+        resetTimer: null
+    };
+
+    function getNotesSafe() {
+        try {
+            const list = typeof window.getStoredNotes === 'function' ? window.getStoredNotes() : [];
+            return Array.isArray(list) ? list.map(n => ({ ...n })) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveNotesSafe(notes) {
+        if (typeof window.saveStoredNotes === 'function') {
+            window.saveStoredNotes(notes);
+        }
+    }
+
+    function getDefaultNotesList() {
+        return Array.isArray(adapter?.defaultNotes) ? adapter.defaultNotes : [];
+    }
+
+    function isJournalNoteModified(note) {
+        if (!note) return false;
+        const base = getDefaultNotesList().find(b => b.id === note.id);
+        return !base || base.title !== note.title || base.text !== note.text;
+    }
+
+    function getCategoryLabel(tagId) {
+        const hit = JOURNAL_EDIT_TAGS.find(c => c.id === tagId);
+        return hit ? hit.label : 'General';
+    }
+
+    function getSortedNotes(notes) {
+        return [...notes].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+    }
+
+    function getFilteredNotes(notes) {
+        const sorted = getSortedNotes(notes);
+        const q = (journalState.search || '').trim().toLowerCase();
+        return sorted.filter(n => {
+            const tag = n.tag || 'general';
+            if (journalState.filter === 'pinned' && !n.pinned) return false;
+            if (journalState.filter !== 'all' && journalState.filter !== 'pinned' && tag !== journalState.filter) return false;
+            if (q) {
+                const hay = `${n.title || ''} ${n.text || ''} ${getCategoryLabel(tag)}`.toLowerCase();
+                if (!hay.includes(q)) return false;
+            }
+            return true;
+        });
+    }
+
+    function formatNoteRelativeTime(ts) {
+        if (!ts || typeof ts !== 'number') return '';
+        const diffSec = Math.max(0, Math.floor((Date.now() - ts) / 1000));
+        if (diffSec < 60) return 'Just now';
+        if (diffSec < 3600) return `${Math.floor(diffSec / 60)}m ago`;
+        if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}h ago`;
+        return new Date(ts).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    }
+
+    function isJournalEditorDirty() {
+        if (journalState.mode !== 'edit' || !journalState.snapshot) return false;
+        const tEl = document.getElementById('note-title-input');
+        const bEl = document.getElementById('note-body-input');
+        if (!tEl || !bEl) return false;
+        return (
+            tEl.value !== journalState.snapshot.title ||
+            bEl.value !== journalState.snapshot.text ||
+            journalState.editTag !== journalState.snapshot.tag ||
+            journalState.editPinned !== journalState.snapshot.pinned
+        );
+    }
+
+    function syncJournalModalDismissMode() {
+        const modal = document.getElementById('player-notes-modal');
+        if (!modal) return;
+        modal.setAttribute('closedby', isJournalEditorDirty() ? 'none' : 'any');
+    }
+
+    function showJournalDirtyBanner(pendingAction) {
+        journalState.pendingDiscardAction = typeof pendingAction === 'function' ? pendingAction : null;
+        const banner = document.getElementById('notes-dirty-banner');
+        if (banner) banner.classList.remove('is-hidden');
+        document.getElementById('notes-keep-edit-btn')?.focus();
+    }
+
+    function hideJournalDirtyBanner() {
+        journalState.pendingDiscardAction = null;
+        const banner = document.getElementById('notes-dirty-banner');
+        if (banner) banner.classList.add('is-hidden');
+    }
+
+    function guardJournalDirty(action) {
+        if (isJournalEditorDirty()) {
+            showJournalDirtyBanner(action);
+            return false;
+        }
+        return true;
+    }
+
+    function buildFormattedNoteFragment(text, noteId) {
+        const frag = document.createDocumentFragment();
+        const lines = String(text || '').replace(/\r\n/g, '\n').split('\n');
+        lines.forEach((rawLine, lineIdx) => {
+            const trimmed = rawLine.trim();
+            if (!trimmed) {
+                const spacer = document.createElement('div');
+                spacer.style.height = '4px';
+                frag.appendChild(spacer);
+                return;
+            }
+            if (/^(-{3,}|─{3,})$/.test(trimmed)) {
+                const hr = document.createElement('hr');
+                hr.className = 'note-divider';
+                frag.appendChild(hr);
+                return;
+            }
+            const checkMatch = rawLine.match(/^\s*(?:[-*•]\s*)?\[([ xX])\]\s*(.*)$/);
+            if (checkMatch) {
+                const isDone = checkMatch[1].toLowerCase() === 'x';
+                const label = document.createElement('label');
+                label.className = `note-check-line${isDone ? ' is-done' : ''}`;
+                const cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.checked = isDone;
+                cb.dataset.noteId = noteId;
+                cb.dataset.lineIdx = String(lineIdx);
+                const span = document.createElement('span');
+                span.className = 'note-check-text';
+                span.textContent = checkMatch[2];
+                label.appendChild(cb);
+                label.appendChild(span);
+                frag.appendChild(label);
+                return;
+            }
+            const bulletMatch = rawLine.match(/^\s*[-*•]\s+(.+)$/);
+            if (bulletMatch) {
+                const row = document.createElement('div');
+                row.className = 'note-bullet-line';
+                const glyph = document.createElement('span');
+                glyph.className = 'note-bullet-glyph';
+                glyph.setAttribute('aria-hidden', 'true');
+                glyph.textContent = '•';
+                const txt = document.createElement('span');
+                txt.textContent = bulletMatch[1];
+                row.appendChild(glyph);
+                row.appendChild(txt);
+                frag.appendChild(row);
+                return;
+            }
+            const p = document.createElement('p');
+            p.className = 'note-para';
+            p.textContent = rawLine;
+            frag.appendChild(p);
+        });
+        return frag;
+    }
+
+    function toggleChecklistLine(noteId, lineIdx) {
+        const notes = getNotesSafe();
+        const note = notes.find(n => n.id === noteId);
+        if (!note) return;
+        const lines = String(note.text || '').replace(/\r\n/g, '\n').split('\n');
+        const line = lines[lineIdx];
+        if (typeof line !== 'string') return;
+        const m = line.match(/^(\s*(?:[-*•]\s*)?)\[([ xX])\](\s*.*)$/);
+        if (!m) return;
+        const nextMark = m[2].toLowerCase() === 'x' ? ' ' : 'x';
+        lines[lineIdx] = `${m[1]}[${nextMark}]${m[3]}`;
+        note.text = lines.join('\n');
+        note.updatedAt = Date.now();
+        saveNotesSafe(notes);
+        renderJournalWorkspace();
+        if (!isCapturingExports) syncHeroStateToFirebase(false);
+    }
+
+    function togglePinJournalNote(noteId) {
+        const notes = getNotesSafe();
+        const note = notes.find(n => n.id === noteId);
+        if (!note) return;
+        note.pinned = !note.pinned;
+        saveNotesSafe(notes);
+        renderJournalWorkspace();
+        if (!isCapturingExports) syncHeroStateToFirebase(false);
+    }
+
+    function commitDeleteJournalNote(noteId) {
+        const notes = getNotesSafe();
+        const idx = notes.findIndex(n => n.id === noteId);
+        if (idx === -1) return;
+        const removed = notes[idx];
+        notes.splice(idx, 1);
+        saveNotesSafe(notes);
+
+        if (typeof window.getRemovedNoteTitles === 'function' && typeof window.saveRemovedNoteTitles === 'function') {
+            const removedTitles = window.getRemovedNoteTitles();
+            if (!removedTitles.includes(removed.title)) {
+                removedTitles.push(removed.title);
+                window.saveRemovedNoteTitles(removedTitles);
+            }
+        }
+
+        journalState.confirmDeleteId = null;
+        if (journalState.editingId === noteId) {
+            journalState.mode = 'read';
+            journalState.editingId = null;
+            journalState.snapshot = null;
+        }
+        const remaining = getFilteredNotes(notes);
+        journalState.selectedId = remaining[0]?.id || getSortedNotes(notes)[0]?.id || null;
+        if (!journalState.selectedId) journalState.mobileDetailOpen = false;
+        renderJournalWorkspace();
+        syncJournalModalDismissMode();
+        if (adapter?.log) {
+            adapter.log(`🗑️ <strong>Removed Note:</strong> "${esc(removed.title)}"`);
+        }
+        if (!isCapturingExports) syncHeroStateToFirebase(false);
+    }
+
+    function saveJournalEditorNote() {
+        const titleEl = document.getElementById('note-title-input');
+        const bodyEl = document.getElementById('note-body-input');
+        const errEl = document.getElementById('note-editor-error');
+        if (!titleEl || !bodyEl) return;
+
+        const rawTitle = (titleEl.value || '').trim().slice(0, MAX_JOURNAL_TITLE);
+        const rawText = (bodyEl.value || '').replace(/\r\n/g, '\n').trim().slice(0, MAX_JOURNAL_BODY);
+        if (!rawTitle || !rawText) {
+            if (errEl) errEl.textContent = 'Please enter both a note title and some content before saving.';
+            if (!rawTitle) titleEl.focus();
+            else bodyEl.focus();
+            return;
+        }
+
+        const notes = getNotesSafe();
+        let savedId = journalState.editingId;
+        if (savedId) {
+            const idx = notes.findIndex(n => n.id === savedId);
+            if (idx !== -1) {
+                notes[idx] = {
+                    ...notes[idx],
+                    title: rawTitle,
+                    text: rawText,
+                    tag: journalState.editTag || 'general',
+                    pinned: Boolean(journalState.editPinned),
+                    updatedAt: Date.now()
+                };
+            }
+        } else {
+            savedId = 'note_' + Date.now();
+            notes.unshift({
+                id: savedId,
+                title: rawTitle,
+                text: rawText,
+                tag: journalState.editTag || 'general',
+                pinned: Boolean(journalState.editPinned),
+                updatedAt: Date.now()
+            });
+            if (typeof window.getRemovedNoteTitles === 'function' && typeof window.saveRemovedNoteTitles === 'function') {
+                const cleaned = window.getRemovedNoteTitles().filter(t => t.toLowerCase() !== rawTitle.toLowerCase());
+                window.saveRemovedNoteTitles(cleaned);
+            }
+        }
+
+        saveNotesSafe(notes);
+        journalState.mode = 'read';
+        journalState.selectedId = savedId;
+        journalState.editingId = null;
+        journalState.snapshot = null;
+        journalState.confirmDeleteId = null;
+        journalState.mobileDetailOpen = true;
+        hideJournalDirtyBanner();
+        renderJournalWorkspace();
+        syncJournalModalDismissMode();
+        if (adapter?.log) {
+            adapter.log(`📓 <strong>Saved Note:</strong> "${esc(rawTitle)}"`);
+        }
+        if (!isCapturingExports) syncHeroStateToFirebase(false);
+    }
+
+    function quickJotNote(rawInput) {
+        const cleaned = String(rawInput || '').trim();
+        if (!cleaned) return false;
+        let title = '';
+        let text = cleaned;
+        const colonIdx = cleaned.indexOf(':');
+        if (colonIdx >= 2 && colonIdx <= 45) {
+            const candidateTitle = cleaned.slice(0, colonIdx).trim();
+            const candidateBody = cleaned.slice(colonIdx + 1).trim();
+            if (candidateTitle && candidateBody) {
+                title = candidateTitle;
+                text = candidateBody;
+            }
+        }
+        if (!title) {
+            if (cleaned.length <= 44) {
+                title = cleaned;
+            } else {
+                const cut = cleaned.slice(0, 44);
+                const lastSpace = cut.lastIndexOf(' ');
+                title = (lastSpace > 18 ? cut.slice(0, lastSpace) : cut).trim() + '...';
+            }
+        }
+        const notes = getNotesSafe();
+        const newNote = {
+            id: 'note_' + Date.now(),
+            title: title.slice(0, MAX_JOURNAL_TITLE),
+            text: text.slice(0, MAX_JOURNAL_BODY),
+            tag: 'general',
+            pinned: false,
+            updatedAt: Date.now()
+        };
+        notes.unshift(newNote);
+        if (typeof window.getRemovedNoteTitles === 'function' && typeof window.saveRemovedNoteTitles === 'function') {
+            const cleanedRemoved = window.getRemovedNoteTitles().filter(t => t.toLowerCase() !== newNote.title.toLowerCase());
+            window.saveRemovedNoteTitles(cleanedRemoved);
+        }
+        saveNotesSafe(notes);
+        journalState.selectedId = newNote.id;
+        renderJournalWorkspace();
+        if (adapter?.log) {
+            adapter.log(`📓 <strong>Jotted Note:</strong> "${esc(newNote.title)}"`);
+        }
+        if (!isCapturingExports) syncHeroStateToFirebase(false);
+        return true;
+    }
+
+    function insertToolbarSnippet(kind) {
+        const ta = document.getElementById('note-body-input');
+        if (!ta) return;
+        const start = typeof ta.selectionStart === 'number' ? ta.selectionStart : ta.value.length;
+        const end = typeof ta.selectionEnd === 'number' ? ta.selectionEnd : ta.value.length;
+        const before = ta.value.slice(0, start);
+        const needsNewline = before.length > 0 && !before.endsWith('\n');
+        let snippet = '';
+        if (kind === 'bullet') snippet = `${needsNewline ? '\n' : ''}• `;
+        else if (kind === 'task') snippet = `${needsNewline ? '\n' : ''}- [ ] `;
+        else if (kind === 'divider') snippet = `${needsNewline ? '\n' : ''}---\n`;
+        else if (kind === 'time') {
+            const now = new Date();
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            snippet = `[${hh}:${mm}] `;
+        }
+        const nextVal = (before + snippet + ta.value.slice(end)).slice(0, MAX_JOURNAL_BODY);
+        ta.value = nextVal;
+        const caret = Math.min(nextVal.length, start + snippet.length);
+        ta.focus();
+        ta.setSelectionRange(caret, caret);
+        updateJournalCharCounter();
+        syncJournalModalDismissMode();
+    }
+
+    function updateJournalCharCounter() {
+        const bodyEl = document.getElementById('note-body-input');
+        const counterEl = document.getElementById('note-char-counter');
+        if (!bodyEl || !counterEl) return;
+        const len = bodyEl.value.length;
+        counterEl.textContent = `${len} / ${MAX_JOURNAL_BODY}`;
+        counterEl.style.color = len >= MAX_JOURNAL_BODY ? 'var(--accent-red)' : (len >= 1350 ? 'var(--accent-gold)' : 'var(--text-muted)');
+    }
+
+    function renderJournalMiniPanel(notes) {
+        const miniList = document.getElementById('player-notes-mini-list');
+        const countBadge = document.getElementById('player-notes-count-badge');
+        if (countBadge) countBadge.textContent = String(notes.length);
+        if (!miniList) return;
+
+        const sorted = getSortedNotes(notes);
+        if (sorted.length === 0) {
+            miniList.innerHTML = `<div style="font-size:0.73rem; color:var(--text-muted); font-style:italic; padding:6px 2px;">No notes saved yet. Jot one below or click + New.</div>`;
+            return;
+        }
+        miniList.innerHTML = sorted.map(n => {
+            const tag = n.tag || 'general';
+            const isNew = isJournalNoteModified(n);
+            const snippet = String(n.text || '').replace(/\s+/g, ' ').trim();
+            return `
+                <button type="button" class="notes-mini-card${n.pinned ? ' is-pinned' : ''}" data-mini-note-id="${esc(n.id)}" title="Click to open in Campaign Journal">
+                    <div class="notes-mini-top">
+                        <span class="notes-mini-title-wrap">
+                            <span class="notes-cat-dot cat-${esc(tag)}" aria-hidden="true"></span>
+                            ${n.pinned ? '<span class="notes-pin-mark" aria-label="Pinned">★</span>' : ''}
+                            <span class="notes-mini-title">${esc(n.title)}</span>
+                        </span>
+                        ${isNew ? '<span class="notes-new-dot">New</span>' : ''}
+                        ${tag !== 'general' ? `<span class="notes-cat-tag cat-${esc(tag)}">${esc(getCategoryLabel(tag))}</span>` : ''}
+                    </div>
+                    <div class="notes-mini-snippet">${esc(snippet)}</div>
+                </button>
+            `;
+        }).join('');
+    }
+
+    function renderJournalSidebar(notes) {
+        const modalCount = document.getElementById('modal-notes-count');
+        const filterRow = document.getElementById('notes-filter-pills');
+        const listEl = document.getElementById('player-notes-full-list');
+        const clearBtn = document.getElementById('notes-search-clear');
+        if (modalCount) modalCount.textContent = String(notes.length);
+        if (clearBtn) clearBtn.style.display = journalState.search ? 'inline-block' : 'none';
+
+        if (filterRow) {
+            filterRow.innerHTML = JOURNAL_CATEGORIES.map(c => {
+                const active = journalState.filter === c.id;
+                return `<button type="button" class="notes-filter-pill" data-filter-cat="${esc(c.id)}" aria-pressed="${active ? 'true' : 'false'}">${esc(c.label)}</button>`;
+            }).join('');
+        }
+
+        if (!listEl) return;
+        const filtered = getFilteredNotes(notes);
+        if (filtered.length === 0) {
+            const q = (journalState.search || '').trim();
+            listEl.innerHTML = `
+                <div class="notes-empty-state">
+                    <div>${notes.length === 0 ? 'Your Campaign Journal is empty.' : 'No notes match your search or filter.'}</div>
+                    <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:center;">
+                        ${(journalState.search || journalState.filter !== 'all')
+                            ? '<button type="button" class="btn-act btn-act-pre" id="notes-clear-filters-btn">Clear Filters</button>'
+                            : ''}
+                        <button type="button" class="btn-act btn-act-heal" id="notes-empty-create-btn">${q ? `+ Create "${esc(q.slice(0, 26))}"` : '+ New Note'}</button>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        listEl.innerHTML = filtered.map(n => {
+            const tag = n.tag || 'general';
+            const isActive = journalState.mode === 'read' && journalState.selectedId === n.id;
+            const isNew = isJournalNoteModified(n);
+            const snippet = String(n.text || '').replace(/\s+/g, ' ').trim();
+            const rel = formatNoteRelativeTime(n.updatedAt);
+            return `
+                <button type="button" class="notes-list-card${n.pinned ? ' is-pinned' : ''}${isActive ? ' is-active' : ''}" data-sidebar-note-id="${esc(n.id)}">
+                    <div class="notes-list-card-head">
+                        <span class="notes-mini-title-wrap">
+                            <span class="notes-cat-dot cat-${esc(tag)}" aria-hidden="true"></span>
+                            ${n.pinned ? '<span class="notes-pin-mark" aria-label="Pinned">★</span>' : ''}
+                            <span class="notes-list-card-title">${esc(n.title)}</span>
+                        </span>
+                        ${isNew ? '<span class="notes-new-dot">New</span>' : ''}
+                    </div>
+                    <div class="notes-list-card-snippet">${esc(snippet)}</div>
+                    <div class="notes-list-card-foot">
+                        <span class="notes-cat-tag cat-${esc(tag)}">${esc(getCategoryLabel(tag))}</span>
+                        ${rel ? `<span style="font-size:0.64rem; color:var(--text-muted);">${esc(rel)}</span>` : ''}
+                    </div>
+                </button>
+            `;
+        }).join('');
+    }
+
+    function renderJournalDetail(notes) {
+        const ws = document.getElementById('notes-journal-workspace');
+        const detail = document.getElementById('notes-detail-scroll');
+        if (ws) ws.classList.toggle('is-detail-open', Boolean(journalState.mobileDetailOpen));
+        if (!detail) return;
+
+        if (journalState.mode === 'edit') {
+            const titleVal = journalState.snapshot ? journalState.snapshot.title : '';
+            const bodyVal = journalState.snapshot ? journalState.snapshot.text : '';
+            const isEdit = Boolean(journalState.editingId);
+            detail.innerHTML = `
+                <div class="notes-editor-pane">
+                    <div id="notes-dirty-banner" class="notes-dirty-banner is-hidden" role="alert">
+                        <span id="notes-dirty-msg">You have unsaved edits. Save or discard before leaving.</span>
+                        <div style="display:inline-flex; gap:6px; align-items:center;">
+                            <button type="button" class="btn-act btn-act-pre" id="notes-keep-edit-btn">Keep Editing</button>
+                            <button type="button" class="btn-act btn-act-dmg" id="notes-discard-btn" aria-describedby="notes-dirty-msg">Discard</button>
+                        </div>
+                    </div>
+
+                    <div class="notes-editor-head">
+                        <strong style="font-size:0.86rem; color:var(--accent-gold-bright);">${isEdit ? '✏️ Edit Note' : '+ New Journal Entry'}</strong>
+                        <label style="display:inline-flex; align-items:center; gap:6px; font-size:0.74rem; color:var(--text-dim); cursor:pointer;">
+                            <input type="checkbox" id="note-pin-checkbox" ${journalState.editPinned ? 'checked' : ''}>
+                            <span>★ Pin to top</span>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label for="note-title-input" class="notes-editor-label">Title</label>
+                        <input type="text" id="note-title-input" class="notes-title-input" maxlength="${MAX_JOURNAL_TITLE}" placeholder="e.g., Madam Eva's Tarokka Reading, Vallaki Lead..." value="${esc(titleVal)}">
+                    </div>
+
+                    <div>
+                        <span class="notes-editor-label">Category</span>
+                        <div class="notes-cat-picker" id="note-editor-cat-picker">
+                            ${JOURNAL_EDIT_TAGS.map(c => `
+                                <button type="button" class="notes-filter-pill" data-edit-cat="${esc(c.id)}" aria-pressed="${journalState.editTag === c.id ? 'true' : 'false'}">${esc(c.label)}</button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="note-body-input" class="sr-only">Note Content</label>
+                        <div class="notes-toolbar">
+                            <div class="notes-toolbar-btns">
+                                <button type="button" class="notes-tool-btn" data-insert-tool="bullet">• Bullet</button>
+                                <button type="button" class="notes-tool-btn" data-insert-tool="task">☑ Task</button>
+                                <button type="button" class="notes-tool-btn" data-insert-tool="divider">— Divider</button>
+                                <button type="button" class="notes-tool-btn" data-insert-tool="time">🕒 Time</button>
+                            </div>
+                            <span id="note-char-counter" style="font-size:0.69rem; font-family:var(--font-num); color:var(--text-muted);">${bodyVal.length} / ${MAX_JOURNAL_BODY}</span>
+                        </div>
+                        <textarea id="note-body-input" class="notes-body-textarea" maxlength="${MAX_JOURNAL_BODY}" placeholder="Write clues, NPC motives, checklist items (- [ ] ...), or session notes...">${esc(bodyVal)}</textarea>
+                    </div>
+
+                    <div id="note-editor-error" class="notes-error-msg" role="alert"></div>
+
+                    <div class="notes-editor-foot">
+                        <button type="button" class="btn-act btn-act-pre" id="note-cancel-edit-btn">Cancel</button>
+                        <button type="button" class="btn-act btn-act-heal" id="btn-save-note">💾 ${isEdit ? 'Update Note' : 'Save Note'}</button>
+                    </div>
+                </div>
+            `;
+            const tEl = document.getElementById('note-title-input');
+            const bEl = document.getElementById('note-body-input');
+            const pEl = document.getElementById('note-pin-checkbox');
+            tEl?.addEventListener('input', () => {
+                const errEl = document.getElementById('note-editor-error');
+                if (errEl) errEl.textContent = '';
+                syncJournalModalDismissMode();
+            });
+            bEl?.addEventListener('input', () => {
+                const errEl = document.getElementById('note-editor-error');
+                if (errEl) errEl.textContent = '';
+                updateJournalCharCounter();
+                syncJournalModalDismissMode();
+            });
+            pEl?.addEventListener('change', () => {
+                journalState.editPinned = Boolean(pEl.checked);
+                syncJournalModalDismissMode();
+            });
+            const shortcutSave = (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    e.preventDefault();
+                    saveJournalEditorNote();
+                }
+            };
+            tEl?.addEventListener('keydown', shortcutSave);
+            bEl?.addEventListener('keydown', shortcutSave);
+            updateJournalCharCounter();
+            return;
+        }
+
+        // Reader Mode
+        const sorted = getSortedNotes(notes);
+        let activeNote = sorted.find(n => n.id === journalState.selectedId);
+        if (!activeNote) {
+            const filtered = getFilteredNotes(notes);
+            activeNote = filtered[0] || sorted[0] || null;
+            journalState.selectedId = activeNote ? activeNote.id : null;
+        }
+
+        if (!activeNote) {
+            detail.innerHTML = `
+                <div class="notes-empty-state" style="margin:auto;">
+                    <div style="font-size:0.95rem; color:var(--text-light); font-weight:600;">No Journal Entries Yet</div>
+                    <div>Capture NPC names, Barovian leads, quests, or checklists so your party never loses a thread.</div>
+                    <button type="button" class="btn-act btn-act-heal" id="notes-detail-new-btn">+ Write First Note</button>
+                </div>
+            `;
+            return;
+        }
+
+        const tag = activeNote.tag || 'general';
+        const modified = isJournalNoteModified(activeNote);
+        const rel = formatNoteRelativeTime(activeNote.updatedAt);
+        const confirmingDelete = journalState.confirmDeleteId === activeNote.id;
+
+        detail.innerHTML = `
+            <div class="notes-reader-meta">
+                <div class="notes-reader-meta-left">
+                    <span class="notes-cat-tag cat-${esc(tag)}">${esc(getCategoryLabel(tag))}</span>
+                    <span style="font-size:0.7rem; font-weight:600; color:${modified ? 'var(--accent-green)' : 'var(--text-muted)'};">
+                        ${modified ? '● Unsynced Edit' : '● Synced'}
+                    </span>
+                    ${rel ? `<span style="font-size:0.69rem; color:var(--text-muted);">· ${esc(rel)}</span>` : ''}
+                </div>
+                <div class="notes-reader-actions">
+                    <button type="button" class="btn-act btn-act-pre" id="reader-btn-pin" aria-pressed="${activeNote.pinned ? 'true' : 'false'}" style="${activeNote.pinned ? 'border-color:var(--border-gold); color:var(--accent-gold-bright); background:var(--accent-gold-soft);' : ''}">★ ${activeNote.pinned ? 'Pinned' : 'Pin'}</button>
+                    <button type="button" class="btn-act btn-act-pre" id="reader-btn-copy">📋 Copy</button>
+                    <button type="button" class="btn-act btn-act-pre" id="reader-btn-edit">✏️ Edit</button>
+                    <button type="button" class="btn-act btn-act-dmg" id="reader-btn-delete">🗑️ Delete</button>
+                </div>
+            </div>
+
+            <div class="notes-reader-canvas">
+                <div class="notes-reader-title" id="reader-note-title">${esc(activeNote.title)}</div>
+                <div class="notes-reader-body" id="reader-note-body"></div>
+            </div>
+
+            <div class="notes-confirm-strip${confirmingDelete ? '' : ' is-hidden'}" id="notes-delete-confirm-strip" role="region" aria-label="Confirm note deletion">
+                <span>Remove <strong>"${esc(activeNote.title)}"</strong> from your journal?</span>
+                <div style="display:inline-flex; gap:6px;">
+                    <button type="button" class="btn-act btn-act-pre" id="notes-cancel-del-btn">Keep Note</button>
+                    <button type="button" class="btn-act btn-act-dmg" id="notes-confirm-del-btn">Confirm Remove</button>
+                </div>
+            </div>
+        `;
+
+        const bodyContainer = document.getElementById('reader-note-body');
+        if (bodyContainer) {
+            bodyContainer.appendChild(buildFormattedNoteFragment(activeNote.text, activeNote.id));
+        }
+    }
+
+    function renderJournalWorkspace() {
+        const notes = getNotesSafe();
+        renderJournalMiniPanel(notes);
+        renderJournalSidebar(notes);
+        renderJournalDetail(notes);
+    }
+
+    function openJournalEditor(noteId = null, prefillTitle = '') {
+        const openWork = () => {
+            const modal = document.getElementById('player-notes-modal');
+            if (modal) {
+                modal.removeAttribute('data-closing');
+                if (!modal.open) modal.showModal();
+            }
+            const notes = getNotesSafe();
+            const existing = noteId ? notes.find(n => n.id === noteId) : null;
+            journalState.mode = 'edit';
+            journalState.editingId = existing ? existing.id : null;
+            journalState.selectedId = existing ? existing.id : journalState.selectedId;
+            journalState.editTag = existing ? (existing.tag || 'general') : (journalState.filter !== 'all' && journalState.filter !== 'pinned' ? journalState.filter : 'general');
+            journalState.editPinned = existing ? Boolean(existing.pinned) : false;
+            journalState.confirmDeleteId = null;
+            journalState.mobileDetailOpen = true;
+            journalState.snapshot = {
+                title: existing ? (existing.title || '') : (prefillTitle || ''),
+                text: existing ? (existing.text || '') : '',
+                tag: journalState.editTag,
+                pinned: journalState.editPinned
+            };
+            renderJournalWorkspace();
+            syncJournalModalDismissMode();
+            const focusTarget = existing ? document.getElementById('note-body-input') : document.getElementById('note-title-input');
+            focusTarget?.focus();
+        };
+
+        if (journalState.mode === 'edit' && !guardJournalDirty(openWork)) return;
+        openWork();
+    }
+
+    function openJournalReader(noteId) {
+        const openWork = () => {
+            const modal = document.getElementById('player-notes-modal');
+            if (modal) {
+                modal.removeAttribute('data-closing');
+                if (!modal.open) modal.showModal();
+            }
+            journalState.mode = 'read';
+            journalState.editingId = null;
+            journalState.snapshot = null;
+            journalState.confirmDeleteId = null;
+            if (noteId) journalState.selectedId = noteId;
+            journalState.mobileDetailOpen = Boolean(noteId);
+            renderJournalWorkspace();
+            syncJournalModalDismissMode();
+        };
+
+        if (journalState.mode === 'edit' && !guardJournalDirty(openWork)) return;
+        openWork();
+    }
+
+    function closeJournalModal(forceDiscard = false) {
+        const modal = document.getElementById('player-notes-modal');
+        if (!forceDiscard && !guardJournalDirty(() => closeJournalModal(true))) return;
+        journalState.mode = 'read';
+        journalState.editingId = null;
+        journalState.snapshot = null;
+        journalState.confirmDeleteId = null;
+        hideJournalDirtyBanner();
+        syncJournalModalDismissMode();
+        if (modal && modal.open) closeDialogTopLayer(modal);
+    }
+
+    function performJournalBaselineReset() {
+        const defaults = getDefaultNotesList().map(n => ({ ...n }));
+        saveNotesSafe(defaults);
+        if (typeof window.saveRemovedNoteTitles === 'function') window.saveRemovedNoteTitles([]);
+        journalState.mode = 'read';
+        journalState.editingId = null;
+        journalState.snapshot = null;
+        journalState.confirmDeleteId = null;
+        journalState.filter = 'all';
+        journalState.search = '';
+        journalState.selectedId = defaults[0]?.id || null;
+        const searchEl = document.getElementById('notes-search-input');
+        if (searchEl) searchEl.value = '';
+        renderJournalWorkspace();
+        syncJournalModalDismissMode();
+        if (adapter?.log) {
+            adapter.log(`📓 <strong>Player Notes Reset</strong> to official baseline notes.`);
+        }
+    }
+
+    function mountPlayerNotesJournal() {
+        if (journalState.mounted) return;
+        journalState.mounted = true;
+
+        // 1. Upgrade Left-Column Notes Card
+        const miniList = document.getElementById('player-notes-mini-list');
+        const notesPanel = miniList?.closest('.panel');
+        if (notesPanel && !notesPanel.dataset.journalUpgraded) {
+            notesPanel.dataset.journalUpgraded = '1';
+            notesPanel.id = 'player-notes-panel';
+            notesPanel.className = 'panel notes-panel';
+            notesPanel.removeAttribute('style');
+            notesPanel.innerHTML = `
+                <div class="notes-panel-head">
+                    <button type="button" class="notes-panel-trigger" id="notes-panel-open-btn" title="Open Campaign Journal">
+                        <span>📓 Player Notes</span>
+                        <span id="player-notes-count-badge" class="notes-count-pill">0</span>
+                    </button>
+                    <button type="button" class="notes-quick-add-btn" id="notes-panel-new-btn" title="Write a new structured note">+ New</button>
+                </div>
+                <div id="player-notes-mini-list" class="notes-mini-list"></div>
+                <form id="notes-quick-jot-form" class="notes-quick-jot-form">
+                    <label for="notes-quick-jot-input" class="sr-only">Quick jot a note</label>
+                    <input type="text" id="notes-quick-jot-input" class="notes-quick-jot-input" maxlength="300" placeholder="Quick jot (Title: Note) &amp; Enter...">
+                    <button type="submit" class="notes-quick-jot-btn" title="Save quick note">+</button>
+                </form>
+            `;
+
+            document.getElementById('notes-panel-open-btn')?.addEventListener('click', () => openJournalReader(null));
+            document.getElementById('notes-panel-new-btn')?.addEventListener('click', () => openJournalEditor(null));
+
+            const miniEl = document.getElementById('player-notes-mini-list');
+            miniEl?.addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-mini-note-id]');
+                if (btn) openJournalReader(btn.dataset.miniNoteId);
+            });
+
+            const jotForm = document.getElementById('notes-quick-jot-form');
+            const jotInput = document.getElementById('notes-quick-jot-input');
+            jotInput?.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    if (event.isComposing || event.keyCode === 229) return;
+                    jotForm?.requestSubmit();
+                }
+            });
+            jotForm?.addEventListener('submit', (event) => {
+                event.preventDefault();
+                if (jotInput && quickJotNote(jotInput.value)) {
+                    jotInput.value = '';
+                }
+            });
+        }
+
+        // 2. Upgrade #player-notes-modal into Split-Pane Campaign Journal
+        const modal = document.getElementById('player-notes-modal');
+        if (modal && !modal.dataset.journalUpgraded) {
+            modal.dataset.journalUpgraded = '1';
+            modal.className = 'sheet-dialog notes-journal-dialog';
+            modal.setAttribute('closedby', 'any');
+            modal.innerHTML = `
+                <div class="modal-card notes-journal-card">
+                    <div class="modal-header">
+                        <h3 id="player-notes-modal-title">📓 Campaign Journal <span id="modal-notes-count" class="notes-count-pill">0</span></h3>
+                        <div class="notes-journal-head-actions">
+                            <button type="button" class="btn-act btn-act-heal" id="journal-head-new-btn">+ New Note</button>
+                            <button type="button" class="modal-close-btn" id="journal-head-close-btn" aria-label="Close Campaign Journal">✕</button>
+                        </div>
+                    </div>
+                    <div id="notes-journal-workspace" class="notes-journal-workspace">
+                        <aside class="notes-sidebar" aria-label="Saved Notes">
+                            <div class="notes-sidebar-controls">
+                                <div class="notes-search-wrap">
+                                    <span aria-hidden="true" style="font-size:0.78rem; color:var(--text-muted);">🔍</span>
+                                    <label for="notes-search-input" class="sr-only">Search notes</label>
+                                    <input type="search" id="notes-search-input" class="notes-search-input" placeholder="Search titles &amp; notes...">
+                                    <button type="button" id="notes-search-clear" class="notes-search-clear" aria-label="Clear search" style="display:none;">✕</button>
+                                </div>
+                                <div class="notes-filter-pills" id="notes-filter-pills"></div>
+                            </div>
+                            <div id="player-notes-full-list" class="notes-sidebar-list"></div>
+                        </aside>
+                        <section class="notes-detail-pane" aria-label="Note Workspace">
+                            <button type="button" id="notes-mobile-back-btn" class="btn-act btn-act-pre notes-mobile-back-btn">← Back to Notes</button>
+                            <div id="notes-detail-scroll" class="notes-detail-scroll"></div>
+                        </section>
+                    </div>
+                    <div class="notes-modal-foot">
+                        <div style="display:inline-flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                            <button type="button" class="btn-act btn-act-pre" id="journal-foot-sync-btn" style="color:var(--accent-green); border-color:rgba(94,184,138,0.38);">☁️ Sync to DM</button>
+                            <button type="button" class="btn-act btn-act-pre" id="journal-foot-reset-btn" title="Restore baseline session notes">↺ Reset Baseline</button>
+                        </div>
+                        <div style="display:inline-flex; align-items:center; gap:10px;">
+                            <span style="font-size:0.68rem; color:var(--text-muted);">Ctrl+Enter to save · Esc to close</span>
+                            <button type="button" class="btn-act btn-act-pre" id="journal-foot-close-btn">Close</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('journal-head-new-btn')?.addEventListener('click', () => openJournalEditor(null));
+            document.getElementById('journal-head-close-btn')?.addEventListener('click', () => closeJournalModal(false));
+            document.getElementById('journal-foot-close-btn')?.addEventListener('click', () => closeJournalModal(false));
+            document.getElementById('journal-foot-sync-btn')?.addEventListener('click', () => pushSyncedCheckpoint(false));
+
+            const resetBtn = document.getElementById('journal-foot-reset-btn');
+            resetBtn?.addEventListener('click', () => {
+                if (!journalState.resetArmed) {
+                    journalState.resetArmed = true;
+                    resetBtn.textContent = 'Confirm Reset?';
+                    resetBtn.classList.add('btn-act-dmg');
+                    clearTimeout(journalState.resetTimer);
+                    journalState.resetTimer = setTimeout(() => {
+                        journalState.resetArmed = false;
+                        resetBtn.textContent = '↺ Reset Baseline';
+                        resetBtn.classList.remove('btn-act-dmg');
+                    }, 4000);
+                } else {
+                    clearTimeout(journalState.resetTimer);
+                    journalState.resetArmed = false;
+                    resetBtn.textContent = '↺ Reset Baseline';
+                    resetBtn.classList.remove('btn-act-dmg');
+                    performJournalBaselineReset();
+                    syncHeroStateToFirebase(false);
+                }
+            });
+
+            document.getElementById('notes-mobile-back-btn')?.addEventListener('click', () => {
+                const goBack = () => {
+                    journalState.mode = 'read';
+                    journalState.editingId = null;
+                    journalState.snapshot = null;
+                    journalState.mobileDetailOpen = false;
+                    renderJournalWorkspace();
+                    syncJournalModalDismissMode();
+                };
+                if (journalState.mode === 'edit' && !guardJournalDirty(goBack)) return;
+                goBack();
+            });
+
+            const searchInp = document.getElementById('notes-search-input');
+            searchInp?.addEventListener('input', () => {
+                journalState.search = searchInp.value;
+                renderJournalSidebar(getNotesSafe());
+            });
+            document.getElementById('notes-search-clear')?.addEventListener('click', () => {
+                journalState.search = '';
+                if (searchInp) searchInp.value = '';
+                renderJournalSidebar(getNotesSafe());
+                searchInp?.focus();
+            });
+
+            // Sidebar delegation
+            document.getElementById('notes-filter-pills')?.addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-filter-cat]');
+                if (!btn) return;
+                journalState.filter = btn.dataset.filterCat;
+                renderJournalSidebar(getNotesSafe());
+            });
+
+            document.getElementById('player-notes-full-list')?.addEventListener('click', (e) => {
+                const card = e.target.closest('[data-sidebar-note-id]');
+                if (card) {
+                    openJournalReader(card.dataset.sidebarNoteId);
+                    return;
+                }
+                if (e.target.closest('#notes-clear-filters-btn')) {
+                    journalState.search = '';
+                    journalState.filter = 'all';
+                    if (searchInp) searchInp.value = '';
+                    renderJournalSidebar(getNotesSafe());
+                } else if (e.target.closest('#notes-empty-create-btn')) {
+                    openJournalEditor(null, (journalState.search || '').trim().slice(0, MAX_JOURNAL_TITLE));
+                }
+            });
+
+            // Detail workspace delegation (Reader + Editor)
+            const detailScroll = document.getElementById('notes-detail-scroll');
+            detailScroll?.addEventListener('click', (e) => {
+                const editCatBtn = e.target.closest('[data-edit-cat]');
+                if (editCatBtn) {
+                    journalState.editTag = editCatBtn.dataset.editCat;
+                    detailScroll.querySelectorAll('[data-edit-cat]').forEach(el => {
+                        el.setAttribute('aria-pressed', el === editCatBtn ? 'true' : 'false');
+                    });
+                    syncJournalModalDismissMode();
+                    return;
+                }
+                const toolBtn = e.target.closest('[data-insert-tool]');
+                if (toolBtn) {
+                    insertToolbarSnippet(toolBtn.dataset.insertTool);
+                    return;
+                }
+                if (e.target.closest('#reader-btn-pin')) {
+                    if (journalState.selectedId) togglePinJournalNote(journalState.selectedId);
+                } else if (e.target.closest('#reader-btn-edit')) {
+                    if (journalState.selectedId) openJournalEditor(journalState.selectedId);
+                } else if (e.target.closest('#reader-btn-copy')) {
+                    const copyBtn = e.target.closest('#reader-btn-copy');
+                    const note = getNotesSafe().find(n => n.id === journalState.selectedId);
+                    if (note && navigator.clipboard?.writeText) {
+                        navigator.clipboard.writeText(`${note.title}\n\n${note.text}`).then(() => {
+                            if (copyBtn) {
+                                copyBtn.textContent = '✓ Copied';
+                                setTimeout(() => { if (copyBtn.isConnected) copyBtn.textContent = '📋 Copy'; }, 1400);
+                            }
+                        }).catch(() => {});
+                    }
+                } else if (e.target.closest('#reader-btn-delete')) {
+                    journalState.confirmDeleteId = journalState.selectedId;
+                    renderJournalDetail(getNotesSafe());
+                } else if (e.target.closest('#notes-cancel-del-btn')) {
+                    journalState.confirmDeleteId = null;
+                    renderJournalDetail(getNotesSafe());
+                } else if (e.target.closest('#notes-confirm-del-btn')) {
+                    if (journalState.confirmDeleteId) commitDeleteJournalNote(journalState.confirmDeleteId);
+                } else if (e.target.closest('#notes-detail-new-btn')) {
+                    openJournalEditor(null);
+                } else if (e.target.closest('#btn-save-note')) {
+                    saveJournalEditorNote();
+                } else if (e.target.closest('#note-cancel-edit-btn')) {
+                    const backToRead = () => {
+                        journalState.mode = 'read';
+                        journalState.editingId = null;
+                        journalState.snapshot = null;
+                        hideJournalDirtyBanner();
+                        renderJournalWorkspace();
+                        syncJournalModalDismissMode();
+                    };
+                    if (!guardJournalDirty(backToRead)) return;
+                    backToRead();
+                } else if (e.target.closest('#notes-keep-edit-btn')) {
+                    hideJournalDirtyBanner();
+                    document.getElementById('note-body-input')?.focus();
+                } else if (e.target.closest('#notes-discard-btn')) {
+                    const pending = journalState.pendingDiscardAction;
+                    journalState.mode = 'read';
+                    journalState.editingId = null;
+                    journalState.snapshot = null;
+                    hideJournalDirtyBanner();
+                    syncJournalModalDismissMode();
+                    if (typeof pending === 'function') pending();
+                    else renderJournalWorkspace();
+                }
+            });
+
+            // Interactive checkboxes inside Reader View
+            detailScroll?.addEventListener('change', (e) => {
+                const cb = e.target;
+                if (cb && cb.matches('input[type="checkbox"][data-note-id][data-line-idx]')) {
+                    toggleChecklistLine(cb.dataset.noteId, parseInt(cb.dataset.lineIdx, 10));
+                }
+            });
+
+            // Intercept Esc / cancel when editor has unsaved changes
+            modal.addEventListener('cancel', (event) => {
+                if (journalState.mode === 'edit' && isJournalEditorDirty()) {
+                    event.preventDefault();
+                    showJournalDirtyBanner(() => closeJournalModal(true));
+                } else if (!supportsDialogTopLayerExit()) {
+                    event.preventDefault();
+                    closeDialogTopLayer(modal);
+                }
+            });
+
+            // Intercept backdrop click when dirty so unsaved edits are protected
+            let pressedBackdrop = false;
+            modal.addEventListener('pointerdown', (e) => {
+                const r = modal.getBoundingClientRect();
+                pressedBackdrop = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+            });
+            modal.addEventListener('pointerup', (e) => {
+                const r = modal.getBoundingClientRect();
+                const releasedOutside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+                if (pressedBackdrop && releasedOutside && journalState.mode === 'edit' && isJournalEditorDirty()) {
+                    showJournalDirtyBanner(() => closeJournalModal(true));
+                }
+                pressedBackdrop = false;
+            });
+        }
+
+        // Override global sheet note hooks cleanly so Firebase restores & shortcuts stay unified
+        window.renderPlayerNotes = renderJournalWorkspace;
+        window.openPlayerNotesModal = () => openJournalReader(null);
+        window.openNoteReader = (id) => openJournalReader(id);
+        window.closePlayerNotesModal = () => closeJournalModal(false);
+        window.resetPlayerNotes = performJournalBaselineReset;
+
+        renderJournalWorkspace();
+    }
+
     function init(sheetAdapter) {
         adapter = sheetAdapter;
         injectDialogsAndBanner();
         mountVideoGameHudWidgets();
+        mountPlayerNotesJournal();
         startLiveSheetWatcher();
         initFirebaseSync();
         applyEquipmentToSheet(true);
@@ -11321,6 +12383,9 @@
         triggerRollFollowup,
         rollBrutalCrit,
         renderPartyMiniHud,
-        renderPublicCombatStrip
+        renderPublicCombatStrip,
+        openPlayerNotesModal: () => openJournalReader(null),
+        openNoteEditor: openJournalEditor,
+        openNoteReader: openJournalReader
     };
 })();

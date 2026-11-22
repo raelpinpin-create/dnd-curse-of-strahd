@@ -7,9 +7,9 @@
     <title>Jacomir Yulle (King of Oakenshire) — Battle Master Fighter Sheet (Curse of Strahd)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v4">
-    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v4">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v5">
+    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v5">
     <style>
         @layer legacy {
         :root {
@@ -1006,22 +1006,22 @@
                             <span id="silver-disp" class="rpg-gold-sp-val">0</span>
                             <span class="rpg-gold-sp-lbl">SP</span>
                         </button>
-                        <div style="display:flex; align-items:center; gap:4px;">
-                            <button type="button" class="btn-act btn-act-pre" onclick="openGoldHistoryModal()" style="font-size:0.67rem; padding:3px 7px; color:var(--accent-gold); border:1px solid rgba(245,158,11,0.4);">📜 Ledger</button>
-                            <button type="button" class="btn-act btn-act-pre" onclick="if(window.COS_RPG){COS_RPG.setTradeMode('gold'); COS_RPG.openTradeModal('send');}" style="font-size:0.67rem; padding:3px 7px; color:#86efac; border:1px solid rgba(74,222,128,0.4);" title="Send Gold or Silver to another hero">🤝 Send</button>
+                        <div class="rpg-gold-top-actions">
+                            <button type="button" class="btn-act btn-act-pre rpg-gold-ledger-btn" onclick="openGoldHistoryModal()">📜 Ledger</button>
+                            <button type="button" class="btn-act btn-act-pre rpg-gold-send-btn" onclick="if(window.COS_RPG){COS_RPG.setTradeMode('gold'); COS_RPG.openTradeModal('send');}" title="Send Gold or Silver to another hero">🤝 Send</button>
                         </div>
                     </div>
 
                     <div class="rpg-gold-bar">
                         <button type="button" id="gold-unit-btn" class="rpg-gold-unit-btn" data-unit="gp" onclick="toggleGoldUnit()" title="Switch between Gold (GP) and Silver (SP) — 10 SP = 1 GP">GP ▾</button>
-                        <input type="number" id="gold-input" class="hp-input-num" placeholder="Amt" min="1" max="99999" style="width:58px; height:27px; font-size:0.8rem; text-align:center; padding:2px 5px; background:#090d16; border:1px solid rgba(245,158,11,0.35); color:#fef08a; font-family:'JetBrains Mono',monospace;">
-                        <button type="button" class="btn-act btn-act-pre" onclick="toggleGoldMemoRow()" style="height:27px; padding:2px 6px; font-size:0.7rem;" title="Add optional memo/reason for Ledger">📝</button>
-                        <button type="button" class="btn-act btn-act-dmg" onclick="applyGoldSpend()" style="padding:2px 8px; height:27px; font-size:0.72rem; font-weight:800; flex:1;">− Spend</button>
-                        <button type="button" class="btn-act btn-act-heal" onclick="applyGoldAdd()" style="padding:2px 8px; height:27px; font-size:0.72rem; font-weight:800; flex:1; background:linear-gradient(135deg, #ca8a04 0%, #a16207 100%); color:#fff;">+ Loot</button>
+                        <input type="number" id="gold-input" class="hp-input-num" placeholder="Amt" min="1" max="99999">
+                        <button type="button" class="btn-act btn-act-pre" onclick="toggleGoldMemoRow()" style="height:28px; padding:2px 7px; font-size:0.7rem;" title="Add optional memo/reason for Ledger">📝</button>
+                        <button type="button" class="btn-act btn-act-dmg" onclick="applyGoldSpend()" style="padding:2px 8px; height:28px; font-size:0.72rem; flex:1;">− Spend</button>
+                        <button type="button" class="btn-act btn-act-heal" onclick="applyGoldAdd()" style="padding:2px 8px; height:28px; font-size:0.72rem; flex:1;">+ Loot</button>
                     </div>
 
                     <div id="gold-memo-row" style="display:none;">
-                        <input type="text" id="gold-reason-input" placeholder="Memo / Reason (optional)..." style="width:100%; height:26px; font-size:0.72rem; padding:2px 7px; background:#090d16; border:1px solid #334155; border-radius:4px; color:#cbd5e1;">
+                        <input type="text" id="gold-reason-input" class="rpg-gold-memo-input" placeholder="Memo / Reason (optional)...">
                     </div>
 
                     <div class="rpg-gold-quick-row">
@@ -1035,14 +1035,13 @@
                 </div>
 
                 <!-- 📓 PLAYER NOTES PANEL -->
-                <div class="panel" style="padding: 8px 10px;">
-                    <div class="panel-title" style="margin-bottom:4px; cursor:pointer;" onclick="openPlayerNotesModal()" title="Click to open Player Notes">
-                        <div style="display:flex; align-items:center; gap:6px;">
-                            <span onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--accent-gold)'" style="transition:color 0.15s;">📓 Player Notes</span>
-                            <span id="player-notes-count-badge" style="font-size:0.64rem; padding:1px 6px; border-radius:999px; background:rgba(167,139,250,0.16); color:#c4b5fd; border:1px solid rgba(167,139,250,0.35);">7</span>
-                        </div>
+                <div class="panel notes-panel" id="player-notes-panel">
+                    <div class="notes-panel-head" onclick="openPlayerNotesModal()" style="cursor:pointer;" title="Click to open Campaign Journal">
+                        <span style="font-size:0.73rem; font-weight:600; color:var(--text-light); text-transform:uppercase; letter-spacing:0.08em; display:inline-flex; align-items:center; gap:7px;">
+                            📓 Player Notes <span id="player-notes-count-badge" class="notes-count-pill">7</span>
+                        </span>
                     </div>
-                    <div id="player-notes-mini-list" style="display:flex; flex-direction:column; gap:4px; max-height:110px; overflow-y:auto;"></div>
+                    <div id="player-notes-mini-list" class="notes-mini-list"></div>
                 </div>
 
             </div>
@@ -1284,14 +1283,14 @@
                 <button class="modal-close-btn" onclick="closeGoldHistoryModal()" aria-label="Close">✕</button>
             </div>
             <div class="modal-body">
-                <div style="background:rgba(245, 158, 11, 0.08); border:1px solid rgba(245, 158, 11, 0.3); border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center;">
+                <div style="background:var(--accent-gold-soft); border:1px solid var(--border-gold); border-radius:8px; padding:9px 12px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim); text-transform:uppercase;">Current Available Balance</div>
-                        <div style="font-size:1.15rem; font-weight:800; color:#facc15;">
-                            <span id="modal-gold-disp">0</span> GP • <span id="modal-silver-disp" style="color:#cbd5e1;">0</span> SP
+                        <div style="font-size:0.68rem; font-weight:600; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em;">Current Available Balance</div>
+                        <div style="font-size:1.25rem; font-weight:600; color:var(--text-muted); font-family:var(--font-num);">
+                            <span id="modal-gold-disp">0</span> GP · <span id="modal-silver-disp">0</span> SP
                         </div>
                     </div>
-                    <button class="btn-act btn-act-pre" onclick="resetGoldPurse()" style="color:var(--accent-gold); border:1px solid rgba(245,158,11,0.3); padding:4px 8px; font-size:0.7rem;">🔄 Reset Balance</button>
+                    <button class="btn-act btn-act-pre" onclick="resetGoldPurse()" style="color:var(--accent-gold-bright); border-color:var(--border-gold); padding:4px 9px; font-size:0.7rem;">🔄 Reset Balance</button>
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
                     <span style="font-size:0.74rem; font-weight:700; color:var(--accent-gold); text-transform:uppercase;">Recent Transactions:</span>
@@ -1336,63 +1335,16 @@
     </dialog>
 
     <!-- 📓 PLAYER NOTES MODAL -->
-    <dialog class="sheet-dialog" id="player-notes-modal" closedby="any" aria-labelledby="player-notes-modal-title">
-        <div class="modal-card" style="border-color:#8b5cf6;">
-            <div class="modal-header" style="background:linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%);">
-                <h3 id="player-notes-modal-title" style="color:#e9d5ff;">📓 Player Notes</h3>
+    <dialog class="sheet-dialog notes-journal-dialog" id="player-notes-modal" closedby="any" aria-labelledby="player-notes-modal-title">
+        <div class="modal-card notes-journal-card">
+            <div class="modal-header">
+                <h3 id="player-notes-modal-title">📓 Campaign Journal</h3>
                 <button class="modal-close-btn" onclick="closePlayerNotesModal()" aria-label="Close">✕</button>
             </div>
             <div class="modal-body" style="display:flex; flex-direction:column; gap:10px;">
-                
-                <!-- VIEW 1: ALL NOTES LIST (DEFAULT WHEN OPENED) -->
                 <div id="notes-list-view" style="display:flex; flex-direction:column; gap:8px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-                        <div style="display:flex; align-items:center; gap:6px;">
-                            <span style="font-size:0.74rem; font-weight:800; color:#c4b5fd; text-transform:uppercase;">All Saved Notes (<span id="modal-notes-count">0</span>)</span>
-                            <span style="font-size:0.68rem; color:var(--text-dim);">• Click any note to open &amp; read</span>
-                        </div>
-                        <div style="display:flex; gap:5px; align-items:center;">
-                            <button class="btn-act btn-act-heal" onclick="openNoteEditorForm()" style="padding:4px 10px; font-size:0.72rem; font-weight:700; background:linear-gradient(135deg, #6d28d9 0%, #4338ca 100%); color:#fff; border:1px solid #8b5cf6;">➕ Write New Note</button>
-                            <button class="btn-act btn-act-pre" onclick="resetPlayerNotes()" style="padding:3px 7px; font-size:0.66rem; color:#94a3b8;" title="Restore baseline notes">🔄 Reset</button>
-                        </div>
-                    </div>
                     <div id="player-notes-full-list" style="display:flex; flex-direction:column; gap:6px; max-height:52vh; overflow-y:auto;"></div>
                 </div>
-
-                <!-- VIEW 2: SINGLE NOTE FULL READER VIEW (WHEN A NOTE IS PRESSED) -->
-                <div id="note-reader-view" style="display:none; flex-direction:column; gap:10px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <button class="btn-act btn-act-pre" onclick="showNotesListView()" style="padding:4px 10px; font-size:0.73rem; color:#fde68a; border-color:rgba(245,158,11,0.4);">⬅️ Back to All Notes</button>
-                        <span id="reader-note-status" style="font-size:0.66rem; color:#94a3b8;"></span>
-                    </div>
-                    <div style="background:rgba(15, 23, 42, 0.92); border:1.5px solid #6d529e; border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:8px;">
-                        <div id="reader-note-title" style="font-family:'Cinzel',serif; font-size:1.02rem; font-weight:800; color:#fde68a; border-bottom:1px solid rgba(167,139,250,0.22); padding-bottom:6px;"></div>
-                        <div id="reader-note-body" style="font-size:0.86rem; color:#f1f5f9; line-height:1.6; white-space:pre-wrap; word-break:break-word;"></div>
-                    </div>
-                    <div style="display:flex; justify-content:flex-end; gap:6px;">
-                        <button id="reader-btn-edit" class="btn-act btn-act-pre" style="padding:5px 12px; font-size:0.74rem; color:#93c5fd; border-color:rgba(147,197,253,0.4);">✏️ Edit Note</button>
-                        <button id="reader-btn-delete" class="btn-act btn-act-dmg" style="padding:5px 12px; font-size:0.74rem;">🗑️ Remove Note</button>
-                    </div>
-                </div>
-
-                <!-- VIEW 3: WRITE / EDIT NOTE FORM -->
-                <div id="note-editor-view" style="display:none; background:rgba(15, 23, 42, 0.92); border:1px solid #4c1d95; border-radius:7px; padding:12px; flex-direction:column; gap:8px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span id="note-form-header-lbl" style="font-size:0.76rem; font-weight:800; color:#fde68a; text-transform:uppercase;">➕ Write a New Note</span>
-                        <span id="note-char-counter" style="font-size:0.68rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;">0 / 220 chars</span>
-                    </div>
-                    <input type="text" id="note-title-input" maxlength="55" placeholder="Note Title (e.g., Survivors of Oakhaven, Madam Eva's Prophecy)..." style="width:100%; padding:7px 10px; font-size:0.82rem; font-weight:700; background:#090d16; border:1px solid #334155; border-radius:5px; color:#f8fafc;">
-                    <textarea id="note-body-input" maxlength="220" rows="4" placeholder="Concise note content (up to 220 characters so exports stay super clean)..." oninput="updateNoteCharCounter()" style="width:100%; padding:7px 10px; font-size:0.8rem; background:#090d16; border:1px solid #334155; border-radius:5px; color:#cbd5e1; resize:vertical; font-family:'Inter',sans-serif;"></textarea>
-                    <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
-                        <button class="btn-act btn-act-pre" onclick="cancelNoteEdit()" style="padding:5px 10px; font-size:0.73rem;">⬅️ Cancel</button>
-                        <button id="btn-save-note" class="btn-act btn-act-heal" onclick="savePlayerNote()" style="padding:5px 14px; font-size:0.75rem; font-weight:700; background:linear-gradient(135deg, #6d28d9 0%, #4338ca 100%); color:#fff; border:1px solid #8b5cf6;">💾 Save Note</button>
-                    </div>
-                </div>
-
-            </div>
-            <div style="background:var(--panel-sub); border-top:1px solid var(--card-border); padding:8px 14px; display:flex; justify-content:space-between; align-items:center;">
-                <button class="btn-act btn-act-pre" onclick="if(window.COS_RPG) COS_RPG.pushSyncedCheckpoint(false);" style="color:#6ee7b7; border:1px solid rgba(52,211,153,0.55); padding:4px 10px; font-size:0.74rem; font-weight:700;">☁️ Sync to DM</button>
-                <button class="btn-act btn-act-pre" onclick="closePlayerNotesModal()" style="padding:4px 12px; font-size:0.76rem; font-weight:600;">Close</button>
             </div>
         </div>
     </dialog>
@@ -1413,7 +1365,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261122v4"></script>
+<script src="cos_rpg_engine.js?v=20261122v5"></script>
 <script>
     // ==========================================
     // 👑 JACOMIR YULLE MASTER STATE VARIABLES
@@ -3454,7 +3406,7 @@
     // ==========================================
     // 📓 PLAYER NOTES LEDGER & DELTA EXPORT ENGINE (LATEST ON TOP — EXACT PLAYER TEXT)
     // ==========================================
-    const MAX_NOTE_CHARS = 220;
+    const MAX_NOTE_CHARS = 1500;
     const defaultPlayerNotes = [
         {
             id: 's1_strahd',
@@ -3829,7 +3781,7 @@
         for (const dialog of document.querySelectorAll('dialog[closedby="any"]')) {
             let pressedOutside = false;
             dialog.addEventListener('pointerdown', (e) => { pressedOutside = outside(e, dialog); });
-            dialog.addEventListener('pointerup', (e) => { if (pressedOutside && outside(e, dialog)) dialog.close(); });
+            dialog.addEventListener('pointerup', (e) => { if (dialog.getAttribute('closedby') === 'any' && pressedOutside && outside(e, dialog)) dialog.close(); });
         }
     }
 
@@ -3856,6 +3808,7 @@
             heroId: 'jacomir',
             heroName: 'Jacomir',
             heroEmoji: '👑',
+            defaultNotes: defaultPlayerNotes,
             getItems: getStoredItems,
             saveItems: saveStoredItems,
             resetItems: () => saveStoredItems([...defaultItems]),

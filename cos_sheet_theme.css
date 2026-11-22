@@ -1,88 +1,96 @@
 /* =========================================================================
-   UNIVERSAL SLEEK DARK-MODE RPG CHARACTER SHEET DESIGN SYSTEM (v3.1)
-   Luminous Twilight-Slate & Refined Gold Game UI — Reusable Across All Campaigns
+   UNIVERSAL OBSIDIAN & BURNISHED BRASS RPG CHARACTER SHEET SYSTEM (v4.0)
+   Smoked Obsidian, Warm Stone & Antique Brass — Calm, Cohesive, Easy on Eyes
    ========================================================================= */
 
 @layer legacy, engine, tokens, base, layout, components, hud-unify, responsive;
 
 @layer tokens {
     :root {
-        /* Mandatory Dark Mode UA integration (scrollbars, inputs, dialogs) */
+        /* Mandatory Dark Mode UA Integration (scrollbars, inputs, dialogs) */
         color-scheme: dark;
-        accent-color: #f0c05a;
+        accent-color: #d8b268;
 
-        /* Tier 1 — Luminous Twilight-Slate Surfaces (Rich & Alive, Never Flat/Dead Black) */
-        --bg-page: #121929;
-        --bg-sheet: #1a2338;
-        --panel-bg: #212d46;
-        --panel-bg-end: #1c263c;
-        --panel-sub: #263450;
-        --bg-well: #151e31;
-        --bg-elevated: #2d3c5c;
+        /* Tier 1 — Smoked Obsidian & Warm Charcoal Surface Ladder (Zero Blue Cast) */
+        --bg-page: #0c0d10;
+        --bg-sheet: #12141a;
+        --panel-bg: #171a22;
+        --panel-bg-end: #14171f;
+        --panel-sub: #1c2029;
+        --panel-sub-end: #181b23;
+        --bg-well: #0f1117;
+        --bg-elevated: #232834;
 
-        /* Tier 2 — Luminous Hairline Borders & Crisp Depth */
-        --card-border: rgba(186, 206, 245, 0.125);
-        --border-med: rgba(186, 206, 245, 0.22);
-        --border-gold: rgba(240, 192, 90, 0.48);
-        --card-border-hover: rgba(240, 192, 90, 0.62);
-        --inner-sheen: inset 0 1px 0 rgba(255, 255, 255, 0.075);
-        --shadow-sheet: 0 24px 64px rgba(4, 8, 18, 0.62), 0 0 0 1px rgba(255, 255, 255, 0.05);
-        --shadow-card: 0 4px 14px rgba(6, 10, 22, 0.28);
+        /* Tier 2 — Warm Stone Hairline Borders & Subtle Tactile Depth */
+        --card-border: rgba(232, 224, 210, 0.085);
+        --border-med: rgba(232, 224, 210, 0.155);
+        --border-strong: rgba(232, 224, 210, 0.24);
+        --border-gold: rgba(216, 178, 104, 0.38);
+        --card-border-hover: rgba(216, 178, 104, 0.54);
+        --inner-sheen: inset 0 1px 0 rgba(255, 248, 236, 0.055);
+        --shadow-sheet: 0 28px 72px rgba(0, 0, 0, 0.72), 0 0 0 1px rgba(255, 248, 236, 0.04);
+        --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.34);
 
-        /* Tier 3 — Crisp High-Contrast Ink */
-        --text-light: #f4f7fc;
-        --text-dim: #becae0;
-        --text-muted: #8b9bb8;
+        /* Tier 3 — Warm Ivory Ink (High Readability, Zero Harsh Glare) */
+        --text-light: #edeae4;
+        --text-dim: #b4b0a8;
+        --text-muted: #938f88;
 
-        /* Tier 4 — Refined Jewel-Tone Semantic Palette */
-        --accent-gold: #f0c05a;
-        --accent-gold-soft: rgba(240, 192, 90, 0.14);
-        --accent-green: #36d399;
-        --accent-green-bg: #187250;
-        --accent-green-hover: #1f8e64;
-        --accent-red: #f2646c;
-        --accent-red-bg: #9b2c3b;
-        --accent-red-hover: #b83648;
-        --accent-blue: #4dbbf6;
-        --accent-cyan: #4dbbf6;
-        --accent-temp-bg: #1f679e;
-        --accent-temp-hover: #287ec0;
-        --accent-purple: #b392f8;
-        --accent-pink: #eb84b5;
-        --accent-bonus: #f5a246;
+        /* Tier 4 — Muted Mineral & Precious-Metal Semantic Accents (Zero Neon) */
+        --accent-gold: #d8b268;
+        --accent-gold-bright: #ebd29c;
+        --accent-gold-soft: rgba(216, 178, 104, 0.11);
+        --accent-green: #5eb88a;
+        --accent-green-bg: #1e5740;
+        --accent-green-hover: #266b4f;
+        --accent-red: #d6656c;
+        --accent-red-bg: #6e252e;
+        --accent-red-hover: #852e38;
+        --accent-blue: #6da8cc;
+        --accent-cyan: #6da8cc;
+        --accent-temp-bg: #224b6b;
+        --accent-temp-hover: #2a5d84;
+        --accent-purple: #a68dd6;
+        --accent-pink: #cc85a3;
+        --accent-bonus: #cf915c;
         --action-col: var(--accent-green);
         --bonus-col: var(--accent-bonus);
         --react-col: var(--accent-purple);
 
-        /* Campaign-Agnostic Subtle Hero Accent */
-        --hero-accent: #f0c05a;
-        --hero-accent-soft: rgba(240, 192, 90, 0.15);
+        /* Uniform 95% Canvas + Signature 5% Per-Hero Accent */
+        --hero-accent: #d8b268;
+        --hero-accent-soft: rgba(216, 178, 104, 0.12);
+        --hero-glow: rgba(216, 178, 104, 0.09);
 
-        /* Sleek Typography & Geometry Scale */
+        /* Typography & Geometry Scale */
         --font-display: 'Cinzel', Georgia, serif;
         --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-num: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         --font-mono: 'JetBrains Mono', ui-monospace, monospace;
         --radius-sm: 7px;
         --radius-md: 11px;
         --radius-lg: 15px;
 
-        /* Standard Scrollbar Coloring (Never animated!) */
-        --scrollbar-thumb: #3b4b6d;
-        --scrollbar-track: #141c2d;
+        /* Scrollbar Tokens (Contrast >= 3.2:1 against track; never animated!) */
+        --scrollbar-thumb: #6d7382;
+        --scrollbar-track: #12141a;
         scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
     }
 
     body[data-hero="jacomir"] {
-        --hero-accent: #f0c05a;
-        --hero-accent-soft: rgba(240, 192, 90, 0.16);
+        --hero-accent: #d8b268;
+        --hero-accent-soft: rgba(216, 178, 104, 0.12);
+        --hero-glow: rgba(216, 178, 104, 0.09);
     }
     body[data-hero="piper"] {
-        --hero-accent: #b794ff;
-        --hero-accent-soft: rgba(183, 148, 255, 0.17);
+        --hero-accent: #a68dd6;
+        --hero-accent-soft: rgba(166, 141, 214, 0.13);
+        --hero-glow: rgba(166, 141, 214, 0.09);
     }
     body[data-hero="yvaine"] {
-        --hero-accent: #5cc4f8;
-        --hero-accent-soft: rgba(92, 196, 248, 0.16);
+        --hero-accent: #6da8cc;
+        --hero-accent-soft: rgba(109, 168, 204, 0.12);
+        --hero-glow: rgba(109, 168, 204, 0.09);
     }
 }
 
@@ -98,10 +106,15 @@
     body {
         padding: 16px;
         background-image:
-            radial-gradient(ellipse 85% 42% at 50% 0%, var(--hero-accent-soft), transparent 68%),
-            radial-gradient(ellipse 70% 50% at 85% 100%, rgba(77, 187, 246, 0.08), transparent 65%),
-            linear-gradient(180deg, #161f33 0%, #111827 100%);
+            radial-gradient(ellipse 80% 38% at 50% 0%, var(--hero-glow), transparent 68%),
+            radial-gradient(ellipse 65% 40% at 85% 100%, rgba(216, 178, 104, 0.045), transparent 65%),
+            linear-gradient(180deg, #0f1116 0%, #0a0b0e 100%);
         background-attachment: fixed;
+    }
+
+    ::selection {
+        background: rgba(216, 178, 104, 0.28);
+        color: #f5f2ec;
     }
 
     :where(a:any-link, button, input, select, textarea):focus-visible {
@@ -109,35 +122,73 @@
         outline-offset: 2px;
     }
 
-    /* Clean Scrollbars with WebKit fallback strictly gated behind @supports */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    /* Native Scrollbars (Keep scrollbar-width: auto for accessible drag targets) */
     .stat-row-list,
     #player-notes-mini-list,
-    .rpg-modal-body {
-        scrollbar-width: thin;
+    .notes-sidebar-list,
+    .notes-detail-scroll,
+    .rpg-modal-body,
+    .modal-body,
+    .rpg-bp-list,
+    .tx-list {
+        scrollbar-width: auto;
         scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
     }
     @supports not (scrollbar-color: auto) {
         .stat-row-list,
         #player-notes-mini-list,
-        .rpg-modal-body {
+        .notes-sidebar-list,
+        .notes-detail-scroll,
+        .rpg-modal-body,
+        .modal-body,
+        .rpg-bp-list,
+        .tx-list {
             scrollbar-width: auto;
         }
         .stat-row-list::-webkit-scrollbar,
         #player-notes-mini-list::-webkit-scrollbar,
-        .rpg-modal-body::-webkit-scrollbar {
-            width: 7px;
-            height: 7px;
+        .notes-sidebar-list::-webkit-scrollbar,
+        .notes-detail-scroll::-webkit-scrollbar,
+        .rpg-modal-body::-webkit-scrollbar,
+        .modal-body::-webkit-scrollbar,
+        .rpg-bp-list::-webkit-scrollbar,
+        .tx-list::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
         }
         .stat-row-list::-webkit-scrollbar-track,
         #player-notes-mini-list::-webkit-scrollbar-track,
-        .rpg-modal-body::-webkit-scrollbar-track {
+        .notes-sidebar-list::-webkit-scrollbar-track,
+        .notes-detail-scroll::-webkit-scrollbar-track,
+        .rpg-modal-body::-webkit-scrollbar-track,
+        .modal-body::-webkit-scrollbar-track,
+        .rpg-bp-list::-webkit-scrollbar-track,
+        .tx-list::-webkit-scrollbar-track {
             background: var(--scrollbar-track);
         }
         .stat-row-list::-webkit-scrollbar-thumb,
         #player-notes-mini-list::-webkit-scrollbar-thumb,
-        .rpg-modal-body::-webkit-scrollbar-thumb {
+        .notes-sidebar-list::-webkit-scrollbar-thumb,
+        .notes-detail-scroll::-webkit-scrollbar-thumb,
+        .rpg-modal-body::-webkit-scrollbar-thumb,
+        .modal-body::-webkit-scrollbar-thumb,
+        .rpg-bp-list::-webkit-scrollbar-thumb,
+        .tx-list::-webkit-scrollbar-thumb {
             background: var(--scrollbar-thumb);
             border-radius: 999px;
+            border: 2px solid var(--scrollbar-track);
         }
     }
 }
@@ -153,11 +204,11 @@
         overflow: hidden;
     }
 
-    /* SLIM LUMINOUS TOP CHARACTER PLATE */
+    /* SLIM OBSIDIAN HEADER PLATE */
     header.header-banner {
-        background: linear-gradient(180deg, color-mix(in oklab, var(--hero-accent) 14%, #253352) 0%, #1c263c 100%) !important;
+        background: linear-gradient(180deg, color-mix(in oklab, var(--hero-accent) 11%, #1b1e28) 0%, #14171f 100%) !important;
         border-bottom: 1px solid var(--card-border);
-        border-top: 2.5px solid var(--hero-accent);
+        border-top: 2px solid var(--hero-accent);
         box-shadow: var(--inner-sheen);
         padding: 15px 20px;
         display: flex;
@@ -178,7 +229,7 @@
     header.header-banner .header-title h1 {
         font-family: var(--font-display);
         color: var(--text-light);
-        font-size: clamp(1.18rem, 1.75vw, 1.5rem);
+        font-size: clamp(1.18rem, 1.75vw, 1.48rem);
         letter-spacing: 0.035em;
         font-weight: 600;
         line-height: 1.15;
@@ -187,7 +238,7 @@
         flex-wrap: wrap;
         gap: 9px;
         margin: 0;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
     }
 
     header.header-banner .header-title h1 span {
@@ -198,7 +249,6 @@
         letter-spacing: 0.01em;
     }
 
-    /* Clean Uniform Header Metadata Row */
     .hero-meta-strip {
         display: flex;
         align-items: center;
@@ -211,7 +261,7 @@
         font-size: 0.69rem;
         font-weight: 500;
         color: var(--text-dim);
-        background: rgba(255, 255, 255, 0.065);
+        background: rgba(255, 248, 236, 0.045);
         border: 1px solid var(--card-border);
         border-radius: 999px;
         padding: 2px 10px;
@@ -223,7 +273,7 @@
     }
 
     .hero-meta-chip.is-level {
-        color: var(--accent-gold);
+        color: var(--accent-gold-bright);
         border-color: var(--border-gold);
         background: var(--accent-gold-soft);
         font-weight: 600;
@@ -231,12 +281,11 @@
 
     .hero-meta-chip.is-class {
         color: var(--text-light);
-        border-color: color-mix(in oklab, var(--hero-accent) 48%, transparent);
+        border-color: color-mix(in oklab, var(--hero-accent) 44%, transparent);
         background: var(--hero-accent-soft);
         font-weight: 600;
     }
 
-    /* Clean Right-Aligned 3-Button Action Bar */
     header.header-banner .pill-badge-group {
         display: flex;
         align-items: center;
@@ -247,10 +296,10 @@
         flex-wrap: nowrap;
     }
 
-    /* MAIN 2-COLUMN GAME HUD GRID */
+    /* MAIN 2-COLUMN HUD GRID */
     .main-layout {
         display: grid;
-        grid-template-columns: 350px minmax(0, 1fr);
+        grid-template-columns: 356px minmax(0, 1fr);
         gap: 16px;
         padding: 16px 20px 24px;
         align-items: start;
@@ -266,7 +315,7 @@
 
 @layer components {
     /* =====================================================================
-       UNIFIED CARDS & PANELS (Crisp Luminous Elevation)
+       UNIFIED CARDS & PANELS (Smoked Obsidian Elevation)
        ===================================================================== */
     .panel {
         background: linear-gradient(180deg, var(--panel-bg) 0%, var(--panel-bg-end) 100%);
@@ -286,7 +335,7 @@
         font-weight: 600;
         color: var(--text-muted);
         text-transform: uppercase;
-        letter-spacing: 0.09em;
+        letter-spacing: 0.085em;
         border-bottom: 1px solid var(--card-border);
         padding-bottom: 7px;
         margin-bottom: 0;
@@ -303,10 +352,10 @@
     }
 
     /* =====================================================================
-       MODULE 1 (LEFT): UNIFIED HERO VITALS & HEALTH PLATE (SLEEK TYPOGRAPHY)
+       MODULE 1 (LEFT): UNIFIED HERO VITALS & HEALTH PLATE (OUTFIT NUMERALS)
        ===================================================================== */
     .vitals-plate {
-        background: linear-gradient(180deg, #253352 0%, #1d273f 100%);
+        background: linear-gradient(180deg, #1d2029 0%, #151820 100%);
         border: 1px solid var(--border-med);
         border-radius: var(--radius-md);
         padding: 13px 14px;
@@ -316,7 +365,6 @@
         box-shadow: var(--shadow-card), var(--inner-sheen);
     }
 
-    /* Top 3-Stat Row (AC | INIT | DC / HIT) */
     .vitals-3bar {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -324,7 +372,7 @@
     }
 
     .vital-stat-tile {
-        background: rgba(17, 25, 42, 0.72);
+        background: var(--bg-well);
         border: 1px solid var(--card-border);
         border-radius: 9px;
         padding: 8px 6px;
@@ -351,24 +399,23 @@
 
     .vital-mini-lbl {
         font-size: 0.6rem;
-        font-weight: 500;
+        font-weight: 600;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: var(--text-muted);
     }
 
-    /* Sleek Slender Numbers (No Chunky Blocky Mono!) */
+    /* Sleek Geometric Numerals (Outfit) */
     .vital-mini-val {
-        font-family: var(--font-sans);
-        font-variant-numeric: tabular-nums;
-        font-size: 1.08rem;
-        font-weight: 500;
+        font-family: var(--font-num);
+        font-variant-numeric: tabular-nums lining-nums;
+        font-size: 1.2rem;
+        font-weight: 600;
         letter-spacing: -0.02em;
-        line-height: 1.18;
+        line-height: 1.15;
         color: var(--text-light);
     }
 
-    /* Integrated HP Meter & Controls inside Vitals Plate */
     .vitals-plate .hp-ctrl-container {
         background: transparent;
         border: none;
@@ -393,30 +440,30 @@
         flex-wrap: wrap;
     }
 
-    /* Ultra-Sleek HP Readout */
+    /* Elevated Sleek HP Readout */
     .hp-plate-readout .hp-main-num {
-        font-family: var(--font-sans);
-        font-variant-numeric: tabular-nums;
-        font-size: 1.32rem;
-        font-weight: 500;
-        letter-spacing: -0.025em;
+        font-family: var(--font-num);
+        font-variant-numeric: tabular-nums lining-nums;
+        font-size: 1.56rem;
+        font-weight: 600;
+        letter-spacing: -0.03em;
         color: var(--accent-green);
         line-height: 1;
     }
 
     .hp-plate-readout .hp-sub-lbl {
         font-size: 0.64rem;
-        font-weight: 500;
+        font-weight: 600;
         letter-spacing: 0.1em;
         text-transform: uppercase;
         color: var(--text-muted);
     }
 
     #hp-status-header {
-        font-family: var(--font-sans) !important;
+        font-family: var(--font-num) !important;
         font-variant-numeric: tabular-nums;
-        font-size: 0.72rem !important;
-        font-weight: 500 !important;
+        font-size: 0.74rem !important;
+        font-weight: 600 !important;
         letter-spacing: 0.01em;
     }
 
@@ -427,7 +474,7 @@
     }
 
     .hp-rest-trigger {
-        background: rgba(255, 255, 255, 0.075);
+        background: rgba(255, 248, 236, 0.055);
         border: 1px solid var(--border-med);
         color: var(--text-light);
         border-radius: 999px;
@@ -446,7 +493,7 @@
     @media (hover: hover) {
         .hp-rest-trigger:hover {
             border-color: var(--border-gold);
-            color: var(--accent-gold);
+            color: var(--accent-gold-bright);
             background: var(--accent-gold-soft);
         }
     }
@@ -454,13 +501,13 @@
     .hp-health-bar-bg {
         width: 100%;
         height: 8px;
-        background: rgba(12, 18, 32, 0.82);
+        background: #0a0c10;
         border-radius: 999px;
         overflow: hidden;
         border: 1px solid var(--card-border);
         position: relative;
         margin: 0;
-        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.55);
     }
 
     .hp-health-bar-fill {
@@ -471,12 +518,12 @@
 
     .hp-health-bar-temp {
         height: 100%;
-        background: linear-gradient(90deg, rgba(77, 187, 246, 0.85), rgba(147, 217, 255, 0.96));
+        background: linear-gradient(90deg, rgba(109, 168, 204, 0.85), rgba(162, 207, 235, 0.94));
         position: absolute;
         top: 0;
         left: 0;
         border-radius: 999px;
-        opacity: 0.78;
+        opacity: 0.8;
         transition: width 0.28s ease;
         pointer-events: none;
     }
@@ -489,9 +536,9 @@
     }
 
     .hp-input-num {
-        width: 46px;
+        width: 52px;
         height: 29px;
-        font-size: 0.8rem;
+        font-size: 0.82rem;
         font-weight: 500;
         text-align: center;
         padding: 2px 4px;
@@ -499,7 +546,7 @@
         border: 1px solid var(--border-med);
         border-radius: var(--radius-sm);
         color: var(--text-light);
-        font-family: var(--font-sans);
+        font-family: var(--font-num);
         font-variant-numeric: tabular-nums;
         outline: none;
     }
@@ -507,7 +554,6 @@
         border-color: var(--accent-gold);
     }
 
-    /* Integrated Status Strip tucked cleanly at bottom of Vitals Plate */
     .vitals-plate .rpg-status-panel {
         background: transparent;
         border: none;
@@ -518,7 +564,7 @@
     }
 
     /* =====================================================================
-       SLEEK LUMINOUS GAME BUTTON SYSTEM
+       HARMONIZED MUTED BUTTON SYSTEM (NO NEON SATURATION)
        ===================================================================== */
     .btn-act {
         min-block-size: 29px;
@@ -540,55 +586,57 @@
     .btn-act:active:not(:disabled):not(.rpg-turn-locked) { transform: scale(0.97); }
 
     .btn-act-dmg {
-        background: linear-gradient(180deg, #ab3444 0%, #8e2836 100%);
-        border-color: rgba(242, 100, 108, 0.45);
-        color: #fff1f2;
+        background: linear-gradient(180deg, #752a34 0%, #5c2028 100%);
+        border-color: rgba(214, 101, 108, 0.36);
+        color: #f6e4e5;
     }
     @media (hover: hover) {
         .btn-act-dmg:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #c23c4e 0%, #a32e3f 100%);
+            background: linear-gradient(180deg, #88323e 0%, #6d2630 100%);
+            border-color: rgba(214, 101, 108, 0.56);
             color: #fff;
         }
     }
 
     .btn-act-heal {
-        background: linear-gradient(180deg, #1d845d 0%, #166a4a 100%);
-        border-color: rgba(54, 211, 153, 0.42);
-        color: #ecfdf5;
+        background: linear-gradient(180deg, #25644a 0%, #1c4e39 100%);
+        border-color: rgba(94, 184, 138, 0.36);
+        color: #e4f4ec;
     }
     @media (hover: hover) {
         .btn-act-heal:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #229a6d 0%, #1a7c57 100%);
+            background: linear-gradient(180deg, #2d7758 0%, #225e45 100%);
+            border-color: rgba(94, 184, 138, 0.56);
             color: #fff;
         }
     }
 
     .btn-act-temp {
-        background: linear-gradient(180deg, #2576b4 0%, #1c5e91 100%);
-        border-color: rgba(77, 187, 246, 0.45);
-        color: #eff8ff;
+        background: linear-gradient(180deg, #295678 0%, #1f445f 100%);
+        border-color: rgba(109, 168, 204, 0.38);
+        color: #e6f2fa;
     }
     @media (hover: hover) {
         .btn-act-temp:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #2c88cf 0%, #226ea8 100%);
+            background: linear-gradient(180deg, #326890 0%, #265273 100%);
+            border-color: rgba(109, 168, 204, 0.58);
             color: #fff;
         }
     }
 
     .btn-act-pre {
-        background: rgba(255, 255, 255, 0.07);
+        background: rgba(255, 248, 236, 0.05);
         border-color: var(--card-border);
         color: var(--text-dim);
     }
     @media (hover: hover) {
         .btn-act-pre:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: rgba(255, 255, 255, 0.13);
+            background: rgba(255, 248, 236, 0.1);
             border-color: var(--border-med);
             color: var(--text-light);
         }
     }
 
-    /* Sleek Action Card Buttons */
     .btn-roll-action {
         min-block-size: 31px;
         padding: 5px 12px;
@@ -598,18 +646,18 @@
         font-family: var(--font-sans);
         letter-spacing: 0.01em;
         cursor: pointer;
-        border: 1px solid rgba(186, 206, 245, 0.22);
-        background: linear-gradient(180deg, #334568 0%, #283755 100%);
+        border: 1px solid var(--border-med);
+        background: linear-gradient(180deg, #272c38 0%, #20242e 100%);
         color: var(--text-light);
         display: inline-flex;
         align-items: center;
         gap: 5px;
-        box-shadow: var(--inner-sheen), 0 2px 6px rgba(6, 10, 22, 0.22);
+        box-shadow: var(--inner-sheen), 0 2px 6px rgba(0, 0, 0, 0.25);
         transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease, transform 0.12s ease;
     }
     @media (hover: hover) {
         .btn-roll-action:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #3d527a 0%, #304163 100%);
+            background: linear-gradient(180deg, #303645 0%, #272c38 100%);
             border-color: var(--border-gold);
             color: #fff;
             transform: translateY(-1px);
@@ -618,27 +666,27 @@
     .btn-roll-action:active:not(:disabled):not(.rpg-turn-locked) { transform: scale(0.97); }
 
     .btn-roll-action.btn-roll-dmg {
-        background: linear-gradient(180deg, #ad3445 0%, #8f2837 100%);
-        border-color: rgba(242, 100, 108, 0.48);
-        color: #fff1f2;
+        background: linear-gradient(180deg, #772a34 0%, #5e2129 100%);
+        border-color: rgba(214, 101, 108, 0.38);
+        color: #f7e6e7;
     }
     @media (hover: hover) {
         .btn-roll-action.btn-roll-dmg:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #c53e51 0%, #a53041 100%);
-            border-color: #fda4af;
+            background: linear-gradient(180deg, #8b323e 0%, #6f2731 100%);
+            border-color: rgba(214, 101, 108, 0.65);
             color: #fff;
         }
     }
 
     .btn-roll-action.btn-roll-heal {
-        background: linear-gradient(180deg, #1d865f 0%, #166a4b 100%);
-        border-color: rgba(54, 211, 153, 0.45);
-        color: #ecfdf5;
+        background: linear-gradient(180deg, #25644a 0%, #1c4e39 100%);
+        border-color: rgba(94, 184, 138, 0.38);
+        color: #e4f4ec;
     }
     @media (hover: hover) {
         .btn-roll-action.btn-roll-heal:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, #239d70 0%, #1b7f5a 100%);
-            border-color: #6ee7b7;
+            background: linear-gradient(180deg, #2d7859 0%, #225e45 100%);
+            border-color: rgba(94, 184, 138, 0.65);
             color: #fff;
         }
     }
@@ -646,22 +694,22 @@
     .btn-roll-action.btn-roll-martial,
     .btn-roll-action.btn-roll-wild,
     .btn-roll-action.btn-roll-accent {
-        background: linear-gradient(180deg, color-mix(in oklab, var(--hero-accent) 26%, #2c3854) 0%, color-mix(in oklab, var(--hero-accent) 16%, #222c44) 100%);
-        border-color: color-mix(in oklab, var(--hero-accent) 56%, transparent);
-        color: #fef3d2;
+        background: linear-gradient(180deg, color-mix(in oklab, var(--hero-accent) 22%, #242834) 0%, color-mix(in oklab, var(--hero-accent) 13%, #1c202a) 100%);
+        border-color: color-mix(in oklab, var(--hero-accent) 46%, transparent);
+        color: var(--text-light);
     }
     @media (hover: hover) {
         .btn-roll-action.btn-roll-martial:hover:not(:disabled):not(.rpg-turn-locked),
         .btn-roll-action.btn-roll-wild:hover:not(:disabled):not(.rpg-turn-locked),
         .btn-roll-action.btn-roll-accent:hover:not(:disabled):not(.rpg-turn-locked) {
-            background: linear-gradient(180deg, color-mix(in oklab, var(--hero-accent) 36%, #324060) 0%, color-mix(in oklab, var(--hero-accent) 24%, #27334f) 100%);
+            background: linear-gradient(180deg, color-mix(in oklab, var(--hero-accent) 30%, #2a2f3d) 0%, color-mix(in oklab, var(--hero-accent) 20%, #212531) 100%);
             border-color: var(--hero-accent);
             color: #fff;
         }
     }
 
     .btn-roll-action.btn-roll-reload {
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 248, 236, 0.06);
         border-color: var(--border-med);
         color: var(--text-light);
     }
@@ -688,7 +736,7 @@
     }
 
     .toggle-btn-card {
-        background: rgba(18, 26, 44, 0.7);
+        background: var(--bg-well);
         border: 1px solid var(--card-border);
         border-radius: 8px;
         padding: 7px 10px;
@@ -716,14 +764,25 @@
         white-space: nowrap;
     }
     .toggle-badge.on {
-        background: rgba(54, 211, 153, 0.18);
-        color: #86efac;
-        border: 1px solid rgba(54, 211, 153, 0.45);
+        background: rgba(94, 184, 138, 0.15);
+        color: #93d6b4;
+        border: 1px solid rgba(94, 184, 138, 0.38);
     }
     .toggle-badge.off {
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(255, 248, 236, 0.045);
         color: var(--text-muted);
         border: 1px solid var(--card-border);
+    }
+
+    /* Kolyan Robe Selector & Pills (Piper) */
+    .robe-selector-card {
+        background: var(--bg-well) !important;
+        border-color: var(--card-border) !important;
+    }
+    .robe-pill-btn {
+        background: var(--panel-sub) !important;
+        border-color: var(--card-border) !important;
+        color: var(--text-dim) !important;
     }
 
     .help-inline-row {
@@ -745,12 +804,12 @@
     }
 
     .help-inline-count {
-        font-family: var(--font-sans);
+        font-family: var(--font-num);
         font-variant-numeric: tabular-nums;
-        font-size: 0.86rem;
+        font-size: 0.9rem;
         font-weight: 600;
         letter-spacing: -0.015em;
-        color: var(--accent-gold);
+        color: var(--accent-gold-bright);
     }
 
     /* =====================================================================
@@ -763,7 +822,7 @@
     }
 
     .save-box {
-        background: rgba(18, 26, 44, 0.72);
+        background: var(--bg-well);
         border: 1px solid var(--card-border);
         border-radius: 8px;
         padding: 6px 9px;
@@ -790,11 +849,11 @@
         color: var(--text-muted);
         font-family: var(--font-sans);
     }
-    .save-box.prof .save-lbl { color: var(--accent-gold); font-weight: 600; }
+    .save-box.prof .save-lbl { color: var(--accent-gold-bright); font-weight: 600; }
     .save-val {
-        font-size: 0.84rem;
-        font-weight: 500;
-        font-family: var(--font-sans);
+        font-size: 0.88rem;
+        font-weight: 600;
+        font-family: var(--font-num);
         font-variant-numeric: tabular-nums;
         letter-spacing: -0.015em;
     }
@@ -805,7 +864,6 @@
         margin: 2px 0;
     }
 
-    /* Clean Scannable Skills List */
     .stat-row-list {
         list-style: none;
         display: flex;
@@ -830,14 +888,14 @@
         transition: background-color 0.12s ease, border-color 0.12s ease;
     }
     .stat-row-item:nth-child(even) {
-        background: rgba(255, 255, 255, 0.024);
+        background: rgba(255, 248, 236, 0.02);
     }
     .stat-row-item.prof-item {
-        background: rgba(240, 192, 90, 0.075);
+        background: rgba(216, 178, 104, 0.065);
         border-inline-start: 2.5px solid var(--accent-gold);
     }
     .stat-row-item.exp-item {
-        background: rgba(77, 187, 246, 0.1);
+        background: rgba(109, 168, 204, 0.085);
         border-inline-start: 3px solid var(--accent-blue);
     }
     @media (hover: hover) {
@@ -848,10 +906,10 @@
     }
 
     .stat-row-item .prof-skill-val {
-        font-family: var(--font-sans) !important;
+        font-family: var(--font-num) !important;
         font-variant-numeric: tabular-nums;
         font-weight: 500 !important;
-        font-size: 0.8rem;
+        font-size: 0.84rem;
         letter-spacing: -0.015em;
     }
     .stat-row-item.prof-item .prof-skill-val,
@@ -876,113 +934,882 @@
         color: var(--text-muted);
         cursor: pointer;
         margin-inline-end: 5px;
-        opacity: 0.72;
+        opacity: 0.78;
         transition: opacity 0.14s ease, border-color 0.14s ease, color 0.14s ease, background-color 0.14s ease;
     }
     .stat-row-item:hover .btn-info-tiny,
     .btn-info-tiny:focus-visible {
         opacity: 1;
         border-color: var(--border-gold);
-        color: var(--accent-gold);
+        color: var(--accent-gold-bright);
         background: var(--accent-gold-soft);
     }
 
     /* =====================================================================
-       MODULE 4 (LEFT): ULTRA-SLEEK COIN POUCH & NOTES (ZERO CARTOONY FONTS!)
+       MODULE 4 (LEFT): WARM BRASS-ACCENTED COIN POUCH (OUTFIT NUMERALS)
        ===================================================================== */
     .rpg-gold-panel {
-        background: linear-gradient(180deg, #25324e 0%, #1d273f 100%) !important;
+        background: linear-gradient(180deg, #1d1c19 0%, #15161c 100%) !important;
         border: 1px solid var(--card-border) !important;
+        border-top: 2px solid var(--border-gold) !important;
         border-radius: var(--radius-md);
-        padding: 11px 13px !important;
+        padding: 12px 13px !important;
         gap: 8px !important;
     }
 
     .rpg-gold-balance-btn {
-        font-family: var(--font-sans) !important;
-        font-variant-numeric: tabular-nums;
+        font-family: var(--font-num) !important;
+        font-variant-numeric: tabular-nums lining-nums;
         align-items: baseline !important;
         gap: 5px !important;
     }
 
     .rpg-gold-gp-val {
-        font-family: var(--font-sans) !important;
-        font-size: 1.18rem !important;
-        font-weight: 500 !important;
+        font-family: var(--font-num) !important;
+        font-size: 1.42rem !important;
+        font-weight: 600 !important;
         letter-spacing: -0.025em;
-        color: var(--accent-gold) !important;
+        color: #e5c176 !important;
+        line-height: 1;
     }
 
     .rpg-gold-gp-lbl {
         font-family: var(--font-sans) !important;
-        font-size: 0.63rem !important;
-        font-weight: 500 !important;
+        font-size: 0.62rem !important;
+        font-weight: 600 !important;
         letter-spacing: 0.08em;
         color: var(--text-muted) !important;
         text-transform: uppercase;
     }
 
     .rpg-gold-sp-val {
-        font-family: var(--font-sans) !important;
-        font-size: 1.04rem !important;
+        font-family: var(--font-num) !important;
+        font-size: 1.16rem !important;
         font-weight: 500 !important;
         letter-spacing: -0.02em;
-        color: var(--text-light) !important;
+        color: #d5d3cd !important;
+        line-height: 1;
     }
 
     .rpg-gold-sp-lbl {
         font-family: var(--font-sans) !important;
-        font-size: 0.63rem !important;
-        font-weight: 500 !important;
+        font-size: 0.62rem !important;
+        font-weight: 600 !important;
         letter-spacing: 0.08em;
         color: var(--text-muted) !important;
         text-transform: uppercase;
     }
 
+    .rpg-gold-top-actions {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .rpg-gold-ledger-btn {
+        font-size: 0.68rem;
+        padding: 3px 8px;
+        color: var(--accent-gold-bright);
+        border-color: var(--border-gold);
+    }
+
+    .rpg-gold-send-btn {
+        font-size: 0.68rem;
+        padding: 3px 8px;
+        color: #93d6b4;
+        border-color: rgba(94, 184, 138, 0.35);
+    }
+
     .rpg-gold-unit-btn {
-        font-family: var(--font-sans) !important;
-        font-weight: 500 !important;
+        font-family: var(--font-num) !important;
+        font-weight: 600 !important;
         font-size: 0.72rem !important;
-        background: rgba(18, 26, 44, 0.85) !important;
+        background: var(--bg-well) !important;
         border: 1px solid var(--border-gold) !important;
-        color: var(--accent-gold) !important;
+        color: var(--accent-gold-bright) !important;
         border-radius: var(--radius-sm) !important;
     }
 
     .rpg-gold-panel #gold-input {
-        font-family: var(--font-sans) !important;
+        font-family: var(--font-num) !important;
         font-variant-numeric: tabular-nums;
         font-weight: 500 !important;
+        width: 58px;
+        height: 28px;
+        font-size: 0.84rem;
+        text-align: center;
+        padding: 2px 5px;
         background: var(--bg-well) !important;
-        border-color: var(--border-med) !important;
+        border: 1px solid var(--border-med) !important;
         color: var(--text-light) !important;
         border-radius: var(--radius-sm) !important;
+    }
+    .rpg-gold-panel #gold-input:focus {
+        border-color: var(--accent-gold) !important;
+    }
+
+    .rpg-gold-memo-input {
+        width: 100%;
+        height: 28px;
+        font-size: 0.74rem;
+        padding: 3px 8px;
+        background: var(--bg-well);
+        border: 1px solid var(--border-med);
+        border-radius: var(--radius-sm);
+        color: var(--text-light);
+        font-family: var(--font-sans);
     }
 
     .rpg-gold-bar .btn-act {
         font-weight: 500 !important;
+        height: 28px;
     }
     .rpg-gold-bar .btn-act-heal {
-        background: linear-gradient(180deg, rgba(240, 192, 90, 0.28) 0%, rgba(212, 158, 55, 0.22) 100%) !important;
+        background: linear-gradient(180deg, rgba(216, 178, 104, 0.25) 0%, rgba(168, 132, 66, 0.2) 100%) !important;
         border: 1px solid var(--border-gold) !important;
-        color: #fef3c7 !important;
+        color: #f3e4c3 !important;
     }
     @media (hover: hover) {
         .rpg-gold-bar .btn-act-heal:hover {
-            background: linear-gradient(180deg, rgba(240, 192, 90, 0.42) 0%, rgba(212, 158, 55, 0.34) 100%) !important;
+            background: linear-gradient(180deg, rgba(216, 178, 104, 0.36) 0%, rgba(168, 132, 66, 0.3) 100%) !important;
             color: #fff !important;
         }
     }
 
     .rpg-gold-quick-pills button {
-        font-family: var(--font-sans) !important;
+        font-family: var(--font-num) !important;
         font-variant-numeric: tabular-nums;
         font-weight: 500 !important;
-        font-size: 0.7rem !important;
+        font-size: 0.72rem !important;
     }
 
     /* =====================================================================
-       RIGHT COLUMN: GAME ACTION DECK & UNIFORM ABILITY CARDS
+       MODULE 5 (LEFT & MODAL): CAMPAIGN JOURNAL / PLAYER NOTES
+       ===================================================================== */
+    .notes-panel {
+        padding: 11px 13px;
+        gap: 8px;
+        border-top: 2px solid rgba(216, 178, 104, 0.32);
+    }
+
+    .notes-panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        border-bottom: 1px solid var(--card-border);
+        padding-bottom: 7px;
+    }
+
+    .notes-panel-trigger {
+        background: transparent;
+        border: none;
+        padding: 0;
+        color: var(--text-light);
+        font-family: var(--font-sans);
+        font-size: 0.73rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        cursor: pointer;
+        text-align: left;
+    }
+    @media (hover: hover) {
+        .notes-panel-trigger:hover { color: var(--accent-gold-bright); }
+    }
+
+    .notes-count-pill {
+        font-family: var(--font-num);
+        font-size: 0.68rem;
+        font-weight: 600;
+        padding: 1px 7px;
+        border-radius: 999px;
+        background: var(--accent-gold-soft);
+        color: var(--accent-gold-bright);
+        border: 1px solid var(--border-gold);
+    }
+
+    .notes-quick-add-btn {
+        background: rgba(255, 248, 236, 0.055);
+        border: 1px solid var(--border-med);
+        color: var(--text-light);
+        border-radius: 999px;
+        padding: 2px 9px;
+        min-block-size: 24px;
+        font-size: 0.68rem;
+        font-weight: 500;
+        font-family: var(--font-sans);
+        cursor: pointer;
+        transition: border-color 0.14s ease, color 0.14s ease, background-color 0.14s ease;
+    }
+    @media (hover: hover) {
+        .notes-quick-add-btn:hover {
+            border-color: var(--border-gold);
+            color: var(--accent-gold-bright);
+            background: var(--accent-gold-soft);
+        }
+    }
+
+    .notes-mini-list {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        max-height: 215px;
+        overflow-y: auto;
+        padding-inline-end: 2px;
+    }
+
+    .notes-mini-card {
+        width: 100%;
+        text-align: left;
+        background: var(--bg-well);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 7px 9px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        font-family: var(--font-sans);
+        transition: border-color 0.14s ease, background-color 0.14s ease;
+    }
+    .notes-mini-card.is-pinned {
+        border-color: rgba(216, 178, 104, 0.28);
+        background: rgba(216, 178, 104, 0.045);
+    }
+    @media (hover: hover) {
+        .notes-mini-card:hover {
+            border-color: var(--border-gold);
+            background: var(--bg-elevated);
+        }
+    }
+
+    .notes-mini-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        min-width: 0;
+    }
+
+    .notes-mini-title-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .notes-mini-title {
+        font-size: 0.76rem;
+        font-weight: 600;
+        color: var(--text-light);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .notes-mini-snippet {
+        font-size: 0.71rem;
+        color: var(--text-muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 1.35;
+    }
+
+    .notes-cat-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        flex-shrink: 0;
+        background: #938f88;
+    }
+    .notes-cat-dot.cat-quest   { background: var(--accent-gold); }
+    .notes-cat-dot.cat-npc     { background: var(--accent-blue); }
+    .notes-cat-dot.cat-clue    { background: var(--accent-purple); }
+    .notes-cat-dot.cat-lore    { background: var(--accent-bonus); }
+    .notes-cat-dot.cat-loot    { background: var(--accent-green); }
+    .notes-cat-dot.cat-session { background: #a7a39c; }
+
+    .notes-pin-mark {
+        color: var(--accent-gold);
+        font-size: 0.68rem;
+        flex-shrink: 0;
+    }
+
+    .notes-new-dot {
+        font-size: 0.58rem;
+        font-weight: 600;
+        padding: 0 5px;
+        border-radius: 999px;
+        background: rgba(94, 184, 138, 0.14);
+        color: #93d6b4;
+        border: 1px solid rgba(94, 184, 138, 0.35);
+        flex-shrink: 0;
+    }
+
+    .notes-cat-tag {
+        font-size: 0.58rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        padding: 1px 6px;
+        border-radius: 999px;
+        border: 1px solid var(--card-border);
+        color: var(--text-dim);
+        background: rgba(255, 248, 236, 0.04);
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    .notes-cat-tag.cat-quest   { color: #ebd29c; border-color: rgba(216, 178, 104, 0.35); background: rgba(216, 178, 104, 0.1); }
+    .notes-cat-tag.cat-npc     { color: #9fc7e0; border-color: rgba(109, 168, 204, 0.35); background: rgba(109, 168, 204, 0.1); }
+    .notes-cat-tag.cat-clue    { color: #c7b5ea; border-color: rgba(166, 141, 214, 0.35); background: rgba(166, 141, 214, 0.1); }
+    .notes-cat-tag.cat-lore    { color: #e2b58e; border-color: rgba(207, 145, 92, 0.35); background: rgba(207, 145, 92, 0.1); }
+    .notes-cat-tag.cat-loot    { color: #93d6b4; border-color: rgba(94, 184, 138, 0.35); background: rgba(94, 184, 138, 0.1); }
+    .notes-cat-tag.cat-session { color: #cbc7bf; border-color: rgba(167, 163, 156, 0.32); background: rgba(167, 163, 156, 0.09); }
+
+    .notes-quick-jot-form {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding-top: 2px;
+    }
+
+    .notes-quick-jot-input {
+        flex: 1;
+        min-width: 0;
+        height: 30px;
+        padding: 4px 9px;
+        background: var(--bg-well);
+        border: 1px solid var(--border-med);
+        border-radius: var(--radius-sm);
+        color: var(--text-light);
+        font-family: var(--font-sans);
+        font-size: 0.74rem;
+    }
+    .notes-quick-jot-input::placeholder { color: var(--text-muted); }
+    .notes-quick-jot-input:focus {
+        border-color: var(--accent-gold);
+        outline: none;
+    }
+
+    .notes-quick-jot-btn {
+        height: 30px;
+        min-inline-size: 32px;
+        padding: 0 10px;
+        border-radius: var(--radius-sm);
+        background: var(--accent-gold-soft);
+        border: 1px solid var(--border-gold);
+        color: var(--accent-gold-bright);
+        font-size: 0.78rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.14s ease, color 0.14s ease;
+    }
+    @media (hover: hover) {
+        .notes-quick-jot-btn:hover {
+            background: rgba(216, 178, 104, 0.24);
+            color: #fff;
+        }
+    }
+
+    /* Split-Pane Campaign Journal Dialog */
+    dialog.sheet-dialog.notes-journal-dialog {
+        width: min(920px, 95vw);
+        max-width: min(920px, 95vw);
+    }
+
+    .notes-journal-card {
+        max-height: 88vh;
+    }
+
+    .notes-journal-head-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .notes-journal-workspace {
+        display: grid;
+        grid-template-columns: 295px minmax(0, 1fr);
+        min-height: 440px;
+        max-height: 68vh;
+        overflow: hidden;
+    }
+
+    .notes-sidebar {
+        background: #101218;
+        border-inline-end: 1px solid var(--card-border);
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .notes-sidebar-controls {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        border-bottom: 1px solid var(--card-border);
+    }
+
+    .notes-search-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--bg-well);
+        border: 1px solid var(--border-med);
+        border-radius: 8px;
+        padding: 3px 8px;
+    }
+    .notes-search-wrap:focus-within {
+        border-color: var(--accent-gold);
+    }
+
+    .notes-search-input {
+        flex: 1;
+        min-width: 0;
+        background: transparent;
+        border: none;
+        color: var(--text-light);
+        font-family: var(--font-sans);
+        font-size: 0.77rem;
+        padding: 4px 0;
+        outline: none;
+    }
+    .notes-search-input::placeholder { color: var(--text-muted); }
+
+    .notes-search-clear {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 0.74rem;
+        padding: 2px 4px;
+        border-radius: 4px;
+    }
+    .notes-search-clear:hover { color: var(--text-light); }
+
+    .notes-filter-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .notes-filter-pill {
+        background: rgba(255, 248, 236, 0.04);
+        border: 1px solid var(--card-border);
+        color: var(--text-dim);
+        border-radius: 999px;
+        padding: 3px 8px;
+        font-size: 0.66rem;
+        font-weight: 500;
+        font-family: var(--font-sans);
+        cursor: pointer;
+        transition: border-color 0.14s ease, color 0.14s ease, background-color 0.14s ease;
+    }
+    .notes-filter-pill[aria-pressed="true"] {
+        background: var(--accent-gold-soft);
+        border-color: var(--border-gold);
+        color: var(--accent-gold-bright);
+        font-weight: 600;
+    }
+    @media (hover: hover) {
+        .notes-filter-pill:hover {
+            border-color: var(--border-med);
+            color: var(--text-light);
+        }
+    }
+
+    .notes-sidebar-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .notes-list-card {
+        width: 100%;
+        text-align: left;
+        background: var(--panel-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 8px 10px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-family: var(--font-sans);
+        transition: border-color 0.14s ease, background-color 0.14s ease;
+    }
+    .notes-list-card.is-pinned {
+        border-inline-start: 2.5px solid var(--accent-gold);
+    }
+    .notes-list-card.is-active {
+        background: var(--bg-elevated);
+        border-color: var(--border-gold);
+        box-shadow: var(--inner-sheen);
+    }
+    @media (hover: hover) {
+        .notes-list-card:hover {
+            border-color: var(--border-med);
+            background: #1f232e;
+        }
+    }
+
+    .notes-list-card-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        min-width: 0;
+    }
+
+    .notes-list-card-title {
+        font-size: 0.79rem;
+        font-weight: 600;
+        color: var(--text-light);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
+    }
+    .notes-list-card.is-active .notes-list-card-title {
+        color: var(--accent-gold-bright);
+    }
+
+    .notes-list-card-snippet {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        line-height: 1.38;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .notes-list-card-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+        margin-top: 1px;
+    }
+
+    .notes-detail-pane {
+        background: var(--bg-sheet);
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    .notes-detail-scroll {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .notes-mobile-back-btn {
+        display: none;
+        align-self: flex-start;
+        margin: 10px 14px 0;
+    }
+
+    .notes-reader-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .notes-reader-meta-left,
+    .notes-reader-actions {
+        display: inline-flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .notes-reader-canvas {
+        background: var(--panel-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 10px;
+        padding: 16px 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        box-shadow: var(--inner-sheen);
+    }
+
+    .notes-reader-title {
+        font-family: var(--font-display);
+        font-size: 1.08rem;
+        font-weight: 600;
+        color: var(--accent-gold-bright);
+        line-height: 1.3;
+        border-bottom: 1px solid var(--card-border);
+        padding-bottom: 8px;
+        word-break: break-word;
+    }
+
+    .notes-reader-body {
+        font-size: 0.86rem;
+        color: var(--text-light);
+        line-height: 1.68;
+        word-break: break-word;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .note-para { margin: 0; }
+
+    .note-bullet-line {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding-inline-start: 4px;
+    }
+    .note-bullet-glyph {
+        color: var(--accent-gold);
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .note-divider {
+        border: none;
+        border-top: 1px solid var(--border-med);
+        margin: 4px 0;
+    }
+
+    .note-check-line {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        background: rgba(255, 248, 236, 0.03);
+        border: 1px solid var(--card-border);
+        cursor: pointer;
+        transition: border-color 0.14s ease, background-color 0.14s ease;
+    }
+    .note-check-line:hover {
+        border-color: var(--border-med);
+        background: rgba(255, 248, 236, 0.055);
+    }
+    .note-check-line input[type="checkbox"] {
+        margin-top: 3px;
+        accent-color: var(--accent-green);
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+    .note-check-line.is-done .note-check-text {
+        text-decoration: line-through;
+        color: var(--text-muted);
+    }
+
+    /* Reserved-Space Confirmation Strip (Prevents controls jumping under pointer) */
+    .notes-confirm-strip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+        min-block-size: 38px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background: rgba(214, 101, 108, 0.1);
+        border: 1px solid rgba(214, 101, 108, 0.38);
+        color: #f4d3d5;
+        font-size: 0.75rem;
+    }
+    .notes-confirm-strip.is-hidden {
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .notes-editor-pane {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .notes-editor-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .notes-editor-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--text-dim);
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    .notes-title-input {
+        width: 100%;
+        padding: 8px 11px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        background: var(--bg-well);
+        border: 1px solid var(--border-med);
+        border-radius: 8px;
+        color: var(--text-light);
+        font-family: var(--font-sans);
+    }
+    .notes-title-input:focus {
+        border-color: var(--accent-gold);
+        outline: none;
+    }
+
+    .notes-cat-picker {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .notes-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 5px 8px;
+        background: var(--panel-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px 8px 0 0;
+        border-bottom: none;
+    }
+
+    .notes-toolbar-btns {
+        display: inline-flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .notes-tool-btn {
+        background: rgba(255, 248, 236, 0.05);
+        border: 1px solid var(--card-border);
+        color: var(--text-dim);
+        border-radius: 5px;
+        padding: 3px 8px;
+        font-size: 0.69rem;
+        font-weight: 500;
+        font-family: var(--font-sans);
+        cursor: pointer;
+    }
+    @media (hover: hover) {
+        .notes-tool-btn:hover {
+            border-color: var(--border-gold);
+            color: var(--text-light);
+        }
+    }
+
+    .notes-body-textarea {
+        field-sizing: content;
+        width: 100%;
+        height: auto;
+        min-block-size: 9lh;
+        max-block-size: 20lh;
+        resize: vertical;
+        padding: 10px 12px;
+        font-size: 0.84rem;
+        line-height: 1.58;
+        background: var(--bg-well);
+        border: 1px solid var(--border-med);
+        border-radius: 0 0 8px 8px;
+        color: var(--text-light);
+        font-family: var(--font-sans);
+    }
+    .notes-body-textarea:focus {
+        border-color: var(--accent-gold);
+        outline: none;
+    }
+
+    .notes-editor-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .notes-dirty-banner {
+        min-block-size: 36px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background: rgba(216, 178, 104, 0.1);
+        border: 1px solid var(--border-gold);
+        color: var(--accent-gold-bright);
+        font-size: 0.74rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .notes-dirty-banner.is-hidden {
+        visibility: hidden;
+        pointer-events: none;
+        height: 0;
+        min-block-size: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        border-width: 0;
+        overflow: hidden;
+    }
+
+    .notes-error-msg {
+        font-size: 0.74rem;
+        color: #f3b5b9;
+        min-height: 1.1em;
+    }
+
+    .notes-modal-foot {
+        background: #101218;
+        border-top: 1px solid var(--card-border);
+        padding: 9px 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .notes-empty-state {
+        padding: 28px 16px;
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* =====================================================================
+       RIGHT COLUMN: ACTION DECK, CARDS & PIPS
        ===================================================================== */
     .action-grid-2col {
         display: grid;
@@ -991,26 +1818,25 @@
     }
 
     .action-card {
-        background: linear-gradient(180deg, #293858 0%, #222f4b 100%);
+        background: linear-gradient(180deg, var(--panel-sub) 0%, var(--panel-sub-end) 100%);
         border: 1px solid var(--card-border);
         border-radius: 9px;
         padding: 11px 12px;
         display: flex;
         flex-direction: column;
         gap: 7px;
-        box-shadow: var(--inner-sheen), 0 2px 8px rgba(6, 10, 22, 0.2);
+        box-shadow: var(--inner-sheen), var(--shadow-card);
         transition: border-color 0.16s ease, background-color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
     }
     @media (hover: hover) {
         .action-card:hover {
             border-color: var(--border-med);
-            background: linear-gradient(180deg, #2e4064 0%, #263554 100%);
+            background: linear-gradient(180deg, var(--bg-elevated) 0%, #1d212b 100%);
             transform: translateY(-1px);
-            box-shadow: var(--inner-sheen), 0 6px 18px rgba(5, 9, 20, 0.32);
+            box-shadow: var(--inner-sheen), 0 8px 20px rgba(0, 0, 0, 0.36);
         }
     }
 
-    /* Subtle Semantic Action-Economy Left Edge */
     .action-card[data-turn-kind="action"]   { border-inline-start: 2.5px solid var(--action-col); }
     .action-card[data-turn-kind="bonus"]    { border-inline-start: 2.5px solid var(--bonus-col); }
     .action-card[data-turn-kind="reaction"] { border-inline-start: 2.5px solid var(--react-col); }
@@ -1027,7 +1853,7 @@
 
     .action-desc {
         font-size: 0.74rem;
-        line-height: 1.48;
+        line-height: 1.5;
         color: var(--text-dim);
         flex: 1;
     }
@@ -1041,7 +1867,6 @@
         margin-top: 2px;
     }
 
-    /* Uniform Subtle Card Badges */
     .pill-badge {
         font-size: 0.6rem;
         font-weight: 600;
@@ -1050,34 +1875,33 @@
         letter-spacing: 0.045em;
         text-transform: uppercase;
         white-space: nowrap;
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 248, 236, 0.06);
         color: var(--text-dim);
         border: 1px solid var(--card-border);
     }
     .pill-gold {
         background: var(--accent-gold-soft);
-        color: var(--accent-gold);
+        color: var(--accent-gold-bright);
         border-color: var(--border-gold);
     }
     .pill-crimson {
-        background: rgba(242, 100, 108, 0.16);
-        color: #fda4af;
-        border-color: rgba(242, 100, 108, 0.38);
+        background: rgba(214, 101, 108, 0.14);
+        color: #eab3b7;
+        border-color: rgba(214, 101, 108, 0.35);
     }
     .pill-blue {
-        background: rgba(77, 187, 246, 0.16);
-        color: #93d7fd;
-        border-color: rgba(77, 187, 246, 0.38);
+        background: rgba(109, 168, 204, 0.14);
+        color: #a9cfe6;
+        border-color: rgba(109, 168, 204, 0.35);
     }
     .pill-purple {
-        background: rgba(179, 146, 248, 0.16);
-        color: #ddd6fe;
-        border-color: rgba(179, 146, 248, 0.4);
+        background: rgba(166, 141, 214, 0.14);
+        color: #d2c2ef;
+        border-color: rgba(166, 141, 214, 0.36);
     }
 
-    /* Clean Geometric Resource Pips (Slot Trackers) */
     .rpg-slot-strip {
-        background: rgba(18, 26, 44, 0.72);
+        background: var(--bg-well);
         border: 1px solid var(--card-border);
         border-radius: 9px;
         padding: 8px 11px;
@@ -1098,31 +1922,31 @@
         border-radius: 3px;
         display: inline-block;
         border: 1px solid var(--border-med);
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(255, 248, 236, 0.05);
         transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .rpg-pip-gem.is-filled.gem-gold {
         background: var(--accent-gold);
-        border-color: #fde68a;
-        box-shadow: 0 0 8px rgba(240, 192, 90, 0.5);
+        border-color: var(--accent-gold-bright);
+        box-shadow: 0 0 6px rgba(216, 178, 104, 0.35);
     }
     .rpg-pip-gem.is-filled.gem-blue {
         background: var(--accent-blue);
-        border-color: #bae6fd;
-        box-shadow: 0 0 8px rgba(77, 187, 246, 0.5);
+        border-color: #a9cfe6;
+        box-shadow: 0 0 6px rgba(109, 168, 204, 0.35);
     }
     .rpg-pip-gem.is-filled.gem-purple {
         background: var(--accent-purple);
-        border-color: #e9d5ff;
-        box-shadow: 0 0 8px rgba(179, 146, 248, 0.5);
+        border-color: #d2c2ef;
+        box-shadow: 0 0 6px rgba(166, 141, 214, 0.35);
     }
     .rpg-pip-gem.is-filled.gem-green {
         background: var(--accent-green);
-        border-color: #a7f3d0;
-        box-shadow: 0 0 8px rgba(54, 211, 153, 0.5);
+        border-color: #93d6b4;
+        box-shadow: 0 0 6px rgba(94, 184, 138, 0.35);
     }
 
-    /* Firearm Ammo Box & Stance Switcher (Yvaine) */
+    /* Firearm Stance Switcher (Yvaine) */
     .stance-tabs-bar {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1130,7 +1954,7 @@
         margin-bottom: 4px;
     }
     .stance-tab-btn {
-        background: rgba(18, 26, 44, 0.75);
+        background: var(--bg-well);
         border: 1px solid var(--card-border);
         border-radius: 9px;
         padding: 9px 12px;
@@ -1151,14 +1975,14 @@
         }
     }
     .stance-tab-btn.active {
-        background: linear-gradient(180deg, rgba(240, 192, 90, 0.16) 0%, rgba(36, 49, 77, 0.95) 100%);
+        background: linear-gradient(180deg, rgba(216, 178, 104, 0.14) 0%, #20242f 100%);
         border-color: var(--border-gold);
         color: var(--text-light);
         box-shadow: var(--inner-sheen);
     }
 
     .firearm-ammo-box {
-        background: rgba(18, 26, 44, 0.72);
+        background: var(--bg-well);
         border: 1px solid var(--card-border);
         border-radius: 8px;
         padding: 7px 10px;
@@ -1166,7 +1990,7 @@
 
     /* Wild Magic Live Box (Piper) */
     .wild-surge-live-box {
-        background: rgba(18, 26, 44, 0.75);
+        background: var(--bg-well);
         border: 1px solid var(--card-border);
         border-inline-start: 3px solid var(--hero-accent);
         border-radius: 9px;
@@ -1187,37 +2011,144 @@
         font-family: var(--font-sans);
     }
 
-    /* Clean Unified Native Modals (Spell / Item / Skill / Notes / Gold Ledger) */
-    dialog.sheet-modal,
-    .modal-dialog {
+    /* =====================================================================
+       NATIVE <dialog> MODALS & TOP-LAYER ANIMATION (sheet-dialog + rpg-dialog)
+       ===================================================================== */
+    dialog:modal {
+        overscroll-behavior: contain;
+    }
+    dialog::backdrop {
+        overflow: hidden;
+        overscroll-behavior: contain;
+    }
+
+    dialog.sheet-dialog,
+    dialog.rpg-dialog {
+        opacity: 0;
+        transition-property: opacity, transform, display, overlay;
+        transition-duration: 0.22s;
+        transition-timing-function: ease-out;
+        transition-behavior: allow-discrete;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        dialog.sheet-dialog,
+        dialog.rpg-dialog {
+            transform: scale(0.96);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        dialog.sheet-dialog,
+        dialog.rpg-dialog,
+        dialog.sheet-dialog::backdrop,
+        dialog.rpg-dialog::backdrop {
+            transition-duration: 0.1s;
+        }
+    }
+
+    :is(dialog.sheet-dialog[open], dialog.rpg-dialog[open]):where(:not([data-closing])) {
+        opacity: 1;
+    }
+    @starting-style {
+        :is(dialog.sheet-dialog[open], dialog.rpg-dialog[open]):where(:not([data-closing])) {
+            opacity: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        :is(dialog.sheet-dialog[open], dialog.rpg-dialog[open]):where(:not([data-closing])) {
+            transform: scale(1);
+        }
+        @starting-style {
+            :is(dialog.sheet-dialog[open], dialog.rpg-dialog[open]):where(:not([data-closing])) {
+                transform: scale(0.96);
+            }
+        }
+    }
+
+    dialog.sheet-dialog::backdrop,
+    dialog.rpg-dialog::backdrop {
+        background: rgba(6, 7, 10, 0.78);
+        backdrop-filter: blur(5px);
+        transition-property: background-color, display, overlay;
+        transition-duration: 0.22s;
+        transition-timing-function: ease-out;
+        transition-behavior: allow-discrete;
+    }
+
+    .modal-card {
         background: var(--bg-sheet);
         color: var(--text-light);
         border: 1px solid var(--border-med);
         border-radius: var(--radius-lg);
-        box-shadow: 0 24px 64px rgba(4, 8, 18, 0.82);
+        box-shadow: 0 28px 72px rgba(0, 0, 0, 0.86);
     }
-    dialog.sheet-modal::backdrop,
-    .modal-dialog::backdrop {
-        background: rgba(8, 12, 24, 0.72);
-        backdrop-filter: blur(5px);
+    .modal-card.is-accent-sage { border-color: rgba(94, 184, 138, 0.38); }
+    .modal-card.is-accent-arcane { border-color: rgba(166, 141, 214, 0.38); }
+
+    .modal-header {
+        background: #1a1d26;
+        border-bottom: 1px solid var(--card-border);
+        padding: 11px 15px;
+    }
+    .modal-header h3 {
+        font-family: var(--font-sans);
+        font-size: 0.96rem;
+        font-weight: 600;
+        color: var(--accent-gold-bright);
+    }
+    .modal-close-btn {
+        background: rgba(255, 248, 236, 0.05);
+        border: 1px solid var(--card-border);
+        color: var(--text-dim);
+        border-radius: 7px;
+        width: 30px;
+        height: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-close-btn:hover {
+        background: var(--accent-red-bg);
+        border-color: rgba(214, 101, 108, 0.5);
+        color: #fff;
     }
 
-    /* Floating Roll HUD — Sleek Twilight Glass */
+    .tx-item,
+    .surge-table-row,
+    .craft-recipe-card {
+        background: var(--panel-bg);
+        border-color: var(--card-border);
+    }
+
+    #modal-gold-disp {
+        font-family: var(--font-num);
+        font-variant-numeric: tabular-nums lining-nums;
+        color: #e5c176;
+    }
+    #modal-silver-disp {
+        font-family: var(--font-num);
+        font-variant-numeric: tabular-nums lining-nums;
+        color: #d5d3cd;
+    }
+
+    /* Floating Roll HUD — Smoked Obsidian Glass */
     .floating-roll-hud {
-        background: rgba(25, 35, 56, 0.96);
+        background: rgba(20, 23, 31, 0.96);
         backdrop-filter: blur(14px);
         border: 1px solid var(--border-gold);
         border-radius: 13px;
-        box-shadow: 0 18px 48px rgba(4, 8, 18, 0.78), 0 0 24px rgba(240, 192, 90, 0.14);
+        box-shadow: 0 20px 52px rgba(0, 0, 0, 0.82), 0 0 20px rgba(216, 178, 104, 0.1);
     }
 }
 
 @layer hud-unify {
     /* =====================================================================
-       ALIGN cos_rpg_engine.css WIDGETS TO THE EXACT SAME SLEEK DESIGN TOKENS
+       ALIGN ALL cos_rpg_engine.css WIDGETS TO OBSIDIAN & BURNISHED BRASS
        ===================================================================== */
     .rpg-header-btn {
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 248, 236, 0.06);
         border: 1px solid var(--border-med);
         color: var(--text-light);
         border-radius: 8px;
@@ -1227,14 +2158,19 @@
         font-weight: 500;
         box-shadow: var(--inner-sheen);
     }
+    .rpg-header-btn:hover {
+        background: var(--bg-elevated);
+        border-color: var(--border-gold);
+        filter: none;
+    }
     .rpg-header-btn.rpg-btn-primary-lg {
         padding: 6px 14px;
         font-size: 0.76rem;
         min-block-size: 34px;
         border-width: 1px;
         border-color: var(--border-gold);
-        background: linear-gradient(180deg, rgba(240, 192, 90, 0.2) 0%, rgba(44, 56, 86, 0.92) 100%);
-        color: #fde68a;
+        background: linear-gradient(180deg, rgba(216, 178, 104, 0.18) 0%, #232630 100%);
+        color: var(--accent-gold-bright);
         font-weight: 600;
     }
     .rpg-header-btn.rpg-btn-backpack {
@@ -1242,9 +2178,16 @@
         color: var(--text-light);
     }
 
-    /* Right-Column Segmented Game Tabs */
+    .rpg-badge-count {
+        font-family: var(--font-num);
+        background: rgba(216, 178, 104, 0.16);
+        color: var(--accent-gold-bright);
+        border-color: var(--border-gold);
+    }
+
+    /* Right-Column Segmented View Tabs */
     .rpg-view-tabs {
-        background: rgba(18, 26, 44, 0.78);
+        background: var(--bg-well);
         border: 1px solid var(--card-border);
         border-radius: 10px;
         padding: 4px;
@@ -1265,16 +2208,16 @@
         transition: background-color 0.14s ease, color 0.14s ease, border-color 0.14s ease;
     }
     .rpg-view-tab[aria-pressed="true"] {
-        background: linear-gradient(180deg, #324368 0%, #273655 100%);
+        background: linear-gradient(180deg, #272b36 0%, #1f232c 100%);
         border-color: var(--border-gold);
-        color: var(--accent-gold);
+        color: var(--accent-gold-bright);
         font-weight: 600;
-        box-shadow: var(--inner-sheen), 0 2px 8px rgba(5, 9, 20, 0.35);
+        box-shadow: var(--inner-sheen), 0 2px 8px rgba(0, 0, 0, 0.35);
     }
 
     /* Live Party Teammate Bar */
     .rpg-party-hud {
-        background: #172035;
+        background: #14171f;
         border-bottom: 1px solid var(--card-border);
         padding: 8px 20px;
     }
@@ -1286,15 +2229,84 @@
         max-width: 320px;
         box-shadow: var(--inner-sheen);
     }
+    .rpg-party-chip-stats {
+        font-family: var(--font-num);
+    }
+    .rpg-party-hp-track {
+        background: var(--bg-well);
+    }
+
+    /* Combat Turn-Order Strip */
+    .rpg-combat-strip {
+        background: linear-gradient(180deg, #1b171b 0%, #13161e 100%);
+        border-bottom: 1px solid rgba(214, 101, 108, 0.36);
+    }
+    .rpg-combat-strip.is-my-turn {
+        background: linear-gradient(180deg, #241f18 0%, #151820 100%);
+        border-bottom-color: var(--accent-gold);
+    }
+    .rpg-combat-tile {
+        background: var(--panel-bg);
+        border-color: var(--card-border);
+    }
 
     /* Action Economy Combat Bar */
     .rpg-action-bar-wrap {
-        background: linear-gradient(180deg, #253352 0%, #1e2a44 100%);
+        background: linear-gradient(180deg, #1d2029 0%, #151820 100%);
         border: 1px solid var(--border-gold);
         border-radius: var(--radius-md);
         padding: 9px 12px;
         margin-bottom: 0;
         box-shadow: var(--inner-sheen);
+    }
+    .rpg-act-pip {
+        background: var(--bg-well);
+        border-color: var(--card-border);
+        color: var(--text-muted);
+    }
+
+    /* Concentration & Quick Status Strip */
+    .rpg-conc-bar {
+        background: linear-gradient(135deg, rgba(166, 141, 214, 0.16) 0%, #181a24 100%);
+        border-color: rgba(166, 141, 214, 0.48);
+    }
+    .rpg-status-chip {
+        background: var(--panel-sub);
+        border-color: var(--border-med);
+        color: var(--text-light);
+    }
+    .rpg-status-add-btn {
+        background: var(--bg-well);
+        border-color: var(--border-med);
+        color: var(--text-dim);
+    }
+    .rpg-status-picker {
+        background: var(--bg-well);
+        border-color: var(--card-border);
+    }
+    .rpg-status-opt {
+        background: var(--panel-bg);
+        border-color: var(--card-border);
+    }
+
+    /* Skills Quick-Filter Bar */
+    .rpg-skills-search {
+        background: var(--bg-well);
+        border-color: var(--border-med);
+        color: var(--text-light);
+    }
+    .rpg-skills-search:focus {
+        border-color: var(--accent-gold);
+    }
+    .rpg-skills-mode-btn {
+        background: var(--bg-well);
+        border-color: var(--card-border);
+        color: var(--text-dim);
+    }
+    .rpg-skills-mode-btn[aria-pressed="true"] {
+        background: var(--accent-gold-soft);
+        border-color: var(--border-gold);
+        color: var(--accent-gold-bright);
     }
 
     /* Rest Chooser Cards inside #rpg-rest-modal */
@@ -1304,7 +2316,7 @@
         gap: 10px;
     }
     .rpg-rest-card {
-        background: var(--panel-sub);
+        background: var(--panel-bg);
         border: 1px solid var(--card-border);
         border-radius: 10px;
         padding: 13px 14px;
@@ -1332,64 +2344,156 @@
         flex: 1;
     }
 
-    /* Speed-Dial Floating Bubbles — Sleek Luminous Game Styling */
+    /* Speed-Dial Floating Bubbles — Smoked Obsidian & Brass */
     .rpg-fab-bubbles.is-open {
-        max-height: 420px;
+        max-height: 380px;
     }
     .rpg-dice-fab {
-        background: linear-gradient(180deg, #324368 0%, #222e49 100%);
+        background: linear-gradient(180deg, #272b36 0%, #191c24 100%);
         border: 1.5px solid var(--border-gold);
-        color: var(--accent-gold);
+        color: var(--accent-gold-bright);
         font-weight: 600;
-        box-shadow: 0 12px 32px rgba(4, 8, 18, 0.72), var(--inner-sheen);
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.72), var(--inner-sheen);
+    }
+    .rpg-dice-fab.is-open {
+        background: linear-gradient(180deg, #312922 0%, #1c1a1c 100%);
+        border-color: var(--accent-gold);
+        color: #fff;
     }
     .rpg-fab-bubble {
-        background: rgba(31, 43, 68, 0.96);
+        background: rgba(26, 29, 38, 0.96);
         border: 1px solid var(--border-med);
         color: var(--text-light);
         font-weight: 500;
         backdrop-filter: blur(10px);
-        box-shadow: 0 8px 22px rgba(4, 8, 18, 0.55), var(--inner-sheen);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.56), var(--inner-sheen);
     }
-    .rpg-fab-bubble.bubble-craft {
-        border-color: rgba(54, 211, 153, 0.45);
-        color: #a7f3d0;
+    .rpg-fab-bubble.bubble-dice {
+        border-color: var(--border-gold);
+        color: var(--accent-gold-bright);
+    }
+    .rpg-fab-bubble.bubble-rules {
+        border-color: rgba(109, 168, 204, 0.36);
+        color: #c2ddec;
     }
     .rpg-fab-bubble.bubble-reset {
-        border-color: rgba(242, 100, 108, 0.45);
-        color: #fda4af;
+        border-color: rgba(214, 101, 108, 0.38);
+        color: #e9b9bd;
     }
     .rpg-fab-bubble.bubble-trade {
-        border-color: rgba(77, 187, 246, 0.48);
-        color: #bae6fd;
+        border-color: rgba(166, 141, 214, 0.4);
+        color: #d6c8f0;
+    }
+    .rpg-fab-bubble.bubble-portal {
+        border-color: var(--border-med);
+        color: var(--text-dim);
     }
     .rpg-fab-dot {
         width: 8px;
         height: 8px;
         border-radius: 999px;
         background: var(--accent-green);
-        box-shadow: 0 0 8px var(--accent-green);
+        box-shadow: 0 0 6px rgba(94, 184, 138, 0.6);
         display: inline-block;
+    }
+
+    .rpg-dice-tray {
+        background: linear-gradient(180deg, rgba(25, 28, 36, 0.98) 0%, rgba(16, 18, 24, 0.99) 100%);
+        border: 1px solid var(--border-gold);
+        box-shadow: 0 18px 46px rgba(0, 0, 0, 0.8);
+    }
+    .rpg-dice-tray-head {
+        color: var(--accent-gold-bright);
     }
 
     /* Engine Modals (Paper-Doll, Backpack, Craft, Trade, Rules, Rest) */
     .rpg-dialog {
+        background: transparent;
+        border: none;
+        border-radius: var(--radius-lg);
+    }
+    .rpg-modal-shell {
         background: var(--bg-sheet);
         border: 1px solid var(--border-med);
         border-radius: var(--radius-lg);
+        box-shadow: 0 28px 72px rgba(0, 0, 0, 0.85);
     }
     .rpg-modal-head {
-        background: #222f4b;
+        background: #1a1d26;
         border-bottom: 1px solid var(--card-border);
     }
     .rpg-modal-head h2 {
         font-family: var(--font-sans);
         font-weight: 600;
         letter-spacing: 0.01em;
+        color: var(--accent-gold-bright);
+    }
+    .rpg-modal-close {
+        background: rgba(255, 248, 236, 0.05);
+        border-color: var(--card-border);
+        color: var(--text-dim);
     }
     .rpg-modal-foot {
-        background: #1b253c;
+        background: #101218;
         border-top: 1px solid var(--card-border);
+    }
+
+    /* Paper-Doll, Backpack, Craft, Trade, Rules Interiors */
+    .rpg-equip-topstats,
+    .rpg-paperdoll-board,
+    .rpg-slot-picker,
+    .rpg-override-bar,
+    .rpg-custom-tagger,
+    .rpg-loader-section,
+    .rpg-search-wrap,
+    .rpg-wpn-ammo-bar,
+    .rpg-equipped-strip {
+        background: var(--bg-well);
+        border-color: var(--card-border);
+    }
+
+    .rpg-slot-box,
+    .rpg-picker-item,
+    .rpg-bp-row,
+    .rpg-craft-card,
+    .rpg-rules-card,
+    .rpg-loader-choice,
+    .rpg-recip-btn,
+    .rpg-tab-btn,
+    .rpg-filter-pill,
+    .rpg-input,
+    .rpg-select {
+        background: var(--panel-bg);
+        border-color: var(--card-border);
+        color: var(--text-light);
+    }
+
+    .rpg-slot-box.slot-filled {
+        border-color: var(--border-gold);
+        background: linear-gradient(135deg, rgba(216, 178, 104, 0.08) 0%, var(--panel-bg) 100%);
+    }
+    .rpg-slot-box.slot-selected {
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 2px rgba(109, 168, 204, 0.28);
+        background: #1d2430;
+    }
+
+    .rpg-mini-btn {
+        background: var(--panel-sub);
+        border-color: var(--border-med);
+        color: var(--text-light);
+    }
+    .rpg-mini-btn:hover {
+        border-color: var(--border-gold);
+    }
+
+    .rpg-craft-card {
+        border-left-color: var(--accent-green);
+    }
+
+    .rpg-rules-card h3 {
+        font-family: var(--font-sans);
+        color: var(--accent-gold-bright);
     }
 
     /* Adventure Gear Hub Tiles */
@@ -1405,6 +2509,11 @@
             background: var(--bg-elevated);
         }
     }
+    .rpg-eq-chip {
+        background: var(--panel-bg);
+        border-color: var(--card-border);
+        color: var(--text-light);
+    }
 
     /* Forced Colors Mode (Windows High Contrast Accessibility) */
     @media (forced-colors: active) {
@@ -1415,12 +2524,18 @@
         .save-box,
         .rpg-view-tab,
         .rpg-fab-bubble,
-        .rpg-dice-fab {
+        .rpg-dice-fab,
+        .notes-mini-card,
+        .notes-list-card,
+        .notes-reader-canvas,
+        .notes-filter-pill {
             border: 1px solid CanvasText;
         }
         .rpg-view-tab[aria-pressed="true"],
         .save-box.prof,
-        .stat-row-item.prof-item {
+        .stat-row-item.prof-item,
+        .notes-list-card.is-active,
+        .notes-filter-pill[aria-pressed="true"] {
             outline: 2px solid Highlight;
         }
         .hp-health-bar-fill {
@@ -1437,6 +2552,25 @@
         }
         header.header-banner {
             padding: 12px 14px;
+        }
+    }
+    @media (max-width: 740px) {
+        .notes-journal-workspace {
+            grid-template-columns: 1fr;
+            max-height: 70vh;
+        }
+        .notes-sidebar {
+            border-inline-end: none;
+            max-height: 70vh;
+        }
+        .notes-journal-workspace.is-detail-open .notes-sidebar {
+            display: none;
+        }
+        .notes-journal-workspace:not(.is-detail-open) .notes-detail-pane {
+            display: none;
+        }
+        .notes-mobile-back-btn {
+            display: inline-flex;
         }
     }
     @media (max-width: 680px) {
