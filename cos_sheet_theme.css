@@ -440,13 +440,13 @@
         flex-wrap: wrap;
     }
 
-    /* Elevated Sleek HP Readout */
+    /* Balanced Sleek HP Readout */
     .hp-plate-readout .hp-main-num {
         font-family: var(--font-num);
         font-variant-numeric: tabular-nums lining-nums;
-        font-size: 1.56rem;
+        font-size: 1.28rem;
         font-weight: 600;
-        letter-spacing: -0.03em;
+        letter-spacing: -0.025em;
         color: var(--accent-green);
         line-height: 1;
     }
