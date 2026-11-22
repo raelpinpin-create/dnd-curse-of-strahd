@@ -767,16 +767,16 @@
                             <span class="vital-mini-lbl">Initiative</span>
                             <span class="vital-mini-val" id="init-disp" style="color:var(--accent-blue);">+2</span>
                         </div>
-                        <div class="vital-stat-tile" title="8 + PB (+2) + WIS (+3) + Star Map Focus (+1) = DC 14 | +6 Hit">
+                        <div class="vital-stat-tile" id="tile-spell-dc-hit" title="8 + PB (+2) + WIS (+3) = DC 13 | +5 Hit">
                             <span class="vital-mini-lbl">Spell DC · Hit</span>
-                            <span class="vital-mini-val" id="dc-hit-disp" style="font-size:0.86rem; color:var(--text-light);">DC 14 | +6</span>
+                            <span class="vital-mini-val" id="dc-hit-disp" style="font-size:0.86rem; color:var(--text-light);">DC 13 | +5</span>
                         </div>
                     </div>
 
                     <div class="hp-ctrl-container">
                         <div class="hp-plate-head">
                             <div class="hp-plate-readout">
-                                <span class="hp-main-num" id="hp-disp">38/38</span>
+                                <span class="hp-main-num" id="hp-disp">24/24</span>
                                 <span class="hp-sub-lbl">HP</span>
                                 <span id="hp-status-header" style="font-size:0.7rem; font-weight:700; font-family:var(--font-mono); color:var(--accent-blue);"></span>
                                 <button type="button" id="btn-clear-temp" class="rpg-clear-temp-pill" onclick="clearTempHP()" style="display:none;" title="Clear Temporary Hit Points">✕ Temp</button>
@@ -805,7 +805,7 @@
                     <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:8px;">
                         <div style="background:var(--panel-sub); border:1px solid var(--card-border); border-radius:6px; padding:6px 8px; display:flex; flex-direction:column; gap:5px;">
                             <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
-                                <span style="font-size:0.72rem; font-weight:700; color:var(--text-light); cursor:pointer;" onclick="openSpellDetailsModal('wild_shape_compendium')">🐾 Wild Shape <span id="ws-uses-disp" style="color:var(--accent-green); font-family:var(--font-mono); margin-left:4px;">2/2</span> ℹ️</span>
+                                <span style="font-size:0.72rem; font-weight:700; color:var(--text-light); cursor:pointer;" onclick="openSpellDetailsModal('wild_shape_compendium')">🐾 Wild Shape <span style="font-size:0.62rem; color:var(--text-muted); font-weight:600;">(BA • Shared)</span> <span id="ws-uses-disp" style="color:var(--accent-green); font-family:var(--font-mono); margin-left:2px;">2/2</span> ℹ️</span>
                                 <div style="display:flex; gap:3px;">
                                     <button type="button" class="btn-act btn-act-pre" onclick="modWildShape(-1)" style="min-block-size:22px; padding:0px 6px; font-size:0.68rem;">−</button>
                                     <button type="button" class="btn-act btn-act-pre" onclick="modWildShape(1)" style="min-block-size:22px; padding:0px 6px; font-size:0.68rem;">+</button>
@@ -813,16 +813,16 @@
                             </div>
                             <div class="wild-shape-pills">
                                 <button type="button" class="ws-pill-btn" data-ws="human" aria-pressed="true" onclick="setWildShapeForm('human')">🧑 Human</button>
-                                <button type="button" class="ws-pill-btn" data-ws="cat" aria-pressed="false" onclick="setWildShapeForm('cat')">🐈 Black Cat</button>
-                                <button type="button" class="ws-pill-btn" data-ws="raven" aria-pressed="false" onclick="setWildShapeForm('raven')">🦅 Mist Raven</button>
+                                <button type="button" class="ws-pill-btn" data-ws="cat" aria-pressed="false" data-rpg-turn-slot="bonus" onclick="setWildShapeForm('cat')">🐈 Black Cat</button>
+                                <button type="button" class="ws-pill-btn" id="btn-ws-raven" data-ws="raven" aria-pressed="false" onclick="setWildShapeForm('raven')" title="Flying Wild Shape unlocks at Druid Level 8 (2024 5.5e Rules)" style="opacity:0.55; border-style:dashed;">🔒 Raven (Lvl 8)</button>
                             </div>
                             <div id="ws-form-banner" style="font-size:0.67rem; color:var(--text-dim); line-height:1.35;">
-                                Base Human Form: AC 14 • 30 ft • Full Druidic Spellcasting.
+                                Base Human Form: AC 14 • 30 ft • Stealth +2 • Full Druidic Spellcasting.
                             </div>
                             <div id="ws-quick-actions" style="display:none; gap:4px; flex-wrap:wrap;"></div>
                         </div>
 
-                        <div class="toggle-btn-card" id="card-vow-toggle" onclick="triggerVowOfNightSky()" title="Vow of the Dark Powers / Night Sky: Once per Long Rest, if reduced to 0 HP, stabilize at 1 HP instead">
+                        <div class="toggle-btn-card" id="card-vow-toggle" onclick="triggerVowOfNightSky()" title="Vow of the Night Sky: Once per Long Rest, if reduced to 0 HP, stabilize at 1 HP instead">
                             <div>
                                 <div style="font-size:0.74rem; font-weight:700; color:var(--text-light);">🌑 Vow of the Night Sky (1/LR)</div>
                                 <div style="font-size:0.65rem; color:var(--text-muted);" id="sub-vow-toggle">Stabilizes at 1 HP if dropped to 0 HP</div>
@@ -895,12 +895,12 @@
                             </div>
                             <span style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+3</span>
                         </li>
-                        <li class="stat-row-item" onclick="rollSkill('Arcana (INT)', 1, false)">
+                        <li class="stat-row-item" onclick="rollSkill('Arcana (INT + Magician)', 4, false)">
                             <div class="check-left-wrap">
                                 <button type="button" class="btn-info-tiny" onclick="openSkillModal('Arcana', event)" title="View Arcana rules &amp; examples">i</button>
-                                <span>Arcana <small style="color:var(--text-muted);">INT</small></span>
+                                <span>Arcana <small style="color:var(--accent-green);">INT +3 Mag</small></span>
                             </div>
-                            <span style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+1</span>
+                            <span style="font-family:var(--font-mono); font-weight:700; color:#86efac;">+4</span>
                         </li>
                         <li class="stat-row-item" onclick="rollSkill('Athletics (STR)', 0, false)">
                             <div class="check-left-wrap">
@@ -951,12 +951,12 @@
                             </div>
                             <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+5</span>
                         </li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Nature (INT) ★', 1, true)">
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Nature (INT + Magician) ★', 4, true)">
                             <div class="check-left-wrap">
                                 <button type="button" class="btn-info-tiny" onclick="openSkillModal('Nature', event)" title="View Nature rules &amp; examples">i</button>
-                                <span style="font-weight:700; color:var(--text-light);">Nature <small style="color:var(--accent-gold);">★ INT</small></span>
+                                <span style="font-weight:700; color:var(--text-light);">Nature <small style="color:var(--accent-gold);">★ INT +3 Mag</small></span>
                             </div>
-                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+3</span>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+6</span>
                         </li>
                         <li class="stat-row-item prof-item" onclick="rollSkill('Perception (WIS) ★', 3, true)">
                             <div class="check-left-wrap">
@@ -993,12 +993,12 @@
                             </div>
                             <span style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+2</span>
                         </li>
-                        <li class="stat-row-item expertise-item" onclick="rollSkill('Stealth (DEX) ★ [Mist-Stalker / Cat]', 2, true, true)">
+                        <li class="stat-row-item" onclick="rollSkill('Stealth (DEX)', 2, false)">
                             <div class="check-left-wrap">
                                 <button type="button" class="btn-info-tiny" onclick="openSkillModal('Stealth', event)" title="View Stealth rules &amp; examples">i</button>
-                                <span style="font-weight:700; color:var(--text-light);">Stealth <small style="color:#38bdf8;">★ (Exp) DEX</small></span>
+                                <span>Stealth <small style="color:var(--text-muted);">DEX (Cat: +6)</small></span>
                             </div>
-                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:#38bdf8;">+6</span>
+                            <span style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+2</span>
                         </li>
                         <li class="stat-row-item" onclick="rollSkill('Survival (WIS)', 3, false)">
                             <div class="check-left-wrap">
@@ -1112,7 +1112,7 @@
                                 </div>
                                 <span class="pill-badge pill-blue" id="badge-starry-archer">OFF</span>
                             </div>
-                            <div class="action-desc">Every Action unlocks a <strong>Bonus Action</strong> luminous arrow prompt (<strong>+6 hit</strong>, <strong>1d8 + 3 Radiant</strong>)!</div>
+                            <div class="action-desc" id="archer-desc-txt">Every Action unlocks a <strong>Bonus Action</strong> luminous arrow prompt (<strong>+5 hit</strong>, <strong>1d8 + 3 Radiant</strong>)!</div>
                             <div class="action-btn-row">
                                 <button type="button" class="btn-roll-action" id="btn-starry-archer" data-rpg-turn-slot="bonus" onclick="activateStarryForm('archer')">🏹 Activate (BA)</button>
                             </div>
@@ -1140,13 +1140,13 @@
                     <div class="rpg-slot-strip" style="flex-direction:row; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                         <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                             <span style="font-size:0.78rem; font-weight:800; color:var(--text-light); cursor:pointer;" onclick="openSpellDetailsModal('star_map')">🗺️ Star Map: Free Guiding Bolt ℹ️</span>
-                            <span id="starmap-pips-disp" style="font-size:0.74rem; cursor:pointer; display:inline-flex; align-items:center;" onclick="modStarMapBolts(-1)">2/2 LR</span>
+                            <span id="starmap-pips-disp" style="font-size:0.74rem; cursor:pointer; display:inline-flex; align-items:center;" onclick="modStarMapBolts(-1)">3/3 LR</span>
                             <div style="display:flex; gap:3px;">
                                 <button type="button" class="btn-act btn-act-pre" onclick="modStarMapBolts(-1)" style="min-block-size:20px; padding:0px 5px; font-size:0.66rem;">−</button>
                                 <button type="button" class="btn-act btn-act-pre" onclick="modStarMapBolts(1)" style="min-block-size:20px; padding:0px 5px; font-size:0.66rem;">+</button>
                             </div>
                         </div>
-                        <button type="button" class="btn-roll-action btn-roll-wild" data-rpg-turn-slot="action" onclick="castFreeStarMapGuidingBolt()">⚡ Free Guiding Bolt (+6, 4d6 Rad)</button>
+                        <button type="button" id="btn-starmap-bolt" class="btn-roll-action btn-roll-wild" data-rpg-turn-slot="action" onclick="castFreeStarMapGuidingBolt()">⚡ Free Guiding Bolt (+5, 4d6 Rad)</button>
                     </div>
                 </div>
 
@@ -1154,7 +1154,7 @@
                 <div class="panel">
                     <div class="panel-title">
                         <span>Weapons &amp; At-Will Cantrips</span>
-                        <span style="font-size:0.68rem; color:var(--text-muted);">Click any title for 5.5e Rules</span>
+                        <span style="font-size:0.68rem; color:var(--text-muted);">Click any title for 2024 5.5e Rules</span>
                     </div>
 
                     <div class="action-grid-2col" id="weapons-grid-cael">
@@ -1169,10 +1169,10 @@
                                 </div>
                                 <span class="pill-badge pill-blue">EVOCATION</span>
                             </div>
-                            <div class="action-desc"><strong id="wisp-hit-txt">+6 to Hit</strong>, <strong id="wisp-dmg-txt">1d8</strong> Radiant. Target emits dim light &amp; cannot benefit from Invisible!</div>
+                            <div class="action-desc"><strong id="wisp-hit-txt">+5 to Hit</strong>, <strong id="wisp-dmg-txt">1d8</strong> Radiant. Target emits dim light &amp; cannot benefit from Invisible!</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" onclick="rollStarryWispAttack()" id="btn-wisp-atk">✨ Attack (+6)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollStarryWispDamage()" id="btn-wisp-dmg">💥 1d8 Radiant</button>
+                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollStarryWispAttack()" id="btn-wisp-atk">✨ Attack (+5)</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="rollStarryWispDamage()" id="btn-wisp-dmg">💥 1d8 Radiant</button>
                             </div>
                         </div>
 
@@ -1181,16 +1181,16 @@
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('produce_flame')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
-                                        🔥 Produce Flame <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                        🔥 Produce Flame (5.5e) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:600; color:var(--accent-red);" id="flame-tag-disp">Cantrip • 1 Action/BA • 30ft (1d8)</div>
+                                    <div style="font-size:0.67rem; font-weight:600; color:var(--accent-red);" id="flame-tag-disp">Cantrip • BA Summon / Action Hurl • 60ft</div>
                                 </div>
                                 <span class="pill-badge pill-gold">CONJURATION</span>
                             </div>
-                            <div class="action-desc">10-ft torchlight in hand or hurl 30 ft (<strong id="flame-hit-txt">+6 to Hit</strong>, <strong id="flame-dmg-txt">1d8</strong> Fire damage).</div>
+                            <div class="action-desc">Bonus Action torchlight (10m) or hurl 60 ft (<strong id="flame-hit-txt">+5 to Hit</strong>, <strong id="flame-dmg-txt">1d8</strong> Fire damage).</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" onclick="rollProduceFlameAttack()" id="btn-flame-atk">🔥 Hurl (+6)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg" onclick="rollProduceFlameDamage()" id="btn-flame-dmg">💥 1d8 Fire</button>
+                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollProduceFlameAttack()" id="btn-flame-atk">🔥 Hurl (+5)</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="rollProduceFlameDamage()" id="btn-flame-dmg">💥 1d8 Fire</button>
                             </div>
                         </div>
 
@@ -1207,7 +1207,7 @@
                             </div>
                             <div class="action-desc">Touch a willing ally; they roll <strong>+1d4</strong> and add it to one ability check of their choice!</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action btn-roll-heal" onclick="castGuidanceCantrip()">🌿 Roll +1d4 Guidance</button>
+                                <button type="button" class="btn-roll-action btn-roll-heal" data-rpg-turn-slot="action" onclick="castGuidanceCantrip()">🌿 Roll +1d4 Guidance</button>
                             </div>
                         </div>
 
@@ -1216,32 +1216,15 @@
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('shillelagh')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
-                                        🪄 Shillelagh <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                        🪄 Shillelagh (5.5e) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
                                     <div style="font-size:0.67rem; font-weight:600; color:var(--accent-green);">Cantrip • Bonus Action • 1 Min</div>
                                 </div>
                                 <span class="pill-badge pill-emerald" id="badge-shillelagh">OFF</span>
                             </div>
-                            <div class="action-desc">Imbues Yew Star-Wand Staff to use WIS: <strong>+6 to Hit, 1d8 + 3 Magical Bludgeoning</strong>!</div>
+                            <div class="action-desc">Imbues Yew Staff to use WIS: <strong>+5 to Hit, 1d8 + 3 Force or Bludgeoning</strong>!</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" onclick="toggleShillelagh()" id="btn-shillelagh-toggle">🪄 Imbue Staff (BA)</button>
-                            </div>
-                        </div>
-
-                        <!-- Mending -->
-                        <div class="action-card" data-turn-kind="action">
-                            <div class="action-header">
-                                <div>
-                                    <div onclick="openSpellDetailsModal('mending')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
-                                        🔧 Mending <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
-                                    </div>
-                                    <div style="font-size:0.67rem; font-weight:600; color:var(--text-dim);">Cantrip • 1 Minute • Touch</div>
-                                </div>
-                                <span class="pill-badge pill-neutral">TRANSMUTATION</span>
-                            </div>
-                            <div class="action-desc">Repairs a single break, tear, splintered axle, or torn cloak up to 1 foot in any dimension.</div>
-                            <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" onclick="castMendingCantrip()">🔧 Cast Mending</button>
+                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="bonus" onclick="toggleShillelagh()" id="btn-shillelagh-toggle">🪄 Imbue Staff (BA)</button>
                             </div>
                         </div>
 
@@ -1256,12 +1239,12 @@
                                 </div>
                                 <span class="pill-badge pill-emerald" id="staff-pill-badge">FOCUS</span>
                             </div>
-                            <div class="action-desc" id="staff-desc-txt"><strong>+2 to Hit</strong>, <strong>1d8 Bludgeoning (2H)</strong>. Toggle <em>Shillelagh</em> for <strong>+6 Hit, 1d8+3 Magic</strong>!</div>
+                            <div class="action-desc" id="staff-desc-txt"><strong>+2 to Hit</strong>, <strong>1d8 Bludgeoning (2H)</strong>. Toggle <em>Shillelagh</em> for <strong>+5 Hit, 1d8+3 Force/Bludge</strong>!</div>
                             <div id="cael-mods-staff"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-staff" type="button" class="btn-roll-action" onclick="rollCaelStaffAttack()">🪄 Attack (+2)</button>
-                                <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollCaelStaffDamage('2h')">💥 2H (1d8)</button>
-                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg" style="display:none;" onclick="rollCaelStaffDamage('1h')">💥 1H (1d6)</button>
+                                <button id="btn-atk-staff" type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollCaelStaffAttack()">🪄 Attack (+2)</button>
+                                <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="rollCaelStaffDamage('2h')">💥 2H (1d8)</button>
+                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" style="display:none;" onclick="rollCaelStaffDamage('1h')">💥 1H (1d6)</button>
                             </div>
                         </div>
 
@@ -1279,8 +1262,8 @@
                             <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong>. Bypasses nonmagical Vampire/Werewolf resistances!</div>
                             <div id="cael-mods-dagger"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" onclick="rollCaelWeaponAttack('Silvered Hunting Dagger', 2, 'dagger')">🗡️ Attack (+4)</button>
-                                <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Silvered Hunting Dagger', 4, 2, 'Silvered Piercing', 1, 'dagger')">💥 1d4+2 Silver</button>
+                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollCaelWeaponAttack('Silvered Hunting Dagger', 2, 'dagger')">🗡️ Attack (+4)</button>
+                                <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="rollFormulaDamage('Silvered Hunting Dagger', 4, 2, 'Silvered Piercing', 1, 'dagger')">💥 1d4+2 Silver</button>
                             </div>
                         </div>
                     </div>
@@ -1471,14 +1454,14 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261122v13"></script>
+<script src="cos_rpg_engine.js?v=20261123v1"></script>
 <script>
     // ==========================================
     // 🌟 CAELUM JUDE ("CAEL") MASTER STATE VARIABLES
     // ==========================================
     let characterLevel = 3;
-    let curHP = 38;
-    let maxHP = 38;
+    let curHP = 24;
+    let maxHP = 24;
     let tempHP = 0;
     let helpTokens = 2;
     const maxHelpTokens = 2;
@@ -1486,16 +1469,16 @@
     const maxShortRests = 2;
     let rollMode = 'norm';
 
-    // Circle of the Stars & Druid Resources
+    // Circle of the Stars & Druid Resources (2024 5.5e Rules)
     let wildShapeUses = 2;
     const maxWildShapeUses = 2;
-    let wildShapeForm = 'human'; // 'human' | 'cat' | 'raven'
+    let wildShapeForm = 'human'; // 'human' | 'cat' | 'raven' (raven unlocks at Lvl 8)
     let starryFormUses = 2;
     const maxStarryFormUses = 2;
     let activeStarryForm = 'none'; // 'none' | 'chalice' | 'archer' | 'dragon'
-    let freeGuidingBolts = 2;
+    let freeGuidingBolts = 3; // 2024 Star Map: WIS mod (+3) / Long Rest
     let isShillelaghActive = false;
-    let vowReady = true; // Vow of the Dark Powers / Night Sky (1/Long Rest)
+    let vowReady = true; // Vow of the Night Sky (1/Long Rest)
     let pendingActionForArcher = false;
 
     // Multi-Tier Spell Slots (Level 3 Druid: 4 L1, 2 L2)
@@ -1509,15 +1492,23 @@
         return characterLevel >= 9 ? 4 : (characterLevel >= 5 ? 3 : 2);
     }
     function getMaxFreeBolts() {
-        return getProfBonus();
+        return 3; // 2024 5.5e Star Map scales off WIS modifier (+3)
     }
     function getSpellSaveDC() {
-        const gearDc = (window.__caelGearCache && typeof window.__caelGearCache.spellDcBonus === 'number') ? window.__caelGearCache.spellDcBonus : 1;
-        return 8 + getProfBonus() + 3 + gearDc; // WIS +3 + PB +2 + Star Chart +1 = 14
+        const gearDc = (window.__caelGearCache && typeof window.__caelGearCache.spellDcBonus === 'number') ? window.__caelGearCache.spellDcBonus : 0;
+        return 8 + getProfBonus() + 3 + gearDc; // 8 + PB (+2) + WIS (+3) = 13
     }
     function getSpellAttackMod() {
-        const gearAtk = (window.__caelGearCache && typeof window.__caelGearCache.spellAtkBonus === 'number') ? window.__caelGearCache.spellAtkBonus : 1;
-        return getProfBonus() + 3 + gearAtk; // WIS +3 + PB +2 + Star Chart +1 = +6
+        const gearAtk = (window.__caelGearCache && typeof window.__caelGearCache.spellAtkBonus === 'number') ? window.__caelGearCache.spellAtkBonus : 0;
+        return getProfBonus() + 3 + gearAtk; // PB (+2) + WIS (+3) = +5
+    }
+
+    function restoreTurnSlotSoon(slot) {
+        setTimeout(() => {
+            if (window.COS_RPG && typeof COS_RPG.restoreTurnAction === 'function') {
+                COS_RPG.restoreTurnAction(slot);
+            }
+        }, 0);
     }
 
     // ==========================================
@@ -1547,8 +1538,14 @@
             if (btn) {
                 btn.innerText = isActive ? '✕ End Form' : activateLbls[form];
                 btn.className = isActive ? 'btn-act btn-act-pre' : 'btn-roll-action';
+                btn.dataset.rpgTurnSlot = isActive ? 'none' : 'bonus';
             }
         });
+
+        const archerDesc = document.getElementById('archer-desc-txt');
+        if (archerDesc) {
+            archerDesc.innerHTML = `Every Action unlocks a <strong>Bonus Action</strong> luminous arrow prompt (<strong>+${getSpellAttackMod()} hit</strong>, <strong>1d8 + 3 Radiant</strong>)!`;
+        }
 
         const banner = document.getElementById('starry-status-banner');
         const endBtn = document.getElementById('btn-end-starry');
@@ -1565,6 +1562,7 @@
             }
         }
         if (endBtn) endBtn.style.display = activeStarryForm !== 'none' ? 'inline-flex' : 'none';
+        if (window.COS_RPG && typeof COS_RPG.syncCombatActionLocks === 'function') COS_RPG.syncCombatActionLocks();
     }
 
     function activateStarryForm(form) {
@@ -1573,11 +1571,12 @@
             return;
         }
         if (starryFormUses <= 0) {
+            restoreTurnSlotSoon('bonus');
             logRoll(`⚠️ <strong>0 Wild Shape / Starry Form uses remaining!</strong> Take a Short or Long Rest (or click <strong>+</strong> to adjust).`);
             return;
         }
         starryFormUses--;
-        wildShapeUses = starryFormUses; // Shared Druid Wild Shape pool in 5e/5.5e!
+        wildShapeUses = starryFormUses; // Shared Druid Wild Shape pool in 2024 5.5e!
         activeStarryForm = form;
         updateStarryFormUI();
         updateWildShapeUI();
@@ -1597,8 +1596,15 @@
     }
 
     function useArcherBonusAction() {
-        if (window.COS_RPG && typeof COS_RPG.spendTurnAction === 'function') {
-            COS_RPG.spendTurnAction('bonus');
+        if (window.COS_RPG && typeof COS_RPG.isCombatActive === 'function' && COS_RPG.isCombatActive()) {
+            const bonusPip = document.querySelector('#rpg-action-bar .pip-bonus');
+            if (bonusPip && bonusPip.getAttribute('aria-pressed') === 'false') {
+                logRoll(`⛔ <strong>Bonus Action Already Used This Turn!</strong> Click the greyed <strong>🟠 Bonus</strong> pip above to refund.`);
+                return;
+            }
+            if (typeof COS_RPG.spendTurnAction === 'function') {
+                COS_RPG.spendTurnAction('bonus');
+            }
         }
         rollStarryArcherAttack();
     }
@@ -1653,14 +1659,17 @@
 
     function updateStarMapUI() {
         const el = document.getElementById('starmap-pips-disp');
-        if (!el) return;
-        const maxB = getMaxFreeBolts();
-        let pips = '<span class="rpg-pip-row">';
-        for (let i = 0; i < maxB; i++) {
-            pips += `<span class="rpg-pip-gem gem-blue ${i < freeGuidingBolts ? 'is-filled' : ''}"></span>`;
+        if (el) {
+            const maxB = getMaxFreeBolts();
+            let pips = '<span class="rpg-pip-row">';
+            for (let i = 0; i < maxB; i++) {
+                pips += `<span class="rpg-pip-gem gem-blue ${i < freeGuidingBolts ? 'is-filled' : ''}"></span>`;
+            }
+            pips += `</span> <strong style="font-family:var(--font-mono); font-size:0.74rem; color:var(--text-light); margin-inline-start:4px;">${freeGuidingBolts}/${maxB} LR</strong>`;
+            el.innerHTML = pips;
         }
-        pips += `</span> <strong style="font-family:var(--font-mono); font-size:0.74rem; color:var(--text-light); margin-inline-start:4px;">${freeGuidingBolts}/${maxB} LR</strong>`;
-        el.innerHTML = pips;
+        const boltBtn = document.getElementById('btn-starmap-bolt');
+        if (boltBtn) boltBtn.innerText = `⚡ Free Guiding Bolt (+${getSpellAttackMod()}, 4d6 Rad)`;
     }
 
     function modStarMapBolts(delta) {
@@ -1670,6 +1679,7 @@
 
     function castFreeStarMapGuidingBolt() {
         if (freeGuidingBolts <= 0) {
+            restoreTurnSlotSoon('action');
             logRoll(`⚠️ <strong>0 Free Star Map Guiding Bolts remaining!</strong> Cast using a 1st-Level Spell Slot below or take a Long Rest.`);
             return;
         }
@@ -1691,6 +1701,24 @@
         const usesEl = document.getElementById('ws-uses-disp');
         if (usesEl) usesEl.innerText = `${wildShapeUses}/${maxWildShapeUses}`;
 
+        const ravenUnlocked = characterLevel >= 8;
+        const ravenBtn = document.getElementById('btn-ws-raven');
+        if (ravenBtn) {
+            if (ravenUnlocked) {
+                ravenBtn.innerText = '🦅 Mist Raven';
+                ravenBtn.style.opacity = '';
+                ravenBtn.style.borderStyle = '';
+                ravenBtn.dataset.rpgTurnSlot = 'bonus';
+                ravenBtn.title = 'Bonus Action: Shift into Mist Raven (Fly 50 ft, Perception +7)';
+            } else {
+                ravenBtn.innerText = '🔒 Raven (Lvl 8)';
+                ravenBtn.style.opacity = '0.55';
+                ravenBtn.style.borderStyle = 'dashed';
+                ravenBtn.dataset.rpgTurnSlot = 'none';
+                ravenBtn.title = 'Flying Wild Shape unlocks at Druid Level 8 (2024 5.5e Rules)';
+            }
+        }
+
         document.querySelectorAll('.ws-pill-btn').forEach(btn => {
             btn.setAttribute('aria-pressed', btn.getAttribute('data-ws') === wildShapeForm ? 'true' : 'false');
         });
@@ -1700,27 +1728,28 @@
         const speedChip = document.getElementById('speed-chip-disp');
 
         if (wildShapeForm === 'cat') {
-            if (banner) banner.innerHTML = `<strong style="color:#4ade80;">🐈 Black Cat Form:</strong> AC 12 • Form HP 2 • Speed <strong>40 ft, Climb 30 ft</strong> • Darkvision 60 ft • Stealth +6.`;
+            if (banner) banner.innerHTML = `<strong style="color:#4ade80;">🐈 Black Cat Form (2024):</strong> AC 12 • Keeps <strong>${curHP}/${maxHP} HP +${characterLevel} Temp HP</strong> • Speed <strong>40 ft, Climb 30 ft</strong> • Darkvision 60 ft • <strong>Stealth +6</strong> (+4 vs Human).`;
             if (speedChip) speedChip.innerText = '40 ft • Climb 30';
             if (quick) {
                 quick.style.display = 'flex';
                 quick.innerHTML = `
                     <button type="button" class="btn-roll-action btn-roll-heal" onclick="rollCatPurrHeal()">🐾 Purr-Heal (1d4+1 Temp)</button>
-                    <button type="button" class="btn-act btn-act-pre" onclick="rollSkill('Black Cat Stealth ★', 2, true, true)">🐈 Stealth (+6)</button>
+                    <button type="button" class="btn-act btn-act-pre" onclick="rollSkill('Black Cat Stealth ★', 4, true)">🐈 Stealth (+6)</button>
                 `;
             }
-        } else if (wildShapeForm === 'raven') {
-            if (banner) banner.innerHTML = `<strong style="color:#38bdf8;">🦅 Mist Raven Form:</strong> AC 12 • Form HP 1 • Speed <strong>10 ft, Fly 50 ft</strong> • Perception +5 • Mimicry.`;
+        } else if (wildShapeForm === 'raven' && ravenUnlocked) {
+            if (banner) banner.innerHTML = `<strong style="color:#38bdf8;">🦅 Mist Raven Form (2024):</strong> AC 12 • Keeps <strong>${curHP}/${maxHP} HP +${characterLevel} Temp HP</strong> • Speed <strong>10 ft, Fly 50 ft</strong> • Keen Perception <strong>+7</strong> • Mimicry.`;
             if (speedChip) speedChip.innerText = 'Fly 50 ft';
             if (quick) {
                 quick.style.display = 'flex';
                 quick.innerHTML = `
-                    <button type="button" class="btn-roll-action" onclick="rollSkill('Mist Raven Perception ★', 3, true)">👁️ Aerial Scout (+5)</button>
+                    <button type="button" class="btn-roll-action" onclick="rollSkill('Mist Raven Perception (Keen Sight) ★', 5, true)">👁️ Aerial Scout (+7)</button>
                     <button type="button" class="btn-act btn-act-pre" onclick="castUtility('🫐 <strong>Aerial Goodberry Drop:</strong> Cael swoops silently over an injured ally as a raven and drops a 1 HP Goodberry!')">🫐 Drop Goodberry</button>
                 `;
             }
         } else {
-            if (banner) banner.innerHTML = `Base Human Form: AC ${document.getElementById('ac-disp')?.innerText || 14} • 30 ft • Full Druidic Spellcasting.`;
+            if (wildShapeForm === 'raven') wildShapeForm = 'human';
+            if (banner) banner.innerHTML = `Base Human Form: AC ${document.getElementById('ac-disp')?.innerText || 14} • 30 ft • Stealth +2 • Full Druidic Spellcasting.`;
             if (speedChip) speedChip.innerText = '30 ft';
             if (quick) { quick.style.display = 'none'; quick.innerHTML = ''; }
         }
@@ -1728,22 +1757,30 @@
     }
 
     function setWildShapeForm(nextForm, silent = false) {
-        if (nextForm !== 'human' && wildShapeForm === 'human' && !silent) {
+        if (nextForm === 'raven' && characterLevel < 8) {
+            logRoll(`🔒 <strong>Mist Raven Form Locked until Level 8:</strong> Under 2024 5.5e Druid rules, Wild Shape forms with a Fly Speed unlock at <strong>Druid Level 8</strong>! Use <strong>🐈 Black Cat</strong> for stealth and infiltration.`);
+            return;
+        }
+        if (nextForm === wildShapeForm && !silent) return;
+        if (nextForm !== 'human' && !silent) {
             if (wildShapeUses <= 0) {
+                restoreTurnSlotSoon('bonus');
                 logRoll(`⚠️ <strong>0 Wild Shape uses remaining!</strong> Take a Short or Long Rest (or adjust uses with <strong>+</strong>).`);
                 return;
             }
             wildShapeUses--;
             starryFormUses = wildShapeUses;
+            tempHP = Math.max(tempHP, characterLevel);
+            updateHPUI();
         }
         wildShapeForm = nextForm;
         updateWildShapeUI();
         updateStarryFormUI();
         if (!silent) {
             const msgMap = {
-                human: `🧑 <strong>Reverted to Human Form:</strong> Silver starlight mists fade back into Cael's human silhouette (AC ${document.getElementById('ac-disp').innerText}).`,
-                cat: `🐈 <strong>Wild Shape — Black Cat:</strong> Cael slips into a sleek midnight-black cat with silver-flecked eyes (40 ft, Climb 30 ft, Darkvision 60 ft, Stealth +6).`,
-                raven: `🦅 <strong>Wild Shape — Mist Raven:</strong> Cael erupts into dark feathers, taking flight as a keen-eyed Barovian raven (Fly 50 ft, Mimicry, Perception +5).`
+                human: `🧑 <strong>Reverted to Human Form:</strong> Silver starlight mists fade back into Cael's human silhouette (AC ${document.getElementById('ac-disp').innerText}, Stealth +2).`,
+                cat: `🐈 <strong>Wild Shape (Bonus Action) — Black Cat:</strong> Cael shifts into a sleek midnight-black cat (+${characterLevel} Temp HP, retains ${curHP}/${maxHP} HP, 40 ft, Climb 30 ft, Darkvision 60 ft, <strong>Stealth +6</strong>).`,
+                raven: `🦅 <strong>Wild Shape (Bonus Action) — Mist Raven:</strong> Cael erupts into dark feathers (+${characterLevel} Temp HP, Fly 50 ft, Mimicry, Perception +7).`
             };
             logRoll(msgMap[nextForm] || msgMap.human);
         }
@@ -1752,7 +1789,7 @@
     function rollCatPurrHeal() {
         const d4 = Math.floor(Math.random() * 4) + 1;
         const tot = d4 + 1;
-        logRoll(`🐾 <strong>Black Cat Purr-Heal:</strong> Cael brushes warmly against an ally's ankle—a painless silver pulse grants <span style="color:#38bdf8; font-weight:800;">+${tot} Temporary HP</span> (or spend a Cure Wounds slot for 1d8+3 HP)!`);
+        logRoll(`🐾 <strong>Black Cat Purr-Heal:</strong> Cael brushes warmly against an ally's ankle—a painless silver pulse grants <span style="color:#38bdf8; font-weight:800;">+${tot} Temporary HP</span>!`);
     }
 
     function updateVowUI() {
@@ -1806,32 +1843,72 @@
         if (isShillelaghActive) {
             if (card) card.classList.add('active-buff');
             if (badge) { badge.innerText = 'ACTIVE'; badge.className = 'pill-badge pill-emerald'; }
-            if (btn) btn.innerText = '✕ End Shillelagh';
-            if (staffTag) staffTag.innerText = 'Shillelagh Active (WIS) • Magic Bludgeoning';
-            if (staffPill) { staffPill.innerText = 'WIS +6'; staffPill.className = 'pill-badge pill-emerald'; }
-            if (staffDesc) staffDesc.innerHTML = `<strong style="color:#4ade80;">+${3 + pb + (sMods.atkBonus || 0)} to Hit</strong>, <strong>1d8 + ${3 + (sMods.dmgBonus || 0)} Magical Bludgeoning</strong> (uses WIS)!`;
+            if (btn) {
+                btn.innerText = '✕ End Shillelagh';
+                btn.dataset.rpgTurnSlot = 'none';
+            }
+            if (staffTag) staffTag.innerText = 'Shillelagh Active (WIS) • Force or Bludgeoning';
+            if (staffPill) { staffPill.innerText = `WIS +${3 + pb + (sMods.atkBonus || 0)}`; staffPill.className = 'pill-badge pill-emerald'; }
+            if (staffDesc) staffDesc.innerHTML = `<strong style="color:#4ade80;">+${3 + pb + (sMods.atkBonus || 0)} to Hit</strong>, <strong>1d8 + ${3 + (sMods.dmgBonus || 0)} Force or Bludgeoning</strong> (uses WIS)!`;
             if (btnAtk) btnAtk.innerText = `🪄 Attack (+${3 + pb + (sMods.atkBonus || 0)})`;
-            if (btn2h) btn2h.innerText = `💥 1d8+${3 + (sMods.dmgBonus || 0)}${sEx} Magic`;
-            if (btn1h) btn1h.innerText = `💥 1d8+${3 + (sMods.dmgBonus || 0)}${sEx} Magic`;
+            if (btn2h) btn2h.innerText = `💥 1d8+${3 + (sMods.dmgBonus || 0)}${sEx} Force`;
+            if (btn1h) btn1h.innerText = `💥 1d8+${3 + (sMods.dmgBonus || 0)}${sEx} Force`;
         } else {
             if (card) card.classList.remove('active-buff');
             if (badge) { badge.innerText = 'OFF'; badge.className = 'pill-badge pill-neutral'; }
-            if (btn) btn.innerText = '🪄 Imbue Staff (BA)';
+            if (btn) {
+                btn.innerText = '🪄 Imbue Staff (BA)';
+                btn.dataset.rpgTurnSlot = 'bonus';
+            }
             if (staffTag) staffTag.innerText = 'Versatile (1H/2H) • Druidic Focus';
             if (staffPill) { staffPill.innerText = 'FOCUS'; staffPill.className = 'pill-badge pill-emerald'; }
-            if (staffDesc) staffDesc.innerHTML = `<strong>+${pb + (sMods.atkBonus || 0)} to Hit</strong>, <strong>1d8 Bludgeoning (2H)</strong>. Toggle <em>Shillelagh</em> for <strong>+${3 + pb} Hit, 1d8+3 Magic</strong>!`;
+            if (staffDesc) staffDesc.innerHTML = `<strong>+${pb + (sMods.atkBonus || 0)} to Hit</strong>, <strong>1d8 Bludgeoning (2H)</strong>. Toggle <em>Shillelagh</em> for <strong>+${3 + pb} Hit, 1d8+3 Force/Bludge</strong>!`;
             if (btnAtk) btnAtk.innerText = `🪄 Attack (+${pb + (sMods.atkBonus || 0)})`;
             const flat = sMods.dmgBonus ? `+${sMods.dmgBonus}` : '';
             if (btn2h) btn2h.innerText = `💥 2H (1d8${flat}${sEx})`;
             if (btn1h) btn1h.innerText = `💥 1H (1d6${flat}${sEx})`;
         }
+        if (window.COS_RPG && typeof COS_RPG.syncCombatActionLocks === 'function') COS_RPG.syncCombatActionLocks();
+    }
+
+    function updateDynamicSpellUI() {
+        const atk = getSpellAttackMod();
+        const dc = getSpellSaveDC();
+        const diceCount = characterLevel >= 5 ? 2 : 1;
+        const dcEl = document.getElementById('dc-hit-disp');
+        if (dcEl) dcEl.innerText = `DC ${dc} | +${atk}`;
+        const tileDc = document.getElementById('tile-spell-dc-hit');
+        if (tileDc) tileDc.title = `8 + PB (+${getProfBonus()}) + WIS (+3) = DC ${dc} | +${atk} Hit`;
+
+        const wispHit = document.getElementById('wisp-hit-txt');
+        const wispBtn = document.getElementById('btn-wisp-atk');
+        if (wispHit) wispHit.innerText = `+${atk} to Hit`;
+        if (wispBtn) wispBtn.innerText = `✨ Attack (+${atk})`;
+
+        const flameHit = document.getElementById('flame-hit-txt');
+        const flameBtn = document.getElementById('btn-flame-atk');
+        if (flameHit) flameHit.innerText = `+${atk} to Hit`;
+        if (flameBtn) flameBtn.innerText = `🔥 Hurl (+${atk})`;
+
+        const wispDmg = document.getElementById('wisp-dmg-txt');
+        const wispDmgBtn = document.getElementById('btn-wisp-dmg');
+        if (wispDmg) wispDmg.innerText = `${diceCount}d8`;
+        if (wispDmgBtn) wispDmgBtn.innerText = `💥 ${diceCount}d8 Radiant`;
+
+        const flameDmg = document.getElementById('flame-dmg-txt');
+        const flameDmgBtn = document.getElementById('btn-flame-dmg');
+        if (flameDmg) flameDmg.innerText = `${diceCount}d8`;
+        if (flameDmgBtn) flameDmgBtn.innerText = `💥 ${diceCount}d8 Fire`;
+
+        updateStarMapUI();
+        updateStarryFormUI();
     }
 
     function toggleShillelagh() {
         isShillelaghActive = !isShillelaghActive;
         updateShillelaghUI();
         logRoll(isShillelaghActive
-            ? `🪄 <strong>Shillelagh (Bonus Action • 1 Min):</strong> Starlit silver sap courses through Cael's yew staff! Uses WIS for attacks (<strong>+${3 + getProfBonus()} to hit</strong>, <strong>1d8 + 3 Magical Bludgeoning</strong>).`
+            ? `🪄 <strong>Shillelagh (Bonus Action • 1 Min):</strong> Starlit silver sap courses through Cael's yew staff! Uses WIS for attacks (<strong>+${3 + getProfBonus()} to hit</strong>, <strong>1d8 + 3 Force or Bludgeoning</strong>).`
             : `🪄 <strong>Shillelagh Ended:</strong> Yew Star-Wand returns to normal quarterstaff stats.`);
     }
 
@@ -1851,7 +1928,6 @@
 
     function rollStarryWispDamage() {
         const diceCount = characterLevel >= 5 ? 2 : 1;
-        pendingActionForArcher = true;
         rollFormulaDamage(`Starry Wisp (${diceCount}d8 • Target Emits Dim Light!)`, 8, 0, 'Radiant', diceCount);
     }
 
@@ -1866,12 +1942,11 @@
             });
         }
         pendingActionForArcher = true;
-        rollD20('🔥 Produce Flame (30 ft)', getSpellAttackMod());
+        rollD20('🔥 Produce Flame (60 ft)', getSpellAttackMod());
     }
 
     function rollProduceFlameDamage() {
         const diceCount = characterLevel >= 5 ? 2 : 1;
-        pendingActionForArcher = true;
         rollFormulaDamage(`Produce Flame (${diceCount}d8)`, 8, 0, 'Fire', diceCount);
     }
 
@@ -1882,11 +1957,6 @@
         const d4 = Math.floor(Math.random() * 4) + 1;
         pendingActionForArcher = true;
         logRoll(`🌿 <strong>Guidance (Touch • Conc 1m):</strong> Cael places a warm starlit hand on an ally's shoulder — add <span style="color:#4ade80; font-weight:800; font-size:1.05rem;">+${d4}</span> (1d4) to one ability check!`);
-    }
-
-    function castMendingCantrip() {
-        pendingActionForArcher = true;
-        logRoll('🔧 <strong>Mending (1 Min • Touch):</strong> Cael traces silver starlight over a break or tear up to 1 foot, weaving the material whole without a seam!');
     }
 
     function getCaelWpnMods(weaponId) {
@@ -1902,7 +1972,7 @@
         const sides = isShillelaghActive ? 8 : (is2H ? 8 : 6);
         const statMod = isShillelaghActive ? 3 : 0;
         const flatMod = statMod + (wMods.dmgBonus || 0);
-        const dType = (isShillelaghActive || wMods.isMagical) ? 'Magical Bludgeoning' : 'Bludgeoning';
+        const dType = isShillelaghActive ? 'Force / Bludgeoning' : (wMods.isMagical ? 'Magical Bludgeoning' : 'Bludgeoning');
         if (window.COS_RPG) {
             COS_RPG.setRollFollowup({
                 label: `💥 Roll Staff Damage (1d${sides}${flatMod ? '+' + flatMod : ''})`,
@@ -1918,8 +1988,7 @@
     function rollCaelStaffDamage(grip) {
         const sides = isShillelaghActive ? 8 : (grip === '2h' ? 8 : 6);
         const flat = isShillelaghActive ? 3 : 0;
-        const dType = isShillelaghActive ? 'Magical Bludgeoning' : 'Bludgeoning';
-        pendingActionForArcher = true;
+        const dType = isShillelaghActive ? 'Force or Bludgeoning' : 'Bludgeoning';
         rollFormulaDamage(isShillelaghActive ? 'Shillelagh Yew Staff' : `Yew Quarterstaff (${grip.toUpperCase()})`, sides, flat, dType, 1, 'staff');
     }
 
@@ -1939,7 +2008,7 @@
     }
 
     // ==========================================
-    // 🔮 PREPARED DRUID SPELLS & COMPENDIUM
+    // 🔮 PREPARED DRUID SPELLS & COMPENDIUM (2024 5.5e)
     // ==========================================
     function rollHealingSpell(name, dicePerLvl, sides, slotLvl, triggerChaliceNote) {
         const diceCount = dicePerLvl * slotLvl;
@@ -1964,7 +2033,6 @@
 
     function rollGuidingBoltDamage(slotLvl = 1) {
         const diceCount = 4 + Math.max(0, slotLvl - 1);
-        pendingActionForArcher = true;
         rollFormulaDamage(`⚡ Guiding Bolt (Lvl ${slotLvl} • Next Atk Advantage!)`, 6, 0, 'Radiant', diceCount);
     }
 
@@ -1977,6 +2045,7 @@
                 onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Guiding Bolt', diceCount: 3 + slotLvl, sides: 6, flatMod: 0, dmgType: 'Radiant' })
             });
         }
+        pendingActionForArcher = true;
         rollD20(`⚡ Guiding Bolt (Lvl ${slotLvl} Slot • Next Atk Adv!)`, getSpellAttackMod());
     }
 
@@ -1998,22 +2067,22 @@
             name: "💚 Cure Wounds",
             tag: "1st Lvl • 1 Action • Touch",
             level: 1,
-            school: "Abjuration (5.5e) / Evocation",
+            school: "Abjuration (2024 5.5e)",
             castingTime: "1 Action",
             range: "Touch",
             components: "V, S",
             duration: "Instantaneous",
             wikiUrl: "https://5e.tools/spells.html#cure%20wounds_xphb",
-            attackMod: "Restores 1d8 + 3 HP (2d8+3 in 5.5e / Upcast +1d8/lvl)",
+            attackMod: "Restores 2d8 + 3 HP (Upcast +2d8/lvl)",
             damage: "Triggers Starry Form: Chalice (+1d8 + 3 bonus HP within 30 ft!)",
-            desc: "Touch ally to restore 1d8+3 HP (+1d8/lvl). Triggers 🏺 Starry Chalice for +1d8+3 bonus heal!",
-            fullRules: "A creature you touch regains Hit Points equal to <strong>1d8 + your Wisdom modifier (+3)</strong> (or 2d8+3 if using 2024 5.5e scaling).<br><br>🏺 <strong>Starry Form — Chalice Synergy:</strong> Whenever you cast this spell using a spell slot while in Chalice Form, you or another creature within 30 feet immediately regains an extra <strong>1d8 + 3 Hit Points</strong>!",
-            upcastNotes: "When cast using a spell slot of 2nd level or higher, the healing increases by 1d8 (or 2d8 in 5.5e) for each slot level above 1st.",
+            desc: "Touch ally to restore 2d8+3 HP (+2d8/lvl). Triggers 🏺 Starry Chalice for +1d8+3 bonus heal!",
+            fullRules: "A creature you touch regains Hit Points equal to <strong>2d8 + your Wisdom modifier (+3)</strong>.<br><br>🏺 <strong>Starry Form — Chalice Synergy:</strong> Whenever you cast this spell using a spell slot while in Chalice Form, you or another creature within 30 feet immediately regains an extra <strong>1d8 + 3 Hit Points</strong>!",
+            upcastNotes: "When cast using a spell slot of 2nd level or higher, the healing increases by <strong>2d8</strong> for each slot level above 1st (4d8+3 at 2nd lvl).",
             flavor: "Cael slams both glowing starlit hands over a bleeding chest wound, knitting torn flesh back together in warm moonlight.",
             hasLevelSelect: true,
-            levelOptions: { 1: "Lvl 1 (1d8+3)", 2: "Lvl 2 (2d8+3)", 3: "Lvl 3 (3d8+3)" },
+            levelOptions: { 1: "Lvl 1 (2d8+3)", 2: "Lvl 2 (4d8+3)", 3: "Lvl 3 (6d8+3)" },
             buttons: [
-                { label: "💚 Cast Cure Wounds (-1 Slot)", class: "btn-roll-action btn-roll-heal", costSlot: true, onClick: (lvl) => rollHealingSpell('Cure Wounds', 1, 8, lvl, true) }
+                { label: "💚 Cast Cure Wounds", class: "btn-roll-action btn-roll-heal", costSlot: true, onClick: (lvl) => rollHealingSpell('Cure Wounds', 2, 8, lvl, true) }
             ]
         },
         {
@@ -2021,22 +2090,22 @@
             name: "💬 Healing Word",
             tag: "1st Lvl • Bonus Action • 60ft",
             level: 1,
-            school: "Abjuration (5.5e) / Evocation",
+            school: "Abjuration (2024 5.5e)",
             castingTime: "1 Bonus Action",
             range: "60 feet",
             components: "V",
             duration: "Instantaneous",
             wikiUrl: "https://5e.tools/spells.html#healing%20word_xphb",
             attackMod: "Bonus Action Ranged Emergency Rescue (60 ft)",
-            damage: "Restores 1d4 + 3 HP + Triggers Starry Chalice (+1d8 + 3 HP)!",
-            desc: "Bonus Action (60ft): Heal 1d4+3 HP to stand up a downed ally & trigger 🏺 Starry Chalice!",
-            fullRules: "A creature of your choice that you can see within 60 feet regains Hit Points equal to <strong>1d4 + your Wisdom modifier (+3)</strong>.<br><br>🏺 <strong>Starry Chalice Rescue Combo:</strong> Because this uses only a <strong>Bonus Action</strong> and a spell slot, you can pick up a downed ally at 0 HP from 60 feet away AND trigger <strong>Chalice (+1d8 + 3 HP)</strong>—while still having your full Action free for a Cantrip or Dodge!",
-            upcastNotes: "Healing increases by 1d4 for each slot level above 1st.",
+            damage: "Restores 2d4 + 3 HP + Triggers Starry Chalice (+1d8 + 3 HP)!",
+            desc: "Bonus Action (60ft): Heal 2d4+3 HP to stand up a downed ally & trigger 🏺 Starry Chalice!",
+            fullRules: "A creature of your choice that you can see within 60 feet regains Hit Points equal to <strong>2d4 + your Wisdom modifier (+3)</strong>.<br><br>🏺 <strong>Starry Chalice Rescue Combo:</strong> Because this uses only a <strong>Bonus Action</strong> and a spell slot, you can pick up a downed ally at 0 HP from 60 feet away AND trigger <strong>Chalice (+1d8 + 3 HP)</strong>—while still having your full Action free for a Cantrip or Dodge!",
+            upcastNotes: "Healing increases by <strong>2d4</strong> for each slot level above 1st (4d4+3 at 2nd lvl).",
             flavor: "'Not on my watch—get back up!'",
             hasLevelSelect: true,
-            levelOptions: { 1: "Lvl 1 (1d4+3)", 2: "Lvl 2 (2d4+3)", 3: "Lvl 3 (3d4+3)" },
+            levelOptions: { 1: "Lvl 1 (2d4+3)", 2: "Lvl 2 (4d4+3)", 3: "Lvl 3 (6d4+3)" },
             buttons: [
-                { label: "💬 Cast Healing Word (-1 Slot)", class: "btn-roll-action btn-roll-heal", costSlot: true, onClick: (lvl) => rollHealingSpell('Healing Word', 1, 4, lvl, true) }
+                { label: "💬 Cast Healing Word", class: "btn-roll-action btn-roll-heal", costSlot: true, onClick: (lvl) => rollHealingSpell('Healing Word', 2, 4, lvl, true) }
             ]
         },
         {
@@ -2050,16 +2119,16 @@
             components: "V, S",
             duration: "1 round",
             wikiUrl: "https://5e.tools/spells.html#guiding%20bolt_xphb",
-            attackMod: "+6 Ranged Spell Attack",
+            attackMod: "+5 Ranged Spell Attack",
             damage: "4d6 Radiant + Next Attack Against Target Has Advantage!",
-            desc: "120ft (+6 Hit): 4d6 Radiant & target glows—the NEXT attack roll has Advantage!",
-            fullRules: "A flash of light streaks toward a creature of your choice within 120 feet. Make a ranged spell attack (<strong>+6 to hit</strong>). On a hit, the target takes <strong>4d6 Radiant damage</strong>, and the next attack roll made against this target before the end of your next turn has <strong>Advantage</strong> thanks to the mystical dim light glittering on it!<br><br>🗺️ <strong>Star Map Free Casts:</strong> You can cast this at 1st level without a spell slot up to <strong>2 times per Long Rest</strong> using the Star Map button above.",
+            desc: "120ft (+5 Hit): 4d6 Radiant & target glows—the NEXT attack roll has Advantage!",
+            fullRules: "A flash of light streaks toward a creature of your choice within 120 feet. Make a ranged spell attack (<strong>+5 to hit</strong>). On a hit, the target takes <strong>4d6 Radiant damage</strong>, and the next attack roll made against this target before the end of your next turn has <strong>Advantage</strong> thanks to the mystical dim light glittering on it!<br><br>🗺️ <strong>2024 Star Map Free Casts:</strong> You can cast this at 1st level without a spell slot a number of times equal to your <strong>Wisdom modifier (3/Long Rest)</strong> using the Star Map bar above.",
             upcastNotes: "Damage increases by +1d6 for each slot level above 1st (5d6 at 2nd lvl).",
             flavor: "'Star's on him! Hit him while he's marked!'",
             hasLevelSelect: true,
             levelOptions: { 1: "Lvl 1 (4d6)", 2: "Lvl 2 (5d6)", 3: "Lvl 3 (6d6)" },
             buttons: [
-                { label: "⚡ Cast w/ Slot (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castGuidingBoltSlot(lvl) }
+                { label: "⚡ Cast w/ Slot", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castGuidingBoltSlot(lvl) }
             ]
         },
         {
@@ -2075,14 +2144,14 @@
             wikiUrl: "https://5e.tools/spells.html#goodberry_xphb",
             attackMod: "Creates 10 Healing Berries (1 HP Each)",
             damage: "10x 1 HP Berries + Full Day's Nourishment in Barovia",
-            desc: "Conjures 10 berries (last 24h). Action to eat 1 for 1 HP & full day's food.",
-            fullRules: "Up to <strong>ten berries</strong> appear in your hand and are infused with magic for the duration. A creature can use its action to eat one berry. Eating a berry restores <strong>1 Hit Point</strong>, and the berry provides enough nourishment to sustain a creature for one day. Berries lose potency after 24 hours.",
+            desc: "Conjures 10 berries (last 24h). Bonus Action (2024) or Action to eat 1 for 1 HP & food.",
+            fullRules: "Up to <strong>ten berries</strong> appear in your hand and are infused with magic for the duration. A creature can use its Bonus Action (2024 5.5e) to eat one berry. Eating a berry restores <strong>1 Hit Point</strong>, and the berry provides enough nourishment to sustain a creature for one day. Berries lose potency after 24 hours.",
             upcastNotes: "No extra benefit at higher levels.",
             flavor: "Cael hands out pocketfuls of frost-sweetened silverberries around the damp Barovian campfire.",
             hasLevelSelect: true,
             levelOptions: { 1: "Lvl 1 (10 Berries)", 2: "Lvl 2 (10 Berries)" },
             buttons: [
-                { label: "🫐 Cast Goodberry (-1 Slot)", class: "btn-roll-action btn-roll-heal", costSlot: true, onClick: (lvl) => logRoll(`🫐 <strong>Goodberry (Lvl ${lvl} Slot):</strong> Conjured <strong>10 healing berries</strong> (last 24 hours; 1 HP + full day's food each)!`) }
+                { label: "🫐 Cast Goodberry", class: "btn-roll-action btn-roll-heal", costSlot: true, onClick: (lvl) => logRoll(`🫐 <strong>Goodberry (Lvl ${lvl} Slot):</strong> Conjured <strong>10 healing berries</strong> (last 24 hours; 1 HP + full day's food each)!`) }
             ]
         },
         {
@@ -2096,39 +2165,16 @@
             components: "V, S",
             duration: "Concentration, up to 1 minute",
             wikiUrl: "https://5e.tools/spells.html#entangle_xphb",
-            attackMod: "DC 14 Strength Saving Throw",
+            attackMod: "DC 13 Strength Saving Throw",
             damage: "20-ft Difficult Terrain + Restrained Condition",
-            desc: "90ft • 20ft square. DC 14 STR save or Restrained (Attacks vs them have Advantage!).",
-            fullRules: "Grasping weeds and dark Barovian briars sprout from the ground in a <strong>20-foot square</strong> starting from a point within range. For the duration, these plants turn the ground in the area into difficult terrain.<br><br>A creature in the area when you cast the spell must succeed on a <strong>DC 14 Strength saving throw</strong> or be <strong>Restrained</strong> by the entangling plants until the spell ends. A restrained creature can use its action to make a <strong>DC 14 Strength check</strong> to break free.",
+            desc: "90ft • 20ft square. DC 13 STR save or Restrained (Attacks vs them have Advantage!).",
+            fullRules: "Grasping weeds and dark Barovian briars sprout from the ground in a <strong>20-foot square</strong> starting from a point within range. For the duration, these plants turn the ground in the area into difficult terrain.<br><br>A creature in the area when you cast the spell must succeed on a <strong>DC 13 Strength saving throw</strong> or be <strong>Restrained</strong> by the entangling plants until the spell ends. A restrained creature can use its action to make a <strong>DC 13 Strength (Athletics) check</strong> to break free.",
             upcastNotes: "No extra benefit at higher levels.",
             flavor: "Silver-veined roots erupt from the muddy Svalich soil, snaring claws and boots alike.",
             hasLevelSelect: true,
             levelOptions: { 1: "Lvl 1 (20ft Square)", 2: "Lvl 2 (20ft Square)" },
             buttons: [
-                { label: "🌿 Cast Entangle (-1 Slot)", class: "btn-roll-action", costSlot: true, onClick: (lvl) => logRoll(`🌿 <strong>Entangle (Lvl ${lvl} • 90ft • 20-ft Square • Conc 1m):</strong> Grasping roots erupt! Foes inside must pass a <strong>DC ${getSpellSaveDC()} STR Save</strong> or be <strong>Restrained</strong>!`) }
-            ]
-        },
-        {
-            id: "absorb_elements",
-            name: "🛡️ Absorb Elements",
-            tag: "1st Lvl • 1 Reaction • Self",
-            level: 1,
-            school: "Abjuration",
-            castingTime: "1 Reaction (when taking Acid/Cold/Fire/Lightning/Thunder)",
-            range: "Self",
-            components: "S",
-            duration: "1 round",
-            wikiUrl: "https://5e.tools/spells.html#absorb%20elements_xge",
-            attackMod: "Resistance to Triggering Elemental Damage until Next Turn",
-            damage: "+1d6 Elemental Damage on Next Melee Hit (+1d6/slot above 1st)",
-            desc: "Reaction: Gain Resistance to Acid/Cold/Fire/Lightning/Thunder + +1d6 on next melee hit.",
-            fullRules: "The spell captures some of the incoming energy, lessening its effect on you and storing it for your next melee attack. You have <strong>Resistance to the triggering damage type</strong> (Acid, Cold, Fire, Lightning, or Thunder) until the start of your next turn. Also, the first time you hit with a melee attack on your next turn, the target takes an extra <strong>1d6 damage</strong> of the triggering type.",
-            upcastNotes: "The extra melee damage increases by 1d6 for each slot level above 1st.",
-            flavor: "Starlit runes across Cael's leather vest drink in the lightning or dragonfire and channel it into his staff.",
-            hasLevelSelect: true,
-            levelOptions: { 1: "Lvl 1 (+1d6)", 2: "Lvl 2 (+2d6)" },
-            buttons: [
-                { label: "🛡️ Absorb Reaction (-1 Slot)", class: "btn-roll-action", costSlot: true, onClick: (lvl) => logRoll(`🛡️ <strong>Absorb Elements (Lvl ${lvl} Reaction):</strong> Cael gains <strong>Resistance</strong> to the triggering elemental damage until his next turn and charges his next melee hit with <strong>+${lvl}d6 elemental damage</strong>!`) }
+                { label: "🌿 Cast Entangle", class: "btn-roll-action", costSlot: true, onClick: (lvl) => logRoll(`🌿 <strong>Entangle (Lvl ${lvl} • 90ft • 20-ft Square • Conc 1m):</strong> Grasping roots erupt! Foes inside must pass a <strong>DC ${getSpellSaveDC()} STR Save</strong> or be <strong>Restrained</strong>!`) }
             ]
         },
         {
@@ -2139,20 +2185,20 @@
             school: "Evocation",
             castingTime: "1 Action",
             range: "120 feet (5-ft radius, 40-ft cylinder)",
-            components: "V, S, M (several seeds of any moonseed plant & opalescent feldspar)",
+            components: "V, S, M (moonseed seeds & opalescent feldspar)",
             duration: "Concentration, up to 1 minute",
             wikiUrl: "https://5e.tools/spells.html#moonbeam_xphb",
-            attackMod: "DC 14 Constitution Saving Throw (Shapechangers Disadvantage!)",
+            attackMod: "DC 13 Constitution Saving Throw (Shapechangers Disadvantage!)",
             damage: "2d10 Radiant (Half on Save) • Reveals Werewolves & Vampire Mist!",
-            desc: "120ft • 5ft cylinder. DC 14 CON or 2d10 Radiant; Shapechangers save at Disadv & revert!",
-            fullRules: "A silvery beam of pale light shines down in a <strong>5-foot-radius, 40-foot-high cylinder</strong> centered on a point within range. When a creature enters the spell's area for the first time on a turn or starts its turn there, it must make a <strong>DC 14 Constitution saving throw</strong>, taking <strong>2d10 Radiant damage</strong> on a failed save, or half as much on a success.<br><br>🐺 <strong>Barovian Shapechanger Bane:</strong> A shapechanger (Werewolves, Night Hags, Vampires in mist/bat form) makes its saving throw with <strong>Disadvantage</strong>. If it fails, it also instantly reverts to its original form and can't assume a different form until it leaves the spell's light. Use an Action on later turns to move the beam up to 60 feet.",
+            desc: "120ft • 5ft cylinder. DC 13 CON or 2d10 Radiant; Shapechangers save at Disadv & revert!",
+            fullRules: "A silvery beam of pale light shines down in a <strong>5-foot-radius, 40-foot-high cylinder</strong> centered on a point within range. When the cylinder appears—and when a creature enters it or ends its turn there (2024 5.5e)—it must make a <strong>DC 13 Constitution saving throw</strong>, taking <strong>2d10 Radiant damage</strong> on a failed save, or half as much on a success.<br><br>🐺 <strong>Barovian Shapechanger Bane:</strong> A shapechanger (Werewolves, Night Hags, Vampires in mist/bat form) makes its saving throw with <strong>Disadvantage</strong>. If it fails, it also instantly reverts to its original form and can't assume a different form until it leaves the spell's light. Use a Magic action on later turns to move the beam up to 60 feet.",
             upcastNotes: "Damage increases by 1d10 for each slot level above 2nd (3d10 at 3rd lvl).",
             flavor: "A pillar of impossible, cold silver moonlight pierces Barovia's choked storm-clouds.",
             hasLevelSelect: true,
             levelOptions: { 2: "Lvl 2 (2d10 Rad)", 3: "Lvl 3 (3d10 Rad)" },
             buttons: [
-                { label: "🌙 Cast Moonbeam (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castMoonbeamSpell(lvl) },
-                { label: "💥 Roll Damage", class: "btn-roll-action btn-roll-dmg", costSlot: false, onClick: (lvl) => { pendingActionForArcher = true; rollFormulaDamage(`Moonbeam (Lvl ${lvl})`, 10, 0, 'Radiant', lvl); } }
+                { label: "🌙 Cast Moonbeam", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castMoonbeamSpell(lvl) },
+                { label: "💥 Move / Turn Dmg", class: "btn-roll-action btn-roll-dmg", costSlot: false, onClick: (lvl) => { pendingActionForArcher = true; rollFormulaDamage(`Moonbeam (Lvl ${lvl})`, 10, 0, 'Radiant', lvl); } }
             ]
         },
         {
@@ -2163,7 +2209,7 @@
             school: "Abjuration",
             castingTime: "1 Action",
             range: "Self (30-ft aura)",
-            components: "V, S, M (ashes from a burned leaf of mistletoe & sprig of spruce)",
+            components: "V, S, M (ashes from burned mistletoe)",
             duration: "Concentration, up to 1 hour",
             wikiUrl: "https://5e.tools/spells.html#pass%20without%20trace_xphb",
             attackMod: "+10 Bonus to All Dexterity (Stealth) Checks for Party",
@@ -2175,30 +2221,7 @@
             hasLevelSelect: true,
             levelOptions: { 2: "Lvl 2 (+10 Stealth 1h)", 3: "Lvl 3 (+10 Stealth 1h)" },
             buttons: [
-                { label: "🌫️ Cast Pass w/o Trace (-1 Slot)", class: "btn-roll-action", costSlot: true, onClick: (lvl) => logRoll(`🌫️ <strong>Pass without Trace (Lvl ${lvl} • 30ft Aura • Conc 1h):</strong> All chosen allies within 30 ft gain <strong>+10 Stealth</strong> and leave zero tracks!`) }
-            ]
-        },
-        {
-            id: "lesser_restoration",
-            name: "✨ Lesser Restoration",
-            tag: "2nd Lvl • 1 Action (BA in 5.5e) • Touch",
-            level: 2,
-            school: "Abjuration",
-            castingTime: "1 Action (or Bonus Action in 5.5e)",
-            range: "Touch",
-            components: "V, S",
-            duration: "Instantaneous",
-            wikiUrl: "https://5e.tools/spells.html#lesser%20restoration_xphb",
-            attackMod: "Ends 1 Disease or Condition Instantly",
-            damage: "Cures Blinded, Deafened, Paralyzed, or Poisoned",
-            desc: "Touch ally to immediately cure 1 disease or Blinded, Deafened, Paralyzed, or Poisoned.",
-            fullRules: "You touch a creature and can end either one disease or one condition afflicting it. The condition can be <strong>Blinded, Deafened, Paralyzed, or Poisoned</strong>.",
-            upcastNotes: "No extra benefit at higher levels.",
-            flavor: "Pale starlight flushes venom and paralyzing ghoul-chill straight out of a companion's veins.",
-            hasLevelSelect: true,
-            levelOptions: { 2: "Lvl 2 (Cure Condition)", 3: "Lvl 3 (Cure Condition)" },
-            buttons: [
-                { label: "✨ Cast Lesser Restoration (-1 Slot)", class: "btn-roll-action btn-roll-heal", costSlot: true, onClick: (lvl) => logRoll(`✨ <strong>Lesser Restoration (Lvl ${lvl} • Touch):</strong> Cleansed 1 disease or <strong>Blinded / Deafened / Paralyzed / Poisoned</strong> condition from an ally!`) }
+                { label: "🌫️ Cast Pass w/o Trace", class: "btn-roll-action", costSlot: true, onClick: (lvl) => logRoll(`🌫️ <strong>Pass without Trace (Lvl ${lvl} • 30ft Aura • Conc 1h):</strong> All chosen allies within 30 ft gain <strong>+10 Stealth</strong> and leave zero tracks!`) }
             ]
         }
     ];
@@ -2211,11 +2234,11 @@
             castingTime: "1 Bonus Action (Uses 1 Wild Shape)",
             range: "30 feet",
             components: "Starlit Bone Star Chart",
-            duration: "10 minutes (No Concentration)",
-            wikiUrl: "https://5e.tools/classes.html#druid_phb,state:sub_stars_tce=b1",
+            duration: "10 minutes (No Concentration • Free to Dismiss)",
+            wikiUrl: "https://5e.tools/classes.html#druid_xphb,state:sub_stars_xphb=b1",
             attackMod: "Triggers on Any Leveled Healing Spell",
             damage: "Restores an extra 1d8 + 3 HP to self or another creature within 30 ft",
-            fullRules: "A constellation of a life-giving goblet appears on you. Whenever you cast a spell using a spell slot that restores Hit Points to a creature (such as <em>Cure Wounds</em> or <em>Healing Word</em>), you or another creature within 30 feet of you can regain Hit Points equal to <strong>1d8 + your Wisdom modifier (+3)</strong>.<br><br>🏺 <strong>Single-Turn Double Heal:</strong> Heal the dying tank with <em>Healing Word</em> AND patch up a second ally at the exact same moment!",
+            fullRules: "A constellation of a life-giving goblet appears on you. Whenever you cast a spell using a spell slot that restores Hit Points to a creature (such as <em>Cure Wounds</em> or <em>Healing Word</em>), you or another creature within 30 feet of you can regain Hit Points equal to <strong>1d8 + your Wisdom modifier (+3)</strong>.<br><br>🏺 <strong>Single-Turn Double Heal:</strong> Heal the dying tank with <em>Healing Word (2d4+3)</em> AND patch up a second ally (+1d8+3) at the exact same moment!",
             flavor: "'Hold the line! Focus the big one—I've got the wounded!'",
             modalButtons: [
                 { label: "🏺 Activate Chalice (BA)", class: "btn-roll-action", onClick: () => { closeSpellModal(); activateStarryForm('chalice'); } },
@@ -2229,15 +2252,15 @@
             castingTime: "1 Bonus Action (Uses 1 Wild Shape)",
             range: "60 feet",
             components: "Starlit Bone Star Chart",
-            duration: "10 minutes (No Concentration)",
-            wikiUrl: "https://5e.tools/classes.html#druid_phb,state:sub_stars_tce=b1",
-            attackMod: "+6 Ranged Spell Attack (60 ft)",
+            duration: "10 minutes (No Concentration • Free to Dismiss)",
+            wikiUrl: "https://5e.tools/classes.html#druid_xphb,state:sub_stars_xphb=b1",
+            attackMod: "+5 Ranged Spell Attack (60 ft)",
             damage: "1d8 + 3 Radiant Damage",
-            fullRules: "A constellation of an archer appears on you. When you activate this form, and as a <strong>Bonus Action</strong> on your subsequent turns while it lasts, you can make a ranged spell attack (<strong>+6 to hit</strong>), hurling a luminous arrow that targets one creature within 60 feet of you. On a hit, the attack deals <strong>1d8 + 3 Radiant damage</strong>.",
+            fullRules: "A constellation of an archer appears on you. When you activate this form, and as a <strong>Bonus Action</strong> on your subsequent turns while it lasts, you can make a ranged spell attack (<strong>+5 to hit</strong>), hurling a luminous arrow that targets one creature within 60 feet of you. On a hit, the attack deals <strong>1d8 + 3 Radiant damage</strong>.",
             flavor: "Constellation light snaps taut across Cael's shoulder, loosing bolts of cold silver starlight.",
             modalButtons: [
                 { label: "🏹 Activate Archer (BA)", class: "btn-roll-action", onClick: () => { closeSpellModal(); activateStarryForm('archer'); } },
-                { label: "🏹 Archer Attack (+6)", class: "btn-roll-action btn-roll-wild", onClick: () => { closeSpellModal(); rollStarryArcherAttack(); } },
+                { label: "🏹 Archer Attack (+5)", class: "btn-roll-action btn-roll-wild", onClick: () => { closeSpellModal(); rollStarryArcherAttack(); } },
                 { label: "💥 Archer Dmg (1d8+3)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollStarryArcherDamage(); } }
             ]
         },
@@ -2248,8 +2271,8 @@
             castingTime: "1 Bonus Action (Uses 1 Wild Shape)",
             range: "Self",
             components: "Starlit Bone Star Chart",
-            duration: "10 minutes (No Concentration)",
-            wikiUrl: "https://5e.tools/classes.html#druid_phb,state:sub_stars_tce=b1",
+            duration: "10 minutes (No Concentration • Free to Dismiss)",
+            wikiUrl: "https://5e.tools/classes.html#druid_xphb,state:sub_stars_xphb=b1",
             attackMod: "d20 Minimum 10 on Concentration CON Saves + INT/WIS Checks",
             damage: "Minimum 12 Concentration Save (Locks in Moonbeam / Entangle / Pass without Trace)",
             fullRules: "A constellation of a wise dragon appears on you. When you make an <strong>Intelligence or a Wisdom check</strong> or a <strong>Constitution saving throw to maintain concentration on a spell</strong>, you can treat a roll of <strong>9 or lower on the d20 as a 10</strong>.",
@@ -2262,15 +2285,15 @@
         "star_map": {
             id: "star_map",
             name: "🗺️ Star Map (Arcane Focus & Free Guiding Bolts)",
-            school: "Circle of the Stars Feature (Level 2/3)",
+            school: "Circle of the Stars Feature (Level 3 • 2024 5.5e)",
             castingTime: "1 Action",
             range: "120 feet",
             components: "Carved Bone Star Chart",
-            duration: "Proficiency Bonus / Long Rest (2/LR)",
-            wikiUrl: "https://5e.tools/classes.html#druid_phb,state:sub_stars_tce=b1",
-            attackMod: "+6 Spell Attack • Grants +1 Spell DC & Hit Resonance",
-            damage: "2 Free Casts of Guiding Bolt (4d6 Radiant + Next Attack Advantage) per Long Rest",
-            fullRules: "You've created a star chart as part of your heavenly studies. It is a Tiny object and can serve as a spellcasting focus for your druid spells.<br><br>• You know the <strong>Guidance</strong> cantrip and have <strong>Guiding Bolt</strong> always prepared.<br>• You can cast <em>Guiding Bolt</em> without expending a spell slot a number of times equal to your <strong>Proficiency Bonus (2/Long Rest)</strong>.",
+            duration: "WIS Modifier / Long Rest (3/LR)",
+            wikiUrl: "https://5e.tools/classes.html#druid_xphb,state:sub_stars_xphb=b1",
+            attackMod: "+5 Spell Attack • DC 13 Save",
+            damage: "3 Free Casts of Guiding Bolt (4d6 Radiant + Next Attack Advantage) per Long Rest",
+            fullRules: "You've created a star chart as part of your heavenly studies. It is a Tiny object and can serve as a spellcasting focus for your druid spells.<br><br>• You always have the <strong>Guidance</strong> cantrip and <strong>Guiding Bolt</strong> prepared.<br>• Under 2024 5.5e rules, you can cast <em>Guiding Bolt</em> without expending a spell slot a number of times equal to your <strong>Wisdom modifier (3/Long Rest)</strong>.",
             flavor: "'The fog stole the sky, but the stars didn't vanish—they're just waiting for someone who remembers where they were.'",
             modalButtons: [
                 { label: "⚡ Cast Free Guiding Bolt", class: "btn-roll-action btn-roll-wild", onClick: () => { closeSpellModal(); castFreeStarMapGuidingBolt(); } }
@@ -2278,72 +2301,72 @@
         },
         "wild_shape_compendium": {
             id: "wild_shape_compendium",
-            name: "🐾 Wild Shape (Black Cat & Mist Raven)",
+            name: "🐾 Wild Shape (2024 5.5e • Black Cat Active)",
             school: "Druid Class Feature (2/Short or Long Rest)",
-            castingTime: "1 Action (or Bonus Action in 5.5e)",
+            castingTime: "1 Bonus Action (2024 5.5e)",
             range: "Self",
             components: "Druidic Transformation",
             duration: "1 Hour (Half Druid Level)",
             wikiUrl: "https://5e.tools/classes.html#druid_xphb",
-            attackMod: "Black Cat (Stealth +6, Climb 30 ft) | Mist Raven (Fly 50 ft, Mimicry)",
+            attackMod: "Retains Full 24/24 HP + Gains 3 Temp HP (Druid Level)",
             damage: "Shared 2/SR Pool with Starry Form",
-            fullRules: "• <strong>🐈 Black Cat:</strong> AC 12, Form HP 2, Speed 40 ft, Climb 30 ft, Darkvision 60 ft, Stealth +6. Can rub against an injured ally's ankle to deliver discreet <em>Purr-Heal (1d4+1 Temp HP)</em> or touch-cast <em>Cure Wounds</em>!<br>• <strong>🦅 Mist Raven:</strong> AC 12, Form HP 1, Speed 10 ft, Fly 50 ft, Perception +5, Mimicry. Can scout Barovian rooftops and drop <em>Goodberries</em> from above!",
+            fullRules: "• <strong>2024 Wild Shape Core:</strong> Activate as a <strong>Bonus Action</strong>. You keep your own Hit Points (<strong>24/24</strong>) and gain <strong>Temporary Hit Points equal to your Druid level (+3 Temp HP)</strong>, plus retain your proficiencies (using whichever skill/save bonus is higher).<br>• <strong>🐈 Black Cat (Unlocked):</strong> Tiny beast, AC 12, Speed 40 ft, Climb 30 ft, Darkvision 60 ft, <strong>Stealth +6</strong> (+4 higher than Human!). Can deliver discreet <em>Purr-Heal (1d4+1 Temp HP)</em>.<br>• <strong>🔒 Mist Raven (Unlocks at Level 8):</strong> Flying Wild Shapes require <strong>Druid Level 8</strong> under 2024 5.5e rules (AC 12, Fly 50 ft, Keen Perception +7, Mimicry).",
             flavor: "A sleek midnight-black cat watches silently from the tavern hearth, silver starlight glinting in its eyes.",
             modalButtons: [
-                { label: "🐈 Shift Black Cat", class: "btn-roll-action", onClick: () => { closeSpellModal(); setWildShapeForm('cat'); } },
-                { label: "🦅 Shift Mist Raven", class: "btn-roll-action", onClick: () => { closeSpellModal(); setWildShapeForm('raven'); } },
+                { label: "🐈 Shift Black Cat (BA)", class: "btn-roll-action", onClick: () => { closeSpellModal(); setWildShapeForm('cat'); } },
                 { label: "🧑 Human Form", class: "btn-act btn-act-pre", onClick: () => { closeSpellModal(); setWildShapeForm('human'); } }
             ]
         },
         "starry_wisp": {
             id: "starry_wisp",
-            name: "✨ Starry Wisp (5.5e Druid Cantrip)",
+            name: "✨ Starry Wisp (2024 5.5e Druid Cantrip)",
             school: "Evocation Cantrip",
             castingTime: "1 Action",
             range: "60 feet",
             components: "V, S",
             duration: "Instantaneous (Light lasts 1 round)",
             wikiUrl: "https://5e.tools/spells.html#starry%20wisp_xphb",
-            attackMod: "+6 Ranged Spell Attack",
+            attackMod: "+5 Ranged Spell Attack",
             damage: "1d8 Radiant + Target Emits Dim Light & Cannot Benefit from Invisible!",
-            fullRules: "You launch a mote of light at one creature or object within 60 feet. Make a ranged spell attack (<strong>+6 to hit</strong>). On a hit, the target takes <strong>1d8 Radiant damage</strong>, and until the end of your next turn, it emits Dim Light in a 10-foot radius and <strong>can't benefit from the Invisible condition</strong>.",
+            fullRules: "You launch a mote of light at one creature or object within 60 feet. Make a ranged spell attack (<strong>+5 to hit</strong>). On a hit, the target takes <strong>1d8 Radiant damage</strong>, and until the end of your next turn, it emits Dim Light in a 10-foot radius and <strong>can't benefit from the Invisible condition</strong>.",
             upcastNotes: "Damage increases by 1d8 at Level 5 (2d8), Level 11 (3d8), and Level 17 (4d8).",
             flavor: "A silver firefly of starlight streaks out and pins invisible stalkers in pale radiance.",
             modalButtons: [
-                { label: "✨ Attack (+6)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollStarryWispAttack(); } },
+                { label: "✨ Attack (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollStarryWispAttack(); } },
                 { label: "💥 1d8 Radiant", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollStarryWispDamage(); } }
             ]
         },
         "produce_flame": {
             id: "produce_flame",
-            name: "🔥 Produce Flame",
+            name: "🔥 Produce Flame (2024 5.5e)",
             school: "Conjuration Cantrip",
-            castingTime: "1 Bonus Action (5.5e) / 1 Action",
-            range: "Self / 30 feet",
+            castingTime: "1 Bonus Action (Summon) / Magic Action (Hurl)",
+            range: "Self / 60 feet",
             components: "V, S",
             duration: "10 minutes",
             wikiUrl: "https://5e.tools/spells.html#produce%20flame_xphb",
-            attackMod: "+6 Ranged Spell Attack (30 ft)",
-            damage: "1d8 Fire Damage + 10 ft Bright / +10 ft Dim Torchlight",
-            fullRules: "A flickering flame appears in your hand and remains for 10 minutes, shedding Bright Light in a 10-foot radius and Dim Light for an additional 10 feet. When you cast the spell—and as a Magic action on later turns—you can hurl the flame at a creature within 30 feet (+6 to hit, <strong>1d8 Fire damage</strong>).",
+            attackMod: "+5 Ranged Spell Attack (60 ft)",
+            damage: "1d8 Fire Damage + 20 ft Bright / +20 ft Dim Torchlight",
+            fullRules: "A flickering flame appears in your hand as a <strong>Bonus Action</strong> and remains for 10 minutes, shedding Bright Light in a 20-foot radius and Dim Light for an additional 20 feet. Until the spell ends, you can take a <strong>Magic action</strong> to hurl fire at a creature or object within <strong>60 feet</strong> (+5 to hit, <strong>1d8 Fire damage</strong>).",
+            upcastNotes: "Damage increases by 1d8 at Level 5 (2d8), Level 11 (3d8), and Level 17 (4d8).",
             flavor: "Warm amber fire dances across Cael's palm, pushing back the freezing Svalich fog.",
             modalButtons: [
-                { label: "🔥 Hurl Flame (+6)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollProduceFlameAttack(); } },
+                { label: "🔥 Hurl Flame (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollProduceFlameAttack(); } },
                 { label: "💥 1d8 Fire", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollProduceFlameDamage(); } }
             ]
         },
         "guidance": {
             id: "guidance",
-            name: "🌿 Guidance",
+            name: "🌿 Guidance (2024 5.5e)",
             school: "Divination Cantrip",
             castingTime: "1 Action",
             range: "Touch",
             components: "V, S",
             duration: "Concentration, up to 1 minute",
             wikiUrl: "https://5e.tools/spells.html#guidance_xphb",
-            attackMod: "+1d4 Bonus to One Ability Check",
+            attackMod: "+1d4 Bonus to One Chosen Skill Check",
             damage: "Boosts Lockpicking, Investigation, Medicine, or Persuasion",
-            fullRules: "You touch one willing creature and choose a skill (or let them choose before rolling). Once before the spell ends, the target can roll a <strong>d4</strong> and add the number rolled to one ability check of its choice.",
+            fullRules: "You touch a willing creature and choose a skill. Until the spell ends, the creature adds <strong>1d4</strong> to any ability check using the chosen skill.",
             flavor: "Silver constellation dust settles briefly on an ally's hands right before a critical check.",
             modalButtons: [
                 { label: "🌿 Roll +1d4 Guidance", class: "btn-roll-action btn-roll-heal", onClick: () => { closeSpellModal(); castGuidanceCantrip(); } }
@@ -2351,50 +2374,34 @@
         },
         "shillelagh": {
             id: "shillelagh",
-            name: "🪄 Shillelagh",
+            name: "🪄 Shillelagh (2024 5.5e)",
             school: "Transmutation Cantrip",
             castingTime: "1 Bonus Action",
             range: "Touch",
-            components: "V, S, M (mistletoe, shamrock leaf, and club or quarterstaff)",
+            components: "V, S, M (mistletoe)",
             duration: "1 minute (No Concentration)",
             wikiUrl: "https://5e.tools/spells.html#shillelagh_xphb",
-            attackMod: "Uses Wisdom (+6 to Hit)",
-            damage: "1d8 + 3 Magical Bludgeoning (or Force in 5.5e)",
-            fullRules: "The wood of a club or quarterstaff you are holding is imbued with nature's power. For the duration, you can use your <strong>Wisdom modifier (+3)</strong> instead of Strength for the attack and damage rolls of melee attacks using that weapon, and the weapon's damage die becomes a <strong>d8</strong>. The weapon also becomes magical (and can deal Force damage in 5.5e).",
+            attackMod: "Uses Wisdom (+5 to Hit)",
+            damage: "1d8 + 3 Force or Bludgeoning Damage",
+            fullRules: "A Club or Quarterstaff you are holding is imbued with nature's power. For the duration, you use your <strong>Wisdom modifier (+3)</strong> instead of Strength for attack and damage rolls with it, its damage die becomes a <strong>d8</strong>, and attacks deal <strong>Force damage</strong> or the weapon's normal Bludgeoning damage (your choice).",
+            upcastNotes: "Damage die scales to 1d10 at Level 5, 1d12 at Level 11, and 2d6 at Level 17.",
             flavor: "Starlit runes ignite down the grain of Cael's yew staff when monsters close into melee.",
             modalButtons: [
                 { label: "🪄 Toggle Shillelagh", class: "btn-roll-action", onClick: () => { closeSpellModal(); toggleShillelagh(); } }
             ]
         },
-        "mending": {
-            id: "mending",
-            name: "🔧 Mending",
-            school: "Transmutation Cantrip",
-            castingTime: "1 Minute",
-            range: "Touch",
-            components: "V, S, M (two lodestones)",
-            duration: "Instantaneous",
-            wikiUrl: "https://5e.tools/spells.html#mending_xphb",
-            attackMod: "Repairs a Single Break or Tear up to 1 Foot",
-            damage: "Fixes wagon axles, torn coats, broken vials & snapped lockpicks",
-            fullRules: "This spell repairs a single break or tear in an object you touch, such as a broken chain link, two halves of a broken key, a torn cloak, or a leaking wineskin. As long as the break or tear is no larger than 1 foot in any dimension, you mend it, leaving no trace of the former damage.",
-            flavor: "Cael quietly patches holes in everyone's travel cloaks around the campfire.",
-            modalButtons: [
-                { label: "🔧 Cast Mending", class: "btn-roll-action", onClick: () => { closeSpellModal(); castUtility('🔧 <strong>Mending (1 Min • Touch):</strong> Object repaired cleanly with silver starlight!'); } }
-            ]
-        },
         "yew_staff_cael": {
             id: "yew_staff_cael",
             name: "🪄 Yew Star-Wand Quarterstaff",
-            school: "Simple Melee Weapon (Versatile • Druidic Focus)",
+            school: "Simple Melee Weapon (Versatile • Topple Mastery • Focus)",
             castingTime: "1 Action",
             range: "5 ft Melee",
-            components: "STR +0 (+2 Hit) or WIS +3 w/ Shillelagh (+6 Hit)",
+            components: "STR +0 (+2 Hit) or WIS +3 w/ Shillelagh (+5 Hit)",
             duration: "Instantaneous",
             wikiUrl: "https://5e.tools/items.html#quarterstaff_xphb",
-            attackMod: "+2 to Hit (+6 with Shillelagh)",
-            damage: "1d6/1d8 Bludgeoning (1d8+3 Magical with Shillelagh)",
-            fullRules: "• <strong>Versatile:</strong> 1d6 Bludgeoning (1H) or 1d8 Bludgeoning (2H).<br>• <strong>Shillelagh Synergy:</strong> Bonus Action turns it into a <strong>+6 to Hit, 1d8 + 3 Magical Bludgeoning</strong> melee weapon.<br>• <strong>Druidic Focus:</strong> Channels all Druid spells requiring non-costly material components.",
+            attackMod: "+2 to Hit (+5 with Shillelagh)",
+            damage: "1d6/1d8 Bludgeoning (1d8+3 Force/Bludge with Shillelagh)",
+            fullRules: "• <strong>Versatile:</strong> 1d6 Bludgeoning (1H) or 1d8 Bludgeoning (2H).<br>• <strong>2024 Shillelagh Synergy:</strong> Bonus Action turns it into a <strong>+5 to Hit, 1d8 + 3 Force or Bludgeoning</strong> melee weapon.<br>• <strong>Druidic Focus:</strong> Channels all Druid spells requiring non-costly material components.",
             flavor: "Carved pale yew notched with star-signs and wrapped in worn leather cord.",
             modalButtons: [
                 { label: "🪄 Staff Attack", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollCaelStaffAttack(); } },
@@ -2422,13 +2429,13 @@
         "backstory_full": {
             id: "backstory_full",
             name: "🌟 Caelum Jude (\"Cael\") — Dossier & Core Stats",
-            school: "Level 3 Circle of the Stars Druid • Neutral Good",
+            school: "Level 3 Circle of the Stars Druid (2024 5.5e) • Neutral Good",
             castingTime: "Age 19 • Athletic, Windswept Traveler",
-            range: "30 ft (Cat: 40 ft | Raven: Fly 50 ft)",
+            range: "30 ft (Black Cat: 40 ft, Climb 30 ft)",
             components: "Common, Druidic, Celestial",
             duration: "« The Starlit Shepherd — Main Party Healer »",
-            wikiUrl: "https://5e.tools/classes.html#druid_phb,state:sub_stars_tce=b1",
-            attackMod: "AC 14 | HP 38/38 | Spell DC 14 (+6 Hit)",
+            wikiUrl: "https://5e.tools/classes.html#druid_xphb,state:sub_stars_xphb=b1",
+            attackMod: "AC 14 | HP 24/24 | Spell DC 13 (+5 Hit)",
             damage: "Vow of the Night Sky: Stabilizes at 1 HP if dropped to 0 HP (1/LR)",
             fullRules: "",
             flavor: "The fog stole the sky, but the stars didn't vanish—they're just waiting for someone who remembers where they were."
@@ -2441,7 +2448,7 @@
     const SKILL_INFO = {
         "Acrobatics": { name: "Acrobatics (DEX +2)", attr: "Dexterity (+2)", desc: "Stay on your feet on slick rooftops, icy paths, or swaying carriages; tumble or slip grapples.", examples: ["Keep balance on damp Barovian cobblestones.", "Slip out of a grapple using agility."], rules: "Standard DEX (Acrobatics) check." },
         "Animal Handling": { name: "Animal Handling (WIS +3)", attr: "Wisdom (+3)", desc: "Calm spooked horses, soothe Barovian hounds, and read beast instincts.", examples: ["Calm panicked draft horses on the Svalich Road.", "Read whether a wolf pack is hunting or driven by Strahd."], rules: "Standard WIS (Animal Handling) check." },
-        "Arcana": { name: "Arcana (INT +1)", attr: "Intelligence (+1)", desc: "Identify occult runes, curses, planar anomalies, and magical sigils.", examples: ["Read Amber Temple constellation glyphs.", "Analyze magical wards or cursed relics."], rules: "Standard INT (Arcana) check." },
+        "Arcana": { name: "Arcana (INT +4 • Magician)", attr: "Intelligence (+1 INT + 3 WIS Primal Order)", desc: "Identify occult runes, curses, planar anomalies, and magical sigils.", examples: ["Read Amber Temple constellation glyphs.", "Analyze magical wards or cursed relics."], rules: "2024 Primal Order (Magician) adds +3 WIS mod! Dragon Form treats d20 of 9- as 10." },
         "Athletics": { name: "Athletics (STR +0)", attr: "Strength (+0)", desc: "Climbing cliffs, swimming freezing currents, jumping, or grappling.", examples: ["Climb a knotted rope up Tser Falls.", "Brace a barricaded tavern door."], rules: "Standard STR (Athletics) check." },
         "Deception": { name: "Deception (CHA +1)", attr: "Charisma (+1)", desc: "Mask emotions, conceal your origin, or pass off half-truths under pressure.", examples: ["Downplay the glowing starlight scars on your forearms.", "Bluff past Vallaki gate guards."], rules: "Standard CHA (Deception) check." },
         "History": { name: "History (INT +1)", attr: "Intelligence (+1)", desc: "Recall legends, lineages, and forgotten events.", examples: ["Recall coastal constellation lore.", "Recognize Barovian crestwork."], rules: "Standard INT (History) check." },
@@ -2449,13 +2456,13 @@
         "Intimidation": { name: "Intimidation (CHA +1)", attr: "Charisma (+1)", desc: "Project fierce resolve or eerie celestial pressure to make foes back down.", examples: ["Flare constellation runes to warn off scavengers."], rules: "Standard CHA (Intimidation) check." },
         "Investigation": { name: "Investigation (INT +1)", attr: "Intelligence (+1)", desc: "Piece together physical clues, hidden compartments, and traps.", examples: ["Search ruined shrines or manor desks."], rules: "Dragon Starry Form treats d20 rolls of 9- as 10 on INT checks!" },
         "Medicine": { name: "Medicine (WIS +5 ★)", attr: "Wisdom • Proficient (+3 WIS + 2 PB)", desc: "Stabilize dying allies, diagnose vampire bites/poisons, and brew herbal salves.", examples: ["Diagnose necrotic rot, lycanthropy, or hag curses.", "Stabilize wounded companions without spending spell slots."], rules: "Dragon Starry Form treats d20 rolls of 9- as 10 on WIS checks!" },
-        "Nature": { name: "Nature (INT +3 ★)", attr: "Intelligence • Proficient (+1 INT + 2 PB)", desc: "Identify flora, fauna, Barovian weather shifts, and medicinal herbs.", examples: ["Forage safe herbs in Svalich Woods.", "Identify blight corruption or nocturnal predator tracks."], rules: "Dragon Starry Form treats d20 rolls of 9- as 10 on INT checks!" },
+        "Nature": { name: "Nature (INT +6 ★ • Magician)", attr: "Intelligence • Prof + Magician (+1 INT + 2 PB + 3 WIS)", desc: "Identify flora, fauna, Barovian weather shifts, and medicinal herbs.", examples: ["Forage safe herbs in Svalich Woods.", "Identify blight corruption or nocturnal predator tracks."], rules: "2024 Primal Order (Magician) adds +3 WIS! Dragon Form treats d20 of 9- as 10." },
         "Perception": { name: "Perception (WIS +5 ★)", attr: "Wisdom • Proficient (+3 WIS + 2 PB)", desc: "Spot ambushes in the mist, hear footsteps on rooftops, and keep night watch.", examples: ["Spot wolves or ravens watching from fog banks (Passive Perception 15).", "Keep watch while the party rests."], rules: "Dragon Starry Form treats d20 rolls of 9- as 10 on WIS checks!" },
         "Performance": { name: "Performance (CHA +1)", attr: "Charisma (+1)", desc: "Tell stories by the campfire or play simple folk tunes.", examples: ["Lift party spirits around a dreary campfire."], rules: "Standard CHA (Performance) check." },
         "Persuasion": { name: "Persuasion (CHA +1)", attr: "Charisma (+1)", desc: "Warm, earnest diplomacy that disarms suspicion and wins trust.", examples: ["Convince frightened villagers to open their doors."], rules: "Standard CHA (Persuasion) check." },
         "Religion": { name: "Religion (INT +1)", attr: "Intelligence (+1)", desc: "Identify Morninglord rites, Mother Night symbols, and undead lore.", examples: ["Recognize consecrated ground vs. desecrated crypts."], rules: "Dragon Starry Form treats d20 rolls of 9- as 10 on INT checks!" },
         "Sleight of Hand": { name: "Sleight of Hand (DEX +2)", attr: "Dexterity (+2)", desc: "Palming small trinkets, tying bandages smoothly, or delicate tasks.", examples: ["Hide your bone star chart quickly."], rules: "Standard DEX (Sleight of Hand) check." },
-        "Stealth": { name: "Stealth (DEX +6 ★ Expertise / Cat)", attr: "Dexterity • Mist-Stalker (+2 DEX + 4 Exp/PB)", desc: "Move unseen through Svalich fog, alleyways, and rooftops in human or Black Cat form.", examples: ["Shadow the party silently through Barovia Village as a Black Cat.", "Stack with Pass without Trace (+10) for +16 Stealth!"], rules: "Contested against enemy Passive Perception." },
+        "Stealth": { name: "Stealth (DEX +2 Human / +6 Black Cat)", attr: "Dexterity (+2 Human • +6 in Black Cat Wild Shape)", desc: "Sneak quietly—Human Cael is untrained (+2), making Black Cat Wild Shape (+6, 40 ft, Tiny) his dedicated stealth/infiltration form.", examples: ["Shift into Black Cat (+6 Stealth) to shadow the party or scout Barovian alleys.", "Stack with Pass without Trace (+10) for +16 Cat Stealth!"], rules: "Contested against enemy Passive Perception." },
         "Survival": { name: "Survival (WIS +3)", attr: "Wisdom (+3)", desc: "Track footprints in mud, find shelter, and navigate mist-choked trails.", examples: ["Track carriage ruts and wolf prints."], rules: "Dragon Starry Form treats d20 rolls of 9- as 10 on WIS checks!" }
     };
 
@@ -2796,25 +2803,26 @@
         const lvl = getSelectedSpellLevel(spellId);
 
         if (btn.costSlot) {
+            const ct = String(sp.castingTime || '1 Action').toLowerCase();
+            const turnSlot = ct.includes('bonus') ? 'bonus' : (ct.includes('react') ? 'reaction' : 'action');
             if (characterLevel < spellSlots[lvl].reqLevel) {
+                restoreTurnSlotSoon(turnSlot);
                 logRoll(`🔒 <strong>Level ${lvl} Spell Slots Locked!</strong> Unlocks at Character Level ${spellSlots[lvl].reqLevel}.`);
                 return;
             }
             if (spellSlots[lvl].current <= 0) {
+                restoreTurnSlotSoon(turnSlot);
                 logRoll(`⚠️ <strong>0 Level ${lvl} Spell Slots remaining!</strong> Select another slot level or take a Long Rest.`);
                 return;
             }
             spellSlots[lvl].current--;
             renderSpellSlots();
-            const ct = String(sp.castingTime || '1 Action').toLowerCase();
             if (window.COS_RPG) {
                 if (/conc/i.test(sp.duration || '')) {
                     const cleanSpell = String(sp.name || '').replace(/^[^a-zA-Z0-9]+/, '').replace(/\s*\([^)]*\)\s*/g, ' ').trim();
                     COS_RPG.setConcentration(cleanSpell || sp.name);
                 }
-                if (ct.includes('bonus')) COS_RPG.spendTurnAction('bonus');
-                else if (ct.includes('react')) COS_RPG.spendTurnAction('reaction');
-                else COS_RPG.spendTurnAction('action');
+                COS_RPG.spendTurnAction(turnSlot);
             }
             if (!ct.includes('bonus') && !ct.includes('react')) {
                 pendingActionForArcher = true;
@@ -2840,7 +2848,7 @@
                 <div style="display:flex; flex-direction:column; gap:10px;">
                     <div style="padding:8px 12px; background:linear-gradient(135deg, rgba(94,184,138,0.14) 0%, rgba(15,23,42,0.9) 100%); border:1px solid rgba(94,184,138,0.38); border-radius:6px;">
                         <div style="color:#bbf7d0; font-weight:800; font-size:0.86rem; letter-spacing:0.3px;">« The Starlit Shepherd • Primary Healer &amp; Circle of the Stars Druid »</div>
-                        <div style="color:#cbd5e1; font-size:0.75rem; margin-top:2px;">Level 3 Human (Variant/5.5e) Circle of the Stars Druid • Age 19 • Neutral Good</div>
+                        <div style="color:#cbd5e1; font-size:0.75rem; margin-top:2px;">Level 3 Human (2024 5.5e) Circle of the Stars Druid • Primal Order: Magician • Age 19 • Neutral Good</div>
                     </div>
 
                     <div style="background:rgba(15,23,42,0.92); border:1.5px solid var(--accent-gold); border-radius:8px; padding:10px 12px;">
@@ -2848,7 +2856,7 @@
                             <span>⚡ Core Ability Scores &amp; Attributes</span>
                             <span style="font-size:0.68rem; color:#cbd5e1; font-weight:600;">Click Any Score to Roll Check</span>
                         </div>
-                        <div style="display:grid; grid-template-columns: repeat(6, 1fr); gap:6px; text-align:center;">
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(72px, 1fr)); gap:6px; text-align:center;">
                             <div style="background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:6px 2px; cursor:pointer;" onclick="closeSpellModal(); rollD20('Strength Check', 0)">
                                 <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim);">STR</div>
                                 <div style="font-size:1.15rem; font-weight:800; color:#f8fafc; font-family:'JetBrains Mono',monospace;">10</div>
@@ -2883,23 +2891,23 @@
                     </div>
 
                     <div style="background:rgba(15,23,42,0.85); border:1px solid #334155; border-left:3px solid #5eb88a; border-radius:6px; padding:10px 12px;">
-                        <div style="font-size:0.74rem; font-weight:800; color:#6ee7b7; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:7px;">🛡️ Passive Abilities, Star Map &amp; Languages</div>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:7px; font-size:0.75rem;">
+                        <div style="font-size:0.74rem; font-weight:800; color:#6ee7b7; text-transform:uppercase; letter-spacing:0.4px; margin-bottom:7px;">🛡️ Passive Abilities, Primal Order &amp; Languages</div>
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:7px; font-size:0.75rem;">
                             <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
                                 <div style="font-weight:700; color:#38bdf8;">🗺️ Starlit Bone Star Chart</div>
-                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Druidic Focus granting <strong>+1 Spell DC/Attack</strong> (DC 14 | +6) &amp; <strong>2/LR Free Guiding Bolts</strong>.</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">2024 Druidic Focus &amp; Star Map (DC ${getSpellSaveDC()} | +${getSpellAttackMod()}) granting <strong>3/LR Free Guiding Bolts</strong>.</div>
                             </div>
                             <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
                                 <div style="font-weight:700; color:#c4b5fd;">🌑 Vow of the Night Sky</div>
                                 <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Once per Long Rest, if damage reduces Cael to 0 HP, he stabilizes at <strong>1 HP</strong> instead.</div>
                             </div>
                             <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
-                                <div style="font-weight:700; color:#4ade80;">🌿 Druidic &amp; Herbalism Kit</div>
-                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Proficient with <strong>Herbalism Kit</strong> (crafts Healing Potions) &amp; secret <strong>Druidic</strong> language.</div>
+                                <div style="font-weight:700; color:#4ade80;">🌿 Primal Order: Magician &amp; Herbalism</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;">Adds <strong>+3 (WIS)</strong> to Arcana &amp; Nature checks, grants +1 Cantrip, &amp; Herbalism Kit proficiency.</div>
                             </div>
                             <div style="background:#090e1a; border:1px solid #1e293b; border-radius:5px; padding:7px 9px;">
                                 <div style="font-weight:700; color:#fde68a;">🗣️ Languages &amp; Senses</div>
-                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;"><strong>Languages:</strong> Common, Druidic, Celestial.<br><strong>Passive Perception:</strong> 15 (Darkvision 60 ft in Cat Form).</div>
+                                <div style="color:#cbd5e1; font-size:0.71rem; margin-top:2px;"><strong>Languages:</strong> Common, Druidic, Celestial.<br><strong>Passive Perception:</strong> 15 (Darkvision 60 ft in Black Cat Form).</div>
                             </div>
                         </div>
                     </div>
@@ -3381,17 +3389,17 @@
     const worldLootVault = {
         "star chart": {
             name: "Starlit Bone Star Chart",
-            category: "DRUIDIC STAR MAP FOCUS • Circle of the Stars",
+            category: "DRUIDIC STAR MAP FOCUS • Circle of the Stars (2024)",
             origin: "Carried by Caelum Jude",
             desc: "A worn ivory-and-bone scroll carved with silver constellation lines worn on a leather cord around Cael's neck.",
-            effect: "• <strong>Arcane / Druidic Focus:</strong> Channels all Druid spells.<br>• <strong>Star Map Resonance:</strong> Grants <strong>+1 Spell Save DC &amp; Spell Attack</strong> (DC 14 | +6) and unlocks <strong>2/Long Rest free casts of Guiding Bolt</strong>."
+            effect: "• <strong>Druidic Star Map Focus:</strong> Channels all Druid spells (DC 13 | +5).<br>• <strong>2024 Star Map:</strong> Keeps <em>Guidance</em> &amp; <em>Guiding Bolt</em> prepared and grants <strong>3/Long Rest free casts of Guiding Bolt</strong> (WIS mod)."
         },
         "yew star-wand": {
             name: "Yew Star-Wand Quarterstaff",
             category: "WEAPON & DRUIDIC FOCUS • Simple Melee (Versatile)",
             origin: "Cael's Shepherd Staff",
             desc: "A weathered pale yew walking staff etched with faint celestial constellations along the grip.",
-            effect: "• <strong>Melee Attack:</strong> +2 to Hit, 1d6 (1H) or 1d8 (2H) Bludgeoning.<br>• <strong>Shillelagh Synergy:</strong> Bonus Action converts to <strong>+6 to Hit, 1d8 + 3 Magical Bludgeoning</strong> (uses WIS)."
+            effect: "• <strong>Melee Attack:</strong> +2 to Hit, 1d6 (1H) or 1d8 (2H) Bludgeoning.<br>• <strong>2024 Shillelagh Synergy:</strong> Bonus Action converts to <strong>+5 to Hit, 1d8 + 3 Force or Bludgeoning</strong> (uses WIS)."
         },
         "studded leather": {
             name: "Studded Leather Travel Vest",
@@ -3823,7 +3831,6 @@
     // ==========================================
     // 📓 PLAYER NOTES LEDGER
     // ==========================================
-    const MAX_NOTE_CHARS = 1500;
     const defaultPlayerNotes = [
         {
             id: 'cael_s1_stalk',
@@ -3942,10 +3949,6 @@
     document.getElementById('new-item-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') addItem(); });
     document.getElementById('gold-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') applyGoldAdd(); });
 
-    function openCraftModalProxy() {
-        if (window.COS_RPG) COS_RPG.openCraftModal();
-    }
-
     // Initialize Sheet
     updateHPUI();
     updateHelpDisplay();
@@ -3954,6 +3957,7 @@
     updateStarMapUI();
     updateVowUI();
     updateShillelaghUI();
+    updateDynamicSpellUI();
     updateGoldUI();
     renderSpellSlots();
     renderSpellbook();
@@ -4132,6 +4136,7 @@
                 if (btn2h) btn2h.style.display = staffIs2H ? '' : 'none';
                 if (btn1h) btn1h.style.display = staffIs2H ? 'none' : '';
                 updateShillelaghUI();
+                updateDynamicSpellUI();
             }
         });
     }

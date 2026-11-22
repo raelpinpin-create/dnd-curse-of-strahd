@@ -225,11 +225,12 @@ Because Cael's emotions, fears, and affection are **100% genuine**, high Insight
 
 ## ⚔️ DM COMBAT STAT BLOCK & SURVIVAL ENGINE
 
-### Caelum Jude — Level 3–5 Circle of the Stars Druid
-* **Armor Class:** **14** (Studded leather vest + DEX mod) | **Hit Points:** **38** (Scaled with party level)
-* **Speed:** 30 ft (Cat: 40 ft, Climb 30 ft | Raven: 10 ft, Fly 50 ft)
-* **Proficiency Bonus:** `+2` / `+3` | **Spell Save DC:** `13` / `14` | **Spell Attack:** `+5` / `+6`
+### Caelum Jude — Level 3 Circle of the Stars Druid (2024 5.5e Rules)
+* **Armor Class:** **14** (Studded leather vest + DEX mod) | **Hit Points:** **24** *(3d8 + CON — Fixed Average)*
+* **Speed:** 30 ft (Black Cat: 40 ft, Climb 30 ft | *Mist Raven Fly 50 ft unlocks at Level 8*)
+* **Proficiency Bonus:** `+2` | **Spell Save DC:** `13` | **Spell Attack:** `+5`
 * **Ability Scores:** STR 10 (+0) | DEX 14 (+2) | CON 14 (+2) | INT 12 (+1) | WIS 16 (+3) | CHA 13 (+1)
+* **Primal Order (Magician):** Adds `+3` (WIS mod) to Arcana (`+4`) and Nature (`+6 ★`), plus 1 extra Druid cantrip. Human Stealth is `+2` (untrained), making Black Cat (`+6`) his dedicated stealth form.
 
 ```
 ================================================================================
@@ -243,17 +244,18 @@ to his knees: "I... guess I got lucky." (The Dark Powers refuse to lose their ve
 
 ### Core Features & Actions:
 1. **Starry Form (2/Short Rest — Bonus Action):**
-   * 🏺 **Chalice (Master Healing Engine):** Whenever Cael casts a spell using a spell slot that restores HP (*Cure Wounds*, *Healing Word*), he or another creature within 30 ft automatically regains **`1d8 + WIS` (1d8+3)** HP. Single-turn double healing!
+   * 🏺 **Chalice (Master Healing Engine):** Whenever Cael casts a spell using a spell slot that restores HP (*Cure Wounds* `2d8+3`, *Healing Word* `2d4+3`), he or another creature within 30 ft automatically regains **`1d8 + WIS` (1d8+3)** HP. Single-turn double healing!
    * 🏹 **Archer (Ranged Artillery):** Bonus action ranged spell attack within 60 ft dealing **`1d8 + WIS` (1d8+3) Radiant damage**.
    * 🐉 **Dragon (Focus Fortress):** Whenever making a Constitution saving throw to maintain concentration on a spell, any roll of 9 or lower on the d20 is treated as a **10**.
-2. **Star Map (*Guiding Bolt*):** Can cast *Guiding Bolt* (`4d6` Radiant + next attack has Advantage) without expending a spell slot a number of times equal to his Proficiency Bonus per Long Rest.
-3. **Prepared Spells:**
-   * *Cantrips:* Guidance, Starry Wisp (5.5e Radiant), Produce Flame, Mending.
-   * *1st Level:* Cure Wounds, Healing Word, Guiding Bolt (Free Map), Goodberry, Absorb Elements.
-   * *2nd Level:* Lesser Restoration, Pass Without Trace, Moonbeam.
-4. **Wild Shape (2/Short Rest — Action):**
-   * 🐈 **Black Cat:** AC 12, HP 2, Speed 40 ft, Climb 30 ft. Stealth `+6`, Darkvision 60 ft. *Purr Heal:* Can touch an ally to cast *Cure Wounds* disguised as an affectionate rub.
-   * 🦅 **Mist Raven:** AC 12, HP 1, Speed 10 ft, Fly 50 ft. Perception `+5`, Mimicry. Can drop *Goodberries* from above.
+2. **Star Map (*Guiding Bolt*):** Can cast *Guiding Bolt* (`4d6` Radiant + next attack has Advantage) without expending a spell slot a number of times equal to his **Wisdom modifier (`3/Long Rest`)**.
+3. **Prepared Spells (2024 Level 3 Cap: 4 Cantrips, 6 Prepared + Star Map):**
+   * *Cantrips:* Starry Wisp (5.5e Radiant), Produce Flame (BA summon, 60 ft), Shillelagh (Force/Bludgeoning), Guidance (Star Map).
+   * *1st Level:* Cure Wounds (`2d8+3`), Healing Word (`2d4+3`), Guiding Bolt (Star Map Free), Goodberry, Entangle.
+   * *2nd Level:* Pass Without Trace, Moonbeam.
+4. **Wild Shape (2024 5.5e • 2/Short Rest — Bonus Action):**
+   * Retains full **`24/24` HP** and gains **`+3 Temp HP`** (equal to Druid level).
+   * 🐈 **Black Cat (Active):** AC 12, Speed 40 ft, Climb 30 ft, Stealth `+6`, Darkvision 60 ft. *Purr Heal:* Can touch an ally for `1d4+1 Temp HP` or touch-cast *Cure Wounds*.
+   * 🔒 **Mist Raven (Locked until Level 8):** Flying Wild Shape unlocks at Druid Level 8 (AC 12, Fly 50 ft, Keen Perception `+7`, Mimicry, *Aerial Goodberry Drop*).
 
 ---
 

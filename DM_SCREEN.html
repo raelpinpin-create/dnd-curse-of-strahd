@@ -2624,10 +2624,10 @@
             <div class="dm-hero-strip-card" style="border-top-color:#34d399;">
                 <div class="dm-hero-strip-top">
                     <button type="button" class="dm-hero-strip-name" onclick="openAllyCharacterWindow('cael')" title="Open Cael's Interactive Character Sheet">🌟 Caelum Jude ("Cael" — Stars Druid)</button>
-                    <span class="pill green" id="dm-sec0-vitals-cael">HP 38/38 • AC 14</span>
+                    <span class="pill green" id="dm-sec0-vitals-cael">HP 24/24 • AC 14</span>
                 </div>
                 <div id="dm-sec0-res-cael" style="font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--accent-green-soft);">
-                    ✨ Chalice (Dual Heals 1d8+3) • 🏹 Archer (+6, 1d8+3) • ⚡ Guiding Bolt 2/2
+                    ✨ Chalice (Dual Heals 1d8+3) • 🏹 Archer (+5, 1d8+3) • ⚡ Guiding Bolt 3/3
                 </div>
                 <div style="font-size:0.73rem; color:var(--text-muted);">Main Party Healer • Vow of Dark Powers: Stabilizes at 1 HP (cannot die before Act IV)</div>
                 <div class="dm-hero-strip-actions">
@@ -4231,7 +4231,7 @@ const PARTY_INIT_PRESETS = [
     { allyKey: 'piper', name: '🎭 Piper', initBonus: 2, defaultCurHp: 17, defaultMaxHp: 17, defaultAc: '13', sheetUrl: 'PIPER_PLAYER_SHEET.html', fullTitle: '🎭 Piper ("The Incomparable") — Level 3 Sorcerer' },
     { allyKey: 'jacomir', name: '👑 Jacomir', initBonus: 0, defaultCurHp: 23, defaultMaxHp: 31, defaultAc: '17', sheetUrl: 'JACOMIR_PLAYER_SHEET.html', fullTitle: '👑 Jacomir Yulle ("King of Oakenshire") — Level 3 Fighter' },
     { allyKey: 'yvaine', name: '🎯 Yvaine', initBonus: 6, defaultCurHp: 28, defaultMaxHp: 28, defaultAc: '16', sheetUrl: 'YVAINE_PLAYER_SHEET.html', fullTitle: '🎯 Eclipsa "Yvaine" — Level 3 Monster Slayer Ranger' },
-    { allyKey: 'cael', name: '🌟 Cael', initBonus: 2, defaultCurHp: 38, defaultMaxHp: 38, defaultAc: '14', sheetUrl: 'CAEL_PLAYER_SHEET.html', npcKey: 'cael', fullTitle: '🌟 Caelum Jude ("Cael") — Level 3 Circle of the Stars Druid' }
+    { allyKey: 'cael', name: '🌟 Cael', initBonus: 2, defaultCurHp: 24, defaultMaxHp: 24, defaultAc: '14', sheetUrl: 'CAEL_PLAYER_SHEET.html', npcKey: 'cael', fullTitle: '🌟 Caelum Jude ("Cael") — Level 3 Circle of the Stars Druid (2024)' }
 ];
 let encounterEntries = [];
 let encounterBoardCollapsed = false;
@@ -9697,9 +9697,9 @@ const NPC_DATA = {
         role: "Main Party Companion & Healer • Session 1: Stalking Black Cat",
         alignment: "Neutral Good (Cosmic Shadow Bound)",
         status: "🟢 Met & Active",
-        hpKey: "cael", ac: 14, maxHp: 38, speed: "30 ft", init: "+2",
+        hpKey: "cael", ac: 14, maxHp: 24, speed: "30 ft", init: "+2",
         statsStrip: "STR 10 (+0) | DEX 14 (+2) | CON 14 (+2) | INT 12 (+1) | WIS 16 (+3) | CHA 13 (+1)",
-        senses: "Darkvision 60 ft (when Panther/Cat) • Passive Perception 15 • Insight +5, Medicine +5, Nature +3, Stealth +6",
+        senses: "Passive Perception 15 • Insight +5, Medicine +5, Nature +6 (Magician), Arcana +4 (Magician), Stealth +2 (+6 Black Cat)",
         saves: "INT (+3), WIS (+5), CON (+2)",
         defaultToggles: { starryForm: false },
         toggleButtons: [
@@ -9716,56 +9716,56 @@ const NPC_DATA = {
         traits: [
             { name: "Starry Form: Chalice", text: "When Cael casts a spell of 1st level or higher using a spell slot to restore HP, he or another creature within 30 ft regains an extra <strong>1d8 + 3 HP</strong>." },
             { name: "Weal and Woe (Coming Level 6) & Cosmic Vow", text: "Once per Long Rest if reduced to 0 HP by non-boss plot betrayal, his Dark Power tether snaps him back at <strong>1 HP</strong> rather than losing his Shepherd." },
-            { name: "Wild Shape (2/Short Rest)", text: "Transforms as a Bonus Action into a <strong>Black Cat</strong> (Stealth +6, Purr-Heal 1d4 Temp HP) or <strong>Barovian Raven</strong> (Fly 50 ft)." }
+            { name: "Wild Shape (2024 • 2/Short Rest)", text: "Bonus Action: Retains <strong>24/24 HP + 3 Temp HP</strong> as a <strong>Black Cat</strong> (Stealth +6, Purr-Heal 1d4+1 Temp HP). <em>Mist Raven flying form unlocks at Level 8.</em>" }
         ],
         actions: [
             "🌟 Starry Form — Chalice: +1d8+3 bonus HP whenever casting a leveled healing spell.",
-            "🏹 Starry Form — Archer: Bonus Action luminous arrow (+6 hit, 60 ft, 1d8+3 Radiant).",
-            "⚡ Free Guiding Bolt (2/Long Rest): +6 hit, 120 ft, 4d6 Radiant + Next attack has Advantage!"
+            "🏹 Starry Form — Archer: Bonus Action luminous arrow (+5 hit, 60 ft, 1d8+3 Radiant).",
+            "⚡ Free Guiding Bolt (3/Long Rest): +5 hit, 120 ft, 4d6 Radiant + Next attack has Advantage!"
         ],
         attacks: [
             {
                 name: "🏹 Starry Form — Luminous Arrow (Bonus Action)",
                 desc: "Ranged Spell Attack: 60 ft. Unsheathes a constellation bow of cold silver starlight.",
-                hitBtn: { label: "🏹 Archer Hit (+6)", func: "rollAttack('Cael Starry Archer', 6, '1d8+3', '0', 'radiant')" },
+                hitBtn: { label: "🏹 Archer Hit (+5)", func: "rollAttack('Cael Starry Archer', 5, '1d8+3', '0', 'radiant')" },
                 dmgBtn: { label: "💥 Archer (1d8+3 Rad)", func: "rollDamage('Cael Starry Archer', '1d8+3', '0', 11, 'radiant')" }
             },
             {
-                name: "⚡ Free Guiding Bolt (Circle of Stars — 2/Long Rest)",
+                name: "⚡ Free Guiding Bolt (2024 Star Map — 3/Long Rest)",
                 desc: "120 ft ranged spell attack. On hit, deals 4d6 Radiant damage and the NEXT attack roll before Cael's next turn has Advantage!",
-                hitBtn: { label: "⚡ Guiding Bolt (+6)", func: "rollAttack('Cael Guiding Bolt', 6, '4d6', '0', 'radiant (Next Atk Adv!)')" },
+                hitBtn: { label: "⚡ Guiding Bolt (+5)", func: "rollAttack('Cael Guiding Bolt', 5, '4d6', '0', 'radiant (Next Atk Adv!)')" },
                 dmgBtn: { label: "💥 4d6 Radiant", func: "rollSimpleDamage('Cael Guiding Bolt', '4d6', 'radiant (Target glows for Advantage!)')" }
             },
             {
                 name: "🪄 Yew Quarterstaff (Shillelagh)",
-                desc: "Melee Weapon Attack (+6 w/ Shillelagh or +2 base), 5 ft. Hit: 1d8+3 magical bludgeoning.",
-                hitBtn: { label: "🪄 Shillelagh (+6)", func: "rollAttack('Cael Shillelagh', 6, '1d8+3', '0', 'magic bludgeoning')" },
-                dmgBtn: { label: "💥 Staff (1d8+3)", func: "rollDamage('Cael Shillelagh', '1d8+3', '0', 11, 'magic bludgeoning')" }
+                desc: "Melee Weapon Attack (+5 w/ Shillelagh or +2 base), 5 ft. Hit: 1d8+3 Force or Bludgeoning.",
+                hitBtn: { label: "🪄 Shillelagh (+5)", func: "rollAttack('Cael Shillelagh', 5, '1d8+3', '0', 'force')" },
+                dmgBtn: { label: "💥 Staff (1d8+3)", func: "rollDamage('Cael Shillelagh', '1d8+3', '0', 11, 'force')" }
             },
             {
-                name: "💚 Cure Wounds + Starry Chalice Combo",
-                desc: "Heals primary target 1d8+3 HP PLUS triggers Starry Chalice (+1d8+3 HP) on same or second injured ally within 30 ft!",
+                name: "💚 Cure Wounds + Starry Chalice Combo (2024)",
+                desc: "Heals primary target 2d8+3 HP PLUS triggers Starry Chalice (+1d8+3 HP) on same or second injured ally within 30 ft!",
                 buttons: [
-                    { label: "💚 Cure + Chalice (2d8+6)", func: "rollDamage('Cael Cure + Chalice Dual Heal', '1d8+3', '1d8+3', 16, 'HP Healed (Chalice Active!)')" },
+                    { label: "💚 Cure + Chalice (3d8+6)", func: "rollDamage('Cael Cure + Chalice Dual Heal', '2d8+3', '1d8+3', 24, 'HP Healed (Chalice Active!)')" },
                     { label: "🐾 Black Cat Purr-Heal (1d4+1)", func: "rollDamage('Black Cat Purr-Heal', '1d4+1', '0', 5, 'Temp HP')" }
                 ]
             }
         ],
         spellcasting: {
-            dc: 14, atk: 6, label: "Circle of Stars Druid (4th-Lvl • WIS DC 14 / +6 Hit)",
-            slots: { 1: 4, 2: 3 },
+            dc: 13, atk: 5, label: "Circle of Stars Druid (Lvl 3 • 2024 5.5e • WIS DC 13 / +5 Hit)",
+            slots: { 1: 4, 2: 2 },
             spells: [
-                { lvl: 0, name: "Guidance", conc: true, rollType: "util", desc: "Touch 1 willing creature; it adds +1d4 to one ability check within 1 minute.", short: "+1d4 to an ability check" },
-                { lvl: 0, name: "Produce Flame", rollType: "atk", dmg: "1d8", dmgType: "fire", desc: "30 ft ranged spell attack dealing 1d8 Fire damage or bright light 10 ft.", short: "1d8 Fire ranged" },
-                { lvl: 0, name: "Shillelagh", rollType: "util", desc: "Bonus Action: staff uses WIS (+6 hit, 1d8+3 magic bludgeoning) for 1 min.", short: "Bonus Action WIS staff" },
-                { lvl: 1, name: "Cure Wounds", rollType: "hp", dmg: "1d8+3", upcast: { mode: "dice", addCount: 1 }, desc: "Touch ally to restore 1d8+3 HP (+1d8/lvl). Triggers Starry Chalice!", short: "Heals 1d8+3 (+Chalice!)" },
-                { lvl: 1, name: "Healing Word", rollType: "hp", dmg: "1d4+3", upcast: { mode: "dice", addCount: 1 }, desc: "Bonus Action 60 ft healing (1d4+3 HP). Triggers Starry Chalice!", short: "Bonus Action ranged heal" },
+                { lvl: 0, name: "Starry Wisp", rollType: "atk", dmg: "1d8", dmgType: "radiant", desc: "60 ft ranged spell attack (+5) for 1d8 Radiant & prevents target from being Invisible.", short: "1d8 Radiant + reveal" },
+                { lvl: 0, name: "Guidance", conc: true, rollType: "util", desc: "Touch 1 willing creature; it adds +1d4 to one chosen skill check within 1 minute.", short: "+1d4 to chosen skill" },
+                { lvl: 0, name: "Produce Flame", rollType: "atk", dmg: "1d8", dmgType: "fire", desc: "Bonus Action flame (10m); Magic action hurl 60 ft (+5) for 1d8 Fire damage.", short: "1d8 Fire (60 ft)" },
+                { lvl: 0, name: "Shillelagh", rollType: "util", desc: "Bonus Action: staff uses WIS (+5 hit, 1d8+3 Force or Bludgeoning) for 1 min.", short: "Bonus Action WIS staff" },
+                { lvl: 1, name: "Cure Wounds", rollType: "hp", dmg: "2d8+3", upcast: { mode: "dice", addCount: 2 }, desc: "Touch ally to restore 2d8+3 HP (+2d8/lvl). Triggers Starry Chalice!", short: "Heals 2d8+3 (+Chalice!)" },
+                { lvl: 1, name: "Healing Word", rollType: "hp", dmg: "2d4+3", upcast: { mode: "dice", addCount: 2 }, desc: "Bonus Action 60 ft healing (2d4+3 HP). Triggers Starry Chalice!", short: "Bonus Action 2d4+3 heal" },
                 { lvl: 1, name: "Guiding Bolt", rollType: "atk", dmg: "4d6", dmgType: "radiant", upcast: { mode: "dice", addCount: 1 }, desc: "120 ft radiant bolt; next attack has Advantage!", short: "4d6 Radiant + Adv" },
-                { lvl: 1, name: "Entangle", conc: true, save: "STR", rollType: "util", desc: "20-ft square grasps foes; DC 14 STR save or Restrained.", short: "20-ft Restrain zone" },
+                { lvl: 1, name: "Entangle", conc: true, save: "STR", rollType: "util", desc: "20-ft square grasps foes; DC 13 STR save or Restrained.", short: "20-ft Restrain zone" },
                 { lvl: 1, name: "Goodberry", rollType: "util", desc: "Creates 10 berries (1 HP & full day's nourishment each) in Barovia's famine.", short: "10x 1 HP survival berries" },
-                { lvl: 2, name: "Moonbeam", conc: true, save: "CON", rollType: "save", dmg: "2d10", dmgType: "radiant", upcast: { mode: "dice", addCount: 1 }, desc: "5-ft radius silver column: DC 14 CON save or 2d10 Radiant; shapechangers save at Disadvantage & revert!", short: "2d10 Radiant vs Shapechangers" },
-                { lvl: 2, name: "Pass without Trace", conc: true, rollType: "util", desc: "Party within 30 ft gains +10 to Stealth checks for 1 hour through Svalich Woods.", short: "+10 Stealth Aura" },
-                { lvl: 2, name: "Lesser Restoration", rollType: "util", desc: "Touch ends Blinded, Deafened, Paralyzed, or Poisoned.", short: "Cure Disease/Condition" }
+                { lvl: 2, name: "Moonbeam", conc: true, save: "CON", rollType: "save", dmg: "2d10", dmgType: "radiant", upcast: { mode: "dice", addCount: 1 }, desc: "5-ft radius silver column: DC 13 CON save or 2d10 Radiant; shapechangers save at Disadvantage & revert!", short: "2d10 Radiant vs Shapechangers" },
+                { lvl: 2, name: "Pass without Trace", conc: true, rollType: "util", desc: "Party within 30 ft gains +10 to Stealth checks for 1 hour through Svalich Woods.", short: "+10 Stealth Aura" }
             ]
         },
         rp: "Loves warm tea, mapping stars through cloudy Barovian skies, and bantering with Jacomir about royalty.",

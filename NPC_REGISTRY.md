@@ -26,8 +26,8 @@
 * **Status:** `🟢 ACTIVE & WATCHING (Session 1: Stealth Feline Stalker Form)`
 * **Role:** Dedicated Main Party Companion, Primary Healer, & Secret Shepherd of the Dark Powers / Vecna Pact
 * **Full Master Dossier:** [`CAEL_MASTER_DOSSIER.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/CAEL_MASTER_DOSSIER.md)
-* **Archetype & Class:** Level 3–5 Druid (Circle of the Stars) | 19-Year-Old Athletic "Percy Jackson" Vibe (messy black hair, stormy grey-blue starlit eyes)
-* **Stat Snapshot:** AC 14 | HP 38 *(Plot Armor: "Vow of the Dark Powers" stabilizes at 1 HP—cannot die before campaign climax)* | Starry Chalice (Dual-Healing Engine: `1d8+3` bonus heal) | Starry Archer (`1d8+3` Radiant bonus attack) | Free Guiding Bolts | Black Cat & Raven Wild Shapes
+* **Archetype & Class:** Level 3 Druid (Circle of the Stars • 2024 5.5e) | 19-Year-Old Athletic "Percy Jackson" Vibe (messy black hair, stormy grey-blue starlit eyes)
+* **Stat Snapshot:** AC 14 | HP 24 *(Fixed 3d8+CON; Plot Armor: "Vow of the Dark Powers" stabilizes at 1 HP—cannot die before campaign climax)* | Spell DC 13 (`+5 Hit`) | Starry Chalice (Dual-Healing Engine: `1d8+3` bonus heal w/ 2024 `2d8+3` Cure Wounds / `2d4+3` Healing Word) | Starry Archer (`1d8+3` Radiant bonus attack) | 3/LR Free Guiding Bolts | 2024 Wild Shape: Black Cat (`+3 Temp HP`, `Stealth +6`; *Mist Raven locked until Level 8*)
 * **Psychological Dossier:**
   * 🧭 **Core Philosophy:** Genuinely kind, empathetic, self-deprecating, and fiercely protective of the party. He is NOT an evil cultist; his affection is 100% real.
   * 🎯 **Secret Cosmic Mission:** Marked by the Dark Powers to shepherd foreign champions to slay Count Strahd and prepare the dark throne for the Pact of Vecna. In the end, he will be compelled to execute their will against his own heart.

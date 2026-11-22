@@ -261,9 +261,7 @@
             match: ['starlit bone star chart', 'bone star chart'],
             category: 'accessory',
             slots: ['amulet'],
-            spellDcBonus: 1,
-            spellAtkBonus: 1,
-            summary: 'Druidic Star Map (+1 Spell DC & Hit)'
+            summary: '2024 Druidic Star Map (3/LR Free Guiding Bolt)'
         },
         {
             match: ['skull-mask charm', 'volenta'],
@@ -10439,8 +10437,8 @@
                 p.dataset.mobileCats = 'combat magic';
                 p.dataset.mobileOrder = '28';
             } else if (titleTxt.includes('starry form') || titleTxt.includes('circle of the stars')) {
-                p.dataset.rpgCats = 'combat magic';
-                p.dataset.mobileCats = 'combat magic';
+                p.dataset.rpgCats = 'magic';
+                p.dataset.mobileCats = 'magic';
                 p.dataset.mobileOrder = '28';
             } else if (titleTxt.includes('maneuver') || titleTxt.includes('monster slayer')) {
                 p.dataset.rpgCats = 'combat magic';
@@ -10451,7 +10449,7 @@
                 p.dataset.mobileCats = 'combat magic';
                 p.dataset.mobileOrder = '34';
             } else if (titleTxt.includes('spell') || titleTxt.includes('occult')) {
-                p.dataset.rpgCats = 'combat magic';
+                p.dataset.rpgCats = (adapter && adapter.heroId === 'cael') ? 'magic' : 'combat magic';
                 p.dataset.mobileCats = (adapter && adapter.heroId === 'piper') ? 'combat magic' : 'magic';
                 p.dataset.mobileOrder = '33';
             } else if (titleTxt.includes('font of magic') || titleTxt.includes('metamagic')) {
@@ -11437,7 +11435,7 @@
                     ? [
                         `Restore full <strong>${v.max}/${v.max} HP</strong> &amp; clear Temporary HP`,
                         `Restore all <strong>Spell Slots</strong>, <strong>Starry Form &amp; Wild Shape (2/2)</strong>`,
-                        `Refill <strong>Star Map Guiding Bolts (2/2)</strong> &amp; <strong>Vow of the Night Sky (1/1)</strong>`,
+                        `Refill <strong>Star Map Guiding Bolts (3/3)</strong> &amp; <strong>Vow of the Night Sky (1/1)</strong>`,
                         `Restore <strong>Help Tokens (2/2)</strong> &amp; Short Rests`
                     ]
                     : [
@@ -11483,8 +11481,11 @@
             tabs.setAttribute('role', 'toolbar');
             tabs.setAttribute('focusgroup', 'toolbar wrap');
             tabs.setAttribute('aria-label', 'Sheet View Filter');
+            const combatTabLbl = (adapter && adapter.heroId === 'cael') ? '🪄 Weapons &amp; Cantrips' : '⚔️ Combat';
+            const combatMobIco = (adapter && adapter.heroId === 'cael') ? '🪄' : '⚔️';
+            const combatMobLbl = (adapter && adapter.heroId === 'cael') ? 'Weapons' : 'Combat';
             tabs.innerHTML = `
-                <button type="button" class="rpg-view-tab" data-tab="combat" aria-pressed="true" onclick="COS_RPG.setRightColumnTab('combat')">⚔️ Combat</button>
+                <button type="button" class="rpg-view-tab" data-tab="combat" aria-pressed="true" onclick="COS_RPG.setRightColumnTab('combat')">${combatTabLbl}</button>
                 <button type="button" class="rpg-view-tab" data-tab="magic" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('magic')">✨ Magic &amp; Features</button>
                 <button type="button" class="rpg-view-tab" data-tab="gear" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('gear')">🎒 Gear &amp; Bag</button>
                 <button type="button" class="rpg-view-tab" data-tab="all" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('all')">📋 All</button>
@@ -11498,8 +11499,8 @@
             mobTabs.setAttribute('aria-label', 'Mobile Sheet Sections');
             mobTabs.innerHTML = `
                 <button type="button" class="rpg-mobile-tab" data-mob-tab="combat" aria-pressed="true" onclick="COS_RPG.setMobileTab('combat')">
-                    <span class="mob-tab-ico" aria-hidden="true">⚔️</span>
-                    <span class="mob-tab-lbl">Combat</span>
+                    <span class="mob-tab-ico" aria-hidden="true">${combatMobIco}</span>
+                    <span class="mob-tab-lbl">${combatMobLbl}</span>
                 </button>
                 <button type="button" class="rpg-mobile-tab" data-mob-tab="magic" aria-pressed="false" onclick="COS_RPG.setMobileTab('magic')">
                     <span class="mob-tab-ico" aria-hidden="true">✨</span>
