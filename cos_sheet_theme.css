@@ -966,7 +966,7 @@
 
     .rpg-gold-gp-val {
         font-family: var(--font-num) !important;
-        font-size: 1.42rem !important;
+        font-size: 1.18rem !important;
         font-weight: 600 !important;
         letter-spacing: -0.025em;
         color: #e5c176 !important;
@@ -984,7 +984,7 @@
 
     .rpg-gold-sp-val {
         font-family: var(--font-num) !important;
-        font-size: 1.16rem !important;
+        font-size: 1.02rem !important;
         font-weight: 500 !important;
         letter-spacing: -0.02em;
         color: #d5d3cd !important;
