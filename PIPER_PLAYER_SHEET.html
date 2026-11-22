@@ -863,33 +863,6 @@
             </div>
         </header>
 
-        <!-- TOP PROMINENT DICE ROLLER CONSOLE -->
-        <section class="top-dice-console">
-            <div class="dice-controls-bar">
-                <div class="dice-buttons-group">
-                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-dim); margin-right:2px;">🎲 Quick Roll:</span>
-                    <button class="dice-btn" onclick="rollCustomDie(20)">d20</button>
-                    <button class="dice-btn" onclick="rollCustomDie(12)">d12</button>
-                    <button class="dice-btn" onclick="rollCustomDie(10)">d10</button>
-                    <button class="dice-btn" onclick="rollCustomDie(8)">d8</button>
-                    <button class="dice-btn" onclick="rollCustomDie(6)">d6</button>
-                    <button class="dice-btn" onclick="rollCustomDie(4)">d4</button>
-                    <button class="dice-btn" onclick="rollCustomDie(100)">d100</button>
-                    <button class="dice-btn" style="border-color:#475569; color:#fde68a; background:#1e293b;" onclick="triggerWildMagicSurge('Manual d100 Surge Roll')">💥 Wild Surge (d100)</button>
-                </div>
-
-                <div class="dice-mod-group">
-                    <span style="font-size:0.75rem; font-weight:600; color:var(--text-dim);">Mod:</span>
-                    <input type="number" id="dice-mod" class="hp-input-num" value="0" style="width:42px; padding:2px 4px; font-size:0.78rem;">
-                    <button class="btn-act btn-act-pre" onclick="modDiceMod(1)">+1</button>
-                    <button class="btn-act btn-act-pre" onclick="modDiceMod(-1)">-1</button>
-                    <button class="btn-act btn-act-pre" onclick="document.getElementById('dice-mod').value=0">0</button>
-                    <button class="btn-act btn-act-pre" id="btn-adv" onclick="toggleAdvantage('adv')">Adv</button>
-                    <button class="btn-act btn-act-pre" id="btn-dis" onclick="toggleAdvantage('dis')">Dis</button>
-                </div>
-            </div>
-        </section>
-
         <!-- MAIN 2-COLUMN LAYOUT -->
         <div class="main-layout">
             

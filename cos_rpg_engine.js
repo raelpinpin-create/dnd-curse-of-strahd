@@ -7563,14 +7563,14 @@
             }
         }
 
-        // Mount 👥 Live Party Mini-HUD & ⚔️ Fog-of-War Combat Turn Strip directly under Top Dice Console
-        const diceConsole = document.querySelector('.top-dice-console');
-        if (diceConsole && !document.getElementById('rpg-party-hud')) {
+        // Mount 👥 Live Party Mini-HUD & ⚔️ Fog-of-War Combat Turn Strip right under Header / Incoming Banner
+        const topAnchor = document.getElementById('rpg-incoming-banner') || document.querySelector('.top-dice-console') || header;
+        if (topAnchor && !document.getElementById('rpg-party-hud')) {
             const partyHud = document.createElement('section');
             partyHud.id = 'rpg-party-hud';
             partyHud.className = 'rpg-party-hud';
             partyHud.setAttribute('aria-label', 'Live Party Vitals');
-            diceConsole.insertAdjacentElement('afterend', partyHud);
+            topAnchor.insertAdjacentElement('afterend', partyHud);
 
             const combatStrip = document.createElement('section');
             combatStrip.id = 'rpg-combat-strip';
@@ -7910,16 +7910,9 @@
             <div class="rpg-equipped-strip">
                 ${chips.length > 0 ? chips.join('') : '<span style="font-size:0.71rem; color:#64748b; font-style:italic;">No gear equipped yet — click 🛡️ Equipment to slot your loadout!</span>'}
             </div>
-
-            ${quickBtns.length > 0 ? `
-                <div class="rpg-quickbelt">
-                    <span class="rpg-quickbelt-lbl">⚡ Quick-Belt:</span>
-                    ${quickBtns.join('')}
-                </div>
-            ` : ''}
         `;
 
-        // Mirror 1-click Quick-Belt consumables into the pinned top Action Economy bar
+        // Pinned 1-click Quick-Belt lives exclusively at the top inside the Action Economy bar (zero bottom duplication!)
         const topQb = document.getElementById('rpg-top-quickbelt');
         if (topQb) {
             topQb.innerHTML = quickBtns.length > 0
@@ -10185,6 +10178,26 @@
     }
 
     // 🔒 ADVANTAGE / DISADVANTAGE AUTO-RESET WITH PIN LOCK
+    function toggleDiceTray(forceState) {
+        const tray = document.getElementById('rpg-dice-tray');
+        const btn = document.getElementById('rpg-dice-fab-btn');
+        if (!tray) return;
+        const next = typeof forceState === 'boolean' ? forceState : !tray.classList.contains('is-open');
+        tray.classList.toggle('is-open', next);
+        if (btn) btn.setAttribute('aria-expanded', next ? 'true' : 'false');
+    }
+
+    function syncDiceFabBadge() {
+        const btn = document.getElementById('rpg-dice-fab-btn');
+        if (!btn) return;
+        const mode = (typeof window.rollMode === 'string') ? window.rollMode : 'norm';
+        btn.classList.toggle('is-adv', mode === 'adv');
+        btn.classList.toggle('is-dis', mode === 'dis');
+        if (mode === 'adv') btn.textContent = hudState.advLocked ? '🎲 ADV 🔒' : '🎲 ADV';
+        else if (mode === 'dis') btn.textContent = hudState.advLocked ? '🎲 DIS 🔒' : '🎲 DIS';
+        else btn.textContent = '🎲 Dice';
+    }
+
     function toggleAdvLock() {
         hudState.advLocked = !hudState.advLocked;
         saveHudState();
@@ -10196,6 +10209,7 @@
                 ? 'Adv/Dis LOCKED (stays active across rolls) — click to unlock'
                 : 'Adv/Dis auto-resets after 1 roll — click to lock for multi-turn buffs/debuffs';
         }
+        syncDiceFabBadge();
     }
 
     function consumeTempRollMode() {
@@ -10322,21 +10336,62 @@
             skillsList.insertAdjacentElement('beforebegin', fBar);
         }
 
-        // 5. Mount Adv/Dis Pin Lock button right beside #btn-dis
-        const btnDis = document.getElementById('btn-dis');
-        if (btnDis && !document.getElementById('rpg-adv-lock-btn')) {
-            const lockBtn = document.createElement('button');
-            lockBtn.type = 'button';
-            lockBtn.id = 'rpg-adv-lock-btn';
-            lockBtn.className = 'rpg-adv-lock-btn';
-            lockBtn.setAttribute('aria-pressed', hudState.advLocked ? 'true' : 'false');
-            lockBtn.textContent = hudState.advLocked ? '🔒' : '🔓';
-            lockBtn.title = hudState.advLocked
-                ? 'Adv/Dis LOCKED (stays active across rolls) — click to unlock'
-                : 'Adv/Dis auto-resets after 1 roll — click to lock for multi-turn buffs/debuffs';
-            lockBtn.onclick = toggleAdvLock;
-            btnDis.insertAdjacentElement('afterend', lockBtn);
+        // 5. Mount Bottom-Right Floating Quick-Roll Dice FAB & Popup Tray (replaces cluttered top dice row!)
+        if (!document.getElementById('rpg-dice-fab-wrap')) {
+            const specialDieBtn = adapter.heroId === 'piper'
+                ? `<button type="button" class="dice-btn" style="grid-column: span 4; border-color:#7c3aed; color:#fde68a; background:#1e1633;" onclick="triggerWildMagicSurge('Manual d100 Surge Roll')">💥 Wild Surge (d100)</button>`
+                : (adapter.heroId === 'jacomir'
+                    ? `<button type="button" class="dice-btn" style="grid-column: span 4; border-color:#f59e0b; color:#fde68a; background:#271a0c;" onclick="rollSuperiorityDieRaw()">⚔️ Superiority Die (1d8)</button>`
+                    : '');
+            const fabWrap = document.createElement('div');
+            fabWrap.id = 'rpg-dice-fab-wrap';
+            fabWrap.className = 'rpg-dice-fab-wrap';
+            fabWrap.innerHTML = `
+                <div id="rpg-dice-tray" class="rpg-dice-tray" role="region" aria-label="Quick Dice Roller">
+                    <div class="rpg-dice-tray-head">
+                        <span>🎲 Quick Dice &amp; Modifiers</span>
+                        <button type="button" class="btn-act btn-act-pre" style="padding:1px 6px; font-size:0.66rem;" onclick="COS_RPG.toggleDiceTray(false)" aria-label="Close Dice Tray">✕</button>
+                    </div>
+                    <div class="rpg-dice-tray-grid">
+                        <button type="button" class="dice-btn" onclick="rollCustomDie(20)">d20</button>
+                        <button type="button" class="dice-btn" onclick="rollCustomDie(12)">d12</button>
+                        <button type="button" class="dice-btn" onclick="rollCustomDie(10)">d10</button>
+                        <button type="button" class="dice-btn" onclick="rollCustomDie(8)">d8</button>
+                        <button type="button" class="dice-btn" onclick="rollCustomDie(6)">d6</button>
+                        <button type="button" class="dice-btn" onclick="rollCustomDie(4)">d4</button>
+                        <button type="button" class="dice-btn" style="grid-column: span 2;" onclick="rollCustomDie(100)">d100</button>
+                        ${specialDieBtn}
+                    </div>
+                    <div class="rpg-dice-tray-modrow">
+                        <div style="display:flex; align-items:center; gap:3px;">
+                            <span style="font-size:0.7rem; font-weight:700; color:#94a3b8;">Mod:</span>
+                            <input type="number" id="dice-mod" class="hp-input-num" value="0" style="width:40px; height:24px; padding:1px 3px; font-size:0.76rem; text-align:center;">
+                            <button type="button" class="btn-act btn-act-pre" style="padding:2px 6px; font-size:0.7rem;" onclick="modDiceMod(-1)">−1</button>
+                            <button type="button" class="btn-act btn-act-pre" style="padding:2px 6px; font-size:0.7rem;" onclick="modDiceMod(1)">+1</button>
+                            <button type="button" class="btn-act btn-act-pre" style="padding:2px 6px; font-size:0.7rem;" onclick="document.getElementById('dice-mod').value=0">0</button>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:3px;">
+                            <button type="button" class="btn-act btn-act-pre" id="btn-adv" style="padding:3px 7px; font-size:0.7rem;" onclick="toggleAdvantage('adv')">Adv</button>
+                            <button type="button" class="btn-act btn-act-pre" id="btn-dis" style="padding:3px 7px; font-size:0.7rem;" onclick="toggleAdvantage('dis')">Dis</button>
+                            <button type="button" id="rpg-adv-lock-btn" class="rpg-adv-lock-btn" aria-pressed="${hudState.advLocked ? 'true' : 'false'}" onclick="COS_RPG.toggleAdvLock()" title="${hudState.advLocked ? 'Adv/Dis LOCKED (stays active across rolls) — click to unlock' : 'Adv/Dis auto-resets after 1 roll — click to lock'}">${hudState.advLocked ? '🔒' : '🔓'}</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="rpg-dice-fab-btn" class="rpg-dice-fab" aria-expanded="false" aria-controls="rpg-dice-tray" onclick="COS_RPG.toggleDiceTray()" title="Open Quick Dice Roller &amp; Adv/Dis Modifiers">🎲 Dice</button>
+            `;
+            document.body.appendChild(fabWrap);
+
+            // Light-dismiss floating dice tray on outside click or Escape
+            document.addEventListener('click', (e) => {
+                const tray = document.getElementById('rpg-dice-tray');
+                if (!tray || !tray.classList.contains('is-open')) return;
+                if (!fabWrap.contains(e.target)) toggleDiceTray(false);
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') toggleDiceTray(false);
+            });
         }
+        syncDiceFabBadge();
 
         renderActionEconomyBar();
         renderStatusStrip();
@@ -10402,6 +10457,14 @@
             window.rollCustomDie = function (sides) {
                 const res = window.__origRollCustomDie.apply(this, arguments);
                 if (sides === 20) consumeTempRollMode();
+                return res;
+            };
+        }
+        if (typeof window.toggleAdvantage === 'function' && !window.__origToggleAdvantage) {
+            window.__origToggleAdvantage = window.toggleAdvantage;
+            window.toggleAdvantage = function (mode) {
+                const res = window.__origToggleAdvantage.apply(this, arguments);
+                syncDiceFabBadge();
                 return res;
             };
         }
@@ -10662,6 +10725,8 @@
         applySkillsFilter,
         toggleSkillsTrainedFilter,
         toggleAdvLock,
+        toggleDiceTray,
+        syncDiceFabBadge,
         consumeTempRollMode,
         setRollFollowup,
         triggerRollFollowup,
