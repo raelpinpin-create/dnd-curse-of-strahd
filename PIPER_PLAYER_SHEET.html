@@ -1381,7 +1381,7 @@
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('quarterstaff_piper')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#c4b5fd'" onmouseout="this.style.color='#f8fafc'">
-                                        🪄 Quarterstaff (Magician's Cane) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
+                                        🪄 Quarterstaff (Magician's Cane) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span><span id="eq-badge-staff"></span>
                                     </div>
                                     <div style="font-size:0.67rem; font-weight:700; color:#c4b5fd;">Versatile (1H/2H) • Arcane Spellcasting Focus</div>
                                 </div>
@@ -1392,7 +1392,7 @@
                             <div class="action-btn-row">
                                 <button id="btn-atk-staff" type="button" class="btn-roll-action" style="background:#334155;" onclick="rollWeaponAttack('Quarterstaff (Magician\'s Cane)', 0, 'staff')">🪄 Attack (+2)</button>
                                 <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning', 1, 'staff')">💥 2H (1d8)</button>
-                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg" style="background:#991b1b;" onclick="rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning', 1, 'staff')">💥 1H (1d6)</button>
+                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg" style="background:#991b1b; display:none;" onclick="rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning', 1, 'staff')">💥 1H (1d6)</button>
                             </div>
                         </div>
 
@@ -2485,9 +2485,9 @@
             fullRules: "• <strong>Versatile:</strong> Wield one-handed for <strong>1d6 Bludgeoning</strong> or two-handed for <strong>1d8 Bludgeoning</strong>.<br>• <strong>Arcane Focus:</strong> Doubles as Piper's theatrical stage cane and Sorcerer spellcasting focus.<br>• <strong>5.5e Weapon Mastery — Topple:</strong> Forces a CON Save or knocks target Prone (if mastered).",
             flavor: "A polished black stage cane capped with tarnished brass—just a harmless prop, Piper insists.",
             modalButtons: [
-                { label: "🪄 Staff Attack (+2)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Quarterstaff', 0); } },
-                { label: "💥 2H Dmg (1d8)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning'); } },
-                { label: "💥 1H Dmg (1d6)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning'); } }
+                { label: "🪄 Staff Attack (+2)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Quarterstaff', 0, 'staff'); } },
+                { label: "💥 2H Dmg (1d8)", gripOnly: '2h', class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning', 1, 'staff'); } },
+                { label: "💥 1H Dmg (1d6)", gripOnly: '1h', class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning', 1, 'staff'); } }
             ]
         },
         "dagger_piper": {
@@ -3606,7 +3606,12 @@
         }
 
         if (sp.modalButtons) {
+            const activeWpnHit = wpnMap[spellId] && window.__piperGearCache && Array.isArray(window.__piperGearCache.equippedWeaponTags)
+                ? window.__piperGearCache.equippedWeaponTags.find(w => w.tag === wpnMap[spellId])
+                : null;
+            const activeGrip = activeWpnHit ? activeWpnHit.grip : null;
             sp.modalButtons.forEach(btn => {
+                if (btn.gripOnly && activeGrip && btn.gripOnly !== activeGrip) return;
                 const b = document.createElement('button');
                 b.className = btn.class;
                 b.innerHTML = btn.label;
@@ -5030,8 +5035,8 @@
             defaultEquipped: {
                 head: "false-bottom stage props & rigged card deck",
                 body: "kolyan's black robe of warding",
-                mainHand: "kolyan's silvered heirloom dagger",
-                _grip: '1h'
+                mainHand: "quarterstaff",
+                _grip: '2h'
             },
             weaponsGridSelector: '#weapons-grid-piper',
             nativeWeaponTags: ['kolyan_dagger', 'staff', 'dagger'],
@@ -5082,6 +5087,14 @@
                 if (btnAtkKol) btnAtkKol.textContent = `🗡️ Attack (${fmtFlat(2 + pb + (kMods.atkBonus || 0)) || '+0'})`;
                 if (btnDmgKol) btnDmgKol.textContent = `💥 1d4${fmtFlat(2 + (kMods.dmgBonus || 0))}${kEx} Silver`;
 
+                const staffHit = bonuses.equippedWeaponTags.find(w => w.tag === 'staff');
+                const staffIs2H = Boolean(staffHit && staffHit.grip === '2h');
+                const staffBadge = document.getElementById('eq-badge-staff');
+                if (staffBadge) {
+                    staffBadge.innerHTML = staffHit
+                        ? ` <span class="rpg-card-equipped-pill">${staffIs2H ? '2H' : '1H'}</span>`
+                        : '';
+                }
                 const sMods = getPiperWpnMods('staff');
                 const sEx = (sMods.extras || []).map(e => `+${e.dice}`).join('');
                 const sDmgFlat = fmtFlat(sMods.dmgBonus || 0);
@@ -5089,8 +5102,14 @@
                 const btnDmgStaff2h = document.getElementById('btn-dmg-staff-2h');
                 const btnDmgStaff1h = document.getElementById('btn-dmg-staff-1h');
                 if (btnAtkStaff) btnAtkStaff.textContent = `🪄 Attack (${fmtFlat(pb + (sMods.atkBonus || 0)) || '+0'})`;
-                if (btnDmgStaff2h) btnDmgStaff2h.textContent = `💥 2H (1d8${sDmgFlat}${sEx})`;
-                if (btnDmgStaff1h) btnDmgStaff1h.textContent = `💥 1H (1d6${sDmgFlat}${sEx})`;
+                if (btnDmgStaff2h) {
+                    btnDmgStaff2h.textContent = `💥 2H (1d8${sDmgFlat}${sEx})`;
+                    btnDmgStaff2h.style.display = staffIs2H ? '' : 'none';
+                }
+                if (btnDmgStaff1h) {
+                    btnDmgStaff1h.textContent = `💥 1H (1d6${sDmgFlat}${sEx})`;
+                    btnDmgStaff1h.style.display = staffIs2H ? 'none' : '';
+                }
 
                 const dMods = getPiperWpnMods('dagger');
                 const dEx = (dMods.extras || []).map(e => `+${e.dice}`).join('');

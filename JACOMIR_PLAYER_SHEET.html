@@ -1117,23 +1117,23 @@
                             </div>
                         </div>
 
-                        <!-- Silvered Longsword (Visible ONLY when Equipped) -->
+                        <!-- Ismark's Silvered Longsword (Visible ONLY when Equipped) -->
                         <div class="action-card" id="card-wpn-silver-ls" style="display:none; border-left:3px solid #e2e8f0;">
                             <div class="action-header">
                                 <div>
                                     <div onclick="openSpellDetailsModal('silvered_longsword_jacomir')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#e2e8f0'" onmouseout="this.style.color='#f8fafc'">
-                                        ⚔️ Silvered Longsword <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span><span id="eq-badge-silver_ls"></span>
+                                        ⚔️ Ismark's Silvered Longsword <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span><span id="eq-badge-silver_ls"></span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#e2e8f0;">Versatile (1H/2H) • Silvered • Bypasses Undead Resist</div>
+                                    <div style="font-size:0.67rem; font-weight:700; color:#e2e8f0;">Versatile (1H/2H) • Spared from Indirovich Armory • Silvered</div>
                                 </div>
                                 <span class="pill-badge" style="background:rgba(226,232,240,0.16); color:#f8fafc; border:1px solid #cbd5e1; font-size:0.62rem; padding:1px 6px;">SAP • SILVER</span>
                             </div>
                             <div class="action-desc"><strong>+5 to Hit</strong>, <strong>1d8+3 (1H)</strong> or <strong>1d10+3 (2H) Silvered Slashing</strong>. Bypasses vampire/werewolf/undead resistance! <em>Sap:</em> target has <strong>Disadvantage</strong> on its next attack!</div>
                             <div id="jacomir-mods-silvered_longsword"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-sls" type="button" class="btn-roll-action" style="background:#475569; border:1px solid #cbd5e1;" onclick="rollWeaponAttack('Silvered Longsword (Sap • Bypasses Undead Resist)', 5, 'silvered_longsword')">⚔️ Silver (+5)</button>
+                                <button id="btn-atk-sls" type="button" class="btn-roll-action" style="background:#475569; border:1px solid #cbd5e1;" onclick="rollWeaponAttack('Ismark\'s Silvered Longsword (Sap • Bypasses Undead Resist)', 5, 'silvered_longsword')">⚔️ Silver (+5)</button>
                                 <button id="btn-dmg-sls-2h" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollSavageLongswordDamage(true)">💥 2H 1d10+3</button>
-                                <button id="btn-dmg-sls-1h" type="button" class="btn-roll-action btn-roll-dmg" style="background:#991b1b;" onclick="rollSavageLongswordDamage(false)">💥 1H 1d8+3</button>
+                                <button id="btn-dmg-sls-1h" type="button" class="btn-roll-action btn-roll-dmg" style="background:#991b1b; display:none;" onclick="rollSavageLongswordDamage(false)">💥 1H 1d8+3</button>
                                 <button type="button" class="btn-act btn-act-pre" style="font-size:0.68rem; color:#e2e8f0; border-color:#94a3b8;" onclick="applySapDebuff()" title="5.5e Weapon Mastery — Sap: Target has Disadvantage on its next attack roll!">🛡️ Sap</button>
                             </div>
                         </div>
@@ -1704,11 +1704,11 @@
         const ex = rollJacomirExtraDice(wMods);
         const total = chosen + flatMod + ex.extraSum;
         const notes = wMods.saveNotes && wMods.saveNotes.length ? ` • ${wMods.saveNotes.join(' • ')}` : '';
-        logRoll(`⚔️ <strong>Silvered Longsword Damage (${grip} • Savage Attacker):</strong> Roll 1 [${d1}] vs Roll 2 [${d2}] ➔ Kept <strong>${chosen}</strong> + ${flatMod}${ex.extraText} = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} Silvered Slashing Damage</span>! <small style="color:#cbd5e1;">(Bypasses Undead/Werewolf Resistance • 🛡️ Sap: target has Disadvantage on next attack!${notes})</small>`);
+        logRoll(`⚔️ <strong>Ismark's Silvered Longsword Damage (${grip} • Savage Attacker):</strong> Roll 1 [${d1}] vs Roll 2 [${d2}] ➔ Kept <strong>${chosen}</strong> + ${flatMod}${ex.extraText} = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} Silvered Slashing Damage</span>! <small style="color:#cbd5e1;">(Bypasses Undead/Werewolf Resistance • 🛡️ Sap: target has Disadvantage on next attack!${notes})</small>`);
     }
 
     function applySapDebuff() {
-        logRoll(`🛡️ <strong>Weapon Mastery — Sap (Silvered Longsword):</strong> On hit, the creature has <strong>Disadvantage on its next attack roll</strong> before the start of your next turn!`);
+        logRoll(`🛡️ <strong>Weapon Mastery — Sap (Ismark's Silvered Longsword):</strong> On hit, the creature has <strong>Disadvantage on its next attack roll</strong> before the start of your next turn!`);
     }
 
     function rollSavageHandaxeDamage() {
@@ -1870,7 +1870,7 @@
         const ls = Math.floor(Math.random() * 10) + 1;
         const sup = Math.floor(Math.random() * 8) + 1;
         const total = ls + sup + 3;
-        logRoll(`⚔️ <strong>Riposte Silvered Longsword Damage (2H):</strong> 1d10[${ls}] + Superiority d8[${sup}] + 3 STR = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">${total} Silvered Slashing Damage</span>! <small style="color:#cbd5e1;">(Bypasses Undead/Werewolf Resist + 🛡️ Sap!)</small>`);
+        logRoll(`⚔️ <strong>Riposte — Ismark's Silvered Longsword Damage (2H):</strong> 1d10[${ls}] + Superiority d8[${sup}] + 3 STR = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">${total} Silvered Slashing Damage</span>! <small style="color:#cbd5e1;">(Bypasses Undead/Werewolf Resist + 🛡️ Sap!)</small>`);
     }
 
     function execMenacingAttack() {
@@ -1903,7 +1903,7 @@
         },
         "silvered_longsword_jacomir": {
             id: "silvered_longsword_jacomir",
-            name: "⚔️ Silvered Longsword (Sap Mastery • Undead & Lycanthrope Bane)",
+            name: "⚔️ Ismark's Silvered Longsword (Sap Mastery • Undead & Lycanthrope Bane)",
             school: "Martial Melee Weapon (Versatile • Silvered)",
             castingTime: "1 Action",
             range: "5 ft Melee Reach",
@@ -1913,11 +1913,11 @@
             attackMod: "+5 to Hit (STR +3, PB +2)",
             damage: "1d8 + 3 (1H) or 1d10 + 3 (2H) Silvered Slashing • Sap: Disadvantage on Enemy's Next Attack!",
             fullRules: "• <strong>Silvered Blade (Bypasses Resistance):</strong> Deals <strong>Silvered Slashing damage</strong>, completely bypassing nonmagical bludgeoning, piercing, and slashing resistances and immunities of <strong>Vampire Spawn, Werewolves, Wights, and Night Hags</strong>.<br>• <strong>Versatile:</strong> Wield one-handed for <strong>1d8 + 3</strong> or two-handed for <strong>1d10 + 3</strong> (both auto-roll twice via <em>Savage Attacker</em>!).<br>• <strong>5.5e Weapon Mastery — Sap:</strong> If you hit a creature with this Longsword, that creature has <strong>Disadvantage on its next attack roll</strong> before the start of your next turn!",
-            flavor: "Moon-bright Barovian silver bonded cleanly over tempered steel—claimed in Session 1 to cut through the immortal hide of Strahd's undead.",
+            flavor: "Spared from the Indirovich Manor armory by Ismark Kolyanovich—moon-bright Barovian silver bonded cleanly over tempered steel to cut through the immortal hide of Strahd's undead.",
             modalButtons: [
-                { label: "⚔️ Silver Attack (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack('Silvered Longsword (+5 • Sap)', 5); } },
-                { label: "💥 Savage 2H (1d10+3)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageLongswordDamage(true); } },
-                { label: "💥 Savage 1H (1d8+3)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageLongswordDamage(false); } },
+                { label: "⚔️ Silver Attack (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollWeaponAttack("Ismark's Silvered Longsword (+5 • Sap)", 5, 'silvered_longsword'); } },
+                { label: "💥 Savage 2H (1d10+3)", gripOnly: '2h', class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageLongswordDamage(true); } },
+                { label: "💥 Savage 1H (1d8+3)", gripOnly: '1h', class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollSavageLongswordDamage(false); } },
                 { label: "🛡️ Sap (Disadv)", class: "btn-act btn-act-pre", onClick: () => { closeSpellModal(); applySapDebuff(); } }
             ]
         },
@@ -2207,7 +2207,12 @@
         }
 
         if (sp.modalButtons) {
+            const activeWpnHit = wpnMap[spellId] && window.__jacomirGearCache && Array.isArray(window.__jacomirGearCache.equippedWeaponTags)
+                ? window.__jacomirGearCache.equippedWeaponTags.find(w => w.tag === wpnMap[spellId])
+                : null;
+            const activeGrip = activeWpnHit ? activeWpnHit.grip : null;
             sp.modalButtons.forEach(btn => {
+                if (btn.gripOnly && activeGrip && btn.gripOnly !== activeGrip) return;
                 const b = document.createElement('button');
                 b.className = btn.class;
                 b.innerHTML = btn.label;
@@ -3018,7 +3023,7 @@
     // ==========================================
     const defaultItems = [
         "Burgomaster Kolyan's Wizard Diary",
-        "Silvered Longsword",
+        "Ismark's Silvered Longsword",
         "Flask of Morninglord Spring Water",
         "Dirty Dream Pastry",
         "Wooden Smoking Pipe",
@@ -3046,10 +3051,10 @@
             effect: "• <strong>Keepers of the Feather Lead:</strong> Kolyan explicitly writes that he knows <strong>Davian Martikov</strong> (master of the <em>Wizard of Wines</em>) and a secret fellowship called <strong>the Keepers of the Feather</strong>, noting that if his children or their champions ever need aid against Strahd, they should present this diary to the Martikov family (at the <em>Blue Water Inn</em> in Vallaki or the Winery).<br>• <strong>Social Key:</strong> Showing this diary to Urwin or Davian Martikov grants immediate trust and faction assistance!"
         },
         "silvered longsword": {
-            name: "Silvered Longsword",
+            name: "Ismark's Silvered Longsword",
             category: "SILVERED MARTIAL WEAPON • Versatile (1d8 / 1d10) • Sap Mastery",
-            origin: "Claimed in Session 1 — Barovia Village / Indirovich Armory",
-            desc: "A finely balanced Barovian steel longsword plated cleanly in pure silver, gleaming coldly beneath the storm clouds.",
+            origin: "Spared by Ismark Kolyanovich — Indirovich Manor Armory (Session 1)",
+            desc: "Ismark Kolyanovich's spare family blade from the Indirovich Manor armory—a finely balanced Barovian steel longsword plated cleanly in pure silver.",
             effect: "• <strong>Bypasses Undead & Lycanthrope Resistance:</strong> Cuts cleanly through nonmagical damage resistance/immunity of <strong>Vampire Spawn, Werewolves, Wights, and Night Hags</strong>!<br>• <strong>Attack &amp; Damage:</strong> <strong>+5 to Hit</strong>, <strong>1d8 + 3 (1H)</strong> or <strong>1d10 + 3 (2H)</strong> Silvered Slashing (rolls twice via <em>Savage Attacker</em>).<br>• <strong>5.5e Weapon Mastery — Sap:</strong> On hit, the target has <strong>Disadvantage on its next attack roll</strong> before the start of your next turn!",
             isSilverLongsword: true
         },
@@ -3152,7 +3157,26 @@
         }
         try {
             const parsed = JSON.parse(stored);
-            return Array.isArray(parsed) ? parsed : [...defaultItems];
+            if (!Array.isArray(parsed)) return [...defaultItems];
+            // Seamlessly upgrade legacy "Silvered Longsword" label to "Ismark's Silvered Longsword" & keep equipped slot synced
+            let migrated = false;
+            const next = parsed.map(raw => {
+                if (/^(?:[\p{Extended_Pictographic}\u{FE00}-\u{FE0F}\s]+)?silvered longsword$/iu.test(String(raw || '').trim())) {
+                    migrated = true;
+                    return "Ismark's Silvered Longsword";
+                }
+                return raw;
+            });
+            if (migrated) {
+                localStorage.setItem('cos_inv_jacomir_v3', JSON.stringify(next));
+                try {
+                    const eqRaw = localStorage.getItem('cos_equip_jacomir_v1');
+                    if (eqRaw && eqRaw.includes('"silvered longsword"')) {
+                        localStorage.setItem('cos_equip_jacomir_v1', eqRaw.replace(/"silvered longsword"/g, `"ismark's silvered longsword"`));
+                    }
+                } catch (e2) {}
+            }
+            return next;
         } catch(e) { return [...defaultItems]; }
     }
 
@@ -3282,7 +3306,7 @@
             btns.push(COS_RPG.buildWeaponModalActionButtonsHtml(modalWeaponId));
         }
         if (match && match.isSilverLongsword) {
-            btns.push(`<button type="button" class="btn-roll-action" style="background:#475569; border:1px solid #cbd5e1;" onclick="closeItemModal(); rollWeaponAttack('Silvered Longsword (+5 • Sap)', 5);">⚔️ Attack (+5)</button>`);
+            btns.push(`<button type="button" class="btn-roll-action" style="background:#475569; border:1px solid #cbd5e1;" onclick="closeItemModal(); rollWeaponAttack('Ismark\\'s Silvered Longsword (+5 • Sap)', 5, 'silvered_longsword');">⚔️ Attack (+5)</button>`);
             btns.push(`<button type="button" class="btn-roll-action btn-roll-dmg" onclick="closeItemModal(); rollSavageLongswordDamage(true);">💥 2H 1d10+3</button>`);
         } else if (match && match.isHolyWater) {
             btns.push(`<button type="button" class="btn-act btn-act-heal" style="background:linear-gradient(135deg,#0369a1,#0284c7); color:#fff;" onclick="throwHolyWaterFlask(${index}); closeItemModal();">💧 Splash / Throw (2d6 Radiant)</button>`);
@@ -3845,8 +3869,9 @@
                     const hit = bonuses.equippedWeaponTags.find(w => w.tag === tag);
                     if (card) card.style.display = hit ? '' : 'none';
                     if (badge) {
+                        const gripLbl = hit ? (hit.meta && hit.meta.versatile ? (hit.grip === '2h' ? '2H' : '1H') : (hit.grip === '2h' ? '2H' : 'EQUIPPED')) : '';
                         badge.innerHTML = hit
-                            ? `<span class="rpg-card-equipped-pill">${hit.grip === '2h' ? '2H' : 'EQUIPPED'}</span>`
+                            ? `<span class="rpg-card-equipped-pill">${gripLbl}</span>`
                             : '';
                     }
                     const modMount = document.getElementById(`jacomir-mods-${tag}`);
@@ -3858,23 +3883,33 @@
                 syncWpnCard('card-wpn-silver-ls', 'eq-badge-silver_ls', 'silvered_longsword');
                 syncWpnCard('card-wpn-handaxe', 'eq-badge-handaxe', 'handaxe');
 
+                const fmtFlat = v => v > 0 ? `+${v}` : (v < 0 ? `${v}` : '');
                 const gsMods = getJacomirWpnMods('greatsword');
                 const gsEx = (gsMods.extras || []).map(e => `+${e.dice}`).join('');
                 const btnAtkGs = document.getElementById('btn-atk-gs');
                 const btnDmgGs = document.getElementById('btn-dmg-gs');
                 const btnGrazeGs = document.getElementById('btn-graze-gs');
-                if (btnAtkGs) btnAtkGs.textContent = `🗡️ Attack (+${5 + (gsMods.atkBonus || 0)})`;
-                if (btnDmgGs) btnDmgGs.textContent = `💥 2d6+${3 + (gsMods.dmgBonus || 0)}${gsEx} (Savage)`;
+                if (btnAtkGs) btnAtkGs.textContent = `🗡️ Attack (${fmtFlat(5 + (gsMods.atkBonus || 0)) || '+0'})`;
+                if (btnDmgGs) btnDmgGs.textContent = `💥 2d6${fmtFlat(3 + (gsMods.dmgBonus || 0))}${gsEx} (Savage)`;
                 if (btnGrazeGs) btnGrazeGs.textContent = `⚡ Graze (${3 + (gsMods.dmgBonus || 0)} Dmg)`;
 
+                const slsHit = bonuses.equippedWeaponTags.find(w => w.tag === 'silvered_longsword');
+                const slsIs2H = Boolean(slsHit && slsHit.grip === '2h');
                 const slsMods = getJacomirWpnMods('silvered_longsword');
                 const slsEx = (slsMods.extras || []).map(e => `+${e.dice}`).join('');
+                const slsFlat = fmtFlat(3 + (slsMods.dmgBonus || 0));
                 const btnAtkSls = document.getElementById('btn-atk-sls');
                 const btnDmgSls2h = document.getElementById('btn-dmg-sls-2h');
                 const btnDmgSls1h = document.getElementById('btn-dmg-sls-1h');
-                if (btnAtkSls) btnAtkSls.textContent = `⚔️ Silver (+${5 + (slsMods.atkBonus || 0)})`;
-                if (btnDmgSls2h) btnDmgSls2h.textContent = `💥 2H 1d10+${3 + (slsMods.dmgBonus || 0)}${slsEx}`;
-                if (btnDmgSls1h) btnDmgSls1h.textContent = `💥 1H 1d8+${3 + (slsMods.dmgBonus || 0)}${slsEx}`;
+                if (btnAtkSls) btnAtkSls.textContent = `⚔️ Silver (${fmtFlat(5 + (slsMods.atkBonus || 0)) || '+0'})`;
+                if (btnDmgSls2h) {
+                    btnDmgSls2h.textContent = `💥 2H 1d10${slsFlat}${slsEx}`;
+                    btnDmgSls2h.style.display = slsIs2H ? '' : 'none';
+                }
+                if (btnDmgSls1h) {
+                    btnDmgSls1h.textContent = `💥 1H 1d8${slsFlat}${slsEx}`;
+                    btnDmgSls1h.style.display = slsIs2H ? 'none' : '';
+                }
 
                 const axeMods = getJacomirWpnMods('handaxe');
                 const axeEx = (axeMods.extras || []).map(e => `+${e.dice}`).join('');

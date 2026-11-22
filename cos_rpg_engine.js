@@ -1424,7 +1424,7 @@
             summary: '2H Heavy • 2d6+STR • Graze'
         },
         {
-            match: ['silvered longsword'],
+            match: ['ismark\'s silvered longsword', 'silvered longsword'],
             category: 'weapon',
             slots: ['mainHand', 'offHand'],
             reqWeapon: 'martial',
@@ -5378,7 +5378,16 @@
         return bonuses;
     }
 
-    function resolveWeaponCombatStats(raw, meta) {
+    function isDynamicWeaponTwoHanded(raw, meta) {
+        if (!raw || !meta) return false;
+        if (meta.hands === 2) return true;
+        if (!meta.versatile) return false;
+        const eq = reconcileEquippedWithInventory();
+        const key = normKey(raw);
+        return Boolean(eq.mainHand === key && isMainHandTwoHanded(eq));
+    }
+
+    function resolveWeaponCombatStats(raw, meta, isTwoHanded = false) {
         if (meta && meta.weaponStats) return meta.weaponStats;
         const low = String(raw || '').toLowerCase();
         // Auto-detect magic bonus (+1/+2/+3)
@@ -5391,21 +5400,24 @@
         let dice = '1d6', dmgType = low.includes('silver') ? 'Silvered Slashing' : 'Slashing';
         let extraDice = '', extraType = '';
         if (low.includes('sunsword')) {
-            magic = 2; dice = '1d8'; dmgType = 'Radiant'; extraDice = '1d8'; extraType = 'Radiant vs Undead';
+            magic = 2; dice = isTwoHanded ? '1d10' : '1d8'; dmgType = 'Radiant'; extraDice = '1d8'; extraType = 'Radiant vs Undead';
         } else if (low.includes('blood spear')) {
-            magic = 2; dice = '1d6'; dmgType = 'Piercing';
+            magic = 2; dice = isTwoHanded ? '1d8' : '1d6'; dmgType = 'Piercing';
         } else if (low.includes('greatsword') || low.includes('vladimir')) {
             dice = '2d6'; dmgType = low.includes('silver') ? 'Silvered Slashing' : 'Slashing';
         } else if (low.includes('longsword') || low.includes('battleaxe') || low.includes('treebane')) {
-            dice = '1d8'; dmgType = low.includes('silver') ? 'Silvered Slashing' : 'Slashing';
+            dice = isTwoHanded ? '1d10' : '1d8'; dmgType = low.includes('silver') ? 'Silvered Slashing' : 'Slashing';
         } else if (low.includes('hand crossbow')) {
             dice = '1d6'; dmgType = 'Piercing';
         } else if (low.includes('heavy crossbow')) {
             dice = '1d10'; dmgType = 'Piercing';
         } else if (low.includes('rapier') || low.includes('longbow') || low.includes('light crossbow') || low.includes('crossbow')) {
             dice = '1d8'; dmgType = low.includes('silver') ? 'Silvered Piercing' : 'Piercing';
-        } else if (low.includes('shortsword') || low.includes('scimitar') || low.includes('shortbow') || low.includes('bow') || low.includes('handaxe') || low.includes('mace') || low.includes('spear') || low.includes('staff')) {
-            dice = '1d6'; dmgType = (low.includes('mace') || low.includes('staff')) ? (low.includes('silver') ? 'Silvered Bludgeoning' : 'Bludgeoning') : (low.includes('silver') ? 'Silvered Piercing' : 'Piercing');
+        } else if (low.includes('spear') || low.includes('staff')) {
+            dice = isTwoHanded ? '1d8' : '1d6';
+            dmgType = low.includes('staff') ? (low.includes('silver') ? 'Silvered Bludgeoning' : 'Bludgeoning') : (low.includes('silver') ? 'Silvered Piercing' : 'Piercing');
+        } else if (low.includes('shortsword') || low.includes('scimitar') || low.includes('shortbow') || low.includes('bow') || low.includes('handaxe') || low.includes('mace')) {
+            dice = '1d6'; dmgType = low.includes('mace') ? (low.includes('silver') ? 'Silvered Bludgeoning' : 'Bludgeoning') : (low.includes('silver') ? 'Silvered Piercing' : 'Piercing');
         } else if (low.includes('sling')) {
             dice = '1d4'; dmgType = 'Bludgeoning';
         } else if (low.includes('dagger') || low.includes('knife') || low.includes('fan')) {
@@ -5417,7 +5429,8 @@
             dmgBonus: heroAbil + magic,
             dmgType,
             extraDice,
-            extraType
+            extraType,
+            isTwoHanded: Boolean(isTwoHanded)
         };
     }
 
@@ -5440,7 +5453,8 @@
         const raw = adapter.getItems()[invIdx];
         if (!raw) return;
         const meta = getItemMeta(raw);
-        const st = resolveWeaponCombatStats(raw, meta);
+        const is2H = isDynamicWeaponTwoHanded(raw, meta);
+        const st = resolveWeaponCombatStats(raw, meta, is2H);
         const weaponId = normKey(raw);
         let shotInfo = null;
         if (meta.ammoKind) {
@@ -5493,7 +5507,9 @@
         const raw = adapter.getItems()[invIdx];
         if (!raw) return;
         const meta = getItemMeta(raw);
-        const st = resolveWeaponCombatStats(raw, meta);
+        const is2H = isDynamicWeaponTwoHanded(raw, meta);
+        const st = resolveWeaponCombatStats(raw, meta, is2H);
+        const gripTag = meta.versatile ? (is2H ? ' (2H)' : ' (1H)') : '';
         const weaponId = normKey(raw);
         const aDef = meta.ammoKind ? getWeaponLastShotDef(weaponId) : null;
         const wCombat = getWeaponCombatMods(weaponId);
@@ -5528,7 +5544,7 @@
         if (aDef && aDef.saveNote) notes.push(esc(aDef.saveNote));
         wCombat.saveNotes.forEach(sn => notes.push(esc(sn)));
         const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.join(' &bull; ')})</small>` : '';
-        adapter.log(`<strong>${esc(shortLabel(raw))} Damage:</strong> ${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(effDmgType)} Damage</span>!${noteHtml}`);
+        adapter.log(`<strong>${esc(shortLabel(raw))}${gripTag} Damage:</strong> ${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(effDmgType)} Damage</span>!${noteHtml}`);
     }
 
     function buildWeaponModAndCoatingBadgesHtml(weaponId) {
@@ -5565,7 +5581,9 @@
             if (adapter.heroId === 'yvaine' && slotId === 'offHand' && meta.isLegDagger) return;
             const slotObj = activeSlots.find(s => s.id === slotId);
             if (!slotObj) return;
-            const st = resolveWeaponCombatStats(raw, meta);
+            const is2H = (slotId === 'mainHand' && bonuses.mainHand2H) || meta.hands === 2;
+            const st = resolveWeaponCombatStats(raw, meta, is2H);
+            const gripLabel = meta.versatile ? (is2H ? '2H ' : '1H ') : '';
             const weaponId = normKey(raw);
             const aDef = meta.ammoKind ? getActiveWeaponAmmoDef(weaponId) : null;
             const wCombat = getWeaponCombatMods(weaponId);
@@ -5590,16 +5608,16 @@
                         <div onclick="COS_RPG.openItemDetails(${idx})" style="cursor:pointer; color:#f8fafc;">
                             ${esc(shortLabel(raw))} <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                         </div>
-                        <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Equipped in ${slotObj.label}${slotId === 'mainHand' && bonuses.mainHand2H ? ' (2-Handed)' : ''} • +${effAtk} Hit • ${esc(dmgLabel)} ${esc(effDmgType)}</div>
+                        <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Equipped in ${slotObj.label}${meta.versatile ? (is2H ? ' (2H)' : ' (1H)') : (slotId === 'mainHand' && bonuses.mainHand2H ? ' (2-Handed)' : '')} • +${effAtk} Hit • ${esc(dmgLabel)} ${esc(effDmgType)}</div>
                     </div>
-                    <span class="rpg-card-equipped-pill">WORN</span>
+                    <span class="rpg-card-equipped-pill">${meta.versatile ? (is2H ? '2H' : '1H') : 'WORN'}</span>
                 </div>
                 <div class="action-desc">${esc(meta.summary || 'Equipped weapon from Backpack.')}</div>
                 ${modCoatHtml}
                 ${ammoStripHtml}
                 <div class="action-btn-row" style="flex-wrap:wrap;">
                     <button type="button" class="btn-roll-action" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${effAtk})</button>
-                    <button type="button" class="btn-roll-action btn-roll-dmg" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${esc(dmgLabel)})</button>
+                    <button type="button" class="btn-roll-action btn-roll-dmg" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${gripLabel}${esc(dmgLabel)})</button>
                     ${buildWeaponModalActionButtonsHtml(weaponId)}
                     <button type="button" class="btn-act btn-act-pre" onclick="COS_RPG.unequipSlot('${slotId}')">Unequip</button>
                 </div>
