@@ -21046,15 +21046,31 @@ function renderPresetEditorModalBody() {
 
                 <div style="border-top:1px solid var(--border-subtle); padding-top:8px; margin-top:2px;">
                     <div style="font-family:'Cinzel',serif; font-size:0.76rem; font-weight:700; color:var(--accent-green-soft); margin-bottom:5px;">➕ Or Add Custom Enemy</div>
-                    <div class="enc-custom-form">
-                        <input type="text" id="enc-preset-ed-cname" class="enc-custom-input" placeholder="Custom Name" style="width:140px;">
-                        <input type="number" id="enc-preset-ed-chp" class="enc-custom-input" placeholder="HP" value="22" min="1" max="999" style="width:62px;" title="Max HP">
-                        <input type="number" id="enc-preset-ed-cac" class="enc-custom-input" placeholder="AC" value="14" min="1" max="35" style="width:56px;" title="AC">
-                        <input type="number" id="enc-preset-ed-cinit" class="enc-custom-input" placeholder="+Init" value="1" min="-10" max="25" style="width:58px;" title="Init Bonus">
-                        <input type="text" id="enc-preset-ed-cwpn" class="enc-custom-input" placeholder="Attack" value="Strike" style="width:105px;" title="Attack Name">
-                        <input type="number" id="enc-preset-ed-chit" class="enc-custom-input" placeholder="+Hit" value="4" min="-5" max="25" style="width:56px;" title="Attack Bonus">
-                        <input type="text" id="enc-preset-ed-cdmg" class="enc-custom-input" placeholder="Dmg" value="1d8+2" style="width:82px;" title="Damage Formula">
-                        <input type="number" id="enc-preset-ed-cqty" class="enc-custom-input" placeholder="Qty" value="1" min="1" max="12" style="width:52px;" title="Quantity">
+                    <div class="enc-custom-form" style="align-items:flex-end;">
+                        <label style="display:flex; flex-direction:column; gap:2px; font-size:0.65rem; color:var(--text-muted); font-weight:700;">Name
+                            <input type="text" id="enc-preset-ed-cname" class="enc-custom-input" placeholder="Custom Name" style="width:136px;">
+                        </label>
+                        <label style="display:flex; flex-direction:column; gap:2px; font-size:0.65rem; color:var(--text-muted); font-weight:700;">HP
+                            <input type="number" id="enc-preset-ed-chp" class="enc-custom-input" value="22" min="1" max="999" style="width:58px;">
+                        </label>
+                        <label style="display:flex; flex-direction:column; gap:2px; font-size:0.65rem; color:var(--text-muted); font-weight:700;">AC
+                            <input type="number" id="enc-preset-ed-cac" class="enc-custom-input" value="14" min="1" max="35" style="width:52px;">
+                        </label>
+                        <label style="display:flex; flex-direction:column; gap:2px; font-size:0.65rem; color:var(--text-muted); font-weight:700;">+Init
+                            <input type="number" id="enc-preset-ed-cinit" class="enc-custom-input" value="1" min="-10" max="25" style="width:54px;">
+                        </label>
+                        <label style="display:flex; flex-direction:column; gap:2px; font-size:0.65rem; color:var(--text-muted); font-weight:700;">Weapon
+                            <input type="text" id="enc-preset-ed-cwpn" class="enc-custom-input" placeholder="Attack" value="Strike" style="width:100px;">
+                        </label>
+                        <label style="display:flex; flex-direction:column; gap:2px; font-size:0.65rem; color:var(--text-muted); font-weight:700;">+Hit
+                            <input type="number" id="enc-preset-ed-chit" class="enc-custom-input" value="4" min="-5" max="25" style="width:52px;">
+                        </label>
+                        <label style="display:flex; flex-direction:column; gap:2px; font-size:0.65rem; color:var(--text-muted); font-weight:700;">Dmg
+                            <input type="text" id="enc-preset-ed-cdmg" class="enc-custom-input" value="1d8+2" style="width:78px;">
+                        </label>
+                        <label style="display:flex; flex-direction:column; gap:2px; font-size:0.65rem; color:var(--text-muted); font-weight:700;">Qty
+                            <input type="number" id="enc-preset-ed-cqty" class="enc-custom-input" value="1" min="1" max="12" style="width:50px;">
+                        </label>
                         <button type="button" class="btn-step btn-heal" onclick="presetEditorAddCustomUnit()">+ Add Custom</button>
                     </div>
                 </div>
