@@ -10261,16 +10261,23 @@
         });
     }
 
+    function isUnifiedTabMode() {
+        const vm = document.documentElement.getAttribute('data-view-mode') || 'pc';
+        if (vm === 'mobile') return true;
+        if (vm === 'tablet' && document.documentElement.getAttribute('data-tablet-orient') !== 'landscape') return true;
+        return false;
+    }
+
     function setRightColumnTab(tabId) {
         hudState.rightTab = tabId || 'all';
         saveHudState();
         classifyRightColumnPanels();
-        const isMobileMode = document.documentElement.getAttribute('data-view-mode') === 'mobile';
+        const unifiedMode = isUnifiedTabMode();
         const rightCol = document.querySelector('.main-layout > div:nth-child(2)');
         if (rightCol) {
             Array.from(rightCol.children).forEach(el => {
                 if (!el.classList || !el.classList.contains('panel')) return;
-                if (isMobileMode) {
+                if (unifiedMode) {
                     el.classList.remove('rpg-tab-hidden');
                     return;
                 }
@@ -10285,29 +10292,36 @@
                 btn.setAttribute('aria-pressed', btn.dataset.tab === hudState.rightTab ? 'true' : 'false');
             });
         }
-        if (isMobileMode) {
+        if (unifiedMode) {
             applyMobileTabLayout();
         }
     }
 
     function applyMobileTabLayout() {
         classifyRightColumnPanels();
-        const isMobileMode = document.documentElement.getAttribute('data-view-mode') === 'mobile';
+        const vm = document.documentElement.getAttribute('data-view-mode') || 'pc';
+        const isPortraitTablet = (vm === 'tablet' && document.documentElement.getAttribute('data-tablet-orient') !== 'landscape');
+        const unifiedMode = isUnifiedTabMode();
         const mobTab = hudState.mobileTab || 'combat';
 
-        // Clear desktop right-tab hiding when in Mobile mode; clear mobile-tab hiding when in PC/Tablet mode
+        // Clear desktop right-tab hiding when in Mobile / Portrait-Tablet mode; clear mobile-tab hiding when in PC / Landscape-Tablet mode
         document.querySelectorAll('.main-layout [data-mobile-cats]').forEach(el => {
-            if (!isMobileMode) {
+            if (!unifiedMode) {
                 el.classList.remove('rpg-mobile-tab-hidden');
                 return;
             }
             el.classList.remove('rpg-tab-hidden');
+            // In Portrait Tablet mode, Perks/Help & Dossier Bar stay permanently docked in the top-right Hero Cockpit!
+            if (isPortraitTablet && (el.classList.contains('perks-compact-panel') || el.id === 'rpg-mobile-dossier-bar')) {
+                el.classList.remove('rpg-mobile-tab-hidden');
+                return;
+            }
             const cats = (el.dataset.mobileCats || '').split(/\s+/).filter(Boolean);
             const show = (mobTab === 'all') || cats.includes(mobTab);
             el.classList.toggle('rpg-mobile-tab-hidden', !show);
         });
 
-        if (!isMobileMode) {
+        if (!unifiedMode) {
             const rightCol = document.querySelector('.main-layout > div:nth-child(2)');
             if (rightCol) {
                 Array.from(rightCol.children).forEach(el => {
@@ -10324,7 +10338,7 @@
             mobBar.querySelectorAll('.rpg-mobile-tab').forEach(btn => {
                 const active = btn.dataset.mobTab === mobTab;
                 btn.setAttribute('aria-pressed', active ? 'true' : 'false');
-                if (active && isMobileMode && typeof btn.scrollIntoView === 'function') {
+                if (active && unifiedMode && typeof btn.scrollIntoView === 'function') {
                     try { btn.scrollIntoView({ block: 'nearest', inline: 'nearest', container: 'nearest' }); } catch (e) {}
                 }
             });
@@ -10809,6 +10823,7 @@
     }
 
     const VIEW_MODE_STORAGE_KEY = 'cos_sheet_view_mode_v1';
+    const TABLET_ORIENT_STORAGE_KEY = 'cos_sheet_tablet_orient_v1';
     const VIEW_MODE_CATALOG = [
         {
             id: 'pc',
@@ -10821,8 +10836,8 @@
             id: 'tablet',
             icon: '📟',
             shortLabel: 'Tablet',
-            name: 'Tablet',
-            desc: 'Medium touch-sized hybrid layout'
+            name: 'Tablet (Portrait & Landscape)',
+            desc: 'Portrait Bento Cockpit · Landscape 2-Col PC'
         },
         {
             id: 'mobile',
@@ -10842,6 +10857,56 @@
         }
     }
 
+    function getStoredTabletOrientPref() {
+        try {
+            const raw = localStorage.getItem(TABLET_ORIENT_STORAGE_KEY);
+            return (raw === 'portrait' || raw === 'landscape' || raw === 'auto') ? raw : 'auto';
+        } catch (e) {
+            return 'auto';
+        }
+    }
+
+    function resolveEffectiveTabletOrient(pref) {
+        const p = pref || getStoredTabletOrientPref();
+        if (p === 'portrait' || p === 'landscape') return p;
+        const isCoarse = typeof window.matchMedia === 'function' && window.matchMedia('(pointer: coarse)').matches;
+        const w = window.innerWidth || 1024;
+        const h = window.innerHeight || 768;
+        // On an actual touch tablet or <=1220px screen, follow physical landscape (>=920px & wider than tall) vs portrait
+        if (isCoarse || w <= 1220) {
+            return (w >= 920 && w > h) ? 'landscape' : 'portrait';
+        }
+        // When previewing Tablet mode on a wide desktop monitor (>1220px mouse), default to Portrait Tablet Cockpit
+        return 'portrait';
+    }
+
+    function syncTabletOrientation() {
+        const pref = getStoredTabletOrientPref();
+        const eff = resolveEffectiveTabletOrient(pref);
+        document.documentElement.setAttribute('data-tablet-orient', eff);
+        document.querySelectorAll('#rpg-tablet-orient-bar [data-tab-orient]').forEach(btn => {
+            btn.setAttribute('aria-pressed', btn.dataset.tabOrient === pref ? 'true' : 'false');
+        });
+        const subLbl = document.getElementById('rpg-tablet-orient-live');
+        if (subLbl) {
+            subLbl.textContent = eff === 'landscape' ? 'Active: Landscape (2-Col PC)' : 'Active: Portrait Cockpit';
+        }
+    }
+
+    function setTabletOrientationPref(pref) {
+        const clean = (pref === 'portrait' || pref === 'landscape') ? pref : 'auto';
+        try { localStorage.setItem(TABLET_ORIENT_STORAGE_KEY, clean); } catch (e) {}
+        if (getStoredViewMode() !== 'tablet') {
+            applySheetViewMode('tablet', true);
+        } else {
+            syncTabletOrientation();
+            syncFormatTrayUI();
+            applyMobileTabLayout();
+        }
+        const eff = document.documentElement.getAttribute('data-tablet-orient') || 'portrait';
+        announceStatus(`Tablet orientation set to ${clean} (${eff}).`);
+    }
+
     function syncFormatTrayUI() {
         const curMode = document.documentElement.getAttribute('data-view-mode') || getStoredViewMode();
         const entry = VIEW_MODE_CATALOG.find(v => v.id === curMode) || VIEW_MODE_CATALOG[0];
@@ -10849,9 +10914,16 @@
             const active = btn.dataset.formatId === entry.id;
             btn.setAttribute('aria-pressed', active ? 'true' : 'false');
         });
+        const orientBox = document.getElementById('rpg-tablet-orient-box');
+        if (orientBox) {
+            orientBox.style.display = entry.id === 'tablet' ? 'flex' : 'none';
+        }
+        syncTabletOrientation();
+        const effOrient = document.documentElement.getAttribute('data-tablet-orient') || 'portrait';
         const fabFormatBtn = document.getElementById('rpg-fab-format-btn');
         if (fabFormatBtn) {
-            fabFormatBtn.innerHTML = `${entry.icon} Format: <strong style="color:var(--accent-gold-bright, #fde68a);">${esc(entry.shortLabel)}</strong>`;
+            const subTag = entry.id === 'tablet' ? ` (${effOrient === 'landscape' ? 'Land' : 'Port'})` : '';
+            fabFormatBtn.innerHTML = `${entry.icon} Format: <strong style="color:var(--accent-gold-bright, #fde68a);">${esc(entry.shortLabel + subTag)}</strong>`;
         }
     }
 
@@ -10861,6 +10933,7 @@
         if (persist) {
             try { localStorage.setItem(VIEW_MODE_STORAGE_KEY, entry.id); } catch (e) {}
         }
+        syncTabletOrientation();
         syncFormatTrayUI();
         applyMobileTabLayout();
     }
@@ -10879,10 +10952,27 @@
         window.addEventListener('storage', (e) => {
             if (e.key === THEME_STORAGE_KEY) {
                 applySheetTheme(e.newValue, false);
-            } else if (e.key === VIEW_MODE_STORAGE_KEY) {
-                applySheetViewMode(e.newValue || 'pc', false);
+            } else if (e.key === VIEW_MODE_STORAGE_KEY || e.key === TABLET_ORIENT_STORAGE_KEY) {
+                applySheetViewMode(getStoredViewMode(), false);
             }
         });
+        let resizeRaf = 0;
+        const onViewportChange = () => {
+            if (resizeRaf) cancelAnimationFrame(resizeRaf);
+            resizeRaf = requestAnimationFrame(() => {
+                if ((document.documentElement.getAttribute('data-view-mode') || getStoredViewMode()) === 'tablet') {
+                    const prev = document.documentElement.getAttribute('data-tablet-orient');
+                    syncTabletOrientation();
+                    const next = document.documentElement.getAttribute('data-tablet-orient');
+                    if (prev !== next) {
+                        syncFormatTrayUI();
+                        applyMobileTabLayout();
+                    }
+                }
+            });
+        };
+        window.addEventListener('resize', onViewportChange, { passive: true });
+        window.addEventListener('orientationchange', onViewportChange, { passive: true });
         if (typeof window.matchMedia === 'function') {
             const mql = window.matchMedia('(prefers-color-scheme: dark)');
             const onSysChange = () => syncThemeTrayUI();
@@ -11365,6 +11455,17 @@
                                 <span class="rpg-theme-check" aria-hidden="true">✓</span>
                             </button>
                         `).join('')}
+                    </div>
+                    <div id="rpg-tablet-orient-box" class="rpg-tablet-orient-box" style="display:none;">
+                        <div class="rpg-tablet-orient-head">
+                            <span>📟 Tablet Orientation</span>
+                            <span id="rpg-tablet-orient-live" class="rpg-theme-desc">Active: Portrait Cockpit</span>
+                        </div>
+                        <div id="rpg-tablet-orient-bar" class="rpg-format-pill-bar" role="group" aria-label="Tablet Orientation Mode">
+                            <button type="button" class="rpg-format-seg-btn" data-tab-orient="auto" aria-pressed="true" onclick="COS_RPG.setTabletOrientationPref('auto')" title="Automatically switch between Portrait Cockpit and Landscape 2-Col PC when rotating your tablet">🔄 Auto</button>
+                            <button type="button" class="rpg-format-seg-btn" data-tab-orient="portrait" aria-pressed="false" onclick="COS_RPG.setTabletOrientationPref('portrait')" title="Portrait Tablet Bento Cockpit (840px)">📐 Portrait</button>
+                            <button type="button" class="rpg-format-seg-btn" data-tab-orient="landscape" aria-pressed="false" onclick="COS_RPG.setTabletOrientationPref('landscape')" title="Landscape Tablet 2-Column PC Dashboard">🖥️ Landscape</button>
+                        </div>
                     </div>
                 </div>
                 <div id="rpg-fab-bubbles" class="rpg-fab-bubbles" role="menu" aria-label="Quick Utility Menu">
@@ -12853,6 +12954,7 @@
         toggleFormatTray,
         setSheetTheme,
         setSheetViewMode,
+        setTabletOrientationPref,
         getStoredViewMode,
         syncDiceFabBadge,
         consumeTempRollMode,

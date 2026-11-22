@@ -18,6 +18,10 @@
                 }
                 var vm = localStorage.getItem('cos_sheet_view_mode_v1');
                 document.documentElement.dataset.viewMode = (vm === 'mobile' || vm === 'tablet') ? vm : 'pc';
+                var to = localStorage.getItem('cos_sheet_tablet_orient_v1') || 'auto';
+                var isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+                var effTo = (to === 'portrait' || to === 'landscape') ? to : ((isCoarse || window.innerWidth <= 1220) && window.innerWidth >= 920 && window.innerWidth > window.innerHeight ? 'landscape' : 'portrait');
+                document.documentElement.dataset.tabletOrient = effTo;
             } catch (e) {}
         })();
     </script>
@@ -25,8 +29,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v11">
-    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v11">
+    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v12">
+    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v12">
     <style>
         @layer legacy {
         :root {
@@ -1382,7 +1386,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261122v11"></script>
+<script src="cos_rpg_engine.js?v=20261122v12"></script>
 <script>
     // ==========================================
     // 👑 JACOMIR YULLE MASTER STATE VARIABLES
