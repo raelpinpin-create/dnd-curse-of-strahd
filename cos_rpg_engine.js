@@ -6633,6 +6633,7 @@
             concentration: hudState.conc || null,
             conditions: Array.isArray(hudState.statuses) ? [...hudState.statuses] : [],
             deathSaves: hudState.deathSaves ? { ...hudState.deathSaves } : { succ: 0, fail: 0 },
+            showPartyHud: Boolean(hudState.showPartyHud),
             resourcesSummary: resSummary,
             sheetExportStr: sheetStr,
             notesExportStr: notesStr,
@@ -6707,9 +6708,9 @@
                     btn.style.color = '#86efac';
                     setTimeout(() => {
                         if (btn) {
-                            btn.innerHTML = `☁️ Sync to DM`;
-                            btn.style.borderColor = 'rgba(52, 211, 153, 0.55)';
-                            btn.style.color = '#6ee7b7';
+                            btn.innerHTML = `☁️ Sync`;
+                            btn.style.borderColor = 'rgba(63, 185, 128, 0.48)';
+                            btn.style.color = '#86efac';
                         }
                     }, 4000);
                 }
@@ -7237,10 +7238,13 @@
                     : { succ: 0, fail: 0 },
                 turn: { action: true, bonus: true, reaction: true, move: true },
                 advLocked: false,
-                rightTab: hudState.rightTab || 'all',
-                skillsTrainedOnly: Boolean(hudState.skillsTrainedOnly)
+                rightTab: hudState.rightTab || 'combat',
+                tabPrefV3: true,
+                skillsTrainedOnly: Boolean(hudState.skillsTrainedOnly),
+                showPartyHud: typeof cp.showPartyHud === 'boolean' ? cp.showPartyHud : Boolean(hudState.showPartyHud)
             };
             saveHudState();
+            syncPartyHudVisibility();
 
             // 6. Restore native sheet variables (HP, Temp HP, Gold/SP, Slots, Resources, Notes)
             if (typeof adapter.restoreSheetState === 'function') {
@@ -7792,8 +7796,8 @@
             header.insertAdjacentElement('afterend', banner);
         }
 
-        // Inject ultra-clean right-header bar: ONLY [🛡️ Gear] [🎒 Bag] [☁️ Sync to DM] [🔄 Reset]
-        // (❓ Rules, 🏰 Portal, 👥 Live Party toggle, and 🎲 Quick Dice live cleanly in the Bottom-Right Speed-Dial!)
+        // Inject ultra-clean 3-button right-header bar: ONLY [🛡️ Gear] [🎒 Bag] [☁️ Sync]
+        // (Live Party, Trade & Chat, Quick Dice, Rules, Reset, & Portal live cleanly in the Bottom-Right ✦ Menu!)
         const badgeGroup = document.querySelector('.pill-badge-group');
         if (badgeGroup && !document.getElementById('rpg-hdr-equip-btn')) {
             badgeGroup.style.marginLeft = 'auto';
@@ -7819,22 +7823,12 @@
             syncBtn.type = 'button';
             syncBtn.id = 'rpg-hdr-sync-btn';
             syncBtn.className = 'rpg-header-btn';
-            syncBtn.style.cssText = 'background:linear-gradient(135deg,#064e3b,#0f172a); border-color:rgba(52,211,153,0.55); color:#6ee7b7;';
-            syncBtn.title = 'Save official Session Checkpoint (Vitals, Slots, Gear, Presets & Player Notes) directly to the DM Screen via Firebase';
+            syncBtn.style.cssText = 'background:linear-gradient(135deg,#133528,#151c24); border-color:rgba(63,185,128,0.48); color:#86efac;';
+            syncBtn.title = 'Save official Session Checkpoint (Vitals, Slots, Gear, Presets, Notes & Live Party preference) directly to DM via Firebase';
             syncBtn.onclick = () => pushSyncedCheckpoint(false);
-            syncBtn.innerHTML = `☁️ Sync to DM`;
+            syncBtn.innerHTML = `☁️ Sync`;
 
-            const resetBtn = document.createElement('button');
-            resetBtn.type = 'button';
-            resetBtn.id = 'rpg-hdr-reset-btn';
-            resetBtn.className = 'rpg-header-btn';
-            resetBtn.style.cssText = 'background:#1e293b; border-color:rgba(248,113,113,0.45); color:#fca5a5;';
-            resetBtn.title = 'Undo unsaved changes & restore sheet back to your last ☁️ Sync to DM checkpoint';
-            resetBtn.onclick = () => resetSheetToOfficialBaseline(false);
-            resetBtn.innerHTML = `🔄 Reset`;
-
-            // Order left-to-right on right side of header: [🛡️ Gear] [🎒 Bag] [☁️ Sync to DM] [🔄 Reset]
-            badgeGroup.insertBefore(resetBtn, badgeGroup.firstChild);
+            // Ultra-clean 3-button right bar: [🛡️ Gear] [🎒 Bag] [☁️ Sync]
             badgeGroup.insertBefore(syncBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(bpBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(equipBtn, badgeGroup.firstChild);
@@ -8023,6 +8017,21 @@
                         </div>
                     </div>
                 </dialog>
+
+                <!-- ⛺ REST CHOOSER MODAL (Short Rest vs Long Rest) -->
+                <dialog class="rpg-dialog" id="rpg-rest-modal" closedby="any" aria-labelledby="rpg-rest-title" style="max-width:560px;">
+                    <div class="rpg-modal-shell">
+                        <div class="rpg-modal-head">
+                            <h2 id="rpg-rest-title">⛺ Take a Rest</h2>
+                            <button type="button" class="rpg-modal-close" onclick="COS_RPG.closeModal('rpg-rest-modal')" aria-label="Close Rest Chooser">✕</button>
+                        </div>
+                        <div class="rpg-modal-body" id="rpg-rest-body"></div>
+                        <div class="rpg-modal-foot">
+                            <span style="font-size:0.7rem; color:#94a3b8;">Choose Short Rest (quick recovery) or Long Rest (full camp reset).</span>
+                            <button type="button" class="rpg-mini-btn" onclick="COS_RPG.closeModal('rpg-rest-modal')">Cancel</button>
+                        </div>
+                    </div>
+                </dialog>
             `;
             document.body.appendChild(wrap);
 
@@ -8056,6 +8065,14 @@
         const eqCnt = document.getElementById('rpg-hdr-equip-cnt');
         if (bpCnt) bpCnt.textContent = items.length;
         if (eqCnt) eqCnt.textContent = bonuses.equippedCount;
+        const alertCount = incomingTrades.length + getTotalUnreadMessages();
+        const tradeBadge = document.getElementById('rpg-fab-trade-badge');
+        if (tradeBadge) {
+            tradeBadge.textContent = alertCount > 0 ? String(alertCount) : '';
+            tradeBadge.style.display = alertCount > 0 ? 'inline-flex' : 'none';
+        }
+        const fabDot = document.getElementById('rpg-fab-alert-dot');
+        if (fabDot) fabDot.style.display = alertCount > 0 ? 'inline-block' : 'none';
     }
 
     function formatTradeItemDisplay(itemRaw, qty) {
@@ -9760,7 +9777,8 @@
         deathSaves: { succ: 0, fail: 0 },
         turn: { action: true, bonus: true, reaction: true, move: true },
         advLocked: false,
-        rightTab: 'all',
+        rightTab: 'combat',
+        tabPrefV3: true,
         skillsTrainedOnly: false,
         showPartyHud: false
     };
@@ -9801,7 +9819,8 @@
                 };
             }
             hudState.advLocked = Boolean(p.advLocked);
-            hudState.rightTab = typeof p.rightTab === 'string' ? p.rightTab : 'all';
+            hudState.rightTab = (p.tabPrefV3 && typeof p.rightTab === 'string') ? p.rightTab : 'combat';
+            hudState.tabPrefV3 = true;
             hudState.skillsTrainedOnly = Boolean(p.skillsTrainedOnly);
             hudState.showPartyHud = Boolean(p.showPartyHud);
         } catch (e) {}
@@ -10641,14 +10660,15 @@
         if (mainBtn) {
             mainBtn.classList.toggle('is-adv', mode === 'adv');
             mainBtn.classList.toggle('is-dis', mode === 'dis');
+            const lbl = document.getElementById('rpg-fab-label') || mainBtn;
             if (bubblesOpen || trayOpen) {
-                mainBtn.textContent = mode === 'adv' ? '✕ ADV' : (mode === 'dis' ? '✕ DIS' : '✕ Close');
+                lbl.textContent = mode === 'adv' ? '✕ ADV' : (mode === 'dis' ? '✕ DIS' : '✕ Close');
             } else if (mode === 'adv') {
-                mainBtn.textContent = hudState.advLocked ? '✦ ADV 🔒' : '✦ ADV';
+                lbl.textContent = hudState.advLocked ? '✦ ADV 🔒' : '✦ ADV';
             } else if (mode === 'dis') {
-                mainBtn.textContent = hudState.advLocked ? '✦ DIS 🔒' : '✦ DIS';
+                lbl.textContent = hudState.advLocked ? '✦ DIS 🔒' : '✦ DIS';
             } else {
-                mainBtn.textContent = '✦ Menu';
+                lbl.textContent = '✦ Menu';
             }
         }
     }
@@ -10730,6 +10750,66 @@
         if (m && !m.open) m.showModal();
     }
 
+    function openRestModal() {
+        const m = document.getElementById('rpg-rest-modal');
+        const body = document.getElementById('rpg-rest-body');
+        if (!m || !body || !adapter) return;
+        const v = parseCurrentVitalsFromDom();
+        const shortHeal = Math.max(1, Math.ceil((v.max || 20) * 0.25));
+        const hid = adapter.heroId;
+        const shortBullets = hid === 'jacomir'
+            ? [
+                `Restore <strong>+${shortHeal} HP</strong> (25% Max HP, capped at Max)`,
+                `Refill all <strong>4/4 Superiority Dice (d8)</strong>`,
+                `Recharge <strong>Action Surge</strong> &amp; regain <strong>+1 Second Wind</strong>`,
+                `Regain <strong>+1 Help Token</strong> (up to 2/day)`
+            ]
+            : (hid === 'piper'
+                ? [
+                    `Restore <strong>+${shortHeal} HP</strong> (25% Max HP, capped at Max)`,
+                    `Regain <strong>+1 Help Token</strong> (up to 2/day)`,
+                    `Good time to craft Potions or Bandages in <strong>Craft</strong>`
+                ]
+                : [
+                    `Restore <strong>+${shortHeal} HP</strong> (25% Max HP, capped at Max)`,
+                    `Top off all <strong>Firearm Chambers</strong> (Lament, Mercy &amp; Less)`,
+                    `Regain <strong>+1 Help Token</strong>`
+                ]);
+        const longBullets = hid === 'jacomir'
+            ? [
+                `Restore full <strong>${v.max}/${v.max} HP</strong> &amp; clear Temporary HP`,
+                `Restore all <strong>Superiority Dice</strong>, <strong>Second Wind (3/3)</strong> &amp; <strong>Action Surge</strong>`,
+                `Restore <strong>Heroic Inspiration</strong>, <strong>Help Tokens (2/2)</strong> &amp; Short Rests`
+            ]
+            : (hid === 'piper'
+                ? [
+                    `Restore full <strong>${v.max}/${v.max} HP</strong> &amp; clear Temporary HP`,
+                    `Restore all <strong>Spell Slots</strong>, <strong>Sorcery Points (3/3)</strong> &amp; <strong>Tides of Chaos</strong>`,
+                    `Restore <strong>Fierna Charm (1/1)</strong>, <strong>Help Tokens (2/2)</strong> &amp; Short Rests`
+                ]
+                : [
+                    `Restore full <strong>${v.max}/${v.max} HP</strong> &amp; clear Temporary HP`,
+                    `Restore all <strong>Spell Slots</strong>, <strong>Hunter's Mark</strong> &amp; <strong>Hunter's Sense (2/2)</strong>`,
+                    `Refill all <strong>Ammo Reserves</strong>, <strong>Whispering Grave</strong>, <strong>Inspiration</strong> &amp; <strong>Help (2/2)</strong>`
+                ]);
+
+        body.innerHTML = `
+            <div class="rpg-rest-grid">
+                <div class="rpg-rest-card">
+                    <h3><span>☕ Short Rest</span><span class="pill-badge pill-blue">1 Hour</span></h3>
+                    <ul>${shortBullets.map(b => `<li>${b}</li>`).join('')}</ul>
+                    <button type="button" class="btn-act btn-act-temp" style="width:100%; min-block-size:34px;" onclick="COS_RPG.closeModal('rpg-rest-modal'); if(typeof shortRest==='function'){shortRest();}">☕ Take Short Rest</button>
+                </div>
+                <div class="rpg-rest-card" style="border-color: rgba(63, 185, 128, 0.32);">
+                    <h3><span>⛺ Long Rest</span><span class="pill-badge" style="color:#86efac; border-color:rgba(63,185,128,0.4);">8 Hours</span></h3>
+                    <ul>${longBullets.map(b => `<li>${b}</li>`).join('')}</ul>
+                    <button type="button" class="btn-act btn-act-heal" style="width:100%; min-block-size:34px;" onclick="COS_RPG.closeModal('rpg-rest-modal'); if(typeof longRest==='function'){longRest();}">⛺ Take Long Rest</button>
+                </div>
+            </div>
+        `;
+        if (!m.open) m.showModal();
+    }
+
     function mountVideoGameHudWidgets() {
         loadHudState();
 
@@ -10750,23 +10830,25 @@
             tabs.setAttribute('focusgroup', 'toolbar wrap');
             tabs.setAttribute('aria-label', 'Sheet View Filter');
             tabs.innerHTML = `
-                <button type="button" class="rpg-view-tab" data-tab="all" aria-pressed="true" onclick="COS_RPG.setRightColumnTab('all')">📋 All</button>
-                <button type="button" class="rpg-view-tab" data-tab="combat" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('combat')">⚔️ Combat</button>
-                <button type="button" class="rpg-view-tab" data-tab="magic" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('magic')">🔮 Magic &amp; Features</button>
+                <button type="button" class="rpg-view-tab" data-tab="combat" aria-pressed="true" onclick="COS_RPG.setRightColumnTab('combat')">⚔️ Combat</button>
+                <button type="button" class="rpg-view-tab" data-tab="magic" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('magic')">✨ Magic &amp; Features</button>
                 <button type="button" class="rpg-view-tab" data-tab="gear" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('gear')">🎒 Gear &amp; Bag</button>
+                <button type="button" class="rpg-view-tab" data-tab="all" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('all')">📋 All</button>
             `;
             rightCol.insertBefore(tabs, rightCol.firstChild);
             rightCol.insertBefore(wrap, rightCol.firstChild);
             installToolbarRovingFallback(tabs);
         }
 
-        // 2. Mount Concentration & Quick Status Strip right below .buffs-toggle-bar in Left Column
+        // 2. Mount Concentration & Quick Status Strip seamlessly inside Unified Vitals Plate (or below buffsBar fallback)
+        const vitalsPlate = document.querySelector('.vitals-plate');
         const buffsBar = document.querySelector('.buffs-toggle-bar');
-        if (buffsBar && !document.getElementById('rpg-status-strip')) {
+        if ((vitalsPlate || buffsBar) && !document.getElementById('rpg-status-strip')) {
             const strip = document.createElement('div');
             strip.id = 'rpg-status-strip';
             strip.className = 'rpg-status-panel';
-            buffsBar.insertAdjacentElement('afterend', strip);
+            if (vitalsPlate) vitalsPlate.appendChild(strip);
+            else buffsBar.insertAdjacentElement('afterend', strip);
         }
 
         // 3. Mount Standard 5e Death Saves Overlay inside the HP box (hidden unless curHP === 0)
@@ -10833,12 +10915,14 @@
                     </div>
                 </div>
                 <div id="rpg-fab-bubbles" class="rpg-fab-bubbles" role="menu" aria-label="Quick Utility Menu">
-                    <a href="index.html" class="rpg-fab-bubble bubble-portal" role="menuitem" title="Back to Curse of Strahd Campaign Portal">🏰 Portal</a>
+                    <a href="index.html" class="rpg-fab-bubble bubble-portal" role="menuitem" title="Back to Campaign Portal">🏰 Portal</a>
+                    <button type="button" class="rpg-fab-bubble bubble-reset" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.resetSheetToOfficialBaseline(false);" title="Undo unsaved changes &amp; restore last ☁️ Sync checkpoint">🔄 Reset</button>
                     <button type="button" class="rpg-fab-bubble bubble-rules" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.openRulesModal();" title="Open Combat Controls &amp; Table House Rules">❓ Rules</button>
-                    <button type="button" id="rpg-fab-party-btn" class="rpg-fab-bubble bubble-party" role="menuitemcheckbox" aria-pressed="false" onclick="COS_RPG.togglePartyHud()" title="Toggle Live Teammate HP &amp; Status Row">👥 Live Party</button>
                     <button type="button" id="rpg-fab-dice-btn" class="rpg-fab-bubble bubble-dice" role="menuitem" onclick="COS_RPG.toggleDiceTray(true)" title="Open Quick Dice Roller &amp; Adv/Dis Modifiers">🎲 Quick Dice</button>
+                    <button type="button" id="rpg-fab-trade-btn" class="rpg-fab-bubble bubble-trade" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.openTradeModal('messages');" title="Open Party Trade &amp; Private Whispers">🤝 Trade &amp; Chat <span id="rpg-fab-trade-badge" class="rpg-badge-count pulse-alert" style="display:none;"></span></button>
+                    <button type="button" id="rpg-fab-party-btn" class="rpg-fab-bubble bubble-party" role="menuitemcheckbox" aria-pressed="false" onclick="COS_RPG.togglePartyHud()" title="Toggle Live Teammate HP &amp; Status Row">👥 Live Party</button>
                 </div>
-                <button type="button" id="rpg-dice-fab-btn" class="rpg-dice-fab" aria-expanded="false" aria-controls="rpg-fab-bubbles" onclick="COS_RPG.toggleFabMenu()" title="Open Quick Menu (Dice, Live Party, Rules &amp; Portal)">✦ Menu</button>
+                <button type="button" id="rpg-dice-fab-btn" class="rpg-dice-fab" aria-expanded="false" aria-controls="rpg-fab-bubbles" onclick="COS_RPG.toggleFabMenu()" title="Open Quick Menu (Live Party, Trade &amp; Chat, Dice, Rules, Reset &amp; Portal)"><span id="rpg-fab-label">✦ Menu</span> <span id="rpg-fab-alert-dot" class="rpg-fab-dot" style="display:none;"></span></button>
             `;
             document.body.appendChild(fabWrap);
 
@@ -11203,6 +11287,7 @@
         // Video-Game RPG HUD API
         openDirectWhisper,
         openRulesModal,
+        openRestModal,
         isCombatActive,
         syncCombatModeLayout,
         syncCombatActionLocks,

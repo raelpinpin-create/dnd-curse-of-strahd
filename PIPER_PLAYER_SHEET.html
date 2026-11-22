@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
     <title>Piper — Wild Magic Sorcerer Sheet (Curse of Strahd)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122r3">
+    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v3">
+    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v3">
     <style>
+        @layer legacy {
         :root {
             --bg-page: #070b14;
             --bg-sheet: #0f172a;
@@ -846,265 +849,118 @@
             outline: 2px solid var(--accent-gold);
             outline-offset: 2px;
         }
-
+        }
     </style>
 </head>
-<body>
+<body data-hero="piper">
 
     <div class="sheet-container">
         
         <!-- HEADER BANNER -->
-        <header class="header-banner" style="background: linear-gradient(180deg, #1b162e 0%, #0f172a 100%);">
+        <header class="header-banner">
             <div class="header-title">
-                <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.filter='brightness(1.18)'" onmouseout="this.style.filter='none'" title="Click to open Piper's Origin Story, Backstory & Passive Abilities">
-                    PIPER <span style="font-size:0.95rem; color:#cbd5e1; font-weight:600;">("Piper the Incomparable")</span>
+                <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer;" title="Click to open Piper's Ability Scores, Origin Story, Feats &amp; Passive Abilities">
+                    PIPER <span>"Piper the Incomparable"</span>
                 </h1>
-                <div style="margin-top:5px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                    <span class="pill-badge pill-gold" style="font-size:0.72rem; padding:2px 10px; letter-spacing:0.6px;">⭐ LEVEL 3</span>
-                    <span class="pill-badge pill-neutral" style="font-size:0.7rem; padding:2px 9px;">CHAOTIC NEUTRAL</span>
-                    <span class="pill-badge pill-purple" style="font-size:0.7rem; padding:2px 9px;">WILD MAGIC SORCERER</span>
-                    <span class="rpg-sense-pill">🥾 30 ft</span>
-                    <span class="rpg-sense-pill">👁️ Darkvision 60 ft</span>
-                    <span class="rpg-sense-pill">🔥 Fire Resist</span>
+                <div class="hero-meta-strip">
+                    <span class="hero-meta-chip is-level">Level 3</span>
+                    <span class="hero-meta-chip is-class">Wild Magic Sorcerer</span>
+                    <span class="hero-meta-chip">Chaotic Neutral</span>
+                    <span class="hero-meta-chip">30 ft</span>
+                    <span class="hero-meta-chip">Darkvision 60 ft</span>
+                    <span class="hero-meta-chip">Fire Resist</span>
                 </div>
             </div>
             <div class="pill-badge-group">
-                <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">🏰 Portal</a>
+                <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">Portal</a>
             </div>
         </header>
 
         <!-- MAIN 2-COLUMN LAYOUT -->
         <div class="main-layout">
             
-            <!-- LEFT COLUMN: VITALS, HP, TOGGLES, HELP TOKENS, ABILITIES, SAVES, 18 SKILLS, GOLD -->
+            <!-- LEFT COLUMN: 4 UNIFIED MODULES (VITALS, PERKS/HELP, CHECKS, COIN & NOTES) -->
             <div>
                 
-                <!-- 4-BOX VITALS -->
-                <div class="vitals-4box">
-                    <div class="vital-mini-box">
-                        <span class="vital-mini-lbl">HIT POINTS</span>
-                        <span class="vital-mini-val" id="hp-disp" style="color:var(--accent-green);">17/17</span>
-                    </div>
-                    <div class="vital-mini-box">
-                        <span class="vital-mini-lbl">ARMOR CLASS</span>
-                        <span class="vital-mini-val" id="ac-disp" style="color:var(--accent-gold);">13</span>
-                    </div>
-                    <div class="vital-mini-box" onclick="rollPiperInitiative()" style="cursor:pointer;" title="Click to roll Initiative">
-                        <span class="vital-mini-lbl">INIT 🎲</span>
-                        <span class="vital-mini-val" id="init-disp" style="color:var(--accent-blue);">+2</span>
-                    </div>
-                    <div class="vital-mini-box" title="Charisma +4, Proficiency Bonus +2">
-                        <span class="vital-mini-lbl">SPELL DC / HIT</span>
-                        <span class="vital-mini-val" id="dc-hit-disp" style="font-size:0.86rem; color:#93c5fd;">DC 14 | +6</span>
-                    </div>
-                </div>
-
-                <!-- COMPACT HP & TEMP HP CONTROLLER -->
-                <div class="hp-ctrl-container">
-                    <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.7rem; font-weight:700; margin-bottom:2px;">
-                        <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.3px;">HIT POINTS</span>
-                        <span style="display:inline-flex; align-items:center;">
-                            <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">17 / 17 (+0 Temp)</span>
-                            <button type="button" id="btn-clear-temp" class="rpg-clear-temp-pill" onclick="clearTempHP()" style="display:none;" title="Clear Temporary Hit Points">✕ Temp</button>
-                        </span>
-                    </div>
-                    <div class="hp-health-bar-bg">
-                        <div class="hp-health-bar-fill" id="hp-bar" style="width: 100%;"></div>
-                        <div class="hp-health-bar-temp" id="hp-temp-bar" style="width: 0%;"></div>
-                    </div>
-                    
-                    <div style="display:flex; flex-direction:column; gap:5px; margin-top:2px;">
-                        <div style="display:flex; align-items:center; gap:4px; width:100%;">
-                            <button type="button" class="btn-act btn-act-dmg" style="padding: 4px 7px; font-size: 0.76rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
-                            <input type="number" id="hp-input" class="hp-input-num" value="" placeholder="Amt" min="1" max="999" style="width:44px; height:26px; font-size:0.84rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage, healing, or Temp HP amount">
-                            <button type="button" class="btn-act btn-act-heal" style="padding: 4px 7px; font-size: 0.76rem; font-weight:700;" onclick="stepHP(1)">+1</button>
-                            <button type="button" class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 6px; font-size:0.72rem; font-weight:700; flex:1;">⚔️ Dmg</button>
-                            <button type="button" class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 6px; font-size:0.72rem; font-weight:700; flex:1;" title="Restore HP up to Max HP (no Temp HP overflow)">💚 Heal</button>
-                            <button type="button" class="btn-act btn-act-temp" onclick="applyTempHP()" style="padding:4px 7px; font-size:0.72rem; font-weight:700;" title="Grant Temporary HP (5e non-stacking: keeps the higher value)">🛡️ Temp</button>
+                <!-- 1. UNIFIED VITALS & HEALTH PLATE -->
+                <div class="vitals-plate">
+                    <div class="vitals-3bar">
+                        <div class="vital-stat-tile">
+                            <span class="vital-mini-lbl">Armor Class</span>
+                            <span class="vital-mini-val" id="ac-disp" style="color:var(--accent-gold);">13</span>
                         </div>
-                        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:1px;">
-                            <div style="display:flex; gap:4px;">
-                                <button class="btn-act btn-act-pre" onclick="shortRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-blue);" title="Heal 25% Max HP (+5 HP), Sorcery Points restoration, &amp; +1 Help Token">☕ Short Rest</button>
-                                <button class="btn-act btn-act-pre" onclick="longRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-green);" title="Full Long Rest (Restore 17/17 HP, 3 Sorcery Points, Spell Slots, Tides of Chaos &amp; 2/2 Help)">⛺ Long Rest</button>
+                        <div class="vital-stat-tile is-clickable" onclick="rollPiperInitiative()" title="Click to roll Initiative">
+                            <span class="vital-mini-lbl">Initiative</span>
+                            <span class="vital-mini-val" id="init-disp" style="color:var(--accent-blue);">+2</span>
+                        </div>
+                        <div class="vital-stat-tile" title="Charisma +4, Proficiency Bonus +2">
+                            <span class="vital-mini-lbl">Spell DC · Hit</span>
+                            <span class="vital-mini-val" id="dc-hit-disp" style="font-size:0.86rem; color:var(--text-light);">DC 14 | +6</span>
+                        </div>
+                    </div>
+
+                    <div class="hp-ctrl-container">
+                        <div class="hp-plate-head">
+                            <div class="hp-plate-readout">
+                                <span class="hp-main-num" id="hp-disp">17/17</span>
+                                <span class="hp-sub-lbl">HP</span>
+                                <span id="hp-status-header" style="font-size:0.7rem; font-weight:700; font-family:var(--font-mono); color:var(--accent-blue);"></span>
+                                <button type="button" id="btn-clear-temp" class="rpg-clear-temp-pill" onclick="clearTempHP()" style="display:none;" title="Clear Temporary Hit Points">✕ Temp</button>
                             </div>
-                            <span style="font-size:0.72rem; color:var(--text-dim); font-family:'JetBrains Mono',monospace;">Max HP: 17</span>
+                            <div class="hp-plate-right">
+                                <button type="button" class="hp-rest-trigger" onclick="COS_RPG && COS_RPG.openRestModal()" title="Open Short Rest / Long Rest menu">⛺ Rest</button>
+                            </div>
+                        </div>
+                        <div class="hp-health-bar-bg">
+                            <div class="hp-health-bar-fill" id="hp-bar" style="width: 100%;"></div>
+                            <div class="hp-health-bar-temp" id="hp-temp-bar" style="width: 0%;"></div>
+                        </div>
+                        <div class="hp-action-row">
+                            <button type="button" class="btn-act btn-act-dmg" style="padding:4px 8px;" onclick="stepHP(-1)">−1</button>
+                            <input type="number" id="hp-input" class="hp-input-num" value="" placeholder="Amt" min="1" max="999" title="Enter damage, healing, or Temp HP amount">
+                            <button type="button" class="btn-act btn-act-heal" style="padding:4px 8px;" onclick="stepHP(1)">+1</button>
+                            <button type="button" class="btn-act btn-act-dmg" onclick="applyDamage()" style="flex:1;">Dmg</button>
+                            <button type="button" class="btn-act btn-act-heal" onclick="applyHeal()" style="flex:1;" title="Restore HP up to Max HP (no Temp HP overflow)">Heal</button>
+                            <button type="button" class="btn-act btn-act-temp" onclick="applyTempHP()" title="Grant Temporary HP (5e non-stacking)">Temp</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- DYNAMIC SPELL BUFF TOGGLE (Surge #51 auto-activates inside Status Strip when rolled!) -->
-                <div class="buffs-toggle-bar">
-                    <div class="toggle-btn-card" id="card-mage-armor-toggle" onclick="toggleMageArmorBuff()" style="grid-column: span 2;">
-                        <div>
-                            <div style="font-size:0.74rem; font-weight:700;">🔮 Mage Armor (8 Hours)</div>
-                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-mage-armor">Base AC: 13 (10+DEX+Black Robe)</div>
+                <!-- 2. COMPACT PERKS & HELP TOKENS STRIP -->
+                <div class="perks-compact-panel">
+                    <div class="buffs-toggle-bar">
+                        <div class="toggle-btn-card" id="card-mage-armor-toggle" onclick="toggleMageArmorBuff()" style="grid-column: span 2;">
+                            <div>
+                                <div style="font-size:0.75rem; font-weight:700; color:var(--text-light);">Mage Armor (8 Hours)</div>
+                                <div style="font-size:0.66rem; color:var(--text-muted);" id="sub-mage-armor">Base AC: 13 (10+DEX+Black Robe)</div>
+                            </div>
+                            <span class="toggle-badge off" id="badge-mage-armor">OFF (13)</span>
                         </div>
-                        <span class="toggle-badge off" id="badge-mage-armor">OFF (13)</span>
                     </div>
-                </div>
-
-                <!-- 4. HELP TOKENS TRACKER -->
-                <div class="panel" style="padding: 7px 10px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.76rem; font-weight:700; color:#fbbf24;">💛 Help Tokens: <span id="help-tokens-disp" style="color:#fbbf24; font-size:0.88rem; font-weight:800; font-family:'JetBrains Mono',monospace;">1 / 2</span></span>
+                    <div class="help-inline-row">
+                        <span class="help-inline-label">Help Tokens <span id="help-tokens-disp" class="help-inline-count">1 / 2</span></span>
                         <div style="display:flex; align-items:center; gap:4px;">
-                            <button class="btn-act btn-act-temp" onclick="rollHelpToken()" style="padding:2px 7px; font-size:0.7rem; background:#4338ca; border-color:#6366f1;">🎲 Grant +1d6</button>
-                            <button class="btn-act btn-act-pre" onclick="modHelpToken(-1)" style="padding:2px 6px; font-size:0.68rem; color:#cbd5e1;" aria-label="Decrease Help Tokens">-</button>
-                            <button class="btn-act btn-act-pre" onclick="modHelpToken(1)" style="padding:2px 6px; font-size:0.68rem; color:#67e8f9;" aria-label="Increase Help Tokens">+</button>
+                            <button type="button" class="btn-act btn-act-pre" onclick="rollHelpToken()" style="min-block-size:25px; padding:2px 8px; color:var(--accent-gold); border-color:var(--border-gold);">+1d6 Ally</button>
+                            <button type="button" class="btn-act btn-act-pre" onclick="modHelpToken(-1)" style="min-block-size:25px; padding:2px 7px;" aria-label="Decrease Help Tokens">−</button>
+                            <button type="button" class="btn-act btn-act-pre" onclick="modHelpToken(1)" style="min-block-size:25px; padding:2px 7px;" aria-label="Increase Help Tokens">+</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 5. 🎯 ALL 18 SKILLS (INDIVIDUAL ROLLS) — TOP PRIORITY ROLLER -->
+                <!-- 3. UNIFIED CHECKS CARD (SAVING THROWS + ALL 18 SKILLS) -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span style="text-transform:uppercase; font-size:0.78rem; font-weight:800; letter-spacing:0.3px;">🎯 ALL 18 SKILLS (INDIVIDUAL ROLLS)</span>
-                        <span id="prof-bonus-disp" style="font-size:0.68rem; color:var(--text-dim); font-weight:700;">PROF: +2 • PASS. PERC: 10</span>
-                    </div>
-                    <ul class="stat-row-list" style="max-height: 290px; overflow-y: auto;">
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Acrobatics (DEX) ★', 2, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Acrobatics', event)" title="View Acrobatics rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Acrobatics (DEX) ★</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+4 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 0, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Animal Handling', event)" title="View Animal Handling rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Animal Handling (WIS)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
-                        </li>
-                        <li class="stat-row-item prof-item" id="skill-row-arcana" onclick="rollSkill('Arcana (INT) ★', 1, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Arcana', event)" title="View Arcana rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Arcana (INT) ★ <small id="arcana-robe-badge" style="color:#4ade80; display:none;">(Green Robe Adv)</small></span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+3 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Athletics (STR)', 0, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Athletics', event)" title="View Athletics rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Athletics (STR)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 4, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Deception', event)" title="View Deception rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Deception (CHA)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+4 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('History (INT)', 1, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('History', event)" title="View History rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">History (INT)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+1 🎲</span>
-                        </li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 0, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Insight', event)" title="View Insight rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Insight (WIS) ★</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+2 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Intimidation (CHA)', 4, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Intimidation', event)" title="View Intimidation rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Intimidation (CHA)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+4 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Investigation (INT)', 1, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Investigation', event)" title="View Investigation rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Investigation (INT)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+1 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 0, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Medicine', event)" title="View Medicine rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Medicine (WIS)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
-                        </li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Nature (INT) ★ [Barovian Lore]', 1, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Nature', event)" title="View Nature rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Nature (INT) ★ <small style="color:#6ee7b7;">(Native)</small></span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+3 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Perception (WIS)', 0, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Perception', event)" title="View Perception rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Perception (WIS)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
-                        </li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Performance (CHA) ★', 4, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Performance', event)" title="View Performance rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Performance (CHA) ★</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+6 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Persuasion (CHA)', 4, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Persuasion', event)" title="View Persuasion rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Persuasion (CHA)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+4 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Religion (INT)', 1, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Religion', event)" title="View Religion rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Religion (INT)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+1 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Sleight of Hand (DEX)', 2, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Sleight of Hand', event)" title="View Sleight of Hand rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Sleight of Hand (DEX)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+2 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Stealth (DEX)', 2, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Stealth', event)" title="View Stealth rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Stealth (DEX)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+2 🎲</span>
-                        </li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Survival (WIS) ★ [Barovian Lore]', 0, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Survival', event)" title="View Survival rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Survival (WIS) ★ <small style="color:#6ee7b7;">(Native)</small></span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+2 🎲</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- 6. 🛡️ SAVING THROWS (2x3 GRID - BELOW SKILLS) -->
-                <div class="panel">
-                    <div class="panel-title">
-                        <span style="font-size:0.78rem; font-weight:800;">🛡️ Saving Throws</span>
-                        <span id="saves-robe-tag" style="font-size:0.68rem; color:#93c5fd;">Prof: +2 • Black Robe +1</span>
+                        <span>Saving Throws</span>
+                        <span id="saves-robe-tag" style="font-size:0.67rem; color:var(--accent-blue); font-weight:600;">Prof +2 · Black Robe +1</span>
                     </div>
                     <div class="saves-grid-2x3">
                         <div class="save-box" onclick="rollSave('Strength Saving Throw', 0, false)" title="Strength Saving Throw">
                             <span class="save-lbl">STR</span>
-                            <span class="save-val" id="save-val-str" style="color:#93c5fd;">+1</span>
+                            <span class="save-val" id="save-val-str" style="color:var(--text-light);">+1</span>
                         </div>
                         <div class="save-box" onclick="rollSave('Dexterity Saving Throw', 2, false)" title="Dexterity Saving Throw">
                             <span class="save-lbl">DEX</span>
-                            <span class="save-val" id="save-val-dex" style="color:#38bdf8;">+3</span>
+                            <span class="save-val" id="save-val-dex" style="color:var(--text-light);">+3</span>
                         </div>
                         <div class="save-box prof" onclick="rollSave('Constitution Saving Throw ★', 1, true)" title="Constitution Saving Throw (Proficient)">
                             <span class="save-lbl">CON ★</span>
@@ -1112,17 +968,152 @@
                         </div>
                         <div class="save-box" onclick="rollSave('Intelligence Saving Throw', 1, false)" title="Intelligence Saving Throw">
                             <span class="save-lbl">INT</span>
-                            <span class="save-val" id="save-val-int" style="color:#93c5fd;">+2</span>
+                            <span class="save-val" id="save-val-int" style="color:var(--text-light);">+2</span>
                         </div>
                         <div class="save-box" onclick="rollSave('Wisdom Saving Throw', 0, false)" title="Wisdom Saving Throw">
                             <span class="save-lbl">WIS</span>
-                            <span class="save-val" id="save-val-wis" style="color:#93c5fd;">+1</span>
+                            <span class="save-val" id="save-val-wis" style="color:var(--text-light);">+1</span>
                         </div>
                         <div class="save-box prof" onclick="rollSave('Charisma Saving Throw ★', 4, true)" title="Charisma Saving Throw (Proficient)">
                             <span class="save-lbl">CHA ★</span>
                             <span class="save-val" id="save-val-cha" style="color:var(--accent-gold);">+7</span>
                         </div>
                     </div>
+
+                    <div class="checks-divider"></div>
+
+                    <div class="panel-title" style="border-bottom:none; padding-bottom:0;">
+                        <span>Skills</span>
+                        <span id="prof-bonus-disp" style="font-size:0.66rem; color:var(--text-muted); font-weight:600;">PROF +2 · PERC 10</span>
+                    </div>
+                    <ul class="stat-row-list">
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Acrobatics (DEX) ★', 2, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Acrobatics', event)" title="View Acrobatics rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Acrobatics <small style="color:var(--accent-gold);">★ DEX</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+4</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Animal Handling', event)" title="View Animal Handling rules &amp; examples">i</button>
+                                <span>Animal Handling <small style="color:var(--text-muted);">WIS</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+0</span>
+                        </li>
+                        <li class="stat-row-item prof-item" id="skill-row-arcana" onclick="rollSkill('Arcana (INT) ★', 1, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Arcana', event)" title="View Arcana rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Arcana <small style="color:var(--accent-gold);">★ INT</small> <small id="arcana-robe-badge" style="color:var(--accent-green); display:none;">(Green Robe Adv)</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+3</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Athletics (STR)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Athletics', event)" title="View Athletics rules &amp; examples">i</button>
+                                <span>Athletics <small style="color:var(--text-muted);">STR</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+0</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 4, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Deception', event)" title="View Deception rules &amp; examples">i</button>
+                                <span>Deception <small style="color:var(--text-muted);">CHA</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+4</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('History (INT)', 1, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('History', event)" title="View History rules &amp; examples">i</button>
+                                <span>History <small style="color:var(--text-muted);">INT</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+1</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 0, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Insight', event)" title="View Insight rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Insight <small style="color:var(--accent-gold);">★ WIS</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+2</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Intimidation (CHA)', 4, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Intimidation', event)" title="View Intimidation rules &amp; examples">i</button>
+                                <span>Intimidation <small style="color:var(--text-muted);">CHA</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+4</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Investigation (INT)', 1, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Investigation', event)" title="View Investigation rules &amp; examples">i</button>
+                                <span>Investigation <small style="color:var(--text-muted);">INT</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+1</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Medicine', event)" title="View Medicine rules &amp; examples">i</button>
+                                <span>Medicine <small style="color:var(--text-muted);">WIS</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+0</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Nature (INT) ★ [Barovian Lore]', 1, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Nature', event)" title="View Nature rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Nature <small style="color:var(--accent-gold);">★ INT</small> <small style="color:var(--accent-green);">(Native)</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+3</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Perception (WIS)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Perception', event)" title="View Perception rules &amp; examples">i</button>
+                                <span>Perception <small style="color:var(--text-muted);">WIS</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+0</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Performance (CHA) ★', 4, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Performance', event)" title="View Performance rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Performance <small style="color:var(--accent-gold);">★ CHA</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+6</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Persuasion (CHA)', 4, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Persuasion', event)" title="View Persuasion rules &amp; examples">i</button>
+                                <span>Persuasion <small style="color:var(--text-muted);">CHA</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+4</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Religion (INT)', 1, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Religion', event)" title="View Religion rules &amp; examples">i</button>
+                                <span>Religion <small style="color:var(--text-muted);">INT</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+1</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Sleight of Hand (DEX)', 2, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Sleight of Hand', event)" title="View Sleight of Hand rules &amp; examples">i</button>
+                                <span>Sleight of Hand <small style="color:var(--text-muted);">DEX</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+2</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Stealth (DEX)', 2, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Stealth', event)" title="View Stealth rules &amp; examples">i</button>
+                                <span>Stealth <small style="color:var(--text-muted);">DEX</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+2</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Survival (WIS) ★ [Barovian Lore]', 0, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Survival', event)" title="View Survival rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Survival <small style="color:var(--accent-gold);">★ WIS</small> <small style="color:var(--accent-green);">(Native)</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+2</span>
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- 🪙 SLEEK 2-ROW RPG COIN POUCH -->
@@ -1181,54 +1172,54 @@
             <div>
 
                 <!-- 🎇 WILD MAGIC SURGE & TIDES OF CHAOS ENGINE -->
-                <div class="panel" style="background: linear-gradient(135deg, #1b162f 0%, #121a2d 100%); border: 1.5px solid #6d529e;">
-                    <div class="panel-title" style="border-bottom-color: rgba(167, 139, 250, 0.22);">
-                        <span style="color:#d8b4fe; font-size:0.86rem;">🎇 Wild Magic Surge &amp; Tides of Chaos Engine</span>
+                <div class="panel" style="border-top: 2px solid var(--hero-accent);">
+                    <div class="panel-title">
+                        <span>Wild Magic Surge &amp; Tides of Chaos</span>
                         <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                            <label style="font-size:0.68rem; color:#c4b5fd; display:flex; align-items:center; gap:4px; cursor:pointer; text-transform:none;" title="When checked, casting any 1st+ level Sorcerer spell automatically rolls the d20 Wild Magic check (or auto-triggers d100 Surge if Tides of Chaos was spent!)">
-                                <input type="checkbox" id="auto-surge-check" checked style="accent-color:#8b5cf6;"> Auto-Check on Spell Cast
+                            <label style="font-size:0.68rem; color:var(--text-dim); display:flex; align-items:center; gap:4px; cursor:pointer; text-transform:none;" title="When checked, casting any 1st+ level Sorcerer spell automatically rolls the d20 Wild Magic check (or auto-triggers d100 Surge if Tides of Chaos was spent!)">
+                                <input type="checkbox" id="auto-surge-check" checked> Auto-Check on Spell Cast
                             </label>
-                            <button class="btn-act btn-act-pre" onclick="openWildSurgeTableModal()" style="font-size:0.68rem; color:#fde68a; border-color:#7c3aed; background:rgba(109, 40, 217, 0.2);">📜 All 50 Surge Effects (d100 Table)</button>
+                            <button class="btn-act btn-act-pre" onclick="openWildSurgeTableModal()" style="font-size:0.68rem; color:var(--accent-gold); border-color:var(--border-gold);">📜 All 50 Surge Effects (d100)</button>
                         </div>
                     </div>
 
                     <!-- TIDES OF CHAOS INTERACTIVE BAR -->
-                    <div id="tides-card" style="background:rgba(15, 23, 42, 0.85); border:1px solid #6d529e; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <div id="tides-card" class="rpg-slot-strip" style="flex-direction:row; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
                         <div style="flex:1; min-width:220px;">
                             <div style="display:flex; align-items:center; gap:6px;">
-                                <span style="font-size:0.82rem; font-weight:800; color:#fde68a; cursor:pointer;" onclick="openSpellDetailsModal('tides_of_chaos')" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#fde68a'">🃏 Tides of Chaos ("Pick-a-Card") ℹ️</span>
-                                <span id="tides-status-badge" onclick="toggleTidesManual()" title="Click to toggle Ready / Primed manually" style="cursor:pointer; font-size:0.66rem; font-weight:800; padding:2px 7px; border-radius:999px; background:rgba(34,197,94,0.16); color:#4ade80; border:1px solid #22c55e;">🟢 READY (1/LR)</span>
+                                <span style="font-size:0.82rem; font-weight:800; color:var(--text-light); cursor:pointer;" onclick="openSpellDetailsModal('tides_of_chaos')" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">🃏 Tides of Chaos ("Pick-a-Card") ℹ️</span>
+                                <span id="tides-status-badge" onclick="toggleTidesManual()" title="Click to toggle Ready / Primed manually" class="toggle-badge on" style="cursor:pointer;">🟢 READY (1/LR)</span>
                             </div>
                             <div style="font-size:0.71rem; color:var(--text-dim); margin-top:2px;" id="tides-desc-line">
                                 Spend to gain <strong>Advantage</strong> on any Attack, Check, or Save. Once spent, your next 1st+ level spell <strong>automatically triggers a Wild Magic Surge</strong> &amp; recharges Tides of Chaos!
                             </div>
                         </div>
                         <div style="display:flex; gap:5px; align-items:center; flex-wrap:wrap;">
-                            <button id="btn-use-tides" class="btn-roll-action" style="background:linear-gradient(135deg, #5b21b6 0%, #3730a3 100%); border:1px solid #8b5cf6; padding:5px 10px; font-size:0.74rem;" onclick="useTidesOfChaos()">🃏 Use Tides (+Advantage)</button>
+                            <button id="btn-use-tides" class="btn-roll-action btn-roll-accent" onclick="useTidesOfChaos()">🃏 Use Tides (+Advantage)</button>
                         </div>
                     </div>
 
                     <!-- DIRECT WILD MAGIC ROLLER BUTTONS -->
                     <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
-                        <button class="btn-roll-action" style="background:#312e81; border:1px solid #6366f1; padding:5px 10px; font-size:0.74rem;" onclick="rollWildMagicD20Check('Manual Spell Check')">🎲 Roll Wild Magic Check (d20)</button>
-                        <button class="btn-roll-action btn-roll-wild" style="padding:5px 12px; font-size:0.74rem; font-weight:700;" onclick="triggerWildMagicSurge('Direct Surge Trigger')">💥 Trigger Wild Magic Surge (d100)</button>
-                        <div style="display:flex; align-items:center; gap:4px; margin-left:auto;">
-                            <span style="font-size:0.68rem; color:#c4b5fd;">Lookup d100:</span>
-                            <input type="number" id="manual-d100-input" class="hp-input-num" placeholder="1-100" min="1" max="100" style="width:52px; height:25px; font-size:0.74rem;">
-                            <button class="btn-act btn-act-pre" onclick="lookupSpecificSurge()" style="font-size:0.68rem; padding:3px 7px; color:#d8b4fe; border-color:#6d529e;">Go</button>
+                        <button class="btn-roll-action" onclick="rollWildMagicD20Check('Manual Spell Check')">🎲 Wild Magic Check (d20)</button>
+                        <button class="btn-roll-action btn-roll-wild" onclick="triggerWildMagicSurge('Direct Surge Trigger')">💥 Trigger Surge (d100)</button>
+                        <div style="display:flex; align-items:center; gap:4px; margin-inline-start:auto;">
+                            <span style="font-size:0.68rem; color:var(--text-muted);">Lookup d100:</span>
+                            <input type="number" id="manual-d100-input" class="hp-input-num" placeholder="1-100" min="1" max="100" style="width:52px; height:26px; font-size:0.74rem;">
+                            <button class="btn-act btn-act-pre" onclick="lookupSpecificSurge()" style="min-block-size:26px; font-size:0.68rem; padding:3px 8px;">Go</button>
                         </div>
                     </div>
 
                     <!-- ACTIVE WILD MAGIC SURGE RESULT DISPLAY -->
                     <div class="wild-surge-live-box" id="wild-surge-live-box">
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-size:0.72rem; font-weight:800; color:#fde68a; text-transform:uppercase; letter-spacing:0.4px;" id="surge-box-header">✨ Active Wild Magic Surge Output</span>
-                            <span style="font-size:0.68rem; color:#c4b5fd; font-family:'JetBrains Mono',monospace;" id="surge-box-roll-tag">Awaiting Surge...</span>
+                            <span style="font-size:0.7rem; font-weight:700; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.06em;" id="surge-box-header">Active Wild Magic Surge Output</span>
+                            <span style="font-size:0.68rem; color:var(--text-muted); font-family:var(--font-mono);" id="surge-box-roll-tag">Awaiting Surge...</span>
                         </div>
-                        <div id="surge-box-effect" style="color:#f8fafc; font-size:0.78rem;">
-                            Cast a 1st-level or higher spell or click <strong>[💥 Trigger Wild Magic Surge (d100)]</strong> to automatically roll and announce the effect!
+                        <div id="surge-box-effect" style="color:var(--text-light); font-size:0.78rem;">
+                            Cast a 1st-level or higher spell or click <strong>[💥 Trigger Surge (d100)]</strong> to automatically roll and announce the effect!
                         </div>
-                        <div id="surge-box-flavor" style="color:#fde68a; font-size:0.72rem; font-style:italic;"></div>
+                        <div id="surge-box-flavor" style="color:var(--accent-gold); font-size:0.72rem; font-style:italic;"></div>
                         <div id="surge-box-actions" style="display:flex; gap:6px; flex-wrap:wrap; margin-top:2px;"></div>
                     </div>
                 </div>
@@ -1236,21 +1227,21 @@
                 <!-- ⚔️ ACTIONS & AT-WILL ATTACKS (WEAPONS + CANTRIPS) -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span>⚔️ Weapons &amp; At-Will Cantrips (Unlimited)</span>
-                        <span style="font-size:0.7rem; color:var(--accent-blue);">Click any title ℹ️ for 5.5e Rules &amp; Wiki</span>
+                        <span>Weapons &amp; At-Will Cantrips</span>
+                        <span style="font-size:0.68rem; color:var(--text-muted);">Click any title for 5.5e Rules</span>
                     </div>
 
                     <div class="action-grid-2col" id="weapons-grid-piper">
                         <!-- Fire Bolt -->
-                        <div class="action-card">
+                        <div class="action-card" data-turn-kind="action">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('firebolt')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#f87171'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('firebolt')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🔥 Fire Bolt ("Thumb-Fire Trick") <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#f87171;" id="firebolt-tag-disp">Cantrip • 1 Action • 120ft (1d10)</div>
+                                    <div style="font-size:0.67rem; font-weight:600; color:var(--accent-red);" id="firebolt-tag-disp">Cantrip • 1 Action • 120ft (1d10)</div>
                                 </div>
-                                <span style="font-size:0.64rem; color:#f87171; font-weight:700;">EVOCATION</span>
+                                <span class="pill-badge pill-crimson">EVOCATION</span>
                             </div>
                             <div class="action-desc">Ranged 120ft. <strong id="firebolt-hit-txt">+6 to Hit</strong>, <strong id="firebolt-dmg-txt">1d10</strong> Fire &amp; ignites flammable objects.</div>
                             <div class="action-btn-row">
@@ -1260,32 +1251,32 @@
                         </div>
 
                         <!-- Friends (Fierna Lineage Cantrip) -->
-                        <div class="action-card">
+                        <div class="action-card" data-turn-kind="action">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('friends')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#f472b6'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('friends')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         💋 Friends (Fierna Lineage) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#f472b6;">Cantrip • 1 Action • Conc 1m</div>
+                                    <div style="font-size:0.67rem; font-weight:600; color:var(--text-dim);">Cantrip • 1 Action • Conc 1m</div>
                                 </div>
-                                <span style="font-size:0.64rem; color:#f472b6; font-weight:700;">ENCHANTMENT</span>
+                                <span class="pill-badge pill-purple">ENCHANTMENT</span>
                             </div>
                             <div class="action-desc">Gain <strong>Advantage on all Charisma checks</strong> directed at 1 non-hostile creature for 1 minute!</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#db2777;" onclick="castFriendsCantrip()">💋 Cast Friends (+CHA Adv)</button>
+                                <button class="btn-roll-action" onclick="castFriendsCantrip()">💋 Cast Friends (+CHA Adv)</button>
                             </div>
                         </div>
 
                         <!-- Prestidigitation -->
-                        <div class="action-card">
+                        <div class="action-card" data-turn-kind="action">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('prestidigitation')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('prestidigitation')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🎩 Prestidigitation (Stage Tricks) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#fbbf24;">Cantrip • 1 Action • 10ft</div>
+                                    <div style="font-size:0.67rem; font-weight:600; color:var(--text-dim);">Cantrip • 1 Action • 10ft</div>
                                 </div>
-                                <span style="font-size:0.64rem; color:#fbbf24; font-weight:700;">TRANSMUTATION</span>
+                                <span class="pill-badge pill-gold">TRANSMUTATION</span>
                             </div>
                             <div class="action-desc">Shower of card sparks, puff of stage smoke, illusory trinkets, lighting candles, or cleaning/flavoring.</div>
                             <div class="action-btn-row">
@@ -1294,32 +1285,32 @@
                         </div>
 
                         <!-- Minor Illusion -->
-                        <div class="action-card">
+                        <div class="action-card" data-turn-kind="action">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('minor_illusion')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#c084fc'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('minor_illusion')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🎭 Minor Illusion <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#c084fc;">Cantrip • 1 Action • 30ft (1m)</div>
+                                    <div style="font-size:0.67rem; font-weight:600; color:var(--text-dim);">Cantrip • 1 Action • 30ft (1m)</div>
                                 </div>
-                                <span style="font-size:0.64rem; color:#c084fc; font-weight:700;">ILLUSION</span>
+                                <span class="pill-badge pill-purple">ILLUSION</span>
                             </div>
                             <div class="action-desc">Create a 5-ft cube visual illusion or phantom sound (applause, footsteps, screams). Investigation DC 14.</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#7c3aed;" onclick="castUtility('🎭 <strong>Minor Illusion (30ft • 1 min):</strong> Piper conjures a 5-ft visual decoy or phantom theatrical sound (DC 14 INT Investigation to discern)!')">🎭 Conjure Illusion</button>
+                                <button class="btn-roll-action" onclick="castUtility('🎭 <strong>Minor Illusion (30ft • 1 min):</strong> Piper conjures a 5-ft visual decoy or phantom theatrical sound (DC 14 INT Investigation to discern)!')">🎭 Conjure Illusion</button>
                             </div>
                         </div>
 
                         <!-- Mage Hand -->
-                        <div class="action-card">
+                        <div class="action-card" data-turn-kind="action">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('magehand')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#38bdf8'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('magehand')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         ✨ Mage Hand ("Invisible Wire") <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#38bdf8;">Cantrip • 1 Action • 30ft</div>
+                                    <div style="font-size:0.67rem; font-weight:600; color:var(--text-dim);">Cantrip • 1 Action • 30ft</div>
                                 </div>
-                                <span style="font-size:0.64rem; color:#38bdf8; font-weight:700;">CONJURATION</span>
+                                <span class="pill-badge pill-blue">CONJURATION</span>
                             </div>
                             <div class="action-desc">Spectral floating hand manipulates objects, opens doors, or palms items up to 10 lbs within 30 ft.</div>
                             <div class="action-btn-row">
@@ -1328,59 +1319,59 @@
                         </div>
 
                         <!-- Kolyan's Silvered Heirloom Dagger (Visible ONLY when Equipped) -->
-                        <div class="action-card" id="card-wpn-kolyan-dagger" style="border-left:3px solid #cbd5e1;">
+                        <div class="action-card" id="card-wpn-kolyan-dagger" data-turn-kind="action">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('kolyan_dagger_piper')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#86efac'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('kolyan_dagger_piper')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🗡️ Kolyan's Silvered Heirloom Dagger <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#e2e8f0;">Finesse • Light • Thrown (20/60ft) • Curved w/ 3 Red Gems</div>
+                                    <div style="font-size:0.67rem; font-weight:600; color:var(--text-dim);">Finesse • Light • Thrown (20/60ft) • Curved w/ 3 Red Gems</div>
                                 </div>
-                                <span style="font-size:0.64rem; color:#fca5a5; font-weight:700;">SILVERED</span>
+                                <span class="pill-badge pill-crimson">SILVERED</span>
                             </div>
                             <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong>. Bypasses nonmagical resistance/immunity of Vampire Spawn, Werewolves &amp; Night Hags!</div>
                             <div id="piper-mods-kolyan_dagger"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-kolyan" type="button" class="btn-roll-action" style="background:#475569; border:1px solid #94a3b8;" onclick="rollWeaponAttack('Kolyan\'s Silvered Heirloom Dagger', 2, 'kolyan_dagger')">🗡️ Attack (+4)</button>
+                                <button id="btn-atk-kolyan" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Kolyan\'s Silvered Heirloom Dagger', 2, 'kolyan_dagger')">🗡️ Attack (+4)</button>
                                 <button id="btn-dmg-kolyan" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Kolyan\'s Silvered Heirloom Dagger', 4, 2, 'Silvered Piercing', 1, 'kolyan_dagger')">💥 1d4+2 Silver</button>
                             </div>
                         </div>
 
                         <!-- Quarterstaff (Visible ONLY when Equipped) -->
-                        <div class="action-card" id="card-wpn-quarterstaff" style="display:none; border-left:3px solid #a78bfa;">
+                        <div class="action-card" id="card-wpn-quarterstaff" data-turn-kind="action" style="display:none;">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('quarterstaff_piper')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#c4b5fd'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('quarterstaff_piper')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🪄 Quarterstaff (Magician's Cane) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span><span id="eq-badge-staff"></span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#c4b5fd;">Versatile (1H/2H) • Arcane Spellcasting Focus</div>
+                                    <div style="font-size:0.67rem; font-weight:600; color:var(--text-dim);">Versatile (1H/2H) • Arcane Spellcasting Focus</div>
                                 </div>
-                                <span style="font-size:0.64rem; color:#c4b5fd; font-weight:700;">VERSATILE</span>
+                                <span class="pill-badge pill-purple">VERSATILE</span>
                             </div>
                             <div class="action-desc"><strong>+2 to Hit</strong>, <strong>1d6 Bludgeoning (1H)</strong> or <strong>1d8 Bludgeoning (2H)</strong>. Doubles as Piper's theatrical cane &amp; arcane focus.</div>
                             <div id="piper-mods-staff"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-staff" type="button" class="btn-roll-action" style="background:#334155;" onclick="rollWeaponAttack('Quarterstaff (Magician\'s Cane)', 0, 'staff')">🪄 Attack (+2)</button>
+                                <button id="btn-atk-staff" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Quarterstaff (Magician\'s Cane)', 0, 'staff')">🪄 Attack (+2)</button>
                                 <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning', 1, 'staff')">💥 2H (1d8)</button>
-                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg" style="background:#991b1b; display:none;" onclick="rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning', 1, 'staff')">💥 1H (1d6)</button>
+                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg" style="display:none;" onclick="rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning', 1, 'staff')">💥 1H (1d6)</button>
                             </div>
                         </div>
 
                         <!-- Standard Dagger (Visible ONLY when Equipped) -->
-                        <div class="action-card" id="card-wpn-dagger" style="display:none; border-left:3px solid #64748b;">
+                        <div class="action-card" id="card-wpn-dagger" data-turn-kind="action" style="display:none;">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('dagger_piper')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='#fde68a'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('dagger_piper')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🗡️ Standard Dagger <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.67rem; font-weight:700; color:#94a3b8;">Finesse • Light • Thrown (20/60ft)</div>
+                                    <div style="font-size:0.67rem; font-weight:600; color:var(--text-dim);">Finesse • Light • Thrown (20/60ft)</div>
                                 </div>
-                                <span style="font-size:0.64rem; color:#94a3b8; font-weight:700;">LIGHT</span>
+                                <span class="pill-badge">LIGHT</span>
                             </div>
                             <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Piercing</strong> (Main-Hand) or <strong>1d4 Piercing</strong> (Off-Hand Bonus Action).</div>
                             <div id="piper-mods-dagger"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" style="background:#334155;" onclick="rollWeaponAttack('Standard Dagger', 2, 'dagger')">🗡️ Attack (+4)</button>
+                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Standard Dagger', 2, 'dagger')">🗡️ Attack (+4)</button>
                                 <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Standard Dagger', 4, 2, 'Piercing', 1, 'dagger')">💥 1d4+2</button>
                                 <button id="btn-dmg-dagger-oh" type="button" class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="rollFormulaDamage('Off-Hand Dagger', 4, 0, 'Piercing', 1, 'dagger')">Off-Hand 1d4</button>
                             </div>
@@ -1391,47 +1382,47 @@
                 <!-- 🔮 SORCERER SPELLS & FIERNA LINEAGE SPELLS -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span>🔮 Known Sorcerer Spells &amp; Fierna Lineage Magic</span>
+                        <span>Known Spells &amp; Fierna Lineage Magic</span>
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <button class="btn-act btn-act-pre" onclick="refillAllSlots()" style="font-size:0.68rem; color:var(--accent-gold);">⛺ Refill Slots</button>
+                            <button class="btn-act btn-act-pre" onclick="refillAllSlots()" style="font-size:0.68rem; color:var(--accent-gold); border-color:var(--border-gold);">⛺ Refill Slots</button>
                         </div>
                     </div>
 
                     <!-- MULTI-TIER SPELL SLOT TRACKER -->
-                    <div style="background:var(--panel-sub); border:1px solid var(--card-border); border-radius:6px; padding:6px 8px; display:flex; flex-direction:column; gap:4px; margin-bottom:5px;">
-                        <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim); text-transform:uppercase; display:flex; justify-content:space-between;">
-                            <span>🔮 Spell Slots by Level (Auto-Deducts &amp; Checks Wild Magic)</span>
-                            <span style="font-size:0.64rem; color:#c084fc; font-weight:600;">Tides Spent ➔ Auto-Triggers d100 Surge!</span>
+                    <div class="rpg-slot-strip">
+                        <div style="font-size:0.68rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+                            <span>Spell Slots by Level (Auto-Deducts &amp; Checks Wild Magic)</span>
+                            <span style="font-size:0.64rem; color:var(--hero-accent); font-weight:600; text-transform:none;">Tides Spent ➔ Auto-Triggers d100 Surge</span>
                         </div>
-                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:5px;">
-                            <div style="background:#090e1a; border:1px solid var(--card-border); border-radius:4px; padding:3px 6px; display:flex; justify-content:space-between; align-items:center;">
-                                <div>
-                                    <span style="font-size:0.68rem; font-weight:700; color:var(--accent-blue);">1st:</span>
-                                    <span id="slot-pips-1" style="font-size:0.74rem; cursor:pointer; margin-left:2px;" onclick="toggleSlotTier(1)">🟦 🟦 🟦 ⬜ (3/4)</span>
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:6px;">
+                            <div style="background:var(--panel-sub); border:1px solid var(--card-border); border-radius:6px; padding:5px 8px; display:flex; justify-content:space-between; align-items:center;">
+                                <div style="display:flex; align-items:center; gap:5px;">
+                                    <span style="font-size:0.68rem; font-weight:700; color:var(--accent-blue);">1st</span>
+                                    <span id="slot-pips-1" style="font-size:0.74rem; cursor:pointer; display:inline-flex; align-items:center;" onclick="toggleSlotTier(1)">3/4</span>
                                 </div>
-                                <div style="display:flex; gap:2px;">
-                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(1, -1)" style="padding:0px 4px; font-size:0.65rem;">-</button>
-                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(1, 1)" style="padding:0px 4px; font-size:0.65rem;">+</button>
-                                </div>
-                            </div>
-                            <div style="background:#090e1a; border:1px solid var(--card-border); border-radius:4px; padding:3px 6px; display:flex; justify-content:space-between; align-items:center;">
-                                <div>
-                                    <span style="font-size:0.68rem; font-weight:700; color:var(--accent-purple);">2nd:</span>
-                                    <span id="slot-pips-2" style="font-size:0.74rem; cursor:pointer; margin-left:2px;" onclick="toggleSlotTier(2)">🟦 🟦 (2/2)</span>
-                                </div>
-                                <div style="display:flex; gap:2px;">
-                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(2, -1)" style="padding:0px 4px; font-size:0.65rem;">-</button>
-                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(2, 1)" style="padding:0px 4px; font-size:0.65rem;">+</button>
+                                <div style="display:flex; gap:3px;">
+                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(1, -1)" style="min-block-size:22px; padding:0px 6px; font-size:0.68rem;">−</button>
+                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(1, 1)" style="min-block-size:22px; padding:0px 6px; font-size:0.68rem;">+</button>
                                 </div>
                             </div>
-                            <div id="slot-tier-box-3" style="display:none; background:#090e1a; border:1px solid var(--card-border); border-radius:4px; padding:3px 6px; justify-content:space-between; align-items:center;">
-                                <div>
-                                    <span style="font-size:0.68rem; font-weight:700; color:var(--accent-gold);">3rd:</span>
-                                    <span id="slot-pips-3" style="font-size:0.74rem; cursor:pointer; margin-left:2px;" onclick="toggleSlotTier(3)">🔒 Lvl 5 Req</span>
+                            <div style="background:var(--panel-sub); border:1px solid var(--card-border); border-radius:6px; padding:5px 8px; display:flex; justify-content:space-between; align-items:center;">
+                                <div style="display:flex; align-items:center; gap:5px;">
+                                    <span style="font-size:0.68rem; font-weight:700; color:var(--accent-purple);">2nd</span>
+                                    <span id="slot-pips-2" style="font-size:0.74rem; cursor:pointer; display:inline-flex; align-items:center;" onclick="toggleSlotTier(2)">2/2</span>
                                 </div>
-                                <div style="display:flex; gap:2px;">
-                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(3, -1)" style="padding:0px 4px; font-size:0.65rem;">-</button>
-                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(3, 1)" style="padding:0px 4px; font-size:0.65rem;">+</button>
+                                <div style="display:flex; gap:3px;">
+                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(2, -1)" style="min-block-size:22px; padding:0px 6px; font-size:0.68rem;">−</button>
+                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(2, 1)" style="min-block-size:22px; padding:0px 6px; font-size:0.68rem;">+</button>
+                                </div>
+                            </div>
+                            <div id="slot-tier-box-3" style="display:none; background:var(--panel-sub); border:1px solid var(--card-border); border-radius:6px; padding:5px 8px; justify-content:space-between; align-items:center;">
+                                <div style="display:flex; align-items:center; gap:5px;">
+                                    <span style="font-size:0.68rem; font-weight:700; color:var(--accent-gold);">3rd</span>
+                                    <span id="slot-pips-3" style="font-size:0.74rem; cursor:pointer; display:inline-flex; align-items:center;" onclick="toggleSlotTier(3)">🔒 Lvl 5 Req</span>
+                                </div>
+                                <div style="display:flex; gap:3px;">
+                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(3, -1)" style="min-block-size:22px; padding:0px 6px; font-size:0.68rem;">−</button>
+                                    <button class="btn-act btn-act-pre" onclick="modSlotTier(3, 1)" style="min-block-size:22px; padding:0px 6px; font-size:0.68rem;">+</button>
                                 </div>
                             </div>
                         </div>
@@ -1445,12 +1436,12 @@
                 <!-- ✨ FONT OF MAGIC (SORCERY POINTS) & METAMAGIC / BEND FATE -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span>✨ Font of Magic (Sorcery Points) &amp; Metamagic</span>
+                        <span>Font of Magic (Sorcery Points) &amp; Metamagic</span>
                         <div style="display:flex; align-items:center; gap:6px;">
-                            <span id="sp-pips-disp" style="font-size:0.82rem; font-weight:700; color:#e9d5ff; cursor:pointer;" onclick="modSorceryPoints(-1)" title="Click to spend 1 Sorcery Point">🟣 🟣 🟣 (3/3 SP)</span>
-                            <button class="btn-act btn-act-pre" onclick="modSorceryPoints(-1)" style="padding:1px 6px; font-size:0.68rem;">-1</button>
-                            <button class="btn-act btn-act-pre" onclick="modSorceryPoints(1)" style="padding:1px 6px; font-size:0.68rem;">+1</button>
-                            <button class="btn-act btn-act-pre" onclick="refillSorceryPoints()" style="font-size:0.66rem; color:var(--accent-gold);">🔄 Max</button>
+                            <span id="sp-pips-disp" style="font-size:0.78rem; font-weight:700; color:var(--text-light); cursor:pointer; display:inline-flex; align-items:center;" onclick="modSorceryPoints(-1)" title="Click to spend 1 Sorcery Point">3/3 SP</span>
+                            <button class="btn-act btn-act-pre" onclick="modSorceryPoints(-1)" style="min-block-size:24px; padding:1px 7px; font-size:0.68rem;">−1</button>
+                            <button class="btn-act btn-act-pre" onclick="modSorceryPoints(1)" style="min-block-size:24px; padding:1px 7px; font-size:0.68rem;">+1</button>
+                            <button class="btn-act btn-act-pre" onclick="refillSorceryPoints()" style="min-block-size:24px; font-size:0.66rem; color:var(--accent-gold); border-color:var(--border-gold);">Max</button>
                         </div>
                     </div>
 
@@ -1459,16 +1450,16 @@
                         <div class="action-card">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('subtle_spell')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('subtle_spell')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🤫 Subtle Spell <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#c084fc;">Metamagic • 1 Sorcery Point</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Metamagic • 1 Sorcery Point</div>
                                 </div>
-                                <span class="pill-badge pill-purple" style="font-size:0.62rem; padding:1px 6px;">1 SP</span>
+                                <span class="pill-badge pill-purple">1 SP</span>
                             </div>
                             <div class="action-desc">Cast a spell without any Verbal (V) or Somatic (S) components. Unnoticeable &amp; immune to Silence!</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#7c3aed;" onclick="useMetamagic('Subtle Spell', 1, '🤫 Cast with NO Verbal or Somatic components — looks like a harmless stage prop!')">🤫 Spend 1 SP (Subtle)</button>
+                                <button class="btn-roll-action btn-roll-accent" onclick="useMetamagic('Subtle Spell', 1, '🤫 Cast with NO Verbal or Somatic components — looks like a harmless stage prop!')">🤫 Spend 1 SP (Subtle)</button>
                             </div>
                         </div>
 
@@ -1476,54 +1467,54 @@
                         <div class="action-card">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('twinned_spell')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('twinned_spell')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         👯 Twinned Spell <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#c084fc;">Metamagic • 1 SP (Cantrip/L1) or 2 SP (L2)</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Metamagic • 1 SP (Cantrip/L1) or 2 SP (L2)</div>
                                 </div>
-                                <span class="pill-badge pill-purple" style="font-size:0.62rem; padding:1px 6px;">1–2 SP</span>
+                                <span class="pill-badge pill-purple">1–2 SP</span>
                             </div>
                             <div class="action-desc">Duplicate a single-target spell (<em>Fire Bolt, Chaos Bolt, Charm Person</em>) onto a 2nd target in range!</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#7c3aed;" onclick="useMetamagic('Twinned Spell (Cantrip / 1st-Lvl)', 1, '👯 Targets a 2nd creature within range with the same spell!')">👯 Twin C/L1 (1 SP)</button>
-                                <button class="btn-roll-action" style="background:#6d28d9;" onclick="useMetamagic('Twinned Spell (2nd-Lvl)', 2, '👯 Targets a 2nd creature with a 2nd-level single-target spell!')">👯 Twin L2 (2 SP)</button>
+                                <button class="btn-roll-action btn-roll-accent" onclick="useMetamagic('Twinned Spell (Cantrip / 1st-Lvl)', 1, '👯 Targets a 2nd creature within range with the same spell!')">👯 Twin C/L1 (1 SP)</button>
+                                <button class="btn-roll-action" onclick="useMetamagic('Twinned Spell (2nd-Lvl)', 2, '👯 Targets a 2nd creature with a 2nd-level single-target spell!')">👯 Twin L2 (2 SP)</button>
                             </div>
                         </div>
 
                         <!-- Bend Fate ("Is That Your Card?!" - 2 SP) -->
-                        <div class="action-card">
+                        <div class="action-card" data-turn-kind="reaction">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('bend_fate')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('bend_fate')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🃏 Bend Fate ("Sleight of Hand") <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#f472b6;">Reaction / Free • 2 Sorcery Points</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Reaction / Free • 2 Sorcery Points</div>
                                 </div>
-                                <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;">2 SP</span>
+                                <span class="pill-badge pill-gold">2 SP</span>
                             </div>
                             <div class="action-desc">Throw a flash-bang coin or yell <em>"Is that your card?!"</em> to add or subtract <strong>1d4</strong> from a roll!</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#db2777;" onclick="useBendFate(1)">🃏 +1d4 Bonus (2 SP)</button>
-                                <button class="btn-roll-action btn-roll-dmg" onclick="useBendFate(-1)">🃏 -1d4 Penalty (2 SP)</button>
+                                <button class="btn-roll-action btn-roll-accent" onclick="useBendFate(1)">🃏 +1d4 Bonus (2 SP)</button>
+                                <button class="btn-roll-action btn-roll-dmg" onclick="useBendFate(-1)">🃏 −1d4 Penalty (2 SP)</button>
                             </div>
                         </div>
 
                         <!-- Flexible Casting Converter -->
-                        <div class="action-card">
+                        <div class="action-card" data-turn-kind="bonus">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('flexible_casting')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('flexible_casting')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🔄 Flexible Casting (Slots ⇄ SP) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#38bdf8;">Bonus Action • Font of Magic</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Bonus Action • Font of Magic</div>
                                 </div>
                             </div>
                             <div class="action-desc">Sacrifice a spell slot to gain SP (+Lvl SP), or spend SP to create a spell slot (L1=2 SP, L2=3 SP).</div>
                             <div class="action-btn-row">
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#38bdf8;" onclick="convertSlotToSP(1)" title="Burn 1st-Lvl Slot for +1 SP">L1➔+1SP</button>
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#38bdf8;" onclick="convertSlotToSP(2)" title="Burn 2nd-Lvl Slot for +2 SP">L2➔+2SP</button>
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#c084fc;" onclick="convertSPToSlot(1, 2)" title="Spend 2 SP to gain +1 1st-Lvl Slot">2SP➔+L1</button>
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#c084fc;" onclick="convertSPToSlot(2, 3)" title="Spend 3 SP to gain +1 2nd-Lvl Slot">3SP➔+L2</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:var(--accent-blue);" onclick="convertSlotToSP(1)" title="Burn 1st-Lvl Slot for +1 SP">L1➔+1SP</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:var(--accent-blue);" onclick="convertSlotToSP(2)" title="Burn 2nd-Lvl Slot for +2 SP">L2➔+2SP</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:var(--accent-purple);" onclick="convertSPToSlot(1, 2)" title="Spend 2 SP to gain +1 1st-Lvl Slot">2SP➔+L1</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:var(--accent-purple);" onclick="convertSPToSlot(2, 3)" title="Spend 3 SP to gain +1 2nd-Lvl Slot">3SP➔+L2</button>
                             </div>
                         </div>
                     </div>
@@ -1733,7 +1724,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261122r3"></script>
+<script src="cos_rpg_engine.js?v=20261122v3"></script>
 <script>
     // ==========================================
     // 🎩 PIPER MASTER STATE VARIABLES (POST-SESSION 1)
@@ -2063,11 +2054,12 @@
     function updateSorceryPointsUI() {
         const el = document.getElementById('sp-pips-disp');
         if (!el) return;
-        let pips = '';
+        let pips = '<span class="rpg-pip-row">';
         for (let i = 0; i < maxSP; i++) {
-            pips += (i < curSP) ? '🟣 ' : '⬛ ';
+            pips += `<span class="rpg-pip-gem gem-purple ${i < curSP ? 'is-filled' : ''}"></span>`;
         }
-        el.innerHTML = `${pips}<strong>(${curSP}/${maxSP} SP)</strong>`;
+        pips += `</span> <strong style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-purple); margin-inline-start:5px;">${curSP}/${maxSP} SP</strong>`;
+        el.innerHTML = pips;
     }
 
     function modSorceryPoints(delta) {
@@ -3059,18 +3051,24 @@
 
     function updateHPUI() {
         const hpDisp = document.getElementById('hp-disp');
+        const hpStatusHeader = document.getElementById('hp-status-header');
         const hpBar = document.getElementById('hp-bar');
         const hpTempBar = document.getElementById('hp-temp-bar');
+        const clearBtn = document.getElementById('btn-clear-temp');
 
         const basePct = Math.max(0, Math.min(100, (curHP / maxHP) * 100));
         hpBar.style.width = `${basePct}%`;
+        if (hpStatusHeader) {
+            hpStatusHeader.innerText = tempHP > 0 ? `+${tempHP} Temp` : '';
+            hpStatusHeader.style.color = 'var(--accent-blue)';
+        }
+        if (clearBtn) clearBtn.style.display = tempHP > 0 ? 'inline-flex' : 'none';
 
+        hpDisp.innerText = `${curHP}/${maxHP}`;
         if (tempHP > 0) {
-            hpDisp.innerText = `${curHP} (+${tempHP}T)/${maxHP}`;
             hpDisp.style.color = 'var(--accent-blue)';
             hpTempBar.style.width = `${Math.min(100, (tempHP / maxHP) * 100)}%`;
         } else {
-            hpDisp.innerText = `${curHP}/${maxHP}`;
             hpTempBar.style.width = '0%';
             if (basePct > 50) {
                 hpBar.style.backgroundColor = 'var(--accent-green)';
@@ -3350,11 +3348,12 @@
             } else if (slot.max === 0) {
                 el.innerHTML = `<span style="color:#64748b; font-size:0.72rem;">— (0/0)</span>`;
             } else {
-                let pips = "";
+                let pips = '<span class="rpg-pip-row">';
                 for (let i = 0; i < slot.max; i++) {
-                    pips += (i < slot.current) ? "🟦 " : "⬛ ";
+                    pips += `<span class="rpg-pip-gem gem-blue ${i < slot.current ? 'is-filled' : ''}"></span>`;
                 }
-                el.innerHTML = `${pips}<strong>(${slot.current}/${slot.max})</strong>`;
+                pips += `</span> <strong style="font-family:var(--font-mono); font-size:0.74rem; color:var(--text-light); margin-inline-start:4px;">${slot.current}/${slot.max}</strong>`;
+                el.innerHTML = pips;
             }
         }
     }
@@ -3393,6 +3392,9 @@
         fullSpellbook.forEach(sp => {
             const card = document.createElement('div');
             card.className = 'action-card';
+            const ct = String(sp.castingTime || '1 Action').toLowerCase();
+            const defaultSlot = ct.includes('bonus') ? 'bonus' : (ct.includes('react') ? 'reaction' : 'action');
+            card.dataset.turnKind = defaultSlot;
 
             let controlsHtml = '';
             if (sp.hasLevelSelect) {
@@ -3406,8 +3408,6 @@
             }
 
             if (sp.buttons) {
-                const ct = String(sp.castingTime || '1 Action').toLowerCase();
-                const defaultSlot = ct.includes('bonus') ? 'bonus' : (ct.includes('react') ? 'reaction' : 'action');
                 sp.buttons.forEach((btn, bIdx) => {
                     let label = btn.label;
                     if (sp.id === 'charm_person' && bIdx === 0) {
@@ -3421,12 +3421,12 @@
             card.innerHTML = `
                 <div class="action-header">
                     <div>
-                        <div onclick="openSpellDetailsModal('${sp.id}')" style="cursor:pointer; font-weight:700; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                        <div onclick="openSpellDetailsModal('${sp.id}')" style="cursor:pointer; font-weight:700; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                             ${sp.name} <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                         </div>
-                        <div style="font-size:0.67rem; font-weight:700; color:${sp.tagColor}; margin-top:1px;">${sp.tag}</div>
+                        <div style="font-size:0.67rem; font-weight:600; color:var(--text-dim); margin-top:1px;">${sp.tag}</div>
                     </div>
-                    <span class="pill-badge" style="background:rgba(192,132,252,0.14); color:#e9d5ff; border:1px solid #a855f7; font-size:0.62rem; padding:1px 6px;">KNOWN</span>
+                    <span class="pill-badge pill-purple">KNOWN</span>
                 </div>
                 <div class="action-desc">${sp.desc}</div>
                 <div class="action-btn-row">${controlsHtml}</div>

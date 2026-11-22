@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
     <title>Eclipsa "Yvaine" Shadowglen — Monster Slayer Ranger Sheet (Curse of Strahd)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122r3">
+    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v3">
+    <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v3">
     <style>
+        @layer legacy {
         :root {
             --bg-page: #070b14;
             --bg-sheet: #0f172a;
@@ -839,265 +842,117 @@
             outline: 2px solid var(--accent-gold);
             outline-offset: 2px;
         }
+        }
     </style>
 </head>
-<body>
+<body data-hero="yvaine">
 
     <div class="sheet-container">
 
-        <!-- TOP HEADER BANNER (PIPER & JACOMIR GOLD STANDARD) -->
+        <!-- TOP HEADER BANNER -->
         <header class="header-banner">
             <div class="header-title">
-                <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer; transition:all 0.15s ease;" onmouseover="this.style.filter='brightness(1.18)'" onmouseout="this.style.filter='none'" title="Click to open Yvaine's Origin Story, Feats &amp; 5.5e Ability Scores">
-                    ECLIPSA ROSALINE "YVAINE" <span style="font-size:0.95rem; color:#cbd5e1; font-weight:600;">("The Fallen Princess")</span>
+                <h1 onclick="openSpellDetailsModal('backstory_full')" style="cursor:pointer;" title="Click to open Yvaine's Ability Scores, Origin Story, Feats &amp; Passives">
+                    ECLIPSA ROSALINE "YVAINE" <span>The Fallen Princess</span>
                 </h1>
-                <div style="margin-top:5px; display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-                    <span class="pill-badge pill-gold" style="font-size:0.72rem; padding:2px 10px; letter-spacing:0.6px;">⭐ LEVEL 3</span>
-                    <span class="pill-badge pill-neutral" style="font-size:0.7rem; padding:2px 9px;">CHAOTIC NEUTRAL</span>
-                    <span class="pill-badge pill-crimson" style="font-size:0.7rem; padding:2px 9px;">MONSTER SLAYER RANGER</span>
-                    <span class="rpg-sense-pill">🥾 30 ft</span>
-                    <span class="rpg-sense-pill">👀 Pass. Perc 16</span>
-                    <span class="rpg-sense-pill">⚡ Alert</span>
+                <div class="hero-meta-strip">
+                    <span class="hero-meta-chip is-level">Level 3</span>
+                    <span class="hero-meta-chip is-class">Monster Slayer Ranger</span>
+                    <span class="hero-meta-chip">Chaotic Neutral</span>
+                    <span class="hero-meta-chip">30 ft</span>
+                    <span class="hero-meta-chip">Pass. Perc 16</span>
+                    <span class="hero-meta-chip">Alert</span>
                 </div>
             </div>
             <div class="pill-badge-group">
-                <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">🏰 Portal</a>
+                <a href="index.html" class="btn-act btn-act-pre" style="text-decoration:none; color:#cbd5e1;" title="Back to Campaign Portal">Portal</a>
             </div>
         </header>
 
         <!-- MAIN 2-COLUMN LAYOUT -->
         <div class="main-layout">
 
-            <!-- ============================================== -->
-            <!-- LEFT COLUMN: VITALS, CONTROLLER, BUFFS, SKILLS -->
-            <!-- ============================================== -->
+            <!-- LEFT COLUMN: 4 UNIFIED MODULES (VITALS, PERKS/HELP, CHECKS, COIN & NOTES) -->
             <div>
 
-                <!-- 1. VITALS 4-BOX ROW -->
-                <div class="vitals-4box">
-                    <div class="vital-mini-box">
-                        <span class="vital-mini-lbl">HIT POINTS</span>
-                        <span class="vital-mini-val" id="hp-disp" style="color:var(--accent-green);">28/28</span>
-                    </div>
-                    <div class="vital-mini-box">
-                        <span class="vital-mini-lbl">ARMOR CLASS</span>
-                        <span class="vital-mini-val" id="ac-disp" style="color:var(--accent-gold);">16</span>
-                    </div>
-                    <div class="vital-mini-box clickable-box" onclick="rollInitiative()" style="cursor:pointer;" title="Click to roll Initiative (Alert Feat + Gear)">
-                        <span class="vital-mini-lbl">INITIATIVE 🎲</span>
-                        <span class="vital-mini-val" id="init-disp" style="color:var(--accent-blue);">+6 ⚡</span>
-                    </div>
-                    <div class="vital-mini-box" title="Spell Save DC: 8 + PB (+2) + WIS (+2) = 12 | Firearms Attack Bonus: +8">
-                        <span class="vital-mini-lbl">SPELL DC / HIT</span>
-                        <span class="vital-mini-val" id="dc-hit-disp" style="font-size:0.86rem; color:#fde68a;">DC 12 | +8</span>
-                    </div>
-                </div>
-
-                <!-- 2. SPACIOUS HP & TEMPORARY HP CONTROLLER -->
-                <div class="panel">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px; font-weight:700; font-size:0.75rem;">
-                        <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.3px;">HIT POINTS</span>
-                        <span style="display:inline-flex; align-items:center;">
-                            <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">28 / 28 (+0 Temp)</span>
-                            <button type="button" id="btn-clear-temp" class="rpg-clear-temp-pill" onclick="clearTempHP()" style="display:none;" title="Clear Temporary Hit Points">✕ Temp</button>
-                        </span>
-                    </div>
-                    <div class="hp-health-bar-bg">
-                        <div class="hp-health-bar-fill" id="hp-bar" style="width: 100%;"></div>
-                        <div class="hp-health-bar-temp" id="hp-temp-bar" style="width: 0%;"></div>
-                    </div>
-                    
-                    <div style="display:flex; flex-direction:column; gap:5px; margin-top:2px;">
-                        <div style="display:flex; align-items:center; gap:4px; width:100%;">
-                            <button type="button" class="btn-act btn-act-dmg" style="padding: 4px 7px; font-size: 0.76rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
-                            <input type="number" id="hp-input" class="hp-input-num" value="" placeholder="Amt" min="1" max="999" style="width:44px; height:26px; font-size:0.84rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage, healing, or Temp HP amount">
-                            <button type="button" class="btn-act btn-act-heal" style="padding: 4px 7px; font-size: 0.76rem; font-weight:700;" onclick="stepHP(1)">+1</button>
-                            <button type="button" class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 6px; font-size:0.72rem; font-weight:700; flex:1;">⚔️ Dmg</button>
-                            <button type="button" class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 6px; font-size:0.72rem; font-weight:700; flex:1;" title="Restore HP up to Max HP (no Temp HP overflow)">💚 Heal</button>
-                            <button type="button" class="btn-act btn-act-temp" onclick="applyTempHP()" style="padding:4px 7px; font-size:0.72rem; font-weight:700;" title="Grant Temporary HP (5e non-stacking: keeps the higher value)">🛡️ Temp</button>
+                <!-- 1. UNIFIED VITALS & HEALTH PLATE -->
+                <div class="vitals-plate">
+                    <div class="vitals-3bar">
+                        <div class="vital-stat-tile">
+                            <span class="vital-mini-lbl">Armor Class</span>
+                            <span class="vital-mini-val" id="ac-disp" style="color:var(--accent-gold);">16</span>
                         </div>
-                        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:1px;">
-                            <div style="display:flex; gap:4px;">
-                                <button class="btn-act btn-act-pre" onclick="shortRest()" style="padding:3px 8px; font-size:0.7rem;" title="Roll hit dice to heal, reload all firearm clips">☕ Short Rest</button>
-                                <button class="btn-act btn-act-pre" onclick="longRest()" style="padding:3px 8px; font-size:0.7rem; color:var(--accent-green);" title="Full HP, Spell Slots, Hunter's Sense, Heroic Inspiration &amp; All Ammo Reserves">⛺ Long Rest</button>
+                        <div class="vital-stat-tile is-clickable" onclick="rollInitiative()" title="Click to roll Initiative (Alert Feat + Gear)">
+                            <span class="vital-mini-lbl">Initiative</span>
+                            <span class="vital-mini-val" id="init-disp" style="color:var(--accent-blue);">+6 ⚡</span>
+                        </div>
+                        <div class="vital-stat-tile" title="Spell Save DC: 8 + PB (+2) + WIS (+2) = 12 | Firearms Attack Bonus: +8">
+                            <span class="vital-mini-lbl">Spell DC · Hit</span>
+                            <span class="vital-mini-val" id="dc-hit-disp" style="font-size:0.86rem; color:var(--text-light);">DC 12 | +8</span>
+                        </div>
+                    </div>
+
+                    <div class="hp-ctrl-container">
+                        <div class="hp-plate-head">
+                            <div class="hp-plate-readout">
+                                <span class="hp-main-num" id="hp-disp">28/28</span>
+                                <span class="hp-sub-lbl">HP</span>
+                                <span id="hp-status-header" style="font-size:0.7rem; font-weight:700; font-family:var(--font-mono); color:var(--accent-blue);"></span>
+                                <button type="button" id="btn-clear-temp" class="rpg-clear-temp-pill" onclick="clearTempHP()" style="display:none;" title="Clear Temporary Hit Points">✕ Temp</button>
                             </div>
-                            <span style="font-size:0.72rem; color:var(--text-dim); font-family:'JetBrains Mono',monospace;">Max HP: 28</span>
+                            <div class="hp-plate-right">
+                                <button type="button" class="hp-rest-trigger" onclick="COS_RPG && COS_RPG.openRestModal()" title="Open Short Rest / Long Rest menu">⛺ Rest</button>
+                            </div>
+                        </div>
+                        <div class="hp-health-bar-bg">
+                            <div class="hp-health-bar-fill" id="hp-bar" style="width: 100%;"></div>
+                            <div class="hp-health-bar-temp" id="hp-temp-bar" style="width: 0%;"></div>
+                        </div>
+                        <div class="hp-action-row">
+                            <button type="button" class="btn-act btn-act-dmg" style="padding:4px 8px;" onclick="stepHP(-1)">−1</button>
+                            <input type="number" id="hp-input" class="hp-input-num" value="" placeholder="Amt" min="1" max="999" title="Enter damage, healing, or Temp HP amount">
+                            <button type="button" class="btn-act btn-act-heal" style="padding:4px 8px;" onclick="stepHP(1)">+1</button>
+                            <button type="button" class="btn-act btn-act-dmg" onclick="applyDamage()" style="flex:1;">Dmg</button>
+                            <button type="button" class="btn-act btn-act-heal" onclick="applyHeal()" style="flex:1;" title="Restore HP up to Max HP (no Temp HP overflow)">Heal</button>
+                            <button type="button" class="btn-act btn-act-temp" onclick="applyTempHP()" title="Grant Temporary HP (5e non-stacking)">Temp</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. DYNAMIC ACTIVE BUFFS (Armor handled cleanly by 🛡️ Gear) -->
-                <div class="buffs-toggle-bar">
-                    <div class="toggle-btn-card active-buff" id="heroic-card" onclick="useHeroicInspiration()" title="Human (Resourceful): Reroll Any Die (1/Long Rest)">
-                        <div>
-                            <div style="font-size:0.73rem; font-weight:700;">🌟 Heroic Insp.</div>
-                            <div style="font-size:0.64rem; color:var(--text-dim);" id="sub-heroic-insp">Reroll die (1/LR)</div>
+                <!-- 2. COMPACT PERKS & HELP TOKENS STRIP -->
+                <div class="perks-compact-panel">
+                    <div class="buffs-toggle-bar">
+                        <div class="toggle-btn-card active-buff" id="heroic-card" onclick="useHeroicInspiration()" title="Human (Resourceful): Reroll Any Die (1/Long Rest)">
+                            <div>
+                                <div style="font-size:0.73rem; font-weight:700; color:var(--text-light);">Heroic Insp.</div>
+                                <div style="font-size:0.64rem; color:var(--text-muted);" id="sub-heroic-insp">Reroll die (1/LR)</div>
+                            </div>
+                            <span class="toggle-badge on" id="heroic-status-badge">READY</span>
                         </div>
-                        <span class="toggle-badge on" id="heroic-status-badge">READY</span>
-                    </div>
 
-                    <div class="toggle-btn-card" id="card-speed-toggle" onclick="toggleLongstriderBuff()">
-                        <div>
-                            <div style="font-size:0.73rem; font-weight:700;">⚡ Longstrider</div>
-                            <div style="font-size:0.64rem; color:var(--text-dim);" id="sub-speed-disp">Speed: 30 ft</div>
+                        <div class="toggle-btn-card" id="card-speed-toggle" onclick="toggleLongstriderBuff()">
+                            <div>
+                                <div style="font-size:0.73rem; font-weight:700; color:var(--text-light);">Longstrider</div>
+                                <div style="font-size:0.64rem; color:var(--text-muted);" id="sub-speed-disp">Speed: 30 ft</div>
+                            </div>
+                            <span class="toggle-badge off" id="badge-speed-toggle">OFF (30)</span>
                         </div>
-                        <span class="toggle-badge off" id="badge-speed-toggle">OFF (30)</span>
                     </div>
-                </div>
-
-                <!-- 4. HELP TOKENS TRACKER -->
-                <div class="panel" style="padding: 7px 10px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.76rem; font-weight:700; color:#fbbf24;">💛 Help Tokens: <span id="help-tokens-disp" style="color:#fbbf24; font-size:0.88rem; font-weight:800; font-family:'JetBrains Mono',monospace;">2 / 2</span></span>
+                    <div class="help-inline-row">
+                        <span class="help-inline-label">Help Tokens <span id="help-tokens-disp" class="help-inline-count">2 / 2</span></span>
                         <div style="display:flex; align-items:center; gap:4px;">
-                            <button class="btn-act btn-act-temp" onclick="rollHelpToken()" style="padding:2px 7px; font-size:0.7rem; background:#4338ca; border-color:#6366f1;">🎲 Grant +1d6</button>
-                            <button class="btn-act btn-act-pre" onclick="modHelpToken(-1)" style="padding:2px 6px; font-size:0.68rem; color:#cbd5e1;" aria-label="Decrease Help Tokens">-</button>
-                            <button class="btn-act btn-act-pre" onclick="modHelpToken(1)" style="padding:2px 6px; font-size:0.68rem; color:#67e8f9;" aria-label="Increase Help Tokens">+</button>
+                            <button type="button" class="btn-act btn-act-pre" onclick="rollHelpToken()" style="min-block-size:25px; padding:2px 8px; color:var(--accent-gold); border-color:var(--border-gold);">+1d6 Ally</button>
+                            <button type="button" class="btn-act btn-act-pre" onclick="modHelpToken(-1)" style="min-block-size:25px; padding:2px 7px;" aria-label="Decrease Help Tokens">−</button>
+                            <button type="button" class="btn-act btn-act-pre" onclick="modHelpToken(1)" style="min-block-size:25px; padding:2px 7px;" aria-label="Increase Help Tokens">+</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- 5. 🎯 SKILLS (18) PANEL (OLD FORMAT - IMAGE 1 PARITY) -->
+                <!-- 3. UNIFIED CHECKS CARD (SAVING THROWS + ALL 18 SKILLS) -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span style="text-transform:uppercase; font-size:0.78rem; font-weight:800; letter-spacing:0.3px;">🎯 ALL 18 SKILLS (INDIVIDUAL ROLLS)</span>
-                        <span id="prof-bonus-disp" style="font-size:0.68rem; color:var(--text-dim); font-weight:700;">PROF: +2 • PASS. PERC: 16</span>
-                    </div>
-                    <ul class="stat-row-list" style="max-height: 290px; overflow-y: auto;">
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Acrobatics (DEX) ★', 6, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Acrobatics', event)" title="View Acrobatics rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Acrobatics (DEX) ★</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+6 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 2, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Animal Handling', event)" title="View Animal Handling rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Animal Handling (WIS)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+2 🎲</span>
-                        </li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Arcana (INT) ★', 2, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Arcana', event)" title="View Arcana rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Arcana (INT) ★</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+2 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Athletics (STR)', -1, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Athletics', event)" title="View Athletics rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Athletics (STR)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">-1 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 0, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Deception', event)" title="View Deception rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Deception (CHA)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('History (INT)', 0, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('History', event)" title="View History rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">History (INT)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
-                        </li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 4, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Insight', event)" title="View Insight rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Insight (WIS) ★</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+4 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Intimidation (CHA)', 0, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Intimidation', event)" title="View Intimidation rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Intimidation (CHA)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
-                        </li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Investigation (INT) ★', 2, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Investigation', event)" title="View Investigation rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Investigation (INT) ★</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+2 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 2, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Medicine', event)" title="View Medicine rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Medicine (WIS)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+2 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Nature (INT)', 0, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Nature', event)" title="View Nature rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Nature (INT)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
-                        </li>
-                        <li class="stat-row-item exp-item" onclick="rollSkill('Perception (WIS) ★ (Expertise)', 6, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Perception', event)" title="View Perception rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#7dd3fc;">Perception (WIS) ★ <small style='color:#7dd3fc;'>(Expertise)</small></span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#38bdf8;">+6 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Performance (CHA)', 0, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Performance', event)" title="View Performance rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Performance (CHA)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Persuasion (CHA)', 0, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Persuasion', event)" title="View Persuasion rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Persuasion (CHA)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
-                        </li>
-                        <li class="stat-row-item" onclick="rollSkill('Religion (INT)', 0, false)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Religion', event)" title="View Religion rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:500; color:#f8fafc;">Religion (INT)</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:var(--text-dim);">+0 🎲</span>
-                        </li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Sleight of Hand (DEX) ★', 6, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Sleight of Hand', event)" title="View Sleight of Hand rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Sleight of Hand (DEX) ★</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+6 🎲</span>
-                        </li>
-                        <li class="stat-row-item exp-item" onclick="rollSkill('Stealth (DEX) ★ (Expertise)', 8, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Stealth', event)" title="View Stealth rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#7dd3fc;">Stealth (DEX) ★ <small style='color:#7dd3fc;'>(Expertise)</small></span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#38bdf8;">+8 🎲</span>
-                        </li>
-                        <li class="stat-row-item prof-item" onclick="rollSkill('Survival (WIS) ★', 4, true)">
-                            <div class="check-left-wrap">
-                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Survival', event)" title="View Survival rules &amp; examples">ℹ️</button>
-                                <span style="font-weight:700; color:#fde68a;">Survival (WIS) ★</span>
-                            </div>
-                            <span class="prof-skill-val" style="font-family:'JetBrains Mono',monospace; font-weight:800; color:#f59e0b;">+4 🎲</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- 6. 🛡️ SAVING THROWS PANEL (2x3 GRID - IMAGE PARITY) -->
-                <div class="panel">
-                    <div class="panel-title">
-                        <span>🛡️ Saving Throws</span>
-                        <span id="saves-gear-tag" style="font-size:0.68rem; color:var(--text-dim);">Proficiency: +2</span>
+                        <span>Saving Throws</span>
+                        <span id="saves-gear-tag" style="font-size:0.67rem; color:var(--text-muted); font-weight:600;">Prof +2</span>
                     </div>
                     <div class="saves-grid-2x3">
                         <div class="save-box prof" onclick="rollSave('Strength Saving Throw ★', 1, true)" title="Strength Saving Throw (Proficient)">
@@ -1106,25 +961,160 @@
                         </div>
                         <div class="save-box prof" onclick="rollSave('Dexterity Saving Throw ★', 6, true)" title="Dexterity Saving Throw (Proficient)">
                             <span class="save-lbl">DEX ★</span>
-                            <span class="save-val" id="save-val-dex" style="color:#38bdf8;">+6</span>
+                            <span class="save-val" id="save-val-dex" style="color:var(--accent-gold);">+6</span>
                         </div>
                         <div class="save-box" onclick="rollSave('Constitution Saving Throw', 2, false)" title="Constitution Saving Throw">
                             <span class="save-lbl">CON</span>
-                            <span class="save-val" id="save-val-con" style="color:#38bdf8;">+2</span>
+                            <span class="save-val" id="save-val-con" style="color:var(--text-light);">+2</span>
                         </div>
                         <div class="save-box" onclick="rollSave('Intelligence Saving Throw', 0, false)" title="Intelligence Saving Throw">
                             <span class="save-lbl">INT</span>
-                            <span class="save-val" id="save-val-int" style="color:var(--text-dim);">+0</span>
+                            <span class="save-val" id="save-val-int" style="color:var(--text-muted);">+0</span>
                         </div>
                         <div class="save-box" onclick="rollSave('Wisdom Saving Throw', 2, false)" title="Wisdom Saving Throw">
                             <span class="save-lbl">WIS</span>
-                            <span class="save-val" id="save-val-wis" style="color:#38bdf8;">+2</span>
+                            <span class="save-val" id="save-val-wis" style="color:var(--text-light);">+2</span>
                         </div>
                         <div class="save-box" onclick="rollSave('Charisma Saving Throw', 0, false)" title="Charisma Saving Throw">
                             <span class="save-lbl">CHA</span>
-                            <span class="save-val" id="save-val-cha" style="color:var(--text-dim);">+0</span>
+                            <span class="save-val" id="save-val-cha" style="color:var(--text-muted);">+0</span>
                         </div>
                     </div>
+
+                    <div class="checks-divider"></div>
+
+                    <div class="panel-title" style="border-bottom:none; padding-bottom:0;">
+                        <span>Skills</span>
+                        <span id="prof-bonus-disp" style="font-size:0.66rem; color:var(--text-muted); font-weight:600;">PROF +2 · PERC 16</span>
+                    </div>
+                    <ul class="stat-row-list">
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Acrobatics (DEX) ★', 6, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Acrobatics', event)" title="View Acrobatics rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Acrobatics <small style="color:var(--accent-gold);">★ DEX</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+6</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Animal Handling (WIS)', 2, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Animal Handling', event)" title="View Animal Handling rules &amp; examples">i</button>
+                                <span>Animal Handling <small style="color:var(--text-muted);">WIS</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+2</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Arcana (INT) ★', 2, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Arcana', event)" title="View Arcana rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Arcana <small style="color:var(--accent-gold);">★ INT</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+2</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Athletics (STR)', -1, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Athletics', event)" title="View Athletics rules &amp; examples">i</button>
+                                <span>Athletics <small style="color:var(--text-muted);">STR</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">−1</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Deception (CHA)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Deception', event)" title="View Deception rules &amp; examples">i</button>
+                                <span>Deception <small style="color:var(--text-muted);">CHA</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+0</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('History (INT)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('History', event)" title="View History rules &amp; examples">i</button>
+                                <span>History <small style="color:var(--text-muted);">INT</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+0</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Insight (WIS) ★', 4, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Insight', event)" title="View Insight rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Insight <small style="color:var(--accent-gold);">★ WIS</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+4</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Intimidation (CHA)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Intimidation', event)" title="View Intimidation rules &amp; examples">i</button>
+                                <span>Intimidation <small style="color:var(--text-muted);">CHA</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+0</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Investigation (INT) ★', 2, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Investigation', event)" title="View Investigation rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Investigation <small style="color:var(--accent-gold);">★ INT</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+2</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Medicine (WIS)', 2, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Medicine', event)" title="View Medicine rules &amp; examples">i</button>
+                                <span>Medicine <small style="color:var(--text-muted);">WIS</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+2</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Nature (INT)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Nature', event)" title="View Nature rules &amp; examples">i</button>
+                                <span>Nature <small style="color:var(--text-muted);">INT</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+0</span>
+                        </li>
+                        <li class="stat-row-item exp-item" onclick="rollSkill('Perception (WIS) ★ (Expertise)', 6, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Perception', event)" title="View Perception rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Perception <small style="color:var(--accent-blue);">★★ WIS</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-blue);">+6</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Performance (CHA)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Performance', event)" title="View Performance rules &amp; examples">i</button>
+                                <span>Performance <small style="color:var(--text-muted);">CHA</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+0</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Persuasion (CHA)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Persuasion', event)" title="View Persuasion rules &amp; examples">i</button>
+                                <span>Persuasion <small style="color:var(--text-muted);">CHA</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+0</span>
+                        </li>
+                        <li class="stat-row-item" onclick="rollSkill('Religion (INT)', 0, false)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Religion', event)" title="View Religion rules &amp; examples">i</button>
+                                <span>Religion <small style="color:var(--text-muted);">INT</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:700; color:var(--text-muted);">+0</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Sleight of Hand (DEX) ★', 6, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Sleight of Hand', event)" title="View Sleight of Hand rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Sleight of Hand <small style="color:var(--accent-gold);">★ DEX</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+6</span>
+                        </li>
+                        <li class="stat-row-item exp-item" onclick="rollSkill('Stealth (DEX) ★ (Expertise)', 8, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Stealth', event)" title="View Stealth rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Stealth <small style="color:var(--accent-blue);">★★ DEX</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-blue);">+8</span>
+                        </li>
+                        <li class="stat-row-item prof-item" onclick="rollSkill('Survival (WIS) ★', 4, true)">
+                            <div class="check-left-wrap">
+                                <button type="button" class="btn-info-tiny" onclick="openSkillModal('Survival', event)" title="View Survival rules &amp; examples">i</button>
+                                <span style="font-weight:700; color:var(--text-light);">Survival <small style="color:var(--accent-gold);">★ WIS</small></span>
+                            </div>
+                            <span class="prof-skill-val" style="font-family:var(--font-mono); font-weight:800; color:var(--accent-gold);">+4</span>
+                        </li>
+                    </ul>
                 </div>
 
                 <!-- 7. 🪙 SLEEK 2-ROW RPG COIN POUCH (10 SP = 1 GP) -->
@@ -1187,39 +1177,39 @@
                 <!-- 1. WEAPONS, FIREARMS & RELOAD ENGINE (TOP PANEL) -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span>⚔️ Primary Firearm Stance &amp; Arsenal</span>
-                        <span style="font-size:0.68rem; color:var(--text-dim);">Point-Blank Clearance • Free Knife Draw</span>
+                        <span>Primary Firearm Stance &amp; Arsenal</span>
+                        <span style="font-size:0.68rem; color:var(--text-muted);">Point-Blank Clearance · Free Knife Draw</span>
                     </div>
 
                     <!-- 2 BIG STANCE BUTTONS AT TOP -->
                     <div class="stance-tabs-bar">
                         <button type="button" id="btn-stance-lament" class="stance-tab-btn active" onclick="switchWeaponStance('lament')">
-                            <span style="font-size:1.3rem;">🎯</span>
+                            <span style="font-size:1.25rem;">🎯</span>
                             <div>
-                                <div style="font-weight:800; font-size:0.86rem; letter-spacing:0.3px;">"LAMENT" (HEAVY RIFLE)</div>
-                                <div style="font-size:0.67rem; color:#fde68a;">Two-Handed Firearm • 1d12+4 Piercing • 10-Mag</div>
+                                <div style="font-weight:800; font-size:0.84rem; letter-spacing:0.02em;">"LAMENT" (HEAVY RIFLE)</div>
+                                <div style="font-size:0.67rem; color:var(--accent-gold);">Two-Handed Firearm · 1d12+4 Piercing · 10-Mag</div>
                             </div>
                         </button>
                         <button type="button" id="btn-stance-revolvers" class="stance-tab-btn" onclick="switchWeaponStance('revolvers')">
-                            <span style="font-size:1.3rem;">💥</span>
+                            <span style="font-size:1.25rem;">💥</span>
                             <div>
-                                <div style="font-weight:800; font-size:0.86rem; letter-spacing:0.3px;">"MERCY &amp; LESS" (REVOLVERS)</div>
-                                <div style="font-size:0.67rem; color:#7dd3fc;">Twin Sidearms • 1d6+4 / 1d6 • 6/6 Cylinders</div>
+                                <div style="font-weight:800; font-size:0.84rem; letter-spacing:0.02em;">"MERCY &amp; LESS" (REVOLVERS)</div>
+                                <div style="font-size:0.67rem; color:var(--accent-blue);">Twin Sidearms · 1d6+4 / 1d6 · 6/6 Cylinders</div>
                             </div>
                         </button>
                     </div>
 
                     <!-- STANCE 1: "LAMENT" HEAVY RIFLE VIEW -->
                     <div id="stance-view-lament">
-                        <div class="action-card" id="card-lament">
+                        <div class="action-card" id="card-lament" data-turn-kind="action">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('lament')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('lament')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🎯 "Lament" (Royal Heavy Long Rifle) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#fbbf24;">Two-Handed Heavy Firearm • Range 80/240 ft (5 ft Point-Blank)</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Two-Handed Heavy Firearm • Range 80/240 ft (5 ft Point-Blank)</div>
                                 </div>
-                                <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;" id="lament-mag-badge">10-ROUND MAG</span>
+                                <span class="pill-badge pill-gold" id="lament-mag-badge">10-ROUND MAG</span>
                             </div>
                             <div class="action-desc">
                                 <strong>+8 to Hit</strong>, <strong>1d12 + 4 Piercing</strong>. Gunner Mastery: no loading penalty, point-blank execution with no disadvantage.
@@ -1231,13 +1221,13 @@
                                     <span style="font-weight:700; color:var(--text-dim);">Chamber:</span>
                                     <div style="display:flex; align-items:center; gap:6px;">
                                         <div class="bullet-pips-bar" id="lament-pips-bar"></div>
-                                        <span id="lament-count-disp" style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#fde68a; font-size:0.75rem;">10/10</span>
+                                        <span id="lament-count-disp" style="font-family:var(--font-mono); font-weight:700; color:var(--accent-gold); font-size:0.75rem;">10/10</span>
                                     </div>
                                 </div>
-                                <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.06); padding-top:4px; margin-top:2px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--card-border); padding-top:5px; margin-top:4px;">
                                     <div style="display:flex; align-items:center; gap:6px;">
-                                        <span style="font-size:0.7rem; color:var(--text-dim); font-weight:600;">Reserve Clips:</span>
-                                        <span id="lament-reserves-disp" style="font-family:'JetBrains Mono',monospace; font-size:0.82rem; font-weight:800; color:#86efac;">2 / 2 Left</span>
+                                        <span style="font-size:0.7rem; color:var(--text-muted); font-weight:600;">Reserve Clips:</span>
+                                        <span id="lament-reserves-disp" style="font-family:var(--font-mono); font-size:0.8rem; font-weight:800; color:var(--accent-green);">2 / 2 Left</span>
                                     </div>
                                     <button id="btn-reload-lament" class="btn-roll-action btn-roll-reload" onclick="reloadLament()">🔄 Reload Clip (BA)</button>
                                 </div>
@@ -1257,15 +1247,15 @@
                     <div id="stance-view-revolvers" style="display:none;">
                         <div class="action-grid-2col">
                             <!-- Mercy -->
-                            <div class="action-card" id="card-mercy">
+                            <div class="action-card" id="card-mercy" data-turn-kind="action">
                                 <div class="action-header">
                                     <div>
-                                        <div onclick="openSpellDetailsModal('mercy')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        <div onclick="openSpellDetailsModal('mercy')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                             🔴 "Mercy" (Main-Hand) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                         </div>
-                                        <div style="font-size:0.66rem; font-weight:700; color:#f87171;">Light Sidearm • 1 Action • Range 5/90 ft</div>
+                                        <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Light Sidearm • 1 Action • Range 5/90 ft</div>
                                     </div>
-                                    <span class="pill-badge pill-crimson" style="font-size:0.62rem; padding:1px 6px;" id="mercy-badge">6-CYLINDER</span>
+                                    <span class="pill-badge pill-crimson" id="mercy-badge">6-CYLINDER</span>
                                 </div>
                                 <div class="action-desc">
                                     <strong>+8 to Hit</strong>, <strong>1d6 + 4 Piercing</strong>. Scarred steel six-shooter drawn on right hip with hair trigger.
@@ -1273,10 +1263,10 @@
 
                                 <div class="firearm-ammo-box">
                                     <div class="ammo-gauge-row">
-                                        <span style="font-weight:700; color:#f87171;">Cylinder:</span>
+                                        <span style="font-weight:700; color:var(--text-dim);">Cylinder:</span>
                                         <div style="display:flex; align-items:center; gap:6px;">
                                             <div class="bullet-pips-bar" id="mercy-pips-bar"></div>
-                                            <span id="mercy-count-disp" style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#f87171; font-size:0.75rem;">6/6</span>
+                                            <span id="mercy-count-disp" style="font-family:var(--font-mono); font-weight:700; color:var(--accent-red); font-size:0.75rem;">6/6</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1291,15 +1281,15 @@
                             </div>
 
                             <!-- Less (Off-Hand Revolver — Swappable On the Fly to Strapped Leg Dagger!) -->
-                            <div class="action-card" id="card-less">
+                            <div class="action-card" id="card-less" data-turn-kind="bonus">
                                 <div class="action-header">
                                     <div>
-                                        <div onclick="openSpellDetailsModal('less')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        <div onclick="openSpellDetailsModal('less')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                             🔵 "Less" (Off-Hand) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                         </div>
-                                        <div style="font-size:0.66rem; font-weight:700; color:#38bdf8;">Light Sidearm • 1 Bonus Action • Range 5/90 ft</div>
+                                        <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Light Sidearm • 1 Bonus Action • Range 5/90 ft</div>
                                     </div>
-                                    <span class="pill-badge pill-blue" style="font-size:0.62rem; padding:1px 6px;" id="less-badge">6-CYLINDER</span>
+                                    <span class="pill-badge pill-blue" id="less-badge">6-CYLINDER</span>
                                 </div>
                                 <div class="action-desc">
                                     <strong>+8 to Hit</strong>, <strong>1d6 Piercing</strong> (Off-Hand bonus attack). Cross-drawn from her left side in rapid rhythm.
@@ -1307,10 +1297,10 @@
 
                                 <div class="firearm-ammo-box">
                                     <div class="ammo-gauge-row">
-                                        <span style="font-weight:700; color:#38bdf8;">Cylinder:</span>
+                                        <span style="font-weight:700; color:var(--text-dim);">Cylinder:</span>
                                         <div style="display:flex; align-items:center; gap:6px;">
                                             <div class="bullet-pips-bar" id="less-pips-bar"></div>
-                                            <span id="less-count-disp" style="font-family:'JetBrains Mono',monospace; font-weight:700; color:#38bdf8; font-size:0.75rem;">6/6</span>
+                                            <span id="less-count-disp" style="font-family:var(--font-mono); font-weight:700; color:var(--accent-blue); font-size:0.75rem;">6/6</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1318,45 +1308,45 @@
                                 <div id="yvaine-ammo-bar-less"></div>
                                 <div id="yvaine-mods-less"></div>
 
-                                <div class="action-btn-row" style="flex-wrap:wrap;">
-                                    <button type="button" id="btn-atk-less" class="btn-roll-action" style="background:#0284c7;" onclick="fireLessShot()">🔵 Attack (+8)</button>
+                                <div class="action-btn-row">
+                                    <button type="button" id="btn-atk-less" class="btn-roll-action" onclick="fireLessShot()">🔵 Attack (+8)</button>
                                     <button type="button" id="btn-dmg-less" class="btn-roll-action btn-roll-dmg" onclick="rollLessDamage()">💥 Damage (1d6)</button>
-                                    <button type="button" id="btn-swap-to-leg-dagger" class="btn-act btn-act-pre" style="font-size:0.68rem; color:#fde68a; border-color:rgba(245,158,11,0.45);" onclick="toggleYvaineOffhandDagger()">Swap to Leg Dagger</button>
+                                    <button type="button" id="btn-swap-to-leg-dagger" class="btn-act btn-act-pre" style="font-size:0.68rem; color:var(--accent-gold); border-color:var(--border-gold);" onclick="toggleYvaineOffhandDagger()">Swap to Leg Dagger</button>
                                 </div>
                             </div>
 
                             <!-- Strapped Leg Dagger (On-the-Fly Off-Hand Swap Target!) -->
-                            <div class="action-card" id="card-leg-dagger" style="display:none; border-left:3px solid #cbd5e1;">
+                            <div class="action-card" id="card-leg-dagger" data-turn-kind="bonus" style="display:none;">
                                 <div class="action-header">
                                     <div>
-                                        <div onclick="openStrappedDaggerInfo()" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                        <div onclick="openStrappedDaggerInfo()" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                             <span id="leg-dagger-title">🗡️ Solmere Royal Trench Knife</span> <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                         </div>
-                                        <div id="leg-dagger-sub" style="font-size:0.66rem; font-weight:700; color:#cbd5e1;">Leg Sheath Quick-Draw • Light • Finesse • Nick</div>
+                                        <div id="leg-dagger-sub" style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Leg Sheath Quick-Draw • Light • Finesse • Nick</div>
                                     </div>
-                                    <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;" id="leg-dagger-badge">LEG SHEATH</span>
+                                    <span class="pill-badge pill-gold" id="leg-dagger-badge">LEG SHEATH</span>
                                 </div>
                                 <div class="action-desc" id="leg-dagger-desc">
                                     <strong>+6 to Hit</strong>, <strong>1d4 Piercing</strong> (Off-Hand BA / Nick) or <strong>1d4 + 4 Piercing</strong> (Action). Quick-drawn on the fly in place of Less!
                                 </div>
                                 <div id="yvaine-mods-leg-dagger"></div>
 
-                                <div class="action-btn-row" style="flex-wrap:wrap;">
+                                <div class="action-btn-row">
                                     <button type="button" id="btn-leg-dagger-atk" class="btn-roll-action" onclick="rollStrappedDaggerAttack()">🗡️ Attack (+6)</button>
                                     <button type="button" id="btn-leg-dagger-off" class="btn-roll-action btn-roll-dmg" onclick="rollStrappedDaggerDamage(true)">💥 Off-Hand (1d4)</button>
                                     <button type="button" id="btn-leg-dagger-main" class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="rollStrappedDaggerDamage(false)">Full (1d4+4)</button>
-                                    <button type="button" id="btn-swap-back-less" class="btn-act btn-act-pre" style="font-size:0.68rem; color:#7dd3fc; border-color:rgba(56,189,248,0.45);" onclick="toggleYvaineOffhandDagger()">Swap to Less</button>
-                                    <button type="button" class="btn-act btn-act-pre" style="font-size:0.68rem; color:#cbd5e1;" onclick="COS_RPG && COS_RPG.openEquipModal('legSheath')">Change Leg Dagger</button>
+                                    <button type="button" id="btn-swap-back-less" class="btn-act btn-act-pre" style="font-size:0.68rem; color:var(--accent-blue);" onclick="toggleYvaineOffhandDagger()">Swap to Less</button>
+                                    <button type="button" class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="COS_RPG && COS_RPG.openEquipModal('legSheath')">Change Leg Dagger</button>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Speedloader Reload Strip for Revolvers -->
-                        <div class="firearm-ammo-box" style="margin-top:6px;">
+                        <div class="firearm-ammo-box" style="margin-top:7px;">
                             <div style="display:flex; justify-content:space-between; align-items:center;">
                                 <div style="display:flex; align-items:center; gap:6px;">
-                                    <span style="font-size:0.72rem; color:var(--text-dim); font-weight:700;">Moon-Clip Speedloaders:</span>
-                                    <span id="revolver-reserves-disp" style="font-family:'JetBrains Mono',monospace; font-size:0.84rem; font-weight:800; color:#86efac;">2 / 2 Left</span>
+                                    <span style="font-size:0.72rem; color:var(--text-muted); font-weight:700;">Moon-Clip Speedloaders:</span>
+                                    <span id="revolver-reserves-disp" style="font-family:var(--font-mono); font-size:0.82rem; font-weight:800; color:var(--accent-green);">2 / 2 Left</span>
                                 </div>
                                 <button class="btn-roll-action btn-roll-reload" onclick="reloadBothRevolvers()">🔄 Speedload Both (BA)</button>
                             </div>
@@ -1364,15 +1354,15 @@
                     </div>
 
                     <!-- TRENCH KNIFE CARD (SHOWN ONLY WHEN EQUIPPED IN PAPER-DOLL) -->
-                    <div class="action-card" id="card-knife" style="display:none; margin-top:7px; border-left:3px solid #cbd5e1;">
+                    <div class="action-card" id="card-knife" data-turn-kind="action" style="display:none; margin-top:7px;">
                         <div class="action-header">
                             <div>
-                                <div onclick="openSpellDetailsModal('knife')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                <div onclick="openSpellDetailsModal('knife')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                     🗡️ Solmere Royal Trench Knife / Stiletto <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                 </div>
-                                <div style="font-size:0.66rem; font-weight:700; color:#cbd5e1;">Finesse • Light • Concealed Boot Stiletto • Free/Instant Draw (No BA Swap)</div>
+                                <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Finesse • Light • Concealed Boot Stiletto • Free/Instant Draw (No BA Swap)</div>
                             </div>
-                            <span class="pill-badge pill-neutral" style="font-size:0.62rem; padding:1px 6px;">BACKUP MELEE</span>
+                            <span class="pill-badge">BACKUP MELEE</span>
                         </div>
                         <div class="action-desc">
                             <strong>+6 to Hit</strong>, <strong>1d4 + 4 Piercing</strong> (Action) / <strong>1d4 Piercing</strong> (Off-Hand BA). Silent takedowns; never runs out of ammo.
@@ -1381,7 +1371,7 @@
                         <div class="action-btn-row">
                             <button id="btn-atk-knife" class="btn-roll-action" onclick="rollKnifeAttack()">🗡️ Attack (+6)</button>
                             <button id="btn-dmg-knife" class="btn-roll-action btn-roll-dmg" onclick="rollKnifeDamage(false)">💥 Damage (1d4+4)</button>
-                            <button class="btn-act btn-act-pre" onclick="rollKnifeDamage(true)" style="font-size:0.68rem; color:#cbd5e1;">🗡️ Off-Hand (1d4)</button>
+                            <button class="btn-act btn-act-pre" onclick="rollKnifeDamage(true)" style="font-size:0.68rem;">🗡️ Off-Hand (1d4)</button>
                         </div>
                     </div>
 
@@ -1391,78 +1381,76 @@
                 <!-- 2. 🔍 MONSTER SLAYER FEATURES (SECOND PANEL) -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span>🔍 Monster Slayer Features</span>
-                        <span style="font-size:0.68rem; color:var(--text-dim);">Anatomy Knowledge &amp; Occult Targeting</span>
+                        <span>Monster Slayer Features</span>
+                        <span style="font-size:0.68rem; color:var(--text-muted);">Anatomy Knowledge · Occult Targeting</span>
                     </div>
 
                     <div class="action-grid-2col">
                         <!-- Hunter's Sense Card -->
-                        <div class="action-card">
+                        <div class="action-card" data-turn-kind="bonus">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('hunters_sense')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('hunters_sense')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🔍 Hunter's Sense <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Bonus Action • 60 ft • 2 Uses / Long Rest</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Bonus Action • 60 ft • 2 Uses / Long Rest</div>
                                 </div>
-                                <span id="badge-hunters-sense" class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;">1/2 USES</span>
+                                <span id="badge-hunters-sense" class="pill-badge pill-gold">1/2 USES</span>
                             </div>
                             <div class="action-desc">
                                 Inspect a creature within 60 ft. Learn its <strong>damage immunities, resistances, and vulnerabilities</strong>!
                             </div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" onclick="useHuntersSense()">👁️ Inspect Creature</button>
+                                <button class="btn-roll-action btn-roll-accent" onclick="useHuntersSense()">👁️ Inspect Creature</button>
                             </div>
                         </div>
 
                         <!-- Slayer's Prey Card -->
-                        <div class="action-card">
+                        <div class="action-card" data-turn-kind="bonus">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('slayers_prey')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('slayers_prey')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🎯 Slayer's Prey (+1d6) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#f87171;">Bonus Action • 60 ft • Extra Damage on First Hit/Turn</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Bonus Action • 60 ft • Extra Damage on First Hit/Turn</div>
                                 </div>
-                                <span id="card-slayers-tag" class="pill-badge pill-neutral" style="font-size:0.62rem; padding:1px 6px;">NO ENEMY</span>
+                                <span id="card-slayers-tag" class="pill-badge">NO ENEMY</span>
                             </div>
                             <div class="action-desc">
                                 First weapon hit each turn against your marked enemy deals an extra <strong>+1d6 weapon damage</strong>! <em>Shift to new target when enemy dies.</em>
                             </div>
                             <div class="action-btn-row">
-                                <button id="btn-slayer-action" class="btn-roll-action" style="background:#991b1b;" onclick="toggleSlayersPreyManual()">🎯 Designate Enemy (BA)</button>
+                                <button id="btn-slayer-action" class="btn-roll-action btn-roll-accent" onclick="toggleSlayersPreyManual()">🎯 Designate Enemy (BA)</button>
                                 <button class="btn-roll-action btn-roll-dmg" onclick="rollSlayerDieOnly()">🎲 Roll +1d6</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. 🔮 OCCULT RIGS & PREPARED SPELLS (THIRD PANEL - EXACT PIPER STANDARD) -->
+                <!-- 3. 🔮 OCCULT RIGS & PREPARED SPELLS -->
                 <div class="panel">
                     <div class="panel-title">
-                        <span>🔮 Occult Rigs &amp; Prepared Spells</span>
+                        <span>Occult Rigs &amp; Prepared Spells</span>
                         <div style="display:flex; align-items:center; gap:8px;">
-                            <span style="font-size:0.68rem; color:var(--text-dim);">Spell DC 12 • Attack +4</span>
-                            <button class="btn-act btn-act-pre" onclick="refillSpellSlots()" style="font-size:0.68rem; color:var(--accent-gold);">⛺ Refill Slots</button>
+                            <span style="font-size:0.68rem; color:var(--text-muted);">Spell DC 12 · Attack +4</span>
+                            <button class="btn-act btn-act-pre" onclick="refillSpellSlots()" style="font-size:0.68rem; color:var(--accent-gold); border-color:var(--border-gold);">⛺ Refill Slots</button>
                         </div>
                     </div>
 
-                    <!-- MULTI-TIER SPELL SLOT TRACKER (PIPER EXACT STANDARD) -->
-                    <div style="background:var(--panel-sub); border:1px solid var(--card-border); border-radius:6px; padding:6px 8px; display:flex; flex-direction:column; gap:4px; margin-bottom:5px;">
-                        <div style="font-size:0.68rem; font-weight:700; color:var(--text-dim); text-transform:uppercase; display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px;">
-                            <span>🔮 Spell Slots by Level &amp; Hunter's Mark</span>
-                            <span id="favored-enemy-pips" style="font-size:0.68rem; color:#fde68a; font-weight:700; font-family:'JetBrains Mono',monospace;">Hunters Mark: 2/2 Free Casts</span>
+                    <!-- MULTI-TIER SPELL SLOT TRACKER -->
+                    <div class="rpg-slot-strip">
+                        <div style="font-size:0.68rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.04em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+                            <span>Spell Slots &amp; Hunter's Mark</span>
+                            <span id="favored-enemy-pips" style="font-size:0.68rem; color:var(--accent-gold); font-weight:700; font-family:var(--font-mono); text-transform:none;">Hunters Mark: 2/2 Free Casts</span>
                         </div>
-                        <div style="display:grid; grid-template-columns: 1fr; gap:5px;">
-                            <div style="background:#090e1a; border:1px solid var(--card-border); border-radius:4px; padding:4px 8px; display:flex; justify-content:space-between; align-items:center;">
-                                <div>
-                                    <span style="font-size:0.7rem; font-weight:700; color:var(--accent-blue);">1st-Level Slots:</span>
-                                    <span id="slots-pips-disp" style="font-size:0.78rem; cursor:pointer; margin-left:4px;" onclick="modSpellSlots(-1)">🟦 🟦 🟦 (3/3)</span>
-                                </div>
-                                <div style="display:flex; gap:3px;">
-                                    <button class="btn-act btn-act-pre" onclick="modSpellSlots(-1)" style="padding:1px 6px; font-size:0.68rem;">-</button>
-                                    <button class="btn-act btn-act-pre" onclick="modSpellSlots(1)" style="padding:1px 6px; font-size:0.68rem;">+</button>
-                                </div>
+                        <div style="background:var(--panel-sub); border:1px solid var(--card-border); border-radius:6px; padding:5px 9px; display:flex; justify-content:space-between; align-items:center;">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <span style="font-size:0.7rem; font-weight:700; color:var(--accent-blue);">1st-Level Slots</span>
+                                <span id="slots-pips-disp" style="font-size:0.76rem; cursor:pointer; display:inline-flex; align-items:center;" onclick="modSpellSlots(-1)">3/3</span>
+                            </div>
+                            <div style="display:flex; gap:3px;">
+                                <button class="btn-act btn-act-pre" onclick="modSpellSlots(-1)" style="min-block-size:22px; padding:0px 7px; font-size:0.68rem;">−</button>
+                                <button class="btn-act btn-act-pre" onclick="modSpellSlots(1)" style="min-block-size:22px; padding:0px 7px; font-size:0.68rem;">+</button>
                             </div>
                         </div>
                     </div>
@@ -1471,53 +1459,53 @@
                     <div class="action-grid-2col">
 
                         <!-- Phosphor Grenade -->
-                        <div class="action-card" style="border-left:3px solid #f97316;">
+                        <div class="action-card" data-turn-kind="bonus">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('spell_phosphor_grenade')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('spell_phosphor_grenade')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         💣 Phosphor Grenade <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#fb923c;">1st Level • Bonus Action on Ranged Hit • DC 12 DEX</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">1st Level • Bonus Action on Ranged Hit • DC 12 DEX</div>
                                 </div>
-                                <span class="pill-badge pill-neutral" style="font-size:0.62rem; padding:1px 6px;">1d10 DMG</span>
+                                <span class="pill-badge pill-crimson">1d10 DMG</span>
                             </div>
                             <div class="action-desc">
                                 Occult shrapnel canister flung immediately on hit! Target and creatures in a <strong>5-ft cube</strong> take <strong>1d10 Piercing &amp; Fire</strong> (DC 12 DEX save for half).
                             </div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action btn-roll-dmg" style="background:#ea580c;" onclick="castPhosphorGrenade()">💣 Throw Grenade (1d10)</button>
+                                <button class="btn-roll-action btn-roll-dmg" onclick="castPhosphorGrenade()">💣 Throw Grenade (1d10)</button>
                             </div>
                         </div>
 
                         <!-- Hunter's Mark (Tracer Round) -->
-                        <div class="action-card" style="border-left:3px solid #ef4444;">
+                        <div class="action-card" data-turn-kind="bonus">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('spell_runic_tracer')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('spell_runic_tracer')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🎯 Hunter's Mark (Tracer Round) <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#f87171;">1st Level • Bonus Action • 90 ft • Conc 1 hr</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">1st Level • Bonus Action • 90 ft • Conc 1 hr</div>
                                 </div>
-                                <span id="card-tracer-tag" onclick="toggleTracerBuffManual()" title="Click to toggle Hunter's Mark (+1d6) manually" style="cursor:pointer; font-size:0.62rem; padding:1px 6px;" class="pill-badge pill-neutral">INACTIVE</span>
+                                <span id="card-tracer-tag" onclick="toggleTracerBuffManual()" title="Click to toggle Hunter's Mark (+1d6) manually" style="cursor:pointer;" class="pill-badge">INACTIVE</span>
                             </div>
                             <div class="action-desc">
                                 <strong>+1d6 Piercing/Force</strong> on every weapon hit vs marked quarry. Adv on Perception &amp; Survival. <em>Shift tracer to new enemy as BA when target dies!</em>
                             </div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#dc2626;" onclick="castTracerRoundFree()">🎯 Cast Hunter's Mark</button>
+                                <button class="btn-roll-action btn-roll-accent" onclick="castTracerRoundFree()">🎯 Cast Hunter's Mark</button>
                             </div>
                         </div>
 
                         <!-- Longstrider -->
-                        <div class="action-card" style="border-left:3px solid #38bdf8;">
+                        <div class="action-card" data-turn-kind="action">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('spell_longstrider')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('spell_longstrider')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         ⚡ Longstrider <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#38bdf8;">1st Level • 1 Action • Touch • 1 Hour (No Conc)</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">1st Level • 1 Action • Touch • 1 Hour (No Conc)</div>
                                 </div>
-                                <span class="pill-badge pill-blue" style="font-size:0.62rem; padding:1px 6px;">+10 FT SPEED</span>
+                                <span class="pill-badge pill-blue">+10 FT SPEED</span>
                             </div>
                             <div class="action-desc">
                                 Slam an adrenaline stim into thigh and pop gaiter valves! Walking speed increases by <strong>+10 ft (40 ft total)</strong> for 1 hour.
@@ -1528,53 +1516,53 @@
                         </div>
 
                         <!-- Protection from Evil and Good -->
-                        <div class="action-card" style="border-left:3px solid #c084fc;">
+                        <div class="action-card" data-turn-kind="action">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('spell_protection_evil_good')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('spell_protection_evil_good')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🛡️ Protection from Evil &amp; Good <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#c084fc;">Subclass Magic • 1 Action • Touch • Conc 10 mins</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Subclass Magic • 1 Action • Touch • Conc 10 mins</div>
                                 </div>
-                                <span class="pill-badge pill-purple" style="font-size:0.62rem; padding:1px 6px;">WARD</span>
+                                <span class="pill-badge pill-purple">WARD</span>
                             </div>
                             <div class="action-desc">
                                 Monsters suffer <strong>disadvantage on attack rolls</strong> vs target; target cannot be charmed, frightened, or possessed!
                             </div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action btn-roll-martial" style="background:#7e22ce; border-color:#a855f7;" onclick="castProtectionEvilGood()">🛡️ Cast Protection</button>
+                                <button class="btn-roll-action" onclick="castProtectionEvilGood()">🛡️ Cast Protection</button>
                             </div>
                         </div>
 
                         <!-- Smokescreen -->
-                        <div class="action-card" style="border-left:3px solid #94a3b8;">
+                        <div class="action-card" data-turn-kind="action">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('spell_smokescreen')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('spell_smokescreen')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🌫️ Smokescreen <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#cbd5e1;">1st Level (Fog Cloud) • 1 Action • 120 ft • Conc 1 hr</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">1st Level (Fog Cloud) • 1 Action • 120 ft • Conc 1 hr</div>
                                 </div>
-                                <span class="pill-badge pill-neutral" style="font-size:0.62rem; padding:1px 6px;">20-FT SPHERE</span>
+                                <span class="pill-badge">20-FT SPHERE</span>
                             </div>
                             <div class="action-desc">
                                 Crack a pressurized sulfur canister from bandolier! Creates a 20-ft-radius sphere of heavy obscuration, cutting off enemy line of sight.
                             </div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" style="background:#475569;" onclick="castSmokescreen()">🌫️ Cast Smokescreen</button>
+                                <button class="btn-roll-action" onclick="castSmokescreen()">🌫️ Cast Smokescreen</button>
                             </div>
                         </div>
 
                         <!-- Amulet of the Whispering Grave (Speak with Dead 1/LR) -->
-                        <div class="action-card" id="card-speak-with-dead" style="border-left:3px solid #dc2626;">
+                        <div class="action-card" id="card-speak-with-dead" data-turn-kind="action">
                             <div class="action-header">
                                 <div>
-                                    <div onclick="openSpellDetailsModal('spell_speak_with_dead')" style="cursor:pointer; color:#f8fafc;" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='#f8fafc'">
+                                    <div onclick="openSpellDetailsModal('spell_speak_with_dead')" style="cursor:pointer; color:var(--text-light);" onmouseover="this.style.color='var(--accent-gold)'" onmouseout="this.style.color='var(--text-light)'">
                                         🩸 Amulet of the Whispering Grave <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span><span id="eq-badge-amulet"></span>
                                     </div>
-                                    <div style="font-size:0.66rem; font-weight:700; color:#fca5a5;">Appraised Relic • Speak with Dead • 1/Long Rest</div>
+                                    <div style="font-size:0.66rem; font-weight:600; color:var(--text-dim);">Appraised Relic • Speak with Dead • 1/Long Rest</div>
                                 </div>
-                                <span id="badge-speak-dead" onclick="toggleSpeakWithDeadManual()" title="Click to toggle Ready / Used manually" style="cursor:pointer; font-size:0.62rem; padding:1px 6px;" class="pill-badge pill-crimson">1/1 READY</span>
+                                <span id="badge-speak-dead" onclick="toggleSpeakWithDeadManual()" title="Click to toggle Ready / Used manually" style="cursor:pointer;" class="pill-badge pill-crimson">1/1 READY</span>
                             </div>
                             <div class="action-desc">
                                 Cast <strong><em>Speak with Dead</em></strong> (1 Action, 10 ft, 10 min, no slot) to question a corpse (up to <strong>5 questions</strong>). Recharges on Long Rest.
@@ -1751,7 +1739,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261122r3"></script>
+<script src="cos_rpg_engine.js?v=20261122v3"></script>
 <script>
     // ==========================================
     // 🧙‍♂️ CHARACTER BASELINE STATE (LEVEL 3 RANGER)
@@ -2529,11 +2517,11 @@
 
         if (slayersPreyActive) {
             if (tag) { tag.className = 'pill-badge pill-crimson'; tag.innerText = 'TARGET MARKED (+1d6)'; }
-            if (btn) { btn.innerText = '✕ Untoggle Marked Enemy'; btn.style.background = '#475569'; }
+            if (btn) { btn.innerText = '✕ Untoggle Marked Enemy'; btn.className = 'btn-roll-action'; btn.style.background = ''; }
             logRoll(`🎯 <strong>Slayer's Prey Active (Bonus Action):</strong> Target designated within 60 ft! The first time each turn you hit this quarry with a weapon attack, it takes an extra <strong style="color:#f87171;">+1d6 weapon damage</strong>! <em>(Untoggle when target dies).</em>`);
         } else {
-            if (tag) { tag.className = 'pill-badge pill-neutral'; tag.innerText = 'NO ENEMY'; }
-            if (btn) { btn.innerText = '🎯 Designate Enemy (BA)'; btn.style.background = '#991b1b'; }
+            if (tag) { tag.className = 'pill-badge'; tag.innerText = 'NO ENEMY'; }
+            if (btn) { btn.innerText = '🎯 Designate Enemy (BA)'; btn.className = 'btn-roll-action btn-roll-accent'; btn.style.background = ''; }
             logRoll(`🎯 <strong>Slayer's Prey Untoggled:</strong> Quarry removed. Ready to designate new target as a Bonus Action.`);
         }
     }
@@ -2549,11 +2537,12 @@
     function updateSpellSlotsUI() {
         const pipsEl = document.getElementById('slots-pips-disp');
         if (pipsEl) {
-            let pips = '';
+            let pips = '<span class="rpg-pip-row">';
             for (let i = 0; i < maxSpellSlots; i++) {
-                pips += (i < curSpellSlots) ? '🟦 ' : '⚪ ';
+                pips += `<span class="rpg-pip-gem gem-blue ${i < curSpellSlots ? 'is-filled' : ''}"></span>`;
             }
-            pipsEl.innerHTML = `${pips}<strong>(${curSpellSlots}/${maxSpellSlots})</strong>`;
+            pips += `</span> <strong style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-light); margin-inline-start:5px;">${curSpellSlots}/${maxSpellSlots}</strong>`;
+            pipsEl.innerHTML = pips;
         }
     }
 
@@ -2842,7 +2831,7 @@
         const hpBar = document.getElementById('hp-bar');
         const tempBar = document.getElementById('hp-temp-bar');
         const statusHeader = document.getElementById('hp-status-header');
-        const hpInput = document.getElementById('hp-input');
+        const clearBtn = document.getElementById('btn-clear-temp');
 
         const pct = Math.max(0, Math.min(100, (curHP / maxHP) * 100));
         hpBar.style.width = `${pct}%`;
@@ -2854,20 +2843,21 @@
         if (tempHP > 0) {
             const tempPct = Math.min(100, (tempHP / maxHP) * 100);
             tempBar.style.width = `${tempPct}%`;
-            hpDisp.innerText = `${curHP} + ${tempHP} / ${maxHP}`;
-            hpDisp.style.color = '#38bdf8';
+            hpDisp.innerText = `${curHP}/${maxHP}`;
+            hpDisp.style.color = 'var(--accent-blue)';
             if (statusHeader) {
-                statusHeader.innerText = `${curHP} / ${maxHP} (+${tempHP} Temp)`;
-                statusHeader.style.color = '#38bdf8';
+                statusHeader.innerText = `+${tempHP} Temp`;
+                statusHeader.style.color = 'var(--accent-blue)';
             }
+            if (clearBtn) clearBtn.style.display = 'inline-flex';
         } else {
             tempBar.style.width = '0%';
             hpDisp.innerText = `${curHP}/${maxHP}`;
             hpDisp.style.color = (curHP > 14 ? 'var(--accent-green)' : (curHP > 7 ? 'var(--accent-gold)' : 'var(--accent-red)'));
             if (statusHeader) {
-                statusHeader.innerText = `${curHP} / ${maxHP} (+0 Temp)`;
-                statusHeader.style.color = (curHP > 14 ? 'var(--accent-green)' : (curHP > 7 ? 'var(--accent-gold)' : 'var(--accent-red)'));
+                statusHeader.innerText = '';
             }
+            if (clearBtn) clearBtn.style.display = 'none';
         }
     }
 
@@ -4907,10 +4897,10 @@
                         const btn = document.getElementById('btn-slayer-action');
                         if (slayersPreyActive) {
                             if (tag) { tag.className = 'pill-badge pill-crimson'; tag.innerText = 'TARGET MARKED (+1d6)'; }
-                            if (btn) { btn.innerText = '✕ Untoggle Marked Enemy'; btn.style.background = '#475569'; }
+                            if (btn) { btn.innerText = '✕ Untoggle Marked Enemy'; btn.className = 'btn-roll-action'; btn.style.background = ''; }
                         } else {
-                            if (tag) { tag.className = 'pill-badge pill-neutral'; tag.innerText = 'NO ENEMY'; }
-                            if (btn) { btn.innerText = '🎯 Designate Enemy (BA)'; btn.style.background = '#991b1b'; }
+                            if (tag) { tag.className = 'pill-badge'; tag.innerText = 'NO ENEMY'; }
+                            if (btn) { btn.innerText = '🎯 Designate Enemy (BA)'; btn.className = 'btn-roll-action btn-roll-accent'; btn.style.background = ''; }
                         }
                     }
                     if (typeof st.curSpellSlots === 'number') curSpellSlots = Math.max(0, Math.min(maxSpellSlots, st.curSpellSlots));

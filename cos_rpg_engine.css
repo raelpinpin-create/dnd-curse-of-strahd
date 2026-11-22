@@ -1,7 +1,9 @@
 /* =========================================================================
    🛡️ CURSE OF STRAHD — UNIFIED RPG PAPER-DOLL, BACKPACK, CRAFT & TRADE UI
    ========================================================================= */
+@layer legacy, engine, tokens, base, layout, components, hud-unify, responsive;
 
+@layer engine {
 /* Modal scroll-chaining protection (Modern Web Guidance) */
 dialog:modal {
     overscroll-behavior: contain;
@@ -2562,3 +2564,4 @@ header.header-banner .pill-badge-group {
         right: 12px;
     }
 }
+} /* end @layer engine */
