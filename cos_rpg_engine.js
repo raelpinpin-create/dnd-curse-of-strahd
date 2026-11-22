@@ -11409,11 +11409,18 @@
                     `Regain <strong>+1 Help Token</strong> (up to 2/day)`,
                     `Good time to craft Potions or Bandages in <strong>Craft</strong>`
                 ]
-                : [
-                    `Restore <strong>+${shortHeal} HP</strong> (25% Max HP, capped at Max)`,
-                    `Top off all <strong>Firearm Chambers</strong> (Lament, Mercy &amp; Less)`,
-                    `Regain <strong>+1 Help Token</strong>`
-                ]);
+                : (hid === 'cael'
+                    ? [
+                        `Restore <strong>+${shortHeal} HP</strong> (25% Max HP, capped at Max)`,
+                        `Recharge all <strong>2/2 Starry Form &amp; Wild Shape</strong> uses`,
+                        `Regain <strong>+1 Help Token</strong> (up to 2/day)`,
+                        `Good time to brew Potions or Bandages in <strong>Craft</strong>`
+                    ]
+                    : [
+                        `Restore <strong>+${shortHeal} HP</strong> (25% Max HP, capped at Max)`,
+                        `Top off all <strong>Firearm Chambers</strong> (Lament, Mercy &amp; Less)`,
+                        `Regain <strong>+1 Help Token</strong>`
+                    ]));
         const longBullets = hid === 'jacomir'
             ? [
                 `Restore full <strong>${v.max}/${v.max} HP</strong> &amp; clear Temporary HP`,
@@ -11426,11 +11433,18 @@
                     `Restore all <strong>Spell Slots</strong>, <strong>Sorcery Points (3/3)</strong> &amp; <strong>Tides of Chaos</strong>`,
                     `Restore <strong>Fierna Charm (1/1)</strong>, <strong>Help Tokens (2/2)</strong> &amp; Short Rests`
                 ]
-                : [
-                    `Restore full <strong>${v.max}/${v.max} HP</strong> &amp; clear Temporary HP`,
-                    `Restore all <strong>Spell Slots</strong>, <strong>Hunter's Mark</strong> &amp; <strong>Hunter's Sense (2/2)</strong>`,
-                    `Refill all <strong>Ammo Reserves</strong>, <strong>Whispering Grave</strong>, <strong>Inspiration</strong> &amp; <strong>Help (2/2)</strong>`
-                ]);
+                : (hid === 'cael'
+                    ? [
+                        `Restore full <strong>${v.max}/${v.max} HP</strong> &amp; clear Temporary HP`,
+                        `Restore all <strong>Spell Slots</strong>, <strong>Starry Form &amp; Wild Shape (2/2)</strong>`,
+                        `Refill <strong>Star Map Guiding Bolts (2/2)</strong> &amp; <strong>Vow of the Night Sky (1/1)</strong>`,
+                        `Restore <strong>Help Tokens (2/2)</strong> &amp; Short Rests`
+                    ]
+                    : [
+                        `Restore full <strong>${v.max}/${v.max} HP</strong> &amp; clear Temporary HP`,
+                        `Restore all <strong>Spell Slots</strong>, <strong>Hunter's Mark</strong> &amp; <strong>Hunter's Sense (2/2)</strong>`,
+                        `Refill all <strong>Ammo Reserves</strong>, <strong>Whispering Grave</strong>, <strong>Inspiration</strong> &amp; <strong>Help (2/2)</strong>`
+                    ]));
 
         body.innerHTML = `
             <div class="rpg-rest-grid">

@@ -3041,6 +3041,48 @@
         if (e.key === 'Escape') dismissFloatingHud();
     });
 
+    function modDiceMod(delta) {
+        const input = document.getElementById('dice-mod');
+        if (input) input.value = (parseInt(input.value) || 0) + delta;
+    }
+
+    function toggleAdvantage(mode) {
+        const advBtn = document.getElementById('btn-adv');
+        const disBtn = document.getElementById('btn-dis');
+        if (rollMode === mode) {
+            rollMode = 'norm';
+            if (advBtn) advBtn.style.background = '#1e293b';
+            if (disBtn) disBtn.style.background = '#1e293b';
+        } else {
+            rollMode = mode;
+            if (advBtn) advBtn.style.background = (mode === 'adv') ? 'var(--accent-green)' : '#1e293b';
+            if (disBtn) disBtn.style.background = (mode === 'dis') ? 'var(--accent-red)' : '#1e293b';
+        }
+    }
+
+    function rollCustomDie(sides) {
+        const mod = parseInt(document.getElementById('dice-mod')?.value) || 0;
+        const modStr = mod >= 0 ? `+${mod}` : `${mod}`;
+        if (sides === 20 && rollMode !== 'norm') {
+            const r1 = Math.floor(Math.random() * 20) + 1;
+            const r2 = Math.floor(Math.random() * 20) + 1;
+            const chosen = (rollMode === 'adv') ? Math.max(r1, r2) : Math.min(r1, r2);
+            const total = chosen + mod;
+            const modeLabel = rollMode === 'adv' ? 'Advantage' : 'Disadvantage';
+            let msg = `🎲 <strong>d20 (${modeLabel}: [${r1}, ${r2}] ➔ ${chosen}) ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span></strong>`;
+            if (chosen === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT!</span>";
+            if (chosen === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1 FAIL!</span>";
+            logRoll(msg);
+            return;
+        }
+        const roll = Math.floor(Math.random() * sides) + 1;
+        const total = roll + mod;
+        let msg = `🎲 <strong>d${sides} (${roll}) ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span></strong>`;
+        if (sides === 20 && roll === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT!</span>";
+        if (sides === 20 && roll === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1 FAIL!</span>";
+        logRoll(msg);
+    }
+
     function isDragonProtectedRoll(label) {
         if (activeStarryForm !== 'dragon') return false;
         const s = String(label || '');
@@ -3050,14 +3092,16 @@
     }
 
     function rollD20(label, mod) {
+        const modInput = parseInt(document.getElementById('dice-mod')?.value) || 0;
+        const totalMod = mod + modInput;
         const dragonActive = isDragonProtectedRoll(label);
         if (rollMode !== 'norm') {
             const r1 = Math.floor(Math.random() * 20) + 1;
             const r2 = Math.floor(Math.random() * 20) + 1;
             const chosen = (rollMode === 'adv') ? Math.max(r1, r2) : Math.min(r1, r2);
             const eff = dragonActive ? Math.max(10, chosen) : chosen;
-            const total = eff + mod;
-            const modStr = mod >= 0 ? `+${mod}` : `${mod}`;
+            const total = eff + totalMod;
+            const modStr = totalMod >= 0 ? `+${totalMod}` : `${totalMod}`;
             const dragonNote = (dragonActive && chosen < 10) ? ` <span style="color:#c084fc; font-weight:700;">[🐉 Dragon: ${chosen} ➔ 10]</span>` : (dragonActive ? ` <span style="color:#c084fc; font-weight:600;">[🐉 Dragon ≥10]</span>` : '');
             let msg = `${dragonActive ? '🐉' : '🎯'} <strong>${label}:</strong> [${r1}, ${r2}] ➔ d20(${chosen})${dragonNote} ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span> <small style="color:var(--text-muted);">(${rollMode === 'adv' ? 'Advantage' : 'Disadvantage'})</small>`;
             if (chosen === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT!</span>";
@@ -3067,8 +3111,8 @@
         }
         const d20 = Math.floor(Math.random() * 20) + 1;
         const eff = dragonActive ? Math.max(10, d20) : d20;
-        const total = eff + mod;
-        const modStr = mod >= 0 ? `+${mod}` : `${mod}`;
+        const total = eff + totalMod;
+        const modStr = totalMod >= 0 ? `+${totalMod}` : `${totalMod}`;
         const dragonNote = (dragonActive && d20 < 10) ? ` <span style="color:#c084fc; font-weight:700;">[🐉 Dragon: ${d20} ➔ 10]</span>` : (dragonActive ? ` <span style="color:#c084fc; font-weight:600;">[🐉 Dragon ≥10]</span>` : '');
         let msg = `${dragonActive ? '🐉' : '🎯'} <strong>${label}:</strong> d20(${d20})${dragonNote} ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span>`;
         if (d20 === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT!</span>";
@@ -3858,6 +3902,12 @@
     function closePlayerNotesModal() {
         const modal = document.getElementById('player-notes-modal');
         if (modal) modal.close();
+    }
+
+    function resetPlayerNotes() {
+        saveStoredNotes(JSON.parse(JSON.stringify(defaultPlayerNotes)));
+        renderPlayerNotes();
+        logRoll(`📓 <strong>Player Notes Reset</strong> to official baseline notes.`);
     }
 
     function exportPlayerNotes() {
