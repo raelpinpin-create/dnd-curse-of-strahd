@@ -11690,6 +11690,7 @@
         const countBadge = document.getElementById('player-notes-count-badge');
         if (countBadge) countBadge.textContent = String(notes.length);
         if (!miniList) return;
+        const prevScrollTop = miniList.scrollTop;
 
         const sorted = getSortedNotes(notes);
         if (sorted.length === 0) {
@@ -11715,6 +11716,7 @@
                 </button>
             `;
         }).join('');
+        miniList.scrollTop = prevScrollTop;
     }
 
     function renderJournalSidebar(notes) {
@@ -11733,6 +11735,7 @@
         }
 
         if (!listEl) return;
+        const prevScrollTop = listEl.scrollTop;
         const filtered = getFilteredNotes(notes);
         if (filtered.length === 0) {
             const q = (journalState.search || '').trim();
@@ -11774,6 +11777,7 @@
                 </button>
             `;
         }).join('');
+        listEl.scrollTop = prevScrollTop;
     }
 
     function renderJournalDetail(notes) {
