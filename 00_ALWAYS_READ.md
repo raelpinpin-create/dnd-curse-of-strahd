@@ -62,11 +62,16 @@
 * 👥 **Master NPC & Villain Registry (Derek, Strahd, Ireena, Ismark, Donavich/Doru, Morgantha, Martikovs):** [`NPC_REGISTRY.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/NPC_REGISTRY.md)
 * 🐾 **Caelum Jude ("Cael") — Master Companion Dossier:** [`CAEL_MASTER_DOSSIER.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/CAEL_MASTER_DOSSIER.md) • **[Cael Google Doc](https://docs.google.com/document/d/17KfeBe_-j6yAFMzWV0tdr4Xw-YsAwCwSX8aRsdwr4Gc/edit)** *(Doc ID: `17KfeBe_-j6yAFMzWV0tdr4Xw-YsAwCwSX8aRsdwr4Gc`)*
 
-### 🛡️ Category E: Interactive DM Screen & Web Portal
-* 🎨 **Interactive HTML DM Screen (All 6 Sections):** [`DM_SCREEN.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/DM_SCREEN.html)
+### 🛡️ Category E: Interactive DM Screen, Shared RPG Engine & Web Portal
+* 🎨 **Interactive HTML DM Screen (Strahd v3.5 Command Center):** [`DM_SCREEN.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/DM_SCREEN.html)
 * 🛡️ **Master DM Screen & Cheat Sheet (Markdown):** [`DM_SCREEN.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/DM_SCREEN.md)
+* ⚙️ **Shared Web RPG Engine, Theme & Firebase Layer:**
+  * [`cos_rpg_engine.js`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/cos_rpg_engine.js) — Unified RPG HUD mounted onto Player Sheets (11/12-slot Paper-Doll Gear, Presets, Weapon Attachment Workbench, Specialty Ammo & Coatings, Hidden Crafting Workbench, Live Trade & Private Whispers, BG3 Combat Action Economy bar, Fog-of-War Turn-Order Strip, Auto-Concentration checks, 3-Strike Death Saves, Live Party Mini-HUD, Speed-Dial `✦ Menu`, and `☁️ Sync to DM` / `🔄 Reset`).
+  * [`cos_rpg_engine.css`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/cos_rpg_engine.css) — Styling for the RPG Engine's injected modals and HUD widgets.
+  * [`cos_sheet_theme.css`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/cos_sheet_theme.css) — v3.0 Matte-Charcoal & Warm-Gold design system (`data-hero` tints + `@layer hud-unify`, active on Jacomir & Yvaine; Piper currently uses inline legacy theme).
+  * [`cos_firebase_config.js`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/cos_firebase_config.js) & [`database.rules.json`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/database.rules.json) — Live RTDB room `curse_of_strahd_main` connecting Player Sheets and `DM_SCREEN.html`.
 * 🏰 **Campaign Landing Portal Hub:** [`index.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/index.html) • **Live Web Portal:** [https://raelpinpin-create.github.io/dnd-curse-of-strahd/](https://raelpinpin-create.github.io/dnd-curse-of-strahd/) *(Repo: [dnd-curse-of-strahd](https://github.com/raelpinpin-create/dnd-curse-of-strahd))*
-* 🎓 **Lead DM & AI Co-Pilot Playbook (`/dmguide` & `/cos`):** [`.agents/skills/curse_of_strahd/SKILL.md`](file:///d:/Dungeons%20and%20Dragons%20Campaigns/.agents/skills/curse_of_strahd/SKILL.md) • [`.agents/skills/dmguide/SKILL.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/.agents/skills/dmguide/SKILL.md)
+* 🎓 **Skills, Playbooks & System Specs:** [`/cos`](file:///d:/Dungeons%20and%20Dragons%20Campaigns/.agents/skills/curse_of_strahd/SKILL.md) • [`/dmguide`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/.agents/skills/dmguide/SKILL.md) • [`/review`](file:///d:/Dungeons%20and%20Dragons%20Campaigns/.agents/skills/review/SKILL.md) • [`dnd_sheet_architect`](file:///d:/Dungeons%20and%20Dragons%20Campaigns/.agents/skills/dnd_sheet_architect/SKILL.md) • [`AGENTS.md`](file:///d:/Dungeons%20and%20Dragons%20Campaigns/.agents/AGENTS.md)
 
 ---
 
@@ -109,8 +114,15 @@ To guarantee maximum narrative momentum without spoilers (read **only the prophe
    * **Deep Multi-Scene Exploration:** Mid-session acts are never rushed—they feature layered exploration (e.g., gallows mirror horror, moral dilemmas with NPCs like Morgantha, side investigation with Mad Mary, shop negotiations).
    * **Tactical Boss Cards & Advice:** Boss encounters include complete stat blocks, Spider Climb/Regeneration puzzles, and step-by-step DM combat tactics.
    * **Physical Table Cues & Chills Endings:** Verbatim instructions for in-person table actions (knocking on tables, dimming lights, physical props) ending on an unforgettable cliffhanger with a strict in-world ticking clock.
-2. **Tier 2 — Master DM Screen ([`DM_SCREEN.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/DM_SCREEN.html) & [`DM_SCREEN.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/DM_SCREEN.md)):** 2-second glanceable monster stat blocks, Pointy Hat Battlefield Actions, NPC tracker, Tarokka artifacts, and World Loot Vault.
-3. **Tier 3 — AI Librarian & Co-Pilot:** Silent auto-sync across all 5 files upon 1-line table updates or `[📋 Export Data]` strings.
+2. **Tier 2 — Master DM Screen ([`DM_SCREEN.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/DM_SCREEN.html) & [`DM_SCREEN.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/DM_SCREEN.md)) + Live Player RPG Engine:**
+   * Glanceable 3-Tab Boss & NPC dossiers, CR-scaled Pointy Hat Battlefield Actions, unbundled Location guides with `IMAGES/` Dual Lightbox, and World Loot Vault.
+   * **Live Firebase Command Center:** Active Encounter Board v3.5 (with 2-way Party HP bars, cross-device `_dm_state`, and Fog-of-War Turn Strip broadcast to player sheets), Live Party Monitor & Remote HP/GP/Override controls, Custom Item Forge, Live Recipe Unlocks, and Loot Drops.
+   * **Player Sheets (`cos_rpg_engine.js` + `cos_sheet_theme.css`):** Paper-Doll Gear, Weapon Workbench, Specialty Ammo & Coatings, Hidden Crafting (`🔒 ???`), Trade & Private Whispers, BG3 Action Economy bar, Auto-Concentration, 3-Strike Death Saves, and `☁️ Sync to DM`.
+3. **Tier 3 — AI Librarian & Co-Pilot:**
+   * **Before Play:** Auto-pulls Firebase (`heroes.json`) first to reconcile any newer `☁️ Sync to DM` (`synced_checkpoint`) or live `state` changes.
+   * **During Play:** Provides on-demand sensory descriptions, voices, and monster tactics with zero mid-session file lag.
+   * **After Play:** Bakes Firebase checkpoints / 1-line table updates across the 5-Part Memory Suite (`00_ALWAYS_READ.md`, `01_STORY_ARCHIVE.md`, `CHARACTER_SHEET.md` + HTML sheets, `NPC_REGISTRY.md`, `DM_SCREEN.html` & `DM_SCREEN.md`) and auto-pushes to GitHub Pages.
+   * **On-Demand Process Refresher:** Type `/review` anytime for a full breakdown of every file, folder, engine, skill, and workflow, or `/dmguide` for a quick table-running cheat sheet.
 
 ---
 
