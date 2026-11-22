@@ -1700,16 +1700,54 @@ dialog::backdrop {
     white-space: nowrap;
 }
 
-/* ⚡ BG3-STYLE TURN ACTION ECONOMY TOOLBAR */
+/* ⚡ BG3-STYLE TURN ACTION ECONOMY TOOLBAR (Appears ONLY during Active Combat!) */
 .rpg-action-bar-wrap {
     background: linear-gradient(135deg, #111a2e 0%, #0a101f 100%);
     border: 1px solid #26354d;
     border-radius: 8px;
     padding: 7px 10px;
     margin-bottom: 10px;
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 6px;
+}
+.rpg-action-bar-wrap.is-combat-active {
+    display: flex;
+}
+.rpg-hub-quickbelt {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    padding-top: 7px;
+    margin-top: 2px;
+    border-top: 1px solid rgba(51, 65, 85, 0.55);
+}
+.rpg-hub-quickbelt:empty {
+    display: none;
+}
+
+/* ⛔ OPTION 1 STRICT COMBAT ACTION LOCKING (Spent Turn Pip Dim/Lock + Refund Feedback) */
+.rpg-turn-locked {
+    opacity: 0.38 !important;
+    filter: grayscale(0.65) !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+}
+.rpg-turn-locked:hover {
+    filter: grayscale(0.65) !important;
+    transform: none !important;
+}
+@keyframes rpg-pip-shake {
+    0%, 100% { transform: translateX(0); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.65); }
+    25% { transform: translateX(-3px); box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.55); }
+    50% { transform: translateX(3px); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.55); }
+    75% { transform: translateX(-2px); }
+}
+.rpg-act-pip.pip-shake {
+    animation: rpg-pip-shake 0.36s ease;
+    border-color: #ef4444 !important;
+    color: #fca5a5 !important;
 }
 .rpg-action-toolbar {
     display: flex;

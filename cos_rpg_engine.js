@@ -3262,6 +3262,16 @@
     function getAmmoStorageKey() { return `cos_ammo_${adapter.heroId}_v1`; }
     function getUnlockedRecipesKey() { return `cos_unlocked_recipes_v1`; }
     function getFbUnlockedRecipesKey() { return `cos_fb_unlocked_recipes_v1`; }
+    function getCheckpointBackupKey() { return `cos_synced_checkpoint_${adapter ? adapter.heroId : 'hero'}_v1`; }
+
+    function getConsumableTurnSlot(useAction) {
+        if (!useAction || !useAction.type || useAction.type === 'learnRecipe') return 'none';
+        if (useAction.actionCost === 'action' || useAction.actionCost === 'bonus' || useAction.actionCost === 'reaction') {
+            return useAction.actionCost;
+        }
+        if (['holyWater', 'alchemistsFire', 'phosphorBomb', 'utilityLog'].includes(useAction.type)) return 'action';
+        return 'bonus';
+    }
 
     const DEFAULT_HERO_PROFICIENCIES = {
         piper: {
@@ -5712,8 +5722,8 @@
                 ${modCoatHtml}
                 ${ammoStripHtml}
                 <div class="action-btn-row" style="flex-wrap:wrap;">
-                    <button type="button" class="btn-roll-action" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${effAtk})</button>
-                    <button type="button" class="btn-roll-action btn-roll-dmg" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${gripLabel}${esc(dmgLabel)})</button>
+                    <button type="button" class="btn-roll-action" data-rpg-turn-slot="${slotId === 'offHand' ? 'bonus' : 'action'}" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${effAtk})</button>
+                    <button type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${gripLabel}${esc(dmgLabel)})</button>
                     ${buildWeaponModalActionButtonsHtml(weaponId)}
                     <button type="button" class="btn-act btn-act-pre" onclick="COS_RPG.unequipSlot('${slotId}')">Unequip</button>
                 </div>
@@ -5733,6 +5743,7 @@
         renderHeaderBadges();
         if (document.getElementById('rpg-equip-modal')?.open) renderEquipModal();
         if (document.getElementById('rpg-backpack-modal')?.open) renderBackpackModal();
+        if (typeof syncCombatActionLocks === 'function') syncCombatActionLocks();
         syncHeroStateToFirebase();
     }
 
@@ -6665,11 +6676,23 @@
         const snap = buildHeroSnapshot();
         const now = new Date();
         const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        let rawUnifiedPresets = null;
+        try {
+            const pRaw = localStorage.getItem(getUnifiedPresetsKey());
+            if (pRaw) rawUnifiedPresets = JSON.parse(pRaw);
+        } catch (e) {}
         const checkpointPayload = {
             ...snap,
+            equippedMap: getEquippedState(),
+            customGearMap: getCustomGearMap(),
+            rawUnifiedPresets,
+            sheetState: (typeof adapter.captureSheetState === 'function') ? adapter.captureSheetState() : null,
             syncedAt: Date.now(),
             syncedTimeStr: timeStr
         };
+        try {
+            localStorage.setItem(getCheckpointBackupKey(), JSON.stringify(checkpointPayload));
+        } catch (e) {}
 
         if (firebaseReady && rtdb) {
             if (!silentToast) {
@@ -6695,7 +6718,7 @@
                     if (combined && navigator.clipboard && navigator.clipboard.writeText) {
                         navigator.clipboard.writeText(combined).catch(() => {});
                     }
-                    adapter.log(`☁️ <strong>Synced Official Checkpoint to DM (${esc(timeStr)})!</strong><br><small style="color:#86efac;">Sheet state saved to DM Screen &amp; session message threads automatically cleared.</small>`);
+                    adapter.log(`☁️ <strong>Synced Official Checkpoint to DM (${esc(timeStr)})!</strong><br><small style="color:#86efac;">Sheet state saved to DM Screen &amp; set as your 🔄 Reset restore point.</small>`);
                 }
             }).catch(err => {
                 if (!silentToast) adapter.log(`⚠️ Cloud Sync failed: ${esc(err.message)}`);
@@ -6705,8 +6728,10 @@
             const combined = [snap.sheetExportStr, snap.notesExportStr].filter(Boolean).join('\n');
             if (combined && navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(combined).then(() => {
-                    adapter.log(`📋 <strong>Copied Sheet State &amp; Player Notes to Clipboard!</strong>`);
+                    adapter.log(`📋 <strong>Saved Local Checkpoint (${esc(timeStr)}) &amp; Copied Sheet State to Clipboard!</strong>`);
                 });
+            } else {
+                adapter.log(`💾 <strong>Saved Local Checkpoint (${esc(timeStr)})!</strong> Clicking 🔄 Reset will restore this checkpoint.`);
             }
         }
     }
@@ -7148,11 +7173,110 @@
         }
     }
 
-    function resetSheetToOfficialBaseline(skipConfirm = false) {
-        if (!skipConfirm && typeof window.confirm === 'function') {
-            const ok = window.confirm(`Reset ${adapter.heroName}'s sheet (HP, Slots/Ammo, Gold Purse, Backpack Inventory, Equipped Gear, Custom Presets & Player Notes) back to the official Session 1 baseline?`);
-            if (!ok) return;
+    function applyRestoredCheckpoint(cp) {
+        if (!cp || !adapter) return;
+        try {
+            // 1. Restore Backpack Items first so equipped slots resolve against restored inventory
+            if (Array.isArray(cp.items)) {
+                adapter.saveItems([...cp.items]);
+            }
+
+            // 2. Restore Custom Gear metadata
+            if (cp.customGearMap && typeof cp.customGearMap === 'object') {
+                saveCustomGearMap(cp.customGearMap);
+            }
+
+            // 3. Restore Equipped Gear map (full raw map, or gracefully rebuild from legacy equippedSlots labels!)
+            if (cp.equippedMap && typeof cp.equippedMap === 'object') {
+                saveEquippedState(cp.equippedMap);
+            } else if (cp.equippedSlots && typeof cp.equippedSlots === 'object') {
+                const rebuilt = {};
+                const activeSlots = getActiveSlots();
+                const curItems = adapter.getItems();
+                Object.entries(cp.equippedSlots).forEach(([slotLabel, itemLabel]) => {
+                    const slotObj = activeSlots.find(s => s.label === slotLabel);
+                    if (!slotObj || !itemLabel) return;
+                    const is2H = /\(2H\)/i.test(String(itemLabel));
+                    const cleanLbl = String(itemLabel).replace(/\s*\(2H\)\s*/ig, '').trim();
+                    const cleanNorm = normKey(cleanLbl);
+                    const foundRaw = curItems.find(r => normKey(r) === cleanNorm || normKey(shortLabel(r)) === cleanNorm || normKey(r).includes(cleanNorm));
+                    if (foundRaw) {
+                        rebuilt[slotObj.id] = normKey(foundRaw);
+                        if (slotObj.id === 'mainHand') rebuilt._grip = is2H ? '2h' : '1h';
+                    }
+                });
+                if (Object.keys(rebuilt).length > 0) saveEquippedState(rebuilt);
+            }
+
+            // 4. Restore Presets, Weapon Mods, Coatings & Specialty Ammo
+            if (cp.rawUnifiedPresets && typeof cp.rawUnifiedPresets === 'object') {
+                try { localStorage.setItem(getUnifiedPresetsKey(), JSON.stringify(cp.rawUnifiedPresets)); } catch (e) {}
+            }
+            if (cp.weaponMods && typeof cp.weaponMods === 'object') {
+                saveWeaponModsStore({ mods: cp.weaponMods });
+            } else {
+                localStorage.removeItem(getWeaponModsStorageKey());
+            }
+            if (cp.weaponCoatings && typeof cp.weaponCoatings === 'object') {
+                saveWeaponCoatingStore({ coatings: cp.weaponCoatings });
+            } else {
+                localStorage.removeItem(getWeaponCoatingStorageKey());
+            }
+            if (cp.weaponAmmo && typeof cp.weaponAmmo === 'object') {
+                try { localStorage.setItem(getAmmoStorageKey(), JSON.stringify({ weapons: cp.weaponAmmo })); } catch (e) {}
+            } else {
+                localStorage.removeItem(getAmmoStorageKey());
+            }
+
+            // 5. Restore HUD State (Concentration, Statuses, Death Saves) & fresh Turn Pips
+            hudState = {
+                conc: (typeof cp.concentration === 'string' && cp.concentration.trim()) ? cp.concentration.trim() : null,
+                statuses: Array.isArray(cp.conditions) ? cp.conditions.filter(id => STATUS_CATALOG.some(s => s.id === id)) : [],
+                deathSaves: (cp.deathSaves && typeof cp.deathSaves === 'object')
+                    ? { succ: Math.max(0, Math.min(3, parseInt(cp.deathSaves.succ) || 0)), fail: Math.max(0, Math.min(3, parseInt(cp.deathSaves.fail) || 0)) }
+                    : { succ: 0, fail: 0 },
+                turn: { action: true, bonus: true, reaction: true, move: true },
+                advLocked: false,
+                rightTab: hudState.rightTab || 'all',
+                skillsTrainedOnly: Boolean(hudState.skillsTrainedOnly)
+            };
+            saveHudState();
+
+            // 6. Restore native sheet variables (HP, Temp HP, Gold/SP, Slots, Resources, Notes)
+            if (typeof adapter.restoreSheetState === 'function') {
+                const statePayload = (cp.sheetState && typeof cp.sheetState === 'object')
+                    ? { ...cp.sheetState, notes: Array.isArray(cp.sheetState.notes) ? cp.sheetState.notes : cp.notes }
+                    : {
+                        curHP: typeof cp.curHp === 'number' ? cp.curHp : undefined,
+                        tempHP: typeof cp.tempHp === 'number' ? cp.tempHp : 0,
+                        curGP: typeof cp.gp === 'number' ? cp.gp : undefined,
+                        curSilver: typeof cp.sp === 'number' ? cp.sp : undefined,
+                        notes: Array.isArray(cp.notes) ? cp.notes : undefined
+                    };
+                adapter.restoreSheetState(statePayload);
+            }
+
+            // 7. Refresh all UI panels and sync LIVE state ONLY (never overwrite synced_checkpoint!)
+            lastAppliedPresetId = null;
+            presetEditor = null;
+            applyEquipmentToSheet(true);
+            renderStatusStrip();
+            renderActionEconomyBar();
+            renderDeathSavesBox(parseCurrentVitalsFromDom().cur);
+            renderPartyMiniHud();
+            syncCombatActionLocks();
+            syncHeroStateToFirebase(true);
+
+            const whenTxt = cp.syncedTimeStr
+                ? cp.syncedTimeStr
+                : (cp.syncedAt ? new Date(cp.syncedAt).toLocaleString() : 'Last Saved');
+            adapter.log(`🔄 <strong>Restored to Last ☁️ Sync to DM Checkpoint (${esc(whenTxt)})!</strong> All unsaved changes since your last sync have been undone.`);
+        } catch (e) {
+            console.warn('[COS_RPG] Checkpoint restore error:', e);
         }
+    }
+
+    function executeSession1FactoryReset() {
         try {
             if (typeof window.resetHP === 'function') window.resetHP();
             // Jacomir's Session 1 end baseline is 23/31 HP
@@ -7174,6 +7298,8 @@
             localStorage.removeItem(getUnifiedPresetsKey());
             localStorage.removeItem(getLocalDmOverrideKey());
             localStorage.removeItem(getAmmoStorageKey());
+            localStorage.removeItem(getWeaponModsStorageKey());
+            localStorage.removeItem(getWeaponCoatingStorageKey());
             localStorage.removeItem(getHudStorageKey());
             hudState = {
                 conc: null,
@@ -7196,10 +7322,58 @@
             lastAppliedPresetId = null;
             presetEditor = null;
             applyEquipmentToSheet(true);
-            pushSyncedCheckpoint(true);
-            adapter.log(`🔄 <strong>Sheet Reset to Official Session 1 Baseline!</strong> All HP, Resources, Gold Purse, Backpack Inventory, Equipped Gear, Presets &amp; Player Notes restored and synced to Firebase.`);
+            syncCombatActionLocks();
+            syncHeroStateToFirebase(true);
+            adapter.log(`🔄 <strong>Sheet Reset to Official Session 1 Baseline!</strong> (No prior ☁️ Sync to DM checkpoint existed yet.)`);
         } catch (e) {
             console.warn('[COS_RPG] Reset error:', e);
+        }
+    }
+
+    function resetSheetToOfficialBaseline(skipConfirm = false) {
+        if (!adapter) return;
+        let localCp = null;
+        try {
+            const raw = localStorage.getItem(getCheckpointBackupKey());
+            if (raw) localCp = JSON.parse(raw);
+        } catch (e) {}
+
+        const finishReset = (cloudCp) => {
+            let bestCp = null;
+            const localTs = (localCp && localCp.syncedAt) ? Number(localCp.syncedAt) : 0;
+            const cloudTs = (cloudCp && cloudCp.syncedAt) ? Number(cloudCp.syncedAt) : 0;
+            if (cloudCp && cloudTs >= localTs) bestCp = cloudCp;
+            else if (localCp) bestCp = localCp;
+            else if (cloudCp) bestCp = cloudCp;
+
+            if (bestCp) {
+                const whenTxt = bestCp.syncedTimeStr
+                    ? bestCp.syncedTimeStr
+                    : (bestCp.syncedAt ? new Date(bestCp.syncedAt).toLocaleString() : 'last saved');
+                if (!skipConfirm && typeof window.confirm === 'function') {
+                    const ok = window.confirm(`Restore ${adapter.heroName}'s sheet back to your last ☁️ Sync to DM checkpoint (${whenTxt})? This undoes unsaved changes since your last sync.`);
+                    if (!ok) return;
+                }
+                applyRestoredCheckpoint(bestCp);
+                return;
+            }
+
+            // Fallback ONLY if no ☁️ Sync to DM checkpoint has ever been saved
+            if (!skipConfirm && typeof window.confirm === 'function') {
+                const ok = window.confirm(`No ☁️ Sync to DM checkpoint found yet for ${adapter.heroName}. Reset sheet back to the Session 1 starting baseline?`);
+                if (!ok) return;
+            }
+            executeSession1FactoryReset();
+        };
+
+        if (firebaseReady && rtdb) {
+            campaignRtdbRef(`heroes/${adapter.heroId}/synced_checkpoint`).once('value').then(snap => {
+                finishReset(snap.val() || null);
+            }).catch(() => {
+                finishReset(null);
+            });
+        } else {
+            finishReset(null);
         }
     }
 
@@ -7660,13 +7834,12 @@
             resetBtn.id = 'rpg-hdr-reset-btn';
             resetBtn.className = 'rpg-header-btn';
             resetBtn.style.cssText = 'background:#1e293b; border-color:rgba(248,113,113,0.45); color:#fca5a5;';
-            resetBtn.title = 'Undo test changes & reset sheet (HP, Gold, Backpack, Equipped Gear, Presets & Notes) to official Session 1 baseline';
+            resetBtn.title = 'Undo unsaved changes & restore sheet back to your last ☁️ Sync to DM checkpoint';
             resetBtn.onclick = () => resetSheetToOfficialBaseline(false);
             resetBtn.innerHTML = `🔄 Reset`;
 
-            // Order left-to-right: [🛡️ Gear (bigger)] [🎒 Bag (bigger)] [☁️ Sync to DM] [❓ Rules] [🔄 Reset] [🏰 Portal (very right)]
+            // Order left-to-right: [🛡️ Gear] [🎒 Bag] [☁️ Sync to DM] [🔄 Reset] [🏰 Portal] [❓ Rules (very right)]
             badgeGroup.insertBefore(resetBtn, badgeGroup.firstChild);
-            badgeGroup.insertBefore(rulesBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(syncBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(bpBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(equipBtn, badgeGroup.firstChild);
@@ -7675,6 +7848,7 @@
                 portalLink.style.cssText = 'background:#0f172a; border-color:#334155; color:#cbd5e1; text-decoration:none;';
                 badgeGroup.appendChild(portalLink);
             }
+            badgeGroup.appendChild(rulesBtn);
         }
 
         // Mount 👥 Live Party Mini-HUD & ⚔️ Fog-of-War Combat Turn Strip right under Header / Incoming Banner
@@ -7972,12 +8146,18 @@
                 return;
             }
             if (!meta.useAction) return;
+            const qbSlot = getConsumableTurnSlot(meta.useAction);
             quickBtns.push(`
-                <button type="button" class="rpg-qb-btn" onclick="COS_RPG.useConsumableByIndex(${idx})" title="1-Tap Combat Use (${esc(p.name)})">
+                <button type="button" class="rpg-qb-btn" data-rpg-turn-slot="${qbSlot}" onclick="COS_RPG.useConsumableByIndex(${idx})" title="1-Tap Combat Use (${esc(p.name)})">
                     ${p.emoji}${esc(meta.useAction.label)}${p.qty > 1 ? ` <span style="color:#6ee7b7; font-family:'JetBrains Mono',monospace;">(${p.qty}x)</span>` : ''}
                 </button>
             `);
         });
+
+        const inCombat = (typeof isCombatActive === 'function') && isCombatActive();
+        const beltHtml = quickBtns.length > 0
+            ? `<span class="rpg-quickbelt-lbl">⚡ Belt:</span>${quickBtns.join('')}`
+            : '';
 
         mount.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
@@ -8024,15 +8204,16 @@
             <div class="rpg-equipped-strip">
                 ${chips.length > 0 ? chips.join('') : '<span style="font-size:0.71rem; color:#64748b; font-style:italic;">No gear equipped yet — click 🛡️ Equipment to slot your loadout!</span>'}
             </div>
+
+            <div id="rpg-hub-quickbelt" class="rpg-hub-quickbelt">${inCombat ? '' : beltHtml}</div>
         `;
 
-        // Pinned 1-click Quick-Belt lives exclusively at the top inside the Action Economy bar (zero bottom duplication!)
+        // Smart Repositioning Belt: Top with Action Bar during Active Combat; down in Adventure Gear Hub during Free Roam!
         const topQb = document.getElementById('rpg-top-quickbelt');
         if (topQb) {
-            topQb.innerHTML = quickBtns.length > 0
-                ? `<span class="rpg-quickbelt-lbl">⚡ Belt:</span>${quickBtns.join('')}`
-                : '';
+            topQb.innerHTML = inCombat ? beltHtml : '';
         }
+        if (typeof syncCombatActionLocks === 'function') syncCombatActionLocks();
     }
 
     // =========================================================================
@@ -9023,7 +9204,7 @@
                                     ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Buy a Partitioned Bullet Sling &amp; Pouch (15 GP in any shop) first">Load (Locked)</button>`
                                     : `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })">Load</button>`))
                             : ''}
-                        ${meta.useAction ? `<button type="button" class="rpg-mini-btn ${isStudyAction ? 'btn-equip' : 'btn-use'}" onclick="COS_RPG.useConsumableByIndex(${idx})">${isStudyAction ? 'Study' : 'Use'}</button>` : ''}
+                        ${meta.useAction ? `<button type="button" class="rpg-mini-btn ${isStudyAction ? 'btn-equip' : 'btn-use'}" data-rpg-turn-slot="${getConsumableTurnSlot(meta.useAction)}" onclick="COS_RPG.useConsumableByIndex(${idx})">${isStudyAction ? 'Study' : 'Use'}</button>` : ''}
                         <button type="button" class="rpg-mini-btn btn-send" onclick="COS_RPG.openSendForItem(${idx})" title="Send to party member">Send</button>
                         <div class="inv-stepper" style="display:inline-flex; align-items:center; gap:3px; background:#090e1a; border:1px solid #334155; border-radius:5px; padding:1px 4px;">
                             ${p.qty > 1 ? `<button type="button" class="rpg-mini-btn" style="min-block-size:22px; padding:0 5px; border:none;" onclick="COS_RPG.stepBackpackQty(${idx}, -1)" aria-label="Decrease quantity">−</button><span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:800; color:#fde68a; min-width:22px; text-align:center;">${p.qty}x</span>` : ''}
@@ -9039,6 +9220,7 @@
         listEl.innerHTML = rows.length > 0
             ? rows.join('')
             : `<div style="text-align:center; padding:18px; color:#64748b; font-size:0.78rem;">No items match this filter or search.</div>`;
+        if (typeof syncCombatActionLocks === 'function') syncCombatActionLocks();
     }
 
     function stepBackpackQty(idx, delta) {
@@ -9706,38 +9888,31 @@
         });
     }
 
-    // 👥 RENDER LIVE PARTY MINI-HUD
+    // 👥 RENDER LIVE PARTY MINI-HUD (Teammates ONLY — no redundant self-HP & clean names without emojis!)
     function renderPartyMiniHud() {
         const host = document.getElementById('rpg-party-hud');
         if (!host || !adapter) return;
-        const selfV = parseCurrentVitalsFromDom();
         const roster = [
-            { id: 'jacomir', name: 'Jacomir', emoji: '👑', defCur: 23, defMax: 31, defAc: '17' },
-            { id: 'piper',   name: 'Piper',   emoji: '🎩', defCur: 17, defMax: 17, defAc: '13' },
-            { id: 'yvaine',  name: 'Yvaine',  emoji: '🔫', defCur: 28, defMax: 28, defAc: '16' }
-        ];
+            { id: 'jacomir', name: 'Jacomir', defCur: 23, defMax: 31, defAc: '17' },
+            { id: 'piper',   name: 'Piper',   defCur: 17, defMax: 17, defAc: '13' },
+            { id: 'yvaine',  name: 'Yvaine',  defCur: 28, defMax: 28, defAc: '16' }
+        ].filter(r => r.id !== adapter.heroId);
         const chipsHtml = roster.map(r => {
-            const isSelf = r.id === adapter.heroId;
             const remote = livePartyMap[r.id] || null;
-            const cur = isSelf ? selfV.cur : (remote && typeof remote.curHp === 'number' ? remote.curHp : r.defCur);
-            const max = isSelf ? selfV.max : (remote && typeof remote.maxHp === 'number' ? remote.maxHp : r.defMax);
-            const temp = isSelf ? selfV.temp : (remote && typeof remote.tempHp === 'number' ? remote.tempHp : 0);
-            const ac = isSelf ? selfV.ac : ((remote && remote.acDisplay) ? remote.acDisplay : r.defAc);
-            const conc = isSelf ? hudState.conc : (remote && remote.concentration ? remote.concentration : null);
+            const cur = (remote && typeof remote.curHp === 'number') ? remote.curHp : r.defCur;
+            const max = (remote && typeof remote.maxHp === 'number') ? remote.maxHp : r.defMax;
+            const temp = (remote && typeof remote.tempHp === 'number') ? remote.tempHp : 0;
+            const ac = (remote && remote.acDisplay) ? remote.acDisplay : r.defAc;
+            const conc = (remote && remote.concentration) ? remote.concentration : null;
             const pct = Math.max(0, Math.min(100, Math.round((cur / Math.max(1, max)) * 100)));
             const isDown = cur <= 0;
             const fillCol = isDown ? '#ef4444' : (pct > 50 ? '#22c55e' : (pct > 25 ? '#f59e0b' : '#ef4444'));
             const hpColor = isDown ? '#f87171' : (temp > 0 ? '#38bdf8' : (pct > 50 ? '#86efac' : (pct > 25 ? '#fde68a' : '#fca5a5')));
-            const titleAttr = isSelf
-                ? `${r.name} (You) — Live Vitals`
-                : `Click to whisper or trade directly with ${r.name}`;
-            const clickAttr = isSelf ? '' : `onclick="COS_RPG.openDirectWhisper('${r.id}')"`;
             return `
-                <button type="button" class="rpg-party-chip ${isSelf ? 'is-self' : ''} ${isDown ? 'is-down' : ''}" ${clickAttr} title="${esc(titleAttr)}">
-                    <span style="font-size:1.05rem; line-height:1;">${r.emoji}</span>
+                <button type="button" class="rpg-party-chip ${isDown ? 'is-down' : ''}" onclick="COS_RPG.openDirectWhisper('${r.id}')" title="Click to whisper or trade directly with ${esc(r.name)}">
                     <div class="rpg-party-chip-main">
                         <div class="rpg-party-chip-top">
-                            <span class="rpg-party-chip-name">${esc(r.name)}${isSelf ? ' <small style="color:#fbbf24; font-weight:600;">(You)</small>' : ''}</span>
+                            <span class="rpg-party-chip-name">${esc(r.name)}</span>
                             <span class="rpg-party-chip-stats" style="color:${hpColor};">${isDown ? '💀 0/' + max : `${cur}${temp > 0 ? `+${temp}` : ''}/${max}`}</span>
                         </div>
                         <div class="rpg-party-hp-track">
@@ -9745,8 +9920,7 @@
                         </div>
                         <div class="rpg-party-meta-tags">
                             <span>🛡️ AC ${esc(ac)}</span>
-                            ${conc ? `<span class="rpg-party-conc-dot">• 🧠 ${esc(conc)}</span>` : ''}
-                            ${!isSelf && !conc ? `<span style="color:#64748b;">• 💬 Whisper</span>` : ''}
+                            ${conc ? `<span class="rpg-party-conc-dot">• 🧠 ${esc(conc)}</span>` : `<span style="color:#64748b;">• 💬 Whisper</span>`}
                         </div>
                     </div>
                 </button>
@@ -9764,6 +9938,103 @@
         openTradeModal('messages');
     }
 
+    let prevCombatActiveFlag = false;
+    let lastAllowedTurnSpend = null;
+
+    function isCombatActive() {
+        return Boolean(liveCombatState && liveCombatState.active && Array.isArray(liveCombatState.combatants) && liveCombatState.combatants.length > 0);
+    }
+
+    function syncCombatModeLayout() {
+        const active = isCombatActive();
+        const wrap = document.getElementById('rpg-action-bar-wrap');
+        if (wrap) {
+            wrap.classList.toggle('is-combat-active', active);
+        }
+        if (active !== prevCombatActiveFlag) {
+            prevCombatActiveFlag = active;
+            hudState.turn = { action: true, bonus: true, reaction: true, move: true };
+            saveHudState();
+            renderActionEconomyBar();
+        }
+        renderHubPanel();
+        syncCombatActionLocks();
+    }
+
+    function getButtonTurnSlot(btn) {
+        if (!btn) return null;
+        if (btn.closest('#rpg-action-bar, #rpg-party-hud, #rpg-combat-strip, #rpg-dice-fab-wrap, #floating-roll-hud, .hp-ctrl-container, .gold-pouch-card')) {
+            return null;
+        }
+        const explicit = btn.getAttribute('data-rpg-turn-slot');
+        if (explicit === 'none') return null;
+        if (explicit === 'action' || explicit === 'bonus' || explicit === 'reaction') return explicit;
+
+        const oc = btn.getAttribute('onclick') || '';
+        if (!oc) return null;
+        // Always free / damage rolls / Action Surge / utility triggers
+        if (/useActionSurge|rollSavage|rollFormulaDamage|rollFireBoltDamage|rollLamentDamage|rollMercyDamage|rollLessDamage|rollKnifeDamage|rollStrappedDaggerDamage|rollSlayerDieOnly|execRiposteDamage|execRiposteSilverLongswordDamage|rollDynamicWeaponDamage|useTacticalMind|useTidesOfChaos|useMetamagic|triggerWildMagicSurge|open.*Modal|close.*Modal|toggleAdvantage|rollCustomDie|rollD20|rollSkill|rollSave|rollInitiative|rollJacomirInitiative|stepHP|applyDamage|applyHeal|applyTempHP|clearTempHP|shortRest|longRest|modSup|refillSup|modSorcery|refillSorcery|modSpellSlots|refillSpellSlots|rollHelpToken|modHelpToken|resetHelpTokens|useHeroicInspiration/i.test(oc)) {
+            return null;
+        }
+        // Reactions
+        if (/useBendFate/i.test(oc)) return 'reaction';
+        // Bonus Actions
+        if (/toggleSlayersPreyManual/i.test(oc)) {
+            // Untoggling Slayer's Prey when an enemy dies is free; designating a target costs Bonus Action!
+            return /Untoggle/i.test(btn.innerText || '') ? null : 'bonus';
+        }
+        if (/useSecondWindHeal|reloadLament|reloadBothRevolvers|useHuntersSense|castTracerRoundFree|fireLessShot|rollStrappedDaggerAttack|castPhosphorGrenade|convertSlotToSP|convertSPToSlot/i.test(oc)) {
+            return 'bonus';
+        }
+        // Standard 1-Action combat attacks & spells
+        if (/rollWeaponAttack|rollDynamicWeaponAttack|fireLamentShot|fireMercyShot|rollKnifeAttack|rollSpellAttack|castFriendsCantrip|castLongstriderStim|castProtectionEvilGood|castSmokescreen|castSpeakWithDeadAmulet|castFiernaFreeCharmPerson|castUtility/i.test(oc)) {
+            return 'action';
+        }
+        return null;
+    }
+
+    function flashSpentTurnPip(slot) {
+        const pip = document.querySelector(`#rpg-action-bar .pip-${slot}`);
+        if (!pip) return;
+        pip.classList.remove('pip-shake');
+        void pip.offsetWidth;
+        pip.classList.add('pip-shake');
+        setTimeout(() => pip.classList.remove('pip-shake'), 420);
+    }
+
+    function syncCombatActionLocks() {
+        const active = isCombatActive();
+        const slotMeta = {
+            action:   { label: '🟢 Action',   hint: 'Action already spent this turn — click 🟢 Action above to refund (or use Action Surge)' },
+            bonus:    { label: '🟠 Bonus',    hint: 'Bonus Action already spent this turn — click 🟠 Bonus above to refund' },
+            reaction: { label: '🟣 Reaction', hint: 'Reaction already spent this round — click 🟣 Reaction above to refund' }
+        };
+        const buttons = document.querySelectorAll('button, .toggle-btn-card');
+        buttons.forEach(btn => {
+            const slot = getButtonTurnSlot(btn);
+            const shouldLock = Boolean(active && slot && hudState.turn && hudState.turn[slot] === false);
+            if (shouldLock) {
+                if (!btn.dataset.rpgOrigTitle && btn.hasAttribute('title')) {
+                    btn.dataset.rpgOrigTitle = btn.getAttribute('title');
+                }
+                btn.classList.add('rpg-turn-locked');
+                btn.setAttribute('aria-disabled', 'true');
+                btn.dataset.rpgLockSlot = slot;
+                btn.setAttribute('title', slotMeta[slot].hint);
+            } else if (btn.classList.contains('rpg-turn-locked')) {
+                btn.classList.remove('rpg-turn-locked');
+                btn.removeAttribute('aria-disabled');
+                delete btn.dataset.rpgLockSlot;
+                if (btn.dataset.rpgOrigTitle) {
+                    btn.setAttribute('title', btn.dataset.rpgOrigTitle);
+                    delete btn.dataset.rpgOrigTitle;
+                } else {
+                    btn.removeAttribute('title');
+                }
+            }
+        });
+    }
+
     // ⚔️ RENDER SANITIZED FOG-OF-WAR COMBAT TURN-ORDER STRIP
     function renderPublicCombatStrip() {
         const host = document.getElementById('rpg-combat-strip');
@@ -9773,6 +10044,7 @@
             host.classList.remove('is-active', 'is-my-turn');
             host.innerHTML = '';
             lastCombatTurnToken = '';
+            syncCombatModeLayout();
             return;
         }
         const list = st.combatants;
@@ -9852,9 +10124,10 @@
             </div>
             <div class="rpg-combat-ribbon">${tilesHtml}</div>
         `;
+        syncCombatModeLayout();
     }
 
-    // ⚡ BG3 TURN ACTION ECONOMY BAR + RIGHT-COLUMN TABS
+    // ⚡ BG3 TURN ACTION ECONOMY BAR + RIGHT-COLUMN TABS (Shown ONLY during Active Combat!)
     function renderActionEconomyBar() {
         const bar = document.getElementById('rpg-action-bar');
         if (!bar) return;
@@ -9862,14 +10135,15 @@
         const t = hudState.turn;
         bar.innerHTML = `
             <div class="rpg-action-pips-group" role="group" aria-label="Turn Resources">
-                <button type="button" class="rpg-act-pip pip-action" aria-pressed="${t.action ? 'true' : 'false'}" onclick="COS_RPG.toggleTurnAction('action')" title="Click to toggle Action (Ready / Used)">🟢 Action</button>
-                <button type="button" class="rpg-act-pip pip-bonus" aria-pressed="${t.bonus ? 'true' : 'false'}" onclick="COS_RPG.toggleTurnAction('bonus')" title="Click to toggle Bonus Action (Ready / Used)">🟠 Bonus</button>
-                <button type="button" class="rpg-act-pip pip-reaction" aria-pressed="${t.reaction ? 'true' : 'false'}" onclick="COS_RPG.toggleTurnAction('reaction')" title="Click to toggle Reaction (Ready / Used)">🟣 Reaction</button>
+                <button type="button" class="rpg-act-pip pip-action" aria-pressed="${t.action ? 'true' : 'false'}" onclick="COS_RPG.toggleTurnAction('action')" title="Click to toggle or refund Action (Ready / Used)">🟢 Action</button>
+                <button type="button" class="rpg-act-pip pip-bonus" aria-pressed="${t.bonus ? 'true' : 'false'}" onclick="COS_RPG.toggleTurnAction('bonus')" title="Click to toggle or refund Bonus Action (Ready / Used)">🟠 Bonus</button>
+                <button type="button" class="rpg-act-pip pip-reaction" aria-pressed="${t.reaction ? 'true' : 'false'}" onclick="COS_RPG.toggleTurnAction('reaction')" title="Click to toggle or refund Reaction (Ready / Used)">🟣 Reaction</button>
                 <button type="button" class="rpg-act-pip pip-move" aria-pressed="${t.move ? 'true' : 'false'}" onclick="COS_RPG.toggleTurnAction('move')" title="Click to mark Movement used / available">🥾 ${esc(speedStr)}</button>
             </div>
             <button type="button" class="rpg-act-reset-btn" onclick="COS_RPG.resetTurnActions(false)" title="Refresh Action, Bonus Action, Reaction &amp; Movement for your next turn">⏭️ New Turn</button>
         `;
         installToolbarRovingFallback(bar);
+        syncCombatActionLocks();
     }
 
     function toggleTurnAction(slot) {
@@ -9880,6 +10154,7 @@
     }
 
     function spendTurnAction(slot) {
+        if (!isCombatActive()) return;
         if (!hudState.turn || typeof hudState.turn[slot] === 'undefined') return;
         if (!hudState.turn[slot]) return;
         hudState.turn[slot] = false;
@@ -10611,24 +10886,52 @@
                 pushSyncedCheckpoint(true);
             };
         }
+        // Option 1 Strict Combat Action Locking (Capture-Phase Guard — ONLY during Active Combat!)
+        document.addEventListener('click', (e) => {
+            lastAllowedTurnSpend = null;
+            if (!isCombatActive()) return;
+            const btn = e.target && e.target.closest ? e.target.closest('button, .toggle-btn-card') : null;
+            if (!btn) return;
+            const slot = getButtonTurnSlot(btn);
+            if (!slot) return;
+            if (hudState.turn && hudState.turn[slot] === false) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                e.stopPropagation();
+                flashSpentTurnPip(slot);
+                const labels = {
+                    action: '🟢 Action',
+                    bonus: '🟠 Bonus Action',
+                    reaction: '🟣 Reaction'
+                };
+                const surgeHint = (slot === 'action' && adapter && adapter.heroId === 'jacomir')
+                    ? ' or activate <strong>⚡ Action Surge</strong>'
+                    : '';
+                if (adapter && adapter.log) {
+                    adapter.log(`⛔ <strong>${labels[slot]} Already Used This Turn!</strong> Click the greyed <strong>${labels[slot]}</strong> pip above to refund${surgeHint}.`);
+                }
+                announceStatus(`${labels[slot]} already used this turn. Click the pip above to refund.`);
+                return;
+            }
+            lastAllowedTurnSpend = { btn, slot, ts: Date.now() };
+        }, true);
+
         // Smart Action Economy Auto-Ticking on Combat Card Buttons + Refresh Speed on Longstrider toggle
         document.addEventListener('click', (e) => {
             const btn = e.target && e.target.closest ? e.target.closest('button, .toggle-btn-card') : null;
             if (btn) {
                 const oc = btn.getAttribute('onclick') || '';
-                if (/useActionSurge/i.test(oc)) {
-                    restoreTurnAction('action');
-                } else if (/useSecondWindHeal|reloadLament|reloadBothRevolvers|useHuntersSense|toggleSlayersPreyManual|castTracerRoundFree|fireLessShot|castPhosphorGrenade|rollKnifeDamage\(true\)|rollStrappedDaggerDamage\(true\)/i.test(oc)) {
-                    spendTurnAction('bonus');
-                } else if (/useBendFate|Parry|Riposte|Shield/i.test(oc) || /\bReaction\b/i.test(btn.innerText || '')) {
-                    spendTurnAction('reaction');
-                } else if (/rollWeaponAttack|fireLamentShot|fireMercyShot|rollKnifeAttack|rollStrappedDaggerAttack|rollSpellAttack|castFriendsCantrip|castLongstriderStim|castProtectionEvilGood|castSmokescreen|castSpeakWithDeadAmulet|castUtility/i.test(oc)) {
-                    spendTurnAction('action');
+                if (isCombatActive()) {
+                    if (lastAllowedTurnSpend && lastAllowedTurnSpend.btn === btn && (Date.now() - lastAllowedTurnSpend.ts < 300)) {
+                        spendTurnAction(lastAllowedTurnSpend.slot);
+                    }
+                    setTimeout(syncCombatActionLocks, 25);
                 }
                 if (/toggleLongstriderBuff|castLongstriderStim/i.test(oc)) {
                     setTimeout(renderActionEconomyBar, 30);
                 }
             }
+            lastAllowedTurnSpend = null;
             if (!isCapturingExports) syncHeroStateToFirebase(false);
         });
         document.addEventListener('change', () => {
@@ -10833,6 +11136,9 @@
         // Video-Game RPG HUD API
         openDirectWhisper,
         openRulesModal,
+        isCombatActive,
+        syncCombatModeLayout,
+        syncCombatActionLocks,
         toggleTurnAction,
         spendTurnAction,
         restoreTurnAction,
