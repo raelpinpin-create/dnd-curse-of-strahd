@@ -7795,6 +7795,8 @@
         // Inject Header Quick Gear, Backpack (slightly bigger), followed by Cloud Sync to DM, Reset, and Portal on the very right
         const badgeGroup = document.querySelector('.pill-badge-group');
         if (badgeGroup && !document.getElementById('rpg-hdr-equip-btn')) {
+            badgeGroup.style.marginLeft = 'auto';
+            badgeGroup.style.justifyContent = 'flex-end';
             const portalLink = badgeGroup.querySelector('a[href*="index.html"]');
 
             const equipBtn = document.createElement('button');

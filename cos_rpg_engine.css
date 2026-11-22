@@ -11,7 +11,7 @@ dialog::backdrop {
     overscroll-behavior: contain;
 }
 
-/* Header Layout & Right-Aligned Action Bar (Higher specificity than inline <style> so buttons stay on the RIGHT!) */
+/* Header Layout & Right-Aligned Action Bar (Always stays anchored on the RIGHT side!) */
 header.header-banner {
     display: flex;
     justify-content: space-between;
@@ -20,11 +20,11 @@ header.header-banner {
     gap: 14px;
 }
 header.header-banner .header-title {
-    flex: 1 1 auto;
+    flex: 1 1 280px;
     min-width: 0;
 }
 header.header-banner .header-title h1 {
-    font-size: clamp(1.16rem, 1.72vw, 1.46rem);
+    font-size: clamp(1.12rem, 1.65vw, 1.44rem);
     flex-wrap: wrap;
     line-height: 1.18;
     gap: 6px;
@@ -34,16 +34,15 @@ header.header-banner .pill-badge-group {
     align-items: center;
     justify-content: flex-end;
     margin-left: auto;
-    flex-shrink: 0;
+    flex: 0 1 auto;
     gap: 5px;
     flex-wrap: wrap;
 }
-@media (max-width: 900px) {
+@media (max-width: 720px) {
     header.header-banner {
         flex-wrap: wrap;
     }
     header.header-banner .pill-badge-group {
-        flex-shrink: 1;
         width: 100%;
         justify-content: flex-end;
     }
