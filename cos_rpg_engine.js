@@ -10654,7 +10654,15 @@
             blessVal -= b;
             blessNote += ` - Bane(${b})`;
         }
-        const total = d20 + conMod + blessVal;
+        const total = (() => {
+            const minDie = (adapter && typeof adapter.getConSaveMinDie === 'function') ? (parseInt(adapter.getConSaveMinDie()) || 1) : 1;
+            const eff = Math.max(minDie, d20);
+            if (minDie > 1 && d20 < minDie) {
+                modeNote += ` [🐉 Dragon: ${d20} ➔ ${eff}]`;
+                d20 = eff;
+            }
+            return d20 + conMod + blessVal;
+        })();
         const passed = total >= targetDc;
         const modStr = conMod >= 0 ? `+ ${conMod}` : `- ${Math.abs(conMod)}`;
         if (!passed) {
@@ -11765,6 +11773,9 @@
                     cDiv.style.width = '100%';
                     cDiv.innerHTML = buildConcAlertHtml(info);
                     hudBody.appendChild(cDiv);
+                }
+                if (adapter && typeof adapter.onAfterLogRoll === 'function') {
+                    adapter.onAfterLogRoll(hudBody, htmlMsg);
                 }
             };
         }

@@ -1095,10 +1095,9 @@
                                 </div>
                                 <span class="pill-badge pill-emerald" id="badge-starry-chalice">OFF</span>
                             </div>
-                            <div class="action-desc">Whenever a slotted spell restores HP, heal self or an ally within 30 ft for an extra <strong>1d8 + 3 HP</strong>!</div>
+                            <div class="action-desc">Slotted healing spells automatically add <strong>+1d8 + 3 HP</strong> Chalice healing (self or ally within 30 ft)!</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="bonus" onclick="activateStarryForm('chalice')">🏺 Activate (BA)</button>
-                                <button type="button" class="btn-roll-action btn-roll-heal" data-rpg-turn-slot="none" onclick="rollChaliceBonusHeal()">💚 +1d8+3 Heal</button>
+                                <button type="button" class="btn-roll-action" id="btn-starry-chalice" data-rpg-turn-slot="bonus" onclick="activateStarryForm('chalice')">🏺 Activate (BA)</button>
                             </div>
                         </div>
 
@@ -1113,11 +1112,9 @@
                                 </div>
                                 <span class="pill-badge pill-blue" id="badge-starry-archer">OFF</span>
                             </div>
-                            <div class="action-desc">Fire a luminous starlight arrow on activation &amp; every Bonus Action: <strong>+6 hit</strong>, <strong>1d8 + 3 Radiant</strong>!</div>
+                            <div class="action-desc">Every Action unlocks a <strong>Bonus Action</strong> luminous arrow prompt (<strong>+6 hit</strong>, <strong>1d8 + 3 Radiant</strong>)!</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="bonus" onclick="activateStarryForm('archer')">🏹 Activate (BA)</button>
-                                <button type="button" class="btn-roll-action btn-roll-wild" data-rpg-turn-slot="bonus" onclick="rollStarryArcherAttack()">🏹 Atk (+6)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="rollStarryArcherDamage()">💥 1d8+3</button>
+                                <button type="button" class="btn-roll-action" id="btn-starry-archer" data-rpg-turn-slot="bonus" onclick="activateStarryForm('archer')">🏹 Activate (BA)</button>
                             </div>
                         </div>
 
@@ -1132,10 +1129,9 @@
                                 </div>
                                 <span class="pill-badge pill-purple" id="badge-starry-dragon">OFF</span>
                             </div>
-                            <div class="action-desc">Treat any <strong>d20 roll of 9 or lower</strong> on INT/WIS checks &amp; Concentration CON saves as a <strong>10</strong>!</div>
+                            <div class="action-desc">Auto-treats any <strong>d20 roll of 9 or lower</strong> on INT/WIS checks &amp; CON saves/checks as a <strong>10</strong>!</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="bonus" onclick="activateStarryForm('dragon')">🐉 Activate (BA)</button>
-                                <button type="button" class="btn-act btn-act-pre" data-rpg-turn-slot="none" onclick="rollConSave()">🎲 Conc Save</button>
+                                <button type="button" class="btn-roll-action" id="btn-starry-dragon" data-rpg-turn-slot="bonus" onclick="activateStarryForm('dragon')">🐉 Activate (BA)</button>
                             </div>
                         </div>
                     </div>
@@ -1245,7 +1241,7 @@
                             </div>
                             <div class="action-desc">Repairs a single break, tear, splintered axle, or torn cloak up to 1 foot in any dimension.</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" onclick="castUtility('🔧 <strong>Mending (1 Min • Touch):</strong> Cael traces silver starlight over a break or tear up to 1 foot, weaving the material whole without a seam!')">🔧 Cast Mending</button>
+                                <button type="button" class="btn-roll-action" onclick="castMendingCantrip()">🔧 Cast Mending</button>
                             </div>
                         </div>
 
@@ -1500,6 +1496,7 @@
     let freeGuidingBolts = 2;
     let isShillelaghActive = false;
     let vowReady = true; // Vow of the Dark Powers / Night Sky (1/Long Rest)
+    let pendingActionForArcher = false;
 
     // Multi-Tier Spell Slots (Level 3 Druid: 4 L1, 2 L2)
     let spellSlots = {
@@ -1530,9 +1527,15 @@
         const disp = document.getElementById('starry-uses-disp');
         if (disp) disp.innerText = `✨ ${starryFormUses}/${maxStarryFormUses} SR`;
 
+        const activateLbls = {
+            chalice: '🏺 Activate (BA)',
+            archer: '🏹 Activate (BA)',
+            dragon: '🐉 Activate (BA)'
+        };
         ['chalice', 'archer', 'dragon'].forEach(form => {
             const card = document.getElementById(`starry-card-${form}`);
             const badge = document.getElementById(`badge-starry-${form}`);
+            const btn = document.getElementById(`btn-starry-${form}`);
             const isActive = activeStarryForm === form;
             if (card) card.classList.toggle('is-starry-active', isActive);
             if (badge) {
@@ -1541,6 +1544,10 @@
                 else if (form === 'archer') badge.className = isActive ? 'pill-badge pill-blue' : 'pill-badge pill-neutral';
                 else badge.className = isActive ? 'pill-badge pill-purple' : 'pill-badge pill-neutral';
             }
+            if (btn) {
+                btn.innerText = isActive ? '✕ End Form' : activateLbls[form];
+                btn.className = isActive ? 'btn-act btn-act-pre' : 'btn-roll-action';
+            }
         });
 
         const banner = document.getElementById('starry-status-banner');
@@ -1548,11 +1555,11 @@
         if (banner) {
             const textEl = banner.querySelector('div');
             if (activeStarryForm === 'chalice') {
-                if (textEl) textEl.innerHTML = `<strong style="color:#4ade80;">🏺 Starry Chalice Active:</strong> Every slotted healing spell you cast triggers an extra <strong>1d8 + 3 HP</strong> heal within 30 ft!`;
+                if (textEl) textEl.innerHTML = `<strong style="color:#4ade80;">🏺 Starry Chalice Active:</strong> <em>Cure Wounds</em> &amp; <em>Healing Word</em> automatically calculate and include <strong>+1d8 + 3 HP</strong> Chalice healing!`;
             } else if (activeStarryForm === 'archer') {
-                if (textEl) textEl.innerHTML = `<strong style="color:#38bdf8;">🏹 Starry Archer Active:</strong> You may fire a radiant star-arrow as a <strong>Bonus Action</strong> (+${getSpellAttackMod()} hit, <strong>1d8 + 3 Radiant</strong>, 60 ft)!`;
+                if (textEl) textEl.innerHTML = `<strong style="color:#38bdf8;">🏹 Starry Archer Active:</strong> Every Action roll automatically unlocks an <strong>[🏹 Archer Bonus Action]</strong> button (+${getSpellAttackMod()} hit, <strong>1d8 + 3 Radiant</strong>) on the result!`;
             } else if (activeStarryForm === 'dragon') {
-                if (textEl) textEl.innerHTML = `<strong style="color:#c084fc;">🐉 Starry Dragon Active:</strong> Any d20 roll of <strong>9 or lower</strong> on Concentration CON saves (and INT/WIS checks) becomes a <strong>10</strong>!`;
+                if (textEl) textEl.innerHTML = `<strong style="color:#c084fc;">🐉 Starry Dragon Active:</strong> Any d20 roll of <strong>9 or lower</strong> on INT/WIS checks or CON saves/checks automatically counts as a <strong>10</strong>!`;
             } else {
                 if (textEl) textEl.innerHTML = `<strong style="color:var(--text-light);">Bonus Action (10 mins):</strong> Choose a constellation to illuminate your form (Bright Light 10 ft, Dim +10 ft).`;
             }
@@ -1576,17 +1583,24 @@
         updateWildShapeUI();
 
         const labels = {
-            chalice: `🏺 <strong>Starry Form — Chalice Activated!</strong> Constellations trace silver fire across Cael's forearms. Whenever he casts a leveled healing spell, he or an ally within 30 ft regains an extra <strong>1d8 + 3 HP</strong>! (${starryFormUses}/${maxStarryFormUses} uses left)`,
-            archer: `🏹 <strong>Starry Form — Archer Activated!</strong> A luminous constellation bow flares behind Cael's shoulder! Firing initial starlight arrow (+${getSpellAttackMod()} hit, 1d8 + 3 Radiant, 60 ft) — roll below! (${starryFormUses}/${maxStarryFormUses} uses left)`,
-            dragon: `🐉 <strong>Starry Form — Dragon Activated!</strong> Wisps of silver draconic starlight coil around Cael. Concentration CON saves and INT/WIS checks treat any d20 roll of <strong>9 or lower as a 10</strong>! (${starryFormUses}/${maxStarryFormUses} uses left)`
+            chalice: `🏺 <strong>Starry Form — Chalice Activated!</strong> Slotted healing spells now automatically roll and include <strong>+1d8 + 3 HP</strong> Chalice bonus healing! (${starryFormUses}/${maxStarryFormUses} uses left)`,
+            archer: `🏹 <strong>Starry Form — Archer Activated!</strong> Luminous constellation bow ready! Every Action you take will offer <strong>[🏹 Archer Bonus Action]</strong> in the result (${starryFormUses}/${maxStarryFormUses} uses left).`,
+            dragon: `🐉 <strong>Starry Form — Dragon Activated!</strong> All INT/WIS checks and CON saves/checks automatically treat d20 rolls of <strong>9 or lower as 10</strong>! (${starryFormUses}/${maxStarryFormUses} uses left)`
         };
         if (form === 'archer' && window.COS_RPG) {
             COS_RPG.setRollFollowup({
-                label: '🏹 Fire Initial Archer Arrow (+6)',
+                label: `🏹 Fire Initial Archer Arrow (+${getSpellAttackMod()}, 1d8+3 Rad)`,
                 onDamage: () => rollStarryArcherAttack()
             });
         }
         logRoll(labels[form]);
+    }
+
+    function useArcherBonusAction() {
+        if (window.COS_RPG && typeof COS_RPG.spendTurnAction === 'function') {
+            COS_RPG.spendTurnAction('bonus');
+        }
+        rollStarryArcherAttack();
     }
 
     function deactivateStarryForm() {
@@ -1669,6 +1683,7 @@
                 onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Guiding Bolt', diceCount: 4, sides: 6, flatMod: 0, dmgType: 'Radiant' })
             });
         }
+        pendingActionForArcher = true;
         rollD20(`⚡ Star Map Guiding Bolt (Free Cast • ${freeGuidingBolts}/${getMaxFreeBolts()} left • Next Atk Adv!)`, getSpellAttackMod());
     }
 
@@ -1830,11 +1845,13 @@
                 onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Starry Wisp', diceCount, sides: 8, flatMod: 0, dmgType: 'Radiant' })
             });
         }
+        pendingActionForArcher = true;
         rollD20('✨ Starry Wisp (60 ft • Outlines Invisible)', getSpellAttackMod());
     }
 
     function rollStarryWispDamage() {
         const diceCount = characterLevel >= 5 ? 2 : 1;
+        pendingActionForArcher = true;
         rollFormulaDamage(`Starry Wisp (${diceCount}d8 • Target Emits Dim Light!)`, 8, 0, 'Radiant', diceCount);
     }
 
@@ -1848,11 +1865,13 @@
                 onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Produce Flame', diceCount, sides: 8, flatMod: 0, dmgType: 'Fire' })
             });
         }
+        pendingActionForArcher = true;
         rollD20('🔥 Produce Flame (30 ft)', getSpellAttackMod());
     }
 
     function rollProduceFlameDamage() {
         const diceCount = characterLevel >= 5 ? 2 : 1;
+        pendingActionForArcher = true;
         rollFormulaDamage(`Produce Flame (${diceCount}d8)`, 8, 0, 'Fire', diceCount);
     }
 
@@ -1861,7 +1880,13 @@
             COS_RPG.setConcentration('Guidance');
         }
         const d4 = Math.floor(Math.random() * 4) + 1;
+        pendingActionForArcher = true;
         logRoll(`🌿 <strong>Guidance (Touch • Conc 1m):</strong> Cael places a warm starlit hand on an ally's shoulder — add <span style="color:#4ade80; font-weight:800; font-size:1.05rem;">+${d4}</span> (1d4) to one ability check!`);
+    }
+
+    function castMendingCantrip() {
+        pendingActionForArcher = true;
+        logRoll('🔧 <strong>Mending (1 Min • Touch):</strong> Cael traces silver starlight over a break or tear up to 1 foot, weaving the material whole without a seam!');
     }
 
     function getCaelWpnMods(weaponId) {
@@ -1886,6 +1911,7 @@
                 onCrit: () => COS_RPG.rollBrutalCrit({ label: isShillelaghActive ? 'Shillelagh Staff' : 'Yew Quarterstaff', diceCount: 1, sides, flatMod, dmgType: dType, extras: wMods.extras || [] })
             });
         }
+        pendingActionForArcher = true;
         rollD20(`${isShillelaghActive ? '🪄 Shillelagh Staff' : '🪄 Yew Quarterstaff'}`, statMod + getProfBonus() + (wMods.atkBonus || 0));
     }
 
@@ -1893,6 +1919,7 @@
         const sides = isShillelaghActive ? 8 : (grip === '2h' ? 8 : 6);
         const flat = isShillelaghActive ? 3 : 0;
         const dType = isShillelaghActive ? 'Magical Bludgeoning' : 'Bludgeoning';
+        pendingActionForArcher = true;
         rollFormulaDamage(isShillelaghActive ? 'Shillelagh Yew Staff' : `Yew Quarterstaff (${grip.toUpperCase()})`, sides, flat, dType, 1, 'staff');
     }
 
@@ -1907,6 +1934,7 @@
                 onCrit: () => COS_RPG.rollBrutalCrit({ label, diceCount: 1, sides: 4, flatMod, dmgType: 'Silvered Piercing', extras: wMods.extras || [] })
             });
         }
+        pendingActionForArcher = true;
         rollD20(label, statMod + getProfBonus() + (wMods.atkBonus || 0));
     }
 
@@ -1923,17 +1951,20 @@
             sum += r;
         }
         const total = sum + 3; // WIS +3
-        let chaliceBtn = '';
         if (activeStarryForm === 'chalice') {
-            chaliceBtn = ` <button class="btn-roll-action btn-roll-heal" style="margin-left:6px;" onclick="rollChaliceBonusHeal()">🏺 Trigger Chalice (+1d8+3)</button>`;
-        } else if (triggerChaliceNote) {
-            chaliceBtn = ` <small style="color:var(--text-dim);">(Activate 🏺 Chalice to add +1d8+3!)</small>`;
+            const chD8 = Math.floor(Math.random() * 8) + 1;
+            const chaliceTotal = chD8 + 3;
+            const combinedTotal = total + chaliceTotal;
+            logRoll(`💚 <strong>${name} (Lvl ${slotLvl}) + 🏺 Starry Chalice:</strong> [${rolls.join('+')}] + 3 = <span style="color:#4ade80; font-size:1.05rem; font-weight:800;">+${total} HP</span> <span style="color:#cbd5e1;">+</span> 🏺 Chalice [1d8(${chD8}) + 3] = <span style="color:#67e8f9; font-size:1.05rem; font-weight:800;">+${chaliceTotal} HP</span> ➔ <strong style="color:#fde68a; font-size:1.08rem;">Combined +${combinedTotal} HP</strong> <small style="color:var(--text-dim);">(same target or split w/ ally in 30 ft)</small> <button class="btn-act btn-act-heal" style="margin-left:4px; font-size:0.7rem;" onclick="applyHealAmount(${total}, '${name}')">Apply +${total} Cael</button> <button class="btn-act btn-act-temp" style="margin-left:3px; font-size:0.7rem;" onclick="applyHealAmount(${combinedTotal}, '${name} + Chalice')">Apply Both (+${combinedTotal})</button>`);
+            return;
         }
-        logRoll(`💚 <strong>${name} (Lvl ${slotLvl} Slot):</strong> [${rolls.join('+')}] + 3 (WIS) = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span> restored!${chaliceBtn} <button class="btn-act btn-act-heal" style="margin-left:4px; font-size:0.7rem;" onclick="applyHealAmount(${total}, '${name}')">Apply to Cael</button>`);
+        const chaliceHint = triggerChaliceNote ? ` <small style="color:var(--text-dim);">(Activate 🏺 Chalice to auto-add +1d8+3)</small>` : '';
+        logRoll(`💚 <strong>${name} (Lvl ${slotLvl} Slot):</strong> [${rolls.join('+')}] + 3 (WIS) = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span> restored!${chaliceHint} <button class="btn-act btn-act-heal" style="margin-left:4px; font-size:0.7rem;" onclick="applyHealAmount(${total}, '${name}')">Apply to Cael</button>`);
     }
 
     function rollGuidingBoltDamage(slotLvl = 1) {
         const diceCount = 4 + Math.max(0, slotLvl - 1);
+        pendingActionForArcher = true;
         rollFormulaDamage(`⚡ Guiding Bolt (Lvl ${slotLvl} • Next Atk Advantage!)`, 6, 0, 'Radiant', diceCount);
     }
 
@@ -2121,7 +2152,7 @@
             levelOptions: { 2: "Lvl 2 (2d10 Rad)", 3: "Lvl 3 (3d10 Rad)" },
             buttons: [
                 { label: "🌙 Cast Moonbeam (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castMoonbeamSpell(lvl) },
-                { label: "💥 Roll Damage", class: "btn-roll-action btn-roll-dmg", costSlot: false, onClick: (lvl) => rollFormulaDamage(`Moonbeam (Lvl ${lvl})`, 10, 0, 'Radiant', lvl) }
+                { label: "💥 Roll Damage", class: "btn-roll-action btn-roll-dmg", costSlot: false, onClick: (lvl) => { pendingActionForArcher = true; rollFormulaDamage(`Moonbeam (Lvl ${lvl})`, 10, 0, 'Radiant', lvl); } }
             ]
         },
         {
@@ -2775,15 +2806,18 @@
             }
             spellSlots[lvl].current--;
             renderSpellSlots();
+            const ct = String(sp.castingTime || '1 Action').toLowerCase();
             if (window.COS_RPG) {
                 if (/conc/i.test(sp.duration || '')) {
                     const cleanSpell = String(sp.name || '').replace(/^[^a-zA-Z0-9]+/, '').replace(/\s*\([^)]*\)\s*/g, ' ').trim();
                     COS_RPG.setConcentration(cleanSpell || sp.name);
                 }
-                const ct = String(sp.castingTime || '1 Action').toLowerCase();
                 if (ct.includes('bonus')) COS_RPG.spendTurnAction('bonus');
                 else if (ct.includes('react')) COS_RPG.spendTurnAction('reaction');
                 else COS_RPG.spendTurnAction('action');
+            }
+            if (!ct.includes('bonus') && !ct.includes('react')) {
+                pendingActionForArcher = true;
             }
             btn.onClick(lvl);
         } else {
@@ -3007,25 +3041,38 @@
         if (e.key === 'Escape') dismissFloatingHud();
     });
 
+    function isDragonProtectedRoll(label) {
+        if (activeStarryForm !== 'dragon') return false;
+        const s = String(label || '');
+        return /\((int|wis)\b/i.test(s)
+            || /\b(intelligence|wisdom)\s+check\b/i.test(s)
+            || /\b(constitution|con)\s+(saving throw|save|check|concentration)\b/i.test(s);
+    }
+
     function rollD20(label, mod) {
+        const dragonActive = isDragonProtectedRoll(label);
         if (rollMode !== 'norm') {
             const r1 = Math.floor(Math.random() * 20) + 1;
             const r2 = Math.floor(Math.random() * 20) + 1;
             const chosen = (rollMode === 'adv') ? Math.max(r1, r2) : Math.min(r1, r2);
-            const total = chosen + mod;
+            const eff = dragonActive ? Math.max(10, chosen) : chosen;
+            const total = eff + mod;
             const modStr = mod >= 0 ? `+${mod}` : `${mod}`;
-            let msg = `🎯 <strong>${label}:</strong> [${r1}, ${r2}] ➔ d20(${chosen}) ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span> <small style="color:var(--text-muted);">(${rollMode === 'adv' ? 'Advantage' : 'Disadvantage'})</small>`;
+            const dragonNote = (dragonActive && chosen < 10) ? ` <span style="color:#c084fc; font-weight:700;">[🐉 Dragon: ${chosen} ➔ 10]</span>` : (dragonActive ? ` <span style="color:#c084fc; font-weight:600;">[🐉 Dragon ≥10]</span>` : '');
+            let msg = `${dragonActive ? '🐉' : '🎯'} <strong>${label}:</strong> [${r1}, ${r2}] ➔ d20(${chosen})${dragonNote} ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span> <small style="color:var(--text-muted);">(${rollMode === 'adv' ? 'Advantage' : 'Disadvantage'})</small>`;
             if (chosen === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT!</span>";
-            if (chosen === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
+            if (chosen === 1 && !dragonActive) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
             logRoll(msg);
             return;
         }
         const d20 = Math.floor(Math.random() * 20) + 1;
-        const total = d20 + mod;
+        const eff = dragonActive ? Math.max(10, d20) : d20;
+        const total = eff + mod;
         const modStr = mod >= 0 ? `+${mod}` : `${mod}`;
-        let msg = `🎯 <strong>${label}:</strong> d20(${d20}) ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span>`;
+        const dragonNote = (dragonActive && d20 < 10) ? ` <span style="color:#c084fc; font-weight:700;">[🐉 Dragon: ${d20} ➔ 10]</span>` : (dragonActive ? ` <span style="color:#c084fc; font-weight:600;">[🐉 Dragon ≥10]</span>` : '');
+        let msg = `${dragonActive ? '🐉' : '🎯'} <strong>${label}:</strong> d20(${d20})${dragonNote} ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span>`;
         if (d20 === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT!</span>";
-        if (d20 === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
+        if (d20 === 1 && !dragonActive) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
         logRoll(msg);
     }
 
@@ -3039,15 +3086,7 @@
         const gc = window.__caelGearCache || null;
         const saveBonus = gc ? (gc.saveBonus || 0) : 0;
         const mod = 2 + saveBonus;
-        if (activeStarryForm === 'dragon') {
-            const raw = Math.floor(Math.random() * 20) + 1;
-            const eff = Math.max(10, raw);
-            const total = eff + mod;
-            const note = raw < 10 ? ` <span style="color:#c084fc; font-weight:700;">[🐉 Dragon Floor: ${raw} ➔ 10!]</span>` : '';
-            logRoll(`🐉 <strong>Concentration / CON Save (Dragon Form):</strong> d20(${raw})${note} + ${mod} = <span style="font-size:1.08rem; color:var(--accent-gold); font-weight:800;">${total}</span>`);
-            return;
-        }
-        rollD20('Constitution Saving Throw', mod);
+        rollD20(saveBonus ? `Constitution Saving Throw [Gear +${saveBonus}]` : 'Constitution Saving Throw', mod);
     }
 
     function rollSave(label, baseStatMod, isProf) {
@@ -3060,15 +3099,6 @@
     function rollSkill(label, baseStatMod, isProf, isExpertise = false) {
         const mult = isExpertise ? 2 : (isProf ? 1 : 0);
         const bonus = baseStatMod + (getProfBonus() * mult);
-        const isDragonCheck = activeStarryForm === 'dragon' && /\((int|wis)/i.test(label);
-        if (isDragonCheck) {
-            const raw = Math.floor(Math.random() * 20) + 1;
-            const eff = Math.max(10, raw);
-            const total = eff + bonus;
-            const note = raw < 10 ? ` <span style="color:#c084fc; font-weight:700;">[🐉 Dragon Floor: ${raw} ➔ 10!]</span>` : '';
-            logRoll(`🐉 <strong>${label}:</strong> d20(${raw})${note} + ${bonus} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:800;">${total}</span>`);
-            return;
-        }
         rollD20(label, bonus);
     }
 
@@ -3932,6 +3962,18 @@
             },
             log: logRoll,
             openItemModal: openItemDetailsModal,
+            getConSaveMinDie: () => (activeStarryForm === 'dragon' ? 10 : 1),
+            onAfterLogRoll: (hudBody) => {
+                if (activeStarryForm === 'archer' && pendingActionForArcher) {
+                    pendingActionForArcher = false;
+                    const wrap = document.createElement('div');
+                    wrap.className = 'rpg-hud-followup-wrap';
+                    wrap.innerHTML = `<button type="button" class="rpg-hud-followup-btn" style="border-color:#38bdf8; color:#bae6fd;" onclick="useArcherBonusAction()">🏹 Use Archer Bonus Action (+${getSpellAttackMod()}, 1d8+3 Rad)</button>`;
+                    hudBody.appendChild(wrap);
+                } else {
+                    pendingActionForArcher = false;
+                }
+            },
             captureSheetState: () => ({
                 curHP,
                 maxHP,
