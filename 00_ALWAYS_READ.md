@@ -1,5 +1,7 @@
 # 🧛‍♂️ Curse of Strahd — Live Session State & Master Hub
 
+> **🔥 STEP 0 — MANDATORY FIRST INITIATIVE (AUTO-SYNC FIREBASE WITHOUT ASKING):** Whenever a new chat starts about *Curse of Strahd* or reads this file, your **very first automatic action** (pre-authorized by the Lead DM—never wait to be asked!) MUST be to fetch live Firebase RTDB (`https://dnd-curse-of-strahd-467ea-default-rtdb.asia-southeast1.firebasedatabase.app/campaigns/curse_of_strahd_main/heroes.json`), inspect `synced_checkpoint` & `state` for **Piper, Jacomir, and Yvaine**, and immediately reconcile/save + `git push` any newer canonical player changes (HP, Gold, Resources, Equipped Gear, Presets, Attachments/Coatings, Inventory, Verbatim Notes) across all campaign sheets & files before doing anything else!
+>
 > **IMPORTANT:** Read this file along with [`CHARACTER_SHEET.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/CHARACTER_SHEET.md), [`NPC_REGISTRY.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/NPC_REGISTRY.md), and [`01_STORY_ARCHIVE.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/01_STORY_ARCHIVE.md) FIRST at the start of every session or new chat!
 
 ---
