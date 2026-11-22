@@ -3,51 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark">
+    <meta name="color-scheme" content="light dark">
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('cos_sheet_theme_v1');
+                var m = document.querySelector('meta[name="color-scheme"]');
+                var map = { obsidian: 'dark', midnight: 'dark', velvet: 'dark', pine: 'dark', parchment: 'light' };
+                if (t && map[t]) {
+                    document.documentElement.dataset.theme = t;
+                    if (m) m.content = map[t];
+                }
+            } catch (e) {}
+        })();
+    </script>
     <title>Master DM Screen — Curse of Strahd (Director's Cut)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            color-scheme: dark;
-            /* Dark Eldritch Gothic / Grimdark Palette (Mal'Goroth & Stormwreck Isle Master Standard) */
-            --bg-primary: #07090e;
-            --bg-container: #0c1017;
-            --bg-card: #111722;
-            --bg-card-header: #172030;
-            --bg-card-subtle: #0d131d;
+            color-scheme: light dark;
+            /* Default: Obsidian Brass / Dark Eldritch Gothic */
+            --bg-primary: #0b0c10;
+            --bg-container: #101218;
+            --bg-card: #151821;
+            --bg-card-header: #1b202c;
+            --bg-card-subtle: #10131b;
             
-            --accent-gold: #c5a059;
-            --accent-gold-soft: #dfc282;
+            --accent-gold: #c8a45c;
+            --accent-gold-soft: #e2c483;
             --accent-gold-dark: #8c6d32;
             
-            --accent-crimson: #a82d38;
-            --accent-crimson-soft: #d2535e;
+            --accent-crimson: #b33642;
+            --accent-crimson-soft: #de6470;
             --accent-crimson-dark: #6e1820;
             
-            --accent-blue: #38bdf8;
-            --accent-blue-soft: #7dd3fc;
+            --accent-blue: #5da9dd;
+            --accent-blue-soft: #8ec8f2;
             --accent-blue-dark: #0369a1;
             
-            --accent-green: #34d399;
-            --accent-green-soft: #86efac;
+            --accent-green: #4db887;
+            --accent-green-soft: #8ae3b9;
             --accent-green-dark: #166534;
             
-            --accent-purple: #a855f7;
-            --accent-purple-soft: #d8b4fe;
+            --accent-purple: #a478e8;
+            --accent-purple-soft: #d5bdfb;
             --accent-purple-dark: #6b21a8;
             
-            --text-main: #e2e8f0;
-            --text-bright: #f8fafc;
-            --text-muted: #8b9bb4;
+            --text-main: #e2e6ee;
+            --text-bright: #f5f7fa;
+            --text-muted: #94a0b4;
             
-            --border-color: #1f2a3c;
-            --border-subtle: #172233;
-            --border-highlight: #33445e;
+            --border-color: #252c3b;
+            --border-subtle: #1b212e;
+            --border-highlight: #384359;
             
-            --stat-bg: #090e18;
-            --modal-bg: #0d121c;
+            --stat-bg: #0c0f16;
+            --modal-bg: #11151e;
+            --nav-glass: rgba(13, 15, 21, 0.96);
+        }
+
+        :root[data-theme="midnight"] {
+            color-scheme: dark;
+            --bg-primary: #070b14;
+            --bg-container: #0c1220;
+            --bg-card: #11192b;
+            --bg-card-header: #17233b;
+            --bg-card-subtle: #0c1322;
+            --border-color: #21314f;
+            --border-subtle: #17233a;
+            --border-highlight: #354d78;
+            --stat-bg: #080d18;
+            --modal-bg: #0d1424;
+            --nav-glass: rgba(9, 14, 26, 0.96);
+        }
+
+        :root[data-theme="velvet"] {
+            color-scheme: dark;
+            --bg-primary: #110a10;
+            --bg-container: #170e15;
+            --bg-card: #1f131d;
+            --bg-card-header: #2b1a28;
+            --bg-card-subtle: #160d14;
+            --border-color: #3d2437;
+            --border-subtle: #2b1927;
+            --border-highlight: #57334f;
+            --stat-bg: #130b11;
+            --modal-bg: #1b1019;
+            --nav-glass: rgba(21, 12, 19, 0.96);
+        }
+
+        :root[data-theme="pine"] {
+            color-scheme: dark;
+            --bg-primary: #08100e;
+            --bg-container: #0c1714;
+            --bg-card: #11201c;
+            --bg-card-header: #172b26;
+            --bg-card-subtle: #0c1714;
+            --border-color: #213d35;
+            --border-subtle: #172c26;
+            --border-highlight: #325c50;
+            --stat-bg: #091310;
+            --modal-bg: #0f1c18;
+            --nav-glass: rgba(10, 19, 16, 0.96);
+        }
+
+        :root[data-theme="parchment"] {
+            color-scheme: light;
+            --bg-primary: #e4dbc9;
+            --bg-container: #efe7d6;
+            --bg-card: #faf6ed;
+            --bg-card-header: #efe6d4;
+            --bg-card-subtle: #f3ecdd;
+            --accent-gold: #8a5d19;
+            --accent-gold-soft: #6e480d;
+            --accent-gold-dark: #a6782e;
+            --accent-crimson: #9c2b36;
+            --accent-crimson-soft: #7d1d27;
+            --accent-crimson-dark: #b84b56;
+            --accent-blue: #1e5a85;
+            --accent-blue-soft: #164669;
+            --accent-green: #1d6b48;
+            --accent-green-soft: #155236;
+            --accent-purple: #5e3d94;
+            --accent-purple-soft: #482b78;
+            --text-main: #2b241c;
+            --text-bright: #17130e;
+            --text-muted: #615547;
+            --border-color: #cfc3ab;
+            --border-subtle: #ddd2bc;
+            --border-highlight: #b5a587;
+            --stat-bg: #ebe2d0;
+            --modal-bg: #f7f1e3;
+            --nav-glass: rgba(242, 234, 217, 0.97);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1873,121 +1962,636 @@
                 animation: none !important;
             }
         }
+
+        /* =====================================================================
+           ⚡ DM SCREEN V4 LIVE SESSION COCKPIT & ZERO-SCROLL NAVIGATION
+           ===================================================================== */
+        header.dm-compact-header {
+            padding: 8px 18px;
+            background: linear-gradient(180deg, var(--bg-card-header) 0%, var(--bg-primary) 100%);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            box-shadow: none;
+        }
+        header.dm-compact-header h1 {
+            font-size: 1.08rem;
+            letter-spacing: 0.06em;
+            gap: 8px;
+        }
+        .dm-header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .dm-hotkey-hint {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.67rem;
+            color: var(--text-muted);
+            background: var(--bg-card-subtle);
+            border: 1px solid var(--border-color);
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 120;
+            background: var(--nav-glass);
+            backdrop-filter: blur(12px);
+            border-bottom: 1.5px solid var(--accent-gold-dark);
+            padding: 6px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
+            overflow-x: visible;
+            white-space: normal;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+        }
+        .dm-nav-tabs {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .dm-nav-tools {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-left: auto;
+        }
+        .nav-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 4px 9px;
+            border-radius: 6px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            font-family: 'Inter', system-ui, sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .nav-btn:hover {
+            background: var(--bg-card-header);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold-soft);
+            transform: none;
+        }
+        .nav-btn.is-active {
+            background: linear-gradient(180deg, rgba(200, 164, 92, 0.24) 0%, var(--bg-card-header) 100%);
+            border-color: var(--accent-gold);
+            color: var(--accent-gold-soft);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+        .nav-btn.nav-btn-combat {
+            background: linear-gradient(135deg, #8f1d28 0%, #5c1118 100%);
+            border-color: #e0636e;
+            color: #fff5f5;
+            font-weight: 700;
+            padding: 4px 10px;
+        }
+        .nav-btn.nav-btn-combat:hover,
+        .nav-btn.nav-btn-combat.is-active {
+            background: linear-gradient(135deg, #b32432 0%, #78151f 100%);
+            border-color: #fde047;
+            color: #ffffff;
+        }
+        .nav-count-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.66rem;
+            font-weight: 700;
+            padding: 0 5px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.35);
+            color: #fde68a;
+        }
+        .dm-nav-search {
+            background: var(--stat-bg);
+            border: 1px solid var(--border-highlight);
+            color: var(--text-bright);
+            padding: 4px 9px;
+            border-radius: 6px;
+            font-size: 0.74rem;
+            width: 175px;
+            outline: none;
+        }
+        .dm-nav-search:focus {
+            border-color: var(--accent-gold);
+            width: 220px;
+        }
+
+        /* Global Sticky Live Turn Ribbon (Visible across ALL tabs during combat!) */
+        .dm-global-combat-ribbon {
+            display: none;
+            position: sticky;
+            top: 43px;
+            z-index: 115;
+            background: linear-gradient(90deg, rgba(115, 24, 34, 0.96) 0%, rgba(18, 25, 38, 0.97) 100%);
+            border-bottom: 1.5px solid var(--accent-gold);
+            padding: 6px 16px;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+        }
+        .dm-global-combat-ribbon.is-visible {
+            display: flex;
+        }
+
+        /* Theme Picker Popover inside .top-nav */
+        .dm-theme-wrap {
+            position: relative;
+            display: inline-flex;
+        }
+        .dm-theme-popover {
+            display: none;
+            position: absolute;
+            top: calc(100% + 6px);
+            right: 0;
+            z-index: 160;
+            width: 245px;
+            background: var(--modal-bg);
+            border: 1.5px solid var(--accent-gold);
+            border-radius: 10px;
+            padding: 8px;
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.7);
+            flex-direction: column;
+            gap: 4px;
+        }
+        .dm-theme-popover.is-open {
+            display: flex;
+        }
+        .dm-theme-opt {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            text-align: left;
+        }
+        .dm-theme-opt:hover {
+            border-color: var(--accent-gold);
+        }
+        .dm-theme-opt[aria-pressed="true"] {
+            border-color: var(--accent-gold);
+            background: rgba(200, 164, 92, 0.16);
+            color: var(--accent-gold-soft);
+        }
+        .dm-theme-dots {
+            display: inline-flex;
+            gap: 3px;
+        }
+        .dm-theme-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(128, 128, 128, 0.4);
+        }
+
+        /* Section Collapse & Focus Tab Modes */
+        .container {
+            gap: 18px;
+            margin-top: 14px;
+        }
+        body.dm-focus-mode .container > section.dm-sec-hidden {
+            display: none !important;
+        }
+        section.dm-sec-collapsed > :not(.section-header) {
+            display: none !important;
+        }
+        .section-header {
+            cursor: pointer;
+            user-select: none;
+            padding: 8px 12px;
+            background: var(--bg-card-header);
+            border: 1px solid var(--border-color);
+            border-left: 3.5px solid var(--accent-gold);
+            border-radius: 7px;
+            margin-bottom: 10px;
+            font-size: 1.02rem;
+        }
+        .section-header:hover {
+            border-color: var(--accent-gold);
+        }
+        .dm-sec-collapse-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--accent-gold-soft);
+            border-radius: 5px;
+            padding: 2px 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Compact Section 0 Live Party HUD Strip */
+        .dm-party-hud-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 10px;
+        }
+        .dm-hero-strip-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-top: 2.5px solid var(--accent-gold);
+            border-radius: 8px;
+            padding: 9px 11px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        .dm-hero-strip-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .dm-hero-strip-name {
+            font-family: 'Cinzel', serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text-bright);
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            padding: 0;
+            text-align: left;
+        }
+        .dm-hero-strip-name:hover {
+            color: var(--accent-gold-soft);
+            text-decoration: underline;
+        }
+        .dm-hero-strip-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding-top: 4px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .dm-escort-drawer {
+            margin-top: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 7px;
+            background: var(--bg-card-subtle);
+            overflow: hidden;
+        }
+        .dm-escort-drawer > summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 7px 12px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent-gold-soft);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .dm-escort-drawer > summary::-webkit-details-marker { display: none; }
+
+        /* Scene Encounter Presets & Custom Enemy Spawner */
+        .enc-drawer-bar {
+            display: none;
+            background: var(--bg-card-subtle);
+            border-bottom: 1px solid var(--border-color);
+            padding: 9px 12px;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .enc-drawer-bar.is-open {
+            display: flex;
+        }
+        .enc-preset-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .btn-enc-preset {
+            background: var(--bg-card);
+            border: 1px solid var(--border-highlight);
+            color: var(--text-bright);
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.14s ease;
+        }
+        .btn-enc-preset:hover {
+            border-color: var(--accent-gold);
+            background: var(--bg-card-header);
+            color: var(--accent-gold-soft);
+        }
+        .enc-custom-form {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+        }
+        .enc-custom-input {
+            background: var(--stat-bg);
+            border: 1px solid var(--border-highlight);
+            color: var(--text-bright);
+            border-radius: 5px;
+            padding: 5px 8px;
+            font-size: 0.76rem;
+        }
+
+        /* Zero-Clutter Direct Attack & Damage Strip on Encounter Board Cards */
+        .enc-quick-atk-list {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 5px 7px;
+            border-radius: 5px;
+            background: var(--stat-bg);
+            border: 1px solid var(--border-subtle);
+        }
+        .enc-quick-atk-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            min-width: 0;
+        }
+        .enc-quick-atk-name {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+            min-width: 0;
+        }
+        .enc-quick-atk-btns {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .btn-enc-atk,
+        .btn-enc-dmg {
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            font-family: 'Inter', system-ui, sans-serif;
+            cursor: pointer;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .btn-enc-atk {
+            background: rgba(200, 164, 92, 0.16);
+            border-color: var(--accent-gold-dark);
+            color: var(--accent-gold-soft);
+        }
+        .btn-enc-atk:hover {
+            background: var(--accent-gold);
+            color: #090d16;
+        }
+        .btn-enc-dmg {
+            background: rgba(179, 54, 66, 0.2);
+            border-color: var(--accent-crimson);
+            color: #fca5a5;
+        }
+        :root[data-theme="parchment"] .btn-enc-dmg {
+            color: var(--accent-crimson-soft);
+        }
+        .btn-enc-dmg:hover {
+            background: var(--accent-crimson);
+            color: #ffffff;
+        }
+
+        /* Tighter, More Glanceable Bestiary & NPC Rows */
+        .guide-table th, .guide-table td {
+            padding: 6px 9px;
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div>
-        <h1>🏰 MASTER DM SCREEN — CURSE OF STRAHD</h1>
-        <p>Campaign 2 of the Grand Trilogy • 15–20 Session Director's Cut • Mode 2 Lead DM Co-Pilot & Librarian</p>
+<header class="dm-compact-header">
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+        <h1>🏰 CURSE OF STRAHD — DM COCKPIT</h1>
+        <span class="badge-mode">🩸 S2 READY • CHURCH ATTIC CLIFFHANGER (LVL 3)</span>
     </div>
-    <div class="header-controls">
-        <input type="text" id="global-search" class="search-input" placeholder="🔍 Filter NPCs, Monsters, Loot, Biomes..." oninput="filterDashboard(this.value)">
-        <span class="badge-mode">🩸 SESSION 2 READY — CHURCH ATTIC CLIFFHANGER (3 LEVEL 3 PCs)</span>
+    <div class="dm-header-right">
+        <span class="dm-hotkey-hint" title="Keyboard Hotkeys (when not typing in a field)">⌨️ Hotkeys: <strong>C</strong> Combat · <strong>N</strong> Next Turn · <strong>1–9</strong> Tabs · <strong>0</strong> Focus/All · <strong>/</strong> Search</span>
     </div>
 </header>
 
-<nav class="top-nav" aria-label="DM Screen Sections">
-    <a href="#party-specs" class="nav-btn">🛡️ 0. Party &amp; Allies</a>
-    <a href="#active-quests" class="nav-btn">📜 1. 15–20 Session Roadmap</a>
-    <a href="#tarokka-oracle" class="nav-btn">🔮 1.1 Tarokka Oracle</a>
-    <a href="#biomes-explorer" class="nav-btn">🗺️ 1.5 Biomes &amp; Locations (25)</a>
-    <button type="button" class="btn-map-ref" onclick="openWorldMapLightbox()">🗺️ Map of Barovia</button>
-    <a href="#npc-directory" id="nav-npc-link" class="nav-btn">👥 2. NPC Directory (37)</a>
-    <a href="#monsters-section" id="nav-monster-link" class="nav-btn">💀 3. Enemies &amp; Bosses (57)</a>
-    <a href="#loot-vault" id="nav-loot-link" class="nav-btn">🎒 4. World Loot (106)</a>
-    <a href="#factions-lore" class="nav-btn">🏛️ 4.5 Factions &amp; Lore (56)</a>
-    <a href="#dm-rules-guide" class="nav-btn">⚖️ 5. Barovian Laws &amp; Rules</a>
+<nav class="top-nav" aria-label="DM Screen Quick Navigation">
+    <div class="dm-nav-tabs" role="tablist" aria-label="DM Sections">
+        <button type="button" id="nav-combat-btn" class="nav-btn nav-btn-combat" onclick="jumpToCombatBoard()" title="Open / Jump to Active Encounter Board (Hotkey: C)">
+            ⚔️ Combat <span id="nav-combat-badge" class="nav-count-pill">0</span>
+        </button>
+        <button type="button" class="nav-btn" data-dm-tab="party-specs" onclick="selectDmSection('party-specs')" title="Section 0: Live Party Vitals &amp; Allies (Hotkey: 1)">🛡️ Party</button>
+        <button type="button" class="nav-btn" data-dm-tab="active-quests" onclick="selectDmSection('active-quests')" title="Section 1: 15–20 Session Roadmap (Hotkey: 2)">📜 Roadmap</button>
+        <button type="button" class="nav-btn" data-dm-tab="tarokka-oracle" onclick="selectDmSection('tarokka-oracle')" title="Section 1.1: Madam Eva Tarokka Oracle (Hotkey: 3)">🔮 Tarokka</button>
+        <button type="button" class="nav-btn" data-dm-tab="biomes-explorer" onclick="selectDmSection('biomes-explorer')" title="Section 1.5: 25 Locations &amp; Biomes (Hotkey: 4)">🗺️ Locations</button>
+        <button type="button" id="nav-npc-link" class="nav-btn" data-dm-tab="npc-directory" onclick="selectDmSection('npc-directory')" title="Section 2: 37 Barovian NPCs (Hotkey: 5)">👥 NPCs</button>
+        <button type="button" id="nav-monster-link" class="nav-btn" data-dm-tab="monsters-section" onclick="selectDmSection('monsters-section')" title="Section 3: 57 Enemies &amp; Bosses + Encounter Board (Hotkey: 6)">💀 Bestiary</button>
+        <button type="button" id="nav-loot-link" class="nav-btn" data-dm-tab="loot-vault" onclick="selectDmSection('loot-vault')" title="Section 4: 106 World Loot &amp; Crafting (Hotkey: 7)">🎒 Loot</button>
+        <button type="button" class="nav-btn" data-dm-tab="factions-lore" onclick="selectDmSection('factions-lore')" title="Section 4.5: 55 Factions &amp; Lore Dossiers (Hotkey: 8)">🏛️ Lore</button>
+        <button type="button" class="nav-btn" data-dm-tab="dm-rules-guide" onclick="selectDmSection('dm-rules-guide')" title="Section 5: Barovian Laws, DCs &amp; Gold Pacing (Hotkey: 9)">⚖️ Rules</button>
+    </div>
+
+    <div class="dm-nav-tools">
+        <input type="search" id="global-search" class="dm-nav-search" placeholder="🔍 Search all (/)" oninput="filterDashboard(this.value)" aria-label="Search all DM Screen sections">
+        <button type="button" id="dm-view-mode-btn" class="nav-btn" onclick="toggleDmViewMode()" title="Toggle between Focused Single-Section Mode and All-Sections Stack Mode (Hotkey: 0)">🗂️ Focus: ON</button>
+        <button type="button" id="dm-collapse-all-btn" class="nav-btn" style="display:none;" onclick="toggleAllDmSections()" title="Collapse or Expand all sections">▾ Collapse All</button>
+        <button type="button" class="nav-btn" onclick="openWorldMapLightbox()" title="Open Full High-Res Map of Barovia">🗺️ Map</button>
+        <button type="button" class="nav-btn" style="border-color:#34d399; color:#86efac;" onclick="openDmCustomDropModal('party')" title="Live Party Monitor, Remote Inventory &amp; Checkpoints">📡 Sync</button>
+        <button type="button" class="nav-btn" style="border-color:#f59e0b; color:#fde68a;" onclick="openDmCustomDropModal('handout')" title="Send Loot, Gold or Custom Forged Item to Players">🎁 Drop</button>
+        <button type="button" id="dm-whisper-btn" class="nav-btn" style="border-color:#60a5fa; color:#bfdbfe;" onclick="openDmWhisperModal()" title="Private DM-to-Player Whispers">💬 Whispers</button>
+        <div class="dm-theme-wrap" id="dm-theme-wrap">
+            <button type="button" id="dm-theme-btn" class="nav-btn" aria-expanded="false" onclick="toggleDmThemePopover()" title="Switch DM Screen Color Theme">🎨 Theme</button>
+            <div id="dm-theme-popover" class="dm-theme-popover" role="region" aria-label="DM Screen Color Themes"></div>
+        </div>
+    </div>
 </nav>
 
-<div class="container">
+<!-- GLOBAL LIVE TURN RIBBON (STAYS VISIBLE ACROSS ALL TABS WHEN COMBAT IS ACTIVE) -->
+<div id="dm-global-combat-ribbon" class="dm-global-combat-ribbon" role="region" aria-label="Active Combat Turn Control"></div>
 
-    <!-- SECTION 0: PARTY SPECS & ESCORT BAR -->
+<div class="container">
+    <!-- DOCK SLOT WHEN ENCOUNTER BOARD IS PINNED TO TOP -->
+    <div id="dm-pinned-encounter-slot"></div>
+
+    <!-- SECTION 0: COMPACT LIVE PARTY HUD STRIP & COLLAPSIBLE ESCORT DRAWER -->
     <section id="party-specs">
-        <div class="section-header">
-            <span>🛡️ SECTION 0: PARTY VITALS &amp; CORE COMPANION / ALLY ROSTER (LEVEL 3 START)</span>
-            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                <button type="button" class="btn-map-ref" style="background:linear-gradient(135deg,#064e3b,#022c22); border-color:#34d399; color:#a7f3d0;" onclick="openDmCustomDropModal('party')">📡 Live Party Monitor &amp; Checkpoints</button>
-                <button type="button" class="btn-map-ref" style="background:linear-gradient(135deg,#78350f,#451a03); border-color:#f59e0b; color:#fef08a;" onclick="openDmCustomDropModal('handout')">🎁 Send Loot / Gold to Player</button>
-                <button type="button" id="dm-whisper-btn" class="btn-map-ref" style="background:linear-gradient(135deg,#1e3a8a,#172554); border-color:#60a5fa; color:#bfdbfe;" onclick="openDmWhisperModal()">💬 Whispers</button>
-                <span class="section-tag">3 LEVEL 3 PCs + COMPANION &amp; ESCORT</span>
+        <div class="section-header" onclick="if(!event.target.closest('button')) toggleDmSectionCollapse('party-specs')">
+            <span>🛡️ SECTION 0: LIVE PARTY HUD &amp; COMPANION ROSTER</span>
+            <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                <button type="button" class="btn-modal-mini" style="border-color:#34d399; color:#a7f3d0;" onclick="openDmCustomDropModal('party')">📡 Full Monitor &amp; Checkpoints</button>
+                <button type="button" class="btn-modal-mini" style="border-color:#f59e0b; color:#fef08a;" onclick="openDmCustomDropModal('forge')">🛠️ Custom Item Forge</button>
+                <button type="button" class="btn-modal-mini" onclick="addPartyToEncounter(); jumpToCombatBoard();">⚔️ + All 4 to Combat</button>
+                <button type="button" class="dm-sec-collapse-btn" data-sec-btn="party-specs" onclick="toggleDmSectionCollapse('party-specs')">▾ Collapse</button>
             </div>
         </div>
-        <div class="grid-4">
-            <div class="card clickable" onclick="openAllyCharacterWindow('piper')">
-                <div class="card-header"><span class="card-title">🎭 Piper ("The Incomparable")</span><span class="pill purple" id="dm-sec0-vitals-piper">HP 17/17 • AC 13 (16)</span></div>
-                <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Wild Magic Sorcerer.</strong> Wears <strong>⬛ Black Robe (+1 AC/Saves)</strong>; holds 🟥/🟩 Robes, <strong>🗡️ Kolyan's Silvered Dagger (3 Red Gems)</strong>, <strong>🃏 Blank Card</strong>, 🧪 2x Potions, &amp; 🌿 4x Herbs (craftable).</p>
-                    <div id="dm-sec0-res-piper" style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#d8b4fe; margin-top:auto;">
-                        ✨ 3/3 SP • L1 3/4 L2 2/2 • 💖 Charm 0/1 • 💛 1/2 Help • Surge #87
+
+        <div class="dm-party-hud-grid">
+            <!-- PIPER -->
+            <div class="dm-hero-strip-card" style="border-top-color:#a855f7;">
+                <div class="dm-hero-strip-top">
+                    <button type="button" class="dm-hero-strip-name" onclick="openAllyCharacterWindow('piper')" title="Open Piper's Live Character Sheet">🎭 Piper (Lvl 3 Wild Magic Sorcerer)</button>
+                    <span class="pill purple" id="dm-sec0-vitals-piper">HP 17/17 • AC 13 (16)</span>
+                </div>
+                <div id="dm-sec0-res-piper" style="font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--accent-purple-soft);">
+                    ✨ 3/3 SP • L1 3/4 L2 2/2 • 💖 Charm 0/1 • 💛 1/2 Help • Surge #87
+                </div>
+                <div style="font-size:0.73rem; color:var(--text-muted);">Pass. Perc 10 • Darkvision 60 ft • Fire Resist • ⬛ Black Robe (+1 AC/Saves) &amp; 🃏 Blank Card</div>
+                <div class="dm-hero-strip-actions">
+                    <div style="display:inline-flex; gap:3px;">
+                        <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteAdjustHeroHp('piper', '🎩 Piper', -5)">-5</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteAdjustHeroHp('piper', '🎩 Piper', -1)">-1</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroHp('piper', '🎩 Piper', 1)">+1</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroHp('piper', '🎩 Piper', 5)">+5</button>
+                    </div>
+                    <div style="display:inline-flex; gap:4px;">
+                        <button type="button" class="btn-modal-mini" onclick="openDmQuickHandoutFor('piper|🎩 Piper')" title="Send Loot or Gold to Piper">🎁 Drop</button>
+                        <button type="button" class="btn-modal-mini" onclick="openDmWhisperModal('piper')" title="Whisper to Piper">💬</button>
+                        <button type="button" class="btn-modal-mini" onclick="openAllyCharacterWindow('piper')">📄 Sheet</button>
                     </div>
                 </div>
             </div>
-            <div class="card clickable" onclick="openAllyCharacterWindow('jacomir')">
-                <div class="card-header"><span class="card-title">👑 Jacomir Yulle ("King")</span><span class="pill crimson" id="dm-sec0-vitals-jacomir">HP 23/31 • AC 17</span></div>
-                <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Battle Master Fighter (0 GP).</strong> Holds <strong>⚔️ Ismark's Silvered Longsword (Sap)</strong>, <strong>💧 Morninglord Spring Water (Holy Water)</strong>, <strong>📖 Kolyan's Diary</strong>, <strong>🥧 Dirty Dream Pastry</strong>, &amp; 🪵 Pipe. Pouring blood cup for Doru!</p>
-                    <div id="dm-sec0-res-jacomir" style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--accent-gold-soft); margin-top:auto;">
-                        ⚔️ 2/4 d8 • ☕ 3/3 SW • ⚡ Surge 1/1 • 🌟 Insp READY • 💛 2/2 Help
+
+            <!-- JACOMIR -->
+            <div class="dm-hero-strip-card" style="border-top-color:#f59e0b;">
+                <div class="dm-hero-strip-top">
+                    <button type="button" class="dm-hero-strip-name" onclick="openAllyCharacterWindow('jacomir')" title="Open Jacomir's Live Character Sheet">👑 Jacomir Yulle (Lvl 3 Battle Master)</button>
+                    <span class="pill crimson" id="dm-sec0-vitals-jacomir">HP 23/31 • AC 17</span>
+                </div>
+                <div id="dm-sec0-res-jacomir" style="font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--accent-gold-soft);">
+                    ⚔️ 2/4 d8 • ☕ 3/3 SW • ⚡ Surge 1/1 • 🌟 Insp READY • 💛 2/2 Help
+                </div>
+                <div style="font-size:0.73rem; color:var(--text-muted);">Pass. Perc 13 • ⚔️ Silvered Longsword (Sap) • 📖 Kolyan's Diary • 🥧 Dream Pastry</div>
+                <div class="dm-hero-strip-actions">
+                    <div style="display:inline-flex; gap:3px;">
+                        <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteAdjustHeroHp('jacomir', '👑 Jacomir', -5)">-5</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteAdjustHeroHp('jacomir', '👑 Jacomir', -1)">-1</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroHp('jacomir', '👑 Jacomir', 1)">+1</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroHp('jacomir', '👑 Jacomir', 5)">+5</button>
+                    </div>
+                    <div style="display:inline-flex; gap:4px;">
+                        <button type="button" class="btn-modal-mini" onclick="openDmQuickHandoutFor('jacomir|👑 Jacomir')" title="Send Loot or Gold to Jacomir">🎁 Drop</button>
+                        <button type="button" class="btn-modal-mini" onclick="openDmWhisperModal('jacomir')" title="Whisper to Jacomir">💬</button>
+                        <button type="button" class="btn-modal-mini" onclick="openAllyCharacterWindow('jacomir')">📄 Sheet</button>
                     </div>
                 </div>
             </div>
-            <div class="card clickable" onclick="openAllyCharacterWindow('yvaine')">
-                <div class="card-header"><span class="card-title">🎯 Eclipsa "Yvaine"</span><span class="pill crimson" id="dm-sec0-vitals-yvaine">HP 28/28 • AC 16</span></div>
-                <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Monster Slayer Ranger (17 GP 5 SP).</strong> Holds <strong>🩸 Amulet of the Whispering Grave (Speak w/ Dead 1/LR)</strong>, 🗝️ Lockpicks, 🍷 Wine, 🥐 3x Croissants (1d4), 🩹 2x Bandages (1d6+1), &amp; ✉️ Arik's Letter clue.</p>
-                    <div id="dm-sec0-res-yvaine" style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#fca5a5; margin-top:auto;">
-                        💥 Mercy 5/6 Less 5/6 • 🎯 Lament 8/10 • L1 2/3 • 🔍 Sense 1/2
+
+            <!-- YVAINE -->
+            <div class="dm-hero-strip-card" style="border-top-color:#38bdf8;">
+                <div class="dm-hero-strip-top">
+                    <button type="button" class="dm-hero-strip-name" onclick="openAllyCharacterWindow('yvaine')" title="Open Yvaine's Live Character Sheet">🎯 Eclipsa "Yvaine" (Lvl 3 Monster Slayer)</button>
+                    <span class="pill crimson" id="dm-sec0-vitals-yvaine">HP 28/28 • AC 16</span>
+                </div>
+                <div id="dm-sec0-res-yvaine" style="font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--accent-blue-soft);">
+                    💥 Mercy 5/6 Less 5/6 • 🎯 Lament 8/10 • L1 2/3 • 🔍 Sense 1/2
+                </div>
+                <div style="font-size:0.73rem; color:var(--text-muted);">Pass. Perc 16 • Alert (+6 Init) • 🩸 Amulet of Whispering Grave • ✉️ Arik's Letter</div>
+                <div class="dm-hero-strip-actions">
+                    <div style="display:inline-flex; gap:3px;">
+                        <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteAdjustHeroHp('yvaine', '🔫 Yvaine', -5)">-5</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteAdjustHeroHp('yvaine', '🔫 Yvaine', -1)">-1</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroHp('yvaine', '🔫 Yvaine', 1)">+1</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#22c55e; color:#86efac;" onclick="dmRemoteAdjustHeroHp('yvaine', '🔫 Yvaine', 5)">+5</button>
+                    </div>
+                    <div style="display:inline-flex; gap:4px;">
+                        <button type="button" class="btn-modal-mini" onclick="openDmQuickHandoutFor('yvaine|🔫 Yvaine')" title="Send Loot or Gold to Yvaine">🎁 Drop</button>
+                        <button type="button" class="btn-modal-mini" onclick="openDmWhisperModal('yvaine')" title="Whisper to Yvaine">💬</button>
+                        <button type="button" class="btn-modal-mini" onclick="openAllyCharacterWindow('yvaine')">📄 Sheet</button>
                     </div>
                 </div>
             </div>
-            <div class="card clickable" onclick="openAllyCharacterWindow('cael')">
-                <div class="card-header"><span class="card-title">🌟 Caelum Jude ("Cael")</span><span class="pill green">HP 38/38 • AC 14</span></div>
-                <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Lvl 3 Circle of the Stars Druid (Main Companion & Healer).</strong> Stalks as black cat in Session 1. <strong>Vow of Dark Powers:</strong> Stabilizes at 1 HP (cannot die before Act IV).</p>
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#86efac; margin-top:auto;">
-                        ✨ Chalice (Dual Heals 1d8+3) • 🏹 Archer (+6, 1d8+3) • ⚡ Guiding Bolt 2/2
-                    </div>
+
+            <!-- CAEL -->
+            <div class="dm-hero-strip-card" style="border-top-color:#34d399;">
+                <div class="dm-hero-strip-top">
+                    <button type="button" class="dm-hero-strip-name" onclick="openAllyCharacterWindow('cael')" title="Open Cael's Companion Dossier">🌟 Caelum Jude ("Cael" — Stars Druid)</button>
+                    <span class="pill green">HP 38/38 • AC 14</span>
                 </div>
-            </div>
-            <div class="card clickable" onclick="openNpcModal('ireena')">
-                <div class="card-header"><span class="card-title">🌹 Ireena Kolyana</span><span class="pill crimson">HP 28/28 • AC 15</span></div>
-                <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Escort Heroine (Tatyana Reborn).</strong> Twice-bitten by Strahd; fights shoulder-to-shoulder with the party using a Silvered Rapier.</p>
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--accent-gold-soft); margin-top:auto;">
-                        ⚔️ Silvered Rapier +5 (1d8+3) • 🛡️ Parry Reaction (+2 AC)
-                    </div>
+                <div style="font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--accent-green-soft);">
+                    ✨ Chalice (Dual Heals 1d8+3) • 🏹 Archer (+6, 1d8+3) • ⚡ Guiding Bolt 2/2
                 </div>
-            </div>
-            <div class="card clickable" onclick="openNpcModal('ismark')">
-                <div class="card-header"><span class="card-title">🗡️ Ismark Indirovich</span><span class="pill gold">HP 58/58 • AC 17</span></div>
-                <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>New Burgomaster & Frontline Defender.</strong> Holds the village barricades and grants his father's Silvered Armory Cache.</p>
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:var(--accent-gold-soft); margin-top:auto;">
-                        ⚔️ 2x Longsword +5 (1d10+3) • ☕ Second Wind (1d10+3)
-                    </div>
-                </div>
-            </div>
-            <div class="card clickable" onclick="openNpcModal('ezmerelda')">
-                <div class="card-header"><span class="card-title">⚔️ Ezmerelda d'Avenir</span><span class="pill purple">HP 82/82 • AC 17</span></div>
-                <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Independent Vistani Monster Hunter Ally (Act II–III).</strong> Optional hunter contact (kept off Card #4 so Cael stays main healer) with +1 Rapier, silvered prosthetic, &amp; Wizard spells.</p>
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#d8b4fe; margin-top:auto;">
-                        ⚔️ 2x +1 Rapier (+8, 1d8+5) • ⚡ Lightning Bolt / Magic Circle
-                    </div>
-                </div>
-            </div>
-            <div class="card clickable" onclick="openNpcModal('derek')">
-                <div class="card-header"><span class="card-title">⏳ Derek ("The Avatar")</span><span class="pill purple">Time-Stop Emissary</span></div>
-                <div class="card-body">
-                    <p style="font-size:0.81rem; color:var(--text-muted);"><strong>Avatar of the Dark Powers (Met in S1 Church).</strong> Froze time (<code>tap, tap, tap</code>) during the Doru blood-cup dilemma! Invisible to Strahd's spies. Appears at <strong>3 Future Milestones Only</strong>.</p>
-                    <div style="font-family:'JetBrains Mono',monospace; font-size:0.74rem; color:#93c5fd; margin-top:auto;">
-                        ⏳ Frozen Time Blind Spot • 🎯 Goal: Kill Strahd • 👁️ Watching Piper
+                <div style="font-size:0.73rem; color:var(--text-muted);">Main Party Healer • Vow of Dark Powers: Stabilizes at 1 HP (cannot die before Act IV)</div>
+                <div class="dm-hero-strip-actions">
+                    <span class="pill gold" style="font-size:0.65rem;">Inside Shepherd (Card #4)</span>
+                    <div style="display:inline-flex; gap:4px;">
+                        <button type="button" class="btn-modal-mini" onclick="openNpcModal('cael')">📄 Dossier &amp; Rolls</button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <details class="dm-escort-drawer">
+            <summary>
+                <span>🌹 Escort &amp; Story Allies Roster — Ireena, Ismark, Ezmerelda &amp; Derek (Click to Expand)</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--text-muted);">4 Dossiers ▾</span>
+            </summary>
+            <div class="grid-4" style="padding:10px 12px;">
+                <div class="card clickable" onclick="openNpcModal('ireena')">
+                    <div class="card-header"><span class="card-title">🌹 Ireena Kolyana</span><span class="pill crimson">HP 28/28 • AC 15</span></div>
+                    <div class="card-body">
+                        <p style="font-size:0.78rem; color:var(--text-muted);"><strong>Escort Heroine (Tatyana Reborn).</strong> Twice-bitten by Strahd; fights shoulder-to-shoulder with Silvered Rapier.</p>
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--accent-gold-soft); margin-top:auto;">⚔️ Silvered Rapier +5 (1d8+3) • 🛡️ Parry (+2 AC)</div>
+                    </div>
+                </div>
+                <div class="card clickable" onclick="openNpcModal('ismark')">
+                    <div class="card-header"><span class="card-title">🗡️ Ismark Indirovich</span><span class="pill gold">HP 58/58 • AC 17</span></div>
+                    <div class="card-body">
+                        <p style="font-size:0.78rem; color:var(--text-muted);"><strong>New Burgomaster &amp; Defender.</strong> Holds village barricades and grants Silvered Armory Cache.</p>
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--accent-gold-soft); margin-top:auto;">⚔️ 2x Longsword +5 (1d10+3) • ☕ Second Wind</div>
+                    </div>
+                </div>
+                <div class="card clickable" onclick="openNpcModal('ezmerelda')">
+                    <div class="card-header"><span class="card-title">⚔️ Ezmerelda d'Avenir</span><span class="pill purple">HP 82/82 • AC 17</span></div>
+                    <div class="card-body">
+                        <p style="font-size:0.78rem; color:var(--text-muted);"><strong>Vistani Monster Hunter (Act II–III).</strong> +1 Rapier, silvered prosthetic, &amp; Wizard spells.</p>
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--accent-purple-soft); margin-top:auto;">⚔️ 2x +1 Rapier (+8, 1d8+5) • ⚡ Lightning Bolt</div>
+                    </div>
+                </div>
+                <div class="card clickable" onclick="openNpcModal('derek')">
+                    <div class="card-header"><span class="card-title">⏳ Derek ("The Avatar")</span><span class="pill purple">Time-Stop Emissary</span></div>
+                    <div class="card-body">
+                        <p style="font-size:0.78rem; color:var(--text-muted);"><strong>Avatar of Dark Powers.</strong> Froze time (<code>tap, tap, tap</code>) in S1 Church! Invisible to Strahd's spies.</p>
+                        <div style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--accent-blue-soft); margin-top:auto;">⏳ Frozen Time Blind Spot • 🎯 Goal: Kill Strahd</div>
+                    </div>
+                </div>
+            </div>
+        </details>
     </section>
 
     <!-- SECTION 1: 15-20 SESSION ROADMAP -->
@@ -2085,13 +2689,12 @@
         </div>
 
         <div class="loot-filter-bar" id="biome-filter-bar">
-            <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Filter Locations by Act:</span>
-            <button type="button" class="btn-loot-filter" data-biomeact="all" onclick="filterBiomes('all', this)">🗺️ All Locations (25)</button>
-            <button type="button" class="btn-loot-filter active" data-biomeact="act1" onclick="filterBiomes('act1', this)">🩸 Act I: Gates, Woods, Barovia, Tser Falls, Pool &amp; Mill (8)</button>
-            <button type="button" class="btn-loot-filter" data-biomeact="act2" onclick="filterBiomes('act2', this)">⚔️ Act II: Vallaki Sites, Winery, Yester Hill &amp; Dinner (8)</button>
-            <button type="button" class="btn-loot-filter" data-biomeact="act3" onclick="filterBiomes('act3', this)">🐉 Act III: Argynvostholt, Krezk, Abbey, Berez, Tower &amp; Den (6)</button>
-            <button type="button" class="btn-loot-filter" data-biomeact="act4" onclick="filterBiomes('act4', this)">🏰 Act IV: Tsolenka Pass, Amber Temple &amp; Ravenloft (3)</button>
-            <button type="button" class="btn-map-ref" style="margin-left:auto;" onclick="openWorldMapLightbox()">🗺️ Map of Barovia</button>
+            <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Act:</span>
+            <button type="button" class="btn-loot-filter" data-biomeact="all" onclick="filterBiomes('all', this)">🗺️ All (25)</button>
+            <button type="button" class="btn-loot-filter active" data-biomeact="act1" onclick="filterBiomes('act1', this)" title="Gates, Woods, Barovia Village, Manor, Church, Tser Falls, Tser Pool &amp; Bonegrinder">🩸 Act I: Barovia &amp; Tser (8)</button>
+            <button type="button" class="btn-loot-filter" data-biomeact="act2" onclick="filterBiomes('act2', this)" title="Vallaki, Blue Water Inn, St. Andral, Coffin Shop, Wachterhaus, Winery, Yester Hill &amp; Dinner">⚔️ Act II: Vallaki &amp; Winery (8)</button>
+            <button type="button" class="btn-loot-filter" data-biomeact="act3" onclick="filterBiomes('act3', this)" title="Argynvostholt, Krezk, Abbey, Berez, Van Richten's Tower &amp; Werewolf Den">🐉 Act III: Argynvost, Krezk &amp; Berez (6)</button>
+            <button type="button" class="btn-loot-filter" data-biomeact="act4" onclick="filterBiomes('act4', this)" title="Tsolenka Pass, Amber Temple &amp; Castle Ravenloft Siege">🏰 Act IV: Amber &amp; Ravenloft (3)</button>
         </div>
 
         <div class="grid-4" id="biomes-grid">
@@ -2266,16 +2869,16 @@
             </search>
         </div>
         <div class="loot-filter-bar" id="npc-filter-bar">
-            <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">📍 FILTER BY LOCATION:</span>
+            <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">📍 Location:</span>
             <button type="button" class="btn-loot-filter active" data-npcloc="met_active" onclick="filterNpcDirectory('met_active', this)">🟢 Met &amp; Active</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="all" onclick="filterNpcDirectory('all', this)">All Locations</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="village" onclick="filterNpcDirectory('village', this)">🌲 Village of Barovia</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="tser_mill" onclick="filterNpcDirectory('tser_mill', this)">🔮 Tser Pool &amp; Bonegrinder</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="vallaki" onclick="filterNpcDirectory('vallaki', this)">⚔️ Vallaki &amp; Vistani Camp</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="argyn_krezk" onclick="filterNpcDirectory('argyn_krezk', this)">🐉 Argynvostholt &amp; Krezk</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="berez_baratok" onclick="filterNpcDirectory('berez_baratok', this)">🌊 Berez, Baratok &amp; Den</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="pass_temple" onclick="filterNpcDirectory('pass_temple', this)">🏔️ Tsolenka Pass &amp; Amber Temple</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="ravenloft" onclick="filterNpcDirectory('ravenloft', this)">🏰 Castle Ravenloft</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="all" onclick="filterNpcDirectory('all', this)">All</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="village" onclick="filterNpcDirectory('village', this)">🌲 Barovia</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="tser_mill" onclick="filterNpcDirectory('tser_mill', this)">🔮 Tser &amp; Mill</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="vallaki" onclick="filterNpcDirectory('vallaki', this)">⚔️ Vallaki</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="argyn_krezk" onclick="filterNpcDirectory('argyn_krezk', this)">🐉 Argynvost &amp; Krezk</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="berez_baratok" onclick="filterNpcDirectory('berez_baratok', this)">🌊 Berez &amp; Den</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="pass_temple" onclick="filterNpcDirectory('pass_temple', this)">🏔️ Pass &amp; Temple</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="ravenloft" onclick="filterNpcDirectory('ravenloft', this)">🏰 Ravenloft</button>
         </div>
         <div class="table-wrap" id="npc-table-wrap" tabindex="0" role="region" aria-labelledby="npc-sec-title">
             <table class="guide-table" id="npc-table">
@@ -2313,16 +2916,47 @@
                 </div>
                 <div class="encounter-board-controls">
                     <button type="button" id="encounter-combat-toggle-btn" class="btn-roll" style="background:linear-gradient(135deg,#b91c1c,#991b1b); border-color:#f87171; color:#fef2f2;" onclick="toggleEncounterCombatBroadcast()" title="Broadcast sanitized Fog-of-War Turn Order strip to all player sheets">⚔️ Start Combat</button>
-                    <button type="button" class="btn-step btn-heal" onclick="addAllyToEncounter()" title="Add an Ally Initiative Card">👤 + Ally</button>
+                    <button type="button" id="enc-preset-toggle-btn" class="btn-roll" onclick="toggleEncounterDrawer('presets')" title="1-Click Load Scene Encounter Presets (Party + Enemies + Auto-Roll Init)">⚡ Presets</button>
+                    <button type="button" id="enc-custom-toggle-btn" class="btn-step btn-heal" onclick="toggleEncounterDrawer('custom')" title="Spawn an ad-hoc custom enemy or NPC onto the Encounter Board">➕ Custom Enemy</button>
                     <button type="button" class="btn-step" onclick="addPartyToEncounter()" title="Add Piper, Jacomir, Yvaine &amp; Cael Initiative Cards">🛡️ + Party</button>
-                    <button type="button" class="btn-roll" onclick="rollAllEncounterInits()" title="Roll Initiative for Enemies and sort all combatants">🎲 Roll Enemy Inits</button>
-                    <button type="button" class="btn-step" onclick="sortEncounterBoard(true)" title="Sort all Allies &amp; Enemies by Initiative">🔃 Sort Order</button>
-                    <button type="button" class="btn-step" onclick="clearDeadEncounterEntries()">🧹 Clear Dead</button>
-                    <button type="button" class="btn-step btn-heal" onclick="healAllEncounterEntries()">💚 Heal All</button>
-                    <button type="button" class="btn-step" onclick="clearEncounterBoard()">🗑️ Clear Board</button>
+                    <button type="button" class="btn-step btn-heal" onclick="addAllyToEncounter()" title="Add an Ally Initiative Card">👤 + Ally</button>
+                    <button type="button" class="btn-roll" onclick="rollAllEncounterInits()" title="Roll Initiative for Enemies and sort all combatants">🎲 Roll Inits</button>
+                    <button type="button" class="btn-step" onclick="sortEncounterBoard(true)" title="Sort all Allies &amp; Enemies by Initiative">🔃 Sort</button>
+                    <button type="button" class="btn-step" onclick="clearDeadEncounterEntries()" title="Remove 0 HP slain enemies">🧹 Clear Dead</button>
+                    <button type="button" class="btn-step btn-heal" onclick="healAllEncounterEntries()" title="Restore all enemies to full HP">💚 Heal All</button>
+                    <button type="button" class="btn-step" onclick="clearEncounterBoard()" title="Clear entire Encounter Board">🗑️ Clear</button>
+                    <button type="button" id="encounter-pin-btn" class="btn-step" onclick="togglePinEncounterBoard()" title="Pin Encounter Board to top of screen across all tabs">📌 Pin Top</button>
                     <button type="button" id="encounter-collapse-btn" class="btn-step" aria-expanded="true" aria-controls="encounter-board-body" onclick="toggleEncounterBoardCollapse()">▾ Collapse</button>
                 </div>
             </div>
+
+            <!-- 1-CLICK SCENE ENCOUNTER PRESETS DRAWER -->
+            <div id="enc-preset-drawer" class="enc-drawer-bar">
+                <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+                    <span style="font-family:'Cinzel',serif; font-size:0.76rem; font-weight:700; color:var(--accent-gold);">⚡ 1-Click Scene Encounter Presets (Spawns Enemies + Party &amp; Rolls Enemy Initiatives):</span>
+                    <label style="font-size:0.72rem; color:var(--text-muted); display:inline-flex; align-items:center; gap:5px; cursor:pointer;">
+                        <input type="checkbox" id="enc-preset-replace-chk" checked> Replace existing enemies
+                    </label>
+                </div>
+                <div class="enc-preset-pills" id="enc-preset-pills"></div>
+            </div>
+
+            <!-- 1-LINE AD-HOC CUSTOM ENEMY SPAWNER DRAWER -->
+            <div id="enc-custom-drawer" class="enc-drawer-bar">
+                <div style="font-family:'Cinzel',serif; font-size:0.76rem; font-weight:700; color:var(--accent-green-soft);">➕ Quick-Spawn Custom Enemy / Improvised NPC Combatant:</div>
+                <form class="enc-custom-form" onsubmit="event.preventDefault(); spawnCustomEncounterEnemy();">
+                    <input type="text" id="enc-cust-name" class="enc-custom-input" placeholder="Name (e.g. Vallaki Guard)" style="width:165px;" required>
+                    <input type="number" id="enc-cust-hp" class="enc-custom-input" placeholder="HP" value="22" min="1" max="999" style="width:68px;" title="Max HP" required>
+                    <input type="number" id="enc-cust-ac" class="enc-custom-input" placeholder="AC" value="14" min="1" max="35" style="width:62px;" title="Armor Class" required>
+                    <input type="number" id="enc-cust-init" class="enc-custom-input" placeholder="+Init" value="1" min="-10" max="25" style="width:64px;" title="Initiative Modifier">
+                    <input type="text" id="enc-cust-wpn" class="enc-custom-input" placeholder="Attack Name (Halberd)" value="Strike" style="width:130px;" title="Primary Weapon/Attack Label">
+                    <input type="number" id="enc-cust-hit" class="enc-custom-input" placeholder="+Hit" value="4" min="-5" max="25" style="width:64px;" title="Attack Roll Bonus (+Hit)">
+                    <input type="text" id="enc-cust-dmg" class="enc-custom-input" placeholder="Dmg (1d8+2)" value="1d8+2" style="width:92px;" title="Damage Dice Formula">
+                    <input type="number" id="enc-cust-qty" class="enc-custom-input" placeholder="Qty" value="1" min="1" max="12" style="width:58px;" title="How many copies to spawn">
+                    <button type="submit" class="btn-roll" style="padding:5px 11px;">⚔️ Spawn</button>
+                </form>
+            </div>
+
             <p id="encounter-status-live" role="status" class="visually-hidden"></p>
             <div class="encounter-board-body" id="encounter-board-body">
                 <div id="encounter-combat-ribbon" class="enc-combat-ribbon"></div>
@@ -2331,15 +2965,15 @@
         </div>
 
         <div class="loot-filter-bar" id="monster-filter-bar">
-            <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">📍 FILTER BY LOCATION / TIER:</span>
-            <button type="button" class="btn-loot-filter" data-monsterloc="all" onclick="filterMonsterDirectory('all', this)">All Enemies</button>
-            <button type="button" class="btn-loot-filter active" data-monsterloc="mobs" onclick="filterMonsterDirectory('mobs', this)">💀 Core &amp; Road Mobs</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="bosses" onclick="filterMonsterDirectory('bosses', this)">👑 Bosses Only</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="barovia_mill" onclick="filterMonsterDirectory('barovia_mill', this)">🌲 Barovia &amp; Bonegrinder</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="vallaki_hill" onclick="filterMonsterDirectory('vallaki_hill', this)">⚔️ Vallaki, Winery &amp; Yester Hill</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="argyn_krezk_berez" onclick="filterMonsterDirectory('argyn_krezk_berez', this)">🐉 Argynvost, Krezk, Berez &amp; Den</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="pass_temple" onclick="filterMonsterDirectory('pass_temple', this)">🏔️ Tsolenka Pass &amp; Amber Temple</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="ravenloft" onclick="filterMonsterDirectory('ravenloft', this)">🏰 Castle Ravenloft</button>
+            <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">📍 Tier / Region:</span>
+            <button type="button" class="btn-loot-filter" data-monsterloc="all" onclick="filterMonsterDirectory('all', this)">All</button>
+            <button type="button" class="btn-loot-filter active" data-monsterloc="mobs" onclick="filterMonsterDirectory('mobs', this)">💀 Core Mobs</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="bosses" onclick="filterMonsterDirectory('bosses', this)">👑 Bosses</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="barovia_mill" onclick="filterMonsterDirectory('barovia_mill', this)">🌲 Barovia &amp; Mill</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="vallaki_hill" onclick="filterMonsterDirectory('vallaki_hill', this)">⚔️ Vallaki &amp; Hill</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="argyn_krezk_berez" onclick="filterMonsterDirectory('argyn_krezk_berez', this)">🐉 Argynvost, Krezk &amp; Berez</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="pass_temple" onclick="filterMonsterDirectory('pass_temple', this)">🏔️ Pass &amp; Temple</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="ravenloft" onclick="filterMonsterDirectory('ravenloft', this)">🏰 Ravenloft</button>
         </div>
         <div class="table-wrap" id="monster-table-wrap" tabindex="0" role="region" aria-labelledby="monster-sec-title">
             <table class="guide-table" id="monster-table">
@@ -2424,13 +3058,12 @@
         </div>
 
         <div class="loot-filter-bar" id="lore-filter-bar">
-            <span style="font-family:'Cinzel',serif; font-size:0.78rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Quick Lore Filter:</span>
-            <button type="button" class="btn-loot-filter" data-lorecat="all" onclick="filterLoreCodex('all', this)">📚 All Lore (55)</button>
-            <button type="button" class="btn-loot-filter active" data-lorecat="factions" onclick="filterLoreCodex('factions', this)">🛡️ 4.5A Factions, Orders &amp; Covens (9)</button>
-            <button type="button" class="btn-loot-filter" data-lorecat="villages" onclick="filterLoreCodex('villages', this)">🏘️ 4.5B All 25 Location Histories &amp; Lore (25)</button>
-            <button type="button" class="btn-loot-filter" data-lorecat="history" onclick="filterLoreCodex('history', this)">⏳ 4.5C History, Fanes, Faiths &amp; Figures (13)</button>
-            <button type="button" class="btn-loot-filter" data-lorecat="cosmic" onclick="filterLoreCodex('cosmic', this)">🌌 4.5D Cosmic Knot &amp; Dark Powers (8)</button>
-            <button type="button" class="btn-map-ref" style="margin-left:auto;" onclick="openWorldMapLightbox()">🗺️ Map of Barovia</button>
+            <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">🔍 Lore:</span>
+            <button type="button" class="btn-loot-filter" data-lorecat="all" onclick="filterLoreCodex('all', this)">📚 All (55)</button>
+            <button type="button" class="btn-loot-filter active" data-lorecat="factions" onclick="filterLoreCodex('factions', this)">🛡️ 4.5A Factions (9)</button>
+            <button type="button" class="btn-loot-filter" data-lorecat="villages" onclick="filterLoreCodex('villages', this)">🏘️ 4.5B Locations (25)</button>
+            <button type="button" class="btn-loot-filter" data-lorecat="history" onclick="filterLoreCodex('history', this)">⏳ 4.5C History &amp; Fanes (13)</button>
+            <button type="button" class="btn-loot-filter" data-lorecat="cosmic" onclick="filterLoreCodex('cosmic', this)">🌌 4.5D Cosmic Knot (8)</button>
         </div>
 
         <!-- 4.5A: BAROVIAN FACTIONS, SECRET ORDERS & COVENS (9) -->
@@ -3656,10 +4289,11 @@ function loadEncounterBoard() {
             encounterEntries = parsed.entries.filter(e => {
                 if (!e) return false;
                 if (e.kind === 'ally') return true;
+                if (e.kind === 'custom' && Array.isArray(e.targets)) return true;
                 return Boolean(MONSTER_DATA[e.key] && Array.isArray(e.targets));
             }).map(e => ({
                 ...e,
-                kind: e.kind === 'ally' ? 'ally' : 'monster',
+                kind: e.kind === 'ally' ? 'ally' : (e.kind === 'custom' ? 'custom' : 'monster'),
                 customLabel: typeof e.customLabel === 'string' ? e.customLabel : '',
                 initBonus: typeof e.initBonus === 'number' ? e.initBonus : null,
                 visibleToPlayers: typeof e.visibleToPlayers === 'boolean' ? e.visibleToPlayers : (e.kind === 'ally'),
@@ -4271,9 +4905,7 @@ function sortEncounterBoard(announce = true) {
                     if (inp) inp.value = typeof e.init === 'number' ? String(e.init) : '';
                 });
             };
-            if (grid.startViewTransition) grid.startViewTransition(update);
-            else if (document.startViewTransition) document.startViewTransition(update);
-            else update();
+            update();
         } else {
             renderEncounterBoard();
         }
@@ -4379,17 +5011,89 @@ function applyEncounterCollapseUi() {
     }
 }
 
+function shortenAttackLabelForBoard(rawName) {
+    if (!rawName) return 'Attack';
+    let s = String(rawName)
+        .replace(/\([^)]*\)/g, '')
+        .split('/')[0]
+        .split('—')[0]
+        .split('•')[0]
+        .replace(/\b(Melee|Ranged|Weapon|Spell|Attack|Bonus|Action|Reaction|Multiattack)\b/gi, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    if (!s) s = String(rawName).split('(')[0].trim() || 'Attack';
+    return s.length > 20 ? s.slice(0, 19) + '…' : s;
+}
+
+function renderEncounterQuickAttacksHtml(entry, m) {
+    if (!entry || entry.kind === 'ally') return '';
+    if (entry.kind === 'custom') {
+        const wpnName = escapeEncounterHtml(entry.customWpn || 'Strike');
+        const hitSign = (entry.customHit || 0) >= 0 ? `+${entry.customHit || 0}` : `${entry.customHit || 0}`;
+        const dmgStr = escapeEncounterHtml(entry.customDmg || '1d8+2');
+        return `
+            <div class="enc-quick-atk-list">
+                <div class="enc-quick-atk-row">
+                    <span class="enc-quick-atk-name" title="${wpnName}">⚔️ ${wpnName}</span>
+                    <div class="enc-quick-atk-btns">
+                        <button type="button" class="btn-enc-atk" onclick="rollCustomEncounterAtk('${entry.uid}')" title="Roll Attack (${hitSign} to Hit)">🎯 Attack</button>
+                        <button type="button" class="btn-enc-dmg" onclick="rollCustomEncounterDmg('${entry.uid}')" title="Roll Damage (${dmgStr})">💥 Dmg</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    if (!m || !Array.isArray(m.attacks) || m.attacks.length === 0) return '';
+    const rows = [];
+    for (let i = 0; i < m.attacks.length && rows.length < 3; i++) {
+        const atk = m.attacks[i];
+        if (!atk) continue;
+        const hasHit = Boolean(atk.hitBtn && atk.hitBtn.func);
+        const hasDmg = Boolean(atk.dmgBtn && atk.dmgBtn.func);
+        const firstExtraBtn = (!hasHit && !hasDmg && Array.isArray(atk.buttons))
+            ? atk.buttons.find(b => b && b.func)
+            : null;
+        if (!hasHit && !hasDmg && !firstExtraBtn) continue;
+
+        const shortName = escapeEncounterHtml(shortenAttackLabelForBoard(atk.name));
+        const fullTitle = escapeEncounterHtml(atk.name || 'Attack');
+        const hitBtnHtml = hasHit
+            ? `<button type="button" class="btn-enc-atk" onclick="${escapeEncounterHtml(atk.hitBtn.func)}" title="${escapeEncounterHtml(atk.hitBtn.label || 'Roll Attack')}">🎯 Attack</button>`
+            : '';
+        const dmgBtnHtml = hasDmg
+            ? `<button type="button" class="btn-enc-dmg" onclick="${escapeEncounterHtml(atk.dmgBtn.func)}" title="${escapeEncounterHtml(atk.dmgBtn.label || 'Roll Damage')}">💥 Dmg</button>`
+            : '';
+        const extraBtnHtml = firstExtraBtn
+            ? `<button type="button" class="btn-enc-atk" onclick="${escapeEncounterHtml(firstExtraBtn.func)}" title="${escapeEncounterHtml(firstExtraBtn.label || 'Roll Ability')}">⚡ Roll</button>`
+            : '';
+
+        rows.push(`
+            <div class="enc-quick-atk-row">
+                <span class="enc-quick-atk-name" title="${fullTitle}">⚔️ ${shortName}</span>
+                <div class="enc-quick-atk-btns">${hitBtnHtml}${dmgBtnHtml}${extraBtnHtml}</div>
+            </div>
+        `);
+    }
+    if (!rows.length) return '';
+    return `<div class="enc-quick-atk-list">${rows.join('')}</div>`;
+}
+
 function renderEncounterBoard() {
     const grid = document.getElementById('encounter-board-grid');
     const badge = document.getElementById('encounter-count-badge');
     const toggleBtn = document.getElementById('encounter-combat-toggle-btn');
     const ribbon = document.getElementById('encounter-combat-ribbon');
+    const navBadge = document.getElementById('nav-combat-badge');
+    const globalRibbon = document.getElementById('dm-global-combat-ribbon');
     applyEncounterCollapseUi();
 
     const allyCount = encounterEntries.filter(e => e.kind === 'ally').length;
     const enemies = encounterEntries.filter(e => e.kind !== 'ally');
     const aliveEnemies = enemies.filter(e => e.targets.some(t => t.cur > 0)).length;
     const hiddenEnemies = enemies.filter(e => !e.visibleToPlayers).length;
+    if (navBadge) {
+        navBadge.textContent = String(encounterEntries.length);
+    }
     if (badge) {
         badge.textContent = allyCount > 0
             ? `${allyCount} Allies • ${enemies.length} Enemies (${aliveEnemies} Alive)`
@@ -4401,6 +5105,34 @@ function renderEncounterBoard() {
             ? 'linear-gradient(135deg,#065f46,#064e3b)'
             : 'linear-gradient(135deg,#b91c1c,#991b1b)';
         toggleBtn.style.borderColor = encounterCombatActive ? '#34d399' : '#f87171';
+    }
+    if (globalRibbon) {
+        const boardDirectlyVisible = !encounterBoardCollapsed && (
+            (typeof encounterBoardPinned !== 'undefined' && encounterBoardPinned) ||
+            (typeof dmFocusMode !== 'undefined' && !dmFocusMode) ||
+            (typeof dmActiveSection !== 'undefined' && dmActiveSection === 'monsters-section')
+        );
+        if (encounterCombatActive && encounterEntries.length > 0 && !boardDirectlyVisible) {
+            globalRibbon.classList.add('is-visible');
+            const activeUnit = encounterEntries.find(e => e.uid === encounterActiveUid) || encounterEntries[0];
+            const activeName = activeUnit ? getEncounterDisplayTitle(activeUnit) : '--';
+            globalRibbon.innerHTML = `
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <span class="pill crimson" style="font-weight:800; font-size:0.72rem;">📡 LIVE COMBAT • ROUND ${encounterRound}</span>
+                    <span style="font-size:0.79rem; color:#f8fafc;">Active Turn: <strong style="color:#fde68a;">${escapeEncounterHtml(activeName)}</strong></span>
+                    <span style="font-size:0.72rem; color:#cbd5e1;">(${aliveEnemies} Enemies Alive)</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;">
+                    <button type="button" class="btn-step" onclick="advanceEncounterTurn(-1)" title="Previous Turn">◀ Prev</button>
+                    <button type="button" class="btn-roll" style="background:linear-gradient(135deg,#d97706,#b45309); border-color:#fde047; color:#090d16; font-weight:900; padding:3px 11px;" onclick="advanceEncounterTurn(1)" title="Next Turn (Hotkey: N)">⏭️ Next Turn</button>
+                    <button type="button" class="btn-step" onclick="jumpToCombatBoard()" title="Jump to Encounter Board (Hotkey: C)">⚔️ Show Board</button>
+                    <button type="button" class="btn-step" onclick="togglePinEncounterBoard()" title="Pin or Unpin Encounter Board at Top">${typeof encounterBoardPinned !== 'undefined' && encounterBoardPinned ? '📌 Unpin' : '📌 Pin Top'}</button>
+                </div>
+            `;
+        } else {
+            globalRibbon.classList.remove('is-visible');
+            globalRibbon.innerHTML = '';
+        }
     }
     if (ribbon) {
         if (encounterCombatActive && encounterEntries.length > 0) {
@@ -4496,6 +5228,14 @@ function renderEncounterBoard() {
                     <button type="button" class="btn-enc-edit" onclick="startRenameEncounterEntry('${entry.uid}')" aria-label="Rename ${safeTitle}" title="Edit Name">✏️</button>
                 </div>
                 ${allyPreset && entry.customLabel !== allyPreset.name ? `<div><button type="button" class="enc-sheet-link" style="color:#94c9a9;" onclick="${clickAction}">📄 ${escapeEncounterHtml(allyPreset.name)} Sheet</button></div>` : ''}`;
+        } else if (entry.kind === 'custom') {
+            titleBlockHtml = `
+                <div class="enc-title-row">
+                    ${isCurrentTurn ? `<span class="pill gold" style="font-size:0.6rem; padding:1px 5px; background:#f59e0b; color:#090d16; font-weight:900;">▶ TURN</span>` : ''}
+                    <strong style="font-size:0.86rem; color:var(--text-bright);">${safeTitle}</strong>
+                    <span class="pill" style="font-size:0.6rem;">Custom</span>
+                    <button type="button" class="btn-enc-edit" onclick="startRenameEncounterEntry('${entry.uid}')" aria-label="Rename ${safeTitle}" title="Rename">✏️</button>
+                </div>`;
         } else {
             const hasCustom = Boolean(entry.customLabel && entry.customLabel.trim());
             const primaryNameHtml = hasCustom
@@ -4617,6 +5357,7 @@ function renderEncounterBoard() {
                 </div>
                 ${isVis && (entry.masked || entry.playerAlias) ? `<div style="font-size:0.65rem; color:#c4b5fd;">Players see: <strong>"${escapeEncounterHtml(pubPreview)}"</strong></div>` : ''}
                 ${targetsHtml}
+                ${renderEncounterQuickAttacksHtml(entry, m)}
                 ${renderConditionsBlock(entry)}
             </div>
         `;
@@ -16197,6 +16938,7 @@ function initDmFirebaseSync() {
             encounterEntries = incomingEntries.filter(e => {
                 if (!e) return false;
                 if (e.kind === 'ally') return true;
+                if (e.kind === 'custom' && Array.isArray(e.targets)) return true;
                 return Boolean(MONSTER_DATA[e.key] && Array.isArray(e.targets));
             }).map(e => ({
                 ...e,
@@ -19300,9 +20042,524 @@ function filterDashboard(query, skipExpand = false) {
         });
     }
     Object.keys(SECTION_SEARCH_CONFIG).forEach(scope => syncSectionVisibility(scope, skipExpand));
+    if (typeof syncDmSectionLayout === 'function') syncDmSectionLayout();
 }
 
+// =========================================================
+// 7. DM SCREEN V4 LIVE SESSION COCKPIT (FOCUS TABS, COLLAPSE,
+//    PINNED COMBAT BOARD, SCENE PRESETS, CUSTOM ENEMY & THEMES)
+// =========================================================
+const DM_SECTION_IDS = [
+    'party-specs',
+    'active-quests',
+    'tarokka-oracle',
+    'biomes-explorer',
+    'npc-directory',
+    'monsters-section',
+    'loot-vault',
+    'factions-lore',
+    'dm-rules-guide'
+];
+const DM_FOCUS_STORAGE_KEY = 'cos_dm_focus_mode_v1';
+const DM_ACTIVE_SEC_STORAGE_KEY = 'cos_dm_active_sec_v1';
+const DM_COLLAPSED_SECS_STORAGE_KEY = 'cos_dm_collapsed_secs_v1';
+const DM_ENC_PINNED_STORAGE_KEY = 'cos_dm_enc_pinned_v1';
+const DM_THEME_STORAGE_KEY = 'cos_sheet_theme_v1';
+
+let dmFocusMode = true;
+let dmActiveSection = 'party-specs';
+let dmCollapsedSections = {};
+let encounterBoardPinned = false;
+
+const DM_THEME_CATALOG = [
+    { id: 'obsidian', name: 'Obsidian Brass', scheme: 'dark', dots: ['#0b0c10', '#c8a45c', '#4db887'] },
+    { id: 'midnight', name: 'Midnight Slate', scheme: 'dark', dots: ['#0c1220', '#5da9dd', '#c8a45c'] },
+    { id: 'velvet', name: 'Barovian Velvet', scheme: 'dark', dots: ['#170e15', '#de6470', '#c8a45c'] },
+    { id: 'pine', name: 'Pine Forest Slate', scheme: 'dark', dots: ['#0c1714', '#4db887', '#c8a45c'] },
+    { id: 'parchment', name: 'Warm Parchment (Light)', scheme: 'light', dots: ['#efe7d6', '#8a5d19', '#9c2b36'] }
+];
+
+const ENCOUNTER_SCENE_PRESETS = [
+    {
+        id: 's2_doru',
+        label: '⛪ S2: Doru Attic',
+        desc: 'Barovia Church Undercroft/Attic — Starving Doru',
+        units: [{ key: 'doru', count: 1 }]
+    },
+    {
+        id: 'svalich_wolves',
+        label: '🐺 Svalich Wolf Pack',
+        desc: 'Old Svalich Road — Alpha Dire Wolf + 3 Dire Wolves',
+        units: [{ key: 'alpha_wolf', count: 1 }, { key: 'dire_wolf', count: 3 }]
+    },
+    {
+        id: 'crossroads_volenta',
+        label: '🎭 Cemetery / Crossroads',
+        desc: 'Bride Volenta + 3 Strahd Zombies + 2 Bat Swarms',
+        units: [{ key: 'volenta', count: 1 }, { key: 'strahd_zombie', count: 3 }, { key: 'barovian_swarm', count: 2 }]
+    },
+    {
+        id: 'bonegrinder_coven',
+        label: '🥧 Old Bonegrinder Coven',
+        desc: 'Morgantha + Bella & Offalia + 3 Mill Dretches',
+        units: [
+            { key: 'morgantha', count: 1 },
+            { key: 'barovian_witch', count: 1, customLabel: '🥧 Bella Sunbane (Hag Sister)' },
+            { key: 'barovian_witch', count: 1, customLabel: '🥧 Offalia Wormwiggle (Hag Sister)' },
+            { key: 'dretch', count: 3 }
+        ]
+    },
+    {
+        id: 'coffin_shop',
+        label: '⚰️ Coffin Shop Ambush',
+        desc: 'Henrik’s Shop — Bride Anastrasya + 4 Vampire Spawn',
+        units: [{ key: 'anastrasya', count: 1 }, { key: 'vampire_spawn', count: 4 }]
+    },
+    {
+        id: 'vallaki_coup',
+        label: '🔥 Vallaki Street Coup',
+        desc: 'Izek Strazni + 4 Vallakian Guards',
+        units: [{ key: 'izek', count: 1 }, { key: 'barovian_guard', count: 4 }]
+    },
+    {
+        id: 'winery_siege',
+        label: '🍷 Winery Blight Siege',
+        desc: '2 Barovian Druids + 2 Vine Blights + 4 Needle Blights',
+        units: [{ key: 'barovian_druid', count: 2 }, { key: 'vine_blight', count: 2 }, { key: 'needle_blight', count: 4 }]
+    },
+    {
+        id: 'yester_hill',
+        label: '⛈️ Yester Hill Ritual',
+        desc: 'Wintersplinter + 2 Druids + 2 Mountain Berserkers',
+        units: [{ key: 'wintersplinter', count: 1 }, { key: 'barovian_druid', count: 2 }, { key: 'berserker', count: 2 }]
+    },
+    {
+        id: 'argynvost_hall',
+        label: '🐉 Argynvostholt Hall',
+        desc: 'Commander Vladimir Horngaard + 2 Phantom Warriors',
+        units: [{ key: 'horngaard', count: 1 }, { key: 'phantom_warrior', count: 2 }]
+    },
+    {
+        id: 'krezk_abbey',
+        label: '⛪ Krezk Abbey',
+        desc: 'The Fallen Abbot + Flesh Golem Vasilka + 2 Mongrelfolk',
+        units: [{ key: 'abbot', count: 1 }, { key: 'vasilka', count: 1 }, { key: 'mongrelfolk', count: 2 }]
+    },
+    {
+        id: 'berez_swamp',
+        label: '🌊 Berez Showdown',
+        desc: 'Baba Lysaga + Creeping Hut + 2 Marsh Scarecrows',
+        units: [{ key: 'baba_lysaga', count: 1 }, { key: 'creeping_hut', count: 1 }, { key: 'scarecrow', count: 2 }]
+    },
+    {
+        id: 'ravenloft_finale',
+        label: '🏰 Ravenloft Finale',
+        desc: 'Count Strahd von Zarovich + Heart of Sorrow + Rahadin',
+        units: [{ key: 'strahd', count: 1 }, { key: 'heart_of_sorrow', count: 1 }, { key: 'rahadin', count: 1 }]
+    }
+];
+
+function loadDmCockpitPrefs() {
+    try {
+        const fm = localStorage.getItem(DM_FOCUS_STORAGE_KEY);
+        if (fm !== null) dmFocusMode = fm === '1';
+        const sec = localStorage.getItem(DM_ACTIVE_SEC_STORAGE_KEY);
+        if (sec && DM_SECTION_IDS.includes(sec)) dmActiveSection = sec;
+        const col = localStorage.getItem(DM_COLLAPSED_SECS_STORAGE_KEY);
+        if (col) dmCollapsedSections = JSON.parse(col) || {};
+        const pin = localStorage.getItem(DM_ENC_PINNED_STORAGE_KEY);
+        if (pin !== null) encounterBoardPinned = pin === '1';
+    } catch (_) {}
+}
+
+function saveDmCockpitPrefs() {
+    try {
+        localStorage.setItem(DM_FOCUS_STORAGE_KEY, dmFocusMode ? '1' : '0');
+        localStorage.setItem(DM_ACTIVE_SEC_STORAGE_KEY, dmActiveSection);
+        localStorage.setItem(DM_COLLAPSED_SECS_STORAGE_KEY, JSON.stringify(dmCollapsedSections));
+        localStorage.setItem(DM_ENC_PINNED_STORAGE_KEY, encounterBoardPinned ? '1' : '0');
+    } catch (_) {}
+}
+
+function decorateDmSectionCollapseHeaders() {
+    DM_SECTION_IDS.forEach(secId => {
+        const sec = document.getElementById(secId);
+        if (!sec) return;
+        const hdr = sec.querySelector(':scope > .section-header');
+        if (!hdr) return;
+        if (!hdr.getAttribute('onclick')) {
+            hdr.addEventListener('click', (ev) => {
+                if (ev.target.closest('button, input, select, a, search')) return;
+                toggleDmSectionCollapse(secId);
+            });
+        }
+        if (!hdr.querySelector(`[data-sec-btn="${secId}"]`)) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'dm-sec-collapse-btn';
+            btn.setAttribute('data-sec-btn', secId);
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                toggleDmSectionCollapse(secId);
+            };
+            btn.textContent = '▾ Collapse';
+            hdr.appendChild(btn);
+        }
+    });
+}
+
+function syncDmSectionLayout() {
+    const hasGlobalQ = Boolean(getGlobalSearchQuery());
+    document.body.classList.toggle('dm-focus-mode', dmFocusMode && !hasGlobalQ);
+
+    const viewBtn = document.getElementById('dm-view-mode-btn');
+    const colAllBtn = document.getElementById('dm-collapse-all-btn');
+    if (viewBtn) {
+        viewBtn.textContent = dmFocusMode ? '🗂️ Focus: ON' : '📑 All Sections';
+        viewBtn.classList.toggle('is-active', dmFocusMode);
+    }
+    if (colAllBtn) {
+        colAllBtn.style.display = dmFocusMode ? 'none' : 'inline-flex';
+        const anyOpen = DM_SECTION_IDS.some(id => !dmCollapsedSections[id]);
+        colAllBtn.textContent = anyOpen ? '▾ Collapse All' : '▸ Expand All';
+    }
+
+    document.querySelectorAll('.top-nav [data-dm-tab]').forEach(btn => {
+        const tabId = btn.getAttribute('data-dm-tab');
+        btn.classList.toggle('is-active', tabId === dmActiveSection);
+    });
+
+    DM_SECTION_IDS.forEach(secId => {
+        const sec = document.getElementById(secId);
+        if (!sec) return;
+        const isActive = secId === dmActiveSection;
+        sec.classList.toggle('dm-sec-hidden', dmFocusMode && !hasGlobalQ && !isActive);
+
+        // In Focus Mode or during active Global Search, never collapse the visible active section
+        const isCollapsed = (!dmFocusMode && !hasGlobalQ) ? Boolean(dmCollapsedSections[secId]) : false;
+        sec.classList.toggle('dm-sec-collapsed', isCollapsed);
+
+        const colBtn = sec.querySelector(`[data-sec-btn="${secId}"]`);
+        if (colBtn) {
+            colBtn.style.display = dmFocusMode ? 'none' : 'inline-flex';
+            colBtn.textContent = isCollapsed ? '▸ Expand' : '▾ Collapse';
+        }
+    });
+    if (typeof renderEncounterBoard === 'function') renderEncounterBoard();
+}
+
+function selectDmSection(secId, skipScroll = false) {
+    if (!DM_SECTION_IDS.includes(secId)) return;
+    dmActiveSection = secId;
+    if (dmCollapsedSections[secId]) {
+        delete dmCollapsedSections[secId];
+    }
+    saveDmCockpitPrefs();
+    syncDmSectionLayout();
+    if (!skipScroll) {
+        const sec = document.getElementById(secId);
+        if (sec) {
+            if (dmFocusMode) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }
+}
+
+function toggleDmViewMode() {
+    dmFocusMode = !dmFocusMode;
+    saveDmCockpitPrefs();
+    syncDmSectionLayout();
+    logRoll(dmFocusMode
+        ? `🗂️ <strong>Focus Tab Mode ON:</strong> Clicking any top tab shows only that section for zero-scroll speed.`
+        : `📑 <strong>All-Sections Stack Mode ON:</strong> All sections stacked vertically (click any section header or Collapse All to fold).`);
+}
+
+function toggleDmSectionCollapse(secId) {
+    if (dmFocusMode) {
+        dmFocusMode = false;
+    }
+    dmCollapsedSections[secId] = !dmCollapsedSections[secId];
+    saveDmCockpitPrefs();
+    syncDmSectionLayout();
+}
+
+function toggleAllDmSections() {
+    const anyOpen = DM_SECTION_IDS.some(id => !dmCollapsedSections[id]);
+    DM_SECTION_IDS.forEach(id => {
+        dmCollapsedSections[id] = anyOpen;
+    });
+    saveDmCockpitPrefs();
+    syncDmSectionLayout();
+}
+
+function applyPinEncounterBoardPosition() {
+    const board = document.getElementById('encounter-board-panel');
+    const pinSlot = document.getElementById('dm-pinned-encounter-slot');
+    const monsterSec = document.getElementById('monsters-section');
+    const pinBtn = document.getElementById('encounter-pin-btn');
+    if (!board || !pinSlot || !monsterSec) return;
+
+    if (encounterBoardPinned) {
+        if (board.parentElement !== pinSlot) {
+            pinSlot.appendChild(board);
+        }
+    } else {
+        const monsterHdr = monsterSec.querySelector(':scope > .section-header');
+        if (monsterHdr && board.parentElement !== monsterSec) {
+            monsterHdr.insertAdjacentElement('afterend', board);
+        }
+    }
+    if (pinBtn) {
+        pinBtn.textContent = encounterBoardPinned ? '📌 Pinned' : '📌 Pin Top';
+        pinBtn.style.borderColor = encounterBoardPinned ? 'var(--accent-gold)' : '';
+        pinBtn.style.color = encounterBoardPinned ? 'var(--accent-gold-soft)' : '';
+    }
+}
+
+function togglePinEncounterBoard(forceState) {
+    encounterBoardPinned = typeof forceState === 'boolean' ? forceState : !encounterBoardPinned;
+    saveDmCockpitPrefs();
+    applyPinEncounterBoardPosition();
+    renderEncounterBoard();
+    logRoll(encounterBoardPinned
+        ? `📌 <strong>Encounter Board Pinned to Top:</strong> Stays visible above all tabs while you browse NPCs, Locations, Loot, or Rules!`
+        : `📌 <strong>Encounter Board Unpinned:</strong> Returned to Section 3 (Bestiary).`);
+}
+
+function jumpToCombatBoard() {
+    if (encounterBoardCollapsed) {
+        encounterBoardCollapsed = false;
+        saveEncounterBoard();
+        applyEncounterCollapseUi();
+    }
+    if (!encounterBoardPinned) {
+        selectDmSection('monsters-section', true);
+    }
+    const board = document.getElementById('encounter-board-panel');
+    if (board) {
+        board.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        board.style.boxShadow = '0 0 0 2px var(--accent-gold), 0 0 24px rgba(200, 164, 92, 0.45)';
+        setTimeout(() => { board.style.boxShadow = ''; }, 900);
+    }
+}
+
+function toggleEncounterDrawer(which) {
+    const presetEl = document.getElementById('enc-preset-drawer');
+    const customEl = document.getElementById('enc-custom-drawer');
+    if (which === 'presets' && presetEl) {
+        const next = !presetEl.classList.contains('is-open');
+        presetEl.classList.toggle('is-open', next);
+        if (next && customEl) customEl.classList.remove('is-open');
+    } else if (which === 'custom' && customEl) {
+        const next = !customEl.classList.contains('is-open');
+        customEl.classList.toggle('is-open', next);
+        if (next && presetEl) presetEl.classList.remove('is-open');
+        if (next) document.getElementById('enc-cust-name')?.focus();
+    }
+}
+
+function renderEncounterPresetButtons() {
+    const wrap = document.getElementById('enc-preset-pills');
+    if (!wrap) return;
+    wrap.innerHTML = ENCOUNTER_SCENE_PRESETS.map(p => `
+        <button type="button" class="btn-enc-preset" onclick="loadEncounterScenePreset('${p.id}')" title="${escapeEncounterHtml(p.desc)}">
+            ${escapeEncounterHtml(p.label)}
+        </button>
+    `).join('');
+}
+
+function loadEncounterScenePreset(presetId) {
+    const preset = ENCOUNTER_SCENE_PRESETS.find(p => p.id === presetId);
+    if (!preset) return;
+    const replaceEnemies = document.getElementById('enc-preset-replace-chk') ? document.getElementById('enc-preset-replace-chk').checked : true;
+    if (replaceEnemies) {
+        encounterEntries = encounterEntries.filter(e => e.kind === 'ally');
+    }
+    // Ensure party is on the board
+    addPartyToEncounter();
+
+    preset.units.forEach(u => {
+        const count = u.count || 1;
+        for (let i = 0; i < count; i++) {
+            const beforeLen = encounterEntries.length;
+            addToEncounter(u.key, 1);
+            if (u.customLabel && encounterEntries.length > beforeLen) {
+                encounterEntries[encounterEntries.length - 1].customLabel = u.customLabel;
+            }
+        }
+    });
+
+    rollAllEncounterInits();
+    const presetDrawer = document.getElementById('enc-preset-drawer');
+    if (presetDrawer) presetDrawer.classList.remove('is-open');
+    logRoll(`⚡ <strong>Loaded Scene Preset — ${escapeEncounterHtml(preset.label)}:</strong> ${escapeEncounterHtml(preset.desc)} (Party added &amp; Enemy Initiatives rolled!).`);
+}
+
+function spawnCustomEncounterEnemy() {
+    const nameEl = document.getElementById('enc-cust-name');
+    const name = (nameEl?.value || '').trim() || 'Custom Enemy';
+    const hp = Math.max(1, parseInt(document.getElementById('enc-cust-hp')?.value, 10) || 22);
+    const ac = Math.max(1, parseInt(document.getElementById('enc-cust-ac')?.value, 10) || 14);
+    const initMod = parseInt(document.getElementById('enc-cust-init')?.value, 10) || 0;
+    const wpn = (document.getElementById('enc-cust-wpn')?.value || '').trim() || 'Strike';
+    const hitBonus = parseInt(document.getElementById('enc-cust-hit')?.value, 10) || 4;
+    const dmgDice = (document.getElementById('enc-cust-dmg')?.value || '').trim() || '1d8+2';
+    const qty = Math.max(1, Math.min(12, parseInt(document.getElementById('enc-cust-qty')?.value, 10) || 1));
+
+    for (let i = 0; i < qty; i++) {
+        const num = i + 1;
+        const uid = `cust_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}_${i}`;
+        const d20 = Math.floor(Math.random() * 20) + 1;
+        const label = qty > 1 ? `${name} #${num}` : name;
+        encounterEntries.push({
+            uid,
+            kind: 'custom',
+            key: 'custom_enemy',
+            num,
+            customLabel: label,
+            variantTag: 'Custom',
+            init: d20 + initMod,
+            initBonus: initMod,
+            customWpn: wpn,
+            customHit: hitBonus,
+            customDmg: dmgDice,
+            visibleToPlayers: false,
+            masked: false,
+            playerAlias: '',
+            hideTier: false,
+            conditions: [],
+            targets: [{ subKey: 'main', label: null, cur: hp, max: hp, ac: String(ac) }]
+        });
+    }
+    if (encounterBoardCollapsed) encounterBoardCollapsed = false;
+    sortEncounterBoard(false);
+    renderEncounterBoard();
+    if (nameEl) nameEl.value = '';
+    logRoll(`➕ <strong>Spawned ${qty}x ${escapeEncounterHtml(name)}</strong> (${hp} HP, AC ${ac}) onto Encounter Board &amp; rolled Initiative!`);
+}
+
+function rollCustomEncounterAtk(uid) {
+    const entry = encounterEntries.find(e => e.uid === uid);
+    if (!entry) return;
+    const title = `${getEncounterDisplayTitle(entry)}: ${entry.customWpn || 'Strike'}`;
+    rollAttack(title, entry.customHit || 0, entry.customDmg || '1d8+2', '0', '');
+}
+
+function rollCustomEncounterDmg(uid) {
+    const entry = encounterEntries.find(e => e.uid === uid);
+    if (!entry) return;
+    const title = `${getEncounterDisplayTitle(entry)}: ${entry.customWpn || 'Strike'}`;
+    rollSimpleDamage(title, entry.customDmg || '1d8+2', '');
+}
+
+function openDmQuickHandoutFor(targetVal) {
+    openDmCustomDropModal('handout');
+    const sel = document.getElementById('dm-drop-target');
+    if (sel && targetVal) sel.value = targetVal;
+}
+
+// 5-Theme Engine for DM Screen
+function getStoredDmTheme() {
+    try {
+        const t = localStorage.getItem(DM_THEME_STORAGE_KEY);
+        return DM_THEME_CATALOG.some(x => x.id === t) ? t : null;
+    } catch (_) {
+        return null;
+    }
+}
+
+function renderDmThemePopover() {
+    const pop = document.getElementById('dm-theme-popover');
+    if (!pop) return;
+    const cur = getStoredDmTheme();
+    pop.innerHTML = DM_THEME_CATALOG.map(t => `
+        <button type="button" class="dm-theme-opt" aria-pressed="${cur === t.id ? 'true' : 'false'}" onclick="setDmTheme('${t.id}')">
+            <span>${escapeEncounterHtml(t.name)}</span>
+            <span class="dm-theme-dots">${t.dots.map(c => `<span class="dm-theme-dot" style="background:${c};"></span>`).join('')}</span>
+        </button>
+    `).join('') + `
+        <button type="button" class="dm-theme-opt" aria-pressed="${cur === null ? 'true' : 'false'}" onclick="setDmTheme('system')">
+            <span>🌓 Follow System</span>
+            <span style="font-size:0.66rem; color:var(--text-muted);">Auto</span>
+        </button>
+    `;
+}
+
+function setDmTheme(themeId) {
+    const root = document.documentElement;
+    const meta = document.querySelector('meta[name="color-scheme"]');
+    const entry = DM_THEME_CATALOG.find(t => t.id === themeId) || null;
+    if (entry) {
+        root.setAttribute('data-theme', entry.id);
+        if (meta) meta.setAttribute('content', entry.scheme);
+        try { localStorage.setItem(DM_THEME_STORAGE_KEY, entry.id); } catch (_) {}
+    } else {
+        root.removeAttribute('data-theme');
+        if (meta) meta.setAttribute('content', 'light dark');
+        try { localStorage.removeItem(DM_THEME_STORAGE_KEY); } catch (_) {}
+    }
+    renderDmThemePopover();
+    toggleDmThemePopover(false);
+}
+
+function toggleDmThemePopover(forceState) {
+    const pop = document.getElementById('dm-theme-popover');
+    const btn = document.getElementById('dm-theme-btn');
+    if (!pop) return;
+    const next = typeof forceState === 'boolean' ? forceState : !pop.classList.contains('is-open');
+    if (next) renderDmThemePopover();
+    pop.classList.toggle('is-open', next);
+    if (btn) btn.setAttribute('aria-expanded', next ? 'true' : 'false');
+}
+
+document.addEventListener('click', (e) => {
+    const wrap = document.getElementById('dm-theme-wrap');
+    const pop = document.getElementById('dm-theme-popover');
+    if (pop && pop.classList.contains('is-open') && wrap && !wrap.contains(e.target)) {
+        toggleDmThemePopover(false);
+    }
+});
+
+// Fast DM Keyboard Hotkeys (C = Combat, N = Next Turn, 1-9 = Tabs, 0 = Focus/All, / = Search)
+document.addEventListener('keydown', (e) => {
+    if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
+    const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+    if (tag === 'input' || tag === 'textarea' || tag === 'select' || (e.target && e.target.isContentEditable)) return;
+    const modalOpen = (document.getElementById('dm-modal')?.open) || (document.getElementById('image-lightbox')?.open);
+    if (modalOpen) return;
+
+    if (e.key === '/') {
+        e.preventDefault();
+        const s = document.getElementById('global-search');
+        if (s) { s.focus(); s.select(); }
+    } else if (e.key === 'c' || e.key === 'C') {
+        e.preventDefault();
+        jumpToCombatBoard();
+    } else if (e.key === 'n' || e.key === 'N') {
+        if (encounterCombatActive && encounterEntries.length > 0) {
+            e.preventDefault();
+            advanceEncounterTurn(1);
+        }
+    } else if (e.key === '0') {
+        e.preventDefault();
+        toggleDmViewMode();
+    } else if (/^[1-9]$/.test(e.key)) {
+        const idx = parseInt(e.key, 10) - 1;
+        if (DM_SECTION_IDS[idx]) {
+            e.preventDefault();
+            selectDmSection(DM_SECTION_IDS[idx]);
+        }
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
+    loadDmCockpitPrefs();
+    decorateDmSectionCollapseHeaders();
+    renderEncounterPresetButtons();
+    applyPinEncounterBoardPosition();
     loadEncounterBoard();
     renderEncounterBoard();
     filterBiomes(activeBiomeAct);
@@ -19311,6 +20568,8 @@ document.addEventListener('DOMContentLoaded', () => {
     renderLootVault(activeLootTag);
     filterLoreCodex(activeLoreCat);
     decorateBiomeCardsWithImages();
+    syncDmSectionLayout();
+    renderDmThemePopover();
     initDmFirebaseSync();
 });
 </script>
