@@ -116,7 +116,7 @@ To guarantee maximum narrative momentum without spoilers (read **only the prophe
 
 ## ⚖️ Table House Rules & Barovian Gothic Laws
 * **Brutal Critical Hits:** Max Base Die + 1 Rolled Die + Modifier.
-* **Death Saves (2-Strike / 1-Success Rule):** 1 success stabilizes at 1 HP (prone); 2 failures = Permanent Death *(or in Barovia: a whispered offer of resurrection from the Dark Powers with an permanent Gothic Flaw/Corruption!)*.
+* **Death Saves (Standard D&D 5e Rules):** At `0 HP`, roll d20 each turn: **3 Successes (`10+`)** = Stabilized at `0 HP`; **3 Failures (`9-`)** = Permanent Death *(or in Barovia: a whispered offer of resurrection from the Dark Powers at 1 HP with a permanent Gothic Flaw/Corruption!)*; **Nat 20** = Regain `1 HP` immediately; **Nat 1** = `2 Failures`.
 * **Potion of Healing:** **Bonus Action** self (`2d6 + 1 HP`) | **Action** administer to ally.
 * **Short Rest Healing (Max 2/day):** Restores **25% of Max HP** and regains **+1 Help Token** (max 2/2).
 * **Help Tokens (2/2 Max):** Free call-out within 30 ft for `+1d6` to an ally's roll (requires narrative justification).

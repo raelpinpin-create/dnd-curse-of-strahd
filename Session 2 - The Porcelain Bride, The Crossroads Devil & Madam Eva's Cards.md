@@ -771,7 +771,7 @@ Drop these lines naturally as the watch PC wakes up **Jacomir**, **Piper**, and 
 
 ### 🎲 Active DC & House Rule Reminders
 * **Brutal Criticals (Nat 20):** Max Base Die + 1 Rolled Die + Modifier.
-* **Death Saves (2-Strike / 1-Success):** `1 Success` stabilizes at `1 HP` (prone); `2 Failures` = Permanent Death *(or Dark Powers whisper offer at 1 HP with a Gothic Flaw!)*.
+* **Death Saves (Standard D&D 5e):** `3 Successes (10+)` stabilizes at `0 HP`; `3 Failures (9-)` = Permanent Death *(or Dark Powers whisper offer at 1 HP with a Gothic Flaw!)*; `Nat 20` = Regain `1 HP`; `Nat 1` = `2 Failures`.
 * **Potion of Healing:** **Bonus Action** self (`2d6 + 1 HP`) | **Action** administer to ally.
 * **Short Rest Healing (Max 2/day):** Restores **25% Max HP** + **1 Help Token** (max `2/2`).
 * **Help Tokens (`2/2` Max):** Free call-out within `30 ft` for `+1d6` to an ally's roll (requires narrative justification).

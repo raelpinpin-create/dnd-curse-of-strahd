@@ -1566,6 +1566,112 @@
             border-left-color: #64748b;
             background: #0b0f17;
         }
+        .encounter-card.is-active-turn {
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 1.5px rgba(245, 158, 11, 0.55), 0 0 18px rgba(245, 158, 11, 0.28);
+            background: linear-gradient(135deg, rgba(66, 38, 9, 0.42) 0%, #101726 100%);
+        }
+        .encounter-card.is-hidden-fog {
+            border-style: dashed;
+        }
+        .enc-combat-ribbon {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            border-radius: 7px;
+            background: linear-gradient(135deg, rgba(127, 29, 29, 0.35) 0%, rgba(15, 23, 42, 0.92) 100%);
+            border: 1.5px solid rgba(245, 158, 11, 0.6);
+        }
+        .enc-combat-ribbon.is-live {
+            display: flex;
+        }
+        .enc-fog-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 4px 6px;
+            border-radius: 5px;
+            background: rgba(9, 14, 26, 0.72);
+            border: 1px solid #1e293b;
+        }
+        .enc-fog-btn {
+            background: #131c2e;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.64rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        .enc-fog-btn.is-visible {
+            background: rgba(16, 185, 129, 0.18);
+            border-color: #34d399;
+            color: #a7f3d0;
+        }
+        .enc-fog-btn.is-hidden {
+            background: rgba(100, 116, 139, 0.22);
+            border-color: #64748b;
+            color: #cbd5e1;
+        }
+        .enc-fog-btn.is-masked {
+            background: rgba(139, 92, 246, 0.22);
+            border-color: #a78bfa;
+            color: #e9d5ff;
+        }
+        .enc-cond-strip {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .enc-cond-pill {
+            background: rgba(139, 92, 246, 0.22);
+            border: 1px solid rgba(167, 139, 250, 0.55);
+            color: #f3e8ff;
+            border-radius: 999px;
+            padding: 1px 7px;
+            font-size: 0.63rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        .enc-cond-pill:hover {
+            background: rgba(220, 38, 38, 0.35);
+            border-color: #f87171;
+        }
+        .enc-cond-picker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            padding: 6px;
+            border-radius: 5px;
+            background: #080d18;
+            border: 1px solid #334155;
+        }
+        .enc-cond-opt {
+            background: #131c2e;
+            border: 1px solid #334155;
+            color: #cbd5e1;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 0.62rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        .enc-cond-opt.is-on {
+            background: rgba(139, 92, 246, 0.32);
+            border-color: #c084fc;
+            color: #fff;
+        }
         .encounter-card-top {
             display: flex;
             align-items: flex-start;
@@ -2206,6 +2312,7 @@
                     <span class="pill crimson" id="encounter-count-badge">0 Active • 0 Alive</span>
                 </div>
                 <div class="encounter-board-controls">
+                    <button type="button" id="encounter-combat-toggle-btn" class="btn-roll" style="background:linear-gradient(135deg,#b91c1c,#991b1b); border-color:#f87171; color:#fef2f2;" onclick="toggleEncounterCombatBroadcast()" title="Broadcast sanitized Fog-of-War Turn Order strip to all player sheets">⚔️ Start Combat</button>
                     <button type="button" class="btn-step btn-heal" onclick="addAllyToEncounter()" title="Add an Ally Initiative Card">👤 + Ally</button>
                     <button type="button" class="btn-step" onclick="addPartyToEncounter()" title="Add Piper, Jacomir, Yvaine &amp; Cael Initiative Cards">🛡️ + Party</button>
                     <button type="button" class="btn-roll" onclick="rollAllEncounterInits()" title="Roll Initiative for Enemies and sort all combatants">🎲 Roll Enemy Inits</button>
@@ -2218,6 +2325,7 @@
             </div>
             <p id="encounter-status-live" role="status" class="visually-hidden"></p>
             <div class="encounter-board-body" id="encounter-board-body">
+                <div id="encounter-combat-ribbon" class="enc-combat-ribbon"></div>
                 <div id="encounter-board-grid"></div>
             </div>
         </div>
@@ -2724,7 +2832,7 @@
                     <p><strong>1. Law of Forbiddance:</strong> Vampires cannot enter private homes without an explicit invitation from a living occupant. <em>(Taverns, shops, churches & ruined manors do not count!)</em></p>
                     <p><strong>2. Law of the Overcast Sky:</strong> Barovia's natural daytime is filtered through perpetual storm clouds and fog—it <strong>never</strong> triggers Vampire Sunlight Hypersensitivity (only The Sunsword, Holy Symbol of Ravenkind, and <em>Dawn</em> spell do!).</p>
                     <p><strong>3. Law of Running Water:</strong> Ending a turn in running river water (Ivlis River, Tser Falls) deals <strong>20 Acid damage</strong> and suppresses vampire regeneration.</p>
-                    <p><strong>4. Law of the Mists (Dark Whisper):</strong> 2 failed Death Saves in Act I–II triggers a split-second time freeze: a voice in the Mists offers revival at <strong>1 HP</strong> in exchange for accepting a permanent Dark Power Touched Mark!</p>
+                    <p><strong>4. Law of the Mists (Dark Whisper):</strong> Falling to <strong>0 HP</strong> and reaching <strong>2–3 failed Death Saves</strong> in Act I–II can trigger a split-second time freeze: a voice in the Mists offers revival at <strong>1 HP</strong> in exchange for accepting a permanent Dark Power Touched Mark!</p>
                     <p><strong>5. Law of the Frozen Second (Derek's Blind Spot):</strong> Whenever <strong>Derek (Avatar of the Dark Powers)</strong> visits (<code>tap, tap, tap</code>), time freezes completely. Because he walks strictly between the ticks of the clock, <strong>Count Strahd, his spies, and Barovian NPCs have ZERO knowledge that Derek exists!</strong></p>
                 </div>
             </div>
@@ -2732,7 +2840,7 @@
                 <div class="card-header"><span class="card-title">🎲 Universal Table House Rules</span></div>
                 <div class="card-body">
                     <p><strong>Brutal Crits (Nat 20):</strong> <code>Max Base Die + 1 Rolled Die + Modifier</code> (automatically calculated when you roll a Nat 20 in the monster window!).</p>
-                    <p><strong>2-Strike Death Saves:</strong> <strong>1 Success</strong> stabilizes at 1 HP (prone). <strong>2 Failures</strong> = Death (or Dark Power Bargain).</p>
+                    <p><strong>Standard D&amp;D 5e Death Saves:</strong> At 0 HP, roll d20 each turn: <strong>3 Successes (10+)</strong> = Stabilized at 0 HP; <strong>3 Failures (9-)</strong> = Dead (or Dark Power Bargain); <strong>Nat 20</strong> = Regain 1 HP immediately; <strong>Nat 1</strong> = 2 Failures.</p>
                     <p><strong>Drinking Potions:</strong> <strong>Bonus Action</strong> for self (<code>2d6 + 1 HP</code>); <strong>Action</strong> to feed a downed ally.</p>
                     <p><strong>Short Rest Healing:</strong> Restores <strong>25% of Max HP</strong> (up to 2/day) and regains <strong>+1 Help Token</strong> (max 2/2).</p>
                     <p><strong>Wilderness Long Rests:</strong> Sleeping exposed on bare muddy roads grants only Short Rest recovery or risks Exhaustion (<code>DC 12–15 CON</code>). Pitching a <strong>⛺ Mist-Ward Traveler's Camp Kit</strong> (bought in select shops or crafted) enables a <strong>True Long Rest</strong> in the wild.</p>
@@ -3406,6 +3514,31 @@ const PARTY_INIT_PRESETS = [
 let encounterEntries = [];
 let encounterBoardCollapsed = false;
 let editingEncounterUid = null;
+let encounterCombatActive = false;
+let encounterRound = 1;
+let encounterActiveUid = null;
+let encounterShowTiers = true;
+let openStatusPickerUid = null;
+
+const DM_COMBAT_CONDITIONS = [
+    '🛡️ Sapped',
+    '🎯 Vexed',
+    "🎯 Slayer's Prey",
+    "🏹 Hunter's Mark",
+    '💫 Prone',
+    '🕸️ Restrained',
+    '😱 Frightened',
+    '😵 Stunned',
+    '🔥 Burning',
+    '🕶️ Blinded',
+    '🧪 Poisoned',
+    '🪢 Grappled',
+    '🔇 Silenced',
+    '💖 Charmed',
+    '⚡ Concentrating',
+    '👻 Invisible',
+    '✨ Blessed'
+];
 
 function resolveAllyEncounterVitals(entry) {
     const preset = entry && entry.allyKey ? PARTY_INIT_PRESETS.find(p => p.allyKey === entry.allyKey) : null;
@@ -3493,6 +3626,9 @@ function updateEncounterBoardLivePartyVitals() {
     if (!updatedAny && encounterEntries.some(e => e.kind === 'ally')) {
         renderEncounterBoard();
     }
+    if (encounterCombatActive && typeof publishPublicCombatState === 'function') {
+        publishPublicCombatState();
+    }
 }
 
 function escapeEncounterHtml(str) {
@@ -3525,20 +3661,121 @@ function loadEncounterBoard() {
                 ...e,
                 kind: e.kind === 'ally' ? 'ally' : 'monster',
                 customLabel: typeof e.customLabel === 'string' ? e.customLabel : '',
-                initBonus: typeof e.initBonus === 'number' ? e.initBonus : null
+                initBonus: typeof e.initBonus === 'number' ? e.initBonus : null,
+                visibleToPlayers: typeof e.visibleToPlayers === 'boolean' ? e.visibleToPlayers : (e.kind === 'ally'),
+                masked: Boolean(e.masked),
+                playerAlias: typeof e.playerAlias === 'string' ? e.playerAlias : '',
+                hideTier: Boolean(e.hideTier),
+                conditions: Array.isArray(e.conditions) ? e.conditions.filter(Boolean) : []
             }));
         }
         if (parsed && typeof parsed.collapsed === 'boolean') {
             encounterBoardCollapsed = parsed.collapsed;
         }
+        if (parsed && typeof parsed.combatActive === 'boolean') {
+            encounterCombatActive = parsed.combatActive;
+        }
+        if (parsed && typeof parsed.round === 'number') {
+            encounterRound = Math.max(1, parsed.round);
+        }
+        if (parsed && typeof parsed.activeUid === 'string') {
+            encounterActiveUid = parsed.activeUid;
+        }
+        if (parsed && typeof parsed.showTiers === 'boolean') {
+            encounterShowTiers = parsed.showTiers;
+        }
     } catch (_) { /* ignore */ }
+}
+
+function isEncounterEntryDefeated(entry) {
+    if (!entry) return false;
+    if (entry.kind === 'ally') {
+        return resolveAllyEncounterVitals(entry).cur <= 0;
+    }
+    return Array.isArray(entry.targets) && entry.targets.length > 0 && entry.targets.every(t => t.cur <= 0);
+}
+
+function computePublicHealthTier(entry) {
+    if (isEncounterEntryDefeated(entry)) return 'Defeated';
+    if (!encounterShowTiers || entry.hideTier) return '???';
+    if (!Array.isArray(entry.targets) || entry.targets.length === 0) return 'Unharmed';
+    const curTot = entry.targets.reduce((s, t) => s + Math.max(0, t.cur || 0), 0);
+    const maxTot = Math.max(1, entry.targets.reduce((s, t) => s + Math.max(1, t.max || 1), 0));
+    const pct = (curTot / maxTot) * 100;
+    if (pct > 75) return 'Unharmed';
+    if (pct > 50) return 'Wounded';
+    if (pct > 25) return 'Bloodied';
+    return 'Near Death';
+}
+
+function getPublicCombatLabel(entry, enemyMaskIndex) {
+    if (entry.kind === 'ally') {
+        return getEncounterDisplayTitle(entry);
+    }
+    if (entry.masked) {
+        return (entry.playerAlias && entry.playerAlias.trim())
+            ? entry.playerAlias.trim()
+            : `Shadowy Figure ${enemyMaskIndex}`;
+    }
+    if (entry.playerAlias && entry.playerAlias.trim()) {
+        return entry.playerAlias.trim();
+    }
+    return getEncounterDisplayTitle(entry);
+}
+
+function buildSanitizedPublicCombatPayload() {
+    if (!encounterCombatActive || encounterEntries.length === 0) {
+        return { active: false, round: 0, activeUid: null, combatants: [], updatedAt: Date.now() };
+    }
+    let maskSeq = 0;
+    const combatants = [];
+    encounterEntries.forEach(entry => {
+        const isVisible = entry.kind === 'ally' ? (entry.visibleToPlayers !== false) : Boolean(entry.visibleToPlayers);
+        if (!isVisible) return;
+        const isEnemy = entry.kind !== 'ally';
+        if (isEnemy && entry.masked) maskSeq++;
+        const isHero = Boolean(entry.kind === 'ally' && (entry.allyKey === 'piper' || entry.allyKey === 'jacomir' || entry.allyKey === 'yvaine'));
+        const conds = Array.isArray(entry.conditions) ? [...entry.conditions] : [];
+        if (isHero && typeof dmLiveHeroes !== 'undefined' && dmLiveHeroes[entry.allyKey] && dmLiveHeroes[entry.allyKey].concentration) {
+            const cLbl = `🧠 ${dmLiveHeroes[entry.allyKey].concentration}`;
+            if (!conds.includes(cLbl)) conds.push(cLbl);
+        }
+        combatants.push({
+            uid: entry.uid,
+            kind: isEnemy ? 'enemy' : (isHero ? 'party' : 'ally'),
+            heroId: isHero ? entry.allyKey : null,
+            label: getPublicCombatLabel(entry, maskSeq || 1),
+            isCurrent: entry.uid === encounterActiveUid,
+            isDefeated: isEncounterEntryDefeated(entry),
+            tier: isEnemy ? computePublicHealthTier(entry) : null,
+            conditions: conds
+        });
+    });
+    return {
+        active: true,
+        round: Math.max(1, encounterRound),
+        activeUid: encounterActiveUid || null,
+        combatants,
+        updatedAt: Date.now()
+    };
+}
+
+function publishPublicCombatState() {
+    const rtdb = typeof dmGetRtdb === 'function' ? dmGetRtdb() : null;
+    if (!rtdb) return;
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    rtdb.ref(`campaigns/${room}/dm_state/public_combat`).set(buildSanitizedPublicCombatPayload()).catch(() => {});
 }
 
 function saveEncounterBoard(skipCloud = false) {
     try {
         localStorage.setItem(ENCOUNTER_STORAGE_KEY, JSON.stringify({
             entries: encounterEntries,
-            collapsed: encounterBoardCollapsed
+            collapsed: encounterBoardCollapsed,
+            combatActive: encounterCombatActive,
+            round: encounterRound,
+            activeUid: encounterActiveUid,
+            showTiers: encounterShowTiers
         }));
     } catch (_) { /* ignore */ }
     if (skipCloud || isApplyingRemoteDmState) return;
@@ -3550,10 +3787,170 @@ function saveEncounterBoard(skipCloud = false) {
         rtdb.ref(`campaigns/${room}/heroes/_dm_state/encounter_board`).set({
             entries: encounterEntries,
             collapsed: encounterBoardCollapsed,
+            combatActive: encounterCombatActive,
+            round: encounterRound,
+            activeUid: encounterActiveUid,
+            showTiers: encounterShowTiers,
             clientId: DM_CLIENT_ID,
             updatedAt: Date.now()
         }).catch(() => {});
+        publishPublicCombatState();
     }, 100);
+}
+
+function toggleEncounterCombatBroadcast() {
+    if (encounterCombatActive) {
+        encounterCombatActive = false;
+        encounterActiveUid = null;
+        saveEncounterBoard();
+        renderEncounterBoard();
+        announceEncounterStatus('Ended combat and hid the Turn Order strip on all player sheets.');
+        logRoll('🏁 <strong>Combat Ended:</strong> Sanitized Turn Order strip cleared from all player sheets.');
+        return;
+    }
+    if (encounterEntries.length === 0) {
+        logRoll('⚠️ Add Party ([🛡️ + Party]) and Enemies ([⚔️ + Add]) to the Encounter Board before starting combat!');
+        return;
+    }
+    if (encounterEntries.some(e => typeof e.init === 'number')) {
+        sortEncounterBoard(false);
+    }
+    encounterCombatActive = true;
+    encounterRound = 1;
+    const firstAlive = encounterEntries.find(e => !isEncounterEntryDefeated(e)) || encounterEntries[0];
+    encounterActiveUid = firstAlive ? firstAlive.uid : null;
+    if (encounterBoardCollapsed) encounterBoardCollapsed = false;
+    saveEncounterBoard();
+    renderEncounterBoard();
+    const hiddenEnemies = encounterEntries.filter(e => e.kind !== 'ally' && !e.visibleToPlayers).length;
+    announceEncounterStatus(`Combat started — Round 1, ${firstAlive ? getEncounterDisplayTitle(firstAlive) : 'Active'}.`);
+    logRoll(`⚔️ <strong>LIVE COMBAT STARTED (Round 1):</strong> Broadcasted Fog-of-War Turn Order to player sheets! Active: <strong style="color:#fde68a;">${escapeEncounterHtml(firstAlive ? getEncounterDisplayTitle(firstAlive) : '--')}</strong>.${hiddenEnemies > 0 ? ` <small style="color:#93c5fd;">(${hiddenEnemies} enemy hidden in Fog of War — click 👁️ or Reveal All when spotted!)</small>` : ''}`);
+}
+
+function advanceEncounterTurn(step = 1) {
+    if (!encounterEntries.length) return;
+    if (!encounterCombatActive) {
+        toggleEncounterCombatBroadcast();
+        return;
+    }
+    const curIdx = encounterEntries.findIndex(e => e.uid === encounterActiveUid);
+    const len = encounterEntries.length;
+    let nextIdx = curIdx;
+    let wrapped = false;
+    for (let i = 0; i < len; i++) {
+        nextIdx = (nextIdx + step + len) % len;
+        if (step > 0 && curIdx >= 0 && nextIdx <= curIdx && i === 0) wrapped = true;
+        else if (step > 0 && nextIdx === 0 && curIdx !== -1) wrapped = true;
+        if (step < 0 && curIdx === 0 && nextIdx === len - 1) encounterRound = Math.max(1, encounterRound - 1);
+        const cand = encounterEntries[nextIdx];
+        if (cand && (!isEncounterEntryDefeated(cand) || cand.kind === 'ally')) {
+            break;
+        }
+    }
+    if (step > 0 && wrapped) encounterRound++;
+    const active = encounterEntries[nextIdx];
+    encounterActiveUid = active ? active.uid : null;
+    saveEncounterBoard();
+    renderEncounterBoard();
+    if (active) {
+        announceEncounterStatus(`Round ${encounterRound}: ${getEncounterDisplayTitle(active)}'s turn.`);
+        logRoll(`⏭️ <strong>Round ${encounterRound} — Active Turn:</strong> <strong style="color:#fde68a;">${escapeEncounterHtml(getEncounterDisplayTitle(active))}</strong>!`);
+    }
+}
+
+function setEncounterActiveTurn(uid) {
+    if (!encounterEntries.some(e => e.uid === uid)) return;
+    encounterActiveUid = uid;
+    if (!encounterCombatActive) {
+        encounterCombatActive = true;
+        encounterRound = Math.max(1, encounterRound);
+    }
+    saveEncounterBoard();
+    renderEncounterBoard();
+}
+
+function toggleEncounterVisible(uid) {
+    const entry = encounterEntries.find(e => e.uid === uid);
+    if (!entry) return;
+    entry.visibleToPlayers = !entry.visibleToPlayers;
+    saveEncounterBoard();
+    renderEncounterBoard();
+    announceEncounterStatus(`${getEncounterDisplayTitle(entry)} is now ${entry.visibleToPlayers ? 'visible to' : 'hidden from'} players.`);
+}
+
+function revealAllEncounterEnemies() {
+    let count = 0;
+    encounterEntries.forEach(e => {
+        if (e.kind !== 'ally' && !e.visibleToPlayers) {
+            e.visibleToPlayers = true;
+            count++;
+        }
+    });
+    saveEncounterBoard();
+    renderEncounterBoard();
+    logRoll(`👁️ <strong>Revealed ${count} Hidden Enemies</strong> on the players' Fog-of-War Turn Strip!`);
+}
+
+function toggleEncounterMasked(uid) {
+    const entry = encounterEntries.find(e => e.uid === uid);
+    if (!entry) return;
+    entry.masked = !entry.masked;
+    saveEncounterBoard();
+    renderEncounterBoard();
+}
+
+function maskAllEncounterEnemies() {
+    const enemies = encounterEntries.filter(e => e.kind !== 'ally');
+    if (!enemies.length) return;
+    const anyUnmasked = enemies.some(e => !e.masked);
+    enemies.forEach(e => { e.masked = anyUnmasked; });
+    saveEncounterBoard();
+    renderEncounterBoard();
+    logRoll(anyUnmasked
+        ? `🎭 <strong>Masked All Enemy Names</strong> on the player Turn Strip ("Shadowy Figure 1, 2...").`
+        : `🏷️ <strong>Revealed All Enemy Names</strong> on the player Turn Strip.`);
+}
+
+function promptEncounterPlayerAlias(uid) {
+    const entry = encounterEntries.find(e => e.uid === uid);
+    if (!entry) return;
+    const cur = entry.playerAlias || '';
+    const next = window.prompt(`Custom Player-Facing Label for "${getEncounterDisplayTitle(entry)}" (leave blank for default):`, cur);
+    if (next === null) return;
+    entry.playerAlias = String(next).trim().slice(0, 48);
+    if (entry.playerAlias) entry.masked = true;
+    saveEncounterBoard();
+    renderEncounterBoard();
+}
+
+function toggleEncounterHideTier(uid) {
+    const entry = encounterEntries.find(e => e.uid === uid);
+    if (!entry) return;
+    entry.hideTier = !entry.hideTier;
+    saveEncounterBoard();
+    renderEncounterBoard();
+}
+
+function toggleEncounterGlobalTiers() {
+    encounterShowTiers = !encounterShowTiers;
+    saveEncounterBoard();
+    renderEncounterBoard();
+}
+
+function toggleEncounterCondPicker(uid) {
+    openStatusPickerUid = (openStatusPickerUid === uid) ? null : uid;
+    renderEncounterBoard();
+}
+
+function toggleEncounterCondition(uid, condLabel) {
+    const entry = encounterEntries.find(e => e.uid === uid);
+    if (!entry) return;
+    if (!Array.isArray(entry.conditions)) entry.conditions = [];
+    const idx = entry.conditions.indexOf(condLabel);
+    if (idx === -1) entry.conditions.push(condLabel);
+    else entry.conditions.splice(idx, 1);
+    saveEncounterBoard();
+    renderEncounterBoard();
 }
 
 function announceEncounterStatus(msg) {
@@ -3600,6 +3997,11 @@ function addAllyToEncounter(customName = '', initBonus = null, allyKey = null, o
         variantTag: '',
         init: null,
         initBonus: typeof initBonus === 'number' ? initBonus : null,
+        visibleToPlayers: true,
+        masked: false,
+        playerAlias: '',
+        hideTier: false,
+        conditions: [],
         targets: []
     });
     if (encounterBoardCollapsed) encounterBoardCollapsed = false;
@@ -3635,6 +4037,11 @@ function addPartyToEncounter() {
                 variantTag: '',
                 init: null,
                 initBonus: p.initBonus,
+                visibleToPlayers: true,
+                masked: false,
+                playerAlias: '',
+                hideTier: false,
+                conditions: [],
                 targets: []
             });
             added.push(p.name);
@@ -3688,6 +4095,11 @@ function addToEncounter(key, count = 1) {
             variantTag,
             init: null,
             initBonus: parseInt(m.init, 10) || 0,
+            visibleToPlayers: false,
+            masked: false,
+            playerAlias: '',
+            hideTier: false,
+            conditions: [],
             targets
         });
         addedLabels.push(`#${num}`);
@@ -3938,6 +4350,10 @@ function healAllEncounterEntries() {
 function clearEncounterBoard() {
     encounterEntries = [];
     editingEncounterUid = null;
+    encounterCombatActive = false;
+    encounterRound = 1;
+    encounterActiveUid = null;
+    openStatusPickerUid = null;
     saveEncounterBoard();
     renderEncounterBoard();
     if (activeModalKind === 'monster' && activeModalMonsterKey) {
@@ -3966,15 +4382,50 @@ function applyEncounterCollapseUi() {
 function renderEncounterBoard() {
     const grid = document.getElementById('encounter-board-grid');
     const badge = document.getElementById('encounter-count-badge');
+    const toggleBtn = document.getElementById('encounter-combat-toggle-btn');
+    const ribbon = document.getElementById('encounter-combat-ribbon');
     applyEncounterCollapseUi();
 
     const allyCount = encounterEntries.filter(e => e.kind === 'ally').length;
     const enemies = encounterEntries.filter(e => e.kind !== 'ally');
     const aliveEnemies = enemies.filter(e => e.targets.some(t => t.cur > 0)).length;
+    const hiddenEnemies = enemies.filter(e => !e.visibleToPlayers).length;
     if (badge) {
         badge.textContent = allyCount > 0
             ? `${allyCount} Allies • ${enemies.length} Enemies (${aliveEnemies} Alive)`
             : `${enemies.length} Active • ${aliveEnemies} Alive`;
+    }
+    if (toggleBtn) {
+        toggleBtn.textContent = encounterCombatActive ? '🏁 End Combat' : '⚔️ Start Combat';
+        toggleBtn.style.background = encounterCombatActive
+            ? 'linear-gradient(135deg,#065f46,#064e3b)'
+            : 'linear-gradient(135deg,#b91c1c,#991b1b)';
+        toggleBtn.style.borderColor = encounterCombatActive ? '#34d399' : '#f87171';
+    }
+    if (ribbon) {
+        if (encounterCombatActive && encounterEntries.length > 0) {
+            ribbon.classList.add('is-live');
+            const activeUnit = encounterEntries.find(e => e.uid === encounterActiveUid) || encounterEntries[0];
+            const activeName = activeUnit ? getEncounterDisplayTitle(activeUnit) : '--';
+            const anyUnmasked = enemies.some(e => !e.masked);
+            ribbon.innerHTML = `
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <span class="pill crimson" style="font-weight:800; font-size:0.74rem;">📡 LIVE • ROUND ${encounterRound}</span>
+                    <span style="font-size:0.8rem; color:#f8fafc;">Active Turn: <strong style="color:#fde68a;">${escapeEncounterHtml(activeName)}</strong></span>
+                    ${hiddenEnemies > 0 ? `<span class="pill gold" style="font-size:0.68rem;">🙈 ${hiddenEnemies} Hidden in Fog</span>` : ''}
+                </div>
+                <div style="display:flex; align-items:center; gap:5px; flex-wrap:wrap;">
+                    <button type="button" class="btn-step" onclick="advanceEncounterTurn(-1)" title="Previous Turn">◀ Prev</button>
+                    <button type="button" class="btn-roll" style="background:linear-gradient(135deg,#d97706,#b45309); border-color:#fde047; color:#090d16; font-weight:900; padding:4px 12px;" onclick="advanceEncounterTurn(1)" title="Advance to Next Turn (auto-increments Round &amp; notifies player sheet!)">⏭️ Next Turn</button>
+                    ${hiddenEnemies > 0 ? `<button type="button" class="btn-step btn-heal" onclick="revealAllEncounterEnemies()" title="Reveal all hidden enemies on the players' Turn Order strip">👁️ Reveal All (${hiddenEnemies})</button>` : ''}
+                    ${enemies.length > 0 ? `<button type="button" class="btn-step" onclick="maskAllEncounterEnemies()" title="Toggle masking enemy names as Shadowy Figure 1, 2...">${anyUnmasked ? '🎭 Mask Names' : '🏷️ Unmask Names'}</button>` : ''}
+                    <button type="button" class="btn-step" onclick="toggleEncounterGlobalTiers()" title="Toggle showing vague enemy health tiers (Unharmed/Wounded/Bloodied) vs ???">${encounterShowTiers ? '❤️ Tiers: ON' : '❓ Tiers: ???'}</button>
+                </div>
+            `;
+        } else {
+            ribbon.classList.remove('is-live');
+            ribbon.innerHTML = '';
+        }
     }
     if (!grid) return;
 
@@ -3983,6 +4434,33 @@ function renderEncounterBoard() {
         grid.innerHTML = `<div class="encounter-empty">Encounter Board is empty — click <strong style="color:#94c9a9;">[👤 + Ally]</strong> or <strong style="color:#93c5fd;">[🛡️ + Party]</strong> to track hero &amp; ally initiatives, or <strong style="color:var(--accent-gold-soft);">[⚔️ + Add]</strong> on any enemy row below!</div>`;
         return;
     }
+
+    let maskIdxSeq = 0;
+    const renderConditionsBlock = (entry) => {
+        const conds = Array.isArray(entry.conditions) ? entry.conditions : [];
+        const isPickerOpen = openStatusPickerUid === entry.uid;
+        const pillsHtml = conds.map(c => {
+            const safeC = escapeEncounterHtml(c);
+            const jsC = c.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+            return `<button type="button" class="enc-cond-pill" onclick="toggleEncounterCondition('${entry.uid}', '${jsC}')" title="Click to remove ${safeC}">${safeC} ✕</button>`;
+        }).join('');
+        const pickerHtml = isPickerOpen ? `
+            <div class="enc-cond-picker">
+                ${DM_COMBAT_CONDITIONS.map(c => {
+                    const on = conds.includes(c);
+                    const jsC = c.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                    return `<button type="button" class="enc-cond-opt ${on ? 'is-on' : ''}" onclick="toggleEncounterCondition('${entry.uid}', '${jsC}')">${escapeEncounterHtml(c)}</button>`;
+                }).join('')}
+            </div>
+        ` : '';
+        return `
+            <div class="enc-cond-strip">
+                ${pillsHtml}
+                <button type="button" class="enc-fog-btn" onclick="toggleEncounterCondPicker('${entry.uid}')" title="Add or remove combat conditions (broadcasts to players if visible)">${isPickerOpen ? '▴ Done' : '+ Status'}</button>
+            </div>
+            ${pickerHtml}
+        `;
+    };
 
     grid.className = 'encounter-grid';
     grid.innerHTML = encounterEntries.map(entry => {
@@ -3995,6 +4473,9 @@ function renderEncounterBoard() {
         const initBonus = getEncounterInitBonus(entry);
         const initModStr = initBonus >= 0 ? `+${initBonus}` : `${initBonus}`;
         const isEditing = editingEncounterUid === entry.uid;
+        const isCurrentTurn = Boolean(encounterCombatActive && entry.uid === encounterActiveUid);
+        const isVis = isAlly ? (entry.visibleToPlayers !== false) : Boolean(entry.visibleToPlayers);
+        if (!isAlly && entry.masked) maskIdxSeq++;
 
         let titleBlockHtml = '';
         if (isEditing) {
@@ -4010,6 +4491,7 @@ function renderEncounterBoard() {
             const clickTitle = allyPreset ? 'Click to open Character Sheet Window' : 'Click to rename Ally';
             titleBlockHtml = `
                 <div class="enc-title-row">
+                    ${isCurrentTurn ? `<span class="pill gold" style="font-size:0.6rem; padding:1px 5px; background:#f59e0b; color:#090d16; font-weight:900;">▶ TURN</span>` : ''}
                     <button type="button" class="link-btn" style="font-size:0.88rem; color:#a3cbb4;" onclick="${clickAction}" title="${clickTitle}">${safeTitle}</button>
                     <button type="button" class="btn-enc-edit" onclick="startRenameEncounterEntry('${entry.uid}')" aria-label="Rename ${safeTitle}" title="Edit Name">✏️</button>
                 </div>
@@ -4021,6 +4503,7 @@ function renderEncounterBoard() {
                 : `<button type="button" class="link-btn" style="font-size:0.86rem;" onclick="openMonsterModal('${entry.key}')">${escapeEncounterHtml(mName)} <span style="color:var(--accent-gold);">#${entry.num}</span></button>`;
             titleBlockHtml = `
                 <div class="enc-title-row">
+                    ${isCurrentTurn ? `<span class="pill gold" style="font-size:0.6rem; padding:1px 5px; background:#f59e0b; color:#090d16; font-weight:900;">▶ TURN</span>` : ''}
                     ${primaryNameHtml}
                     <button type="button" class="btn-enc-edit" onclick="startRenameEncounterEntry('${entry.uid}')" aria-label="Rename or tag ${safeTitle}" title="Rename / Tag">✏️</button>
                 </div>
@@ -4041,13 +4524,20 @@ function renderEncounterBoard() {
             const barColor = getEncounterHpBarColor(pct);
             const isDown = v.cur <= 0;
             return `
-                <div class="encounter-card is-ally ${isDown ? 'is-dead' : ''}" data-uid="${entry.uid}">
+                <div class="encounter-card is-ally ${isDown ? 'is-dead' : ''} ${isCurrentTurn ? 'is-active-turn' : ''} ${!isVis ? 'is-hidden-fog' : ''}" data-uid="${entry.uid}">
                     <div class="encounter-card-top">
                         <div style="flex:1 1 auto; min-width:0;">${titleBlockHtml}</div>
                         <div class="encounter-card-meta">
                             ${initWidgetHtml}
                             <button type="button" class="modal-close-btn" style="width:24px; height:24px; font-size:0.74rem;" onclick="removeEncounterEntry('${entry.uid}')" aria-label="Remove ${safeTitle} from encounter" title="Remove">✕</button>
                         </div>
+                    </div>
+                    <div class="enc-fog-row">
+                        <div style="display:flex; gap:4px; align-items:center;">
+                            <button type="button" class="enc-fog-btn ${isVis ? 'is-visible' : 'is-hidden'}" onclick="toggleEncounterVisible('${entry.uid}')" title="Toggle visibility on players' Turn Strip">${isVis ? '👁️ Visible' : '🙈 Hidden'}</button>
+                            ${!isCurrentTurn ? `<button type="button" class="enc-fog-btn" onclick="setEncounterActiveTurn('${entry.uid}')" title="Set as Active Turn">▶ Set Turn</button>` : `<span style="font-size:0.64rem; color:#fde68a; font-weight:800;">⚡ Active Turn</span>`}
+                        </div>
+                        <span style="font-size:0.62rem; color:#94a3b8;">Player Strip</span>
                     </div>
                     <div class="enc-target-block">
                         <div class="enc-target-head">
@@ -4068,12 +4558,15 @@ function renderEncounterBoard() {
                             <button type="button" class="btn-enc-step is-heal" onclick="modAllyEncounterHP('${entry.uid}', 5)" title="Heal ${safeTitle} by 5 (syncs to player sheet)">+5</button>
                         </div>
                     </div>
+                    ${renderConditionsBlock(entry)}
                 </div>
             `;
         }
 
         const allDead = entry.targets.every(t => t.cur <= 0);
         const isBoss = !!(m && ((m.battlefieldActions && m.battlefieldActions.length) || (m.lairActions && m.lairActions.length)));
+        const pubPreview = getPublicCombatLabel(entry, maskIdxSeq || 1);
+        const pubTier = computePublicHealthTier(entry);
 
         const targetsHtml = entry.targets.map((tgt, tIdx) => {
             const pct = Math.round((tgt.cur / Math.max(1, tgt.max)) * 100);
@@ -4105,7 +4598,7 @@ function renderEncounterBoard() {
         }).join('');
 
         return `
-            <div class="encounter-card ${isBoss ? 'is-boss' : ''} ${allDead ? 'is-dead' : ''}" data-uid="${entry.uid}">
+            <div class="encounter-card ${isBoss ? 'is-boss' : ''} ${allDead ? 'is-dead' : ''} ${isCurrentTurn ? 'is-active-turn' : ''} ${!isVis ? 'is-hidden-fog' : ''}" data-uid="${entry.uid}">
                 <div class="encounter-card-top">
                     <div style="flex:1 1 auto; min-width:0;">${titleBlockHtml}</div>
                     <div class="encounter-card-meta">
@@ -4113,7 +4606,18 @@ function renderEncounterBoard() {
                         <button type="button" class="modal-close-btn" style="width:24px; height:24px; font-size:0.74rem;" onclick="removeEncounterEntry('${entry.uid}')" aria-label="Remove ${safeTitle} from encounter" title="Remove">✕</button>
                     </div>
                 </div>
+                <div class="enc-fog-row">
+                    <div style="display:flex; gap:3px; align-items:center; flex-wrap:wrap;">
+                        <button type="button" class="enc-fog-btn ${isVis ? 'is-visible' : 'is-hidden'}" onclick="toggleEncounterVisible('${entry.uid}')" title="Toggle whether players can see this enemy on the Turn Order Strip">${isVis ? '👁️ Visible' : '🙈 Hidden'}</button>
+                        <button type="button" class="enc-fog-btn ${entry.masked ? 'is-masked' : ''}" onclick="toggleEncounterMasked('${entry.uid}')" title="Mask real monster name as Shadowy Figure / Alias on player sheets">${entry.masked ? '🎭 Masked' : '🏷️ Name'}</button>
+                        <button type="button" class="enc-fog-btn" onclick="promptEncounterPlayerAlias('${entry.uid}')" title="Set custom player-facing alias (e.g. Tall Pale Stranger)">Alias</button>
+                        <button type="button" class="enc-fog-btn" onclick="toggleEncounterHideTier('${entry.uid}')" title="Toggle vague health tier vs ??? on player sheets">${entry.hideTier ? '❓ ???' : `❤️ ${pubTier}`}</button>
+                        ${!isCurrentTurn ? `<button type="button" class="enc-fog-btn" onclick="setEncounterActiveTurn('${entry.uid}')" title="Jump active turn spotlight to this enemy">▶</button>` : ''}
+                    </div>
+                </div>
+                ${isVis && (entry.masked || entry.playerAlias) ? `<div style="font-size:0.65rem; color:#c4b5fd;">Players see: <strong>"${escapeEncounterHtml(pubPreview)}"</strong></div>` : ''}
                 ${targetsHtml}
+                ${renderConditionsBlock(entry)}
             </div>
         `;
     }).join('');
@@ -15654,9 +16158,28 @@ function initDmFirebaseSync() {
                 if (!e) return false;
                 if (e.kind === 'ally') return true;
                 return Boolean(MONSTER_DATA[e.key] && Array.isArray(e.targets));
-            });
+            }).map(e => ({
+                ...e,
+                visibleToPlayers: typeof e.visibleToPlayers === 'boolean' ? e.visibleToPlayers : (e.kind === 'ally'),
+                masked: Boolean(e.masked),
+                playerAlias: typeof e.playerAlias === 'string' ? e.playerAlias : '',
+                hideTier: Boolean(e.hideTier),
+                conditions: Array.isArray(e.conditions) ? e.conditions.filter(Boolean) : []
+            }));
             if (typeof val.collapsed === 'boolean') {
                 encounterBoardCollapsed = val.collapsed;
+            }
+            if (typeof val.combatActive === 'boolean') {
+                encounterCombatActive = val.combatActive;
+            }
+            if (typeof val.round === 'number') {
+                encounterRound = Math.max(1, val.round);
+            }
+            if (typeof val.activeUid === 'string' || val.activeUid === null) {
+                encounterActiveUid = val.activeUid;
+            }
+            if (typeof val.showTiers === 'boolean') {
+                encounterShowTiers = val.showTiers;
             }
             saveEncounterBoard(true);
             renderEncounterBoard();

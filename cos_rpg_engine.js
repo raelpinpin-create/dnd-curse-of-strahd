@@ -5375,6 +5375,10 @@
             }
         }
 
+        if (typeof hudState === 'object' && hudState && Array.isArray(hudState.statuses)) {
+            if (hudState.statuses.includes('half_cover')) bonuses.acBonus += 2;
+            if (hudState.statuses.includes('surge_ac')) bonuses.acBonus += 2;
+        }
         return bonuses;
     }
 
@@ -5464,7 +5468,16 @@
         const wCombat = getWeaponCombatMods(weaponId);
         const effAtkBonus = st.atkBonus + (aDef ? (aDef.atkBonus || 0) : 0) + wCombat.atkBonus;
         const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0) + wCombat.dmgBonus;
-        const d20 = Math.floor(Math.random() * 20) + 1;
+        const mode = (typeof window.rollMode === 'string') ? window.rollMode : 'norm';
+        let d20 = Math.floor(Math.random() * 20) + 1;
+        let modeNote = '';
+        if (mode === 'adv' || mode === 'dis') {
+            const d2 = Math.floor(Math.random() * 20) + 1;
+            const chosen = mode === 'adv' ? Math.max(d20, d2) : Math.min(d20, d2);
+            modeNote = ` <small style="color:#94a3b8;">(${mode === 'adv' ? 'Adv' : 'Dis'} [${d20}, ${d2}])</small>`;
+            d20 = chosen;
+            consumeTempRollMode();
+        }
         const total = d20 + effAtkBonus;
         const name = shortLabel(raw);
         const ammoTag = aDef
@@ -5476,6 +5489,8 @@
         const effDmgType = (makeSilver && !String(st.dmgType).toLowerCase().includes('silver'))
             ? `Silvered ${st.dmgType}`
             : st.dmgType;
+
+        spendTurnAction('action');
 
         if (d20 === 20) {
             const base = rollDiceExpr(st.dmgDice);
@@ -5496,11 +5511,16 @@
                 critTotal += exR.max + exR.sum;
                 extraHtml += ` + ${exR.max}+[${exR.rolls.join('+')}](${esc(exM.type)})`;
             });
-            adapter.log(`<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>] + ${effAtkBonus} = <strong>${total} to Hit</strong>!${ammoTag}${modBadgeTag}${coatBadgeTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${effDmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!`);
+            adapter.log(`<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>]${modeNote} + ${effAtkBonus} = <strong>${total} to Hit</strong>!${ammoTag}${modBadgeTag}${coatBadgeTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${effDmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!`);
             return;
         }
+        setRollFollowup({
+            label: `💥 Roll ${name} Damage`,
+            isCrit: false,
+            onDamage: () => rollDynamicWeaponDamage(invIdx)
+        });
         const tag = d20 === 1 ? ' <strong style="color:#f87171;">(NAT 1 MISS!)</strong>' : '';
-        adapter.log(`<strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>] + ${effAtkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}${ammoTag}${modBadgeTag}${coatBadgeTag}`);
+        adapter.log(`<strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>]${modeNote} + ${effAtkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}${ammoTag}${modBadgeTag}${coatBadgeTag}`);
     }
 
     function rollDynamicWeaponDamage(invIdx) {
@@ -6235,6 +6255,7 @@
         else items[invIndex] = `${parsed.emoji}${newQty > 1 ? newQty + 'x ' : ''}${parsed.name}`.trim();
         adapter.saveItems(items);
         if (act.type === 'heal') {
+            spendTurnAction('bonus');
             let rolls = [], sum = 0;
             for (let i = 0; i < act.dice; i++) {
                 const r = Math.floor(Math.random() * act.sides) + 1;
@@ -6244,17 +6265,21 @@
             adapter.healHP(total, false);
             adapter.log(`💚 <strong>${act.verb} ${esc(shortLabel(raw))}:</strong> [${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span> restored!`);
         } else if (act.type === 'holyWater') {
+            spendTurnAction('action');
             const d1 = Math.floor(Math.random() * 6) + 1;
             const d2 = Math.floor(Math.random() * 6) + 1;
             adapter.log(`💧 <strong>Splashed ${esc(shortLabel(raw))}:</strong> 2d6[${d1}+${d2}] = <span style="color:#fde68a; font-size:1.08rem; font-weight:800;">${d1 + d2} Radiant Damage</span> to Undead/Fiends — <strong>VAMPIRE REGEN HALTED FOR 1 ROUND!</strong>`);
         } else if (act.type === 'dreamPastry') {
+            spendTurnAction('bonus');
             const d6 = Math.floor(Math.random() * 6) + 1;
             adapter.healHP(d6, true);
             adapter.log(`🥧 <strong>Ate Morgantha's Dream Pastry:</strong> Gained <span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${d6} Temp HP</span> &amp; cured 1 Exhaustion! <small style="color:#f87171;">(⚠️ 8-hr blissful dream trance — DC 13 CON Save at dawn!)</small>`);
         } else if (act.type === 'alchemistsFire') {
+            spendTurnAction('action');
             const d4 = Math.floor(Math.random() * 4) + 1;
             adapter.log(`🔥 <strong>Threw ${esc(shortLabel(raw))} (20 ft):</strong> Target takes <span style="color:#fb923c; font-size:1.08rem; font-weight:800;">${d4} Fire Damage</span> at the start of each of its turns until doused (<code>DC 10 DEX Check</code>)!`);
         } else if (act.type === 'phosphorBomb') {
+            spendTurnAction('action');
             const d1 = Math.floor(Math.random() * 6) + 1;
             const d2 = Math.floor(Math.random() * 6) + 1;
             adapter.log(`💣 <strong>Threw ${esc(shortLabel(raw))} (30 ft, 10-ft radius):</strong> 2d6[${d1}+${d2}] = <span style="color:#fde68a; font-size:1.08rem; font-weight:800;">${d1 + d2} Fire/Radiant Damage</span> + <strong>Blinded 1 turn</strong> (<code>DC 13 DEX/CON Save</code>; lights up blood-mist &amp; invisible foes!).`);
@@ -6480,6 +6505,9 @@
             weaponMods: getWeaponModsStore().mods,
             weaponCoatings: getWeaponCoatingStore().coatings,
             dmOverrideActive: isDmOverrideActive(),
+            concentration: hudState.conc || null,
+            conditions: Array.isArray(hudState.statuses) ? [...hudState.statuses] : [],
+            deathSaves: hudState.deathSaves ? { ...hudState.deathSaves } : { succ: 0, fail: 0 },
             resourcesSummary: resSummary,
             sheetExportStr: sheetStr,
             notesExportStr: notesStr,
@@ -6506,6 +6534,9 @@
                     wm: snap.weaponMods,
                     wc: snap.weaponCoatings,
                     ov: snap.dmOverrideActive,
+                    cn: snap.concentration,
+                    st: snap.conditions,
+                    ds: snap.deathSaves,
                     rs: snap.resourcesSummary
                 });
                 if (!forceNow && fp === lastSyncedFingerprint) return;
@@ -6705,6 +6736,24 @@
 
         // 4. Discreet Multi-Recipient Messages Listener (ONLY loads threads where this hero is a participant!)
         startMessagesListener();
+
+        // 5. Live Party Mini-HUD Listener (Reads ONLY piper, jacomir, yvaine states — never _dm_state)
+        campaignRtdbRef('heroes').on('value', snap => {
+            const val = snap.val() || {};
+            const nextParty = {};
+            ['jacomir', 'piper', 'yvaine'].forEach(hid => {
+                if (val[hid] && val[hid].state) nextParty[hid] = val[hid].state;
+            });
+            livePartyMap = nextParty;
+            renderPartyMiniHud();
+        });
+
+        // 6. Sanitized Fog-of-War Public Combat Turn-Order Listener (Read-Only)
+        campaignRtdbRef('dm_state/public_combat').on('value', snap => {
+            const val = snap.val();
+            liveCombatState = (val && val.active && Array.isArray(val.combatants)) ? val : null;
+            renderPublicCombatStrip();
+        });
     }
 
     function applyRemoteItemUpgrade(cmd) {
@@ -7011,6 +7060,21 @@
             localStorage.removeItem(getUnifiedPresetsKey());
             localStorage.removeItem(getLocalDmOverrideKey());
             localStorage.removeItem(getAmmoStorageKey());
+            localStorage.removeItem(getHudStorageKey());
+            hudState = {
+                conc: null,
+                statuses: [],
+                deathSaves: { succ: 0, fail: 0 },
+                turn: { action: true, bonus: true, reaction: true, move: true },
+                advLocked: false,
+                rightTab: 'all',
+                skillsTrainedOnly: false
+            };
+            renderStatusStrip();
+            renderActionEconomyBar();
+            setRightColumnTab('all');
+            applySkillsFilter();
+            renderDeathSavesBox(parseCurrentVitalsFromDom().cur);
             dmRemoteGearOverride = { enabled: false, note: '' };
             if (firebaseReady && rtdb) {
                 campaignRtdbRef(`heroes/${adapter.heroId}/dm_gear_override`).set(null).catch(() => {});
@@ -7468,6 +7532,15 @@
             syncBtn.onclick = () => pushSyncedCheckpoint(false);
             syncBtn.innerHTML = `☁️ Sync to DM`;
 
+            const rulesBtn = document.createElement('button');
+            rulesBtn.type = 'button';
+            rulesBtn.id = 'rpg-hdr-rules-btn';
+            rulesBtn.className = 'rpg-header-btn';
+            rulesBtn.style.cssText = 'background:#131d33; border-color:rgba(147,197,253,0.45); color:#bae6fd;';
+            rulesBtn.title = 'Open Combat Controls & Table House Rules Cheat-Sheet';
+            rulesBtn.onclick = () => openRulesModal();
+            rulesBtn.innerHTML = `❓ Rules`;
+
             const resetBtn = document.createElement('button');
             resetBtn.type = 'button';
             resetBtn.id = 'rpg-hdr-reset-btn';
@@ -7477,8 +7550,9 @@
             resetBtn.onclick = () => resetSheetToOfficialBaseline(false);
             resetBtn.innerHTML = `🔄 Reset`;
 
-            // Order left-to-right: [🛡️ Gear (bigger)] [🎒 Bag (bigger)] [☁️ Sync to DM] [🔄 Reset] [🏰 Portal (very right)]
+            // Order left-to-right: [🛡️ Gear (bigger)] [🎒 Bag (bigger)] [☁️ Sync to DM] [❓ Rules] [🔄 Reset] [🏰 Portal (very right)]
             badgeGroup.insertBefore(resetBtn, badgeGroup.firstChild);
+            badgeGroup.insertBefore(rulesBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(syncBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(bpBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(equipBtn, badgeGroup.firstChild);
@@ -7487,6 +7561,22 @@
                 portalLink.style.cssText = 'background:#0f172a; border-color:#334155; color:#cbd5e1; text-decoration:none;';
                 badgeGroup.appendChild(portalLink);
             }
+        }
+
+        // Mount 👥 Live Party Mini-HUD & ⚔️ Fog-of-War Combat Turn Strip directly under Top Dice Console
+        const diceConsole = document.querySelector('.top-dice-console');
+        if (diceConsole && !document.getElementById('rpg-party-hud')) {
+            const partyHud = document.createElement('section');
+            partyHud.id = 'rpg-party-hud';
+            partyHud.className = 'rpg-party-hud';
+            partyHud.setAttribute('aria-label', 'Live Party Vitals');
+            diceConsole.insertAdjacentElement('afterend', partyHud);
+
+            const combatStrip = document.createElement('section');
+            combatStrip.id = 'rpg-combat-strip';
+            combatStrip.className = 'rpg-combat-strip';
+            combatStrip.setAttribute('aria-label', 'Combat Initiative Order');
+            partyHud.insertAdjacentElement('afterend', combatStrip);
         }
 
         // Replace bloated inventory panel contents with compact Adventure Gear Hub!
@@ -7603,6 +7693,56 @@
                         <div class="rpg-modal-foot">
                             <button type="button" class="rpg-mini-btn" onclick="COS_RPG.closeModal('rpg-weapon-mod-dialog')">Cancel</button>
                             <button type="button" class="rpg-mini-btn btn-equip" id="rpg-weapon-mod-confirm" onclick="COS_RPG.confirmAttachWeaponMod()">Attach to Weapon</button>
+                        </div>
+                    </div>
+                </dialog>
+
+                <!-- ❓ COMBAT CONTROLS & TABLE HOUSE RULES MODAL -->
+                <dialog class="rpg-dialog" id="rpg-rules-modal" closedby="any" aria-labelledby="rpg-rules-title" style="max-width:680px;">
+                    <div class="rpg-modal-shell">
+                        <div class="rpg-modal-head">
+                            <h2 id="rpg-rules-title">❓ Combat Controls &amp; Barovian Table Rules</h2>
+                            <button type="button" class="rpg-modal-close" onclick="COS_RPG.closeModal('rpg-rules-modal')" aria-label="Close Rules">✕</button>
+                        </div>
+                        <div class="rpg-modal-body">
+                            <div class="rpg-rules-grid">
+                                <div class="rpg-rules-card">
+                                    <h3>🟢 Actions (1 / Turn)</h3>
+                                    <div><strong>Attack:</strong> Strike with weapon or unarmed (Grapple/Shove).</div>
+                                    <div><strong>Magic:</strong> Cast a spell with a 1 Action casting time.</div>
+                                    <div><strong>Dash:</strong> Gain extra movement equal to your Speed.</div>
+                                    <div><strong>Disengage:</strong> Movement doesn't provoke Opportunity Attacks.</div>
+                                    <div><strong>Dodge:</strong> Attacks vs you have <strong>Disadvantage</strong>; Adv on DEX saves.</div>
+                                    <div><strong>Help:</strong> Grant an ally Advantage on their next check or attack.</div>
+                                    <div><strong>Hide / Search / Study / Ready:</strong> Stealth, Perception, Lore, or held trigger.</div>
+                                </div>
+                                <div class="rpg-rules-card">
+                                    <h3>🟠 Bonus, 🟣 Reaction &amp; 🥾 Free</h3>
+                                    <div><strong>Bonus Action:</strong> Only when a spell, potion, off-hand light weapon, or class feature grants one (e.g., <em>Second Wind, Hunter's Mark, Reload, Drinking a Potion</em>).</div>
+                                    <div><strong>Reaction (1 / Round):</strong> <em>Opportunity Attack</em> (when a foe leaves 5 ft), <em>Shield</em>, <em>Parry</em>, <em>Riposte</em>, <em>Bend Fate</em>.</div>
+                                    <div><strong>Free Interaction:</strong> Speak briefly, drop Prone (standing costs half speed), open an unlocked door, or draw/stow 1 weapon as part of an attack.</div>
+                                    <div><strong>Cover:</strong> Half Cover = <strong>+2 AC &amp; DEX Saves</strong> • Three-Quarters = <strong>+5 AC &amp; DEX Saves</strong>.</div>
+                                </div>
+                                <div class="rpg-rules-card">
+                                    <h3>🔥 Curse of Strahd Table Rules</h3>
+                                    <div><strong>Brutal Crits (Nat 20):</strong> <code>Max Base Die + 1 Normal Roll + Modifiers</code> (auto-calculated in the Roll HUD!).</div>
+                                    <div><strong>Potions:</strong> <strong>Bonus Action</strong> for yourself (<code>2d6+1 HP</code>); <strong>Action</strong> to feed a downed ally.</div>
+                                    <div><strong>Help Tokens:</strong> Spend 1 to grant <strong>+1d6</strong> to any ally within 30 ft (<code>2/LR</code>, <code>+1</code> on Short Rest).</div>
+                                    <div><strong>Short Rest:</strong> Heals <strong>25% Max HP</strong> (up to 2/day) + restores Short Rest features &amp; +1 Help Token.</div>
+                                </div>
+                                <div class="rpg-rules-card">
+                                    <h3>💀 Standard 5e Death Saves &amp; Concentration</h3>
+                                    <div><strong>At 0 HP (Unconscious):</strong> Roll a flat d20 at the start of each turn:</div>
+                                    <div>• <strong>10–19:</strong> +1 Success (<strong>3 Successes</strong> = Stabilized at 0 HP).</div>
+                                    <div>• <strong>2–9:</strong> +1 Failure (<strong>3 Failures</strong> = Dead!).</div>
+                                    <div>• <strong>Nat 20:</strong> Regain <strong>1 HP</strong> immediately! • <strong>Nat 1:</strong> <strong>2 Failures</strong>!</div>
+                                    <div><strong>Concentration:</strong> Taking damage triggers a <strong>CON Save</strong> (<code>DC 10</code> or <code>half damage taken</code>, whichever is higher).</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rpg-modal-foot">
+                            <span style="font-size:0.7rem; color:#94a3b8;">Tip: Click your character's name at the top to view Ability Scores, Passives &amp; Origin Story.</span>
+                            <button type="button" class="rpg-mini-btn" onclick="COS_RPG.closeModal('rpg-rules-modal')">Close</button>
                         </div>
                     </div>
                 </dialog>
@@ -7778,6 +7918,14 @@
                 </div>
             ` : ''}
         `;
+
+        // Mirror 1-click Quick-Belt consumables into the pinned top Action Economy bar
+        const topQb = document.getElementById('rpg-top-quickbelt');
+        if (topQb) {
+            topQb.innerHTML = quickBtns.length > 0
+                ? `<span class="rpg-quickbelt-lbl">⚡ Belt:</span>${quickBtns.join('')}`
+                : '';
+        }
     }
 
     // =========================================================================
@@ -9291,13 +9439,970 @@
         } catch (e) {}
     }
 
+    // =========================================================================
+    // 🎮 VIDEO-GAME RPG HUD ENGINE (TURN BAR, CONCENTRATION, STATUS, DEATH SAVES,
+    //    LIVE PARTY FRAMES, FOG-OF-WAR COMBAT STRIP, TABS, SKILLS FILTER & CRITS)
+    // =========================================================================
+    const STATUS_CATALOG = [
+        { id: 'blessed',     kind: 'buff',   label: '✨ Blessed (+1d4)',      rule: 'Add +1d4 to all Attack Rolls and Saving Throws while Blessed.' },
+        { id: 'invisible',   kind: 'buff',   label: '👻 Invisible',           rule: 'Attacks against you have Disadvantage; your attacks have Advantage.' },
+        { id: 'dodging',     kind: 'buff',   label: '🛡️ Dodging',             rule: 'Until start of next turn, attacks against you have Disadvantage & you have Advantage on DEX Saves.' },
+        { id: 'half_cover',  kind: 'buff',   label: '🧱 Half Cover (+2 AC)',  rule: '+2 Bonus to AC (applied automatically!) and +2 to Dexterity Saving Throws.' },
+        { id: 'surge_ac',    kind: 'buff',   label: '✨ Spectral Shield (+2 AC)', rule: 'Wild Magic Surge #51: +2 AC & immune to Magic Missile for 1 minute.' },
+        { id: 'poisoned',    kind: 'debuff', label: '🤢 Poisoned',            rule: 'Disadvantage on all Attack Rolls and Ability Checks.' },
+        { id: 'frightened',  kind: 'debuff', label: '😱 Frightened',          rule: 'Disadvantage on Ability Checks & Attack Rolls while source is in sight; cannot move closer to source.' },
+        { id: 'prone',       kind: 'debuff', label: '💫 Prone',               rule: 'Crawl only (standing costs half speed). Disadvantage on attacks; melee attacks within 5 ft vs you have Advantage, ranged have Disadvantage.' },
+        { id: 'restrained',  kind: 'debuff', label: '🕸️ Restrained',          rule: 'Speed 0. Attacks vs you have Advantage; your attacks & DEX Saves have Disadvantage.' },
+        { id: 'grappled',    kind: 'debuff', label: '🪢 Grappled',            rule: 'Speed becomes 0 until you break free (Action: Athletics/Acrobatics vs Escape DC).' },
+        { id: 'blinded',     kind: 'debuff', label: '🕶️ Blinded',             rule: 'Auto-fail sight checks. Attacks vs you have Advantage; your attacks have Disadvantage.' },
+        { id: 'charmed',     kind: 'debuff', label: '💖 Charmed',             rule: 'Cannot attack or harm the charmer; charmer has Advantage on social checks vs you.' },
+        { id: 'stunned',     kind: 'debuff', label: '😵 Stunned',             rule: 'Incapacitated, cannot move, auto-fail STR & DEX saves, attacks vs you have Advantage.' },
+        { id: 'burning',     kind: 'debuff', label: '🔥 Burning',             rule: 'Takes fire damage at start/end of turn until spending an Action to douse flames.' },
+        { id: 'bane',        kind: 'debuff', label: '🩸 Bane (-1d4)',         rule: 'Subtract 1d4 from all Attack Rolls and Saving Throws while under Bane.' },
+        { id: 'silenced',    kind: 'debuff', label: '🔇 Silenced',            rule: 'Cannot speak or cast spells with Verbal (V) components (Subtle Spell bypasses!).' }
+    ];
+
+    let hudState = {
+        conc: null,
+        statuses: [],
+        deathSaves: { succ: 0, fail: 0 },
+        turn: { action: true, bonus: true, reaction: true, move: true },
+        advLocked: false,
+        rightTab: 'all',
+        skillsTrainedOnly: false
+    };
+    let statusPickerOpen = false;
+    let inspectedStatusId = null;
+    let livePartyMap = {};
+    let liveCombatState = null;
+    let lastCombatTurnToken = '';
+    let prevTrackedHp = null;
+    let pendingRollFollowup = null;
+    let pendingConcAlert = null;
+    let pendingConcFallbackTimer = null;
+
+    function getHudStorageKey() {
+        return `cos_rpg_hud_${adapter ? adapter.heroId : 'hero'}_v1`;
+    }
+
+    function loadHudState() {
+        try {
+            const raw = localStorage.getItem(getHudStorageKey());
+            if (!raw) return;
+            const p = JSON.parse(raw);
+            if (!p || typeof p !== 'object') return;
+            hudState.conc = typeof p.conc === 'string' && p.conc.trim() ? p.conc.trim() : null;
+            hudState.statuses = Array.isArray(p.statuses) ? p.statuses.filter(id => STATUS_CATALOG.some(s => s.id === id)) : [];
+            if (p.deathSaves && typeof p.deathSaves === 'object') {
+                hudState.deathSaves = {
+                    succ: Math.max(0, Math.min(3, parseInt(p.deathSaves.succ) || 0)),
+                    fail: Math.max(0, Math.min(3, parseInt(p.deathSaves.fail) || 0))
+                };
+            }
+            if (p.turn && typeof p.turn === 'object') {
+                hudState.turn = {
+                    action: p.turn.action !== false,
+                    bonus: p.turn.bonus !== false,
+                    reaction: p.turn.reaction !== false,
+                    move: p.turn.move !== false
+                };
+            }
+            hudState.advLocked = Boolean(p.advLocked);
+            hudState.rightTab = typeof p.rightTab === 'string' ? p.rightTab : 'all';
+            hudState.skillsTrainedOnly = Boolean(p.skillsTrainedOnly);
+        } catch (e) {}
+    }
+
+    function saveHudState() {
+        try { localStorage.setItem(getHudStorageKey(), JSON.stringify(hudState)); } catch (e) {}
+    }
+
+    function parseCurrentVitalsFromDom() {
+        const hpTxt = (document.getElementById('hp-disp')?.innerText || '').replace(/\s+/g, ' ').trim();
+        let cur = 10, max = 10, temp = 0;
+        const m1 = hpTxt.match(/(\d+)\s*(?:\(\+(\d+)T?\)|\+\s*(\d+))\s*\/\s*(\d+)/i);
+        const m2 = hpTxt.match(/(\d+)\s*\/\s*(\d+)/);
+        if (m1) {
+            cur = parseInt(m1[1], 10) || 0;
+            temp = parseInt(m1[2] || m1[3], 10) || 0;
+            max = parseInt(m1[4], 10) || 10;
+        } else if (m2) {
+            cur = parseInt(m2[1], 10) || 0;
+            max = parseInt(m2[2], 10) || 10;
+        }
+        const statusTxt = (document.getElementById('hp-status-header')?.innerText || '');
+        const mt = statusTxt.match(/\+(\d+)\s*Temp/i);
+        if (mt) temp = parseInt(mt[1], 10) || temp;
+        const acTxt = (document.getElementById('ac-disp')?.innerText || '10').trim();
+        return { cur, max, temp, ac: acTxt };
+    }
+
+    function getLiveConSaveBonus() {
+        const el = document.getElementById('save-val-con');
+        if (!el) return 0;
+        const m = String(el.innerText || '').match(/[+-]?\d+/);
+        return m ? parseInt(m[0], 10) : 0;
+    }
+
+    function getLiveHeroSpeed() {
+        const speedEl = document.getElementById('sub-speed-disp') || document.getElementById('badge-speed-toggle');
+        if (speedEl) {
+            const m = String(speedEl.innerText || '').match(/(\d+)\s*ft/i);
+            if (m) return `${m[1]} ft`;
+        }
+        return (adapter && adapter.speed) ? adapter.speed : '30 ft';
+    }
+
+    // Modern Web Guidance: Toolbar roving-tabindex fallback ONLY when focusgroup is unsupported
+    function installToolbarRovingFallback(bar) {
+        if (!bar || ('focusGroup' in HTMLElement.prototype) || bar.dataset.rovingWired) return;
+        bar.dataset.rovingWired = '1';
+        const getItems = () => Array.from(bar.querySelectorAll('button:not([disabled])'));
+        const initTabs = () => {
+            const items = getItems();
+            items.forEach((b, i) => { b.tabIndex = i === 0 ? 0 : -1; });
+        };
+        initTabs();
+        bar.addEventListener('focusin', (e) => {
+            const items = getItems();
+            if (items.includes(e.target)) {
+                items.forEach(b => { b.tabIndex = (b === e.target) ? 0 : -1; });
+            }
+        });
+        bar.addEventListener('keydown', (e) => {
+            const items = getItems();
+            const idx = items.indexOf(document.activeElement);
+            if (idx === -1 || items.length < 2) return;
+            let nextIdx = -1;
+            if (e.key === 'ArrowRight') nextIdx = (idx + 1) % items.length;
+            else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + items.length) % items.length;
+            else if (e.key === 'Home') nextIdx = 0;
+            else if (e.key === 'End') nextIdx = items.length - 1;
+            if (nextIdx !== -1) {
+                e.preventDefault();
+                items[nextIdx].focus();
+            }
+        });
+    }
+
+    // 👥 RENDER LIVE PARTY MINI-HUD
+    function renderPartyMiniHud() {
+        const host = document.getElementById('rpg-party-hud');
+        if (!host || !adapter) return;
+        const selfV = parseCurrentVitalsFromDom();
+        const roster = [
+            { id: 'jacomir', name: 'Jacomir', emoji: '👑', defCur: 23, defMax: 31, defAc: '17' },
+            { id: 'piper',   name: 'Piper',   emoji: '🎩', defCur: 17, defMax: 17, defAc: '13' },
+            { id: 'yvaine',  name: 'Yvaine',  emoji: '🔫', defCur: 28, defMax: 28, defAc: '16' }
+        ];
+        const chipsHtml = roster.map(r => {
+            const isSelf = r.id === adapter.heroId;
+            const remote = livePartyMap[r.id] || null;
+            const cur = isSelf ? selfV.cur : (remote && typeof remote.curHp === 'number' ? remote.curHp : r.defCur);
+            const max = isSelf ? selfV.max : (remote && typeof remote.maxHp === 'number' ? remote.maxHp : r.defMax);
+            const temp = isSelf ? selfV.temp : (remote && typeof remote.tempHp === 'number' ? remote.tempHp : 0);
+            const ac = isSelf ? selfV.ac : ((remote && remote.acDisplay) ? remote.acDisplay : r.defAc);
+            const conc = isSelf ? hudState.conc : (remote && remote.concentration ? remote.concentration : null);
+            const pct = Math.max(0, Math.min(100, Math.round((cur / Math.max(1, max)) * 100)));
+            const isDown = cur <= 0;
+            const fillCol = isDown ? '#ef4444' : (pct > 50 ? '#22c55e' : (pct > 25 ? '#f59e0b' : '#ef4444'));
+            const hpColor = isDown ? '#f87171' : (temp > 0 ? '#38bdf8' : (pct > 50 ? '#86efac' : (pct > 25 ? '#fde68a' : '#fca5a5')));
+            const titleAttr = isSelf
+                ? `${r.name} (You) — Live Vitals`
+                : `Click to whisper or trade directly with ${r.name}`;
+            const clickAttr = isSelf ? '' : `onclick="COS_RPG.openDirectWhisper('${r.id}')"`;
+            return `
+                <button type="button" class="rpg-party-chip ${isSelf ? 'is-self' : ''} ${isDown ? 'is-down' : ''}" ${clickAttr} title="${esc(titleAttr)}">
+                    <span style="font-size:1.05rem; line-height:1;">${r.emoji}</span>
+                    <div class="rpg-party-chip-main">
+                        <div class="rpg-party-chip-top">
+                            <span class="rpg-party-chip-name">${esc(r.name)}${isSelf ? ' <small style="color:#fbbf24; font-weight:600;">(You)</small>' : ''}</span>
+                            <span class="rpg-party-chip-stats" style="color:${hpColor};">${isDown ? '💀 0/' + max : `${cur}${temp > 0 ? `+${temp}` : ''}/${max}`}</span>
+                        </div>
+                        <div class="rpg-party-hp-track">
+                            <div class="rpg-party-hp-fill" style="width:${pct}%; background:${fillCol};"></div>
+                        </div>
+                        <div class="rpg-party-meta-tags">
+                            <span>🛡️ AC ${esc(ac)}</span>
+                            ${conc ? `<span class="rpg-party-conc-dot">• 🧠 ${esc(conc)}</span>` : ''}
+                            ${!isSelf && !conc ? `<span style="color:#64748b;">• 💬 Whisper</span>` : ''}
+                        </div>
+                    </div>
+                </button>
+            `;
+        }).join('');
+        host.innerHTML = `<span class="rpg-party-hud-lbl">👥 Party</span>${chipsHtml}`;
+    }
+
+    function openDirectWhisper(targetHeroId) {
+        if (!targetHeroId || !adapter || targetHeroId === adapter.heroId) return;
+        msgSelectedRecips = new Set([targetHeroId]);
+        msgActiveThreadId = computeThreadId([adapter.heroId, targetHeroId]);
+        if (msgActiveThreadId) markThreadRead(msgActiveThreadId);
+        tradeRecipient = targetHeroId;
+        openTradeModal('messages');
+    }
+
+    // ⚔️ RENDER SANITIZED FOG-OF-WAR COMBAT TURN-ORDER STRIP
+    function renderPublicCombatStrip() {
+        const host = document.getElementById('rpg-combat-strip');
+        if (!host || !adapter) return;
+        const st = liveCombatState;
+        if (!st || !st.active || !Array.isArray(st.combatants) || st.combatants.length === 0) {
+            host.classList.remove('is-active', 'is-my-turn');
+            host.innerHTML = '';
+            lastCombatTurnToken = '';
+            return;
+        }
+        const list = st.combatants;
+        const activeIdx = list.findIndex(c => c.isCurrent);
+        const curUnit = activeIdx >= 0 ? list[activeIdx] : null;
+        const isMyTurn = Boolean(curUnit && curUnit.heroId && curUnit.heroId === adapter.heroId);
+
+        // Determine if this player is directly "UP NEXT" (skipping defeated combatants)
+        let isUpNext = false;
+        if (!isMyTurn && activeIdx >= 0 && list.length > 1) {
+            for (let step = 1; step < list.length; step++) {
+                const cand = list[(activeIdx + step) % list.length];
+                if (cand && !cand.isDefeated) {
+                    isUpNext = Boolean(cand.heroId && cand.heroId === adapter.heroId);
+                    break;
+                }
+            }
+        }
+
+        // Auto-refresh player's BG3 Action Economy pips once per new turn when spotlight lands on them!
+        const turnToken = `${st.round || 1}:${st.activeUid || ''}`;
+        if (isMyTurn && turnToken !== lastCombatTurnToken) {
+            lastCombatTurnToken = turnToken;
+            resetTurnActions(true);
+            announceStatus(`Round ${st.round || 1}: It is your turn! Action, Bonus Action, and Reaction refreshed.`);
+        } else if (!isMyTurn && st.activeUid) {
+            lastCombatTurnToken = turnToken;
+        }
+
+        host.classList.add('is-active');
+        host.classList.toggle('is-my-turn', isMyTurn);
+
+        const tierClass = (tier) => {
+            const t = String(tier || '').toLowerCase();
+            if (t.includes('defeat')) return 'tier-defeated';
+            if (t.includes('near') || t.includes('crit')) return 'tier-critical';
+            if (t.includes('blood')) return 'tier-bloodied';
+            if (t.includes('wound')) return 'tier-wounded';
+            if (t.includes('unharm') || t.includes('health')) return 'tier-unharmed';
+            return 'tier-unknown';
+        };
+
+        const calloutHtml = isMyTurn
+            ? `<span class="rpg-combat-banner-call is-now">⚔️ YOUR TURN! (Actions Refreshed)</span>`
+            : (isUpNext
+                ? `<span class="rpg-combat-banner-call is-next">⚡ UP NEXT — Prep Your Move!</span>`
+                : `<span style="font-size:0.71rem; color:#94a3b8;">Current: <strong style="color:#fde68a;">${esc(curUnit ? curUnit.label : 'Combat Active')}</strong></span>`);
+
+        const tilesHtml = list.map(c => {
+            const kindCls = c.kind === 'enemy' ? 'kind-enemy' : (c.kind === 'party' ? 'kind-party' : 'kind-ally');
+            const conds = Array.isArray(c.conditions) ? c.conditions : [];
+            const tierHtml = c.tier
+                ? `<div class="rpg-combat-tier ${tierClass(c.tier)}">${c.isDefeated ? '💀' : '●'} ${esc(c.tier)}</div>`
+                : (c.isDefeated ? `<div class="rpg-combat-tier tier-defeated">💀 Down</div>` : '');
+            const condsHtml = conds.length > 0
+                ? `<div class="rpg-combat-conds">${conds.map(cd => `<span class="rpg-combat-cond-pill">${esc(cd)}</span>`).join('')}</div>`
+                : '';
+            return `
+                <div class="rpg-combat-tile ${kindCls} ${c.isCurrent ? 'is-current' : ''} ${c.isDefeated ? 'is-defeated' : ''}">
+                    <div class="rpg-combat-tile-top">
+                        <span class="rpg-combat-tile-name">${esc(c.label)}</span>
+                        ${c.isCurrent ? `<span class="rpg-combat-now-tag">▶ NOW</span>` : ''}
+                    </div>
+                    ${tierHtml}
+                    ${condsHtml}
+                </div>
+            `;
+        }).join('');
+
+        host.innerHTML = `
+            <div class="rpg-combat-strip-head">
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                    <span class="rpg-combat-round-pill">⚔️ COMBAT • ROUND ${st.round || 1}</span>
+                    ${calloutHtml}
+                </div>
+                <span style="font-size:0.65rem; color:#94a3b8;">Turn Order (Fog of War)</span>
+            </div>
+            <div class="rpg-combat-ribbon">${tilesHtml}</div>
+        `;
+    }
+
+    // ⚡ BG3 TURN ACTION ECONOMY BAR + RIGHT-COLUMN TABS
+    function renderActionEconomyBar() {
+        const bar = document.getElementById('rpg-action-bar');
+        if (!bar) return;
+        const speedStr = getLiveHeroSpeed();
+        const t = hudState.turn;
+        bar.innerHTML = `
+            <div class="rpg-action-pips-group" role="group" aria-label="Turn Resources">
+                <button type="button" class="rpg-act-pip pip-action" aria-pressed="${t.action ? 'true' : 'false'}" onclick="COS_RPG.toggleTurnAction('action')" title="Click to toggle Action (Ready / Used)">🟢 Action</button>
+                <button type="button" class="rpg-act-pip pip-bonus" aria-pressed="${t.bonus ? 'true' : 'false'}" onclick="COS_RPG.toggleTurnAction('bonus')" title="Click to toggle Bonus Action (Ready / Used)">🟠 Bonus</button>
+                <button type="button" class="rpg-act-pip pip-reaction" aria-pressed="${t.reaction ? 'true' : 'false'}" onclick="COS_RPG.toggleTurnAction('reaction')" title="Click to toggle Reaction (Ready / Used)">🟣 Reaction</button>
+                <button type="button" class="rpg-act-pip pip-move" aria-pressed="${t.move ? 'true' : 'false'}" onclick="COS_RPG.toggleTurnAction('move')" title="Click to mark Movement used / available">🥾 ${esc(speedStr)}</button>
+            </div>
+            <button type="button" class="rpg-act-reset-btn" onclick="COS_RPG.resetTurnActions(false)" title="Refresh Action, Bonus Action, Reaction &amp; Movement for your next turn">⏭️ New Turn</button>
+        `;
+        installToolbarRovingFallback(bar);
+    }
+
+    function toggleTurnAction(slot) {
+        if (!hudState.turn || typeof hudState.turn[slot] === 'undefined') return;
+        hudState.turn[slot] = !hudState.turn[slot];
+        saveHudState();
+        renderActionEconomyBar();
+    }
+
+    function spendTurnAction(slot) {
+        if (!hudState.turn || typeof hudState.turn[slot] === 'undefined') return;
+        if (!hudState.turn[slot]) return;
+        hudState.turn[slot] = false;
+        saveHudState();
+        renderActionEconomyBar();
+    }
+
+    function restoreTurnAction(slot) {
+        if (!hudState.turn || typeof hudState.turn[slot] === 'undefined') return;
+        hudState.turn[slot] = true;
+        saveHudState();
+        renderActionEconomyBar();
+    }
+
+    function resetTurnActions(silent = false) {
+        hudState.turn = { action: true, bonus: true, reaction: true, move: true };
+        saveHudState();
+        renderActionEconomyBar();
+        if (!silent) announceStatus('New turn: Action, Bonus Action, Reaction, and Movement refreshed.');
+    }
+
+    function classifyRightColumnPanels() {
+        const rightCol = document.querySelector('.main-layout > div:nth-child(2)');
+        if (!rightCol) return;
+        const panels = Array.from(rightCol.children).filter(el => el.classList && el.classList.contains('panel'));
+        panels.forEach(p => {
+            if (p.querySelector('#rpg-hub-mount')) {
+                p.dataset.rpgCats = 'gear';
+                return;
+            }
+            const titleTxt = (p.querySelector('.panel-title')?.innerText || '').toLowerCase();
+            if (titleTxt.includes('weapon') || titleTxt.includes('firearm') || titleTxt.includes('arsenal')) {
+                p.dataset.rpgCats = 'combat';
+            } else if (titleTxt.includes('maneuver') || titleTxt.includes('fighter') || titleTxt.includes('monster slayer')) {
+                p.dataset.rpgCats = 'combat magic';
+            } else if (titleTxt.includes('spell') || titleTxt.includes('occult')) {
+                p.dataset.rpgCats = 'combat magic';
+            } else if (titleTxt.includes('wild magic') || titleTxt.includes('font of magic') || titleTxt.includes('metamagic')) {
+                p.dataset.rpgCats = 'magic';
+            } else {
+                p.dataset.rpgCats = 'combat magic';
+            }
+        });
+    }
+
+    function setRightColumnTab(tabId) {
+        hudState.rightTab = tabId || 'all';
+        saveHudState();
+        const rightCol = document.querySelector('.main-layout > div:nth-child(2)');
+        if (rightCol) {
+            classifyRightColumnPanels();
+            Array.from(rightCol.children).forEach(el => {
+                if (!el.classList || !el.classList.contains('panel')) return;
+                const cats = (el.dataset.rpgCats || 'combat magic gear').split(/\s+/);
+                const show = (hudState.rightTab === 'all') || cats.includes(hudState.rightTab);
+                el.classList.toggle('rpg-tab-hidden', !show);
+            });
+        }
+        const tabsBar = document.getElementById('rpg-right-tabs');
+        if (tabsBar) {
+            tabsBar.querySelectorAll('.rpg-view-tab').forEach(btn => {
+                btn.setAttribute('aria-pressed', btn.dataset.tab === hudState.rightTab ? 'true' : 'false');
+            });
+        }
+    }
+
+    // 🧠 AUTO-CONCENTRATION & QUICK STATUS PILLS
+    function setConcentration(spellName, silent = false) {
+        const clean = String(spellName || '').trim();
+        if (!clean) return;
+        const prev = hudState.conc;
+        hudState.conc = clean;
+        saveHudState();
+        renderStatusStrip();
+        renderPartyMiniHud();
+        syncHeroStateToFirebase(false);
+        if (!silent && prev && prev.toLowerCase() !== clean.toLowerCase()) {
+            announceStatus(`Switched concentration from ${prev} to ${clean}.`);
+        }
+    }
+
+    function dropConcentration(silent = false) {
+        const prev = hudState.conc;
+        if (!prev) return;
+        hudState.conc = null;
+        pendingConcAlert = null;
+        saveHudState();
+        renderStatusStrip();
+        renderPartyMiniHud();
+        syncHeroStateToFirebase(false);
+        if (!silent && adapter && adapter.log) {
+            adapter.log(`🧠 <strong>Concentration Ended:</strong> Stopped concentrating on <strong>${esc(prev)}</strong>.`);
+        }
+    }
+
+    function promptManualConcentration() {
+        const val = window.prompt('Which spell or effect are you concentrating on?', hudState.conc || '');
+        if (val && val.trim()) {
+            setConcentration(val.trim(), false);
+            if (adapter && adapter.log) {
+                adapter.log(`🧠 <strong>Concentrating on ${esc(val.trim())}</strong> — taking damage will automatically prompt a CON Save!`);
+            }
+        }
+    }
+
+    function buildConcAlertHtml(info) {
+        const conMod = getLiveConSaveBonus();
+        const modStr = conMod >= 0 ? `+${conMod}` : `${conMod}`;
+        return `
+            <div class="rpg-hud-conc-alert">
+                <div>
+                    <strong>🧠 CONCENTRATION CHECK!</strong> Took <strong>${info.dmg} dmg</strong> while concentrating on <strong style="color:#fde68a;">${esc(info.spell)}</strong> ➔ <strong>DC ${info.dc} CON Save</strong>
+                </div>
+                <button type="button" class="rpg-hud-crit-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="COS_RPG.rollConcentrationSave(${info.dc})">🎲 Roll CON Save (${modStr})</button>
+            </div>
+        `;
+    }
+
+    function triggerConcentrationCheck(dmgAmount) {
+        if (!hudState.conc || dmgAmount <= 0) return;
+        const dc = Math.max(10, Math.floor(dmgAmount / 2));
+        pendingConcAlert = { spell: hudState.conc, dc, dmg: dmgAmount, ts: Date.now() };
+        const cBar = document.querySelector('#rpg-status-strip .rpg-conc-bar');
+        if (cBar) {
+            cBar.classList.add('needs-check');
+            setTimeout(() => cBar.classList.remove('needs-check'), 4000);
+        }
+        clearTimeout(pendingConcFallbackTimer);
+        pendingConcFallbackTimer = setTimeout(() => {
+            if (!pendingConcAlert) return;
+            const info = pendingConcAlert;
+            pendingConcAlert = null;
+            if (typeof window.__origLogRoll === 'function') {
+                window.__origLogRoll(buildConcAlertHtml(info));
+            }
+        }, 70);
+    }
+
+    function rollConcentrationSave(dc) {
+        const targetDc = Math.max(10, parseInt(dc) || 10);
+        const spell = hudState.conc || 'Spell';
+        const conMod = getLiveConSaveBonus();
+        const mode = (typeof window.rollMode === 'string') ? window.rollMode : 'norm';
+        let d20 = Math.floor(Math.random() * 20) + 1;
+        let modeNote = '';
+        if (mode === 'adv' || mode === 'dis') {
+            const d2 = Math.floor(Math.random() * 20) + 1;
+            const chosen = mode === 'adv' ? Math.max(d20, d2) : Math.min(d20, d2);
+            modeNote = ` (${mode === 'adv' ? 'Adv' : 'Dis'} [${d20}, ${d2}])`;
+            d20 = chosen;
+            consumeTempRollMode();
+        }
+        let blessNote = '';
+        let blessVal = 0;
+        if (hudState.statuses.includes('blessed')) {
+            blessVal = Math.floor(Math.random() * 4) + 1;
+            blessNote += ` + Bless(${blessVal})`;
+        }
+        if (hudState.statuses.includes('bane')) {
+            const b = Math.floor(Math.random() * 4) + 1;
+            blessVal -= b;
+            blessNote += ` - Bane(${b})`;
+        }
+        const total = d20 + conMod + blessVal;
+        const passed = total >= targetDc;
+        const modStr = conMod >= 0 ? `+ ${conMod}` : `- ${Math.abs(conMod)}`;
+        if (!passed) {
+            hudState.conc = null;
+            saveHudState();
+            renderStatusStrip();
+            renderPartyMiniHud();
+            syncHeroStateToFirebase(false);
+        }
+        const resultBadge = passed
+            ? `<span style="color:#4ade80; font-weight:900;">✅ CONCENTRATION HELD!</span>`
+            : `<span style="color:#f87171; font-weight:900;">💔 CONCENTRATION BROKEN! (${esc(spell)} ends)</span>`;
+        if (adapter && adapter.log) {
+            adapter.log(`🧠 <strong>Concentration CON Save (DC ${targetDc} — ${esc(spell)}):</strong> d20[${d20}]${modeNote} ${modStr}${blessNote} = <strong style="font-size:1.1rem; color:${passed ? '#4ade80' : '#f87171'};">${total}</strong> ➔ ${resultBadge}`);
+        }
+    }
+
+    function toggleStatus(statusId) {
+        const idx = hudState.statuses.indexOf(statusId);
+        if (idx === -1) {
+            hudState.statuses.push(statusId);
+            inspectedStatusId = statusId;
+        } else {
+            hudState.statuses.splice(idx, 1);
+            if (inspectedStatusId === statusId) inspectedStatusId = null;
+        }
+        saveHudState();
+        renderStatusStrip();
+        if (statusId === 'half_cover' || statusId === 'surge_ac') {
+            applyEquipmentToSheet(true);
+            if (typeof window.updateACDisplay === 'function') window.updateACDisplay();
+        }
+        syncHeroStateToFirebase(false);
+    }
+
+    function toggleStatusPicker() {
+        statusPickerOpen = !statusPickerOpen;
+        renderStatusStrip();
+    }
+
+    function inspectStatus(statusId) {
+        inspectedStatusId = (inspectedStatusId === statusId) ? null : statusId;
+        renderStatusStrip();
+    }
+
+    function renderStatusStrip() {
+        const host = document.getElementById('rpg-status-strip');
+        if (!host) return;
+        const conMod = getLiveConSaveBonus();
+        const modStr = conMod >= 0 ? `+${conMod}` : `${conMod}`;
+        const concHtml = hudState.conc
+            ? `
+                <div class="rpg-conc-bar">
+                    <span class="rpg-conc-title">🧠 Conc: <span style="color:#fde68a;">${esc(hudState.conc)}</span></span>
+                    <div style="display:flex; gap:4px; align-items:center;">
+                        <button type="button" class="rpg-mini-btn btn-equip" style="min-block-size:22px; padding:1px 7px; font-size:0.65rem;" onclick="COS_RPG.rollConcentrationSave(10)" title="Roll DC 10 Constitution Save">🎲 CON (${modStr})</button>
+                        <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:22px; padding:1px 6px; font-size:0.65rem;" onclick="COS_RPG.dropConcentration(false)" title="End Concentration">✕</button>
+                    </div>
+                </div>
+            `
+            : '';
+
+        const activeChipsHtml = hudState.statuses.map(id => {
+            const def = STATUS_CATALOG.find(s => s.id === id);
+            if (!def) return '';
+            return `<button type="button" class="rpg-status-chip ${def.kind === 'buff' ? 'is-buff' : 'is-debuff'}" onclick="COS_RPG.inspectStatus('${def.id}')" title="${esc(def.rule)}">${esc(def.label)}</button>`;
+        }).join('');
+
+        const inspDef = inspectedStatusId ? STATUS_CATALOG.find(s => s.id === inspectedStatusId) : null;
+        const ruleHtml = (inspDef && hudState.statuses.includes(inspDef.id))
+            ? `
+                <div class="rpg-status-rule-box">
+                    <div><strong style="color:#fde68a;">${esc(inspDef.label)}:</strong> ${esc(inspDef.rule)}</div>
+                    <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:22px; padding:1px 6px; font-size:0.64rem; flex-shrink:0;" onclick="COS_RPG.toggleStatus('${inspDef.id}')">Remove</button>
+                </div>
+            `
+            : '';
+
+        const pickerHtml = `
+            <div class="rpg-status-picker ${statusPickerOpen ? 'is-open' : ''}">
+                <div style="font-size:0.64rem; font-weight:800; color:#86efac; text-transform:uppercase;">Buffs &amp; Cover</div>
+                <div class="rpg-status-picker-grid">
+                    ${STATUS_CATALOG.filter(s => s.kind === 'buff').map(s => `
+                        <button type="button" class="rpg-status-opt opt-buff" aria-pressed="${hudState.statuses.includes(s.id) ? 'true' : 'false'}" onclick="COS_RPG.toggleStatus('${s.id}')" title="${esc(s.rule)}">${esc(s.label)}</button>
+                    `).join('')}
+                </div>
+                <div style="font-size:0.64rem; font-weight:800; color:#fca5a5; text-transform:uppercase; margin-top:2px;">Conditions &amp; Debuffs</div>
+                <div class="rpg-status-picker-grid">
+                    ${STATUS_CATALOG.filter(s => s.kind === 'debuff').map(s => `
+                        <button type="button" class="rpg-status-opt opt-debuff" aria-pressed="${hudState.statuses.includes(s.id) ? 'true' : 'false'}" onclick="COS_RPG.toggleStatus('${s.id}')" title="${esc(s.rule)}">${esc(s.label)}</button>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+
+        host.innerHTML = `
+            ${concHtml}
+            <div class="rpg-status-row">
+                ${activeChipsHtml || (!hudState.conc ? '<span style="font-size:0.67rem; color:#64748b;">No active conditions</span>' : '')}
+                <button type="button" class="rpg-status-add-btn" onclick="COS_RPG.toggleStatusPicker()" aria-expanded="${statusPickerOpen ? 'true' : 'false'}">${statusPickerOpen ? '▴ Done' : '+ Status'}</button>
+                ${!hudState.conc ? `<button type="button" class="rpg-status-add-btn" style="color:#c4b5fd; border-color:rgba(167,139,250,0.45);" onclick="COS_RPG.promptManualConcentration()" title="Set a Concentration spell manually">+ 🧠 Conc</button>` : ''}
+            </div>
+            ${ruleHtml}
+            ${pickerHtml}
+        `;
+    }
+
+    // 💀 STANDARD D&D 5E DEATH SAVES (3 Successes / 3 Failures, Nat 20 = 1 HP, Nat 1 = 2 Fails)
+    function renderDeathSavesBox(curHp) {
+        const box = document.getElementById('rpg-death-saves-box');
+        if (!box) return;
+        const isDying = (curHp <= 0);
+        if (!isDying) {
+            if (hudState.deathSaves.succ > 0 || hudState.deathSaves.fail > 0) {
+                hudState.deathSaves = { succ: 0, fail: 0 };
+                saveHudState();
+            }
+            box.classList.remove('is-dying');
+            return;
+        }
+        box.classList.add('is-dying');
+        const { succ, fail } = hudState.deathSaves;
+        const statusBanner = succ >= 3
+            ? `<span style="color:#4ade80; font-weight:800;">✅ STABILIZED (0 HP)</span>`
+            : (fail >= 3
+                ? `<span style="color:#f87171; font-weight:900;">💀 3 FAILURES — FALLEN</span>`
+                : `<span style="color:#fecaca; font-weight:800;">💀 DYING — 5e DEATH SAVES</span>`);
+
+        const succPips = [1, 2, 3].map(n => `
+            <button type="button" class="rpg-ds-pip ${succ >= n ? 'is-succ' : ''}" onclick="COS_RPG.setDeathSavePip('succ', ${n})" aria-label="Death Save Success ${n}" title="Toggle Success ${n}">${succ >= n ? '✓' : ''}</button>
+        `).join('');
+        const failPips = [1, 2, 3].map(n => `
+            <button type="button" class="rpg-ds-pip ${fail >= n ? 'is-fail' : ''}" onclick="COS_RPG.setDeathSavePip('fail', ${n})" aria-label="Death Save Failure ${n}" title="Toggle Failure ${n}">${fail >= n ? '✕' : ''}</button>
+        `).join('');
+
+        box.innerHTML = `
+            <div class="rpg-ds-row">
+                ${statusBanner}
+                <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:24px; padding:2px 9px; font-size:0.7rem;" onclick="COS_RPG.rollDeathSave()" ${succ >= 3 || fail >= 3 ? 'disabled' : ''}>🎲 Roll Death Save</button>
+            </div>
+            <div class="rpg-ds-row">
+                <span style="color:#86efac;">Successes (${succ}/3)</span>
+                <div class="rpg-ds-pips">${succPips}</div>
+            </div>
+            <div class="rpg-ds-row">
+                <span style="color:#fca5a5;">Failures (${fail}/3)</span>
+                <div class="rpg-ds-pips">${failPips}</div>
+            </div>
+        `;
+    }
+
+    function setDeathSavePip(kind, n) {
+        const cur = hudState.deathSaves[kind] || 0;
+        hudState.deathSaves[kind] = (cur === n) ? n - 1 : n;
+        saveHudState();
+        renderDeathSavesBox(parseCurrentVitalsFromDom().cur);
+        syncHeroStateToFirebase(false);
+    }
+
+    function rollDeathSave() {
+        const d20 = Math.floor(Math.random() * 20) + 1;
+        if (d20 === 20) {
+            hudState.deathSaves = { succ: 0, fail: 0 };
+            saveHudState();
+            if (adapter && adapter.healHP) adapter.healHP(1, false);
+            if (adapter && adapter.log) {
+                adapter.log(`🌟 <strong>NAT 20 DEATH SAVE!</strong> You gasp back to consciousness and immediately regain <strong style="color:#4ade80;">1 HP</strong>!`);
+            }
+            return;
+        }
+        if (d20 === 1) {
+            hudState.deathSaves.fail = Math.min(3, (hudState.deathSaves.fail || 0) + 2);
+            saveHudState();
+            renderDeathSavesBox(0);
+            syncHeroStateToFirebase(true);
+            if (adapter && adapter.log) {
+                adapter.log(`💀 <strong>NAT 1 DEATH SAVE!</strong> Suffers <strong style="color:#f87171;">2 Failures</strong> (${hudState.deathSaves.fail}/3 Fails, ${hudState.deathSaves.succ}/3 Successes)!${hudState.deathSaves.fail >= 3 ? ' <strong>CHARACTER HAS FALLEN!</strong>' : ''}`);
+            }
+            return;
+        }
+        if (d20 >= 10) {
+            hudState.deathSaves.succ = Math.min(3, (hudState.deathSaves.succ || 0) + 1);
+            saveHudState();
+            renderDeathSavesBox(0);
+            syncHeroStateToFirebase(true);
+            if (adapter && adapter.log) {
+                adapter.log(`💚 <strong>Death Save SUCCESS (d20: ${d20}):</strong> ${hudState.deathSaves.succ}/3 Successes, ${hudState.deathSaves.fail}/3 Failures.${hudState.deathSaves.succ >= 3 ? ' <strong style="color:#4ade80;">✅ STABILIZED AT 0 HP!</strong>' : ''}`);
+            }
+        } else {
+            hudState.deathSaves.fail = Math.min(3, (hudState.deathSaves.fail || 0) + 1);
+            saveHudState();
+            renderDeathSavesBox(0);
+            syncHeroStateToFirebase(true);
+            if (adapter && adapter.log) {
+                adapter.log(`🩸 <strong>Death Save FAILURE (d20: ${d20}):</strong> ${hudState.deathSaves.fail}/3 Failures, ${hudState.deathSaves.succ}/3 Successes.${hudState.deathSaves.fail >= 3 ? ' <strong style="color:#f87171;">💀 3 FAILURES — CHARACTER HAS FALLEN!</strong>' : ''}`);
+            }
+        }
+    }
+
+    // ✨ TACTILE HP FLOATING NUMBERS & BLOODIED PULSE
+    function spawnHpFloat(delta, isTemp = false) {
+        if (!delta) return;
+        const hpBox = document.getElementById('hp-bar')?.closest('.hp-ctrl-container, .panel');
+        if (!hpBox) return;
+        hpBox.classList.add('rpg-hp-host');
+        const el = document.createElement('span');
+        el.className = `rpg-hp-float ${isTemp ? 'is-temp' : (delta > 0 ? 'is-heal' : 'is-dmg')}`;
+        el.textContent = isTemp ? `+${delta} TEMP` : (delta > 0 ? `+${delta} HP` : `${delta} HP`);
+        hpBox.appendChild(el);
+        setTimeout(() => el.remove(), 1100);
+    }
+
+    function handleHpUpdateEffects() {
+        const v = parseCurrentVitalsFromDom();
+        const hpBox = document.getElementById('hp-bar')?.closest('.hp-ctrl-container, .panel');
+        if (hpBox) {
+            hpBox.classList.toggle('hp-critical-pulse', v.cur > 0 && (v.cur / Math.max(1, v.max)) <= 0.25);
+        }
+        // Smart Clear Temp visibility (show ONLY when temp > 0!)
+        const clrBtn = document.getElementById('btn-clear-temp');
+        if (clrBtn) clrBtn.style.display = v.temp > 0 ? 'inline-flex' : 'none';
+
+        if (prevTrackedHp) {
+            const prevTot = prevTrackedHp.cur + prevTrackedHp.temp;
+            const nextTot = v.cur + v.temp;
+            const diff = nextTot - prevTot;
+            if (diff < 0) {
+                spawnHpFloat(diff, false);
+                if (hudState.conc) triggerConcentrationCheck(Math.abs(diff));
+            } else if (diff > 0) {
+                const onlyTemp = (v.cur === prevTrackedHp.cur && v.temp > prevTrackedHp.temp);
+                spawnHpFloat(diff, onlyTemp);
+            }
+        }
+        prevTrackedHp = { cur: v.cur, max: v.max, temp: v.temp };
+        renderDeathSavesBox(v.cur);
+        renderPartyMiniHud();
+    }
+
+    // 🎯 SKILLS QUICK-FILTER (Search + Trained-Only Toggle)
+    function applySkillsFilter() {
+        const q = (document.getElementById('rpg-skills-search')?.value || '').trim().toLowerCase();
+        const trainedOnly = Boolean(hudState.skillsTrainedOnly);
+        const list = document.querySelector('.stat-row-list');
+        if (!list) return;
+        list.querySelectorAll('li.stat-row-item').forEach(li => {
+            const isTrained = li.classList.contains('prof-item') || li.classList.contains('exp-item');
+            const matchesTrained = !trainedOnly || isTrained;
+            const matchesQuery = !q || (li.innerText || '').toLowerCase().includes(q);
+            li.style.display = (matchesTrained && matchesQuery) ? '' : 'none';
+        });
+        const btn = document.getElementById('rpg-skills-trained-btn');
+        if (btn) btn.setAttribute('aria-pressed', trainedOnly ? 'true' : 'false');
+    }
+
+    function toggleSkillsTrainedFilter() {
+        hudState.skillsTrainedOnly = !hudState.skillsTrainedOnly;
+        saveHudState();
+        applySkillsFilter();
+    }
+
+    // 🔒 ADVANTAGE / DISADVANTAGE AUTO-RESET WITH PIN LOCK
+    function toggleAdvLock() {
+        hudState.advLocked = !hudState.advLocked;
+        saveHudState();
+        const btn = document.getElementById('rpg-adv-lock-btn');
+        if (btn) {
+            btn.setAttribute('aria-pressed', hudState.advLocked ? 'true' : 'false');
+            btn.textContent = hudState.advLocked ? '🔒' : '🔓';
+            btn.title = hudState.advLocked
+                ? 'Adv/Dis LOCKED (stays active across rolls) — click to unlock'
+                : 'Adv/Dis auto-resets after 1 roll — click to lock for multi-turn buffs/debuffs';
+        }
+    }
+
+    function consumeTempRollMode() {
+        if (hudState.advLocked) return;
+        if (typeof window.rollMode === 'string' && window.rollMode !== 'norm' && typeof window.toggleAdvantage === 'function') {
+            window.toggleAdvantage(window.rollMode);
+        }
+    }
+
+    // 💥 1-CLICK ATTACK ➔ DAMAGE & BRUTAL CRIT ENGINE INSIDE FLOATING ROLL HUD
+    function setRollFollowup(spec) {
+        pendingRollFollowup = spec ? { ...spec, ts: Date.now() } : null;
+    }
+
+    function triggerRollFollowup(useCrit) {
+        const f = pendingRollFollowup;
+        pendingRollFollowup = null;
+        if (!f) return;
+        if (useCrit && typeof f.onCrit === 'function') f.onCrit();
+        else if (typeof f.onDamage === 'function') f.onDamage();
+    }
+
+    function rollBrutalCrit(opts) {
+        const diceCount = Math.max(1, parseInt(opts.diceCount) || 1);
+        const sides = Math.max(4, parseInt(opts.sides) || 6);
+        const flatMod = parseInt(opts.flatMod) || 0;
+        const maxBase = diceCount * sides;
+        const rollOneSet = () => {
+            const arr = [];
+            let sum = 0;
+            for (let i = 0; i < diceCount; i++) {
+                const r = Math.floor(Math.random() * sides) + 1;
+                arr.push(r); sum += r;
+            }
+            return { arr, sum };
+        };
+        let rolled = rollOneSet();
+        let savageNote = '';
+        if (opts.isSavage) {
+            const set2 = rollOneSet();
+            if (set2.sum > rolled.sum) {
+                savageNote = ` <em>(Savage: [${rolled.arr.join('+')}] vs <strong>[${set2.arr.join('+')}]</strong>)</em>`;
+                rolled = set2;
+            } else {
+                savageNote = ` <em>(Savage: <strong>[${rolled.arr.join('+')}]</strong> vs [${set2.arr.join('+')}])</em>`;
+            }
+        }
+        let total = maxBase + rolled.sum + flatMod;
+        let extraHtml = '';
+        (opts.extras || []).forEach(ex => {
+            if (!ex || !ex.dice) return;
+            const r = rollDiceExpr(ex.dice);
+            total += r.max + r.sum;
+            extraHtml += ` + <span style="color:#fde68a;">${r.max}+[${r.rolls.join('+')}] ${esc(ex.type || 'Bonus')}</span>`;
+        });
+        const modStr = flatMod > 0 ? ` + ${flatMod}` : (flatMod < 0 ? ` - ${Math.abs(flatMod)}` : '');
+        const msg = `🔥 <strong style="color:#facc15;">BRUTAL CRIT — ${esc(opts.label || 'Attack')}!</strong> Max(<strong>${maxBase}</strong>) + Roll([<strong>${rolled.arr.join('+')}</strong>])${savageNote}${modStr}${extraHtml} = <span style="font-size:1.18rem; color:#f87171; font-weight:900;">${total} ${esc(opts.dmgType || '')} Damage!</span>`;
+        if (adapter && adapter.log) adapter.log(msg);
+    }
+
+    function openRulesModal() {
+        const m = document.getElementById('rpg-rules-modal');
+        if (m && !m.open) m.showModal();
+    }
+
+    function mountVideoGameHudWidgets() {
+        loadHudState();
+
+        // 1. Mount BG3 Action Economy Toolbar + Pinned Quick-Belt + Right-Column View Tabs
+        const rightCol = document.querySelector('.main-layout > div:nth-child(2)');
+        if (rightCol && !document.getElementById('rpg-action-bar-wrap')) {
+            const wrap = document.createElement('div');
+            wrap.id = 'rpg-action-bar-wrap';
+            wrap.className = 'rpg-action-bar-wrap';
+            wrap.innerHTML = `
+                <div id="rpg-action-bar" class="rpg-action-toolbar" role="toolbar" focusgroup="toolbar wrap" aria-label="Turn Action Economy"></div>
+                <div id="rpg-top-quickbelt" class="rpg-top-quickbelt"></div>
+            `;
+            const tabs = document.createElement('div');
+            tabs.id = 'rpg-right-tabs';
+            tabs.className = 'rpg-view-tabs';
+            tabs.setAttribute('role', 'toolbar');
+            tabs.setAttribute('focusgroup', 'toolbar wrap');
+            tabs.setAttribute('aria-label', 'Sheet View Filter');
+            tabs.innerHTML = `
+                <button type="button" class="rpg-view-tab" data-tab="all" aria-pressed="true" onclick="COS_RPG.setRightColumnTab('all')">📋 All</button>
+                <button type="button" class="rpg-view-tab" data-tab="combat" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('combat')">⚔️ Combat</button>
+                <button type="button" class="rpg-view-tab" data-tab="magic" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('magic')">🔮 Magic &amp; Features</button>
+                <button type="button" class="rpg-view-tab" data-tab="gear" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('gear')">🎒 Gear &amp; Bag</button>
+            `;
+            rightCol.insertBefore(tabs, rightCol.firstChild);
+            rightCol.insertBefore(wrap, rightCol.firstChild);
+            installToolbarRovingFallback(tabs);
+        }
+
+        // 2. Mount Concentration & Quick Status Strip right below .buffs-toggle-bar in Left Column
+        const buffsBar = document.querySelector('.buffs-toggle-bar');
+        if (buffsBar && !document.getElementById('rpg-status-strip')) {
+            const strip = document.createElement('div');
+            strip.id = 'rpg-status-strip';
+            strip.className = 'rpg-status-panel';
+            buffsBar.insertAdjacentElement('afterend', strip);
+        }
+
+        // 3. Mount Standard 5e Death Saves Overlay inside the HP box (hidden unless curHP === 0)
+        const hpBox = document.getElementById('hp-bar')?.closest('.hp-ctrl-container, .panel');
+        if (hpBox && !document.getElementById('rpg-death-saves-box')) {
+            const ds = document.createElement('div');
+            ds.id = 'rpg-death-saves-box';
+            ds.className = 'rpg-death-saves-box';
+            hpBox.appendChild(ds);
+        }
+
+        // 4. Mount Skills Quick-Filter Bar inside the 18 Skills panel
+        const skillsList = document.querySelector('.stat-row-list');
+        if (skillsList && !document.getElementById('rpg-skills-filter-bar')) {
+            const fBar = document.createElement('div');
+            fBar.id = 'rpg-skills-filter-bar';
+            fBar.className = 'rpg-skills-filter-bar';
+            fBar.innerHTML = `
+                <input type="search" id="rpg-skills-search" class="rpg-skills-search" placeholder="🔍 Filter skills..." aria-label="Filter skills" oninput="COS_RPG.applySkillsFilter()">
+                <button type="button" id="rpg-skills-trained-btn" class="rpg-skills-mode-btn" aria-pressed="${hudState.skillsTrainedOnly ? 'true' : 'false'}" onclick="COS_RPG.toggleSkillsTrainedFilter()" title="Toggle showing only proficient / expertise skills">★ Trained</button>
+            `;
+            skillsList.insertAdjacentElement('beforebegin', fBar);
+        }
+
+        // 5. Mount Adv/Dis Pin Lock button right beside #btn-dis
+        const btnDis = document.getElementById('btn-dis');
+        if (btnDis && !document.getElementById('rpg-adv-lock-btn')) {
+            const lockBtn = document.createElement('button');
+            lockBtn.type = 'button';
+            lockBtn.id = 'rpg-adv-lock-btn';
+            lockBtn.className = 'rpg-adv-lock-btn';
+            lockBtn.setAttribute('aria-pressed', hudState.advLocked ? 'true' : 'false');
+            lockBtn.textContent = hudState.advLocked ? '🔒' : '🔓';
+            lockBtn.title = hudState.advLocked
+                ? 'Adv/Dis LOCKED (stays active across rolls) — click to unlock'
+                : 'Adv/Dis auto-resets after 1 roll — click to lock for multi-turn buffs/debuffs';
+            lockBtn.onclick = toggleAdvLock;
+            btnDis.insertAdjacentElement('afterend', lockBtn);
+        }
+
+        renderActionEconomyBar();
+        renderStatusStrip();
+        setRightColumnTab(hudState.rightTab || 'all');
+        applySkillsFilter();
+        // Initialize HP baseline silently before first diff so boot doesn't spawn a fake float
+        prevTrackedHp = parseCurrentVitalsFromDom();
+        handleHpUpdateEffects();
+        renderPartyMiniHud();
+    }
+
     function startLiveSheetWatcher() {
-        // Wrap updateHPUI so any HP decrease/increase immediately streams to Firebase for the DM's Active Encounter Board!
+        // Wrap updateHPUI so any HP decrease/increase triggers floating deltas, Concentration Check, Death Saves & Firebase sync!
         if (typeof window.updateHPUI === 'function' && !window.__origUpdateHPUI) {
             window.__origUpdateHPUI = window.updateHPUI;
             window.updateHPUI = function () {
                 window.__origUpdateHPUI();
+                handleHpUpdateEffects();
                 if (!isCapturingExports) syncHeroStateToFirebase(true);
+            };
+        }
+        // Wrap logRoll to append 1-click Damage / Brutal Crit follow-up & Auto-Concentration Check banners cleanly!
+        if (typeof window.logRoll === 'function' && !window.__origLogRoll) {
+            window.__origLogRoll = window.logRoll;
+            window.logRoll = function (htmlMsg) {
+                window.__origLogRoll(htmlMsg);
+                const hudBody = document.getElementById('floating-roll-body');
+                if (!hudBody) return;
+                if (pendingRollFollowup && (Date.now() - pendingRollFollowup.ts < 350)) {
+                    const f = pendingRollFollowup;
+                    const isNat20 = /NAT 20|CRITICAL/i.test(String(htmlMsg || ''));
+                    const wrap = document.createElement('div');
+                    wrap.className = 'rpg-hud-followup-wrap';
+                    if (isNat20 && typeof f.onCrit === 'function') {
+                        wrap.innerHTML = `<button type="button" class="rpg-hud-crit-btn" onclick="COS_RPG.triggerRollFollowup(true)">${esc(f.critLabel || '🔥 ROLL BRUTAL CRIT!')}</button>`;
+                    } else if (typeof f.onDamage === 'function') {
+                        wrap.innerHTML = `<button type="button" class="rpg-hud-followup-btn" onclick="COS_RPG.triggerRollFollowup(false)">${esc(f.label || '💥 Roll Damage')}</button>`;
+                    }
+                    if (wrap.innerHTML) hudBody.appendChild(wrap);
+                }
+                if (pendingConcAlert && (Date.now() - pendingConcAlert.ts < 350)) {
+                    const info = pendingConcAlert;
+                    pendingConcAlert = null;
+                    clearTimeout(pendingConcFallbackTimer);
+                    const cDiv = document.createElement('div');
+                    cDiv.style.width = '100%';
+                    cDiv.innerHTML = buildConcAlertHtml(info);
+                    hudBody.appendChild(cDiv);
+                }
+            };
+        }
+        // Wrap rollD20 & rollCustomDie so unlocked Adv/Dis auto-resets cleanly after 1 d20 roll
+        if (typeof window.rollD20 === 'function' && !window.__origRollD20) {
+            window.__origRollD20 = window.rollD20;
+            window.rollD20 = function () {
+                const res = window.__origRollD20.apply(this, arguments);
+                consumeTempRollMode();
+                return res;
+            };
+        }
+        if (typeof window.rollCustomDie === 'function' && !window.__origRollCustomDie) {
+            window.__origRollCustomDie = window.rollCustomDie;
+            window.rollCustomDie = function (sides) {
+                const res = window.__origRollCustomDie.apply(this, arguments);
+                if (sides === 20) consumeTempRollMode();
+                return res;
             };
         }
         // Wrap native exportSheetState / exportPlayerNotes so clicking them ALSO pushes a Firebase checkpoint!
@@ -9315,8 +10420,24 @@
                 pushSyncedCheckpoint(true);
             };
         }
-        // Stream live changes (HP, slots, ammo, notes, buffs) to Firebase for DM live monitoring
-        document.addEventListener('click', () => {
+        // Smart Action Economy Auto-Ticking on Combat Card Buttons + Refresh Speed on Longstrider toggle
+        document.addEventListener('click', (e) => {
+            const btn = e.target && e.target.closest ? e.target.closest('button, .toggle-btn-card') : null;
+            if (btn) {
+                const oc = btn.getAttribute('onclick') || '';
+                if (/useActionSurge/i.test(oc)) {
+                    restoreTurnAction('action');
+                } else if (/useSecondWindHeal|reloadLament|reloadBothRevolvers|useHuntersSense|toggleSlayersPreyManual|castTracerRoundFree|fireLessShot|castPhosphorGrenade|rollKnifeDamage\(true\)|rollStrappedDaggerDamage\(true\)/i.test(oc)) {
+                    spendTurnAction('bonus');
+                } else if (/useBendFate|Parry|Riposte|Shield/i.test(oc) || /\bReaction\b/i.test(btn.innerText || '')) {
+                    spendTurnAction('reaction');
+                } else if (/rollWeaponAttack|fireLamentShot|fireMercyShot|rollKnifeAttack|rollStrappedDaggerAttack|rollSpellAttack|castFriendsCantrip|castLongstriderStim|castProtectionEvilGood|castSmokescreen|castSpeakWithDeadAmulet|castUtility/i.test(oc)) {
+                    spendTurnAction('action');
+                }
+                if (/toggleLongstriderBuff|castLongstriderStim/i.test(oc)) {
+                    setTimeout(renderActionEconomyBar, 30);
+                }
+            }
             if (!isCapturingExports) syncHeroStateToFirebase(false);
         });
         document.addEventListener('change', () => {
@@ -9330,6 +10451,7 @@
     function init(sheetAdapter) {
         adapter = sheetAdapter;
         injectDialogsAndBanner();
+        mountVideoGameHudWidgets();
         startLiveSheetWatcher();
         initFirebaseSync();
         applyEquipmentToSheet(true);
@@ -9516,6 +10638,35 @@
         saveBrowserFirebaseConfig,
         encodeTradeCode,
         lookupSharedItemLore,
-        getItemMeta
+        getItemMeta,
+        // Video-Game RPG HUD API
+        openDirectWhisper,
+        openRulesModal,
+        toggleTurnAction,
+        spendTurnAction,
+        restoreTurnAction,
+        resetTurnActions,
+        renderActionEconomyBar,
+        setRightColumnTab,
+        setConcentration,
+        dropConcentration,
+        promptManualConcentration,
+        triggerConcentrationCheck,
+        rollConcentrationSave,
+        toggleStatus,
+        toggleStatusPicker,
+        inspectStatus,
+        renderStatusStrip,
+        setDeathSavePip,
+        rollDeathSave,
+        applySkillsFilter,
+        toggleSkillsTrainedFilter,
+        toggleAdvLock,
+        consumeTempRollMode,
+        setRollFollowup,
+        triggerRollFollowup,
+        rollBrutalCrit,
+        renderPartyMiniHud,
+        renderPublicCombatStrip
     };
 })();

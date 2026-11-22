@@ -49,8 +49,8 @@ In 90% of D&D campaigns, the party never meets the final boss until Session 20. 
 * Vampires can walk around at noon in Barovia if they want to. Only **True Sunlight**—created by **The Sunsword**, **The Holy Symbol of Ravenkind**, or the 5th-level *Dawn* spell—triggers Vampire Sunlight Hypersensitivity (20 Radiant damage per turn, Disadvantage on attacks, and shuts off their 20 HP/turn regeneration!).
 
 ### Rule 4: Death Saves & The Dark Power Whispers (Seeding Campaign 3)
-* Under your **2-Strike / 1-Success Death Save Rule**, Barovia is lethal.
-* **The Safety Net & Corruption Mechanic:** If a PC fails their second Death Save and "dies" in Acts I–III, time freezes before the player rolls a new sheet. In the black void of the Mists, a voice from the **Amber Temple** whispers to them: *"Your story does not end in the mud. Take my hand, and rise."*
+* Using **Standard D&D 5e Death Save Rules** (`3 Successes` = Stabilized at 0 HP; `3 Failures` = Dead; `Nat 20` = Regain 1 HP immediately; `Nat 1` = 2 Failures), Barovia remains deadly.
+* **The Safety Net & Corruption Mechanic:** If a PC fails their 3rd Death Save and "dies" in Acts I–III, time freezes before the player rolls a new sheet. In the black void of the Mists, a voice from the **Amber Temple** whispers to them: *"Your story does not end in the mud. Take my hand, and rise."*
 * If the player accepts, they gasp back to life at **1 HP** on their next turn—carrying a **Dark Mark** (e.g., corpse-pale skin, eyes that gleam red in the dark, a whisper in their dreams urging them toward Mount Ghakis) and a minor boon. This naturally primes the party to accept the **Supreme Dark Gifts** in Session 15!
 
 ### Rule 5: Keep the Compass Pointed Forward (The Three Guides: Madam Eva vs. Derek vs. Strahd)

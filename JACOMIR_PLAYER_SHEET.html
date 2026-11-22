@@ -733,6 +733,8 @@
                     <span class="pill-badge pill-gold" style="font-size:0.72rem; padding:2px 10px; letter-spacing:0.6px;">⭐ LEVEL 3</span>
                     <span class="pill-badge pill-neutral" style="font-size:0.7rem; padding:2px 9px;">LAWFUL NEUTRAL</span>
                     <span class="pill-badge pill-crimson" style="font-size:0.7rem; padding:2px 9px;">BATTLE MASTER FIGHTER</span>
+                    <span class="rpg-sense-pill">🥾 30 ft</span>
+                    <span class="rpg-sense-pill">👀 Pass. Perc 13</span>
                 </div>
             </div>
             <div class="pill-badge-group">
@@ -796,8 +798,11 @@
                 <!-- COMPACT HP & OVERHEAL TEMP HP CONTROLLER -->
                 <div class="hp-ctrl-container">
                     <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.7rem; font-weight:700; margin-bottom:2px;">
-                        <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.3px;">HIT POINTS STATUS</span>
-                        <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">23 / 31 (+0 Temp)</span>
+                        <span style="color:var(--text-dim); text-transform:uppercase; letter-spacing:0.3px;">HIT POINTS</span>
+                        <span style="display:inline-flex; align-items:center;">
+                            <span id="hp-status-header" style="color:var(--accent-green); font-family:'JetBrains Mono',monospace;">23 / 31 (+0 Temp)</span>
+                            <button type="button" id="btn-clear-temp" class="rpg-clear-temp-pill" onclick="clearTempHP()" style="display:none;" title="Clear Temporary Hit Points">✕ Temp</button>
+                        </span>
                     </div>
                     <div class="hp-health-bar-bg">
                         <div class="hp-health-bar-fill" id="hp-bar" style="width: 74%;"></div>
@@ -807,13 +812,10 @@
                     <div style="display:flex; flex-direction:column; gap:5px; margin-top:2px;">
                         <div style="display:flex; align-items:center; gap:4px; width:100%;">
                             <button class="btn-act btn-act-dmg" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(-1)">-1</button>
-                            <input type="number" id="hp-input" class="hp-input-num" value="23" min="1" max="999" style="width:46px; height:26px; font-size:0.9rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage or healing amount">
+                            <input type="number" id="hp-input" class="hp-input-num" value="" placeholder="Amt" min="1" max="999" style="width:46px; height:26px; font-size:0.86rem; text-align:center; padding:1px 3px; font-weight:800; background:#090e1a; border:1px solid #3b82f6; border-radius:4px; font-family:'JetBrains Mono',monospace; color:#f8fafc;" title="Enter damage or healing amount">
                             <button class="btn-act btn-act-heal" style="padding: 4px 8px; font-size: 0.78rem; font-weight:700;" onclick="stepHP(1)">+1</button>
                             <button class="btn-act btn-act-dmg" onclick="applyDamage()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">⚔️ Dmg</button>
                             <button class="btn-act btn-act-heal" onclick="applyHeal()" style="padding:4px 8px; font-size:0.74rem; font-weight:700; flex:1;">💚 Heal</button>
-                        </div>
-                        <div style="display:flex; align-items:center; justify-content:flex-start;">
-                            <button class="btn-act btn-act-pre" onclick="clearTempHP()" style="padding:3px 8px; font-size:0.7rem; color:#94a3b8; border:1px solid #334155;">Clear Temp</button>
                         </div>
                         <div style="display:flex; align-items:center; justify-content:space-between; margin-top:1px;">
                             <div style="display:flex; gap:4px;">
@@ -825,20 +827,12 @@
                     </div>
                 </div>
 
-                <!-- DYNAMIC ABILITY / BUFF TOGGLES -->
+                <!-- DYNAMIC ABILITY / BUFF TOGGLES (Armor handled cleanly by 🛡️ Gear) -->
                 <div class="buffs-toggle-bar">
-                    <div class="toggle-btn-card active-buff" id="card-armor-toggle" onclick="toggleChainMailBuff()">
-                        <div>
-                            <div style="font-size:0.74rem; font-weight:700;">⛓️ Chain Mail Armor</div>
-                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-armor-style">Equipped AC: 17</div>
-                        </div>
-                        <span class="toggle-badge on" id="badge-armor-style">ON (17)</span>
-                    </div>
-
-                    <div class="toggle-btn-card active-buff" id="heroic-card" onclick="useHeroicInspiration()" title="Human (Resourceful): Reroll any die immediately after rolling it (1/Long Rest)">
+                    <div class="toggle-btn-card active-buff" id="heroic-card" onclick="useHeroicInspiration()" style="grid-column: span 2;" title="Human (Resourceful): Reroll any die immediately after rolling it (1/Long Rest)">
                         <div>
                             <div style="font-size:0.74rem; font-weight:700;">🌟 Heroic Inspiration</div>
-                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-heroic-insp">Reroll any die (1/LR)</div>
+                            <div style="font-size:0.65rem; color:var(--text-dim);" id="sub-heroic-insp">Reroll any die immediately (1/Long Rest)</div>
                         </div>
                         <span class="toggle-badge on" id="heroic-status-badge">READY</span>
                     </div>
@@ -850,9 +844,8 @@
                         <span style="font-size:0.76rem; font-weight:700; color:#fbbf24;">💛 Help Tokens: <span id="help-tokens-disp" style="color:#fbbf24; font-size:0.88rem; font-weight:800; font-family:'JetBrains Mono',monospace;">2 / 2</span></span>
                         <div style="display:flex; align-items:center; gap:4px;">
                             <button class="btn-act btn-act-temp" onclick="rollHelpToken()" style="padding:2px 7px; font-size:0.7rem; background:#4338ca; border-color:#6366f1;">🎲 Grant +1d6</button>
-                            <button class="btn-act btn-act-pre" onclick="modHelpToken(-1)" style="padding:2px 6px; font-size:0.68rem; color:#cbd5e1;">-</button>
-                            <button class="btn-act btn-act-pre" onclick="modHelpToken(1)" style="padding:2px 6px; font-size:0.68rem; color:#67e8f9;">+</button>
-                            <button class="btn-act btn-act-pre" onclick="resetHelpTokens()" style="padding:2px 6px; font-size:0.68rem;">Reset</button>
+                            <button class="btn-act btn-act-pre" onclick="modHelpToken(-1)" style="padding:2px 6px; font-size:0.68rem; color:#cbd5e1;" aria-label="Decrease Help Tokens">-</button>
+                            <button class="btn-act btn-act-pre" onclick="modHelpToken(1)" style="padding:2px 6px; font-size:0.68rem; color:#67e8f9;" aria-label="Increase Help Tokens">+</button>
                         </div>
                     </div>
                 </div>
@@ -1027,48 +1020,41 @@
                     </div>
                 </div>
 
-                <!-- 💰 SLEEK GOLD & COIN PURSE -->
-                <div class="panel" style="padding: 8px 10px; background: linear-gradient(135deg, #18150a 0%, #0d121c 100%); border: 1px solid rgba(245, 158, 11, 0.35);">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 5px;">
-                        <div style="display:flex; align-items:center; gap:5px;">
-                            <span style="font-size:0.95rem;">💰</span>
-                            <span style="color:var(--accent-gold); font-size:0.75rem; font-weight:800;">GOLD PURSE</span>
-                            <span style="font-size:0.62rem; color:var(--text-muted); font-weight:600; background:rgba(255,255,255,0.05); padding:1px 4px; border-radius:3px;">10 SP = 1 GP</span>
-                        </div>
+                <!-- 🪙 SLEEK 2-ROW RPG COIN POUCH -->
+                <div class="panel rpg-gold-panel">
+                    <div class="rpg-gold-top">
+                        <button type="button" class="rpg-gold-balance-btn" onclick="openGoldHistoryModal()" title="Click to open Royal Coin Purse Ledger (10 SP = 1 GP)">
+                            <span style="font-size:1rem;">🪙</span>
+                            <span id="gold-disp" class="rpg-gold-gp-val">0</span>
+                            <span class="rpg-gold-gp-lbl">GP</span>
+                            <span style="color:#475569;">•</span>
+                            <span id="silver-disp" class="rpg-gold-sp-val">0</span>
+                            <span class="rpg-gold-sp-lbl">SP</span>
+                        </button>
                         <div style="display:flex; align-items:center; gap:4px;">
-                            <button class="btn-act btn-act-pre" onclick="openGoldHistoryModal()" style="font-size:0.68rem; padding:2px 6px; color:var(--accent-gold); border:1px solid rgba(245,158,11,0.4);">📜 Ledger</button>
-                            <button class="btn-act btn-act-pre" onclick="resetGoldPurse()" style="font-size:0.68rem; padding:2px 5px; color:#cbd5e1;">🔄 Reset</button>
-                            <div style="display:flex; align-items:baseline; gap:4px; margin-left:3px;">
-                                <span id="gold-disp" style="font-size:1.12rem; font-weight:800; color:#facc15;">0</span>
-                                <span style="font-size:0.7rem; font-weight:700; color:#fbbf24;">GP</span>
-                                <span style="color:var(--text-dim); font-size:0.75rem;">•</span>
-                                <span id="silver-disp" style="font-size:0.95rem; font-weight:700; color:#cbd5e1;">0</span>
-                                <span style="font-size:0.68rem; font-weight:600; color:#94a3b8;">SP</span>
-                            </div>
+                            <button type="button" class="btn-act btn-act-pre" onclick="openGoldHistoryModal()" style="font-size:0.67rem; padding:3px 7px; color:var(--accent-gold); border:1px solid rgba(245,158,11,0.4);">📜 Ledger</button>
+                            <button type="button" class="btn-act btn-act-pre" onclick="if(window.COS_RPG){COS_RPG.setTradeMode('gold'); COS_RPG.openTradeModal('send');}" style="font-size:0.67rem; padding:3px 7px; color:#86efac; border:1px solid rgba(74,222,128,0.4);" title="Send Gold or Silver to another hero">🤝 Send</button>
                         </div>
                     </div>
 
-                    <div style="display:flex; align-items:center; gap:4px; margin-bottom:5px;">
-                        <input type="number" id="gold-input" class="hp-input-num" placeholder="GP..." min="1" max="99999" style="width:54px; height:26px; font-size:0.78rem; text-align:left; padding:2px 6px; background:#0b1220; border:1px solid rgba(245,158,11,0.3); color:#fef08a;">
-                        <input type="text" id="gold-reason-input" placeholder="Memo / Reason (optional)..." style="flex:1; height:26px; font-size:0.72rem; padding:2px 6px; background:#0b1220; border:1px solid #334155; border-radius:3px; color:#cbd5e1;">
-                        <button class="btn-act btn-act-dmg" onclick="applyGoldSpend()" style="padding:2px 8px; height:26px; font-size:0.72rem; font-weight:700;">- Spend</button>
-                        <button class="btn-act btn-act-heal" onclick="applyGoldAdd()" style="padding:2px 8px; height:26px; font-size:0.72rem; font-weight:700; background:linear-gradient(135deg, #ca8a04 0%, #a16207 100%); color:#fff;">+ Add</button>
+                    <div class="rpg-gold-bar">
+                        <button type="button" id="gold-unit-btn" class="rpg-gold-unit-btn" data-unit="gp" onclick="toggleGoldUnit()" title="Switch between Gold (GP) and Silver (SP) — 10 SP = 1 GP">GP ▾</button>
+                        <input type="number" id="gold-input" class="hp-input-num" placeholder="Amt" min="1" max="99999" style="width:58px; height:27px; font-size:0.8rem; text-align:center; padding:2px 5px; background:#090d16; border:1px solid rgba(245,158,11,0.35); color:#fef08a; font-family:'JetBrains Mono',monospace;">
+                        <button type="button" class="btn-act btn-act-pre" onclick="toggleGoldMemoRow()" style="height:27px; padding:2px 6px; font-size:0.7rem;" title="Add optional memo/reason for Ledger">📝</button>
+                        <button type="button" class="btn-act btn-act-dmg" onclick="applyGoldSpend()" style="padding:2px 8px; height:27px; font-size:0.72rem; font-weight:800; flex:1;">− Spend</button>
+                        <button type="button" class="btn-act btn-act-heal" onclick="applyGoldAdd()" style="padding:2px 8px; height:27px; font-size:0.72rem; font-weight:800; flex:1; background:linear-gradient(135deg, #ca8a04 0%, #a16207 100%); color:#fff;">+ Loot</button>
                     </div>
 
-                    <div style="display:flex; align-items:center; justify-content:space-between; gap:3px;">
-                        <div style="display:flex; gap:2px; align-items:center;">
-                            <button class="btn-act btn-act-dmg" style="padding:2px 5px; font-size:0.68rem; font-weight:700;" onclick="stepGold(-5)">-5</button>
-                            <button class="btn-act btn-act-dmg" style="padding:2px 5px; font-size:0.68rem; font-weight:700;" onclick="stepGold(-1)">-1</button>
-                            <button class="btn-act btn-act-heal" style="padding:2px 5px; font-size:0.68rem; font-weight:700;" onclick="stepGold(1)">+1</button>
-                            <button class="btn-act btn-act-heal" style="padding:2px 5px; font-size:0.68rem; font-weight:700;" onclick="stepGold(5)">+5</button>
-                            <button class="btn-act btn-act-heal" style="padding:2px 5px; font-size:0.68rem; font-weight:700;" onclick="stepGold(10)">+10</button>
-                        </div>
-                        <div style="display:flex; gap:2px; align-items:center;">
-                            <span style="font-size:0.65rem; color:var(--text-dim); font-weight:600;">SP:</span>
-                            <button class="btn-act btn-act-dmg" style="padding:2px 4px; font-size:0.65rem; font-weight:700;" onclick="stepSilver(-5)">-5</button>
-                            <button class="btn-act btn-act-pre" style="padding:2px 4px; font-size:0.65rem;" onclick="stepSilver(-1)">-1</button>
-                            <button class="btn-act btn-act-pre" style="padding:2px 4px; font-size:0.65rem;" onclick="stepSilver(1)">+1</button>
-                            <button class="btn-act btn-act-heal" style="padding:2px 4px; font-size:0.65rem; font-weight:700;" onclick="stepSilver(5)">+5</button>
+                    <div id="gold-memo-row" style="display:none;">
+                        <input type="text" id="gold-reason-input" placeholder="Memo / Reason (optional)..." style="width:100%; height:26px; font-size:0.72rem; padding:2px 7px; background:#090d16; border:1px solid #334155; border-radius:4px; color:#cbd5e1;">
+                    </div>
+
+                    <div class="rpg-gold-quick-row">
+                        <div class="rpg-gold-quick-pills">
+                            <button type="button" class="btn-act btn-act-dmg" onclick="stepActiveCoin(-1)">−1</button>
+                            <button type="button" class="btn-act btn-act-heal" onclick="stepActiveCoin(1)">+1</button>
+                            <button type="button" class="btn-act btn-act-heal" onclick="stepActiveCoin(5)">+5</button>
+                            <button type="button" class="btn-act btn-act-heal" onclick="stepActiveCoin(10)">+10</button>
                         </div>
                     </div>
                 </div>
@@ -1659,11 +1645,40 @@
     }
 
     function rollWeaponAttack(weaponLabel, attackBonus, weaponId) {
-        const wMods = weaponId ? getJacomirWpnMods(weaponId) : { atkBonus: 0, mod: null, coating: null };
+        const wMods = weaponId ? getJacomirWpnMods(weaponId) : { atkBonus: 0, dmgBonus: 0, extras: [], mod: null, coating: null };
         const modTags = [];
         if (wMods.mod) modTags.push(wMods.mod.itemName);
         if (wMods.coating) modTags.push(wMods.coating.itemName);
         const tagStr = modTags.length ? ` • ${modTags.join(' + ')}` : '';
+        if (window.COS_RPG && weaponId) {
+            const flatMod = 3 + (wMods.dmgBonus || 0);
+            const extras = wMods.extras || [];
+            if (weaponId === 'greatsword') {
+                COS_RPG.setRollFollowup({
+                    label: `💥 Roll Greatsword Damage (2d6+${flatMod} Savage)`,
+                    critLabel: `🔥 ROLL BRUTAL CRIT! (12 + 2d6+${flatMod} Savage)`,
+                    onDamage: () => rollSavageGreatswordDamage(),
+                    onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Ancestral Greatsword', diceCount: 2, sides: 6, flatMod, dmgType: wMods.isSilvered ? 'Silvered Slashing' : 'Slashing', extras, isSavage: true })
+                });
+            } else if (weaponId === 'silvered_longsword') {
+                const hit = window.__jacomirGearCache?.equippedWeaponTags?.find(w => w.tag === 'silvered_longsword');
+                const is2H = Boolean(!hit || hit.grip === '2h');
+                const sides = is2H ? 10 : 8;
+                COS_RPG.setRollFollowup({
+                    label: `💥 Roll Silvered Longsword (${is2H ? '2H 1d10' : '1H 1d8'}+${flatMod})`,
+                    critLabel: `🔥 ROLL BRUTAL CRIT! (${sides} + 1d${sides}+${flatMod} Silver)`,
+                    onDamage: () => rollSavageLongswordDamage(is2H),
+                    onCrit: () => COS_RPG.rollBrutalCrit({ label: `Ismark's Silvered Longsword (${is2H ? '2H' : '1H'})`, diceCount: 1, sides, flatMod, dmgType: 'Silvered Slashing', extras, isSavage: true })
+                });
+            } else if (weaponId === 'handaxe') {
+                COS_RPG.setRollFollowup({
+                    label: `💥 Roll Handaxe Damage (1d6+${flatMod})`,
+                    critLabel: `🔥 ROLL BRUTAL CRIT! (6 + 1d6+${flatMod})`,
+                    onDamage: () => rollSavageHandaxeDamage(),
+                    onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Handaxe (Vex)', diceCount: 1, sides: 6, flatMod, dmgType: wMods.isSilvered ? 'Silvered Slashing' : 'Slashing', extras, isSavage: true })
+                });
+            }
+        }
         rollD20(`${weaponLabel}${tagStr}`, attackBonus + (wMods.atkBonus || 0));
     }
 
@@ -2944,12 +2959,43 @@
         logRoll(`🥈 <strong>Silver Purse:</strong> ${deltaStr} ➔ Total: <strong>${curGP} GP, ${curSilver} SP</strong>`);
     }
 
+    let activeGoldUnit = 'gp';
+    function toggleGoldUnit() {
+        activeGoldUnit = (activeGoldUnit === 'gp') ? 'sp' : 'gp';
+        const btn = document.getElementById('gold-unit-btn');
+        if (btn) {
+            btn.dataset.unit = activeGoldUnit;
+            btn.textContent = activeGoldUnit === 'gp' ? 'GP ▾' : 'SP ▾';
+        }
+    }
+    function toggleGoldMemoRow() {
+        const row = document.getElementById('gold-memo-row');
+        if (!row) return;
+        const next = row.style.display === 'none';
+        row.style.display = next ? 'block' : 'none';
+        if (next) document.getElementById('gold-reason-input')?.focus();
+    }
+    function stepActiveCoin(delta) {
+        if (activeGoldUnit === 'sp') stepSilver(delta);
+        else stepGold(delta);
+    }
+
     function applyGoldAdd() {
         const inp = document.getElementById('gold-input');
         const memoInp = document.getElementById('gold-reason-input');
         const amt = parseInt(inp.value) || 0;
         if (amt <= 0) return;
         const memo = memoInp ? memoInp.value.trim() : '';
+        if (activeGoldUnit === 'sp') {
+            curSilver += amt;
+            normalizeCoins();
+            inp.value = '';
+            if (memoInp) memoInp.value = '';
+            updateGoldUI();
+            logGoldTx('silver', memo || 'Earned Silver', `+${amt} SP`, `${curGP} GP, ${curSilver} SP`);
+            logRoll(`🥈 <strong>Gained Silver:</strong> +${amt} SP ${memo ? '(' + memo + ')' : ''} ➔ <strong>${curGP} GP, ${curSilver} SP</strong>`);
+            return;
+        }
         curGP += amt;
         inp.value = '';
         if (memoInp) memoInp.value = '';
@@ -2965,18 +3011,20 @@
         if (amt <= 0) return;
         const memo = memoInp ? memoInp.value.trim() : '';
         let totalSP = (curGP * 10) + curSilver;
-        if (amt * 10 > totalSP) {
+        const costSP = activeGoldUnit === 'sp' ? amt : (amt * 10);
+        if (costSP > totalSP) {
             logRoll(`⚠️ Insufficient funds! You have ${curGP} GP, ${curSilver} SP.`);
             return;
         }
-        totalSP -= amt * 10;
+        totalSP -= costSP;
         curGP = Math.floor(totalSP / 10);
         curSilver = totalSP % 10;
         inp.value = '';
         if (memoInp) memoInp.value = '';
         updateGoldUI();
-        logGoldTx('spend', memo || 'Spent Gold', `-${amt} GP`, `${curGP} GP, ${curSilver} SP`);
-        logRoll(`💸 <strong>Spent Gold:</strong> -${amt} GP ${memo ? '(' + memo + ')' : ''} ➔ <strong>${curGP} GP, ${curSilver} SP</strong>`);
+        const unitLbl = activeGoldUnit === 'sp' ? 'SP' : 'GP';
+        logGoldTx('spend', memo || `Spent ${unitLbl}`, `-${amt} ${unitLbl}`, `${curGP} GP, ${curSilver} SP`);
+        logRoll(`💸 <strong>Spent ${unitLbl}:</strong> -${amt} ${unitLbl} ${memo ? '(' + memo + ')' : ''} ➔ <strong>${curGP} GP, ${curSilver} SP</strong>`);
     }
 
     function resetGoldPurse() {
