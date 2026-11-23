@@ -4463,8 +4463,11 @@
         const attachBtn = schema.length > 0
             ? `<button type="button" class="btn-act btn-act-pre" style="border-color:#3b82f6; color:#93c5fd;" onclick="COS_RPG.openWeaponWorkbench(decodeURIComponent('${encId}'))">Attachments (${usedCnt}/${schema.length})</button>`
             : `<button type="button" class="btn-act btn-act-pre" disabled style="opacity:0.55; border-color:#475569; color:#94a3b8;" title="Legendary Artifacts are complete and have 0 attachment slots">Legendary (0 Slots)</button>`;
-        const coatBtn = `<button type="button" class="btn-act btn-act-pre" style="border-color:#10b981; color:#6ee7b7;" onclick="COS_RPG.openCoatWeaponModal(decodeURIComponent('${encId}'))">Coat Weapon</button>`;
-        return `${attachBtn} ${coatBtn}`;
+        const isRangedAmmoWeapon = Boolean(wpn.isRanged || wpn.kind === 'firearm' || wpn.kind === 'bow' || wpn.kind === 'crossbow');
+        const coatBtn = isRangedAmmoWeapon
+            ? ''
+            : `<button type="button" class="btn-act btn-act-pre" style="border-color:#10b981; color:#6ee7b7;" onclick="COS_RPG.openCoatWeaponModal(decodeURIComponent('${encId}'))">Coat Weapon</button>`;
+        return coatBtn ? `${attachBtn} ${coatBtn}` : attachBtn;
     }
 
     let attachModalState = { mode: 'mod', invIndex: null, weaponId: null, activeSlotId: null };
