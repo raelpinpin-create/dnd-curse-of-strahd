@@ -1629,6 +1629,15 @@
             summary: '2H Heavy Crossbow 100/400ft • 1d10 • Push'
         },
         {
+            match: ['father donovich\'s crossbow', 'donovich\'s crossbow', 'old crossbow'],
+            category: 'weapon',
+            slots: ['ranged'],
+            reqWeapon: 'simple',
+            ammoKind: 'crossbow',
+            hands: 2,
+            summary: '2H Old Light Crossbow 80/320ft • 1d8 Piercing • Slow'
+        },
+        {
             match: ['light crossbow', 'crossbow'],
             category: 'weapon',
             slots: ['ranged'],
@@ -2367,6 +2376,70 @@
             origin: "Vistani Forge (102 GP) or Barovian Scholar Stash",
             desc: "An ironwood mage's staff bound at both ferrules with heavy bands of stamped silver.",
             effect: "• <strong>Damage:</strong> <code>1d6</code> (1H) / <code>1d8</code> (2H) <strong>Silvered Bludgeoning</strong>.<br>• <strong>Silvered Bane &amp; Topple Mastery:</strong> Bypasses nonmagical resistances and forces targets hit to pass a <strong>CON Save or fall Prone</strong>!"
+        },
+        {
+            match: ['father donovich\'s crossbow', 'donovich\'s crossbow', 'old crossbow'],
+            name: "Father Donovich's Crossbow",
+            category: "SIMPLE RANGED WEAPON • Two-Handed • Loading • Slow",
+            origin: "Father Donovich's Rectory Quarters — Barovia Church (E5)",
+            desc: "An old, oil-darkened ashwood light crossbow etched with a faded Morninglord sunburst along the stock, kept behind the priest's vestry door.",
+            effect: "• <strong>Damage &amp; Range:</strong> <code>1d8 + DEX</code> Piercing (<code>80/320 ft</code>, Two-Handed, Ammunition: <strong>Crossbow Bolts</strong>).<br>• <strong>5.5e Slow Mastery:</strong> Hitting a creature reduces its Speed by <strong>10 ft</strong> until the start of your next turn.<br>• <strong>Loading Bolts:</strong> Fires standard bolts by default; click <strong>[Load]</strong> on the weapon card (or on <em>Silvered / Specialty Crossbow Bolts</em> in Backpack) to load special bolts."
+        },
+        {
+            match: ['heavy crossbow'],
+            name: "Heavy Crossbow",
+            category: "MARTIAL RANGED WEAPON • Heavy • Two-Handed • Push",
+            origin: "Ismark's Armory (E4), Arasek Stockyard (N5 — 50 GP) & Vallaki Guard",
+            desc: "A steel-prodded arbalest cranked by stirrup and windlass for punching through heavy armor.",
+            effect: "• <strong>Damage &amp; Range:</strong> <code>1d10 + DEX</code> Piercing (<code>100/400 ft</code>, Heavy, Two-Handed, Ammunition: <strong>Crossbow Bolts</strong>).<br>• <strong>5.5e Push Mastery:</strong> On a hit, you can push a Large or smaller target up to <strong>10 ft</strong> straight away from you!"
+        },
+        {
+            match: ['hand crossbow'],
+            name: "Hand Crossbow",
+            category: "MARTIAL RANGED WEAPON • Light • One-Handed • Vex",
+            origin: "Arasek Stockyard (N5 — 75 GP), Tser Pool Vistani (G) & Wereraven Caches",
+            desc: "A compact, walnut-stocked one-handed crossbow favored by scouts, assassins, and Keepers of the Feather.",
+            effect: "• <strong>Damage &amp; Range:</strong> <code>1d6 + DEX</code> Piercing (<code>30/120 ft</code>, Light, 1H, Ammunition: <strong>Crossbow Bolts</strong>).<br>• <strong>5.5e Vex Mastery:</strong> Hitting grants <strong>Advantage on your next attack roll</strong> against that creature before the end of your next turn!"
+        },
+        {
+            match: ['light crossbow', 'crossbow'],
+            name: "Light Crossbow",
+            category: "SIMPLE RANGED WEAPON • Two-Handed • Loading • Slow",
+            origin: "Bildrath's Mercantile (E1 — 25 GP+), Ismark's Armory (E4) & Arasek Stockyard (N5)",
+            desc: "A reliable wooden crossbow with a latched iron trigger and horn-tipped prod.",
+            effect: "• <strong>Damage &amp; Range:</strong> <code>1d8 + DEX</code> Piercing (<code>80/320 ft</code>, Two-Handed, Ammunition: <strong>Crossbow Bolts</strong>).<br>• <strong>5.5e Slow Mastery:</strong> Hitting a creature reduces its Speed by <strong>10 ft</strong> until the start of your next turn."
+        },
+        {
+            match: ['longbow'],
+            name: "Longbow",
+            category: "MARTIAL RANGED WEAPON • Heavy • Two-Handed • Slow",
+            origin: "Ismark's Armory (E4 — 50 GP), Arasek Stockyard (N5) & Vallaki Armory",
+            desc: "A tall six-foot yew warbow strung with waxed linen for long-range sentry work.",
+            effect: "• <strong>Damage &amp; Range:</strong> <code>1d8 + DEX</code> Piercing (<code>150/600 ft</code>, Heavy, Two-Handed, Ammunition: <strong>Arrows</strong>).<br>• <strong>5.5e Slow Mastery:</strong> Hitting a creature reduces its Speed by <strong>10 ft</strong> until the start of your next turn."
+        },
+        {
+            match: ['shortbow', /\bbow\b/],
+            name: "Shortbow",
+            category: "SIMPLE RANGED WEAPON • Two-Handed • Vex",
+            origin: "Bildrath's Mercantile (E1 — 25 GP+), Tser Pool Vistani (G) & Arasek Stockyard (N5)",
+            desc: "A curved hunting bow suited for quick skirmishes through dense Svalich timber.",
+            effect: "• <strong>Damage &amp; Range:</strong> <code>1d6 + DEX</code> Piercing (<code>80/320 ft</code>, Two-Handed, Ammunition: <strong>Arrows</strong>).<br>• <strong>5.5e Vex Mastery:</strong> Hitting grants <strong>Advantage on your next attack roll</strong> against that creature before the end of your next turn!"
+        },
+        {
+            match: ['crossbow bolts'],
+            name: "Crossbow Bolts (Standard)",
+            category: "STANDARD AMMUNITION • Crossbows",
+            origin: "Bildrath's Mercantile (E1 — 1 GP / 20), Arasek Stockyard (N5) & Guard Quivers",
+            desc: "Iron-tipped quarrels fletched with stiff goose feathers for Light, Heavy, and Hand Crossbows.",
+            effect: "• <strong>Standard Ammo:</strong> Fired automatically whenever a Crossbow is set to <strong>Standard</strong> mode (no Load step required — use <strong>[Load]</strong> only for Silvered or Specialty Bolts)."
+        },
+        {
+            match: [/\barrows\b/],
+            name: "Arrows (Standard)",
+            category: "STANDARD AMMUNITION • Bows",
+            origin: "Bildrath's Mercantile (E1 — 1 GP / 20), Arasek Stockyard (N5) & Hunter Quivers",
+            desc: "Ashwood shafts with steel bodkin heads for Shortbows and Longbows.",
+            effect: "• <strong>Standard Ammo:</strong> Fired automatically whenever a Bow is set to <strong>Standard</strong> mode (note: Bows fire <strong>Arrows</strong>, while Crossbows fire <strong>Crossbow Bolts</strong>)."
         },
         {
             match: ['silvered firearm', 'silvered bullets'],
@@ -4907,7 +4980,7 @@
                     <span class="rpg-loader-cap">${esc(needsContainer ? 'Need Bullet Sling' : (isCoatingEmpty ? 'Empty Chamber (Reload First)' : capText))}</span>
                 </button>`;
             }).join('')}</div>`
-            : `<div style="font-size:0.74rem; color:#fca5a5;">No compatible weapon available for this item.</div>`;
+            : `<div style="font-size:0.74rem; color:#fca5a5;">No compatible weapon available for this item. ${activeAmmo ? (activeAmmo.ammoKind === 'bow' ? 'Arrows only load into <strong>Bows</strong> (Crossbows fire <strong>Bolts</strong>).' : (activeAmmo.ammoKind === 'crossbow' ? 'Crossbow Bolts only load into <strong>Crossbows</strong>.' : 'Requires a matching Firearm.')) : ''}</div>`;
 
         let qtyBlockHtml = '';
         if (activeAmmo && activeWeapon && maxUnits > 0) {
