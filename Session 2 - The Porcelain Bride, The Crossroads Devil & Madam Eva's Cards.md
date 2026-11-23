@@ -13,8 +13,8 @@
 | Phase | Target Runtime | Location & Core Objectives |
 | :--- | :--- | :--- |
 | **ACT I** | `0:00 – 0:45` *(45m)* | **The Unfrozen Second & The Blood Cup in the Attic (`Area E5` / *Reloaded* `Arc B5`):**<br>• **Exact Resume:** `Tap, tap, tap` fades—time snaps back! **Jacomir** holds a cup of his own royal blood beside **Ismark**; **Piper & Yvaine** demand **Doru**'s death; **Ireena** watches; **Father Donavich** weeps.<br>• **Branch A (Willing Blood Cup):** Doru drinks, regains 2 minutes of heartbreaking lucidity, reveals **Dr. Rudolph van Richten's failed siege** and **"a giant red crystal beating in the North Tower"** (*Heart of Sorrow*), and begs for mercy.<br>• **Branch B (Combat):** Tactical rafter battle vs. **Doru (`CR 5`, `85 HP`, Spider Climb)**. |
-| **ACT II** | `0:45 – 1:40` *(55m)* | **2:30 AM Burial, Strahd’s Courier & Bride Volenta’s Crash (`Churchyard Cemetery — Area E5`):**<br>• **The Burial:** Burying **Burgomaster Kolyan** at 2:30 AM in the foggy churchyard behind the church.<br>• **The Courier:** Strahd's gaunt **Vampire Spawn Emissary** arrives at the iron gate offering *"condolences"* and inviting *"Lady Tatyana"* into a *"warmer carriage"* ➔ party intercepts ➔ tension boils over!<br>• **CRASH — Bride Volenta Popofsky (`CR 5`, `95 HP`):** Drops off the church roof, **brutally maims the Spawn** to establish her unhinged jealousy, terrorizes the graveyard with *Corpse-Puppet Strings*, and vanishes in a swarm of bats around `45–50 HP` with a chilling, **unpredictable threat** (zero timetable!). |
-| **ACT III** | `1:40 – 2:20` *(40m)* | **Old Svalich Road & Count Strahd at the River Ivlis Crossroads (`Area F` / *Reloaded* `Arc C2`):**<br>• *(Optional Gallows Mirror check if skipped in S1.)*<br>• **Option B Payoff:** The **Phantom Black Carriage** awaits at the three-way stone signpost. **Count Strahd von Zarovich** steps out face-to-face for the first time—coldly apologizing for Volenta's lack of discipline, claiming his two-bite seal over Ireena, quietly sizing up **Jacomir**, **Yvaine**, and **Piper's pocket watch** (*keeping his secret successor & corruption motives strictly inside his own mind!*), answering tough questions with chilling aristocratic poise, and departing with a haunting farewell. |
+| **ACT II** | `0:45 – 1:15` *(30m)* | **2:30 AM Burial, Volenta’s Rooftop Cameo & Count Strahd’s Visit (`Churchyard Cemetery — Area E5`):**<br>• **The Burial:** Burying **Burgomaster Kolyan** (and Doru, if slain) at 2:30 AM in the foggy churchyard behind the church.<br>• **Rooftop Cameo (Zero Combat):** **Bride Volenta Popofsky** perches laughing on the wet church eaves in her porcelain skull-mask, taunting Ireena and the party—until **Count Strahd** himself steps through the iron gate and orders her back to the carriage.<br>• **Count Strahd’s First Face-to-Face Parley:** Strahd delivers his chilling condolences over Kolyan's grave, claims his two-bite seal over **Ireena**, sizes up **Jacomir**, **Yvaine**, and **Piper's pocket watch**, answers tough questions (with the *Heart of Sorrow* flex if attacked!), and departs.<br>• **Ismark’s Farewell & Armory Cache:** Ismark stays to guard Barovia Village and hands over Kolyan's silver/potion pack. |
+| **ACT III** | `1:15 – 1:25` *(10m)* | **Fast-Track Misty Road to Tser Pool (`Area F`):**<br>• Since Strahd already visited at the burial, fast-forward past the **River Ivlis Crossroads** *(optional 1-minute Gallows Mirror spook)* straight down into the warm lanterns of **Tser Pool**. |
 | **ACT IV** | `2:20 – 3:55` *(95m)* | **THE HIGHLIGHT — Tser Pool Vistani Camp, Madam Eva, Piper’s Fate & Cael’s Reveal (`Area G` / *Reloaded* `Arc C4`):**<br>• **Part 1 — The Vistani Sanctuary (`25m`):** Warm bonfire oasis, **Stanimir’s tale** of Strahd's blood-oath, **Piper welcomed without fear** for her horns & card tricks, silver gear trade, and eerie **Pool Reflection omens**.<br>• **Part 2 — Madam Eva’s Tent, Piper’s Story & Party Fate (`40m`):** Eva reads each hero’s secret grief (**Oakenshire**, **Solmere**, and **Piper’s Barnaby pocket watch / Amber frost clue!**), deals the **5 Curated Tarokka Prophecies**, and triggers **Card #6: Piper’s Blank Tarokka Card (`Stage 1` charcoal bleed)**.<br>• **Part 3 — Long Rest Camp Comedy-to-Heart Reveal (`30m`):** On night watch, a PC busts **Caelum Jude ("Cael")** in human form behind the supply packs **stuffing dried jerky & Vistani honey-rolls into his mouth**—leading into his sincere sales pitch to join as healer! |
 | **ACT V** | `3:55 – 4:30` *(35m)* | **Tser Falls Stone Bridge & Derek’s Milestone 1 Briefing (`Area H` / *Reloaded* `Arc C7`):**<br>• **The Climb (`15m`):** Hiking the mist-soaked gorge alongside human Cael; spotting silvered bolt & alchemical scorch scars from **Van Richten's desperate escape** a year ago.<br>• **`Tap, Tap, Tap` — Extended Time-Freeze (`15m`):** Frozen waterfall hangs like blown glass; **Cael** collapses sweating against the stone parapet in silent terror while **Derek** walks the bridge, delivering razor-sharp personal pressure to **Jacomir**, **Yvaine**, and **Piper**.<br>• **Chills Ending (`5m`):** Time snaps back; Cael hides his panic; ahead in the dusk mist loom the creaking sails and warm pastry smoke of **Old Bonegrinder**! |
 
@@ -108,20 +108,17 @@
 
 ---
 
-## ⚰️ ACT II: THE 2:30 AM BURIAL, STRAHD’S COURIER & BRIDE VOLENTA’S CRASH
+## ⚰️ ACT II: THE 2:30 AM BURIAL, VOLENTA’S ROOFTOP CAMEO & COUNT STRAHD’S VISIT
 
-*(Pacing: 0:45 – 1:45 | Time: ~2:30 AM | Location: Village of Barovia Churchyard Cemetery — Area E5)*
+*(Pacing: 0:45 – 1:15 | Time: ~2:30 AM | Location: Village of Barovia Churchyard Cemetery — Area E5)*
 
 ### 🗺️ Detailed Map & Spatial Read: Barovia Churchyard Cemetery (`Area E5` Rear Yard)
 
 > **Tactical Layout (`50 × 50 ft` Enclosed Graveyard):**
 > * **Perimeter:** A knee-high crumbling stone wall topped with rusted, spear-tipped wrought-iron fencing (`3 ft` high total—vaultable, `Half Cover` if crouching; **only one unlocked iron gate** on the south path facing the street).
 > * **The Open Grave (Center-North):** Two muddy mounds of churned black earth flank a fresh `6-ft-deep` rectangular grave (`Difficult Terrain` around the loose dirt lip). Kolyan’s pine coffin rests on two ropes over the opening. *(If Doru was slain cleanly, a smaller second grave or blanket-wrapped body lies beside the yew tree.)*
-> * **Terrain & Elevation:**
->   * **Church Rear Gable & Eaves (`South Edge`, `15 ft high`):** Steep wet slate church roof overhanging the cemetery—dark shadows cling beneath the bell-tower ridge.
->   * **Leaning Headstones & Mossy Angels (`Scattered`):** Provide `+2 AC Half Cover` against ranged fire (`Yvaine` / `Piper`).
->   * **Ancient Yew Tree (`Northeast Corner`):** Gnarled branches hanging `10 ft` over the iron fence.
->   * **Lighting:** Two flickering iron lanterns set on dirt mounds (`20 ft bright / 20 ft dim`). Beyond `40 ft`, choking white grave-fog reduces visibility to heavy gloom.
+> * **Church Rear Gable & Eaves (`South Edge`, `15 ft high`):** Steep wet slate church roof overhanging the cemetery—dark shadows cling beneath the bell-tower ridge.
+> * **Lighting:** Two flickering iron lanterns set on dirt mounds (`20 ft bright / 20 ft dim`). Beyond `40 ft`, choking white grave-fog reduces visibility to heavy gloom.
 > * **🐾 Cael’s Silent Cameo (No Reveal Yet):** Perched atop a cracked stone cherub `15 ft` from the grave sits the sleek **Black Cat**, starlight glinting off its wet fur as it silently watches the ritual. *(DM Tip: If anyone took wounds from Doru, the cat can casually brush past their shin and trigger a quiet `1d8+3 HP` warm pulse—leaving them wondering why a stray cat just healed them!)*
 
 ---
@@ -142,127 +139,107 @@ Read aloud as **Ismark** and **Jacomir** help carry Kolyan’s heavy pine coffin
 
 ---
 
-### 🩸 2. Strahd’s Emissary Arrives at the Gate (*The Insane Courier Dialogue*)
+### 🎭 2. Volenta’s Laughing Rooftop Cameo *(Zero Combat — Pure Dread!)*
 
-Cut Donavich off mid-prayer with slow, rhythmic iron scraping:
+Cut Donavich off mid-prayer with a high, musical, completely unhinged giggle from directly overhead:
 
 > *"Before the second shovel of dirt can hit the box—*
 > 
-> ***SCREEEEECH.***
-> 
-> *Outside the cemetery fence, the heavy wrought-iron gate swings lazily inward on rusted hinges.*
-> 
-> *Through the waist-high fog steps a tall, pale figure dressed in the immaculate, charcoal-gray velvet livery of a Castle Ravenloft herald—though his wrists are gaunt to the bone and his fingernails are long, blackened obsidian.*
-> 
-> *He does not draw steel. He stops twenty feet away beside a cracked angel headstone, sweeps a theatrical, courtly bow toward the open grave, and smiles—revealing rows of gleaming needle-white fangs.*
-> 
-> *Behind him in the fog outside the fence, half a dozen pairs of faint red pinpricks flicker in the dark like embers.*
-> 
-> *When he speaks, his voice is silky, oiled, and deeply unsettling—like a butler announcing supper in a slaughterhouse:*
-> 
-> **Courier Spawn:** *'Forgive the intrusion, good priest. Our gracious Lord—**Count Strahd von Zarovich, Master of Barovia**—sends his deepest, most solemn condolences for faithful Burgomaster Kolyan. A loyal steward deserves dry earth.*
-> 
-> *...However,'* *(his head tilts slowly past Jacomir and Yvaine, locking eyes straight onto Ireena beside the grave)* *'His Lordship cannot bear to watch his grieving **Lady Tatyana** shiver ankle-deep in church mud alongside nameless strays.*
-> 
-> *Waiting just beyond the fog is a warmer carriage. Dry velvet cushions. Hot spiced wine. A chamber of silk high above the rain where no beast may ever scratch at your door again. My master asks only that you drop that cold little sword... take my hand... and come home where you belong.'*"
-
-#### 🔥 The Party Intercepts (Let the Table React & Argue!)
-Give **Ireena**, **Ismark**, and the **Players** ~30–60 seconds of fiery in-character confrontation!
-* **Ireena** *(jaw clenched, stepping toward the coffin with rapier raised)*: *"My name is **Ireena Kolyana**. Tell your master he can keep his silk—I'd rather bleed out in this mud than climb into his hearse!"*
-* **Ismark** *(stepping right alongside Jacomir, drawing steel)*: *"Over my dead body, bloodsucker. Take one more step past that gate and we feed you to the worms."*
-* **Courier Spawn** *(chuckle turning cold and predatory as Jacomir, Yvaine, and Piper step forward to intercept)*: *"Oh, my dear **Tatyana**... you always did like brave little sheep before the slaughter. And you three—foreign steel, black powder, and cheap parlor sparks? My master expressly forbade me from killing the lady... he said nothing about leaving the dogs in pieces behind the fence."*
-* The Spawn drops into a feral crouch, jaw unhinging as his claws lengthen an inch—**everyone reaches for weapons, hands tighten on triggers and hilts—**
-
----
-
-### 🎭 3. CRASH!! ENTER BRIDE VOLENTA POPOFSKY (*The Gruesome Hijack!*)
-
-**DM ACTION:** Right as a player tries to roll Initiative or draw first blood—**SLAM BOTH HANDS ON THE TABLE!**
-
-> *"Before a single trigger pulls—*
-> 
 > *A high, musical, completely unhinged **giggle** rings out directly above your heads.*
 > 
-> ***'HAHAHAHA—OH, SHUT YOUR TEETH, DOG!'***
+> ***'Hee-hee-hee... oh, look at the little strays digging in the wet dirt!'***
 > 
-> ***CRACK!***
+> *Fifteen feet up on the slick slate eaves of the church roof, crouched upside-down like a spider in tattered crimson lace stitched with dozens of bleached human finger-bones, sits a lithe woman wearing a **cracked, ivory-white porcelain skull-mask**.*
 > 
-> *A blur of crimson lace and human finger-bones plummets straight down from the church eaves—landing boots-first onto the Vampire Spawn’s shoulders and driving him face-first into the wet mud with a sickening **CRUNCH** of shattering collarbone!*
+> *Feral crimson eyes and a smear of black lipstick gleam through the splintered jaw of her mask as she dangles a serrated bone-hilted dagger between two fingers, staring straight down at **Ireena**:*
 > 
-> *Before the courier can even shriek, the figure straddles his pinned back, grabs a fistful of his silver hair, and drags a **serrated bone-hilted dagger** straight across his cheek from ear to mouth—splitting his pale flesh open in a hideous, gurgling red grin!*
+> **Volenta:** *'Two tiny holes on your neck, little bird, and you still make your new pets bury the old man in the mud? Tell me, **Lady Tatyana**—which one's ribs do I get to braid into my hem first? The tin-can king... the gun-girl... or the little horned spark?'*
 > 
-> *Black, tar-thick blood sprays across the grass as she smashes his face brutally twice against the corner of the marble tombstone—**WHAM! WHAM!**—shattering half his fangs into the soil!*
+> *She giggles again, her bone-stitched skirt clattering softly in the wind as she shifts her weight to pounce—*
 > 
-> *Kneeling over his twitching body, she yanks his head up by one ear, presses the bloody bone blade against his ruined throat, and giggles softly into his ear:*
+> ***SCREEEEECH.***
 > 
-> **Volenta:** *'A warm carriage? Hot spiced wine? Who taught you to speak to my husband's new porcelain toy like a little lapdog?! Crawl back up the cliff, whelp—tell **Strahd** his youngest bride decided to test the strays' edges herself... **before I weave your ribs into my next hem!**'*
-> 
-> *With a vicious kick to his ribs, she sends the ruined, whimpering Spawn tumbling backward through the iron gate, scrambling frantically away on all fours into the choking mist!"*
-
-#### 🎭 Volenta’s Villain Spotlight (Read Aloud Slowly!)
-> *"Slowly, the woman rises to her feet atop the mossy headstone right beside Kolyan’s open grave.*
-> 
-> *She is lithe, lethal, and draped in a tattered ballgown of soaked crimson lace stitched with dozens of bleached human finger-bones that clatter softly when she breathes. Over her face sits a **cracked, ivory-white porcelain skull-mask**—leaving only bright, feral crimson eyes and a smear of black lipstick visible through the splintered jaw.*
-> 
-> *She tilts her head all the way sideways until a vertebra pops, wiping her dripping dagger clean across her sleeve as her gaze locks onto **Ireena**:*
-> 
-> **Volenta:** *'Two tiny holes on your neck, little bird... and suddenly the whole castle has to rearrange the table? You aren't even half as pretty as the redhead before you. Still... our sweet husband would lock me in the cold dark crypts for a hundred years if I ruined your face before dusk...'*
-> 
-> *Suddenly, her mask snaps straight toward **Jacomir, Yvaine, and Piper**—her voice dropping into an ecstatic, sing-song purr:*
-> 
-> *'—Good thing he didn't say a single word about peeling the three of YOU out of your coats! Let’s hear what kind of music foreigners make when they bleed!'*
-> 
-> *She snaps her pale fingers—and out of the churned graveyard mud behind you, **pale crimson threads of blood-magic** lash down into two sunken graves, jerking wet gray hands up out of the dirt!*
-> 
-> ***EVERYONE—ROLL INITIATIVE!"***
+> *Behind you, the wrought-iron cemetery gate swings slowly open on oiled hinges."*
 
 ---
 
-### ⚔️ Boss Stat Block & Combat Guide: Bride Volenta Popofsky (`CR 5` | `DM_SCREEN.html` Match)
+### 👑 3. Count Strahd’s First Face-to-Face Entrance (`Full Verbatim Burial Dialogue`)
 
-* **AC:** `16` | **HP:** `95 HP` *(**Level 3 Retreat Trigger:** Laughs and escapes around **`45–50 HP`**—OR **`~35 HP`** if they skipped fighting Doru and are at full HP!)*
-* **Initiative:** `+4` | **Speed:** `35 ft, Climb 35 ft (Spider Climb)`
-* **Stats:** `STR 16 (+3) | DEX 18 (+4) | CON 16 (+3) | INT 13 (+1) | WIS 12 (+1) | CHA 16 (+3)`
-* **Saves:** `DEX +7, WIS +4, CHA +6` | **Senses:** `Darkvision 120 ft, Passive Perception 14`
-* **Immunities / Resistances:** `Necrotic; Bludgeoning, Piercing & Slashing from Non-Silvered / Non-Magical Attacks`
-* **Regeneration:** Regains **`10 HP`** at the start of her turn unless damaged by **Radiant, Holy Water, or True Sunlight** since her last turn. *(Fire damages her normally without stopping Regen—Radiant/Holy Water stops it!)*
-* **Cemetery Minions (Keep Tension Without TPK!):**
-  * **2x Freshly Raised Strahd Zombies (`20 HP` each, `AC 8`, `Speed 20 ft`):** Claw out of adjacent mud mounds when she triggers her *Blood Strings*! **Ismark** (`AC 17, 58 HP`, `2x Longsword +5`) and **Ireena** (`AC 15, 28 HP`, `Silvered Rapier +5`, `Parry +2 AC`) immediately step up to intercept one zombie and guard Donavich, leaving the PCs free to focus on Volenta!
-* **Actions & Attacks:**
-  * **Multiattack (2 Attacks Total — Max 1 Bite):** Makes **2 attacks**: 2x Claws, 2x Bone-Daggers, or 1x Claw/Dagger + 1x Crimson Kiss Bite. *(Optional Hard Mode: 2x Claws/Daggers + 1x Bite.)*
-  * **Claws (Slash or Auto-Grapple `DC 14`):** `+7 to hit`, `5 ft`. *Hit:* `2d4 + 4` (`9`) slashing damage, or **Grapple** target (`Escape DC 14`) to set up her Bite!
-  * **Twin Bone-Spiked Daggers (Melee or Thrown `20/60 ft`):** `+7 to hit`. *Hit:* `1d4 + 4` (`6`) piercing + `2d6` (`7`) necrotic damage *(Avg 13)*. Daggers snap instantly back to her hands on thin crimson blood-threads!
-  * **Crimson Kiss (Bite — vs. Grappled/Restrained/Incapacitated):** `+7 to hit`, `5 ft`. *Hit:* `1d6 + 4` (`7`) piercing + `3d6` (`10`) necrotic damage *(lowers Max HP & heals Volenta by necrotic dealt!)*.
-* **Pointy Hat Battlefield Actions (`Tell ➔ Counterplay ➔ Resolve`):**
-  1. **🧵 Action 1: Corpse-Puppet Blood Strings:**
-     * **📢 TELL (End of Turn):** Volenta giggles and flicks all ten fingers—glowing crimson blood-threads shoot into two cemetery graves (or grapple onto a bleeding hero!).
-     * **🛡️ COUNTERPLAY (The Round):** Deal **`15+` damage** to Volenta, hit her with **Radiant / Holy Water**, or **sever the threads (`AC 13, 10 HP`)** before her next turn.
-     * **💥 RESOLUTION (Start of Next Turn):** All tethered corpses surge `20 ft` and make a free slam (`+3, 1d6+1`) with Advantage—or a tethered PC must pass a **`DC 14 STR Save`** or be yanked **`15 ft`** toward her into the open grave pit!
-  2. **💀 Action 2: Shattering Skull-Mask Shriek *(Use Once After Taking Heavy Hits)*:**
-     * **📢 TELL (End of Turn):** Volenta scrambles up the wet church eaves (`Spider Climb`), unhinges the lower jaw of her cracked porcelain mask, and inhales swirling graveyard fog!
-     * **🛡️ COUNTERPLAY (The Round):** Duck behind a heavy headstone (**Total Cover**), cast *Silence*, or hit her with a Readied shot forcing a **`DC 13 CON Save`** to break her breath!
-     * **💥 RESOLUTION (Start of Next Turn):** Unleashes a `30-ft cone` psychic scream: **`DC 13 WIS Save`** or take **`3d8` (`13`) Psychic damage** (half on pass) and become **Frightened** until the end of their next turn!
+Read aloud slowly as everyone turns toward the iron gate:
 
----
+> *"Parked just beyond the iron fence in the waist-high fog stands the **Phantom Black Carriage**—its snapped axle magically whole, its raven-crest doors gleaming spotless in the lantern light, two colossal black stallions breathing white steam into the dark.*
+> 
+> *Stepping cleanly through the gate onto the muddy cemetery grass without getting a single speck of filth on his polished riding boots is **COUNT STRAHD VON ZAROVICH**.*
+> 
+> *He is tall, broad-shouldered, and terrifyingly composed—wearing tailored black military wool beneath a heavy cloak lined in blood-crimson silk, a ruby signet gleaming at his throat. His raven-black hair is swept cleanly back from sharp, aristocratic features pale as wet marble. His dark eyes hold no frantic beast-hunger—only four hundred years of bone-deep boredom, lethal intellect, and absolute ownership.*
+> 
+> *He does not even look up at the church roof. He simply lifts two gloved fingers an inch.*
+> 
+> **Strahd:** *(Calm, velvet, ice-cold—barely above a whisper, yet it cuts dead through the mist)*  
+> *'Volenta. Enough. Back to the carriage.'*
+> 
+> *On the eaves above, the giggling snaps off instantly. The porcelain-masked bride hisses softly like a scolded cat, blows a mocking two-fingered kiss down at **Piper, Jacomir, and Yvaine**—'Later, strays!'—and dissolves into a silent swirl of midnight bats that dart straight back toward the black coach.*
+> 
+> *Ireena freezes beside the open grave, all color draining from her face as her knuckles lock white around her silvered rapier. Ismark steps half a pace in front of her, jaw clenched.*
+> 
+> *Strahd folds his gloved hands neatly behind his back, stops ten feet from the fresh earth, and inclines his head once toward the pine coffin:*
+> 
+> **Strahd:** *(Deep, unhurried baritone—like a monarch paying respects at a vassal's funeral)*  
+> *'I did not come to spoil the earth over **Kolyan Indirovich**, good priest. Finish your prayer if you wish. He served this valley with stubborn dignity... and even a Devil knows how to let a loyal steward rest in dry soil.'*"
 
-### 🦇 4. Volenta’s Unpredictable Exit (*Zero Schedule — Pure Paranoia!*)
+#### 💬 Key Burial Dialogue Modules (Play Smoothly Back & Forth With Players!)
 
-The moment Volenta drops to **`~45–50 HP`** (or `~35 HP` if the party is still super healthy) OR takes a heavy **Brutal Crit / Radiant / Silvered blast**:
+1. **Addressing Ireena Kolyana (`The Two-Bite Claim & Slow Psychological Siege`):**
+   *(Strahd’s dark crimson eyes shift gently from the coffin to **Ireena**—horrifyingly soft, patient, and possessive.)*
+   > **Strahd:** *"Forgive my youngest bride’s lack of leash, dear **Ireena**. Volenta mistakes patience for weakness. My wolves stayed clear of your porch tonight out of respect for your father’s passing... not because I forgot whose blood carries my seal.*
+   > 
+   > *Do you truly believe those two little scars beneath your collar were a failure of nerve? A third bite turns a soul into a mindless shadow on a chain, and I have crypts full of weeping dolls already. No... those marks are my promise. When every wooden wall, crooked priest, and brave little stranger in Barovia fails you—and they **will** fail you—my carriage will still be waiting. **All you need do is step inside on your own two feet.**"*
+   * *(Ireena whispers defiantly, trembling but refusing to blink:)* **"I will never step inside, monster. And I am not yours!"**
+   * *(Strahd merely offers a sad, patient half-smile, glancing calmly from Ireena back to the heroes as if inviting them into a private joke.)*
 
-> *"Your strike cracks cleanly across the cheek of her porcelain mask—**SNAP!** A sharp triangular shard of white ceramic pops loose and hits the mud.*
-> 
-> *For one heartbeat, her giggling dies completely.*
-> 
-> *Behind the cracked mask, her crimson eye widens—not in fear, but in thrilled, venomous shock. She presses two fingers against the splintered edge of her mask, tasting the silver burn on her lip.*
-> 
-> **Volenta:** *(Her voice drops low, calm, and chillingly soft—no longer laughing)*  
-> *'Oh... you bite back. And here I thought tonight would be boring.*
-> 
-> *Keep your silver close, strays. **I won’t forget these faces—not one of you.** Listen very carefully the next time your shutters rattle in the rain. Check every locked window twice. And the night you get careless... the moment you stop looking over your shoulder...*
-> 
-> *...I’ll be smiling right behind the glass.'*
-> 
-> *She drops backward off the tombstone into swirling black smoke—exploding into a screeching whirlwind of midnight bats that scatter wildly into the storm clouds, leaving zero trace of which direction they flew."*
+2. **Sizing Up the Three Strangers (`Subtle, Striking & Unnerving — Zero Secrets Leaked!`):**
+   *(Remember: Strahd did NOT summon the party and does NOT know their homelands, Oakenshire, Solmere, or secret backstories yet—only their **names** from stalking them through Barovia Village in Session 1, plus what he observes right in front of him!)*
+   * **To Jacomir:**
+     > *"Heavy steel, fresh blood on your palm, and an unbent chin, **Jacomir**. Tell me—wherever the Mists pulled you from, did they teach you how quickly pride cracks once winter settles over this valley? Walk my roads awhile. Let us see what that posture weighs after a week in Barovian mud."*
+   * **To Yvaine:**
+     > *"Black powder, silvered lead, and eyes that do not flinch even over an open grave—a rare discipline on my roads, **Eclipsa**. Keep that rifle oiled. Out here, beasts rarely wait for a hunter to finish aiming."*
+   * **To Piper *(The Cosmic Knot Spotlight — [`THE_COSMIC_KNOT_MASTER_LORE.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/THE_COSMIC_KNOT_MASTER_LORE.md#L136))*:**
+     *(Strahd’s eyes linger past Jacomir and Yvaine, locking straight onto **Piper**—and dropping slowly down to **Barnaby’s tarnished brass pocket watch** on her coat/belt. For the first time, the faintest, knowing, deeply unnerving smile parts his lips.)*
+     > *"And at last... **Piper.***
+     > 
+     > *Card tricks, greasepaint, and a tarnished brass watch? Oh, little tiefling... how terribly loud the storm beneath your ribs hums when you think no one is listening. Enjoy your parlor illusions while the crowds still clap."*
+     *(Wait a beat—let Piper feel absolute goosebumps! How does he know her name and what woke inside her?!)*
+
+   > 🧠 **DM Private Rule (`Strahd's Unspoken Agenda — DO NOT SAY ALOUD!`):**
+   > Strahd **never** tells strangers on Day 1 that he is testing them as potential successors or hoping they become monsters—that cheapens his dignity and ruins the mystery! Keep those intentions **strictly in his own head**:
+   > * Internally, he watches whether **Jacomir, Yvaine, or Piper** have the stomach to cross ugly moral lines in Barovia—and **naturally** sends quiet rewards (*Red Dragon Crush* wine, wax-sealed compliments, tactical intel, or brief roadside nods) *after* they actually commit cold/ruthless deeds later in Acts I–III, letting Ireena witness their corruption firsthand.
+
+3. **Burial Q&A Bank (`Striking Replies When Players Question or Challenge Him!`):**
+   * **If Asked: *"Why don't you just take Ireena right now / why stop at two bites?"*:**
+     > **Strahd:** *"Force? Any starving beast can drag a kicking girl into the dark—Volenta proved as much on your roof. I prefer a queen who walks through my gates on the day this valley teaches her there is nowhere left to run."*
+   * **If Asked: *"Why don't you just kill us right here and leave her unprotected?"*:**
+     > **Strahd:** *"Why slaughter useful shepherds? These mountains crawl with hags, mountain wolves, and desperate fools who lack my restraint. You bleed to keep the rain off Kolyan’s daughter until she reaches Vallaki—and in return, you get to draw breath on my earth a few days longer. Consider it rent."*
+   * **If Asked: *"Why did you bring us to Barovia? What do you want from us?"*:**
+     *(He offers nothing away—calmly brushing off the Mists without revealing he didn't choose them.)*
+     > **Strahd:** *"I did not open the gates for you—the Mists sweep all manner of stray blades and loud fools across my borders. Some entertain me for a fortnight; most feed the crows before the first frost. Walk my roads, remember whose soil you tread—and try not to bore me."*
+   * **If Mentioned: *"We're taking her to Vallaki / St. Andral's Church where you can't reach her!"*:**
+     *(A cold, razor-thin smile touches his marble face.)*
+     > **Strahd:** *"By all means. Place your faith in Vallaki's wooden walls, a mad burgomaster's painted smiles, and a priest's locked doors. Let us see how long your 'sanctuary' stays standing once dusk settles."*
+   * **If Challenged: *"Who are you? / Do you expect us to kneel?"*:**
+     > **Strahd:** *"I am Count Strahd von Zarovich—the Ancient, and the Land. I do not ask strangers to kneel in the mud. When Barovia finishes with you, knees tend to bend on their own."*
+   * **⚠️ If Someone Attacks or Shoots Strahd Over the Grave:**
+     * **NEVER TPK them in Session 2**, and NEVER turn Strahd into a punching bag!
+     * **Heart of Sorrow Flex (`50 HP` hidden crystal shield in Ravenloft!):** The bullet or greatsword slams straight into Strahd's chest—and **not a single drop of blood spills!** A faint ruby shimmer ripples beneath his black wool and vanishes (`"Did you see that?! He didn't even flinch!"` — connecting straight back to what **Doru** told them in the attic!!).
+     * **Catch-and-Release Dominance:** Strahd calmly wipes a speck of gunpowder dust off his lapel, speaks one word—**`Sleep`** *(or `Gust of Wind` DC 18 STR / one casual Unarmed disarm pushing the attacker onto their knees)*—or locks eyes for **Vampire Charm (`DC 17 WIS Save`)** just to prove to Ireena he owns their lives, then chuckles softly:
+       > *"Amusing spirit. Break your teeth on my brides and my wolves first, little strangers. Earn an invitation to my dinner table before you waste my evening."*
+
+4. **Concluding Words & The Departure (`What He Says When Dialogue Ends`):**
+   *(Strahd straightens his crimson-lined collar, lets his dark crimson eyes pass once over **Jacomir**, **Yvaine**, and **Piper**, and finally rests them softly on **Ireena**.)*
+   > **Strahd:** *"Finish burying your dead. Warm yourselves beside the Vistani fire at Tser Pool while the night is still kind to you. Sharpen your silver, and cling tightly to the little oaths you brought through the fog.*
+   > 
+   > *I shall be watching—and when this valley finally strips away every illusion you carry, my carriage will be waiting. Enjoy the road, travelers... and farewell for now, my dear Ireena."*
+
+   Strahd bows once with immaculate courtly grace, steps smoothly back through the iron gate into the Black Carriage, and pulls the silver-hinged door shut. Without a sound from the driverless horses, the obsidian coach turns silently into the fog and vanishes. *(Zero knowledge of Derek! Notice how completely unaware Strahd is of the Man Between Seconds.)*
 
 #### ⚰️ Finishing the Burial & Dawn Departure (`Ismark’s Farewell / Cache`)
 * Father Donavich finishes sealing **Burgomaster Kolyan’s** grave in shaky silence, urging them to get Ireena far away from this village before night falls again.
@@ -276,118 +253,13 @@ The moment Volenta drops to **`~45–50 HP`** (or `~35 HP` if the party is still
 
 ---
 
-## ⚖️ ACT III: THE RIVER IVLIS CROSSROADS & COUNT STRAHD (`Arc C2` — OPTION B)
+## ⚖️ ACT III: THE MISTY ROAD TO TSER POOL (`5–10 Minute Fast-Track`)
 
-*(Pacing: 1:45 – 2:30 | Location: River Ivlis Crossroads — Area F | Music: Cold wind in tall pines, rushing icy river, distant thunder)*
+*(Pacing: 1:15 – 1:25 | Location: Old Svalich Road & River Ivlis Crossroads — Area F | Music: Cold wind in tall pines, rushing icy river)*
 
-### 🗺️ Detailed Map & Spatial Read: The River Ivlis Crossroads (`Area F`)
-
-> **Tactical Layout (`80 × 80 ft` Forest Clearing & Stone Bridge):**
-> * **Three-Way Intersection:** Dirt carriage road splits sharply:
->   * **East:** Back toward the Village of Barovia (`behind you`).
->   * **Northeast (Uphill into Thickening Mist):** Steep switchback climbing toward **Castle Ravenloft**.
->   * **Northwest (Across the River):** Slopes down toward **Tser Pool Vistani Encampment** (`and onward to Vallaki`).
-> * **The Stone Signpost (Center Fork):** Ancient moss-stained obelisk carved with weathered directional runes.
-> * **The River Ivlis Bridge (`West Edge`, `30 ft` long):** Arched gray stone bridge spanning a fast, freezing, foam-white mountain river **`15 ft` wide** (*Sacred Law of Running Water: Vampires ending a turn in running water take `20 Acid` damage and cannot regenerate!*).
-> * **Optional Gallows Mound (`South Edge` — Skip if Run in Session 1!):** A low mound holding a rotting wooden gallows (`15 ft` off the road). *(If you didn’t run the hanging-corpse mirror illusion in Session 1, trigger the `DC 12 WIS Save` corpse-turning-into-Jacomir/Yvaine vision right before the carriage rolls out!)*
-
----
-
-### 🖤 1. Arrival of the Black Carriage
-
-Read aloud as the party, **Ireena** *(and the Black Cat trailing quietly `30 ft` back in the pines)*, reach the stone signpost under bruised gray morning-noon clouds:
-
-> *"The wind drops abruptly. Not even a crow cries in the dead pines.*
-> 
-> *Standing completely motionless at the northwest fork of the crossroads—blocking the trail toward Tser Pool—is a **gleaming black landau carriage**.*
-> 
-> *You recognize the lacquered raven-crest doors instantly. It is the exact same phantom coach from the night you crashed at the gates—except the snapped axle is magically whole, the cracked glass is spotless, and the two colossal black draft stallions stand silent as statues, breath steaming in the cold mist.*
-> 
-> *There is no driver in the box.*
-> 
-> *Ireena freezes dead in her tracks beside you. All color drains straight out of her face. Her fingers lock white around her rapier hilt—and she cannot seem to force her breath out.*
-> 
-> *Click.*
-> 
-> *The black carriage door swings silently open on greased silver hinges. One polished riding boot steps down into the mud."*
-
----
-
-### 👑 2. Count Strahd’s First Face-to-Face Entrance (`Full Verbatim Dialogue`)
-
-> *"He does not lunge. He does not bare fangs.*
-> 
-> *Stepping cleanly onto the cobblestones without getting a speck of mud on his boots is **COUNT STRAHD VON ZAROVICH**.*
-> 
-> *He is tall, broad-shouldered, and unnervingly composed—wearing tailored black military wool beneath a heavy cloak lined in blood-crimson silk, a ruby signet gleaming at his throat. His raven-black hair is swept cleanly back from sharp, aristocratic features pale as wet marble. His dark eyes hold no frantic beast-hunger—only four hundred years of bone-deep boredom, lethal intellect, and absolute ownership.*
-> 
-> *He folds gloved hands neatly behind his back, tilting his head slightly as his gaze sweeps over your travel-stained armor, silvered steel, and blackened gunpowder—before resting briefly upon Ireena’s trembling scarf.*
-> 
-> **Strahd:** *(Deep, velvet, unhurried baritone—like a monarch inspecting guests walking across his carpet)*  
-> *'Good morning, travelers. I trust the Village of Barovia proved... educational.'*"
-
-#### 💬 Key Dialogue Modules (Play Smoothly Back & Forth With Players!)
-
-1. **If the Party Mentions Volenta or Last Night's Attack at the Grave:**
-   *(Strahd’s jaw tightens by a fraction of a millimeter—the faintest flash of icy displeasure across his marble face.)*
-   > **Strahd:** *"Ah. Yes. My courier returned to the castle this morning missing half his jaw and three ribs.*
-   > 
-   > *I sent a polite escort to offer Ireena dry shelter after her father's burial. It seems my youngest bride forgot her leash—and mistook an act of mercy for her personal butcher block. Rest assured... **Volenta is presently learning the cost of poor manners.**"*
-   > 
-   > *(His crimson eyes flick coldly to Jacomir and Yvaine.)*  
-   > *"Believe me, strangers: if I had wished to strip Kolyan’s daughter away from you at two in the morning... you would not be breathing on my road right now. You survived because I was not the one who walked into that graveyard."*
-
-2. **Addressing Ireena Kolyana (`The Two-Bite Claim & Slow Psychological Siege`):**
-   > **Strahd:** *(Voice dropping softer—horrifyingly gentle, patient, and possessive)*  
-   > *"Kolyan Indirovich served this valley with dignity. My condolences are genuine, dear **Ireena**—which is precisely why my wolves stayed clear of your porch until his ashes touched the earth.*
-   > 
-   > *Do you truly believe those two little scars beneath your collar were a failure of nerve? A third bite turns a creature into a mindless shadow on a leash. I have enough weeping dolls locked in my crypts already. No... those marks are my seal upon your blood so not one claw in my woods forgets whose bride walks this road. When every wooden wall, crooked priest, and brave little stranger in Barovia fails you—and they **will** fail you—my coach will still be waiting. **All you need do is step inside on your own two feet.**"*
-   * *(Ireena whispers defiantly, trembling but refusing to blink:)* **"I will never step inside, monster. And I am not yours!"**
-   * *(Strahd merely offers a sad, patient half-smile, glancing calmly from Ireena back to the heroes as if inviting them into a private joke.)*
-
-3. **Sizing Up the Three Strangers (`Subtle, Striking & Unnerving — Zero Secrets Leaked!`):**
-   *(Remember: Strahd did NOT summon the party and does NOT know their homelands, Oakenshire, Solmere, or secret backstories yet—only their **names** from stalking them through Barovia Village in Session 1, plus what he observes right in front of him!)*
-   * **To Jacomir:**
-     > *"Heavy steel and an unbent chin, **Jacomir**. Tell me—wherever the Mists pulled you from, did they teach you how quickly pride cracks once winter settles over this valley? Walk my roads awhile. Let us see what that posture weighs after a week in Barovian mud."*
-   * **To Yvaine:**
-     > *"Black powder, silvered lead, and eyes that do not flinch—a rare discipline on my roads, **Eclipsa**. Keep that rifle oiled. Out here, beasts rarely wait for a hunter to finish aiming."*
-   * **To Piper *(The Cosmic Knot Spotlight — [`THE_COSMIC_KNOT_MASTER_LORE.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/THE_COSMIC_KNOT_MASTER_LORE.md#L136))*:**
-     *(Strahd’s eyes linger past Jacomir and Yvaine, locking straight onto **Piper**—and dropping slowly down to **Barnaby’s tarnished brass pocket watch** on her coat/belt. For the first time, the faintest, knowing, deeply unnerving smile parts his lips.)*
-     > *"And welcome to the road as well... **Piper.***
-     > 
-     > *Card tricks, greasepaint, and a tarnished brass watch? Oh, little tiefling... how terribly loud the storm beneath your ribs hums when you think no one is listening. Enjoy your parlor illusions while the crowds still clap."*
-     *(Wait a beat—let Piper feel absolute goosebumps! How does he know her name and what woke inside her?!)*
-
-   > 🧠 **DM Private Rule (`Strahd's Unspoken Agenda — DO NOT SAY ALOUD!`):**
-   > Strahd **never** tells strangers on Day 1 that he is testing them as potential successors or hoping they become monsters—that cheapens his dignity and ruins the mystery! Keep those intentions **strictly in his own head**:
-   > * Internally, he watches whether **Jacomir, Yvaine, or Piper** have the stomach to cross ugly moral lines in Barovia—and **naturally** sends quiet rewards (*Red Dragon Crush* wine, wax-sealed compliments, tactical intel, or brief roadside nods) *after* they actually commit cold/ruthless deeds later in Acts I–III, letting Ireena witness their corruption firsthand.
-
-4. **Crossroads Q&A Bank (`Striking Replies When Players Question or Challenge Him!`):**
-   * **If Asked: *"Why don't you just take Ireena right now / why stop at two bites?"*:**
-     > **Strahd:** *"Force? Any starving beast can drag a kicking girl into the dark—my youngest bride proved as much last night. A third bite turns a soul into a hollow puppet on a chain, and I have crypts full of puppets already. I prefer a queen who walks through my gates on the day this valley teaches her there is nowhere left to run."*
-   * **If Asked: *"Why don't you just kill us right here and leave her unprotected?"*:**
-     > **Strahd:** *"Why slaughter useful shepherds? These mountains crawl with hags, mountain wolves, and desperate fools who lack my restraint. You bleed to keep the rain off Kolyan’s daughter until she reaches Vallaki—and in return, you get to draw breath on my earth a few days longer. Consider it rent."*
-   * **If Asked: *"Why did you bring us to Barovia? What do you want from us?"*:**
-     *(He offers nothing away—calmly brushing off the Mists without revealing he didn't choose them.)*
-     > **Strahd:** *"I did not open the gates for you—the Mists sweep all manner of stray blades and loud fools across my borders. Some entertain me for a fortnight; most feed the crows before the first frost. Walk my roads, remember whose soil you tread—and try not to bore me."*
-   * **If Mentioned: *"We're taking her to Vallaki / St. Andral's Church where you can't reach her!"*:**
-     *(A cold, razor-thin smile touches his marble face.)*
-     > **Strahd:** *"By all means. Place your faith in Vallaki's wooden walls, a mad burgomaster's painted smiles, and a priest's locked doors. Let us see how long your 'sanctuary' stays standing once dusk settles."*
-   * **If Challenged: *"Who are you? / Do you expect us to kneel?"*:**
-     > **Strahd:** *"I am Count Strahd von Zarovich—the Ancient, and the Land. I do not ask strangers to kneel in the mud. When Barovia finishes with you, knees tend to bend on their own."*
-   * **⚠️ If Someone Attacks or Shoots Strahd Right Here:**
-     * **NEVER TPK them in Session 2**, and NEVER turn Strahd into a punching bag!
-     * **Heart of Sorrow Flex (`50 HP` hidden crystal shield in Ravenloft!):** The bullet or greatsword slams straight into Strahd's chest—and **not a single drop of blood spills!** A faint ruby shimmer ripples beneath his black wool and vanishes (`"Did you see that?! He didn't even flinch!"` — connecting straight back to what **Doru** told them in the attic!!).
-     * **Catch-and-Release Dominance:** Strahd calmly wipes a speck of gunpowder dust off his lapel, speaks one word—**`Sleep`** *(or `Gust of Wind` DC 18 STR / one casual Unarmed disarm pushing the attacker onto their knees)*—or locks eyes for **Vampire Charm (`DC 17 WIS Save`)** just to prove to Ireena he owns their lives, then chuckles softly:
-       > *"Amusing spirit. Break your teeth on my brides and my wolves first, little strangers. Earn an invitation to my dinner table before you waste my evening."*
-
-5. **Concluding Words & The Departure (`What He Says When Dialogue Ends`):**
-   *(Strahd straightens his crimson-lined collar, lets his dark crimson eyes pass once over **Jacomir**, **Yvaine**, and **Piper**, and finally rests them softly on **Ireena**.)*
-   > **Strahd:** *"Go on, then. Warm yourselves beside the Vistani fire at Tser Pool while the night is still kind to you. Bury your grief, sharpen your silver, and cling tightly to the little oaths you brought through the fog.*
-   > 
-   > *I shall be watching—and when this valley finally strips away every illusion you carry, my carriage will be waiting. Enjoy the road, travelers... and farewell for now, my dear Ireena."*
-
-   Strahd bows once with immaculate courtly grace, steps smoothly back into the Black Carriage, and pulls the silver-hinged door shut. Without a sound from the driverless horses, the obsidian coach turns silently onto the misty switchback climbing toward Castle Ravenloft—vanishing cleanly into the fog. *(Zero knowledge of Derek! Notice how completely unaware Strahd is of the Man Between Seconds.)*
+* **Since Count Strahd already visited at the burial**, keep the travel to Tser Pool brisk and atmospheric!
+* **Optional 1-Minute Spook (`Gallows Mound` — Skip if Run in Session 1!):** As they pass the three-way stone signpost at the River Ivlis Bridge, a rotting wooden gallows creaks in the fog (`DC 12 WIS Save`: for one second, the hanging corpse wears **Jacomir's** or **Yvaine's** own face before snapping back to a bundle of wet rags!).
+* Cross the arched stone bridge over the freezing River Ivlis and follow the slope down into the sheltered pine basin—where warm amber lanterns and accordion music rise through the mist ahead!
 
 ---
 
