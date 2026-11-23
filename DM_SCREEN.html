@@ -17750,9 +17750,13 @@ function renderDmDropModalBody() {
                             <option value="all|👥 Entire Party">👥 Best for All Heroes (Entire Party)</option>
                         </select>
                     </label>
-                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700; grid-column:span 2;">
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700;">
                         Where Found / Source Location
-                        <input type="text" id="dm-forge-loc" value="Custom DM Reward" placeholder="e.g. Blood on the Vine Tavern, Tser Pool Chest, Wilderness..." style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                        <input type="text" id="dm-forge-loc" value="Custom DM Reward" placeholder="e.g. Blood on the Vine Tavern, Tser Pool Chest..." style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
+                    </label>
+                    <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#facc15; font-weight:700;">
+                        Cost / Gold Value
+                        <input type="text" id="dm-forge-cost" placeholder="e.g. 25 GP, 150 GP, 5 SP, Priceless..." style="padding:6px 8px; background:#111827; border:1px solid #475569; border-radius:6px; color:#f8fafc;">
                     </label>
                     ${dynamicFieldsHtml}
                     <label style="display:flex; flex-direction:column; gap:4px; font-size:0.75rem; color:#cbd5e1; font-weight:700; grid-column:span 2;">
@@ -17956,6 +17960,8 @@ function submitDmForgeItem(andSendToHero = true) {
     }
     const actVal = (document.getElementById('dm-forge-act')?.value || 'Act I').trim();
     const rawWhere = (document.getElementById('dm-forge-loc')?.value || 'Custom DM Reward').trim().replace(/^Act\s+[I|V]+\s*•\s*/i, '');
+    const rawCost = (document.getElementById('dm-forge-cost')?.value || '').trim();
+    const costVal = rawCost ? (/^\d+(\.\d+)?$/.test(rawCost) ? `${rawCost} GP` : rawCost) : 'Custom / Unpriced';
     const note = (document.getElementById('dm-forge-note')?.value || '').trim();
     const targetVal = (document.getElementById('dm-forge-target')?.value || 'piper|🎩 Piper').split('|');
     const heroId = targetVal[0] || 'piper';
@@ -18125,10 +18131,12 @@ function submitDmForgeItem(andSendToHero = true) {
     }
 
     const lootKey = 'custom_' + name.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').slice(0, 40) + '_' + Date.now().toString(36).slice(-4);
+    if (customMeta && rawCost) customMeta.cost = costVal;
     const lootRecord = {
         cat: vaultCat,
         name,
         rarity,
+        cost: costVal,
         location: loc,
         mechanics: mechanicsHtml,
         lore: note || `Forged by the Lead DM in Curse of Strahd (${loc}).`,
