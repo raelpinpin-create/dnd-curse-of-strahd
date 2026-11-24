@@ -533,6 +533,184 @@
             border-color: #93c5fd;
             color: #eff6ff;
         }
+        .loot-loc-bar {
+            display: none;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 5px;
+            margin: -6px 0 8px;
+            padding: 6px 10px;
+            background: rgba(24, 18, 12, 0.88);
+            border: 1px solid rgba(245, 158, 11, 0.34);
+            border-radius: 7px;
+        }
+        .loot-loc-bar.is-open { display: flex; }
+        .btn-loot-loc {
+            background: #141824;
+            color: #fde68a;
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            border-radius: 5px;
+            padding: 3px 9px;
+            font-size: 0.71rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.14s ease;
+        }
+        .btn-loot-loc:hover { border-color: #fbbf24; color: #fffbeb; }
+        .btn-loot-loc.active {
+            background: linear-gradient(135deg, #b45309, #92400e);
+            border-color: #fde68a;
+            color: #fffbeb;
+            box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.4);
+        }
+        .loot-scene-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 5px;
+            margin: 0 0 8px;
+            padding: 7px 10px;
+            background: linear-gradient(135deg, rgba(6, 36, 28, 0.88), rgba(11, 18, 32, 0.92));
+            border: 1px solid rgba(52, 211, 153, 0.36);
+            border-radius: 8px;
+        }
+        .btn-loot-scene {
+            background: #0d1624;
+            color: #a7f3d0;
+            border: 1px solid rgba(52, 211, 153, 0.35);
+            border-radius: 6px;
+            padding: 4px 9px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.14s ease;
+        }
+        .btn-loot-scene:hover { border-color: #34d399; color: #ecfdf5; background: #102527; }
+        .btn-loot-scene.active {
+            background: linear-gradient(135deg, #065f46, #047857);
+            border-color: #6ee7b7;
+            color: #ecfdf5;
+            box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.45);
+        }
+        .loot-tier-bar {
+            display: none;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin: -2px 0 10px;
+            padding: 7px 10px;
+            background: linear-gradient(135deg, rgba(25, 19, 44, 0.92), rgba(15, 23, 42, 0.95));
+            border: 1px solid rgba(251, 191, 36, 0.42);
+            border-radius: 8px;
+        }
+        .loot-tier-bar.is-open { display: flex; }
+        .loot-tier-group { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+        .btn-loot-tier {
+            background: #0f172a;
+            color: #cbd5e1;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            padding: 4px 9px;
+            font-size: 0.71rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.14s ease;
+        }
+        .btn-loot-tier:hover { border-color: #94a3b8; color: #f8fafc; }
+        .btn-loot-tier.active { background: #1e293b; border-color: #60a5fa; color: #f8fafc; }
+        .btn-loot-tier.tier-high.active { background: rgba(180, 83, 9, 0.35); border-color: #f59e0b; color: #fef3c7; }
+        .btn-loot-tier.tier-nat20 { border-color: rgba(192, 132, 252, 0.5); color: #e9d5ff; }
+        .btn-loot-tier.tier-nat20.active { background: linear-gradient(135deg, #581c87, #3b0764); border-color: #fde047; color: #fef08a; box-shadow: 0 0 8px rgba(250, 204, 21, 0.25); }
+        .btn-roll-plant {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #e2e8f0;
+            border: 1px solid #475569;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.14s ease;
+        }
+        .btn-roll-plant:hover { transform: translateY(-1px); border-color: #38bdf8; color: #fff; }
+        .btn-roll-plant.roll-high { border-color: #f59e0b; color: #fde68a; background: linear-gradient(135deg, #2b1d0c, #1e160d); }
+        .btn-roll-plant.roll-nat20 { border-color: #facc15; color: #fef08a; background: linear-gradient(135deg, #4c1d95, #1e1b4b); box-shadow: 0 0 10px rgba(250, 204, 21, 0.22); }
+        .loot-rolled-box {
+            margin: 0 0 12px;
+            padding: 11px 13px;
+            border-radius: 9px;
+            border: 1.5px solid #f59e0b;
+            background: linear-gradient(135deg, rgba(24, 17, 36, 0.96), rgba(10, 18, 30, 0.98));
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.42);
+        }
+        .loot-rolled-box.tier-nat20 {
+            border-color: #facc15;
+            background: linear-gradient(135deg, rgba(46, 16, 101, 0.92), rgba(15, 23, 42, 0.98));
+            box-shadow: 0 6px 22px rgba(250, 204, 21, 0.16);
+        }
+        .loot-rolled-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 7px;
+            margin-bottom: 8px;
+        }
+        .loot-rolled-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 8px;
+        }
+        .loot-rolled-item {
+            background: rgba(9, 14, 26, 0.92);
+            border: 1px solid #334155;
+            border-left: 3px solid #34d399;
+            border-radius: 6px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .loot-rolled-item.is-high { border-left-color: #f59e0b; }
+        .loot-rolled-item.is-nat20 { border-left-color: #facc15; background: rgba(29, 17, 51, 0.78); }
+        .loot-tier-pill {
+            display: inline-block;
+            font-size: 0.58rem;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: 4px;
+            vertical-align: middle;
+            margin-left: 4px;
+            letter-spacing: 0.02em;
+        }
+        .loot-tier-pill.tier-everyday { background: rgba(51, 65, 85, 0.75); color: #cbd5e1; border: 1px solid #475569; }
+        .loot-tier-pill.tier-high { background: rgba(180, 83, 9, 0.35); color: #fde68a; border: 1px solid rgba(245, 158, 11, 0.55); }
+        .loot-tier-pill.tier-nat20 { background: linear-gradient(135deg, #6b21a8, #4c1d95); color: #fef08a; border: 1px solid #facc15; }
+        .loot-mat-strip {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 4px;
+            margin-top: 5px;
+            padding-top: 5px;
+            border-top: 1px dashed rgba(52, 211, 153, 0.28);
+            font-size: 0.68rem;
+            color: #a7f3d0;
+        }
+        .loot-mat-recipe-pill {
+            background: rgba(6, 78, 59, 0.45);
+            border: 1px solid rgba(52, 211, 153, 0.45);
+            color: #d1fae5;
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .loot-mat-recipe-pill:hover { background: #047857; border-color: #6ee7b7; color: #fff; }
         .loot-cat-details {
             border: 1px solid #24324a;
             border-radius: 8px;
@@ -3267,7 +3445,7 @@
                 </search>
             </div>
         </div>
-        <div class="loot-filter-bar" id="loot-filter-bar">
+        <div class="loot-filter-bar" id="loot-filter-bar" role="group" aria-label="Filter loot by Act or Hero">
             <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:2px;">1. Act / Hero:</span>
             <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Acts</button>
             <button type="button" class="btn-loot-filter active" data-loottag="Act I" onclick="filterLootVault('Act I', this)">🩸 Act I</button>
@@ -3279,6 +3457,18 @@
             <button type="button" class="btn-loot-filter" data-loottag="Jacomir" onclick="filterLootVault('Jacomir', this)">👑 Jacomir</button>
             <button type="button" class="btn-loot-filter" data-loottag="Yvaine" onclick="filterLootVault('Yvaine', this)">🔫 Yvaine</button>
         </div>
+        <div class="loot-loc-bar" id="loot-loc-bar" role="group" aria-label="Filter by specific location in active Act"></div>
+        <div class="loot-scene-bar" id="loot-scene-bar" role="group" aria-label="Quick search where players are exploring right now">
+            <span style="font-family:'Cinzel',serif; font-size:0.73rem; color:#6ee7b7; font-weight:700; margin-right:2px;">🔎 Exploring Now:</span>
+            <button type="button" class="btn-loot-scene" data-lootscene="room_attic" onclick="filterLootScene('room_attic')" aria-pressed="false">🏠 Room / Attic</button>
+            <button type="button" class="btn-loot-scene" data-lootscene="forest_road" onclick="filterLootScene('forest_road')" aria-pressed="false">🌲 Forest / Travel</button>
+            <button type="button" class="btn-loot-scene" data-lootscene="tavern_kitchen" onclick="filterLootScene('tavern_kitchen')" aria-pressed="false">🍺 Tavern / Kitchen</button>
+            <button type="button" class="btn-loot-scene" data-lootscene="church_crypt" onclick="filterLootScene('church_crypt')" aria-pressed="false">⛪ Church / Crypt</button>
+            <button type="button" class="btn-loot-scene" data-lootscene="corpse_monster" onclick="filterLootScene('corpse_monster')" aria-pressed="false">💀 Corpse / Monster</button>
+            <button type="button" class="btn-loot-scene" data-lootscene="lab_study" onclick="filterLootScene('lab_study')" aria-pressed="false">⚗️ Lab / Study</button>
+            <button type="button" id="btn-loot-scene-clear" class="btn-modal-mini" style="display:none; margin-left:auto; border-color:#f87171; color:#fca5a5;" onclick="filterLootScene(null)">✕ Exit Scene Mode</button>
+        </div>
+        <div class="loot-tier-bar" id="loot-tier-bar" role="group" aria-label="Filter or roll exploration loot by check tier"></div>
         <div class="loot-cat-bar" id="loot-cat-bar">
             <span style="font-family:'Cinzel',serif; font-size:0.74rem; color:#93c5fd; font-weight:700; margin-right:2px;">2. Category:</span>
             <button type="button" id="btn-lcat-overview" class="btn-loot-cat active" data-lootcat="overview" onclick="filterLootCategory('overview', this)">📋 Overview</button>
@@ -3302,6 +3492,7 @@
             <button type="button" class="btn-loot-slot" data-lootslot="crown" onclick="filterLootSlot('crown', this)">🔮 Arcane Core (Spell &amp; Elements)</button>
             <button type="button" class="btn-loot-slot" data-lootslot="grip" onclick="filterLootSlot('grip', this)">🎗️ Shaft Grip (Conc, Saves &amp; AC)</button>
         </div>
+        <div id="loot-rolled-panel" role="status" aria-live="polite"></div>
         <div class="loot-vault-stack" id="loot-containers"></div>
     </section>
 
@@ -15416,6 +15607,845 @@ const LOOT_DATA = {
         "location": "Act III • Krezk Abbey Sanctuary (Area S13) or Keepers of the Feather Loft",
         "mechanics": "Mount into a Quarterstaff's <strong>Shaft Grip / Wrap Slot</strong>. <strong>Bonus:</strong> Grants <strong>+2 to all Saving Throws</strong> (including <strong>Concentration CON saves</strong>) while equipped. <strong>Trade-Off:</strong> Imposes <strong>-1 to Initiative</strong> while equipped (steady meditative trance grip).",
         "lore": "Iridescent black raven plumes braided with incense-cured linen around the staff handle to hold spells steady under siege."
+    },
+
+    // =========================================================================
+    // BAROVIAN EXPLORATION VAULT — EVERYDAY (DC 10–14), HIGH ROLL (15–19) & NAT 20 JACKPOTS
+    // =========================================================================
+    "raw_wolf_pelt": {
+        "cat": "material",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "craftAs": "pelt_canvas",
+        "sceneTags": ["forest_road", "corpse_monster"],
+        "rollTier": "everyday",
+        "name": "Raw Wolf / Beast Pelt",
+        "rarity": "Common Crafting Material • Hide & Fur",
+        "cost": "4 GP",
+        "location": "Act I–IV • Svalich Woods & Road, Dire Wolf Kills, Hunter Shacks & Werewolf Trails (DC 11 Survival)",
+        "mechanics": "• <strong>Crafting Material (Counts as Pelt / Canvas):</strong> Automatically counts toward the <strong>Mist-Ward Traveler's Camp Kit</strong> (<code>MIST-CAMP</code>) on player sheets!<br>• <strong>Harvest DC:</strong> <code>DC 11 Survival</code> to skin cleanly from a felled Barovian wolf, dire wolf, or winter beast. Also sells to tanners or Vallaki trappers for <code>4 GP</code>.",
+        "lore": "Thick, oil-rich winter fur stripped from a Svalich predator—keeps mountain frost and Barovian mist off sleeping cloaks."
+    },
+    "smugglers_waxed_canvas": {
+        "cat": "material",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "craftAs": "pelt_canvas",
+        "sceneTags": ["room_attic", "forest_road", "corpse_monster"],
+        "rollTier": "high",
+        "name": "Smuggler's Waxed Canvas Tarp",
+        "rarity": "Uncommon Crafting Material • Waterproof Shelter Cloth",
+        "cost": "10 GP",
+        "location": "Act I–III • Overturned Svalich Wagons, Barovia Village Attics, Tser Pool Stashes & Arasek Stockyard (N5)",
+        "mechanics": "• <strong>Crafting Material (Counts as Pelt / Canvas):</strong> Automatically counts toward the <strong>Mist-Ward Traveler's Camp Kit</strong> (<code>MIST-CAMP</code>) without needing a wolf hunt!<br>• <strong>Exploration Utility:</strong> Doubles as a rainproof lean-to tarp, wagon cover, or quiet bundle wrap.",
+        "lore": "Heavy-weave sailcloth double-dipped in pine resin and beeswax—water beads right off it even in a Mount Ghakis gale."
+    },
+    "silver_veined_quartz": {
+        "cat": "material",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "craftAs": "silver_dust",
+        "sceneTags": ["forest_road", "church_crypt", "lab_study"],
+        "rollTier": "high",
+        "name": "Ancient Silver-Veined Quartz",
+        "rarity": "Uncommon Crafting Material • Silver Ore",
+        "cost": "18 GP",
+        "location": "Act I–IV • Tser Falls Riverbed, Svalich Outcrops, Crypt Masonry, Yester Hill & Mount Ghakis (DC 14 Nature / Investigation)",
+        "mechanics": "• <strong>Crafting Material (Counts as Powdered Silver Dust):</strong> Automatically counts toward <strong>Holy Water</strong>, <strong>Liquid Silver Coating</strong>, <strong>Phosphor Flash-Bombs</strong>, <strong>Witch-Iron Oil</strong>, <strong>Sun-Ash Balm</strong>, and the <strong>Mist-Ward Camp Kit</strong>!<br>• <strong>Refining:</strong> Crushing it in a mortar or against iron yields enough pure Barovian silver dust for 1 full craft.",
+        "lore": "Milky white mountain stone shot through with bright metallic threads that catch lantern light like frost."
+    },
+    "ghost_cap_mushrooms": {
+        "cat": "material",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road", "lab_study"],
+        "rollTier": "everyday",
+        "name": "Ghost-Cap Forest Mushrooms",
+        "rarity": "Common Crafting Material • Barovian Fungus",
+        "cost": "3 GP",
+        "location": "Act I–III • Svalich Woods Damp Hollows, Old Bonegrinder Woods, Berez Marsh & Alchemist Cellars (DC 11 Nature)",
+        "mechanics": "• <strong>Crafting & Alchemy Reagent:</strong> Pale luminescent fungi prized by Barovian apothecaries and Vistani herbalists for poultices, night-vision brews, or mild sedative teas.<br>• <strong>DM Hook:</strong> Safe when brewed properly (<code>DC 12 Nature / Herbalism</code>); raw bites impose <code>DC 11 CON Save</code> vs 1 hr mild nausea.",
+        "lore": "Translucent white toadstools that glow faintly blue when shaken in complete darkness."
+    },
+    "grave_salt_ward_pouch": {
+        "cat": "material",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt"],
+        "rollTier": "everyday",
+        "name": "Grave-Salt Ward Pouch",
+        "rarity": "Common Crafting Material • Ritual Salt",
+        "cost": "5 GP",
+        "location": "Act I–IV • Barovia Church (E5), St. Andral's Crypt (N1), Krezk Graveyard (S7) & Ravenloft Catacombs",
+        "mechanics": "• <strong>Ritual & Ward Reagent:</strong> Sprinkle across a single 5-ft doorway or window sill (1 Action) to leave a chalky alarm line that hisses audibly if an Undead steps over it.<br>• <strong>Crafting Hook:</strong> Useful component for necrotic coatings, exorcisms, or Morninglord wards.",
+        "lore": "Coarse rock salt baked with crushed rosemary and dried chapel ash in a tied linen sack."
+    },
+    "spider_silk_gland": {
+        "cat": "material",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "forest_road"],
+        "rollTier": "everyday",
+        "name": "Thick Spider Silk Gland",
+        "rarity": "Common Crafting Material • Monster Salvage",
+        "cost": "6 GP",
+        "location": "Act I–III • Giant Spiders, Abandoned Attics, Svalich Hollows & Berez Ruins (DC 12 Nature / Survival)",
+        "mechanics": "• <strong>Monster Salvage:</strong> Spins into <code>20 ft</code> of whisper-quiet, feather-light cord strong enough to hold 200 lbs—or trades to Vallaki bowyers & tailors for <code>6 GP</code>.<br>• <strong>Tinker Hook:</strong> Can reinforce bowstrings, trap tripwires, or field sutures.",
+        "lore": "A fist-sized pearlescent sac harvested intact from a Barovian cave or attic arachnid."
+    },
+    "cold_iron_scrap_shards": {
+        "cat": "material",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "lab_study", "room_attic"],
+        "rollTier": "everyday",
+        "name": "Cold-Iron Scrap Shards",
+        "rarity": "Common Crafting Material • Smithing Scrap",
+        "cost": "5 GP",
+        "location": "Act I–III • Ruined Carts, Barovia Village Forges, Vallaki Smithy, Animated Armor Wreckage & Bandit Gear",
+        "mechanics": "• <strong>Smithing & Tinker Salvage:</strong> Unforged high-carbon iron nails, horseshoe stock, and shards used to hammer field caltrops, pitons, or reinforce crossbow bolts.<br>• <strong>Fey Lore:</strong> Fey creatures and hags flinch noticeably from raw cold-iron filings.",
+        "lore": "Pitted dark iron hammered cold without flame—heavy, sharp-edged, and faintly stinging to fey skin."
+    },
+    "dire_wolf_fangs": {
+        "cat": "material",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "forest_road"],
+        "rollTier": "everyday",
+        "name": "Dire Wolf Fangs",
+        "rarity": "Common Crafting Material • Monster Trophy",
+        "cost": "4 GP",
+        "location": "Act I–III • Svalich Woods Wolf Packs, Old Svalich Road Ambushes & Werewolf Den Trails (DC 10 Survival)",
+        "mechanics": "• <strong>Monster Harvest & Trade:</strong> Pair of curved ivory predator fangs prized by Vistani amulet-makers and Vallaki hunters (<code>4 GP</code> per pair) or strung into intimidatory talismans.<br>• <strong>Tinker Hook:</strong> Can tip improvised bolts or daggers in a pinch.",
+        "lore": "Two inches of jagged, bone-white enamel pulled from the jaw of one of Strahd's mountain hounds."
+    },
+    "tarnished_silver_locket": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic"],
+        "rollTier": "everyday",
+        "name": "Tarnished Silver Locket",
+        "rarity": "Common Trade Valuable • Everyday Keepsake",
+        "cost": "8 GP",
+        "location": "Act I–III • Barovia Village Homes, Indirovich Manor, Vallaki Mansions & Dusty Attics",
+        "mechanics": "• <strong>Trade Valuable (<code>8 GP</code>):</strong> Contains a faded watercolor portrait of a smiling Barovian family painted generations ago.<br>• <strong>Table Hook:</strong> Returning it to a grieving relative can earn shelter or local rumor; melting it yields silver scrap.",
+        "lore": "The silver hinge clicks open with a sigh, revealing bright paint that still refuses to fade into valley gray."
+    },
+    "brass_chamber_candlestick": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic"],
+        "rollTier": "everyday",
+        "name": "Brass Chamber Candlestick",
+        "rarity": "Common Everyday Item • Household Valuables",
+        "cost": "3 GP",
+        "location": "Act I–IV • Village Bedrooms, Indirovich Manor, Wachterhaus, Blue Water Inn & Ravenloft Guest Rooms",
+        "mechanics": "• <strong>Everyday Utility / Trade (<code>3 GP</code>):</strong> Sturdy finger-loop brass candleholder with a stub of tallow wax—casts <code>5-ft bright / 10-ft dim light</code> for 1 hour or serves as an improvised blunt club (1d4).",
+        "lore": "Heavy, wax-dripped brass stamped with a tiny faded sunburst on the underside."
+    },
+    "moth_eaten_wool_cloak": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic"],
+        "rollTier": "everyday",
+        "name": "Moth-Eaten Winter Wool Cloak",
+        "rarity": "Common Everyday Gear • Travel Garment",
+        "cost": "2 GP",
+        "location": "Act I–III • Barovia Village Wardrobes, Abandoned Farmhouses, Attics & Krezk Cottages",
+        "mechanics": "• <strong>Cold Weather Utility:</strong> Heavy wool mantle that sheds rain and provides basic protection against chill mountain wind on the Old Svalich Road (great spare cloak for shivering NPCs or disguising as a drab Barovian villager).",
+        "lore": "Smells faintly of cedar chests, damp hearth smoke, and ten winters of fog."
+    },
+    "box_beeswax_candles": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic", "tavern_kitchen", "church_crypt"],
+        "rollTier": "everyday",
+        "name": "Box of Beeswax Candles",
+        "rarity": "Common Everyday Item • Light & Ritual Supply",
+        "cost": "1 GP",
+        "location": "Act I–IV • Village Pantries, Church Vestries, Tavern Cellars & Vallaki Attics",
+        "mechanics": "• <strong>Pack of 5 Candles:</strong> Each burns for <code>1 hour</code> (<code>5-ft bright / 10-ft dim light</code>). Useful for lighting dark cellars, sealing wax letters, dripping alarms, or Morninglord vigils.",
+        "lore": "Five golden-brown hand-dipped tapers bundled in twine—they smell warmly of wildflower honey when lit."
+    },
+    "old_family_diary": {
+        "cat": "quest",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic", "lab_study"],
+        "rollTier": "everyday",
+        "name": "Old Barovian Family Diary",
+        "rarity": "Common Lore Clue • Household Journal",
+        "cost": "2 GP",
+        "location": "Act I–III • Barovia Village Attics, Indirovich Manor, Vallaki Townhouses & Abandoned Studies",
+        "mechanics": "• <strong>Lore & Rumor Hook:</strong> Leather-bound household ledger containing dated entries about missing neighbors, Strahd's midnight tax collectors, Morgantha's pie cart, or a sketched map of a nearby cellar hideout.<br>• <strong>DM Tip:</strong> Great vehicle to hand players a subtle local clue on any search!",
+        "lore": "Water-warped parchment filled with trembling charcoal script that stops abruptly three winters ago."
+    },
+    "rusted_skeleton_key": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic", "church_crypt"],
+        "rollTier": "everyday",
+        "name": "Rusted Skeleton Key",
+        "rarity": "Common Everyday Item • Lock & Door Curio",
+        "cost": "5 SP",
+        "location": "Act I–IV • Attic Floorboards, Abandoned Desks, Caretaker Sheds & Crypt Alcoves",
+        "mechanics": "• <strong>Exploration Utility:</strong> Old iron bit-key that grants <strong>+1 bonus</strong> (or DM-ruled instant open) on one old rusty Barovian chest, padlock, or attic bolt before snapping on a Nat 1.",
+        "lore": "A long iron ward-key shaped like a crooked raven claw, crusted with orange rust."
+    },
+    "carved_blinsky_toy": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic"],
+        "rollTier": "everyday",
+        "name": "Carved Blinsky Wooden Toy",
+        "rarity": "Common Barovian Curio • Keepsake",
+        "cost": "2 GP",
+        "location": "Act I–II • Barovia Village Nurseries, Attics, Vallaki Homes & Blinsky Toys (N7)",
+        "mechanics": "• <strong>Barovian Curio (<code>2 GP</code>):</strong> A slightly unsettling hand-painted wooden jester, mini-guillotine, or smiling bat stamped <em>'Is No Fun, Is No Blinsky!'</em>.<br>• <strong>RP Hook:</strong> Instantly connects to Gadof Blinsky in Vallaki—or calms a frightened Barovian child.",
+        "lore": "Brightly painted with too many teeth and tiny glass eyes that seem to follow you around the room."
+    },
+    "sewing_mending_kit": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic"],
+        "rollTier": "everyday",
+        "name": "Sewing & Mending Kit",
+        "rarity": "Common Everyday Tool • Field Maintenance",
+        "cost": "2 GP",
+        "location": "Act I–III • Village Parlors, Attics, Inn Linen Closets & Traveler Trunks",
+        "mechanics": "• <strong>Field Utility:</strong> Steel needles, waxed linen thread, spare brass buttons, and sharp snips. Repairs torn packs, cloaks, or tent canvas during a Short Rest—and can stitch urgent battlefield wounds (+1 bonus to stabilize checks if paired with bandages).",
+        "lore": "A tidy tin box lined with velvet, holding six sharp needles and spools of storm-gray thread."
+    },
+    "stashed_copper_purse": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic"],
+        "rollTier": "everyday",
+        "name": "Stashed Copper & Silver Purse",
+        "rarity": "Common Coin Find • Everyday Stash",
+        "cost": "6 GP",
+        "location": "Act I–III • Loose Floorboards, Chimneys, Attic Trunks & Bedside Drawers",
+        "mechanics": "• <strong>Instant Coin Payout:</strong> Contains <code>2d6 SP + 3d10 CP</code> (average <code>~4–6 GP</code>) in tarnished Barovian coinage stamped with Count Strahd's severe profile.",
+        "lore": "A knotted leather drawstring pouch tucked nervously behind a loose attic brick."
+    },
+    "tarnished_silver_cutlery": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic", "tavern_kitchen"],
+        "rollTier": "everyday",
+        "name": "Tarnished Silver Cutlery Set",
+        "rarity": "Common Trade Valuable • Silverware",
+        "cost": "10 GP",
+        "location": "Act I–III • Manor Dining Rooms, Tavern Pantries, Dusty Sideboards & Attics",
+        "mechanics": "• <strong>Trade Valuable (<code>10 GP</code>):</strong> Bundle of six tarnished silver knives and spoons wrapped in faded velvet.<br>• <strong>Barovian Bonus:</strong> A blacksmith can melt this silverware down to help silver a weapon or 10 bolts/arrows!",
+        "lore": "Tarnished black at the handles, yet gleaming pale moon-white wherever cloth rubs the edge."
+    },
+    "dry_birch_tinder_flint": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road"],
+        "rollTier": "everyday",
+        "name": "Dry Birch Tinder & Flint",
+        "rarity": "Common Everyday Gear • Camp & Travel",
+        "cost": "5 SP",
+        "location": "Act I–IV • Old Svalich Road Campsites, Hollow Tree Stumps, Ranger Caches & Trailside Ruins",
+        "mechanics": "• <strong>Wilderness Utility:</strong> Bone-dry birch bark strips and flint striker sealed in a waxed leather pouch—lights a campfire or torch in damp Barovian rain with <strong>Advantage on Survival fire-lighting checks</strong>.",
+        "lore": "Dry kindling is worth more than copper once the mist rolls down off the Svalich pines."
+    },
+    "sturdy_hempen_rope": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road", "room_attic"],
+        "rollTier": "everyday",
+        "name": "Sturdy Hempen Rope (50 ft)",
+        "rarity": "Common Adventuring Gear • Climbing & Rigging",
+        "cost": "1 GP",
+        "location": "Act I–IV • Overturned Carts, Barn Lofts, Attics, Tser Falls Cliffs & Stockyards",
+        "mechanics": "• <strong>5e Standard Gear:</strong> <code>50 ft</code> of braided hempen rope (<code>2 HP</code>, <code>DC 17 STR</code> to burst). Essential for scaling cliffs, lashing prisoners, hauling crates, or rigging snare traps.",
+        "lore": "Coiled tight and weathered gray, smelling of pine tar and wagon grease."
+    },
+    "whetstone_blade_oil_rag": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road", "corpse_monster"],
+        "rollTier": "everyday",
+        "name": "Whetstone & Blade-Oil Rag",
+        "rarity": "Common Field Maintenance • Weapon Care",
+        "cost": "2 GP",
+        "location": "Act I–III • Fallen Scouts, Guard Posts, Svalich Campsites & Armory Benches",
+        "mechanics": "• <strong>RPG Polish Bonus:</strong> Spend 10 minutes during a Short Rest honing a melee slashing/piercing weapon—your <strong>very next hit</strong> with that honed blade deals <strong>+1 bonus slashing/piercing damage</strong> (1/Short Rest).",
+        "lore": "A palm-sized slate honing stone wrapped inside a clean rag soaked in clove and linseed oil."
+    },
+    "iron_hunters_bear_trap": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road"],
+        "rollTier": "everyday",
+        "name": "Iron Hunter's Bear Trap",
+        "rarity": "Common Tactical Trap • Wilderness Ambush",
+        "cost": "5 GP",
+        "location": "Act I–III • Svalich Woods Hunting Blinds, Old Svalich Road, Wolf-Hunter Shacks & Krezk Forest",
+        "mechanics": "• <strong>1 Action to Set (5e Hunting Trap):</strong> Anchored to ground by iron chain. Any creature stepping on it must make a <code>DC 13 DEX Save</code> or take <code>1d4 Piercing</code> damage and have its <strong>Speed reduced to 0</strong> (<code>DC 13 STR</code> action to pry free). Great for camp perimeters!",
+        "lore": "Heavy rusted steel jaws hammered strong enough to stop a charging Svalich dire wolf cold."
+    },
+    "bundle_morninglord_incense": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt"],
+        "rollTier": "everyday",
+        "name": "Bundle of Morninglord Incense",
+        "rarity": "Common Religious Supply • Ritual & Trade",
+        "cost": "5 GP",
+        "location": "Act I–IV • Barovia Church (E5), St. Andral's (N1), Krezk Abbey (S13) & Wayside Shrines",
+        "mechanics": "• <strong>Ritual Supply (<code>5 GP</code>):</strong> Bundle of 4 golden frankincense sticks. Burning one during a Short Rest masks corpse-stench, calms frightened villagers, or satisfies spell components for <em>Find Familiar</em> / divine rites.",
+        "lore": "Smells faintly of dried orange peel, pine sap, and warm sunlight remembered from before the Mists."
+    },
+    "tarnished_silver_censer": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt"],
+        "rollTier": "everyday",
+        "name": "Tarnished Silver Censer",
+        "rarity": "Common Trade Valuable • Chapel Relic",
+        "cost": "15 GP",
+        "location": "Act I–IV • Barovia Church Vestry (E5), Ruined Wayside Chapels, Vallaki Crypts & Ravenloft Chapel",
+        "mechanics": "• <strong>Trade Valuable (<code>15 GP</code>):</strong> Chained brass-and-silver swinging incense burner embossed with sunburst filigree. Sells cleanly to collectors or provides silver stock for smithing.",
+        "lore": "Still faintly warm with century-old soot and dried amber resin inside its pierced dome."
+    },
+    "sealed_wax_prayer_scroll": {
+        "cat": "quest",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt"],
+        "rollTier": "everyday",
+        "name": "Sealed Wax Prayer Scroll",
+        "rarity": "Common Lore / Blessing Curio • Chapel Text",
+        "cost": "3 GP",
+        "location": "Act I–IV • Church Pews, Tomb Alcoves, Wayside Shrines & Abandoned Rectory Desks",
+        "mechanics": "• <strong>Lore & Morale Hook:</strong> A folded parish prayer sealed in pale yellow wax containing either an old Barovian genealogy, a forgotten saint's verse, or a quiet blessing (reading it over a grave puts restless spirits at ease).",
+        "lore": "Sealed with a cracked sunburst ring—someone prayed desperately here before locking the doors."
+    },
+    "bent_iron_crowbar": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "room_attic"],
+        "rollTier": "everyday",
+        "name": "Bent Iron Crowbar",
+        "rarity": "Common Adventuring Tool • Dungeon Delving",
+        "cost": "2 GP",
+        "location": "Act I–III • Bandit Packs, Ruined Cellars, Attics & Grave-Robber Corpses",
+        "mechanics": "• <strong>5e Tool Bonus:</strong> Grants <strong>Advantage on Strength checks</strong> where leverage can be applied (prying nailed floorboards, jammed crypt lids, rusted chests, and barred shutters).",
+        "lore": "Scratched raw at the claw end from prying open Barovian coffins and boarded attic hatches."
+    },
+    "worn_bandit_coin_belt": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster"],
+        "rollTier": "everyday",
+        "name": "Worn Bandit Coin Belt",
+        "rarity": "Common Coin Pouch • Body Loot",
+        "cost": "8 GP",
+        "location": "Act I–III • Slain Bandits, Road Ambusher Corpses, Strahd's Cultists & Fallen Adventurers",
+        "mechanics": "• <strong>Instant Coin Payout:</strong> Stitched-in leather money belt holding <code>1d6 GP + 2d6 SP</code> (average <code>~5–8 GP</code>) plus a lucky bent copper coin.",
+        "lore": "Scuffed dark leather buckled tight under a torn wool coat—smells of mud and cheap tavern ale."
+    },
+    "empty_glass_vials_3": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["lab_study", "tavern_kitchen"],
+        "rollTier": "everyday",
+        "name": "Empty Glass Apothecary Vials (3x)",
+        "rarity": "Common Alchemy Supply • Containers",
+        "cost": "3 GP",
+        "location": "Act I–IV • Alchemist Shelves, Bonegrinder Kitchen, Wachterhaus Lab, Studies & Apothecary Cabinets",
+        "mechanics": "• <strong>Alchemy & Harvest Utility (3 Vials):</strong> Corked thick-glass vials required to bottle spring water, harvested monster venom, vampire ash, or newly brewed field potions.",
+        "lore": "Three hand-blown green glass phials stoppered with beeswax-sealed corks."
+    },
+    "parchment_crow_quill_set": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["lab_study", "room_attic"],
+        "rollTier": "everyday",
+        "name": "Parchment & Crow-Quill Ink Set",
+        "rarity": "Common Scholarly Supply • Scribe Kit",
+        "cost": "5 GP",
+        "location": "Act I–IV • Manor Studies, Libraries, Church Desks, Vallaki Burgomaster's Office & Ravenloft Study",
+        "mechanics": "• <strong>Scholar & Caster Utility:</strong> Ten sheets of fine rag parchment, black iron-gall inkwell, and a trimmed raven quill—ready for copying ciphered notes, mapping dungeons, or drafting forged passes.",
+        "lore": "A slender black feather cut sharp at the nib beside a tightly corked bottle of soot-black ink."
+    },
+    "chalk_charcoal_sticks": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["lab_study", "room_attic"],
+        "rollTier": "everyday",
+        "name": "Chalk & Charcoal Sticks",
+        "rarity": "Common Dungeon Supply • Marking & Rubbings",
+        "cost": "5 SP",
+        "location": "Act I–IV • Scholar Desks, Attics, Crypt Entrances & Dungeon Adventurer Packs",
+        "mechanics": "• <strong>Exploration Utility:</strong> Mark cleared corridors in Castle Ravenloft or the Amber Temple, take paper rubbings of faded tomb reliefs, or dust invisible footprints across stone floors.",
+        "lore": "A cloth-wrapped bundle of white limestone chalk and charred willow sticks."
+    },
+    "spiced_garlic_turnip_stew": {
+        "cat": "food",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["tavern_kitchen"],
+        "rollTier": "everyday",
+        "name": "Spiced Garlic & Turnip Stew",
+        "rarity": "Common Barovian Meal • Food (1d4+1 HP)",
+        "cost": "4 SP",
+        "location": "Act I–III • Blood on the Vine Tavern (E2), Blue Water Inn (N2), Village Hearths & Kitchens",
+        "mechanics": "• <strong>Eat (1 Action or Short Rest):</strong> Restores <code>1d4 + 1 HP</code> (strictly caps at Max HP). Hearty, piping-hot root stew seasoned heavily with Barovian garlic cloves.<br>• <strong>Table Flavor:</strong> The staple hot meal of every Barovian kitchen.",
+        "lore": "Thick, peppery earthenware broth brimming with roasted turnips, barley, and enough garlic to make a vampire grimace."
+    },
+    "loaf_dark_rye_bread": {
+        "cat": "food",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["tavern_kitchen", "room_attic"],
+        "rollTier": "everyday",
+        "name": "Loaf of Dark Rye Bread",
+        "rarity": "Common Provision • Food (1d4 HP)",
+        "cost": "2 SP",
+        "location": "Act I–III • Village Pantries, Tavern Kitchens, Bakery Shelves & Market Carts",
+        "mechanics": "• <strong>Eat (1 Action):</strong> Restores <code>1d4 HP</code> (caps at Max HP). Dense, crusty dark Barovian rye loaf that keeps well in a pack for days.",
+        "lore": "Heavy as a cobblestone with a crisp caraway crust and warm earthy crumb inside."
+    },
+    "smoked_wolf_jerky": {
+        "cat": "food",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["tavern_kitchen", "forest_road", "corpse_monster"],
+        "rollTier": "everyday",
+        "name": "Smoked Wolf-Jerky Strips",
+        "rarity": "Common Trail Snack • Food (+2 HP)",
+        "cost": "5 SP",
+        "location": "Act I–IV • Tavern Counters, Ranger Packs, Bandit Pouches & Krezk Smokehouses",
+        "mechanics": "• <strong>Eat (1 Action):</strong> Restores <code>+2 HP</code> (caps at Max HP). Tough, pepper-cured strips of smoked wolf meat—never spoils in mist or cold.",
+        "lore": "Chewy, salty, and smoky over juniper wood—preferred road food of Barovian wolf-hunters."
+    },
+    "wheel_aged_goat_cheese": {
+        "cat": "food",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["tavern_kitchen"],
+        "rollTier": "everyday",
+        "name": "Wheel of Aged Goat Cheese",
+        "rarity": "Common Provision • Food (1d4 HP)",
+        "cost": "4 SP",
+        "location": "Act I–III • Tavern Cellars, Farmhouse Larders, Krezk Cottages & Wagon Hampers",
+        "mechanics": "• <strong>Eat (1 Action):</strong> Restores <code>1d4 HP</code> (caps at Max HP). Wax-sealed wheel of sharp mountain goat cheese.",
+        "lore": "Coated in cracked red wax to keep out cellar damp—sharp, creamy, and surprisingly welcome on a cold march."
+    },
+    "wild_svalich_blackberries": {
+        "cat": "food",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road"],
+        "rollTier": "everyday",
+        "name": "Wild Svalich Blackberries",
+        "rarity": "Common Wilderness Forage • Food (1d4 HP)",
+        "cost": "1 SP",
+        "location": "Act I–III • Svalich Woods Clearings, Old Svalich Road Hedges & Tser Pool Glades (DC 10 Nature / Survival)",
+        "mechanics": "• <strong>Eat (1 Action):</strong> Restores <code>1d4 HP</code> (caps at Max HP). Tart purple-black forest berries gathered cleanly along thorn-hedges.",
+        "lore": "Cool, tart berries beaded with morning mist—staining fingers dark violet like spilled ink."
+    },
+    "mug_warm_mulled_wine": {
+        "cat": "food",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["tavern_kitchen"],
+        "rollTier": "everyday",
+        "name": "Mug of Warm Mulled Wine",
+        "rarity": "Common Barovian Drink • Buff Food",
+        "cost": "3 SP",
+        "location": "Act I–III • Blood on the Vine Tavern (E2), Blue Water Inn (N2), Tser Pool Campfire (G) & Winery Cellars",
+        "mechanics": "• <strong>Drink (1 Action):</strong> Steaming spiced Purple Grapemash warmed with cloves and cinnamon—grants <strong>Advantage on Saving Throws against Extreme Cold & mountain chill for 2 hours</strong>.",
+        "lore": "Sweet, spiced ruby wine steaming inside a chipped stoneware mug—drives the damp out of frozen knuckles."
+    },
+    "barovian_salt_pork_rations": {
+        "cat": "food",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["tavern_kitchen", "forest_road"],
+        "rollTier": "everyday",
+        "name": "Barovian Salt-Pork Rations",
+        "rarity": "Common Camp Provision • Normal Food",
+        "cost": "5 SP",
+        "location": "Act I–IV • Bildrath's Mercantile (E1), Village Cellars, Guard Posts & Supply Wagons",
+        "mechanics": "• <strong>Normal Camp Rations (1 Day):</strong> Waxed paper bundle of salt-cured pork, hardtack biscuits, and dried turnips. Sustains a hero for one full day of travel across Barovia (Flavor / Camp Provision).",
+        "lore": "Bland, salty, and practically indestructible—keeps marchers on their feet when inns are miles away."
+    },
+    "false_bottom_jewelry_box": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic"],
+        "rollTier": "high",
+        "name": "False-Bottom Heirloom Jewelry Box",
+        "rarity": "Uncommon High-Roll Find • Hidden Valuable (15–19)",
+        "cost": "35 GP",
+        "location": "Act I–III • Attic Trunks, Indirovich Manor, Vallaki Noble Bedrooms & Wachterhaus Closets (DC 15 Investigation)",
+        "mechanics": "• <strong>High-Roll Treasure (<code>35 GP</code>):</strong> Pushing a hidden brass rosebud pops the velvet lining, revealing an amber-set silver brooch and <code>15 GP</code> in old Zarovian gold coins.",
+        "lore": "Carved walnut lined with moth-eaten crimson satin—hidden decades ago before Strahd's taxmen knocked."
+    },
+    "hidden_floorboard_coins": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic", "tavern_kitchen"],
+        "rollTier": "high",
+        "name": "Hidden Floorboard Coin Cache",
+        "rarity": "Uncommon High-Roll Find • Stashed Coin (15–19)",
+        "cost": "30 GP",
+        "location": "Act I–IV • Attic Joists, Tavern Bedrooms, Abandoned Houses & Inn Cellars (DC 15 Investigation / Perception)",
+        "mechanics": "• <strong>High-Roll Payout:</strong> Tin box wedged beneath a creaking plank holding <code>3d10 + 10 GP</code> (average <code>~26–30 GP</code>) in tarnished gold & electrum coins.",
+        "lore": "Wrapped in oilcloth so the metal wouldn't clink whenever wolves prowled beneath the eaves."
+    },
+    "antique_music_box": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic", "tavern_kitchen"],
+        "rollTier": "high",
+        "name": "Antique Silver-Inlaid Music Box",
+        "rarity": "Uncommon High-Roll Curio • Art Object (15–19)",
+        "cost": "45 GP",
+        "location": "Act I–IV • Manor Attics, Inn Parlor Shelves, Blinsky's Backroom & Noble Studies (DC 15 Investigation)",
+        "mechanics": "• <strong>High-Roll Art Object (<code>45 GP</code>):</strong> Winding the tiny brass key plays a haunting pre-Curse Barovian lullaby.<br>• <strong>RP Bonus:</strong> Grants <strong>Advantage on Persuasion checks</strong> to soothe frightened villagers or children—and fetches <code>45 GP</code> from collectors or Vistani traders.",
+        "lore": "Delicate silver filigree swirls over polished ebony; its chimes sound like rain falling on a sunlit lake."
+    },
+    "hunters_silvered_satchel": {
+        "cat": "weapon",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road", "corpse_monster"],
+        "rollTier": "high",
+        "name": "Hunter's Silvered Bolt & Arrow Satchel",
+        "rarity": "Uncommon High-Roll Cache • Silvered Ammo (15–19)",
+        "cost": "25 GP",
+        "location": "Act I–III • Svalich Woods Blind, Fallen Monster-Hunters, Old Svalich Road & Krezk Trails (DC 15 Survival / Investigation)",
+        "mechanics": "• <strong>High-Roll Ammo Cache:</strong> Waterproof leather quiver holding <strong>5x Silvered Bolts</strong> OR <strong>5x Silvered Arrows</strong> OR <strong>5x Silvered Bullets</strong> (DM's choice to match whoever found it!) + 1 spare bowstring. Bypasses Werewolf, Vampire & Hag nonmagical resistance.",
+        "lore": "Stitched with a tiny silver raven mark inside the flap—left behind by a hunter who never returned to Vallaki."
+    },
+    "pristine_stag_antler": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road"],
+        "rollTier": "high",
+        "name": "Pristine Stag-Antler Carving",
+        "rarity": "Uncommon High-Roll Trade Curio • Fane Folk Art (15–19)",
+        "cost": "30 GP",
+        "location": "Act I–III • Svalich Glades, Tser Pool Woods, Yester Hill Footpaths & Mountain Shrines (DC 15 Nature / Survival)",
+        "mechanics": "• <strong>High-Roll Curio (<code>30 GP</code>):</strong> Pale shed stag antler etched with pre-Zarovich runes of The Huntress and The Seeker. Fetches <code>30 GP</code> from Vistani or Martikov elders—or acts as a respectful offering at any Barovian Fane stone.",
+        "lore": "Polished smooth by centuries of rain and moss, bearing delicate spiral knots older than Castle Ravenloft."
+    },
+    "innkeepers_honey_mead": {
+        "cat": "food",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["tavern_kitchen"],
+        "rollTier": "high",
+        "name": "Innkeeper's Spiced Honey-Mead Flask",
+        "rarity": "Uncommon High-Roll Drink • Hearty Food (1d6+2 HP)",
+        "cost": "15 GP",
+        "location": "Act I–III • Blood on the Vine Back Cellar (E2), Blue Water Inn Pantry (N2) & Wizard of Wines (W1) (DC 15 Investigation)",
+        "mechanics": "• <strong>Drink (1 Action):</strong> Restores <code>1d6 + 2 HP</code> (caps at Max HP) AND <strong>cures 1 level of Exhaustion</strong>!<br>• <strong>High-Roll Find:</strong> Hidden behind ordinary turnip-ale casks.",
+        "lore": "Amber-gold mead brewed from rare mountain clover honey, ginger root, and a twist of dried pear."
+    },
+    "cellar_martikov_reserve": {
+        "cat": "food",
+        "bestHeroId": "all",
+        "actTag": "Act II",
+        "sceneTags": ["tavern_kitchen"],
+        "rollTier": "high",
+        "name": "Cellar-Aged Martikov Reserve Cask",
+        "rarity": "Uncommon High-Roll Vintage • Buff Drink (+1d6 Temp)",
+        "cost": "25 GP",
+        "location": "Act I–III • Tavern Wine Cellars, Indirovich Cellar, Blue Water Inn (N2) & Wizard of Wines (W1) (DC 15 Investigation)",
+        "mechanics": "• <strong>Drink (1 Action — Shares up to 3 Pours):</strong> Grants <code>+1d6 Temporary HP</code> (non-stacking) AND <strong>Advantage on Saving Throws against being Frightened for 4 hours</strong>!<br>• <strong>Value:</strong> Sells unopened to nobles for <code>25 GP</code>.",
+        "lore": "A dusty Champagne du le Stomp bottle sealed in dark green wax—tastes like summer thunder and unbroken courage."
+    },
+    "intact_vestry_offering_box": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt"],
+        "rollTier": "high",
+        "name": "Intact Vestry Offering Box",
+        "rarity": "Uncommon High-Roll Find • Chapel Cache (15–19)",
+        "cost": "35 GP",
+        "location": "Act I–IV • Barovia Church Vestry (E5), St. Andral's (N1), Abandoned Chapels & Crypts (DC 15 Investigation)",
+        "mechanics": "• <strong>High-Roll Chapel Stash:</strong> Oak alms box hidden behind a loose sanctuary stone containing <code>25 GP</code> in silver/gold offerings + <strong>1 fresh vial of Holy Water</strong> (<code>2d6 Radiant</code> vs Undead/Fiends).",
+        "lore": "Brass-bound and untouched since the last Morninglord festival—still carries a faint scent of sweet frankincense."
+    },
+    "sun_blessed_burial_shroud": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt"],
+        "rollTier": "high",
+        "name": "Sun-Blessed Burial Shroud Scrap",
+        "rarity": "Uncommon High-Roll Relic Cloth • Undead Ward (15–19)",
+        "cost": "25 GP",
+        "location": "Act I–IV • Consecrated Crypts, Barovia Graveyard, St. Andral's & Krezk Abbey Vaults (DC 15 Religion / Investigation)",
+        "mechanics": "• <strong>Single-Use Ward Cloth:</strong> Wrap around a melee weapon or drape across a camp threshold—the next hit against an Undead deals <strong>+1d6 Radiant damage</strong> (or blocks 1 Undead from entering a 5-ft doorway for 10 minutes).",
+        "lore": "Golden-threaded linen woven by saintly hands centuries ago; dust refuses to settle on its weave."
+    },
+    "consecrated_prayer_medallion": {
+        "cat": "caster",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt"],
+        "rollTier": "high",
+        "name": "Consecrated Silver Prayer Medallion",
+        "rarity": "Uncommon High-Roll Charm • Minor Holy Relic (15–19)",
+        "cost": "40 GP",
+        "location": "Act I–IV • Church Altars, Fallen Cleric Tombs, Abbey Cloisters & Wayside Shrines (DC 16 Investigation / Religion)",
+        "mechanics": "• <strong>Wearable Amulet (No Attunement • 1/Long Rest):</strong> Click <strong>[Activate]</strong> on your sheet to add <strong>+1d4</strong> to any <strong>Religion check</strong> OR <strong>Death Saving Throw</strong>!",
+        "lore": "A worn silver sunburst pendant stamped with a tiny kneeling lark—still faintly warm against your sternum."
+    },
+    "dead_monster_hunter_pouch": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster"],
+        "rollTier": "high",
+        "name": "Dead Monster-Hunter's Belt Pouch",
+        "rarity": "Uncommon High-Roll Bundle • Hunter Loot (15–19)",
+        "cost": "35 GP",
+        "location": "Act I–IV • Fallen Outlander Corpses, Wolf Dens, Svalich Ambush Sites & Crypt Floors (DC 15 Investigation)",
+        "mechanics": "• <strong>High-Roll Loot Bundle:</strong> Contains <code>12 GP</code>, <strong>1x Potion of Healing</strong> (<code>2d6+1 HP</code>), <strong>2x sharpened ashwood stakes</strong>, and a folded charcoal sketch warning of a local monster's weakness!",
+        "lore": "Scorched leather embossed with a faded silver fang—its previous owner went down fighting."
+    },
+    "vampire_hunter_pitons_stakes": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "church_crypt"],
+        "rollTier": "high",
+        "name": "Vampire-Hunter's Steel Pitons & Stakes",
+        "rarity": "Uncommon High-Roll Tactical Kit • Anti-Undead (15–19)",
+        "cost": "20 GP",
+        "location": "Act I–IV • Fallen Hunters, Van Richten Caches, Ismark's Armory & Crypt Entrances (DC 15 Investigation)",
+        "mechanics": "• <strong>Tactical Vampire Kit:</strong> 4 silver-tipped ashwood stakes, heavy iron mallet, and 6 spiked iron pitons. Stakes can paralyze a resting vampire in its coffin; pitons wedge heavy crypt doors shut (<code>DC 18 STR</code> to force).",
+        "lore": "Rolled tight in oiled canvas with a small chalk vial and notches carved down the mallet handle."
+    },
+    "sealed_alchemist_reagent_satchel": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["lab_study"],
+        "rollTier": "high",
+        "name": "Sealed Alchemist's Reagent Satchel",
+        "rarity": "Uncommon High-Roll Bundle • Crafting Cache (15–19)",
+        "cost": "45 GP",
+        "location": "Act I–IV • Bonegrinder Workroom, Wachterhaus Cellar, Victor's Attic Lab (N3t) & Abbey Labs (DC 15 Investigation)",
+        "mechanics": "• <strong>High-Roll Crafting Bundle:</strong> Unpack to receive <strong>1x Alchemical Catalyst</strong> + <strong>1x Powdered Silver Dust</strong> + <strong>2x Barovian Medicinal Herbs</strong> (ready to brew straight away on player sheets!).",
+        "lore": "Padded waxed leather roll holding corked amber bottles carefully labeled in tidy crimson ink."
+    },
+    "annotated_herbalist_folio": {
+        "cat": "quest",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["lab_study"],
+        "rollTier": "high",
+        "name": "Annotated Barovian Herbalist Folio",
+        "rarity": "Uncommon High-Roll Field Guide • Foraging Manual (15–19)",
+        "cost": "20 GP",
+        "location": "Act I–III • Village Studies, Libraries, Apothecary Desks & Krezk Abbey Infirmary (DC 15 Investigation)",
+        "mechanics": "• <strong>RPG Exploration Passive:</strong> Carrying and consulting this illustrated botanical guide grants <strong>Advantage on Nature & Survival checks to forage Barovian herbs, roots, and mushrooms</strong>!",
+        "lore": "Pressed Moonpetals and dried Wolfbane leaves still cling between hand-inked botanical sketches."
+    },
+    "cracked_brass_magnifying_glass": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["lab_study", "room_attic"],
+        "rollTier": "high",
+        "name": "Cracked Brass Magnifying Glass",
+        "rarity": "Uncommon High-Roll Detective Tool • Investigation Gear (15–19)",
+        "cost": "25 GP",
+        "location": "Act I–IV • Burgomaster Desks, Libraries, Clockmaker Benches & Scholar Studies (DC 15 Investigation)",
+        "mechanics": "• <strong>5e Tool Bonus:</strong> Grants <strong>Advantage on Investigation & Appraisal checks</strong> made to inspect tiny runes, hidden lock mechanisms, counterfeit seals, or microscopic clues!",
+        "lore": "A hairline crack hugs the outer rim, yet the thick crystal center magnifies scratches with razor clarity."
+    },
+    "heirloom_luckstone_charm": {
+        "cat": "caster",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic", "church_crypt"],
+        "rollTier": "nat20",
+        "name": "Heirloom Luckstone Charm",
+        "rarity": "Rare Nat 20 Jackpot • Minor Wondrous Charm (No Attunement)",
+        "cost": "120 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Hidden Attic Vaults, Secret Drawers & Forgotten Shrines",
+        "mechanics": "• <strong>🌟 Nat 20 Discovery (Pocket Relic • No Attunement • 1/Long Rest):</strong> Click <strong>[Activate]</strong> on your sheet after rolling a failed Ability Check or Saving Throw to add <strong>+1d4</strong> to the result—potentially turning defeat into victory!",
+        "lore": "A smooth river-worn agate bound in pre-Curse silver wire that pulses softly warm whenever fate tilts against you."
+    },
+    "secret_wall_safe_sovereigns": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic", "tavern_kitchen"],
+        "rollTier": "nat20",
+        "name": "Secret Wall-Safe Sovereign Cache",
+        "rarity": "Rare Nat 20 Jackpot • Concealed Treasure Hoard",
+        "cost": "95 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Hidden Hearth Panels, Attic False Walls & Inn Vaults",
+        "mechanics": "• <strong>🌟 Nat 20 Treasure Jackpot:</strong> Concealed iron lockbox holding <strong>65 GP</strong> in pristine pre-Curse gold sovereigns, a <strong>30 GP bloodstone ring</strong>, AND a sealed clue letter tying into the local Act plot!",
+        "lore": "Stashed behind a hollow masonry keystone before Strahd's Mists ever sealed the valley—untouched for centuries."
+    },
+    "mist_compass_old_fanes": {
+        "cat": "caster",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road"],
+        "rollTier": "nat20",
+        "name": "Mist-Compass of the Old Fanes",
+        "rarity": "Rare Nat 20 Jackpot • Wondrous Exploration Relic (No Attunement)",
+        "cost": "150 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Svalich Woods Megaliths, Tser Pool Glades & Ancient Trails",
+        "mechanics": "• <strong>🌟 Nat 20 Discovery (Passive Exploration Relic):</strong> Unlike ordinary compasses that spin wildly in Barovia, its carved bone needle always points true north through the Mists and grants <strong>Advantage on Survival checks to navigate, track, or avoid getting lost</strong>!",
+        "lore": "A weathered brass compass ringed with tiny symbols of a raven, a stag, and a spider—whispering softly when Fane stones are near."
+    },
+    "hidden_moonlit_shrine_cache": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road"],
+        "rollTier": "nat20",
+        "name": "Hidden Moonlit Shrine Glade Cache",
+        "rarity": "Rare Nat 20 Jackpot • Wilderness Bounty Bundle",
+        "cost": "110 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Overgrown Svalich Hollows, Tser Falls Grottos & Ancient Waystones",
+        "mechanics": "• <strong>🌟 Nat 20 Wilderness Bundle:</strong> Discovering a forgotten Fane hollow yields <strong>1x Svalich Moonpetal Blossom</strong> (rare Act III reagent!), <strong>1x Potion of Greater Healing</strong> (<code>4d4+4 HP</code>), and <strong>30 GP</strong> in ancient silver offerings!",
+        "lore": "A tiny moss-carpeted clearing untouched by storm clouds, where silver dew clings to blooming pale petals."
+    },
+    "barovian_ambrosia_cordial": {
+        "cat": "food",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["tavern_kitchen"],
+        "rollTier": "nat20",
+        "name": "Lost Pre-Curse Barovian Ambrosia Cordial",
+        "rarity": "Rare Nat 20 Jackpot • Legendary Vintage (2d6+4 ➔ Temp HP)",
+        "cost": "125 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Sealed Sub-Cellars, Tavern Vaults & Forgotten Pantries",
+        "mechanics": "• <strong>🌟 Nat 20 Vintage (Drink • Bonus Action):</strong> Restores <code>2d6 + 4 HP</code> (<strong>excess over Max HP becomes Temporary HP for 2 hours!</strong>) AND immediately <strong>cures 1 level of Exhaustion</strong>!<br>• <strong>Taste of the Sun:</strong> Bottled before 351 BC when sunlight still warmed the valley's vineyards.",
+        "lore": "Liquid gold sealed in hand-blown crystal—opening the cork fills the whole room with the impossible scent of warm summer peaches."
+    },
+    "vistani_gamblers_bones": {
+        "cat": "caster",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["tavern_kitchen", "corpse_monster"],
+        "rollTier": "nat20",
+        "name": "Loaded Ivory Gambler's Bones of Vistani Luck",
+        "rarity": "Rare Nat 20 Jackpot • Wondrous Pocket Charm (No Attunement)",
+        "cost": "140 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Tavern Loose Planks, Vistani Caravan Wagons & Smuggler Stashes",
+        "mechanics": "• <strong>🌟 Nat 20 Discovery (1/Long Rest • No Attunement):</strong> Click <strong>[Activate]</strong> on your sheet to immediately <strong>re-roll any Natural 1 on an Ability Check</strong> (must keep the new roll)!",
+        "lore": "Two scrimshaw ivory dice inked with tiny grinning moons—they rattle softly in your pocket right before disaster strikes."
+    },
+    "dawn_touched_thurible_charm": {
+        "cat": "caster",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt"],
+        "rollTier": "nat20",
+        "name": "Dawn-Touched Silver Thurible Charm",
+        "rarity": "Rare Nat 20 Jackpot • Sanctified Amulet (No Attunement)",
+        "cost": "160 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Hidden Reliquaries, Barovia Church Crypts & Abbey Sanctums",
+        "mechanics": "• <strong>🌟 Nat 20 Discovery (Wearable Amulet • 1/Long Rest):</strong> Click <strong>[Activate]</strong> (1 Action) to shed <strong>15-ft warm bright dawn light for 10 minutes</strong>—allies inside gain <strong>Advantage on saves vs Frightened & Charmed</strong>.<br>• <strong>Passive Undead Chime:</strong> Emits a faint silver bell-chime whenever an Undead approaches within <code>30 ft</code>!",
+        "lore": "A thumb-sized silver censer hanging on a fine chain, miraculously holding a single speck of unbroken dawnfire."
+    },
+    "scroll_lesser_restoration": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt", "lab_study"],
+        "rollTier": "nat20",
+        "name": "Scroll of Lesser Restoration",
+        "rarity": "Rare Nat 20 Jackpot • 2nd-Level Divine Spell Scroll",
+        "cost": "150 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Church Reliquaries, Cleric Tombs & Abbey Libraries",
+        "mechanics": "• <strong>Single-Use Spell Scroll (1 Action • Anyone Can Read in Emergency):</strong> Touch 1 creature to immediately end <strong>Blinded, Deafened, Paralyzed, Poisoned, or 1 Disease</strong>!",
+        "lore": "Cream vellum inscribed in warm gold-leaf calligraphy smelling faintly of cedar and morning dew."
+    },
+    "scroll_misty_step": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["room_attic", "lab_study", "corpse_monster"],
+        "rollTier": "nat20",
+        "name": "Scroll of Misty Step",
+        "rarity": "Rare Nat 20 Jackpot • 2nd-Level Arcane Spell Scroll",
+        "cost": "150 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Hidden Study Books, Attic Chests & Fallen Mage Pouches",
+        "mechanics": "• <strong>Single-Use Spell Scroll (Bonus Action):</strong> Briefly surrounded by silvery mist, teleport up to <strong>30 ft</strong> to an unoccupied space you can see—lifesaving escape from grapples, cages, or ambushes!",
+        "lore": "Silver ink shimmers across pale blue parchment that turns pleasantly cool to the touch."
+    },
+    "fallen_hunters_silvered_dagger": {
+        "cat": "weapon",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "forest_road"],
+        "rollTier": "nat20",
+        "name": "Fallen Hunter's +1 Silvered Dagger",
+        "rarity": "Rare Nat 20 Jackpot • +1 Magic Silvered Dagger (No Attunement)",
+        "cost": "220 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Concealed Boot Sheaths, Fallen Monster-Hunters & Svalich Graves",
+        "mechanics": "• <strong>🌟 Nat 20 Discovery (1H / Leg Sheath • Simple • Auto-Scales Finesse):</strong> Deals <code>1d4 + 1 + STR/DEX</code> <strong>Magical Silvered Piercing</strong> damage (<code>+1 Hit/Dmg</code>, Thrown <code>20/60 ft</code>, <strong>Nick Mastery</strong>). Bypasses Werewolf, Vampire & Fiend resistances immediately!",
+        "lore": "Balanced like a throwing needle with etched silver wolves along the fuller—fits neatly into any boot or belt sheath."
+    },
+    "master_hunter_concealed_pack": {
+        "cat": "loot",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster"],
+        "rollTier": "nat20",
+        "name": "Master Monster-Hunter's Concealed Pack",
+        "rarity": "Rare Nat 20 Jackpot • Elite Field Supply Bundle",
+        "cost": "165 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Hidden False-Bottom Corpses, Cult Leaders & Veteran Hunter Stashes",
+        "mechanics": "• <strong>🌟 Nat 20 Jackpot Bundle:</strong> Unpack to receive <strong>1x Potion of Greater Healing</strong> (<code>4d4+4 HP</code>), <strong>1x Liquid Silver Coating Vial</strong> (full mag or blade), <strong>1x Ash-Cloud Smoke Bomb</strong>, AND <strong>45 GP</strong> in clean coin!",
+        "lore": "An oilskin rucksack marked with a stitched silver cross—packed by someone who planned to survive Castle Ravenloft."
+    },
+    "eyeglass_arcane_appraisal": {
+        "cat": "caster",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["lab_study"],
+        "rollTier": "nat20",
+        "name": "Eyeglass of Arcane Appraisal",
+        "rarity": "Rare Nat 20 Jackpot • Wondrous Head / Lens Relic (No Attunement)",
+        "cost": "175 GP",
+        "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Hidden Library Alcoves, Wachterhaus Study, Victor's Lab & Amber Temple",
+        "mechanics": "• <strong>🌟 Nat 20 Discovery (1/Long Rest • No Attunement):</strong> Click <strong>[Activate]</strong> (1 Action) to cast <strong>Identify</strong> OR <strong>Detect Magic</strong> without expending a spell slot or material components!",
+        "lore": "A folding brass monocle fitted with a pale violet quartz lens that causes hidden enchantments to shimmer like frost."
     }
 };
 
@@ -17672,6 +18702,9 @@ function dmEditCustomLoot(lootKey) {
         cost: (it.cost && it.cost !== 'Custom / Unpriced') ? it.cost : '',
         loc: String(it.location || '').replace(/^Act\s+[IVX]+\s*•\s*/i, '').replace(/\s*\(Best for [^)]+\)\s*/i, '').trim() || 'Custom DM Reward',
         note: (it.lore && !it.lore.startsWith('Forged by the Lead DM')) ? it.lore : '',
+        craftAs: it.craftAs || cm.craftAs || '',
+        sceneTag: (Array.isArray(it.sceneTags) && it.sceneTags[0]) || '',
+        rollTier: it.rollTier || 'everyday',
         cm
     };
     openDmCustomDropModal('forge', { keepEdit: true });
@@ -18352,6 +19385,7 @@ function renderDmDropModalBody() {
                 </div>
             `;
         } else if (dmForgeKind === 'material') {
+            const pfCraftAs = pf.craftAs || '';
             dynamicFieldsHtml = `
                 <div class="dm-forge-field">
                     <label for="dm-forge-mat-sub" style="color:#6ee7b7;">Crafting Material Type</label>
@@ -18364,8 +19398,23 @@ function renderDmDropModalBody() {
                 </div>
                 ${raritySelectHtml('Common / Mundane')}
                 <div class="dm-forge-field span-2">
+                    <label for="dm-forge-mat-craftas" style="color:#6ee7b7;">Counts As Crafting Ingredient (Auto-Works in Player Sheet Recipes!)</label>
+                    <select id="dm-forge-mat-craftas" class="dm-forge-select">
+                        <option value="" ${!pfCraftAs ? 'selected' : ''}>None — Standalone Salvage / Custom Material</option>
+                        <option value="pelt_canvas" ${pfCraftAs === 'pelt_canvas' ? 'selected' : ''}>🏕️ Pelt / Waxed Canvas (Builds Mist-Ward Camp Kit)</option>
+                        <option value="medicinal_herb" ${pfCraftAs === 'medicinal_herb' ? 'selected' : ''}>🌿 Barovian Medicinal Herbs (Healing Potions, Bandages, Antitoxin, Smoke Bomb)</option>
+                        <option value="spring_water" ${pfCraftAs === 'spring_water' ? 'selected' : ''}>💧 Pure Mountain Spring Water (Holy Water, Sun-Ash Balm, Elixir of Health)</option>
+                        <option value="silver_dust" ${pfCraftAs === 'silver_dust' ? 'selected' : ''}>✨ Powdered Silver Dust (Holy Water, Silver Coating, Phosphor Bomb, Camp Kit, Witch-Iron, Sun-Ash)</option>
+                        <option value="wolfbane" ${pfCraftAs === 'wolfbane' ? 'selected' : ''}>🐺 Svalich Wolfbane Root (Antitoxin, Mist-Ward Camp Kit, Witch-Iron Oil)</option>
+                        <option value="sulfur" ${pfCraftAs === 'sulfur' ? 'selected' : ''}>🔥 Brimstone &amp; Pitch Sulfur (Incendiary Vial, Alchemist's Fire, Smoke &amp; Phosphor Bombs)</option>
+                        <option value="pitch_oil" ${pfCraftAs === 'pitch_oil' ? 'selected' : ''}>🛢️ Pine Pitch &amp; Lamp Oil (Silver Coating, Incendiary Vial, Alchemist's Fire, Camp Kit)</option>
+                        <option value="catalyst" ${pfCraftAs === 'catalyst' ? 'selected' : ''}>⚗️ Alchemical Catalyst (Greater/Superior Healing, Phosphor Bomb, Witch-Iron, Elixir of Health)</option>
+                        <option value="moonpetal" ${pfCraftAs === 'moonpetal' ? 'selected' : ''}>🌙 Svalich Moonpetal Blossom (Superior Healing, Sun-Ash Balm, Elixir of Health)</option>
+                    </select>
+                </div>
+                <div class="dm-forge-field span-2">
                     <label for="dm-forge-mat-dc" style="color:#fde68a;">Forage / Harvest DC or Crafting Use Hint</label>
-                    <input type="text" id="dm-forge-mat-dc" class="dm-forge-input" placeholder="e.g. DC 12 Nature / Survival • Used for Healing Potions or Weapon Silvering">
+                    <input type="text" id="dm-forge-mat-dc" class="dm-forge-input" placeholder="e.g. DC 12 Survival to skin • Counts as Pelt/Canvas for Camp Kit">
                 </div>
             `;
         } else if (dmForgeKind === 'loot') {
@@ -18522,6 +19571,26 @@ function renderDmDropModalBody() {
                             <option value="jacomir|👑 Jacomir" ${pfHero === 'jacomir' ? 'selected' : ''}>👑 Jacomir Yulle ("King of Oakenshire")</option>
                             <option value="yvaine|🔫 Yvaine" ${pfHero === 'yvaine' ? 'selected' : ''}>🔫 Eclipsa "Yvaine" the First</option>
                             <option value="cael|🐾 Cael" ${pfHero === 'cael' ? 'selected' : ''}>🐾 Caelum Jude ("Cael" — Companion)</option>
+                        </select>
+                    </div>
+                    <div class="dm-forge-field">
+                        <label for="dm-forge-scene" style="color:#6ee7b7;">Quick Search Scene Tag (Optional)</label>
+                        <select id="dm-forge-scene" class="dm-forge-select">
+                            <option value="" ${!pf.sceneTag ? 'selected' : ''}>Auto / None (Act &amp; Category Only)</option>
+                            <option value="room_attic" ${pf.sceneTag === 'room_attic' ? 'selected' : ''}>🏠 Room / House / Attic</option>
+                            <option value="forest_road" ${pf.sceneTag === 'forest_road' ? 'selected' : ''}>🌲 Forest / Road / Travel</option>
+                            <option value="tavern_kitchen" ${pf.sceneTag === 'tavern_kitchen' ? 'selected' : ''}>🍺 Tavern / Kitchen / Shop</option>
+                            <option value="church_crypt" ${pf.sceneTag === 'church_crypt' ? 'selected' : ''}>⛪ Church / Crypt / Ruins</option>
+                            <option value="corpse_monster" ${pf.sceneTag === 'corpse_monster' ? 'selected' : ''}>💀 Corpse / Bandit / Monster</option>
+                            <option value="lab_study" ${pf.sceneTag === 'lab_study' ? 'selected' : ''}>⚗️ Lab / Study / Library</option>
+                        </select>
+                    </div>
+                    <div class="dm-forge-field">
+                        <label for="dm-forge-rolltier" style="color:#fde68a;">Exploration Roll Tier</label>
+                        <select id="dm-forge-rolltier" class="dm-forge-select">
+                            <option value="everyday" ${(!pf.rollTier || pf.rollTier === 'everyday') ? 'selected' : ''}>🪙 Everyday Find (DC 10–14)</option>
+                            <option value="high" ${pf.rollTier === 'high' ? 'selected' : ''}>✨ High Roll Find (15–19)</option>
+                            <option value="nat20" ${pf.rollTier === 'nat20' ? 'selected' : ''}>🌟 Nat 20 Jackpot!</option>
                         </select>
                     </div>
                     ${dynamicFieldsHtml}
@@ -19090,13 +20159,27 @@ function submitDmForgeItem(andSendToHero = true) {
         vaultCat = 'material';
         const matSub = document.getElementById('dm-forge-mat-sub')?.value || 'Crafting Material';
         const matDc = (document.getElementById('dm-forge-mat-dc')?.value || '').trim();
+        const craftAsVal = (document.getElementById('dm-forge-mat-craftas')?.value || '').trim();
+        const craftAsLabels = {
+            pelt_canvas: 'Pelt / Waxed Canvas (Mist-Ward Camp Kit)',
+            medicinal_herb: 'Barovian Medicinal Herbs',
+            spring_water: 'Pure Mountain Spring Water',
+            silver_dust: 'Powdered Silver Dust',
+            wolfbane: 'Svalich Wolfbane Root',
+            sulfur: 'Brimstone & Pitch Sulfur',
+            pitch_oil: 'Pine Pitch & Lamp Oil',
+            catalyst: 'Alchemical Catalyst',
+            moonpetal: 'Svalich Moonpetal Blossom'
+        };
+        const craftAsBadge = craftAsVal && craftAsLabels[craftAsVal] ? ` • Counts as ${craftAsLabels[craftAsVal]} in Crafting!` : '';
         rarity = `${rarityTier} ${matSub}`;
-        mechanicsHtml = `• <strong>Crafting Reagent (${escapeEncounterHtml(matSub)}):</strong> ${escapeEncounterHtml(matDc || note || 'Used in Barovian alchemy, smithing, or field crafting.')}${matDc && escNote ? `<br>• <strong>Notes:</strong> ${escNote}` : ''}`;
+        mechanicsHtml = `• <strong>Crafting Reagent (${escapeEncounterHtml(matSub)}):</strong> ${escapeEncounterHtml(matDc || note || 'Used in Barovian alchemy, smithing, or field crafting.')}${craftAsBadge ? `<br>• <strong>Live Recipe Link:</strong> Automatically counts as <strong>${escapeEncounterHtml(craftAsLabels[craftAsVal])}</strong> when players craft on their sheets!` : ''}${matDc && escNote ? `<br>• <strong>Notes:</strong> ${escNote}` : ''}`;
         defaultLore = `Raw ${matSub.toLowerCase()} salvaged or foraged in ${rawWhere || 'Barovia'}.`;
         customMeta = {
             category: 'crafting',
             slots: [],
-            summary: matDc || note || `${matSub} Reagent`
+            ...(craftAsVal ? { craftAs: craftAsVal } : {}),
+            summary: (matDc || note || `${matSub} Reagent`) + craftAsBadge
         };
     } else if (dmForgeKind === 'loot') {
         const sub = document.getElementById('dm-forge-loot-sub')?.value || 'everyday';
@@ -19178,6 +20261,10 @@ function submitDmForgeItem(andSendToHero = true) {
         customMeta.lore = loreText;
     }
 
+    const forgeSceneVal = (document.getElementById('dm-forge-scene')?.value || '').trim();
+    const forgeRollTier = (document.getElementById('dm-forge-rolltier')?.value || 'everyday').trim();
+    const forgeCraftAs = (dmForgeKind === 'material') ? ((document.getElementById('dm-forge-mat-craftas')?.value || '').trim() || undefined) : undefined;
+
     const lootRecord = {
         cat: vaultCat,
         forgeKind: dmForgeKind,
@@ -19190,6 +20277,8 @@ function submitDmForgeItem(andSendToHero = true) {
         customMeta,
         actTag: actVal,
         bestHeroId: heroId,
+        ...(forgeCraftAs ? { craftAs: forgeCraftAs } : {}),
+        ...(forgeSceneVal ? { sceneTags: [forgeSceneVal], rollTier: forgeRollTier } : {}),
         createdAt: (dmForgeEditKey && LOOT_DATA[dmForgeEditKey]?.createdAt) || Date.now(),
         updatedAt: Date.now(),
         isCustomForged: true
@@ -19200,15 +20289,19 @@ function submitDmForgeItem(andSendToHero = true) {
     dmForgeEditKey = null;
     dmForgePrefill = null;
 
-    // Auto-switch Section 4 to the matching filter tab if the current tab wouldn't display this item
-    let targetFilterTag = activeLootTag;
-    if (vaultCat === 'material') {
-        targetFilterTag = 'Materials';
-    } else if (activeLootTag === 'Materials' || !matchesLootFilter(lootRecord, activeLootTag)) {
-        targetFilterTag = actVal;
-    }
-    if (targetFilterTag !== activeLootTag) {
-        filterLootVault(targetFilterTag);
+    // Auto-switch Section 4 cleanly so the newly forged/updated item is immediately visible
+    if (forgeSceneVal && activeLootScene === forgeSceneVal) {
+        renderLootVault(activeLootTag, true);
+    } else if (vaultCat === 'material') {
+        filterLootVault('Materials');
+    } else if (forgeSceneVal) {
+        activeLootScene = forgeSceneVal;
+        activeLootRollTier = 'all';
+        activeLootCat = 'overview';
+        syncLootBarButtonsUI();
+        renderLootVault(activeLootTag, true);
+    } else if (activeLootScene || activeLootTag === 'Materials' || !matchesLootFilter(lootRecord, activeLootTag)) {
+        filterLootVault(actVal);
     } else {
         renderLootVault(activeLootTag, true);
     }
@@ -19434,13 +20527,16 @@ function openItemModal(key, fromNav = false) {
             </div>
         `;
     } else {
-        const usedIn = DM_CRAFTING_RECIPES.filter(r => r.ingredients.some(ing => ing.key === key || (Array.isArray(ing.orKeys) && ing.orKeys.includes(key))));
+        const usedIn = getRecipesForMaterial(key, it);
         if (usedIn.length > 0) {
+            const aliasTag = (it && (it.craftAs || (it.customMeta && it.customMeta.craftAs))) || '';
+            const aliasKey = aliasTag ? CRAFT_TAG_TO_MAT_KEY[aliasTag] : null;
+            const matchKeys = [key, ...(aliasKey ? [aliasKey] : [])];
             const usedPills = usedIn.map(r => {
                 const targetItem = LOOT_DATA[r.lootKey];
-                const ingObj = r.ingredients.find(ing => ing.key === key || (Array.isArray(ing.orKeys) && ing.orKeys.includes(key)));
+                const ingObj = r.ingredients.find(ing => matchKeys.includes(ing.key) || (Array.isArray(ing.orKeys) && ing.orKeys.some(ok => matchKeys.includes(ok))));
                 const lbl = targetItem ? targetItem.name : r.lootKey;
-                return `<button type="button" class="loot-link-pill" onclick="navigateModalFromInside('item', '${r.lootKey}')">${lbl} <small style="color:#94a3b8;">(Needs ${ingObj.qty}x • ${r.unlockedDefault ? 'Unlocked' : r.code})</small></button>`;
+                return `<button type="button" class="loot-link-pill" onclick="navigateModalFromInside('item', '${r.lootKey}')">${lbl} <small style="color:#94a3b8;">(Needs ${ingObj ? ingObj.qty : 1}x • ${r.unlockedDefault ? 'Unlocked' : r.code})</small></button>`;
             }).join('');
             craftSectionHtml = `
                 <h4>⚒️ Craftable Items Using This Reagent (Click to View)</h4>
@@ -20718,6 +21814,192 @@ function getPrimaryAct(locationStr, itObj) {
     return 'Act I';
 }
 
+const ACT_ROMAN_NUM = { I: 1, II: 2, III: 3, IV: 4 };
+function matchesActScope(it, actTag) {
+    const targetNum = ACT_ROMAN_NUM[String(actTag || '').replace(/^Act\s+/i, '').toUpperCase()];
+    if (!targetNum) return true;
+    if (it.actTag && it.actTag === actTag) return true;
+    const loc = String(it.location || '');
+    const rangeM = loc.match(/\bAct\s+(IV|III|II|I)\s*(?:–|-|to)\s*(IV|III|II|I)\b/i);
+    if (rangeM) {
+        const s = ACT_ROMAN_NUM[rangeM[1].toUpperCase()] || 1;
+        const e = ACT_ROMAN_NUM[rangeM[2].toUpperCase()] || s;
+        if (targetNum >= Math.min(s, e) && targetNum <= Math.max(s, e)) return true;
+    }
+    const pairM = loc.match(/\bAct\s+(IV|III|II|I)\s*(?:\/|&amp;|&)\s*(?:Act\s+)?(IV|III|II|I)\b/i);
+    if (pairM) {
+        const a = ACT_ROMAN_NUM[pairM[1].toUpperCase()];
+        const b = ACT_ROMAN_NUM[pairM[2].toUpperCase()];
+        if (targetNum === a || targetNum === b) return true;
+    }
+    return getPrimaryAct(it.location, it) === actTag;
+}
+
+const LOOT_ACT_LOCATIONS = {
+    'Act I': [
+        { id: 'all', label: 'All Act I', match: [] },
+        { id: 'svalich', label: '🌲 Svalich Woods & Road', match: ['svalich', 'eastern gates', 'road', 'logging', 'wilderness', 'wolf', 'dire', 'hunting', 'campsite', 'glade', 'travel'] },
+        { id: 'village', label: '🏚️ Barovia Village & Shops', match: ['barovia village', 'bildrath', 'blood on the vine', 'village', 'mad mary', 'bakery', 'pantry', 'attic', 'tavern', 'cellar', 'farmhouse', 'parlor', 'nurser', 'e1', 'e2'] },
+        { id: 'indirovich', label: '🕯️ Indirovich Manor', match: ['indirovich', 'ismark', 'kolyan', 'manor', 'e4'] },
+        { id: 'church', label: '⛪ Barovia Church & Crypt', match: ['barovia church', 'donovich', 'donavich', 'e5', 'church', 'crypt', 'graveyard', 'chapel', 'vestry', 'shrine', 'altar'] },
+        { id: 'tser', label: '🔮 Tser Pool & Falls', match: ['tser', 'madam eva', 'vistani', 'petru', '(g)', 'area g', 'caravan'] },
+        { id: 'bonegrinder', label: '🥧 Old Bonegrinder', match: ['bonegrinder', 'morgantha', 'windmill', 'hag', 'dream pastry', 'chimney'] }
+    ],
+    'Act II': [
+        { id: 'all', label: 'All Act II', match: [] },
+        { id: 'vallaki_town', label: '🏘️ Vallaki Town, Inn & Shops', match: ['vallaki', 'blue water', 'arasek', 'blinsky', 'rictavio', 'n2', 'n5', 'n7', 'smithy', 'apothecary', 'tavern', 'inn'] },
+        { id: 'vallaki_nobles', label: '🏛️ Wachterhaus & Burgomaster', match: ['wachter', 'burgomaster', 'victor', 'n3', 'n4', 'noble', 'attic', 'study', 'library'] },
+        { id: 'st_andral', label: '⛪ St. Andral\'s Church', match: ['andral', 'n1', 'church', 'crypt', 'vestry', 'altar', 'shrine'] },
+        { id: 'vistani_dusk', label: '⛺ Vistani & Dusk Elf Camp', match: ['arrigal', 'dusk elf', 'kasimir', 'n9', 'vistani', 'caravan'] },
+        { id: 'winery', label: '🍇 Wizard of Wines', match: ['winery', 'wizard of wines', 'martikov', 'w1', 'cask', 'wine'] },
+        { id: 'yester', label: '⚡ Yester Hill', match: ['yester', 'y3', 'druid', 'gulthias', 'cairn', 'outcrop'] }
+    ],
+    'Act III': [
+        { id: 'all', label: 'All Act III', match: [] },
+        { id: 'argynvostholt', label: '🐉 Argynvostholt', match: ['argynvost', 'vladimir', 'q28', 'q36', 'q53', 'beacon', 'knight'] },
+        { id: 'krezk_abbey', label: '⛪ Krezk & St. Markovia Abbey', match: ['krezk', 'abbey', 'markovia', 'abbot', 's4', 's7', 's13', 's19', 'ezmerelda'] },
+        { id: 'van_richten', label: '🗼 Van Richten\'s Tower & Lake', match: ['van richten', 'tower', 'baratok', 'v1', 'v4', 'khazan'] },
+        { id: 'berez', label: '🐸 Ruins of Berez', match: ['berez', 'lysaga', 'u3', 'u6', 'swamp', 'marsh'] },
+        { id: 'werewolf_den', label: '🐺 Werewolf Den', match: ['werewolf', 'z7', 'mother night', 'kiril', 'den', 'wolf'] }
+    ],
+    'Act IV': [
+        { id: 'all', label: 'All Act IV', match: [] },
+        { id: 'tsolenka', label: '🏔️ Tsolenka Pass & Ghakis', match: ['tsolenka', 'ghakis', 'pass', 'warmth', 'mountain'] },
+        { id: 'amber_temple', label: '⚡ Amber Temple', match: ['amber temple', 'x24', 'x30', 'x40', 'x42', 'neferon', 'exethanter', 'amber'] },
+        { id: 'ravenloft', label: '🏰 Castle Ravenloft', match: ['ravenloft', 'k15', 'k20', 'k41', 'k84', 'crypt', 'catacomb', 'strahd', 'heart of sorrow', 'chapel'] }
+    ]
+};
+
+const LOOT_SCENES = {
+    room_attic: {
+        id: 'room_attic',
+        label: '🏠 Room / House / Attic',
+        short: 'Room / Attic',
+        prompts: {
+            everyday: 'Rummaging through cobwebbed chests, dusty sideboards, and loose rafters turns up...',
+            high: 'Spotting a hairline seam in the wainscoting and prying back a false drawer reveals...',
+            nat20: '🌟 NAT 20 DISCOVERY! Tapping a hollow chimney stone unlocks a centuries-old Barovian secret stash...'
+        }
+    },
+    forest_road: {
+        id: 'forest_road',
+        label: '🌲 Forest / Road / Travel',
+        short: 'Forest / Travel',
+        prompts: {
+            everyday: 'Scouring the damp pine needle floor, muddy wheel-ruts, and mossy hollows yields...',
+            high: 'Following faint boot prints off the Old Svalich Road to a weathered ranger blind uncovers...',
+            nat20: '🌟 NAT 20 DISCOVERY! Parting silver-frosted ferns reveals a hidden Fane clearing untouched by mist...'
+        }
+    },
+    tavern_kitchen: {
+        id: 'tavern_kitchen',
+        label: '🍺 Tavern / Kitchen / Shop',
+        short: 'Tavern / Kitchen',
+        prompts: {
+            everyday: 'Checking larder shelves, smoky hearth hooks, and damp cellar barrels turns up...',
+            high: 'Reaching behind the dusty turnip-ale casks in the back pantry reveals a prized reserve...',
+            nat20: '🌟 NAT 20 DISCOVERY! Sliding a loose hearth brick uncovers a sealed pre-Curse treasure tucked away for generations...'
+        }
+    },
+    church_crypt: {
+        id: 'church_crypt',
+        label: '⛪ Church / Crypt / Ruins',
+        short: 'Church / Crypt',
+        prompts: {
+            everyday: 'Searching cracked stone pews, vestry drawers, and candle-dripped niches yields...',
+            high: 'Inspecting behind a loose Morninglord relief reveals an intact sanctuary offering...',
+            nat20: '🌟 NAT 20 DISCOVERY! A faint silver chime guides your hand to a forgotten blessed reliquary untouched by shadow...'
+        }
+    },
+    corpse_monster: {
+        id: 'corpse_monster',
+        label: '💀 Corpse / Bandit / Monster',
+        short: 'Corpse / Monster',
+        prompts: {
+            everyday: 'Patting down torn wool coats, belt pouches, and harvesting monster remains yields...',
+            high: 'Unbuckling a concealed inner harness and boot-strap turns up a fallen hunter\'s emergency gear...',
+            nat20: '🌟 NAT 20 DISCOVERY! Slitting open the false lining of the pack reveals an elite veteran\'s hidden arsenal...'
+        }
+    },
+    lab_study: {
+        id: 'lab_study',
+        label: '⚗️ Lab / Study / Library',
+        short: 'Lab / Study',
+        prompts: {
+            everyday: 'Sorting through wax-stained desks, dusty bookshelves, and glass apothecary trays yields...',
+            high: 'Unlocking a hidden inkwell latch and stacked folio drawer uncovers preserved arcane supplies...',
+            nat20: '🌟 NAT 20 DISCOVERY! Pulling a tilted leather tome swings open a velvet-lined scholar\'s cache...'
+        }
+    }
+};
+
+const BUILTIN_SCENE_MAP = {
+    medicinal_herbs:        { scenes: ['forest_road', 'lab_study'], tier: 'everyday' },
+    pure_spring_water:      { scenes: ['forest_road', 'church_crypt'], tier: 'everyday' },
+    powdered_silver_dust:   { scenes: ['lab_study', 'tavern_kitchen', 'church_crypt'], tier: 'high' },
+    wolfbane_root:          { scenes: ['forest_road'], tier: 'everyday' },
+    charcoal_sulfur:        { scenes: ['lab_study', 'room_attic'], tier: 'everyday' },
+    pitch_oil:              { scenes: ['forest_road', 'tavern_kitchen', 'room_attic'], tier: 'everyday' },
+    treated_pelt_canvas:    { scenes: ['forest_road', 'corpse_monster'], tier: 'high' },
+    clean_linen_cloth:      { scenes: ['room_attic', 'church_crypt', 'tavern_kitchen'], tier: 'everyday' },
+    alchemical_catalyst:    { scenes: ['lab_study'], tier: 'high' },
+    svalich_moonpetal:      { scenes: ['forest_road'], tier: 'nat20' },
+    vampire_ash_fang:       { scenes: ['corpse_monster'], tier: 'high' },
+    barovian_apple:         { scenes: ['tavern_kitchen', 'forest_road', 'room_attic'], tier: 'everyday' },
+    spiced_roast_mutton:    { scenes: ['tavern_kitchen'], tier: 'everyday' },
+    fresh_croissants:       { scenes: ['tavern_kitchen'], tier: 'everyday' },
+    barovian_holy_chalice:  { scenes: ['church_crypt', 'room_attic'], tier: 'everyday' },
+    holy_barovian_book:     { scenes: ['church_crypt', 'lab_study'], tier: 'everyday' },
+    bandages_field:         { scenes: ['room_attic', 'corpse_monster', 'church_crypt'], tier: 'everyday' },
+    healing_potion:         { scenes: ['room_attic', 'corpse_monster', 'lab_study'], tier: 'high' },
+    holy_water:             { scenes: ['church_crypt'], tier: 'high' },
+    greater_healing:        { scenes: ['corpse_monster', 'lab_study'], tier: 'nat20' },
+    barovian_antitoxin:     { scenes: ['lab_study', 'forest_road'], tier: 'high' },
+    alchemists_fire:        { scenes: ['lab_study', 'corpse_monster'], tier: 'high' },
+    ash_smoke_bomb:         { scenes: ['corpse_monster', 'lab_study'], tier: 'high' },
+    phosphor_grenades:      { scenes: ['lab_study'], tier: 'nat20' },
+    liquid_silver_coating:  { scenes: ['corpse_monster', 'lab_study'], tier: 'high' },
+    mist_ward_camp_kit:     { scenes: ['forest_road'], tier: 'nat20' },
+    vistani_stag_tonic:     { scenes: ['tavern_kitchen', 'forest_road'], tier: 'high' },
+    silvered_bolts:         { scenes: ['corpse_monster', 'forest_road'], tier: 'high' },
+    silvered_arrows:        { scenes: ['forest_road', 'corpse_monster'], tier: 'high' },
+    silvered_bullets:       { scenes: ['corpse_monster'], tier: 'high' },
+    bag_of_tricks:          { scenes: ['room_attic'], tier: 'nat20' },
+    cloak_of_protection:    { scenes: ['room_attic', 'forest_road'], tier: 'nat20' }
+};
+
+function getItemScenesAndTier(k, it) {
+    if (it && Array.isArray(it.sceneTags) && it.sceneTags.length > 0) {
+        return { scenes: it.sceneTags, tier: it.rollTier || 'everyday' };
+    }
+    if (BUILTIN_SCENE_MAP[k]) return BUILTIN_SCENE_MAP[k];
+    return { scenes: [], tier: it && it.rollTier ? it.rollTier : 'everyday' };
+}
+
+const CRAFT_TAG_TO_MAT_KEY = {
+    pelt_canvas: 'treated_pelt_canvas',
+    medicinal_herb: 'medicinal_herbs',
+    spring_water: 'pure_spring_water',
+    silver_dust: 'powdered_silver_dust',
+    wolfbane: 'wolfbane_root',
+    sulfur: 'charcoal_sulfur',
+    pitch_oil: 'pitch_oil',
+    catalyst: 'alchemical_catalyst',
+    moonpetal: 'svalich_moonpetal',
+    heart_core: 'heart_of_sorrow_shard'
+};
+
+function getRecipesForMaterial(k, it) {
+    const aliasTag = (it && (it.craftAs || (it.customMeta && it.customMeta.craftAs))) || '';
+    const aliasKey = aliasTag ? CRAFT_TAG_TO_MAT_KEY[aliasTag] : null;
+    const keysToCheck = [k, ...(aliasKey && aliasKey !== k ? [aliasKey] : [])];
+    return DM_CRAFTING_RECIPES.filter(r =>
+        (r.ingredients || []).some(ing =>
+            keysToCheck.includes(ing.key) || (Array.isArray(ing.orKeys) && ing.orKeys.some(ok => keysToCheck.includes(ok)))
+        )
+    );
+}
+
 const LOOT_SLOT_LABELS = {
     hilt: 'HILT',
     guard: 'EDGE/GUARD',
@@ -20730,7 +22012,7 @@ const LOOT_SLOT_LABELS = {
 function matchesLootScope(it, scopeTag) {
     if (!scopeTag || scopeTag === 'all' || scopeTag === 'search_all') return true;
     if (scopeTag === 'Act I' || scopeTag === 'Act II' || scopeTag === 'Act III' || scopeTag === 'Act IV') {
-        return getPrimaryAct(it.location, it) === scopeTag;
+        return matchesActScope(it, scopeTag);
     }
     const q = scopeTag.toLowerCase();
     if ((q === 'piper' || q === 'jacomir' || q === 'yvaine') && (it.bestHeroId === q || it.bestHeroId === 'all')) {
@@ -20738,6 +22020,16 @@ function matchesLootScope(it, scopeTag) {
     }
     const blob = `${it.name} ${it.rarity} ${it.cost || ''} ${it.location} ${it.mechanics}`.toLowerCase();
     return blob.includes(q);
+}
+
+function matchesLootLocation(it, actTag, locId) {
+    if (!locId || locId === 'all') return true;
+    const defs = LOOT_ACT_LOCATIONS[actTag];
+    if (!defs) return true;
+    const def = defs.find(d => d.id === locId);
+    if (!def || !def.match || def.match.length === 0) return true;
+    const blob = `${it.location || ''} ${it.name || ''}`.toLowerCase();
+    return def.match.some(kw => blob.includes(kw));
 }
 
 function getLootViewBucket(it, itemKey = '') {
@@ -20938,8 +22230,12 @@ const DM_CRAFTING_RECIPES = [
 const DM_CRAFTING_BY_LOOT = Object.fromEntries(DM_CRAFTING_RECIPES.map(r => [r.lootKey, r]));
 
 let activeLootTag = 'Act I';
+let activeLootLoc = 'all';
 let activeLootCat = 'overview';
 let activeLootSlot = 'all';
+let activeLootScene = null;
+let activeLootRollTier = 'all';
+let rolledSceneFinds = null;
 
 function renderLootCardHtml(k, it) {
     const customBadge = it.isCustomForged
@@ -20958,6 +22254,14 @@ function renderLootCardHtml(k, it) {
         : '';
     const craftBadge = DM_CRAFTING_BY_LOOT[k]
         ? ` <span class="pill green" style="font-size:0.59rem; padding:1px 5px; vertical-align:middle;" title="Craftable (${DM_CRAFTING_BY_LOOT[k].code})">⚗️ CRAFT</span>`
+        : '';
+    const stInfo = getItemScenesAndTier(k, it);
+    const tierBadge = (stInfo.scenes.length > 0 || it.rollTier)
+        ? (stInfo.tier === 'nat20'
+            ? '<span class="loot-tier-pill tier-nat20" title="Nat 20 Exploration Jackpot">🌟 NAT 20</span>'
+            : (stInfo.tier === 'high'
+                ? '<span class="loot-tier-pill tier-high" title="High Search Roll (15–19)">✨ 15–19</span>'
+                : (activeLootScene ? '<span class="loot-tier-pill tier-everyday" title="Everyday Search Find (DC 10–14)">🪙 10–14</span>' : '')))
         : '';
     const renamedBadge = it.isRenamed
         ? ' <span class="pill blue" style="font-size:0.59rem; padding:1px 5px; vertical-align:middle;">✏️</span>'
@@ -20993,12 +22297,26 @@ function renderLootCardHtml(k, it) {
             <div id="dm-loot-rename-err-${k}" class="dm-loot-rename-err" role="status" aria-live="polite"></div>
         </form>
     ` : '';
+
+    let matStripHtml = '';
+    if (it.cat === 'material') {
+        const recs = getRecipesForMaterial(k, it);
+        const recPills = recs.length > 0
+            ? recs.map(r => {
+                const out = LOOT_DATA[r.lootKey];
+                const nm = out ? out.name.replace(/\s*\([^)]*\)\s*/g, '').trim() : r.lootKey;
+                return `<button type="button" class="loot-mat-recipe-pill" onclick="openItemModal('${r.lootKey}')" title="View craftable item: ${escapeEncounterHtml(nm)}">⚗️ ${escapeEncounterHtml(nm)}</button>`;
+            }).join('')
+            : '<span style="color:#94a3b8; font-style:italic;">Trade, Salvage, Field Utility &amp; Custom Alchemy</span>';
+        matStripHtml = `<div class="loot-mat-strip"><strong style="color:#6ee7b7;">Builds:</strong> ${recPills}</div>`;
+    }
+
     const cardCls = it.isUpgradeItem ? 'card-upgrade' : (it.isAttachment ? 'card-attach' : (it.isCustomForged ? 'card-custom' : ''));
     return `
         <div class="loot-dense-card searchable-row ${cardCls}">
             <div class="loot-card-top">
                 <div class="loot-card-title">
-                    <button type="button" class="link-btn" onclick="openItemModal('${k}')">${escapeEncounterHtml(it.name)}</button>${slotPill}${upgBadge}${craftBadge}${foodBadge}${customBadge}${renamedBadge}
+                    <button type="button" class="link-btn" onclick="openItemModal('${k}')">${escapeEncounterHtml(it.name)}</button>${slotPill}${upgBadge}${craftBadge}${foodBadge}${tierBadge}${customBadge}${renamedBadge}
                 </div>
                 ${rowActionsHtml}
             </div>
@@ -21008,6 +22326,7 @@ function renderLootCardHtml(k, it) {
                 <span style="color:#fde68a; font-weight:600;">${escapeEncounterHtml(shortRarity)}</span>
                 <span class="loot-card-loc" title="${escapeEncounterHtml(String(it.location || '').replace(/<[^>]+>/g, ''))}">• ${it.location}</span>
             </div>
+            ${matStripHtml}
             <span class="visually-hidden">${escapeEncounterHtml(String(it.mechanics || '').replace(/<[^>]+>/g, ' '))}</span>
         </div>
     `;
@@ -21085,6 +22404,171 @@ function renderDmCraftingTableHtml() {
     `;
 }
 
+function renderLootLocationBar(renderScope, allEntries) {
+    const locBar = document.getElementById('loot-loc-bar');
+    if (!locBar) return;
+    const defs = (!activeLootScene && LOOT_ACT_LOCATIONS[renderScope]) ? LOOT_ACT_LOCATIONS[renderScope] : null;
+    if (!defs) {
+        locBar.classList.remove('is-open');
+        locBar.innerHTML = '';
+        return;
+    }
+    const actEntries = allEntries.filter(([_, it]) => matchesLootScope(it, renderScope));
+    const pillsHtml = defs.map(d => {
+        const cnt = d.id === 'all'
+            ? actEntries.length
+            : actEntries.filter(([_, it]) => matchesLootLocation(it, renderScope, d.id)).length;
+        const on = activeLootLoc === d.id;
+        return `<button type="button" class="btn-loot-loc ${on ? 'active' : ''}" data-lootloc="${d.id}" aria-pressed="${on ? 'true' : 'false'}" onclick="filterLootLocation('${d.id}')">${d.label} (${cnt})</button>`;
+    }).join('');
+    locBar.innerHTML = `<span style="font-size:0.71rem; color:#fbbf24; font-weight:700; margin-right:2px;">📍 ${escapeEncounterHtml(renderScope)} Location:</span>${pillsHtml}`;
+    locBar.classList.add('is-open');
+}
+
+function renderLootTierBar(sceneEntries) {
+    const tierBar = document.getElementById('loot-tier-bar');
+    const clearBtn = document.getElementById('btn-loot-scene-clear');
+    if (clearBtn) clearBtn.style.display = activeLootScene ? 'inline-flex' : 'none';
+    if (!tierBar) return;
+    if (!activeLootScene || !LOOT_SCENES[activeLootScene]) {
+        tierBar.classList.remove('is-open');
+        tierBar.innerHTML = '';
+        return;
+    }
+    const cEvery = sceneEntries.filter(([k, it]) => getItemScenesAndTier(k, it).tier === 'everyday').length;
+    const cHigh  = sceneEntries.filter(([k, it]) => getItemScenesAndTier(k, it).tier === 'high').length;
+    const cNat20 = sceneEntries.filter(([k, it]) => getItemScenesAndTier(k, it).tier === 'nat20').length;
+    const tierBtn = (id, label, cls = '') => {
+        const on = activeLootRollTier === id;
+        return `<button type="button" class="btn-loot-tier ${cls} ${on ? 'active' : ''}" aria-pressed="${on ? 'true' : 'false'}" onclick="filterLootRollTier('${id}')">${label}</button>`;
+    };
+    tierBar.innerHTML = `
+        <div class="loot-tier-group">
+            <span style="font-size:0.71rem; color:#fde68a; font-weight:700; margin-right:2px;">🎯 Check Tier:</span>
+            ${tierBtn('all', `All (${sceneEntries.length})`)}
+            ${tierBtn('everyday', `🪙 Everyday 10–14 (${cEvery})`)}
+            ${tierBtn('high', `✨ High Roll 15–19 (${cHigh})`, 'tier-high')}
+            ${tierBtn('nat20', `🌟 Nat 20 Jackpot! (${cNat20})`, 'tier-nat20')}
+        </div>
+        <div class="loot-tier-group">
+            <span style="font-size:0.71rem; color:#93c5fd; font-weight:700; margin-right:2px;">🎲 Instant Plant:</span>
+            <button type="button" class="btn-roll-plant" onclick="rollSceneExplorationLoot('everyday')" title="Roll 2–3 Everyday finds for this scene">🎲 Roll 10–14</button>
+            <button type="button" class="btn-roll-plant roll-high" onclick="rollSceneExplorationLoot('high')" title="Roll High-Roll hidden cache + bonus for this scene">✨ Roll 15–19</button>
+            <button type="button" class="btn-roll-plant roll-nat20" onclick="rollSceneExplorationLoot('nat20')" title="Roll a Nat 20 Jackpot haul for this scene!">🌟 Roll Nat 20!</button>
+        </div>
+    `;
+    tierBar.classList.add('is-open');
+}
+
+function renderRolledScenePanel() {
+    const host = document.getElementById('loot-rolled-panel');
+    if (!host) return;
+    if (!rolledSceneFinds || !Array.isArray(rolledSceneFinds.items) || rolledSceneFinds.items.length === 0) {
+        host.innerHTML = '';
+        return;
+    }
+    const sc = LOOT_SCENES[rolledSceneFinds.sceneId] || { label: 'Exploration', prompts: {} };
+    const tierId = rolledSceneFinds.tierId || 'everyday';
+    const tierTitle = tierId === 'nat20' ? '🌟 NAT 20 JACKPOT HAUL' : (tierId === 'high' ? '✨ HIGH ROLL DISCOVERY (15–19)' : '🪙 EVERYDAY SEARCH FIND (10–14)');
+    const flavorPrompt = (sc.prompts && sc.prompts[tierId]) || 'Searching carefully turns up...';
+    const cardsHtml = rolledSceneFinds.items.map(entry => {
+        const k = entry.key;
+        const it = LOOT_DATA[k];
+        if (!it) return '';
+        const t = entry.tier || 'everyday';
+        const tCls = t === 'nat20' ? 'is-nat20' : (t === 'high' ? 'is-high' : '');
+        const tPill = t === 'nat20'
+            ? '<span class="loot-tier-pill tier-nat20">🌟 NAT 20</span>'
+            : (t === 'high' ? '<span class="loot-tier-pill tier-high">✨ 15–19</span>' : '<span class="loot-tier-pill tier-everyday">🪙 10–14</span>');
+        const splitRC = dmSplitRarityAndCost(it);
+        const plainMech = String(it.mechanics || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        const shortMech = plainMech.length > 135 ? plainMech.slice(0, 132) + '…' : plainMech;
+        const escName = escapeEncounterHtml(it.name);
+        return `
+            <div class="loot-rolled-item ${tCls}">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+                    <div>
+                        <button type="button" class="link-btn" style="font-size:0.84rem;" onclick="openItemModal('${k}')">${escName}</button>${tPill}
+                    </div>
+                    <span class="loot-cost-pill">${escapeEncounterHtml(splitRC.costText)}</span>
+                </div>
+                <div style="font-size:0.72rem; color:#cbd5e1; line-height:1.38;">${escapeEncounterHtml(shortMech)}</div>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:5px; margin-top:auto; padding-top:4px; border-top:1px solid #1e293b;">
+                    <button type="button" class="btn-modal-mini" style="font-size:0.65rem; padding:2px 7px;" onclick="openItemModal('${k}')">📖 Details</button>
+                    <span style="display:inline-flex; gap:3px;">
+                        <button type="button" class="btn-modal-mini" style="font-size:0.65rem; padding:2px 6px;" onclick="dmQuickDropByKey('${k}', 'piper', '🎩 Piper', event, 1)" title="Drop to Piper" aria-label="Drop ${escName} to Piper">🎩</button>
+                        <button type="button" class="btn-modal-mini" style="font-size:0.65rem; padding:2px 6px;" onclick="dmQuickDropByKey('${k}', 'jacomir', '👑 Jacomir', event, 1)" title="Drop to Jacomir" aria-label="Drop ${escName} to Jacomir">👑</button>
+                        <button type="button" class="btn-modal-mini" style="font-size:0.65rem; padding:2px 6px;" onclick="dmQuickDropByKey('${k}', 'yvaine', '🔫 Yvaine', event, 1)" title="Drop to Yvaine" aria-label="Drop ${escName} to Yvaine">🔫</button>
+                        <button type="button" class="btn-modal-mini" style="font-size:0.65rem; padding:2px 6px; border-color:#34d399; color:#a7f3d0;" onclick="dmQuickDropByKey('${k}', 'all', '👥 Entire Party', event, 1)" title="Drop to Entire Party" aria-label="Drop ${escName} to Entire Party">👥</button>
+                    </span>
+                </div>
+            </div>
+        `;
+    }).join('');
+    host.innerHTML = `
+        <div class="loot-rolled-box ${tierId === 'nat20' ? 'tier-nat20' : ''}">
+            <div class="loot-rolled-head">
+                <div>
+                    <div style="font-family:'Cinzel',serif; font-size:0.84rem; font-weight:800; color:${tierId === 'nat20' ? '#fef08a' : '#fde68a'};">🎲 ${tierTitle} — ${escapeEncounterHtml(sc.label)}</div>
+                    <div style="font-size:0.74rem; color:#cbd5e1; font-style:italic; margin-top:2px;">“${escapeEncounterHtml(flavorPrompt)}”</div>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <button type="button" class="btn-modal-mini" style="border-color:#60a5fa; color:#bfdbfe;" onclick="rollSceneExplorationLoot('${tierId}')">🔄 Re-Roll</button>
+                    <button type="button" class="btn-modal-mini" style="border-color:#f87171; color:#fca5a5;" onclick="clearRolledSceneLoot()">✕ Clear</button>
+                </div>
+            </div>
+            <div class="loot-rolled-grid">${cardsHtml}</div>
+        </div>
+    `;
+}
+
+function rollSceneExplorationLoot(tierId = 'everyday') {
+    if (!activeLootScene || !LOOT_SCENES[activeLootScene]) return;
+    const allEntries = Object.entries(LOOT_DATA);
+    const inScene = allEntries.filter(([k, it]) => getItemScenesAndTier(k, it).scenes.includes(activeLootScene));
+    const byTier = { everyday: [], high: [], nat20: [] };
+    inScene.forEach(([k, it]) => {
+        const t = getItemScenesAndTier(k, it).tier;
+        if (byTier[t]) byTier[t].push([k, it]);
+    });
+    const pickUnique = (pool, count, usedSet, tierLabel) => {
+        const avail = pool.filter(([k]) => !usedSet.has(k));
+        for (let i = avail.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [avail[i], avail[j]] = [avail[j], avail[i]];
+        }
+        return avail.slice(0, count).map(([k]) => {
+            usedSet.add(k);
+            return { key: k, tier: tierLabel };
+        });
+    };
+    const used = new Set();
+    let picks = [];
+    if (tierId === 'nat20') {
+        picks = picks
+            .concat(pickUnique(byTier.nat20, 1, used, 'nat20'))
+            .concat(pickUnique(byTier.high, 1, used, 'high'))
+            .concat(pickUnique(byTier.everyday, 1, used, 'everyday'));
+    } else if (tierId === 'high') {
+        picks = picks
+            .concat(pickUnique(byTier.high, 2, used, 'high'))
+            .concat(pickUnique(byTier.everyday, 1, used, 'everyday'));
+    } else {
+        const mats = byTier.everyday.filter(([_, it]) => it.cat === 'material');
+        const nonMats = byTier.everyday.filter(([_, it]) => it.cat !== 'material');
+        picks = picks
+            .concat(pickUnique(nonMats, 2, used, 'everyday'))
+            .concat(pickUnique(mats.length ? mats : byTier.everyday, 1, used, 'everyday'));
+    }
+    rolledSceneFinds = { sceneId: activeLootScene, tierId, items: picks };
+    renderRolledScenePanel();
+}
+
+function clearRolledSceneLoot() {
+    rolledSceneFinds = null;
+    renderRolledScenePanel();
+}
+
 function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
     const container = document.getElementById('loot-containers');
     if (!container) return;
@@ -21102,9 +22586,31 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
     }
 
     const allEntries = Object.entries(LOOT_DATA);
-    const scopeEntries = allEntries.filter(([_, it]) => matchesLootScope(it, renderScope));
+    const isSearchExpand = (renderScope === 'search_all');
+    const inSceneMode = Boolean(!isSearchExpand && activeLootScene && LOOT_SCENES[activeLootScene]);
 
-    // Live counts for Category Bar buttons scoped to current Act / Hero!
+    let scopeEntries;
+    let sceneBaseEntries = [];
+    if (inSceneMode) {
+        sceneBaseEntries = allEntries.filter(([k, it]) => getItemScenesAndTier(k, it).scenes.includes(activeLootScene));
+        scopeEntries = activeLootRollTier === 'all'
+            ? sceneBaseEntries
+            : sceneBaseEntries.filter(([k, it]) => getItemScenesAndTier(k, it).tier === activeLootRollTier);
+    } else {
+        scopeEntries = allEntries.filter(([_, it]) => {
+            if (!matchesLootScope(it, renderScope)) return false;
+            if (!isSearchExpand && LOOT_ACT_LOCATIONS[renderScope] && activeLootLoc && activeLootLoc !== 'all') {
+                return matchesLootLocation(it, renderScope, activeLootLoc);
+            }
+            return true;
+        });
+    }
+
+    renderLootLocationBar(isSearchExpand ? 'all' : renderScope, allEntries);
+    renderLootTierBar(sceneBaseEntries);
+    renderRolledScenePanel();
+
+    // Live counts for Category Bar buttons scoped to current Act/Location or Scene!
     const catDefs = [
         { id: 'weapons', btnId: 'btn-lcat-weapons', shortLabel: '⚔️ Weapons & Ammo', title: '⚔️ Weapons, Silvered Arms & Specialty Ammo', cls: 'loot-header-weapon' },
         { id: 'attachments', btnId: 'btn-loot-attachments', shortLabel: '🔧 Attachments', title: '🔧 Weapon Attachments (2 Non-Overlapping Slots per Weapon)', cls: 'loot-header-weapon' },
@@ -21113,7 +22619,7 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         { id: 'armor', btnId: 'btn-lcat-armor', shortLabel: '🛡️ Armor & Gear', title: '🛡️ Armor, Shields, Rings, Cloaks & Camp Gear', cls: 'loot-header-armor' },
         { id: 'consumables', btnId: 'btn-lcat-consumables', shortLabel: '🧪 Potions & Food', title: '🧪 Potions, Food & Drink, Coating Vials, Bombs & Boons', cls: 'loot-header-heal' },
         { id: 'craftables', btnId: 'btn-loot-craftables', shortLabel: '⚗️ Craft & Recipes', title: '📜 Physical Crafting Recipe Writings & Formula Scrolls', cls: 'loot-header-quest' },
-        { id: 'materials', btnId: 'btn-loot-materials', shortLabel: '🌿 Materials', title: '🌿 Barovian Crafting Materials & Wilderness Forage', cls: 'loot-header-material' },
+        { id: 'materials', btnId: 'btn-loot-materials', shortLabel: '🌿 Materials', title: '🌿 All Barovian Crafting Materials & Wilderness Forage (Where Found & Recipes)', cls: 'loot-header-material' },
         { id: 'quest', btnId: 'btn-lcat-quest', shortLabel: '🗝️ Quest & Loot', title: '🗝️ Fated Relics, Story Books, Valuables & Normal Loot', cls: 'loot-header-quest' }
     ];
 
@@ -21123,13 +22629,14 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         const b = getLootViewBucket(it, k);
         if (byBucket[b]) byBucket[b].push([k, it]);
     });
-    // Materials & Craftables are always countable globally when scope is All or Act
     const matGlobal = allEntries.filter(([_, it]) => it.cat === 'material');
-    if (byBucket.materials.length === 0 && (renderScope === 'all' || renderScope === 'search_all')) {
+    if (!inSceneMode && activeLootLoc === 'all' && (renderScope === 'all' || renderScope === 'search_all')) {
         byBucket.materials = matGlobal;
     }
 
-    const totalTreasureInScope = scopeEntries.filter(([_, it]) => it.cat !== 'material').length;
+    const totalTreasureInScope = inSceneMode
+        ? scopeEntries.length
+        : scopeEntries.filter(([_, it]) => it.cat !== 'material').length;
     const allBtn = document.getElementById('btn-loot-all');
     if (allBtn) allBtn.innerText = `📦 All Acts (${allEntries.filter(([_, it]) => it.cat !== 'material').length})`;
     const ovBtn = document.getElementById('btn-lcat-overview');
@@ -21137,7 +22644,9 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
     catDefs.forEach(c => {
         const bEl = document.getElementById(c.btnId);
         if (bEl) {
-            const cnt = c.id === 'craftables' ? DM_CRAFTING_RECIPES.length : (byBucket[c.id] ? byBucket[c.id].length : 0);
+            const cnt = c.id === 'craftables'
+                ? DM_CRAFTING_RECIPES.length
+                : (c.id === 'materials' && !inSceneMode && activeLootLoc === 'all' ? matGlobal.length : (byBucket[c.id] ? byBucket[c.id].length : 0));
             bEl.innerText = `${c.shortLabel} (${cnt})`;
         }
     });
@@ -21157,61 +22666,102 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         'Act IV': '🏰 ACT IV — Tsolenka Pass, Amber Temple & Castle Ravenloft'
     };
 
-    const catsToRender = renderCat === 'overview'
-        ? (renderScope === 'search_all' ? catDefs : catDefs.filter(c => c.id !== 'materials'))
-        : catDefs.filter(c => c.id === renderCat);
-
     let html = '';
 
-    // When viewing Craft & Recipes (or search_all), put the 100%-clickable Secret Crafting Table right at top!
-    if (renderCat === 'craftables' || renderCat === 'materials' || renderScope === 'search_all') {
-        html += renderDmCraftingTableHtml();
+    // SCENE EXPLORATION MODE: Group directly by Roll Tier (Everyday 10–14 | High Roll 15–19 | Nat 20 Jackpot!)
+    if (inSceneMode && renderCat === 'overview') {
+        const scObj = LOOT_SCENES[activeLootScene];
+        const tierGroups = [
+            { id: 'everyday', title: `🪙 Everyday Finds — ${scObj.short} (Investigation / Perception / Survival DC 10–14)`, cls: 'loot-header-material' },
+            { id: 'high', title: `✨ High Roll Finds — ${scObj.short} (Roll 15–19 — Hidden Caches, Silver & Quality Gear)`, cls: 'loot-header-buff' },
+            { id: 'nat20', title: `🌟 Nat 20 Jackpots! — ${scObj.short} (Secret Vaults, Scrolls & Minor Magic Curios)`, cls: 'loot-header-caster' }
+        ];
+        html += tierGroups.map(tg => {
+            if (activeLootRollTier !== 'all' && activeLootRollTier !== tg.id) return '';
+            const items = scopeEntries
+                .filter(([k, it]) => getItemScenesAndTier(k, it).tier === tg.id)
+                .sort((a, b) => (b[1].isCustomForged ? 1 : 0) - (a[1].isCustomForged ? 1 : 0));
+            if (items.length === 0) return '';
+            return `
+                <details class="table-wrap loot-cat-details" open>
+                    <summary class="loot-cat-summary loot-cat-title ${tg.cls}">
+                        <span>${tg.title} (${items.length})</span>
+                        <span class="loot-cat-summary-caret">▶</span>
+                    </summary>
+                    <div class="loot-dense-grid">${items.map(([k, it]) => renderLootCardHtml(k, it)).join('')}</div>
+                </details>
+            `;
+        }).join('');
+    } else {
+        const catsToRender = renderCat === 'overview'
+            ? (isSearchExpand ? catDefs : catDefs.filter(c => c.id !== 'materials'))
+            : catDefs.filter(c => c.id === renderCat);
+
+        // Secret Crafting Table appears ONLY under Craft & Recipes (or global search) — NEVER blocks Materials cards!
+        if (renderCat === 'craftables' || isSearchExpand) {
+            html += renderDmCraftingTableHtml();
+        }
+
+        html += catsToRender.map((c, idx) => {
+            let items = (byBucket[c.id] || []);
+            let matShowingGlobalFallback = false;
+            if (c.id === 'materials') {
+                if (!inSceneMode && activeLootLoc === 'all') {
+                    items = matGlobal;
+                } else if (items.length === 0) {
+                    items = matGlobal;
+                    matShowingGlobalFallback = true;
+                }
+            }
+            if (c.id === 'attachments' && renderCat === 'attachments' && activeLootSlot && activeLootSlot !== 'all') {
+                items = items.filter(([_, it]) => it.attachSlot === activeLootSlot);
+            }
+            if (items.length === 0) return '';
+
+            const showActHeaders = (!inSceneMode && c.id !== 'materials' && (renderScope === 'all' || isSearchExpand || !/^Act\s+/i.test(renderScope)));
+            let innerHtml = '';
+            if (c.id === 'materials') {
+                const sortedMats = [...items].sort((a, b) => (b[1].isCustomForged ? 1 : 0) - (a[1].isCustomForged ? 1 : 0));
+                const matHintBanner = matShowingGlobalFallback
+                    ? `<div style="padding:7px 10px; font-size:0.74rem; color:#fde68a; background:rgba(120,53,15,0.22); border-bottom:1px solid #334155;">No location-specific materials tagged here — showing all ${matGlobal.length} Barovian Materials instead.</div>`
+                    : (activeLootLoc !== 'all' && !inSceneMode
+                        ? `<div style="padding:6px 10px; font-size:0.73rem; color:#a7f3d0; background:rgba(6,78,59,0.24); border-bottom:1px solid #1e293b; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;"><span>Showing <strong>${sortedMats.length}</strong> materials found in this location (click any <strong>⚗️ Builds</strong> pill to inspect the crafted item!).</span><button type="button" class="btn-modal-mini" onclick="filterLootLocation('all')">🌿 Show All ${matGlobal.length} Materials</button></div>`
+                        : '');
+                innerHtml = `${matHintBanner}<div class="loot-dense-grid">${sortedMats.map(([k, it]) => renderLootCardHtml(k, it)).join('')}</div>`;
+            } else if (showActHeaders) {
+                actOrder.forEach(actKey => {
+                    const actItems = items
+                        .filter(([_, it]) => getPrimaryAct(it.location, it) === actKey)
+                        .sort((a, b) => (b[1].isCustomForged ? 1 : 0) - (a[1].isCustomForged ? 1 : 0));
+                    if (actItems.length === 0) return;
+                    innerHtml += `
+                        <div class="loot-act-group">
+                            <div class="loot-act-banner">${actLabels[actKey]} (${actItems.length})</div>
+                            <div class="loot-dense-grid">${actItems.map(([k, it]) => renderLootCardHtml(k, it)).join('')}</div>
+                        </div>
+                    `;
+                });
+            } else {
+                const sorted = [...items].sort((a, b) => (b[1].isCustomForged ? 1 : 0) - (a[1].isCustomForged ? 1 : 0));
+                innerHtml = `<div class="loot-dense-grid">${sorted.map(([k, it]) => renderLootCardHtml(k, it)).join('')}</div>`;
+            }
+
+            const shouldOpen = (renderCat !== 'overview' || isSearchExpand || idx < 2);
+            const catHeadingId = `loot-cat-head-${c.id}`;
+            return `
+                <details class="table-wrap loot-cat-details" ${shouldOpen ? 'open' : ''}>
+                    <summary id="${catHeadingId}" class="loot-cat-summary loot-cat-title ${c.cls}">
+                        <span>${c.title} (${items.length})</span>
+                        <span class="loot-cat-summary-caret">▶</span>
+                    </summary>
+                    ${innerHtml}
+                </details>
+            `;
+        }).join('');
     }
 
-    html += catsToRender.map((c, idx) => {
-        let items = (byBucket[c.id] || []);
-        if (c.id === 'materials' && items.length === 0) items = matGlobal;
-        if (c.id === 'attachments' && renderCat === 'attachments' && activeLootSlot && activeLootSlot !== 'all') {
-            items = items.filter(([_, it]) => it.attachSlot === activeLootSlot);
-        }
-        if (items.length === 0) return '';
-
-        const showActHeaders = (renderScope === 'all' || renderScope === 'search_all' || !/^Act\s+/i.test(renderScope));
-        let innerHtml = '';
-        if (showActHeaders) {
-            actOrder.forEach(actKey => {
-                const actItems = items
-                    .filter(([_, it]) => getPrimaryAct(it.location, it) === actKey)
-                    .sort((a, b) => (b[1].isCustomForged ? 1 : 0) - (a[1].isCustomForged ? 1 : 0));
-                if (actItems.length === 0) return;
-                innerHtml += `
-                    <div class="loot-act-group">
-                        <div class="loot-act-banner">${actLabels[actKey]} (${actItems.length})</div>
-                        <div class="loot-dense-grid">${actItems.map(([k, it]) => renderLootCardHtml(k, it)).join('')}</div>
-                    </div>
-                `;
-            });
-        } else {
-            const sorted = [...items].sort((a, b) => (b[1].isCustomForged ? 1 : 0) - (a[1].isCustomForged ? 1 : 0));
-            innerHtml = `<div class="loot-dense-grid">${sorted.map(([k, it]) => renderLootCardHtml(k, it)).join('')}</div>`;
-        }
-
-        // In Overview mode, keep the first 2 categories open and remaining neatly collapsed (1-click toggle) so you see EVERYTHING at first glance with ZERO giant scrolling!
-        const shouldOpen = (renderCat !== 'overview' || renderScope === 'search_all' || idx < 2);
-        const catHeadingId = `loot-cat-head-${c.id}`;
-        return `
-            <details class="table-wrap loot-cat-details" ${shouldOpen ? 'open' : ''}>
-                <summary id="${catHeadingId}" class="loot-cat-summary loot-cat-title ${c.cls}">
-                    <span>${c.title} (${items.length})</span>
-                    <span class="loot-cat-summary-caret">▶</span>
-                </summary>
-                ${innerHtml}
-            </details>
-        `;
-    }).join('');
-
     if (!html.trim()) {
-        html = '<div style="padding:18px; text-align:center; color:#94a3b8; font-size:0.82rem; border:1px dashed #334155; border-radius:8px;">No loot entries match this Act/Hero + Category filter. Try switching to <strong>📦 All Acts</strong> or another Category tab!</div>';
+        html = '<div style="padding:18px; text-align:center; color:#94a3b8; font-size:0.82rem; border:1px dashed #334155; border-radius:8px;">No loot entries match this filter combination. Try switching to <strong>All Locations</strong>, <strong>📦 All Acts</strong>, or <strong>📋 Overview</strong>!</div>';
     }
 
     container.innerHTML = html;
@@ -21235,7 +22785,15 @@ function syncLootBarButtonsUI() {
     const lootBar = document.getElementById('loot-filter-bar');
     if (lootBar) {
         lootBar.querySelectorAll('.btn-loot-filter').forEach(b => {
-            const on = b.getAttribute('data-loottag') === activeLootTag;
+            const on = !activeLootScene && (b.getAttribute('data-loottag') === activeLootTag);
+            b.classList.toggle('active', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+    }
+    const sceneBar = document.getElementById('loot-scene-bar');
+    if (sceneBar) {
+        sceneBar.querySelectorAll('.btn-loot-scene').forEach(b => {
+            const on = b.getAttribute('data-lootscene') === activeLootScene;
             b.classList.toggle('active', on);
             b.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
@@ -21261,11 +22819,46 @@ function syncLootBarButtonsUI() {
 function filterLootVault(tag, btnEl) {
     searchExpandedAll = false;
     sectionSearchExpanded.loot = false;
+    activeLootScene = null;
+    activeLootRollTier = 'all';
+    rolledSceneFinds = null;
+    activeLootLoc = 'all';
     if (tag === 'Attachments') { activeLootTag = 'all'; activeLootCat = 'attachments'; }
     else if (tag === 'Upgrades') { activeLootTag = 'all'; activeLootCat = 'upgrades'; }
     else if (tag === 'Recipes' || tag === 'Craftables') { activeLootTag = 'all'; activeLootCat = 'craftables'; }
     else if (tag === 'Materials') { activeLootTag = 'all'; activeLootCat = 'materials'; }
     else { activeLootTag = tag || 'all'; }
+    syncLootBarButtonsUI();
+    renderLootVault(activeLootTag);
+    if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
+}
+
+function filterLootLocation(locId) {
+    searchExpandedAll = false;
+    sectionSearchExpanded.loot = false;
+    activeLootLoc = locId || 'all';
+    syncLootBarButtonsUI();
+    renderLootVault(activeLootTag);
+    if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
+}
+
+function filterLootScene(sceneId) {
+    searchExpandedAll = false;
+    sectionSearchExpanded.loot = false;
+    activeLootScene = (sceneId && activeLootScene === sceneId) ? null : (sceneId || null);
+    activeLootRollTier = 'all';
+    rolledSceneFinds = null;
+    if (activeLootScene) {
+        activeLootCat = 'overview';
+        activeLootSlot = 'all';
+    }
+    syncLootBarButtonsUI();
+    renderLootVault(activeLootTag);
+    if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
+}
+
+function filterLootRollTier(tierId) {
+    activeLootRollTier = tierId || 'all';
     syncLootBarButtonsUI();
     renderLootVault(activeLootTag);
     if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);

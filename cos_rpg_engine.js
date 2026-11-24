@@ -2100,6 +2100,187 @@
             useAction: { type: 'dreamPastry', label: 'Dream Pie (+1d6 Temp)' },
             summary: '+1d6 Temp HP • DC 13 CON Save @ Dawn'
         },
+        // --- EXPLORATION EVERYDAY / HIGH-ROLL / NAT 20 FOOD, MATERIALS & RELICS ---
+        {
+            match: ['ambrosia cordial', 'barovian ambrosia'],
+            category: 'food',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'overheal', dice: 2, sides: 6, bonus: 4, verb: 'Drank', actionCost: 'bonus', duration: '2 hours', label: 'Ambrosia (2d6+4➔Temp)', extraNote: 'Also cures 1 level of Exhaustion!' },
+            summary: 'Bonus Action: Heal 2d6+4 HP (excess ➔ Temp HP 2 hr) & cures 1 Exhaustion!'
+        },
+        {
+            match: ['honey-mead flask', 'spiced honey-mead'],
+            category: 'food',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'heal', dice: 1, sides: 6, bonus: 2, verb: 'Drank', actionCost: 'action', label: 'Honey-Mead (1d6+2)', extraNote: 'Warms bones & cures 1 level of Exhaustion!' },
+            summary: 'Drink (Action): Heal 1d6+2 HP & cures 1 Exhaustion'
+        },
+        {
+            match: ['martikov reserve', 'reserve cask'],
+            category: 'food',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'tempHp', dice: 1, sides: 6, bonus: 0, verb: 'Drank', actionCost: 'action', duration: '4 hours', label: 'Reserve (+1d6 Temp)', extraNote: 'Advantage on Saving Throws vs Frightened for 4 hours!' },
+            summary: 'Drink: +1d6 Temp HP & Adv vs Frightened (4 hrs)'
+        },
+        {
+            match: ['garlic & turnip stew', 'garlic and turnip stew', 'turnip stew'],
+            category: 'food',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'heal', dice: 1, sides: 4, bonus: 1, verb: 'Ate', actionCost: 'action', label: 'Garlic Stew (1d4+1)', extraNote: 'Warming tavern meal.' },
+            summary: 'Eat (Action): Heal 1d4+1 HP (Caps at Max HP)'
+        },
+        {
+            match: ['dark rye bread', 'rye bread'],
+            category: 'food',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'heal', dice: 1, sides: 4, bonus: 0, verb: 'Ate', actionCost: 'action', label: 'Rye Bread (1d4)' },
+            summary: 'Eat (Action): Heal 1d4 HP (Caps at Max HP)'
+        },
+        {
+            match: ['wolf-jerky', 'smoked wolf-jerky'],
+            category: 'food',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'heal', dice: 0, sides: 1, bonus: 2, verb: 'Ate', actionCost: 'action', label: 'Wolf-Jerky (+2 HP)' },
+            summary: 'Eat (Action): Restore +2 HP (Trail Snack)'
+        },
+        {
+            match: ['goat cheese', 'aged goat cheese'],
+            category: 'food',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'heal', dice: 1, sides: 4, bonus: 0, verb: 'Ate', actionCost: 'action', label: 'Goat Cheese (1d4)' },
+            summary: 'Eat (Action): Heal 1d4 HP (Caps at Max HP)'
+        },
+        {
+            match: ['wild svalich blackberries', 'svalich blackberries', 'blackberries'],
+            category: 'food',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'heal', dice: 1, sides: 4, bonus: 0, verb: 'Ate', actionCost: 'action', label: 'Blackberries (1d4)' },
+            summary: 'Eat (Action): Heal 1d4 HP (Foraged Berries)'
+        },
+        {
+            match: ['mulled wine', 'warm mulled wine'],
+            category: 'food',
+            slots: [],
+            quickBelt: false,
+            useAction: { type: 'utilityLog', verb: 'Drank', actionCost: 'action', label: 'Mulled Wine (Cold Adv)', effect: 'Warms the blood: Advantage on saves vs extreme Cold & mountain chill for 2 hours!' },
+            summary: 'Drink: Advantage vs Cold (2 hrs)'
+        },
+        {
+            match: ['raw wolf pelt', 'beast pelt', 'smuggler\'s waxed canvas', 'waxed canvas tarp'],
+            category: 'crafting',
+            craftAs: 'pelt_canvas',
+            slots: [],
+            summary: 'Crafting Material • Counts as Pelt / Canvas for Mist-Ward Camp Kit!'
+        },
+        {
+            match: ['silver-veined quartz'],
+            category: 'crafting',
+            craftAs: 'silver_dust',
+            slots: [],
+            summary: 'Crafting Material • Counts as Silver Dust for Holy Water, Coatings & Camp Kits!'
+        },
+        {
+            match: ['ghost-cap', 'grave-salt ward pouch', 'spider silk gland', 'cold-iron scrap', 'dire wolf fangs'],
+            category: 'crafting',
+            slots: [],
+            summary: 'Barovian Crafting Material / Monster Salvage'
+        },
+        {
+            match: ['luckstone charm', 'trinket of the forgotten sun'],
+            category: 'accessory',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: 'Luckstone (+1d4)', charges: '1/Long Rest', effect: 'Add +1d4 to a failed Ability Check or Saving Throw (1/Long Rest • No Attunement)!' },
+            summary: '1/LR: Add +1d4 to a failed Check or Save (No Attunement)'
+        },
+        {
+            match: ['mist-compass', 'compass of the old fanes'],
+            category: 'accessory',
+            slots: [],
+            skillAdv: ['Survival'],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: 'Mist-Compass', charges: 'Always Active', effect: 'Points true north through Barovian Mist & grants Advantage on Survival checks to navigate or track!' },
+            summary: 'Points True North in Mist • Adv on Survival'
+        },
+        {
+            match: ['gambler\'s bones', 'vistani luck'],
+            category: 'accessory',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: 'Re-Roll Nat 1', charges: '1/Long Rest', effect: 'Re-roll a Natural 1 on any Ability Check (1/Long Rest • No Attunement)!' },
+            summary: '1/LR: Re-roll a Natural 1 on an Ability Check'
+        },
+        {
+            match: ['dawn-touched silver thurible', 'silver thurible charm'],
+            category: 'accessory',
+            slots: ['amulet'],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'action', label: 'Dawn Light (15 ft)', charges: '1/Long Rest (10 min)', effect: 'Sheds warm 15-ft bright dawn light (10 min): allies inside have Advantage on saves vs Fear & Charm; chimes softly if Undead enter 30 ft!' },
+            summary: '1/LR Dawn Light (Adv vs Fear/Charm) • Undead Chime 30 ft'
+        },
+        {
+            match: ['eyeglass of arcane appraisal', 'arcane appraisal'],
+            category: 'accessory',
+            slots: ['head'],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'action', label: 'Identify / Detect Magic', charges: '1/Long Rest', effect: 'Cast Identify or Detect Magic without expending a spell slot or material components (1/Long Rest)!' },
+            summary: '1/LR: Free Identify or Detect Magic'
+        },
+        {
+            match: ['consecrated silver prayer medallion', 'prayer medallion'],
+            category: 'accessory',
+            slots: ['amulet'],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: 'Prayer (+1d4)', charges: '1/Long Rest', effect: 'Add +1d4 to a Religion check or Death Saving Throw (1/Long Rest • No Attunement)!' },
+            summary: '1/LR: +1d4 to Religion Check or Death Save'
+        },
+        {
+            match: ['scroll of lesser restoration'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Cast', actionCost: 'action', label: 'Lesser Restoration', effect: 'Touch 1 creature to end Blinded, Deafened, Paralyzed, Poisoned, or 1 Disease (Single-Use Scroll)!' },
+            summary: 'Scroll (1 Action): Cure Blind/Paralyzed/Poisoned/Disease'
+        },
+        {
+            match: ['scroll of misty step'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Cast', actionCost: 'bonus', label: 'Misty Step (30 ft)', effect: 'Teleport up to 30 ft to an unoccupied space you can see (Bonus Action • Single-Use Scroll)!' },
+            summary: 'Scroll (Bonus Action): Teleport 30 ft'
+        },
+        {
+            match: ['fallen hunter\'s +1 silvered dagger', '+1 silvered dagger'],
+            category: 'weapon',
+            slots: ['legSheath', 'offHand', 'mainHand'],
+            reqWeapon: 'simple',
+            hands: 1,
+            isLegDagger: true,
+            weaponClasses: ['melee', 'slashing_piercing', 'caster_weapon'],
+            weaponStats: { autoScale: true, abilityMode: 'finesse', magicBonus: 1, dmgDice: '1d4', dmgType: 'Silvered Piercing' },
+            summary: '+1 Magic Silvered Dagger • 1d4+1 • Finesse, Light, Nick'
+        },
+        {
+            match: ['herbalist folio', 'barovian herbalist'],
+            category: 'quest',
+            slots: [],
+            summary: 'Field Guide • Advantage on Nature Foraging Checks (20 GP)'
+        },
+        {
+            match: ['brass magnifying glass', 'magnifying glass'],
+            category: 'gear',
+            slots: [],
+            summary: 'Detective Tool • Advantage on Fine Investigation Checks (25 GP)'
+        },
         {
             match: ['holy barovian book'],
             category: 'quest',
@@ -2113,7 +2294,7 @@
             summary: 'Trade Valuable • 5 GP • Morninglord Ritual Vessel'
         },
         {
-            match: ['days of rations', 'trail rations', /\brations?\b/],
+            match: ['days of rations', 'trail rations', 'salt-pork rations', /\brations?\b/],
             category: 'food',
             slots: [],
             quickBelt: false,
@@ -2129,13 +2310,13 @@
             summary: 'Barovian Drink / Tavern Vintage'
         },
         {
-            match: ['tarokka', 'wizard diary', 'pocket watch', 'journal', 'letter', 'tome of strahd', 'bones of'],
+            match: ['tarokka', 'wizard diary', 'pocket watch', 'journal', 'diary', 'letter', 'tome of strahd', 'bones of', 'prayer scroll'],
             category: 'quest',
             slots: [],
             summary: 'Story Clue / Key Relic'
         },
         {
-            match: ['lockpick', 'thieves', 'pipe', 'dragonchess', 'bandolier', 'slug', 'cartridge', 'speedloader', 'tinker', 'lantern', 'crowbar', 'pack', 'pouch', 'torch', 'rope', 'waterskin', 'chalice', 'goblet', 'statuette', 'candelabra'],
+            match: ['lockpick', 'thieves', 'pipe', 'dragonchess', 'bandolier', 'slug', 'cartridge', 'speedloader', 'tinker', 'lantern', 'crowbar', 'pack', 'pouch', 'torch', 'rope', 'waterskin', 'chalice', 'goblet', 'statuette', 'candelabra', 'locket', 'candlestick', 'music box', 'cutlery', 'censer', 'candles', 'whetstone', 'bear trap', 'sewing', 'skeleton key', 'vials', 'ink', 'chalk', 'incense', 'jewelry box'],
             category: 'gear',
             slots: [],
             summary: 'Adventuring / Trade Gear'
@@ -3339,6 +3520,114 @@
             category: "SIMPLE RANGED WEAPON • Light Crossbow (25 GP)",
             desc: "An old, oil-darkened ashwood light crossbow etched with a faded Morninglord sunburst along the stock, kept behind Father Donovich's vestry door.",
             effect: "• <strong>Two-Handed (80/320 ft):</strong> Deals <strong>1d8 + DEX Piercing</strong> damage (<strong>5.5e Slow Mastery:</strong> target's Speed is reduced by 10 ft until start of your next turn).<br>• <strong>Ammunition:</strong> Fires <strong>Crossbow Bolts</strong> — use <strong>[Load]</strong> to chamber Silvered or Specialty Bolts!"
+        },
+        {
+            match: ['raw wolf pelt', 'beast pelt'],
+            name: "Raw Wolf / Beast Pelt",
+            category: "CRAFTING MATERIAL • Hunt & Travel Salvage (3 GP)",
+            desc: "A thick, rain-shedding gray Barovian wolf hide stripped clean of burrs and bound with twine.",
+            effect: "• <strong>Crafting Ingredient:</strong> Counts directly as <strong>Pelt / Waxed Canvas</strong> toward building a <strong>Mist-Ward Traveler's Camp Kit</strong> (<code>2x</code> needed) — or sells for <strong>3 GP</strong> to tanners and Vistani."
+        },
+        {
+            match: ['smuggler\'s waxed canvas', 'waxed canvas tarp'],
+            name: "Smuggler's Waxed Canvas Tarp",
+            category: "UNCOMMON CRAFTING MATERIAL • Attic / Wagon Find (8 GP)",
+            desc: "Heavy double-waxed sailcloth stitched with brass grommets, hidden under dusty floorboards to keep contraband dry in Barovian storms.",
+            effect: "• <strong>Crafting Ingredient:</strong> Counts directly as <strong>Pelt / Waxed Canvas</strong> toward building a <strong>Mist-Ward Traveler's Camp Kit</strong>!"
+        },
+        {
+            match: ['silver-veined quartz'],
+            name: "Ancient Silver-Veined Quartz",
+            category: "UNCOMMON CRAFTING MATERIAL • Forest / Cave Find (20 GP)",
+            desc: "A jagged fist-sized chunk of milky mountain quartz threaded with gleaming ribbons of pure Barovian silver.",
+            effect: "• <strong>Crafting Ingredient:</strong> Can be crushed or filed to count directly as <strong>Powdered Silver Dust</strong> (for <em>Holy Water</em>, <em>Liquid Silver Coating</em>, <em>Phosphor Bombs</em>, or <em>Camp Kits</em>) — or sold for <strong>20 GP</strong>."
+        },
+        {
+            match: ['luckstone charm', 'trinket of the forgotten sun'],
+            name: "Heirloom Luckstone Charm",
+            category: "UNCOMMON MAGIC RELIC • Nat 20 Attic Find (No Attunement)",
+            desc: "A smooth, sun-warmed river agate wrapped in tarnished silver wire—tucked inside a forgotten attic wall cavity since before Strahd's curse fell.",
+            effect: "• <strong>Flicker of Dawn (1/Long Rest — No Attunement):</strong> Add <strong>+1d4</strong> to a failed Ability Check or Saving Throw before the DM declares the final outcome!",
+            useViaRpg: true,
+            useBtnLabel: "✨ Activate Luckstone (+1d4)",
+            useBtnClass: "btn-act-temp"
+        },
+        {
+            match: ['mist-compass', 'compass of the old fanes'],
+            name: "Mist-Compass of the Old Fanes",
+            category: "UNCOMMON MAGIC RELIC • Nat 20 Forest Find (No Attunement)",
+            desc: "An antique copper-and-horn compass whose needle glows faintly pale green, refusing to spin inside Barovia's disorienting fog banks.",
+            effect: "• <strong>True Bearing:</strong> Always points true north through Barovian Mists and grants <strong>Advantage on Wisdom (Survival)</strong> checks to navigate, forage, or track quarry!",
+            useViaRpg: true,
+            useBtnLabel: "🧭 Consult Mist-Compass",
+            useBtnClass: "btn-act-temp"
+        },
+        {
+            match: ['ambrosia cordial', 'barovian ambrosia'],
+            name: "Lost Pre-Curse Barovian Ambrosia Cordial",
+            category: "RARE CONSUMABLE • Nat 20 Tavern Cellar Find (75 GP)",
+            desc: "A tiny wax-sealed crystal bottle of golden spiced honey-brandy brewed before 351 BC—still shimmering like trapped afternoon sunlight.",
+            effect: "• <strong>Drink (Bonus Action):</strong> Restores <strong>2d6 + 4 HP</strong>; any healing exceeding Max HP converts into <strong>Temporary HP for 2 hours</strong> (non-stacking) AND <strong>cures 1 level of Exhaustion</strong>!",
+            useViaRpg: true,
+            useBtnLabel: "🍷 Drink Ambrosia (2d6+4 ➔ Temp)",
+            useBtnClass: "btn-act-heal"
+        },
+        {
+            match: ['gambler\'s bones', 'vistani luck'],
+            name: "Loaded Ivory Gambler's Bones of Vistani Luck",
+            category: "UNCOMMON MAGIC RELIC • Nat 20 Tavern Find (No Attunement)",
+            desc: "A pair of carved pale-ivory dice etched with tiny crescent moons that always clatter warmly in the palm.",
+            effect: "• <strong>Twist of Fate (1/Long Rest):</strong> Whenever you roll a <strong>Natural 1</strong> on an Ability Check, re-roll the d20 and keep the new roll!",
+            useViaRpg: true,
+            useBtnLabel: "🎲 Trigger Vistani Luck (Re-Roll 1)",
+            useBtnClass: "btn-act-temp"
+        },
+        {
+            match: ['dawn-touched silver thurible', 'silver thurible charm'],
+            name: "Dawn-Touched Silver Thurible Charm",
+            category: "UNCOMMON MAGIC AMULET • Nat 20 Church/Crypt Find",
+            desc: "A miniature silver incense pendant bearing an unbroken Morninglord sunburst that chimes like faint temple bells when undead approach.",
+            effect: "• <strong>Warmth of Dawn (1/Long Rest, 10 min):</strong> Sheds 15-ft bright warm light granting allies inside <strong>Advantage on saves vs Fear &amp; Charm</strong>.<br>• <strong>Undead Chime:</strong> Emits a quiet silver chime whenever an Undead creature enters within 30 ft.",
+            useViaRpg: true,
+            useBtnLabel: "☀️ Ignite Dawn Light (15 ft)",
+            useBtnClass: "btn-act-temp"
+        },
+        {
+            match: ['eyeglass of arcane appraisal', 'arcane appraisal'],
+            name: "Eyeglass of Arcane Appraisal",
+            category: "UNCOMMON MAGIC HEAD/POCKET RELIC • Nat 20 Study Find",
+            desc: "A folding brass monocle fitted with a lavender-tinted crystal lens ground by an old Vallakian scholar.",
+            effect: "• <strong>Scholar's Lens (1/Long Rest):</strong> Peer through the crystal for 1 Action to cast <strong><em>Identify</em></strong> or <strong><em>Detect Magic</em></strong> without a spell slot or material components!",
+            useViaRpg: true,
+            useBtnLabel: "🔮 Cast Identify / Detect Magic",
+            useBtnClass: "btn-act-temp"
+        },
+        {
+            match: ['fallen hunter\'s +1 silvered dagger', '+1 silvered dagger'],
+            name: "Fallen Hunter's +1 Silvered Side-Blade",
+            category: "RARE MAGIC SILVERED WEAPON • Nat 20 Corpse/Hunter Find",
+            desc: "A razor-balanced silvered trench-dagger stamped with a faded monster-hunter's wolf-and-stake sigil.",
+            effect: "• <strong>+1 Magic &amp; Silvered Dagger (Finesse, Light, Thrown 20/60 ft):</strong> Grants <strong>+1 to Attack and Damage rolls</strong> (<code>1d4 + STR/DEX + 1</code> Magic Silvered Piercing; <strong>5.5e Nick Mastery</strong>). Bypasses BOTH nonmagical AND silver immunities!"
+        },
+        {
+            match: ['garlic & turnip stew', 'garlic and turnip stew', 'turnip stew'],
+            name: "Spiced Garlic & Turnip Stew",
+            category: "BAROVIAN TAVERN MEAL • Food & Drink (2 SP)",
+            desc: "A steaming earthenware bowl of thick root-vegetable stew fragrant with wild garlic and cracked black pepper.",
+            effect: "• <strong>Eat (1 Action / Camp Meal):</strong> Restores <strong>1d4 + 1 Hit Points</strong> (strictly caps at Max HP).",
+            useViaRpg: true,
+            useBtnLabel: "🍲 Eat 1 (1d4+1 HP)",
+            useBtnClass: "btn-act-heal"
+        },
+        {
+            match: ['honey-mead flask', 'spiced honey-mead'],
+            name: "Innkeeper's Spiced Honey-Mead Flask",
+            category: "HIGH-ROLL TAVERN PROVISION • Food & Drink (5 GP)",
+            desc: "A clay hip-flask of clover honey-mead spiced with cinnamon bark and ginger root—hoarded behind the hearth.",
+            effect: "• <strong>Drink (1 Action):</strong> Restores <strong>1d6 + 2 Hit Points</strong> (caps at Max HP) and <strong>cures 1 level of Exhaustion</strong>!",
+            useViaRpg: true,
+            useBtnLabel: "🍯 Drink 1 (1d6+2 HP + Exhaustion)",
+            useBtnClass: "btn-act-heal"
         }
     ];
 
@@ -6760,14 +7049,38 @@
     // =========================================================================
     // UNIFIED CRAFTING ENGINE
     // =========================================================================
+    const CRAFT_TAG_KEYWORDS = {
+        medicinal_herb: ['medicinal herb', 'healing herb', 'comfrey', 'silver-leaf'],
+        spring_water:   ['spring water', 'glacier melt', 'pure water'],
+        silver_dust:    ['silver dust', 'silver filings', 'silver shavings', 'powdered silver', 'silver-veined quartz'],
+        wolfbane:       ['wolfbane', 'wolfsbane'],
+        sulfur:         ['sulfur', 'brimstone', 'black powder'],
+        pitch_oil:      ['pine pitch', 'pitch oil', 'lamp oil', 'pine resin', 'tar oil'],
+        pelt_canvas:    ['dire-pelt', 'treated pelt', 'waxed canvas', 'wolf pelt', 'bear pelt', 'beast pelt', 'thick hide', 'tent canvas', 'stagecoach tarp', 'heavy pelt'],
+        catalyst:       ['alchemical catalyst', 'alembic salt'],
+        moonpetal:      ['moonpetal'],
+        heart_core:     ['heart of sorrow', 'heartstone']
+    };
+
+    function inferCraftTagsForKeyword(keyword) {
+        const kwList = (Array.isArray(keyword) ? keyword : [keyword]).map(k => String(k || '').toLowerCase()).filter(Boolean);
+        const tags = [];
+        Object.entries(CRAFT_TAG_KEYWORDS).forEach(([tag, syns]) => {
+            if (kwList.some(k => syns.some(s => s.includes(k) || k.includes(s)))) {
+                tags.push(tag);
+            }
+        });
+        return { kwList, tags };
+    }
+
     function matchesIngredient(itemName, keyword) {
         const meta = getItemMeta(itemName);
         if (meta && meta.useAction && meta.useAction.type === 'learnRecipe') return false;
+        const { kwList, tags } = inferCraftTagsForKeyword(keyword);
+        if (meta && meta.craftAs && tags.includes(meta.craftAs)) return true;
         const low = String(itemName || '').toLowerCase();
-        if (Array.isArray(keyword)) {
-            return keyword.some(k => low.includes(String(k).toLowerCase()));
-        }
-        return low.includes(String(keyword || '').toLowerCase());
+        if (kwList.some(k => low.includes(k))) return true;
+        return tags.some(t => (CRAFT_TAG_KEYWORDS[t] || []).some(syn => low.includes(syn)));
     }
 
     function countIngredientQty(keyword) {
