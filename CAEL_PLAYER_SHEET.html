@@ -3735,7 +3735,11 @@
         if (match && match.isCraftableReagent) {
             btns.push(`<button type="button" class="btn-act btn-act-heal" onclick="closeItemModal(); openCraftModal();" style="background:linear-gradient(135deg,#065f46,#047857); border:1px solid #34d399; color:#ecfdf5;">⚗️ Open Potion Crafting</button>`);
         }
-        if (match && match.healFormula) {
+        if (match && match.useViaRpg) {
+            const btnCls = match.useBtnClass || 'btn-act-temp';
+            const btnLbl = match.useBtnLabel || `✨ Use 1`;
+            btns.push(`<button type="button" class="btn-act ${btnCls}" onclick="if(window.COS_RPG){COS_RPG.useConsumableByIndex(${index});} closeItemModal();">${btnLbl}</button>`);
+        } else if (match && match.healFormula) {
             const hf = match.healFormula;
             const formulaStr = hf.sides === 1 ? '1' : `${hf.dice}d${hf.sides}${hf.bonus ? '+' + hf.bonus : ''}`;
             const safeName = match.name.replace(/'/g, "\\'");

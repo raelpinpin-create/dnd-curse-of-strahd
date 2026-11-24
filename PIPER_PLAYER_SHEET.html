@@ -4077,26 +4077,26 @@
 
     const worldLootVault = {
         "apple": {
-            name: "Apple",
-            category: "BAROVIAN PROVISION • Consumable",
-            origin: "Session 2 Salvage / Camp Supplies",
-            desc: "A crisp, tart orchard apple packed into Piper's coat pocket.",
-            effect: "• <strong>Eat (Action):</strong> Restores <strong>1d4 + 1 HP</strong> (strictly caps at Max HP).",
+            name: "Barovian Orchard Apple",
+            category: "BAROVIAN PROVISION • Food & Drink (2 CP)",
+            origin: "Barovia Village / Road Orchards (Session 2 Salvage)",
+            desc: "Small, tart crimson apples plucked from gnarled mist-shadowed orchard trees along the Old Svalich Road—surprisingly crisp and sweet inside despite Barovia's gray skies.",
+            effect: "• <strong>Eat (1 Action):</strong> Restores <strong>1d4 + 1 Hit Points</strong> (strictly caps at Max HP — does not overflow into Temporary HP).",
             healFormula: { dice: 1, sides: 4, bonus: 1, verb: 'Ate' }
         },
         "holy barovian book": {
             name: "Holy Barovian Book",
-            category: "SACRED CHURCH RELIC • Trade / Lore Value (5 GP)",
-            origin: "Church of the Village of Barovia (Session 2 Loot)",
-            desc: "A worn leather-bound prayer tome of the Morninglord salvaged from Father Donavich's church.",
-            effect: "• <strong>Value &amp; Lore:</strong> Worth roughly <strong>5 GP</strong> to priests or scholars, and contains traditional Barovian hymns and rites of the Morninglord."
+            category: "SACRED HYMNAL & LORE TEXT • Story Valuable (5 GP)",
+            origin: "Church of the Village of Barovia (Area E5 — Session 2 Salvage)",
+            desc: "A cracked, smoke-scented leather hymnal stitched with tarnished gold thread, its margins annotated in spidery ink by generations of Barovian priests.",
+            effect: "• <strong>Trade Value (5 GP):</strong> Worth roughly <strong>5 GP</strong> to priests or scholars.<br>• <strong>Lore Context:</strong> Contains traditional Barovian hymns, burial rites, and forgotten litanies of the Morninglord."
         },
         "barovian holy chalice": {
             name: "Barovian Holy Chalice",
-            category: "SACRED CHURCH RELIC • Trade Value (5 GP)",
-            origin: "Church of the Village of Barovia (Session 2 Loot)",
-            desc: "A tarnished ritual chalice engraved with the rising sun crest of the Morninglord.",
-            effect: "• <strong>Value &amp; Ritual:</strong> Worth roughly <strong>5 GP</strong>; can hold consecrated water or ceremonial offerings."
+            category: "TRADE VALUABLE & SACRED VESSEL • Art Object (5 GP)",
+            origin: "Church of the Village of Barovia (Area E5 — Session 2 Salvage)",
+            desc: "A tarnished silvered-pewter ritual chalice engraved with the rising sunburst of the Morninglord, recovered from the dust-choked nave of Father Donavich's broken church.",
+            effect: "• <strong>Trade Value (5 GP):</strong> Worth roughly <strong>5 GP</strong> to merchants, collectors, or faithful Barovians.<br>• <strong>Ceremonial Use:</strong> May hold consecrated spring water or temple offerings."
         },
         "spring water": {
             name: "Flask of Morninglord Spring Water",
@@ -4565,7 +4565,7 @@
             const hf = match.healFormula;
             const formulaStr = `${hf.dice}d${hf.sides}${hf.bonus ? '+' + hf.bonus : ''}`;
             const safeName = match.name.replace(/'/g, "\\'");
-            btns.push(`<button type="button" class="btn-act btn-act-heal" onclick="consumeAndHealItem(${index}, ${hf.dice}, ${hf.sides}, ${hf.bonus}, '${hf.verb}', '${safeName}'); closeItemModal();">💚 ${hf.verb === 'Drank' ? 'Drink' : 'Use'} 1 (${formulaStr} HP)</button>`);
+            btns.push(`<button type="button" class="btn-act btn-act-heal" onclick="consumeAndHealItem(${index}, ${hf.dice}, ${hf.sides}, ${hf.bonus}, '${hf.verb}', '${safeName}'); closeItemModal();">💚 ${hf.verb === 'Drank' ? 'Drink' : (hf.verb === 'Ate' ? 'Eat' : (hf.verb === 'Applied' ? 'Apply' : 'Use'))} 1 (${formulaStr} HP)</button>`);
         } else if (parsed.hasQty) {
             btns.push(`<button type="button" class="btn-act btn-act-pre" style="color:var(--accent-gold);" onclick="stepItemQty(${index}, -1); closeItemModal();">🧪 Consume 1 (${parsed.qty} left)</button>`);
         }

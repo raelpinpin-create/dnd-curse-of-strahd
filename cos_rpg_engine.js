@@ -1879,11 +1879,35 @@
         },
         {
             match: ['croissant'],
-            category: 'consumable',
+            category: 'food',
             slots: [],
             quickBelt: true,
             useAction: { type: 'heal', dice: 1, sides: 4, bonus: 0, verb: 'Ate', actionCost: 'action', label: 'Croissant (1d4)' },
-            summary: 'Heal 1d4 HP (Action • Caps at Max HP)'
+            summary: 'Eat (Action): Heal 1d4 HP (Caps at Max HP)'
+        },
+        {
+            match: ['spiced roast mutton', 'roast mutton'],
+            category: 'food',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'overheal', dice: 1, sides: 6, bonus: 1, verb: 'Ate', actionCost: 'action', duration: '1 hour', label: 'Roast Mutton (1d6+1➔Temp)' },
+            summary: 'Eat (Action): Heal 1d6+1 HP; excess ➔ Temp HP (1 hr)'
+        },
+        {
+            match: [/\bapples?\b/],
+            category: 'food',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'heal', dice: 1, sides: 4, bonus: 1, verb: 'Ate', actionCost: 'action', label: 'Apple (1d4+1)' },
+            summary: 'Eat (Action): Heal 1d4+1 HP (Caps at Max HP)'
+        },
+        {
+            match: ['goodberr'],
+            category: 'food',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'heal', dice: 0, sides: 1, bonus: 1, verb: 'Ate', actionCost: 'action', label: 'Goodberry (+1 HP)', extraNote: 'Provides full nourishment for 1 day.' },
+            summary: 'Eat (Action): Restore 1 HP & full day nourishment'
         },
         {
             match: ['holy water', 'blessed by the morninglord', 'morninglord spring water'],
@@ -2070,11 +2094,39 @@
         },
         {
             match: ['dream pastry'],
-            category: 'consumable',
+            category: 'food',
             slots: [],
             quickBelt: true,
             useAction: { type: 'dreamPastry', label: 'Dream Pie (+1d6 Temp)' },
             summary: '+1d6 Temp HP • DC 13 CON Save @ Dawn'
+        },
+        {
+            match: ['holy barovian book'],
+            category: 'quest',
+            slots: [],
+            summary: 'Sacred Morninglord Hymnal • 5 GP Lore & Trade Text'
+        },
+        {
+            match: ['barovian holy chalice', 'holy chalice'],
+            category: 'gear',
+            slots: [],
+            summary: 'Trade Valuable • 5 GP • Morninglord Ritual Vessel'
+        },
+        {
+            match: ['days of rations', 'trail rations', /\brations?\b/],
+            category: 'food',
+            slots: [],
+            quickBelt: false,
+            useAction: { type: 'flavor', verb: 'Ate', actionCost: 'none', label: 'Eat Rations', effect: 'Ate a day\'s trail rations of dried jerky, salted biscuits, and hardtack.' },
+            summary: 'Camp Provision • Normal Trail Rations'
+        },
+        {
+            match: ['vintage barovian wine', 'purple grapemash', 'red dragon crush', 'champagne du le stomp', /\bwine\b/, /\bale\b/, /\bmead\b/],
+            category: 'food',
+            slots: [],
+            quickBelt: false,
+            useAction: { type: 'flavor', verb: 'Drank', actionCost: 'none', label: 'Drink Vintage', effect: 'Shared a warming pour to steady frayed Barovian nerves.' },
+            summary: 'Barovian Drink / Tavern Vintage'
         },
         {
             match: ['tarokka', 'wizard diary', 'pocket watch', 'journal', 'letter', 'tome of strahd', 'bones of'],
@@ -2083,7 +2135,7 @@
             summary: 'Story Clue / Key Relic'
         },
         {
-            match: ['lockpick', 'thieves', 'wine', 'pipe', 'dragonchess', 'bandolier', 'slug', 'cartridge', 'speedloader', 'tinker', 'lantern', 'crowbar', 'pack', 'pouch', 'torch', 'ration', 'rope', 'waterskin'],
+            match: ['lockpick', 'thieves', 'pipe', 'dragonchess', 'bandolier', 'slug', 'cartridge', 'speedloader', 'tinker', 'lantern', 'crowbar', 'pack', 'pouch', 'torch', 'rope', 'waterskin', 'chalice', 'goblet', 'statuette', 'candelabra'],
             category: 'gear',
             slots: [],
             summary: 'Adventuring / Trade Gear'
@@ -3246,15 +3298,136 @@
             category: "VERY RARE ENDGAME CASTER ATTACHMENT • Shaft Grip / Wrap Slot",
             desc: "A translucent blown-glass grip casing swirling with living silver fog that shields the caster and pierces Barovian mist.",
             effect: "• <strong>Bonus:</strong> Grants <strong>+1 to Armor Class</strong>, <strong>+2 to all Saving Throws &amp; Concentration</strong>, and <strong>Mist-Piercing Sight</strong>.<br>• <strong>Trade-Off:</strong> <strong>-2 to Melee Weapon Damage</strong> (fragile mist-glass wrap)."
+        },
+        {
+            match: ['spiced roast mutton', 'roast mutton'],
+            name: "Spiced Roast Mutton",
+            category: "HEARTY BAROVIAN MEAL • Food & Drink (5 SP)",
+            desc: "Slow-turned over applewood embers and basted with wild garlic, peppered tallow, and mountain rosemary—a rare hot meal in Barovia that puts iron back into freezing bones.",
+            effect: "• <strong>Eat (1 Action / Camp Meal):</strong> Restores <strong>1d6 + 1 Hit Points</strong>; any healing exceeding your Max HP converts into <strong>Temporary HP</strong> for <strong>1 hour</strong> (5e non-stacking).",
+            useViaRpg: true,
+            useBtnLabel: "🍖 Eat 1 (1d6+1 ➔ Temp HP)",
+            useBtnClass: "btn-act-heal"
+        },
+        {
+            match: [/\bapples?\b/],
+            name: "Barovian Orchard Apple",
+            category: "BAROVIAN PROVISION • Food & Drink (2 CP)",
+            desc: "Small, tart crimson apples plucked from gnarled mist-shadowed orchard trees along the Old Svalich Road—surprisingly crisp and sweet inside despite Barovia's gray skies.",
+            effect: "• <strong>Eat (1 Action):</strong> Restores <strong>1d4 + 1 Hit Points</strong> (strictly caps at Max HP — does not overflow into Temporary HP).",
+            useViaRpg: true,
+            useBtnLabel: "🍎 Eat 1 (1d4+1 HP)",
+            useBtnClass: "btn-act-heal"
+        },
+        {
+            match: ['barovian holy chalice', 'holy chalice'],
+            name: "Barovian Holy Chalice",
+            category: "TRADE VALUABLE & SACRED VESSEL • Art Object (5 GP)",
+            desc: "A tarnished silvered-pewter ritual chalice engraved with the rising sunburst of the Morninglord, recovered from the dust-choked nave of Father Donavich's broken church.",
+            effect: "• <strong>Trade Value (5 GP):</strong> Worth roughly <strong>5 GP</strong> to merchants, collectors, or faithful Barovians.<br>• <strong>Ceremonial Use:</strong> May hold consecrated spring water or temple offerings."
+        },
+        {
+            match: ['holy barovian book'],
+            name: "Holy Barovian Book",
+            category: "SACRED HYMNAL & LORE TEXT • Story Valuable (5 GP)",
+            desc: "A cracked leather-bound prayer tome stitched with tarnished gold thread, its margins annotated in spidery ink by generations of Barovian priests.",
+            effect: "• <strong>Trade Value (5 GP):</strong> Worth roughly <strong>5 GP</strong> to priests or scholars.<br>• <strong>Lore Context:</strong> Contains traditional Barovian hymns, burial rites, and forgotten litanies of the Morninglord."
+        },
+        {
+            match: ['father donovich\'s crossbow', 'donovich\'s crossbow'],
+            name: "Father Donovich's Crossbow",
+            category: "SIMPLE RANGED WEAPON • Light Crossbow (25 GP)",
+            desc: "An old, oil-darkened ashwood light crossbow etched with a faded Morninglord sunburst along the stock, kept behind Father Donovich's vestry door.",
+            effect: "• <strong>Two-Handed (80/320 ft):</strong> Deals <strong>1d8 + DEX Piercing</strong> damage (<strong>5.5e Slow Mastery:</strong> target's Speed is reduced by 10 ft until start of your next turn).<br>• <strong>Ammunition:</strong> Fires <strong>Crossbow Bolts</strong> — use <strong>[Load]</strong> to chamber Silvered or Specialty Bolts!"
         }
     ];
 
+    function getCustomLoreKey() { return `cos_custom_lore_${adapter ? adapter.heroId : 'hero'}_v1`; }
+    function getCustomLoreMap() {
+        try {
+            const raw = localStorage.getItem(getCustomLoreKey());
+            return raw ? JSON.parse(raw) : {};
+        } catch (e) { return {}; }
+    }
+    function saveCustomLoreMap(map) {
+        try { localStorage.setItem(getCustomLoreKey(), JSON.stringify(map || {})); } catch (e) {}
+    }
+
+    function registerCustomAmmoFromMeta(meta) {
+        if (!meta || !meta.ammoMeta) return;
+        const am = meta.ammoMeta;
+        if (am.ammoId && am.customDef && typeof am.customDef === 'object') {
+            AMMO_CATALOG[am.ammoId] = { id: am.ammoId, ...am.customDef };
+        }
+    }
+
+    function hydrateCustomAmmoDefs() {
+        const map = getCustomGearMap();
+        Object.values(map).forEach(m => registerCustomAmmoFromMeta(m));
+    }
+
+    function buildUseBtnDescriptor(useAction) {
+        if (!useAction || !useAction.type) return null;
+        if (useAction.type === 'learnRecipe') return { label: `📜 ${useAction.label || 'Study Recipe'}`, cls: 'btn-act-temp' };
+        if (useAction.type === 'magicPower') return { label: `✨ Activate: ${useAction.label || 'Magic Power'}`, cls: 'btn-act-temp' };
+        if (useAction.type === 'customBomb' || useAction.type === 'holyWater' || useAction.type === 'alchemistsFire' || useAction.type === 'phosphorBomb') {
+            return { label: `💣 Throw / Splash (${useAction.label || '1 Action'})`, cls: 'btn-act-dmg' };
+        }
+        if (useAction.type === 'flavor') {
+            const v = useAction.verb === 'Drank' ? '🍷 Drink 1' : (useAction.verb === 'Ate' ? '🍽️ Eat 1' : '✨ Use 1');
+            return { label: v, cls: 'btn-act-pre' };
+        }
+        if (useAction.type === 'heal' || useAction.type === 'overheal' || useAction.type === 'tempHp') {
+            const verbLbl = useAction.verb === 'Ate' ? '🍖 Eat 1' : (useAction.verb === 'Drank' ? '🧪 Drink 1' : (useAction.verb === 'Applied' ? '🩹 Apply 1' : '✨ Use 1'));
+            return { label: `${verbLbl} (${useAction.label || 'Roll'})`, cls: useAction.type === 'tempHp' ? 'btn-act-temp' : 'btn-act-heal' };
+        }
+        return { label: `✨ Use (${useAction.label || 'Effect'})`, cls: 'btn-act-temp' };
+    }
+
+    function registerCustomLoreFromMeta(rawName, meta) {
+        if (!rawName || !meta) return;
+        const k = normKey(rawName);
+        if (!k) return;
+        if (meta.lore || meta.mechanics || meta.rarity || meta.cost || meta.summary) {
+            const lMap = getCustomLoreMap();
+            lMap[k] = {
+                name: shortLabel(rawName),
+                rarity: meta.rarity || (lMap[k] && lMap[k].rarity) || 'Custom Item',
+                cost: meta.cost || (lMap[k] && lMap[k].cost) || '',
+                location: meta.location || (lMap[k] && lMap[k].location) || '',
+                mechanics: meta.mechanics || (meta.summary ? `• ${esc(meta.summary)}` : (lMap[k] && lMap[k].mechanics) || ''),
+                lore: meta.lore || (lMap[k] && lMap[k].lore) || '',
+                useAction: meta.useAction || (lMap[k] && lMap[k].useAction) || null
+            };
+            saveCustomLoreMap(lMap);
+        }
+    }
+
     function lookupSharedItemLore(rawName) {
         if (!rawName) return null;
+        const k = normKey(rawName);
+        const customLoreMap = getCustomLoreMap();
+        const cl = k ? customLoreMap[k] : null;
+        if (cl) {
+            const customMeta = getCustomGearMap()[k];
+            const uAct = (customMeta && customMeta.useAction) || cl.useAction || null;
+            const btnInfo = buildUseBtnDescriptor(uAct);
+            const catParts = [cl.rarity || 'CUSTOM ITEM', cl.cost ? `Value: ${cl.cost}` : ''].filter(Boolean);
+            return {
+                name: cl.name || shortLabel(rawName),
+                category: catParts.join(' • ').toUpperCase(),
+                origin: cl.location || 'Barovia',
+                desc: cl.lore || cl.location || 'Custom item forged in Barovia.',
+                effect: cl.mechanics || (customMeta && customMeta.summary ? `• ${esc(customMeta.summary)}` : '• Tracked in Backpack.'),
+                useViaRpg: Boolean(uAct),
+                useBtnLabel: btnInfo ? btnInfo.label : '✨ Use 1',
+                useBtnClass: btnInfo ? btnInfo.cls : 'btn-act-temp'
+            };
+        }
         const low = String(rawName).toLowerCase();
         for (const entry of SHARED_ITEM_LORE) {
-            if (entry.match.some(m => low.includes(m))) {
-                return { ...entry, origin: '' };
+            if (entry.match.some(m => (m instanceof RegExp ? m.test(low) : low.includes(m)))) {
+                return { ...entry, origin: entry.origin || '' };
             }
         }
         return null;
@@ -3344,11 +3517,12 @@
     function getCheckpointBackupKey() { return `cos_synced_checkpoint_${adapter ? adapter.heroId : 'hero'}_v1`; }
 
     function getConsumableTurnSlot(useAction) {
-        if (!useAction || !useAction.type || useAction.type === 'learnRecipe') return 'none';
+        if (!useAction || !useAction.type || useAction.type === 'learnRecipe' || useAction.type === 'flavor') return 'none';
+        if (useAction.actionCost === 'none') return 'none';
         if (useAction.actionCost === 'action' || useAction.actionCost === 'bonus' || useAction.actionCost === 'reaction') {
             return useAction.actionCost;
         }
-        if (['holyWater', 'alchemistsFire', 'phosphorBomb', 'utilityLog'].includes(useAction.type)) return 'action';
+        if (['holyWater', 'alchemistsFire', 'phosphorBomb', 'customBomb', 'utilityLog', 'magicPower'].includes(useAction.type)) return 'action';
         return 'bonus';
     }
 
@@ -4070,8 +4244,12 @@
     function classifyWeaponClasses(rawName, meta) {
         const low = String(rawName || '').toLowerCase();
         const classes = new Set();
+        if (meta && Array.isArray(meta.weaponClasses) && meta.weaponClasses.length > 0) {
+            meta.weaponClasses.forEach(c => classes.add(c));
+            return classes;
+        }
         const ammoKind = meta && (meta.ammoKind || meta.kind);
-        if (ammoKind === 'firearm' || low.includes('lament') || low.includes('mercy') || low.includes('less') || low.includes('revolver') || low.includes('rifle') || low.includes('musket') || low.includes('pistol')) {
+        if (ammoKind === 'firearm' || low.includes('lament') || low.includes('mercy') || low.includes('less') || low.includes('revolver') || low.includes('rifle') || low.includes('musket') || low.includes('pistol') || low.includes('blunderbuss') || low.includes('shotgun')) {
             classes.add('ranged');
             classes.add('firearm');
             return classes;
@@ -4087,10 +4265,11 @@
             return classes;
         }
         classes.add('melee');
-        if (low.includes('sword') || low.includes('axe') || low.includes('treebane') || low.includes('dagger') || low.includes('knife') || low.includes('rapier') || low.includes('scimitar') || low.includes('spear') || /\bfan\b/.test(low)) {
+        const dt = String((meta && meta.weaponStats && meta.weaponStats.dmgType) || '').toLowerCase();
+        if (dt.includes('slashing') || dt.includes('piercing') || low.includes('sword') || low.includes('axe') || low.includes('treebane') || low.includes('dagger') || low.includes('knife') || low.includes('rapier') || low.includes('scimitar') || low.includes('spear') || low.includes('glaive') || low.includes('halberd') || low.includes('pike') || low.includes('whip') || /\bfan\b/.test(low)) {
             classes.add('slashing_piercing');
         }
-        if (low.includes('mace') || low.includes('staff') || low.includes('thighbone')) {
+        if (dt.includes('bludgeoning') || low.includes('mace') || low.includes('staff') || low.includes('thighbone') || low.includes('hammer') || low.includes('maul') || low.includes('club') || low.includes('flail')) {
             classes.add('blunt');
         }
         if (low.includes('staff') || low.includes('quarterstaff') || low.includes('dagger') || low.includes('knife') || low.includes('wand') || low.includes('rod')) {
@@ -5482,6 +5661,7 @@
             initBonus: 0,
             spellFireBonus: null,
             skillAdv: [],
+            resistances: [],
             robeKey: 'none',
             equippedWeaponTags: [],
             equippedAbilities: [],
@@ -5528,6 +5708,9 @@
             if (Array.isArray(meta.skillAdv)) {
                 meta.skillAdv.forEach(sk => { if (!bonuses.skillAdv.includes(sk)) bonuses.skillAdv.push(sk); });
             }
+            if (meta.resistance && !bonuses.resistances.includes(meta.resistance)) {
+                bonuses.resistances.push(meta.resistance);
+            }
             if (meta.weaponTag) bonuses.equippedWeaponTags.push({ tag: meta.weaponTag, slot: s.id, grip: s.id === 'mainHand' && bonuses.mainHand2H ? '2h' : '1h', raw, meta });
             if (meta.grantsAbility) bonuses.equippedAbilities.push(meta.grantsAbility);
             if (meta.summary) bonuses.activePerks.push(`<strong>${esc(shortLabel(raw))}:</strong> ${esc(meta.summary)}`);
@@ -5564,8 +5747,48 @@
         return Boolean(eq.mainHand === key && isMainHandTwoHanded(eq));
     }
 
+    function getHeroAbilityMods() {
+        const hid = adapter ? adapter.heroId : '';
+        if (hid === 'piper')   return { str: 0, dex: 2, con: 2, int: 1, wis: 0, cha: 4, spell: 4, pb: 2 };
+        if (hid === 'jacomir') return { str: 3, dex: 0, con: 2, int: 0, wis: 1, cha: 2, spell: 2, pb: 2 };
+        if (hid === 'yvaine')  return { str: 1, dex: 4, con: 2, int: 0, wis: 2, cha: 0, spell: 2, pb: 2 };
+        if (hid === 'cael')    return { str: 0, dex: 2, con: 2, int: 1, wis: 3, cha: 1, spell: 3, pb: 2 };
+        return { str: 2, dex: 2, con: 2, int: 2, wis: 2, cha: 2, spell: 2, pb: 2 };
+    }
+
+    function stepVersatileDice(baseDice) {
+        const map = { '1d4': '1d6', '1d6': '1d8', '1d8': '1d10', '1d10': '1d12' };
+        return map[String(baseDice || '').toLowerCase()] || baseDice;
+    }
+
     function resolveWeaponCombatStats(raw, meta, isTwoHanded = false) {
-        if (meta && meta.weaponStats) return meta.weaponStats;
+        if (meta && meta.weaponStats) {
+            const ws = meta.weaponStats;
+            const effDice = (meta.versatile && isTwoHanded)
+                ? (ws.versatileDice || stepVersatileDice(ws.dmgDice))
+                : (ws.dmgDice || '1d8');
+            if (ws.autoScale || ws.abilityMode) {
+                const m = getHeroAbilityMods();
+                const mode = ws.abilityMode || (meta.ammoKind ? 'dex' : 'auto');
+                let abil = m.str;
+                if (mode === 'dex') abil = m.dex;
+                else if (mode === 'str') abil = m.str;
+                else if (mode === 'finesse') abil = Math.max(m.str, m.dex);
+                else if (mode === 'spell') abil = m.spell;
+                else abil = meta.ammoKind ? m.dex : Math.max(m.str, m.dex);
+                const magic = parseInt(ws.magicBonus) || 0;
+                const profCheck = checkItemProficiency(raw, meta);
+                const profAdd = (profCheck.allowed || isDmOverrideActive()) ? m.pb : 0;
+                return {
+                    ...ws,
+                    atkBonus: abil + profAdd + magic,
+                    dmgDice: effDice,
+                    dmgBonus: abil + magic,
+                    isTwoHanded: Boolean(isTwoHanded)
+                };
+            }
+            return { ...ws, dmgDice: effDice, isTwoHanded: Boolean(isTwoHanded) };
+        }
         const low = String(raw || '').toLowerCase();
         // Auto-detect magic bonus (+1/+2/+3)
         let magic = 0;
@@ -6423,6 +6646,14 @@
             return;
         }
 
+        if (act.type === 'magicPower' || act.keepItem) {
+            spendTurnAction(act.actionCost || 'action');
+            const chgTag = act.charges ? ` <span style="color:#d8b4fe; font-size:0.76rem;">(${esc(act.charges)})</span>` : '';
+            adapter.log(`✨ <strong>Activated ${esc(shortLabel(raw))}:</strong>${chgTag} ${esc(act.effect || act.label || 'Magic ability triggered!')}`);
+            applyEquipmentToSheet(true);
+            return;
+        }
+
         // Deduct 1 from inventory
         const newQty = parsed.qty - 1;
         if (newQty <= 0) items.splice(invIndex, 1);
@@ -6431,8 +6662,9 @@
         if (act.type === 'heal') {
             spendTurnAction(act.actionCost || 'bonus');
             let rolls = [], sum = 0;
-            for (let i = 0; i < act.dice; i++) {
-                const r = Math.floor(Math.random() * act.sides) + 1;
+            const dCnt = parseInt(act.dice) || 0;
+            for (let i = 0; i < dCnt; i++) {
+                const r = Math.floor(Math.random() * (act.sides || 4)) + 1;
                 rolls.push(r); sum += r;
             }
             const total = sum + (act.bonus || 0);
@@ -6440,12 +6672,15 @@
             const capNote = (res && typeof res.healed === 'number' && res.healed < total)
                 ? ` <small style="color:#94a3b8;">(+${res.healed} restored, capped at Max HP — no Temp HP)</small>`
                 : '';
-            adapter.log(`💚 <strong>${act.verb} ${esc(shortLabel(raw))}:</strong> [${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span>${capNote}`);
+            const extraTxt = act.extraNote ? `<br><small style="color:#fde68a;">✨ ${esc(act.extraNote)}</small>` : '';
+            const rollExpr = dCnt > 0 ? `[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = ` : '';
+            adapter.log(`💚 <strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${rollExpr}<span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span>${capNote}${extraTxt}`);
         } else if (act.type === 'tempHp') {
             spendTurnAction(act.actionCost || 'bonus');
             let rolls = [], sum = 0;
-            for (let i = 0; i < act.dice; i++) {
-                const r = Math.floor(Math.random() * act.sides) + 1;
+            const dCnt = parseInt(act.dice) || 0;
+            for (let i = 0; i < dCnt; i++) {
+                const r = Math.floor(Math.random() * (act.sides || 4)) + 1;
                 rolls.push(r); sum += r;
             }
             const total = sum + (act.bonus || 0);
@@ -6455,12 +6690,14 @@
                 ? ` <small style="color:#94a3b8;">(kept higher existing +${res.prevTemp} Temp HP — 5e non-stacking)</small>`
                 : '';
             const extraTxt = act.extraNote ? `<br><small style="color:#fde68a;">✨ ${esc(act.extraNote)}</small>` : '';
-            adapter.log(`🛡️ <strong>${act.verb || 'Drank'} ${esc(shortLabel(raw))}:</strong> [${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = <span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${total} Temp HP</span>${durTxt}!${keptTxt}${extraTxt}`);
+            const rollExpr = dCnt > 0 ? `[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = ` : '';
+            adapter.log(`🛡️ <strong>${esc(act.verb || 'Drank')} ${esc(shortLabel(raw))}:</strong> ${rollExpr}<span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${total} Temp HP</span>${durTxt}!${keptTxt}${extraTxt}`);
         } else if (act.type === 'overheal') {
             spendTurnAction(act.actionCost || 'bonus');
             let rolls = [], sum = 0;
-            for (let i = 0; i < act.dice; i++) {
-                const r = Math.floor(Math.random() * act.sides) + 1;
+            const dCnt = parseInt(act.dice) || 0;
+            for (let i = 0; i < dCnt; i++) {
+                const r = Math.floor(Math.random() * (act.sides || 4)) + 1;
                 rolls.push(r); sum += r;
             }
             const total = sum + (act.bonus || 0);
@@ -6475,7 +6712,25 @@
                     ? `<span style="color:#4ade80; font-weight:800;">+${res.healed} HP</span> + Overheal ➔ ${tempPart}!`
                     : `Full HP — Overheal ➔ ${tempPart}!`;
             }
-            adapter.log(`✨ <strong>${act.verb || 'Drank'} ${esc(shortLabel(raw))}:</strong> [${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} (${total}) ➔ ${detailTxt}`);
+            const extraTxt = act.extraNote ? `<br><small style="color:#fde68a;">✨ ${esc(act.extraNote)}</small>` : '';
+            const rollExpr = dCnt > 0 ? `[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} (${total})` : `(${total})`;
+            adapter.log(`✨ <strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${rollExpr} ➔ ${detailTxt}${extraTxt}`);
+        } else if (act.type === 'customBomb') {
+            spendTurnAction(act.actionCost || 'action');
+            let rolls = [], sum = 0;
+            const dCnt = Math.max(1, parseInt(act.dice) || 2);
+            const dSides = Math.max(2, parseInt(act.sides) || 6);
+            for (let i = 0; i < dCnt; i++) {
+                const r = Math.floor(Math.random() * dSides) + 1;
+                rolls.push(r); sum += r;
+            }
+            const total = sum + (act.bonus || 0);
+            const rngTag = act.range ? ` (${esc(act.range)}${act.aoe ? ', ' + esc(act.aoe) : ''})` : '';
+            const saveTxt = act.saveNote ? ` <small style="color:#fde68a;">(${esc(act.saveNote)})</small>` : '';
+            adapter.log(`💣 <strong>${esc(act.verb || 'Threw')} ${esc(shortLabel(raw))}${rngTag}:</strong> ${dCnt}d${dSides}[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = <span style="color:#fb923c; font-size:1.1rem; font-weight:800;">${total} ${esc(act.dmgType || 'Fire')} Damage</span>!${saveTxt}`);
+        } else if (act.type === 'flavor') {
+            const icon = act.verb === 'Drank' ? '🍷' : '🍽️';
+            adapter.log(`${icon} <strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${esc(act.effect || 'Consumed from Backpack.')}`);
         } else if (act.type === 'holyWater') {
             spendTurnAction('action');
             const d1 = Math.floor(Math.random() * 6) + 1;
@@ -6496,7 +6751,8 @@
             const d2 = Math.floor(Math.random() * 6) + 1;
             adapter.log(`💣 <strong>Threw ${esc(shortLabel(raw))} (30 ft, 10-ft radius):</strong> 2d6[${d1}+${d2}] = <span style="color:#fde68a; font-size:1.08rem; font-weight:800;">${d1 + d2} Fire/Radiant Damage</span> + <strong>Blinded 1 turn</strong> (<code>DC 13 DEX/CON Save</code>; lights up blood-mist &amp; invisible foes!).`);
         } else if (act.type === 'utilityLog') {
-            adapter.log(`<strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${esc(act.effect || act.label)}`);
+            if (act.actionCost && act.actionCost !== 'none') spendTurnAction(act.actionCost);
+            adapter.log(`✨ <strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${esc(act.effect || act.label)}`);
         }
         applyEquipmentToSheet(true);
     }
@@ -6841,19 +7097,39 @@
     function startCloudVaultAndCommandListeners() {
         if (!firebaseReady || !rtdb || !adapter) return;
 
-        // 1. Live sync DM-created custom items (customMeta) into local recognition map
+        // 1. Live sync DM-created custom items (customMeta + full lore/mechanics/ammo) into local recognition maps
         campaignRtdbRef('custom_loot').on('value', snap => {
             const val = snap.val() || {};
             const map = getCustomGearMap();
+            const lMap = getCustomLoreMap();
             let changed = false;
+            let loreChanged = false;
             Object.values(val).forEach(entry => {
-                if (!entry || !entry.name || !entry.customMeta) return;
+                if (!entry || !entry.name) return;
                 const k = normKey(entry.name);
-                if (k && JSON.stringify(map[k]) !== JSON.stringify(entry.customMeta)) {
-                    map[k] = entry.customMeta;
-                    changed = true;
+                if (!k) return;
+                if (entry.customMeta) {
+                    registerCustomAmmoFromMeta(entry.customMeta);
+                    if (JSON.stringify(map[k]) !== JSON.stringify(entry.customMeta)) {
+                        map[k] = entry.customMeta;
+                        changed = true;
+                    }
+                }
+                const loreRec = {
+                    name: entry.name,
+                    rarity: entry.rarity || 'Custom Item',
+                    cost: entry.cost || '',
+                    location: entry.location || '',
+                    mechanics: entry.mechanics || (entry.customMeta && entry.customMeta.summary ? `• ${esc(entry.customMeta.summary)}` : ''),
+                    lore: entry.lore || '',
+                    useAction: (entry.customMeta && entry.customMeta.useAction) || null
+                };
+                if (JSON.stringify(lMap[k]) !== JSON.stringify(loreRec)) {
+                    lMap[k] = loreRec;
+                    loreChanged = true;
                 }
             });
+            if (loreChanged) saveCustomLoreMap(lMap);
             if (changed) {
                 saveCustomGearMap(map);
                 applyEquipmentToSheet(true);
@@ -6924,6 +7200,8 @@
                             const map = getCustomGearMap();
                             map[normKey(cmd.itemRaw)] = cmd.customMeta;
                             saveCustomGearMap(map);
+                            registerCustomAmmoFromMeta(cmd.customMeta);
+                            registerCustomLoreFromMeta(cmd.itemRaw, cmd.customMeta);
                         }
                         applyEquipmentToSheet(true);
                         adapter.log(`🎁 <strong>DM Added to Your Backpack:</strong> <strong>${cmd.qty > 1 ? cmd.qty + 'x ' : ''}${esc(shortLabel(cmd.itemRaw))}</strong>${cmd.note ? ` <em>("${esc(cmd.note)}")</em>` : ''}!`);
@@ -7759,6 +8037,8 @@
                 const map = getCustomGearMap();
                 map[normKey(data.itemRaw)] = data.customMeta;
                 saveCustomGearMap(map);
+                registerCustomAmmoFromMeta(data.customMeta);
+                registerCustomLoreFromMeta(data.itemRaw, data.customMeta);
             }
             applyEquipmentToSheet(true);
         }
@@ -7800,6 +8080,8 @@
                     const map = getCustomGearMap();
                     map[normKey(tr.itemRaw)] = tr.customMeta;
                     saveCustomGearMap(map);
+                    registerCustomAmmoFromMeta(tr.customMeta);
+                    registerCustomLoreFromMeta(tr.itemRaw, tr.customMeta);
                 }
                 applyEquipmentToSheet(true);
                 adapter.log(`✅ <strong>Accepted ${tr.qty > 1 ? tr.qty + 'x ' : ''}${esc(shortLabel(tr.itemRaw))}</strong> from <strong>${esc(tr.fromName)}</strong> into your Backpack!`);
@@ -7971,6 +8253,8 @@
                     const map = getCustomGearMap();
                     map[normKey(payload.itemRaw)] = payload.customMeta;
                     saveCustomGearMap(map);
+                    registerCustomAmmoFromMeta(payload.customMeta);
+                    registerCustomLoreFromMeta(payload.itemRaw, payload.customMeta);
                 }
                 applyEquipmentToSheet(true);
                 adapter.log(`✅ <strong>Claimed ${payload.qty > 1 ? payload.qty + 'x ' : ''}${esc(shortLabel(payload.itemRaw))}</strong> from <strong>${esc(payload.fromName || 'Ally')}</strong>!`);
@@ -8751,6 +9035,15 @@
             const defAbil = adapter.heroId === 'yvaine' ? 4 : (adapter.heroId === 'jacomir' ? 3 : 2);
             kindFieldsHtml = `
                 <div class="rpg-form-grid">
+                    <label class="rpg-field-lbl">Weapon Type / Ammunition
+                        <select id="rpg-tag-wpn-ammo" class="rpg-select">
+                            <option value="">Melee Blade / Polearm (Coatable)</option>
+                            <option value="blunt">Melee Blunt / Staff</option>
+                            <option value="crossbow">Crossbow (Loads Crossbow Bolts)</option>
+                            <option value="bow">Bow (Loads Bow Arrows)</option>
+                            <option value="firearm">Firearm / Sling (Loads Bullets)</option>
+                        </select>
+                    </label>
                     <label class="rpg-field-lbl">Weapon Slot
                         <select id="rpg-tag-slot" class="rpg-select">${handSlotOpts}</select>
                     </label>
@@ -8869,6 +9162,62 @@
                     <input type="text" id="rpg-tag-note" class="rpg-input" placeholder="e.g. 1/LR Speak with Dead, +5 Sorcery Points on Short Rest...">
                 </label>
             `;
+        } else if (customTagKind === 'food') {
+            kindFieldsHtml = `
+                <div class="rpg-form-grid">
+                    <label class="rpg-field-lbl">Food / Drink Effect
+                        <select id="rpg-tag-food-type" class="rpg-select">
+                            <option value="heal">💚 Restore HP (Caps at Max HP)</option>
+                            <option value="overheal">✨ Hearty Overheal (Heal + Excess ➔ Temp HP • 1 hr)</option>
+                            <option value="tempHp">🛡️ Pure Temporary HP (1 hr • Non-Stacking)</option>
+                            <option value="utilityLog">🌟 Buff / Stamina / Cure Exhaustion</option>
+                            <option value="flavor">🍽️ Normal Food / Flavor Only (No Dice)</option>
+                        </select>
+                    </label>
+                    <label class="rpg-field-lbl">Verb
+                        <select id="rpg-tag-food-verb" class="rpg-select">
+                            <option value="Ate">🍖 Ate (Food / Meal / Snack)</option>
+                            <option value="Drank">🍷 Drank (Wine / Ale / Tea)</option>
+                        </select>
+                    </label>
+                    <label class="rpg-field-lbl">Dice Rolled (if Heal/Temp)
+                        <select id="rpg-tag-cons-dice" class="rpg-select">
+                            <option value="0|1">Flat Bonus Only (No Dice)</option>
+                            <option value="1|4" selected>1d4 (Apple / Croissant / Snack)</option>
+                            <option value="1|6">1d6 (Roast / Hearty Stew)</option>
+                            <option value="2|4">2d4 (Tavern Feast)</option>
+                            <option value="2|6">2d6 (Rich Banquet)</option>
+                        </select>
+                    </label>
+                    <label class="rpg-field-lbl">Flat Bonus (+HP)
+                        <input type="number" id="rpg-tag-cons-bonus" class="rpg-input" value="1" min="0" max="20">
+                    </label>
+                    <label class="rpg-field-lbl">Pin to 1-Tap Quick-Belt?
+                        <select id="rpg-tag-cons-qb" class="rpg-select">
+                            <option value="yes">Yes (Show on Main Sheet)</option>
+                            <option value="no">No (Backpack Only)</option>
+                        </select>
+                    </label>
+                </div>
+                <label class="rpg-field-lbl">Food Effect / Buff / Flavor Note
+                    <input type="text" id="rpg-tag-note" class="rpg-input" placeholder="e.g. Cures 1 Exhaustion, Adv vs Cold 2 hrs, Warm tavern roast...">
+                </label>
+            `;
+        } else if (customTagKind === 'loot_mat') {
+            kindFieldsHtml = `
+                <div class="rpg-form-grid">
+                    <label class="rpg-field-lbl">Backpack Category
+                        <select id="rpg-tag-loot-cat" class="rpg-select">
+                            <option value="gear">🪙 Normal Loot / Valuable / Everyday Gear</option>
+                            <option value="crafting">🌿 Crafting Material / Reagent</option>
+                            <option value="quest">📜 Quest Relic / Book / Clue</option>
+                        </select>
+                    </label>
+                </div>
+                <label class="rpg-field-lbl">Value / Lore / Purpose Note
+                    <input type="text" id="rpg-tag-note" class="rpg-input" placeholder="e.g. Worth 5 GP, Morninglord ritual chalice, Alchemy herb...">
+                </label>
+            `;
         } else if (customTagKind === 'consumable') {
             kindFieldsHtml = `
                 <div class="rpg-form-grid">
@@ -8979,14 +9328,16 @@
                         <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'weapon' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('weapon')">⚔️ Weapon</button>
                         <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'armor' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('armor')">🛡️ Armor / Gear</button>
                         <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'caster' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('caster')">🔮 Caster Focus</button>
-                        <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'accessory' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('accessory')">💍 Amulet / Ring</button>
-                        <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'consumable' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('consumable')">🧪 Consumable</button>
+                        <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'accessory' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('accessory')">💍 Magic / Relic</button>
+                        <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'food' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('food')">🍖 Food &amp; Drink</button>
+                        <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'consumable' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('consumable')">🧪 Potion / Bomb</button>
+                        <button type="button" class="rpg-filter-pill" aria-pressed="${customTagKind === 'loot_mat' ? 'true' : 'false'}" onclick="COS_RPG.setCustomTagKind('loot_mat')">🪙 Loot / Material</button>
                     </div>
                 </div>
                 ${kindFieldsHtml}
                 <div style="display:flex; gap:6px; justify-content:flex-end;">
                     <button type="button" class="rpg-mini-btn" onclick="COS_RPG.toggleCustomTagger()">Cancel</button>
-                    <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.saveCustomGearTag()">Save${customTagKind === 'consumable' ? ' Consumable' : ' &amp; Equip'}</button>
+                    <button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.saveCustomGearTag()">Save${['consumable', 'food', 'loot_mat'].includes(customTagKind) ? ' Tag' : ' &amp; Equip'}</button>
                 </div>
                 ${customListHtml}
             </div>
@@ -9008,6 +9359,7 @@
                     ${bonuses.initBonus ? `<span class="rpg-stat-pill gold">Init: ${bonuses.initBonus > 0 ? '+' : ''}${bonuses.initBonus}</span>` : ''}
                     ${bonuses.spellFireBonus ? `<span class="rpg-stat-pill" style="border-color:#ef4444; color:#fca5a5;">Spell Fire: +${esc(bonuses.spellFireBonus)}</span>` : ''}
                     ${bonuses.skillAdv.length ? `<span class="rpg-stat-pill green">Adv: ${esc(bonuses.skillAdv.join(', '))}</span>` : ''}
+                    ${bonuses.resistances && bonuses.resistances.length ? `<span class="rpg-stat-pill blue">Resist: ${esc(bonuses.resistances.join(', '))}</span>` : ''}
                     <span class="rpg-stat-pill purple" title="D&D 5e Attunement Limit: You can bond with at most 3 powerful magic items at the same time (e.g. Cloak of Protection, Sunsword, Bloodwell Vial).">Attuned: ${bonuses.attunedCount} / 3</span>
                 </div>
                 <div class="rpg-override-bar">
@@ -9161,7 +9513,9 @@
         let equipTargetSlot = null;
 
         if (customTagKind === 'weapon') {
-            const slotVal = document.getElementById('rpg-tag-slot')?.value || 'mainHand';
+            const ammoSel = document.getElementById('rpg-tag-wpn-ammo')?.value || '';
+            const ammoKind = ['crossbow', 'bow', 'firearm'].includes(ammoSel) ? ammoSel : null;
+            const slotVal = document.getElementById('rpg-tag-slot')?.value || (ammoKind ? 'ranged' : 'mainHand');
             const handsVal = document.getElementById('rpg-tag-hands')?.value || '1';
             const dmgDice = document.getElementById('rpg-tag-wpn-dice')?.value || '1d8';
             const dmgType = document.getElementById('rpg-tag-wpn-type')?.value || 'Slashing';
@@ -9174,9 +9528,11 @@
 
             const slots = slotVal === 'both_1h' ? ['mainHand', 'offHand'] : [slotVal];
             equipTargetSlot = slots[0];
+            const ammoHint = ammoKind === 'crossbow' ? 'Bolts' : (ammoKind === 'bow' ? 'Arrows' : (ammoKind === 'firearm' ? 'Bullets' : ''));
             const summaryParts = [
                 `${handsVal === '2' ? '2H' : (handsVal === 'versatile' ? 'Versatile' : '1H')} • +${atkBonus} Hit`,
                 `${dmgDice}${dmgBonus ? (dmgBonus > 0 ? '+' + dmgBonus : dmgBonus) : ''} ${dmgType}`,
+                ammoHint ? `Loads ${ammoHint}` : '',
                 extraDice ? `+${extraDice} ${extraType}` : '',
                 note,
                 attune ? 'Attune' : ''
@@ -9186,12 +9542,54 @@
                 category: 'weapon',
                 slots,
                 reqWeapon,
+                ammoKind,
+                weaponClasses: ammoKind ? ['ranged', ammoKind] : (ammoSel === 'blunt' ? ['melee', 'blunt'] : ['melee', 'slashing_piercing']),
                 hands: handsVal === '2' ? 2 : 1,
                 versatile: handsVal === 'versatile',
                 attune,
                 isLegDagger: slots.includes('legSheath'),
                 weaponStats: { atkBonus, dmgDice, dmgBonus, dmgType, extraDice, extraType },
                 summary: summaryParts.join(' • ')
+            };
+        } else if (customTagKind === 'food') {
+            const fType = document.getElementById('rpg-tag-food-type')?.value || 'heal';
+            const verb = document.getElementById('rpg-tag-food-verb')?.value || 'Ate';
+            const [diceCnt, diceSides] = (document.getElementById('rpg-tag-cons-dice')?.value || '1|4').split('|').map(Number);
+            const bonus = parseInt(document.getElementById('rpg-tag-cons-bonus')?.value) || 0;
+            const qb = document.getElementById('rpg-tag-cons-qb')?.value === 'yes';
+            const fStr = diceCnt > 0 ? `${diceCnt}d${diceSides}${bonus ? '+' + bonus : ''}` : `+${bonus}`;
+            const sLbl = shortLabel(raw).replace(/^[^\w"]+/, '').split(' ').slice(0, 2).join(' ') || 'Food';
+            let actObj = null;
+            let baseSum = '';
+            if (fType === 'heal') {
+                actObj = { type: 'heal', dice: diceCnt, sides: diceSides, bonus, verb, actionCost: 'action', label: `${sLbl} (${fStr})`, extraNote: note || '' };
+                baseSum = `${verb === 'Drank' ? 'Drink' : 'Eat'} (Action): Heal ${fStr} HP`;
+            } else if (fType === 'overheal') {
+                actObj = { type: 'overheal', dice: diceCnt, sides: diceSides, bonus, verb, actionCost: 'action', duration: '1 hour', label: `${sLbl} (${fStr}➔Temp)`, extraNote: note || '' };
+                baseSum = `${verb === 'Drank' ? 'Drink' : 'Eat'} (Action): Heal ${fStr} HP; excess ➔ Temp HP (1 hr)`;
+            } else if (fType === 'tempHp') {
+                actObj = { type: 'tempHp', dice: diceCnt, sides: diceSides, bonus, verb, actionCost: 'action', duration: '1 hour', label: `${sLbl} (+${fStr} Temp)`, extraNote: note || '' };
+                baseSum = `${verb === 'Drank' ? 'Drink' : 'Eat'} (Action): +${fStr} Temp HP (1 hr)`;
+            } else if (fType === 'utilityLog') {
+                actObj = { type: 'utilityLog', verb, actionCost: 'action', label: sLbl, effect: note || 'Hearty Barovian meal buff!' };
+                baseSum = `${verb === 'Drank' ? 'Drink' : 'Eat'}: ${note || 'Meal Buff'}`;
+            } else {
+                actObj = { type: 'flavor', verb, actionCost: 'none', label: sLbl, effect: note || 'Consumed normal Barovian provision.' };
+                baseSum = `Normal Food / Provision`;
+            }
+            meta = {
+                category: 'food',
+                slots: [],
+                quickBelt: qb && fType !== 'flavor',
+                useAction: actObj,
+                summary: `${baseSum}${note && fType !== 'utilityLog' ? ' • ' + note : ''}`
+            };
+        } else if (customTagKind === 'loot_mat') {
+            const lCat = document.getElementById('rpg-tag-loot-cat')?.value || 'gear';
+            meta = {
+                category: lCat,
+                slots: [],
+                summary: note || (lCat === 'crafting' ? 'Crafting Material' : (lCat === 'quest' ? 'Quest / Lore Item' : 'Normal Loot / Valuable'))
             };
         } else if (customTagKind === 'caster') {
             const slot = document.getElementById('rpg-tag-slot')?.value || 'mainHand';
@@ -9342,12 +9740,13 @@
         { id: 'all',        label: '📦 All' },
         { id: 'equipped',   label: '✓ Equipped' },
         { id: 'weapon',     label: '⚔️ Weapons' },
-        { id: 'armor',      label: '🛡️ Armor & Robes' },
-        { id: 'accessory',  label: '💍 Accessories' },
-        { id: 'consumable', label: '🧪 Consumables' },
+        { id: 'armor',      label: '🛡️ Armor' },
+        { id: 'accessory',  label: '💍 Magic & Relics' },
+        { id: 'consumable', label: '🧪 Potions & Bombs' },
+        { id: 'food',       label: '🍖 Food & Drink' },
         { id: 'crafting',   label: '🌿 Crafting' },
         { id: 'quest',      label: '📜 Quest & Clues' },
-        { id: 'gear',       label: '🎒 Gear' }
+        { id: 'gear',       label: '🪙 Gear & Loot' }
     ];
 
     function renderBackpackModal() {
@@ -9420,7 +9819,13 @@
             const isAttachMod = Boolean(meta.attachMeta);
             const ammoNeedsContainer = Boolean(hasLoadableAmmo && !isCoatingVial && meta.ammoMeta.ammoKind === 'firearm' && !hasBulletContainerInBag());
             const isStudyAction = Boolean(meta.useAction && meta.useAction.type === 'learnRecipe');
-            const catLbl = BP_CATS.find(c => c.id === meta.category)?.label || '📦 Gear';
+            const useBtnLbl = !meta.useAction ? ''
+                : (isStudyAction ? 'Study'
+                : (meta.useAction.type === 'magicPower' ? 'Activate'
+                : (['customBomb', 'holyWater', 'alchemistsFire', 'phosphorBomb'].includes(meta.useAction.type) ? 'Throw'
+                : (meta.useAction.verb === 'Ate' ? 'Eat'
+                : (meta.useAction.verb === 'Drank' ? 'Drink' : 'Use')))));
+            const catLbl = BP_CATS.find(c => c.id === meta.category)?.label || '🪙 Gear & Loot';
 
             rows.push(`
                 <div class="rpg-bp-row ${isEquipped ? 'row-equipped' : ''}">
@@ -9452,7 +9857,7 @@
                                     ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Buy a Partitioned Bullet Sling &amp; Pouch (15 GP in any shop) first">Load (Locked)</button>`
                                     : `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })">Load</button>`))
                             : ''}
-                        ${meta.useAction ? `<button type="button" class="rpg-mini-btn ${isStudyAction ? 'btn-equip' : 'btn-use'}" data-rpg-turn-slot="${getConsumableTurnSlot(meta.useAction)}" onclick="COS_RPG.useConsumableByIndex(${idx})">${isStudyAction ? 'Study' : 'Use'}</button>` : ''}
+                        ${meta.useAction ? `<button type="button" class="rpg-mini-btn ${isStudyAction || meta.useAction.type === 'magicPower' ? 'btn-equip' : 'btn-use'}" data-rpg-turn-slot="${getConsumableTurnSlot(meta.useAction)}" onclick="COS_RPG.useConsumableByIndex(${idx})">${useBtnLbl}</button>` : ''}
                         <button type="button" class="rpg-mini-btn btn-send" onclick="COS_RPG.openSendForItem(${idx})" title="Send to party member">Send</button>
                         <div class="inv-stepper" style="display:inline-flex; align-items:center; gap:3px; background:#090e1a; border:1px solid #334155; border-radius:5px; padding:1px 4px;">
                             ${p.qty > 1 ? `<button type="button" class="rpg-mini-btn" style="min-block-size:22px; padding:0 5px; border:none;" onclick="COS_RPG.stepBackpackQty(${idx}, -1)" aria-label="Decrease quantity">−</button><span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:800; color:#fde68a; min-width:22px; text-align:center;">${p.qty}x</span>` : ''}
@@ -13034,6 +13439,7 @@
 
     function init(sheetAdapter) {
         adapter = sheetAdapter;
+        hydrateCustomAmmoDefs();
         loadCachedMsgThreads();
         initThemeListeners();
         injectDialogsAndBanner();
@@ -13226,6 +13632,7 @@
         saveBrowserFirebaseConfig,
         encodeTradeCode,
         lookupSharedItemLore,
+        getSharedLootItemMeta: lookupSharedItemLore,
         getItemMeta,
         // Video-Game RPG HUD API
         openDirectWhisper,

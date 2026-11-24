@@ -3067,11 +3067,11 @@
             effect: "• <strong>Strahd's Secret Favor:</strong> Strahd asked Jacomir to <em>convince Ireena to join him willingly</em> as her only true safety in Barovia.<br>• <strong>The Sovereign's Bait:</strong> If Jacomir accepts the favor and uses this letter to summon/visit Strahd again, the Count promised to <strong>help Jacomir find his missing people of Oakenshire</strong> (whom Madam Eva confirmed are somewhere in Barovia!)."
         },
         "apple": {
-            name: "Apple",
-            category: "BAROVIAN PROVISION • Consumable",
-            origin: "Session 2 Salvage / Camp Supplies",
-            desc: "A crisp, tart orchard apple packed into Jacomir's cloak.",
-            effect: "• <strong>Eat (Action):</strong> Restores <strong>1d4 + 1 HP</strong> (strictly caps at Max HP).",
+            name: "Barovian Orchard Apple",
+            category: "BAROVIAN PROVISION • Food & Drink (2 CP)",
+            origin: "Barovia Village / Road Orchards (Session 2 Salvage)",
+            desc: "Small, tart crimson apples plucked from gnarled mist-shadowed orchard trees along the Old Svalich Road—surprisingly crisp and sweet inside despite Barovia's gray skies.",
+            effect: "• <strong>Eat (1 Action):</strong> Restores <strong>1d4 + 1 Hit Points</strong> (strictly caps at Max HP — does not overflow into Temporary HP).",
             healFormula: { dice: 1, sides: 4, bonus: 1, verb: 'Ate' }
         },
         "wizard diary": {
@@ -3358,7 +3358,7 @@
             const hf = match.healFormula;
             const formulaStr = `${hf.dice}d${hf.sides}${hf.bonus ? '+' + hf.bonus : ''}`;
             const safeName = match.name.replace(/'/g, "\\'");
-            btns.push(`<button type="button" class="btn-act btn-act-heal" onclick="consumeAndHealItem(${index}, ${hf.dice}, ${hf.sides}, ${hf.bonus}, '${hf.verb}', '${safeName}'); closeItemModal();">💚 ${hf.verb === 'Drank' ? 'Drink' : 'Apply'} 1 (${formulaStr} HP)</button>`);
+            btns.push(`<button type="button" class="btn-act btn-act-heal" onclick="consumeAndHealItem(${index}, ${hf.dice}, ${hf.sides}, ${hf.bonus}, '${hf.verb}', '${safeName}'); closeItemModal();">💚 ${hf.verb === 'Drank' ? 'Drink' : (hf.verb === 'Ate' ? 'Eat' : (hf.verb === 'Applied' ? 'Apply' : 'Use'))} 1 (${formulaStr} HP)</button>`);
         } else if (parsed.hasQty) {
             btns.push(`<button type="button" class="btn-act btn-act-pre" style="color:var(--accent-gold);" onclick="stepItemQty(${index}, -1); closeItemModal();">🧪 Consume 1 (${parsed.qty} left)</button>`);
         }
