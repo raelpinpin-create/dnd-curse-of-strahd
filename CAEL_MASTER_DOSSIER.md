@@ -45,11 +45,12 @@ In Barovia, the sky is perpetually choked in impenetrable, suffocating grey fog.
 * **The Dark Truth:**
   Cael's bone star chart does not map the constellations of Toril or Oerth. It maps the **Amber Sarcophagi of the Amber Temple and the cosmic leylines of the Dark Powers**. When he reads the "stars" to tell the party where to go next, he is following the invisible navigation beacons of the cosmic puppet masters.
 
-### 3. His Internal Struggle (The Agony of Attachment)
-Cael's kindness is **not an act**. He has spent weeks shivering in the fog, terrified and alone. When the party takes him in, feeds him, and treats him like family, it fills a desperate void in his heart. 
-* Every time a player character takes a blade for him, his soul fractures with guilt.
-* He desperately wishes he were just an ordinary druid boy from an ordinary world.
-* But deep within his blood, the black tendrils of the Dark Powers are woven into his life force. He knows that if he disobeys, the Dark Powers will snuff out his life and consume the party anyway. He clings to the tragic belief that if he helps them kill Strahd, somehow—just maybe—they can all escape the nightmare together.
+### 3. The "Reiner Braun" Dissociation — *Caelum (The Boy He Wants to Be)* vs. *The Scion (The Mission)*
+Cael's tragedy is inspired directly by **Reiner Braun (*Attack on Titan*)**: **he WAS planted by the Dark Powers from Day 1, and deep down he KNEW it**—yet his true moral alignment is genuinely **Neutral Good**.
+* **Drowning Himself in the "Caelum" Persona:** Cael isn't putting on a cold spy act. He desperately *wants* to be a real human, a good person, and someone who deserves friends. Because the guilt of guiding people he genuinely loves toward a cosmic trap is unbearable, **he psychologically dissociates and drowns himself inside the "Cael" persona and the fake coastal-city backstory he built for himself**—burying the Scion in a mental basement so he can feel human for a few weeks.
+* **Why He Is Easy to Play & Passes Insight Checks (`Sessions 3–14`):** Day-to-day at camp, Cael truly *lives* inside his Neutral Good "Cael" headspace—so his warmth, goofy humor, panic, and devotion are **100% real in the moment**. Normal Insight checks (`DC 10–19`) read pure sincerity!
+* **The "Zeke Yeager" Trigger (`Derek` in Session 2):** Cael was deployed as an undercover Scion without ever being briefed on **Derek's** human name or face. When Derek froze time at Tser Pool in Session 2, Cael's buried Scion self involuntarily snapped awake and recognized the suffocating authority of his Masters' executive enforcer standing two feet away—causing him to freeze in silent terror before frantically shoving the Scion back down and swearing to the party *"I don't know him! I just want to go home!"*
+* **The Amber Temple Fracture (`Sessions 15–16`) ➔ Session 20 Climax:** Inside the **Amber Temple** (the Dark Powers' physical switchboard in Barovia), the resonance makes it **impossible** to keep his "Caelum" dissociation wall intact any longer. The fake human life cracks open, leaving him haunted and quiet through Act IV—until Strahd turns to ash in Session 20, and Cael breaks down weeping as he forces himself to finish the mission he was born to execute.
 
 ---
 
@@ -173,13 +174,13 @@ Cael's reveal is **dynamic and reactive**. Rather than forcing a scripted cutsce
 
 ---
 
-### 3. 🎲 Handling Player Insight Checks
+### 3. 🎲 Handling Player Insight Checks (The Reiner Split)
 
-Because Cael's emotions, fears, and affection are **100% genuine**, high Insight checks will confirm his sincerity and disarm player paranoia:
+Because Cael genuinely dissociates into his Neutral Good **"Cael"** persona to survive his guilt, his feelings in the moment are **100% real**—making him pass ordinary Insight checks completely naturally:
 
 * **DC 10–14:** *"He is nervous, slightly embarrassed, and fidgeting, but his exhaustion is obvious. You can tell he has been sleeping rough and is genuinely terrified of being left behind."*
-* **DC 15–19:** *"He is telling the complete truth about wanting to help you. There is zero bloodlust, malice, or smugness in his posture. He genuinely views your party as his only hope for survival in Barovia."*
-* **DC 20+ (Critical Insight):** *"He is completely sincere in his desire to protect you and keep you alive. However, beneath his warm, boyish smile, you catch a flicker of profound, haunting sadness in his eyes—the look of someone carrying a heavy, silent burden they believe they must bear alone."*
+* **DC 15–19:** *"He is telling the complete truth about wanting to help you. There is zero bloodlust, malice, or smugness in his posture. When he says he doesn't know Derek and just wants to survive together, he means every word from the bottom of his heart."*
+* **DC 20+ (Critical Insight):** *"Everything he feels toward you is genuinely sincere—yet for half a second, you catch a haunting crack behind his starry eyes, like a boy trying just as desperately to convince **himself** of his own story as he is trying to convince you."*
 
 ---
 
@@ -213,13 +214,13 @@ Because Cael's emotions, fears, and affection are **100% genuine**, high Insight
 > 
 > **Player:** *"Jude? What's wrong? We did it. Strahd is dead. We can go home."*
 > 
-> **Cael:** *(Voice trembling, clutching his birch staff with white knuckles)*  
+> **Cael:** *(Voice trembling, tears spilling as his "Caelum" mask finally shatters forever, clutching his birch staff with white knuckles)*  
 > *"I'm sorry. God... I'm so, so sorry.  
-> I wasn't dragged here by accident. The Dark Powers chose me to be your shepherd. You were never meant to go home. Strahd was just an old, broken toy... and the throne can never stay empty.  
+> I wasn't dragged here by accident. There was no ocean... no warm sand... I made myself believe it because I wanted—so badly—to just be a normal kid who got to keep the friends he found. The Dark Powers planted me here to be your Scion. Strahd was just an old, broken toy... and the throne can never stay empty.  
 > 
-> Please... please don't look at me like that. You don't know how much I wanted this to be different. I loved being with you. For the first time in my life, I felt like I had a family. But the stars don't negotiate. The pact was sealed before we ever met.  
+> Please... please don't look at me like that. I tried so hard to just be Cael. For the first time in my existence, I felt like a real person when I was with you. But I'm a Scion—and I can't stop myself from turning the key.  
 > 
-> Draw your weapons. Please... fight like you fought for me on the road. Because if you don't kill me right now... they're going to make me destroy you."*
+> Draw your weapons. Please... fight like you fought for me on the road. Don't forgive me... because if you don't kill me right now, I'm going to seal you inside the Mists forever."*
 
 ---
 

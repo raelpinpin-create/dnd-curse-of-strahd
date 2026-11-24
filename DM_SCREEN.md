@@ -514,12 +514,17 @@ flowchart TD
 
 ### 🌌 4.5D: The Cosmic Knot, The Dark Powers & Grand Trilogy Lore (8 Separate Dossiers)
 
-49. 🌑 **The Dark Powers (`lore_dark_powers`)** *(Primordial Dawn-Entities Decoupled from Shadowfell, False-Hope Despair Reactor & Amber Vestiges)*.
+> **⚡ 2-Second DM Cosmology Reminder (Dark Powers vs. Vestiges vs. Amber Temple):**
+> * **🌌 The Dark Powers (`ABOVE` Barovia):** Primordial cosmic wardens sitting *outside & above* Barovia running Ravenloft's despair reactor (`Derek` = Avatar, `Cael` = Planted Scion; why Madam Eva shivered over Derek in S2!).
+> * **🟠 The Vestiges (`INSIDE` Amber Sarcophagi):** Trapped evil remnants/dead god shards (*Vampyr, Zhudun, etc.*) locked in amber jars—**NOT** the Dark Powers! *(This is what Strahd offered Jacomir in S2's Silence bubble—Strahd knows the Vestiges, yet is 100% blind to Derek & the Root Anchor!)*
+> * **🔌 The Amber Temple (`SWITCHBOARD`):** Physical grounding rod / junction box (`Vault X42`) where the Dark Powers' frequency & Vecna's Pact plug deepest into Barovia—pulls at Piper's pocket watch, lets Derek walk without stopping time, and shatters Cael's "Caelum" dissociation wall in Act IV!
+
+49. 🌑 **The Dark Powers (`lore_dark_powers`)** *(Cosmic Wardens ABOVE Barovia — Decoupled from Shadowfell, False-Hope Reactor & Distinct From Amber Vestiges)*.
 50. 🏰 **Domain Zero & The Barovian Root Anchor (`cosmic_reactor`)** *(Why Strahd Is the Literal Load-Bearing Keystone & Session 20's "Pin From the Grenade" Implosion)*.
 51. 🟣 **Lord Vecna's Unholy Covenant (`vecna_pact`)** *(Amber Vault `X42` Parasite Treaty, Why Gods Cannot Touch Ravenloft Directly, 3 Mortal Surge Protectors & Campaign 3 Interstate)*.
 52. 🌀 **The Non-Linear Temporal Loop (`lore_time_loop`)** *(Decoupled Causality Closing Backward Into Campaign 1 **Stormwreck Isle**: Moros, Obsidian Monoliths & **The Asflumph** Sailing Into Campaign 3)*.
-53. ⏳ **Derek ('The Man Between Seconds') (`lore_derek`)** *(Cold Corporate Avatar Operating Inside `Tap, Tap, Tap` Frozen Seconds — 100% Blind Spot to Strahd Under Sacred Law #5 & 3 Strict Milestones)*.
-54. 🌟 **Caelum Jude ('Cael' — The Scion) (`lore_cael`)** *(Genuine 19-Yr Stars Druid Healer, 1-HP Dark Powers Vow, Terror of Derek, **Tarokka #4 Marionette**, & Session 20 Barnaby-Voice Gut Punch)*.
+53. ⏳ **Derek ('The Man Between Seconds') (`lore_derek`)** *(Cold Corporate Avatar Operating Inside `Tap, Tap, Tap` Frozen Seconds — 100% Blind Spot to Strahd Under Sacred Law #5 & Cael's "Zeke Yeager" Trigger)*.
+54. 🌟 **Caelum Jude ('Cael' — The Reiner-Style Self-Repressed Scion) (`lore_cael`)** *(Planted Scion Who Knew All Along Yet Drowns Himself in the Neutral Good "Caelum" Persona & Fake Coastal Backstory Because He Desperately Wants to Be Human; Passes DC 10–19 Insight Naturally; Amber Temple Fracture ➔ Session 20 Breakdown)*.
 55. 👑 **The Three Chosen Vessels & The Crucible Replacement Rule (`three_vessels`)** *(**Zero Plot Armor / NOT Set in Stone — PCs Can Permanently Die & Replacement Vessels Are Chosen From Infinite Timelines**, The Grim Smile Motif, **Jacomir**, **Yvaine**, & **Piper** + Barnaby)*.
 56. 🃏 **Piper's Blank Tarokka Card (`lore_blank_card`)** *(Session 1 Blood on the Vine Tavern Anomaly, Madam Eva's Cold Recoil & **Option 2 Progressive 3-Stage Charcoal/Mist Ink Bleed**)*.
 
