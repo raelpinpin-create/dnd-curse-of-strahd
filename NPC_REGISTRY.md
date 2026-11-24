@@ -8,14 +8,14 @@
 ## 🌟 CORE COSMIC EMISSARIES: THE AVATAR (DEREK) & THE SCION (CAEL)
 
 ### ⏳ Derek ("The Man Between Seconds") — Avatar & Emissary of the Dark Powers
-* **Status:** `🟢 MET IN SESSION 1 (Froze Time in Father Donavich's Church)`
+* **Status:** `🟢 MET IN S1 & S2 (Milestone 1 Completed at Tser Pool Camp — Madam Eva Terrified of Him!)`
 * **Role:** Physical Avatar / Cosmic Project Manager of the Dark Powers' Pact (Paired with **Caelum Jude**, the Inside Shepherd)
 * **Appearance:** A tall, pale-skinned white man with sharp, unblinking features and an eerily composed, modernly transactional demeanor. Appears only when three knocks sound (`tap, tap, tap`) and time freezes around the party.
 * **Crucial Canon Rules (How Derek Blends 100% into *Curse of Strahd*):**
-  * **1. Strahd Does NOT Know Derek Exists:** Because Derek never walks around Barovia in normal time—stepping only into frozen pockets between the ticks of the clock—Strahd's wolves, bats, ravens, and scrying sensors **never see or hear him** (during the church visit, Donavich, Ismark, and Ireena were frozen like statues!).
-  * **2. Session 1 Church Visit (`Tap, Tap, Tap`):** Stepped into Father Donavich's church right as King Jacomir was pouring his own blood into a cup to feed Doru in the attic (while Piper and Yvaine demanded Doru's execution). Spoke directly to **Jacomir & Yvaine**, revealing he knows who they are and promising they will get what they want and go home if they follow him and **kill Strahd**. Looked at **Piper** with curiosity and astonishment—recognizing *what she is* (the chaotic Wild Magic vessel/detonator) and what the Dark Powers plan for her—and told her to *"take care of herself"* before vanishing and unfreezing time.
-  * **3. Strict 3-Milestone Future Appearances Only (Never a Combatant or DM-PC):**
-    * **Milestone 1 (Post-Tarokka Reading — Tser Falls Bridge in Session 2):** Appears for 10 frozen seconds after Madam Eva's reading (and after Cael joins the party). While Cael freezes/shrinks back in silent terror of his overseer, Derek translates Eva's riddles into cold action: *"The old woman gave you the riddles. I'm giving you the bottom line: take the book, take the amulet, take the sword, and don't let Barovia's sob stories slow your blade."*
+  * **1. Strahd & Madam Eva Do NOT Know Derek Exists:** Because Derek steps only into frozen pockets between the ticks of the clock, Strahd's wolves, bats, ravens, and scrying sensors never perceive him. In Session 2, when the party asked **Madam Eva** about Derek and described his time-stopping powers, even the 400-year-old Vistani seer shivered in dread—realizing he is an **enigma above her, above Strahd, and above Barovia itself**, warning that the party's presence here is no coincidence!
+  * **2. Session 1 Church Visit (`Tap, Tap, Tap`):** Froze time during the Doru blood-cup standoff; promised **Jacomir & Yvaine** they will get what they want and go home if they follow him and **kill Strahd**; looked at **Piper** in astonishment and told her to *"take care of herself."*
+  * **3. Session 2 Post-Eva Morning Visit (`Milestone 1 Completed`):** Greeted the party waking from their Tser Pool Long Rest (*"Good morning"*), translating Eva's Tarokka riddles into a blunt 3-item checklist (*Take the Tome from the walled town, take the Silver Dawn from the dead dragon's fortress, take the buried sunlight from the drowned swamp*). **Cael visibly froze up and trembled in terror** during Derek's presence—triggering massive party suspicion toward Cael!
+  * **4. Remaining Future Milestone Appearances (Never a Combatant or DM-PC):**
     * **Milestone 2 (Act II Moral Crossroads — Vallaki / Feast of St. Andral):** Freezes time during a political/moral crisis to push the ruthless, pragmatic choice (*"Save your strength for the castle"*).
     * **Milestone 3 (Act IV — The Amber Temple & Gates of Ravenloft):** Walks among the Amber Sarcophagi in real time (where Strahd's spies cannot reach), encouraging the party to claim the Dark Gifts before the final siege.
 * **Voice & Roleplay Cue:** Calm, transactional, razor-sharp, unnervingly well-informed. *"Everyone else in this valley will give you riddles or fangs. I'm the only one giving you a straight deal: kill the vampire on the hill, and you go home. And you, little spark... take care of yourself. You're far too valuable to burn out early."*
@@ -23,7 +23,7 @@
 ---
 
 ### 🐾 Caelum Jude ("Cael") — The Starlit Healer & Scion of the Dark Powers (The Inside Shepherd)
-* **Status:** `🟢 ACTIVE & WATCHING (Session 1: Stealth Feline Stalker Form)`
+* **Status:** `🟢 JOINED PARTY IN SESSION 2 (Busted as Talking Cat -> Human Stars Druid • Currently Under Suspicion After Freezing Up Around Derek!)`
 * **Role:** Dedicated Main Party Companion, Primary Healer, & Secret Shepherd of the Dark Powers / Vecna Pact
 * **Full Master Dossier:** [`CAEL_MASTER_DOSSIER.md`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/CAEL_MASTER_DOSSIER.md)
 * **Archetype & Class:** Level 3 Druid (Circle of the Stars • 2024 5.5e) | 19-Year-Old Athletic "Percy Jackson" Vibe (messy black hair, stormy grey-blue starlit eyes)
@@ -31,17 +31,15 @@
 * **Psychological Dossier:**
   * 🧭 **Core Philosophy:** Genuinely kind, empathetic, self-deprecating, and fiercely protective of the party. He is NOT an evil cultist; his affection is 100% real.
   * 🎯 **Secret Cosmic Mission:** Marked by the Dark Powers to shepherd foreign champions to slay Count Strahd and prepare the dark throne for the Pact of Vecna. In the end, he will be compelled to execute their will against his own heart.
-  * ⚡ **Immediate Session 1 State:** Stalking the party in the Village of Barovia as a sleek black cat with starlit eyes (and perched as a raven). Listening to their conversations, assessing their courage, and secretly purr-healing downed allies.
-  * 💬 **Canonical Confession Line:** *"My name is Cael. I was dragged through the fog from my home world a few weeks ago—just like you guys. I learned real quick that if you walk around Barovia looking like food, the wolves and the bats will tear you apart. The only way I survived was keeping four paws and staying low. Then I saw you guys enter the village. You didn't cower like the locals; you actually fought back. I followed you because... honestly? I didn't want to die out here alone. Can I... travel with you? I know how to patch up wounds, and Barovia is a lot less terrifying when you're not on your own."*
+  * ⚡ **Session 2 Table Canon (The Croissant Bust & Derek Suspicion):** During the Barovia Church Long Rest, **Yvaine** heard him in the kitchen and the party baited the Black Cat with a *Prestidigitation*-scented croissant (`Yvaine: 3x ➔ 2x`). Mid-bite, Cael slipped up and spoke aloud: ***"Fuck, this is good!"*** Bolting in panic, he was caught by Yvaine & Jacomir and shifted into human form while Yvaine roasted him as a pervert for letting them pet him and rub his belly! After interrogation, he joined as their Druid healer. The next morning after Madam Eva's reading, **Cael visibly froze up in silent terror when Derek appeared**—leading the party to gang up on him! He swore he doesn't know who Derek is and only felt something deeply ominous, proving he's just a frightened castaway wanting to go home—while leaving lingering suspicion.
   * 🤫 **The Name Secret:** Introduces himself only as **Cael**. Only those he loves as true family ever learn his full name is **Caelum Jude**.
-  * 🎲 **Reveal Triggers (Sessions 2 & 3):** (1) *The Sacrifice:* Breaks cover with a massive radiant heal if a PC shields the cat and drops to 0 HP; (2) *The 2nd Campfire:* Caught in human form snacking on trail rations during night watch; (3) *The Near-Wipe:* Unleashes celestial fury when an imminent TPK threatens the party.
 
 ---
 
 ## 👑 SECTION 1: THE DARKLORD & THE COURT OF CASTLE RAVENLOFT
 
 ### 🧛‍♂️ Count Strahd von Zarovich (The Ancient, The Land — CR 15 Apex Darklord)
-* **Status:** `🟢 ACTIVE & WATCHING`
+* **Status:** `🟢 MET IN SESSION 2 (Cemetery Burial • Tied King Jacomir 16-16 in Dragonchess • Secretly Offered Jacomir Co-Rule & Ireena Favor!)`
 * **Role:** Overarching Campaign Antagonist, Vampire Lord of Barovia, Master of Castle Ravenloft
 * **Location:** Castle Ravenloft (Appears anywhere in Barovia at will via the Mists / Phantom Coach / Bucephalus)
 * **Appearance:** A tall, aristocratic nobleman with pale, chiseled features, jet-black hair swept cleanly back from a widow's peak, and piercing crimson eyes that smolder with centuries of boredom and predatory hunger. Wears an immaculate cloak of black wolf-fur and blood-red silk with a gleaming ruby medallion at his throat.
@@ -54,7 +52,7 @@
   2. **Use the PCs as Free Bodyguards (Phase 1 — Acts I–II):** Armed outsiders keep Ireena alive against stray Barovian hazards (hags, Izek, rabid wolves, rogue Volenta) while Strahd ruins every shelter she trusts (Barovia Village ➔ Vallaki's Feast/Coup ➔ Krezk's Fallen Abbot). If attacked early, he executes **"Catch-and-Release" Humiliation** (tanking hits with the *Heart of Sorrow*, dropping/charming a hero, and walking away laughing so Ireena sees they survive strictly by his mercy).
   3. **Push the PCs to Evil/Monstrosity & Audition a Successor:** Actively tempts **Jacomir** (*"thrones are mortared with blood"*), **Yvaine** (*"mercy left Solmere open"*), and **Piper** (*"drop the stage paint and unleash your fire"*) into dark, ruthless choices—rewarding cruelty with **🍾 Red Dragon Crush wine, sealed praise notes, silver/tactical intel, or personal visits** right in front of Ireena! He genuinely wants to see if one can survive the **Amber Temple (`X42`)** and inherit his crown to free him—yet his ego almost guarantees he deems them unworthy in the end *(completely blind to **Derek** and **the Root Anchor**, meaning only Strahd's **death** actually breaks the seal and crowns them Vecna's Living Conduits!)*.
   4. **Flip to "True Kill Mode" (Phase 2 — Acts III–IV):** The moment Ireena escapes into **Sergei's Pool in Krezk (`S4`, Session 12)** OR the party claims **True Sunlight** (*Holy Symbol* & *Sunsword*) and defies him with his stolen *Tome*, all sport ends. Rather than fighting True Sunlight outdoors on open ground, an INT 20 general bleeds them with Rahadin/Brides and traps them inside **Castle Ravenloft** for wall-phasing Lair warfare!
-* ⚡ **Immediate Current Problem (Independent of Players):** Waiting at the River Ivlis Crossroads (`Session 2`) to size up the new outsiders with immaculate aristocratic poise and punish Volenta's graveyard sloppiness—keeping his successor curiosity and cruelty-testing **strictly unspoken inside his own head** on first meeting, while privately watching them (and sneaking into Vallaki/Krezk in disguise as **"Vasili von Holtz"** to witness Bonegrinder `O4`, prepare St. Andral's Feast, and corrupt the Abbot).
+* ⚡ **Immediate Current Problem (Post-Session 2 State):** Deeply intrigued by **King Jacomir Yulle** after their legendary 5-round Dragonchess stalemate (`16 vs. 16`) at Kolyan's burial! Inside a private **Silence bubble** (guarded outside by his handsome spawn servants **James** & **Orin/Oryn**), Strahd offered Jacomir co-rule of Barovia and the power of the **Vestiges**; when Jacomir respectfully declined, Strahd asked for a favor—*convince Ireena to join him willingly*—and handed Jacomir **✉️ Strahd's Black Sealed Letter**, promising in return to help Jacomir locate his missing people of Oakenshire. Privately watching the party's road to Old Bonegrinder & Vallaki while preparing Vasili von Holtz and St. Andral's Feast!
 * ⚖️ **Moral Stand & DM Roleplay Cues:**
   * *Red Lines:* Never breaks the formal **Law of Hospitality** during the Session 9 Castle Ravenloft Dinner (until guests draw steel first or steal his Tome/Sunsword); forbids subordinates from landing killing blows on Ireena; explodes into volcanic rage if Tatyana's soul slips permanently beyond his grasp or if his *Tome* is read aloud.
   * *Gray Areas:* Never bluntly pitches "go be evil" on Day 1—instead, quietly observes the party under Barovia's pressure and *naturally* rewards cruelty, pragmatism, or dark compromises whenever they choose them on their own.
@@ -75,11 +73,11 @@
 
 ---
 
-### 💀 The Three Brides of Strahd (Volenta, Anastrasya, & Ludmilla)
-1. **🎭 Volenta Popofsky (The Porcelain Sadist — Act I Antagonist):**
+### 💀 The Three Brides of Strahd (Volenta, Anastrasya, & Ludmilla) & Court Spawn
+1. **🎭 Volenta Popofsky (The Porcelain Sadist — `🟢 MET IN S2: Laughing Rooftop Cameo at Burial!`):**
    * *Role:* Youngest Bride; feral assassin and psychological terrorizer in the Village of Barovia.
    * *Appearance:* Wears a cracked white porcelain skull-mask over her face and jagged bone-fetishes woven into her lace dress.
-   * *Philosophy & Motive:* Desperately wants Strahd's attention and fears being replaced by Ireena; stalks Ireena and the party from the shadows, eager to see if the new strangers survive the Count's tests.
+   * *Session 2 Cameo:* Perched laughing atop the Barovia Church roof during Kolyan's burial before Strahd himself arrived and dismissed her—still untouched and lurking for future ambushes!
    * *Voice Cue:* High, playful, unhinged giggling that snaps into vicious snarls. *"If I peel Ireena's pretty face off, do you think the Count will look at me again?"*
 2. **🌹 Anastrasya Karelova (The Vallakian Aristocrat — Act II Antagonist):**
    * *Role:* Noble-born vampire socialite orchestrating the **Feast of St. Andral** in Vallaki.
@@ -91,55 +89,53 @@
    * *Appearance:* Tall, dark-skinned woman with silver-streaked hair and gold spectacles, carrying an obsidian spellbook.
    * *Philosophy & Motive:* Accepts that Strahd feels no true love for anyone; channels her immortality into cold arcane mastery and studying the Amber Temple's Dark Powers.
    * *Voice Cue:* Calm, clinical, scholarly precision. *"Love is a mortal chemical delusion. Power is arithmetic."*
+4. **🩸 James & Orin ("Oryn") — Strahd's Handsome Vampire Spawn Bodyguards (`🟢 MET IN S2 Cemetery`):**
+   * *Appearance:* Two strikingly handsome male Vampire Spawn (`CR 5`, `82 HP`, `AC 15`) summoned by Count Strahd during Kolyan's burial to guard/watch Piper, Yvaine, Ireena, and Ismark outside the Silence bubble while Strahd spoke privately with King Jacomir: **James** *(long flowing silver hair)* and **Orin ("Oryn")** *(red spiky hair)*.
+   * *Party Note:* Piper logged them in her notes as *"James and Oryn: Servants of Strahd."* Reusable court enforcers for Vallaki / Ravenloft Dinner!
 
 ---
 
 ## 🛡️ SECTION 2: THE VILLAGE OF BAROVIA & TSER POOL (ACT I ALLIES)
 
 ### 🌹 Ireena Kolyana (The Twice-Bitten Noblewoman & Tatyana Reborn)
-* **Status:** `🟢 MET IN SESSION 1 (Currently in Barovia Church with Party — Neutral in Doru Dilemma)`
-* **Role:** Key Escort Ally & Target of Strahd's Obsession (Village of Barovia ➔ Vallaki / Krezk)
+* **Status:** `🟢 TRAVELING WITH PARTY (Left Barovia Village After Kolyan's Burial — Saved Yvaine's Life With Nat 20 Medicine vs. Doru!)`
+* **Role:** Key Escort Ally & Target of Strahd's Obsession (Tser Pool ➔ Old Bonegrinder ➔ Vallaki / Krezk)
 * **Stat Block Snapshot:** AC 15 (Breastplate) | HP 28 *(Upgraded for Party Survival!)* | Speed 30 ft | Silvered Rapier (`+5 hit`, `1d8+2` piercing) | *Parry Reaction (+2 AC)* | *Help Action*.
 * **Psychological Dossier:**
-  * 🧭 **Core Philosophy:** **Defiant Self-Sovereignty**. Refuses to be a passive victim or bargaining chip. Though haunted by dreams of falling from Castle Ravenloft's cliffs, she fights with steel and grit.
-  * ⚡ **Immediate Problem:** Her adoptive father Kolyan lies dead in a pine coffin in their parlor; Strahd has bitten her twice, and she refuses to flee until her father is buried at dawn.
+  * 🧭 **Core Philosophy:** **Defiant Self-Sovereignty**. Refuses to be a passive victim or bargaining chip. Proved her steel in Session 2 by dashing straight into Doru's claws and rolling a **Nat 20 Medicine check** to rescue dying Yvaine (2 Death Failures)!
+  * ⚡ **Immediate Situation:** Buried her father Kolyan in Session 2, faced down Strahd and Volenta at the grave, and is now traveling west past Tser Pool toward Vallaki—completely unaware that Strahd privately asked **King Jacomir** to convince her to join him!
   * 🗣️ **Voice & Cue:** Fierce, clear-voiced, sleepless resolve. *"Count Strahd may own the dirt of this valley, but he does not own my soul. Give me a blade and tell me where to stand."*
 
 ---
 
 ### 🗡️ Ismark "The Lesser" Indirovich (New Burgomaster of Barovia Village)
-* **Status:** `🟢 MET IN SESSION 1 (Currently in Barovia Church — Empathizes with Donavich Alongside Jacomir)`
-* **Role:** Veteran Swordsman & Quest Giver (Blood on the Vine Tavern)
+* **Status:** `🟢 REMAINED IN BAROVIA VILLAGE (S2: Saved Downed Jacomir vs. Doru, Took Accident Nat 1 Hit, Led Kolyan's Burial Rites)`
+* **Role:** Veteran Swordsman & New Burgomaster holding the Village of Barovia
 * **Stat Block Snapshot (Veteran):** AC 17 (Splint) | HP 58 | Speed 30 ft | Multiattack: 2x Longsword (`+5 hit`, `1d10+3`) + 1x Shortsword (`+5 hit`, `1d6+3`).
 * **Psychological Dossier:**
-  * 🧭 **Core Philosophy:** **Crushing Duty Under a Father's Shadow**. Has spent his whole life mocked as *"Ismark the Lesser"*; willing to die holding the line if it means getting his sister Ireena safely out of the village.
-  * ⚡ **Immediate Problem:** Needs outsiders uncorrupted by Strahd's fear to help him carry Kolyan's coffin to the church at dawn and escort Ireena west to Vallaki.
+  * 🧭 **Core Philosophy:** **Crushing Duty Under a Father's Shadow**. Rushed to heal downed **King Jacomir** on Round 1 vs. Doru (even shrugging off an accidental Nat 1 friendly-fire hit from Jacomir!), accepted the burial rites from exhausted Father Donavich, buried his father Kolyan, and entrusted Ireena's journey toward Vallaki to the party.
   * 🗣️ **Voice & Cue:** Exhausted, earnest, gravelly baritone. *"They call me the Lesser. Maybe they're right. But I'll be damned before I let that monster take my sister."*
 
 ---
 
-### ⛪ Father Donavich & Doru (The Broken Priest & The Starving Son in the Attic — Session 1/2 Cliffhanger)
-* **Status:** `🟢 MET IN SESSION 1 (Active Standoff in Barovia Church — Doru Hidden in the Church Attic!)`
-* **Role:** Village Priest of the Morninglord (`Donavich`) & Trapped Vampire Spawn (`Doru` — Hidden in the Attic)
-* **Location:** Church of the Village of Barovia (Area E5 — Attic)
-* **Session 1 Cliffhanger State (*DragnaCarta Reloaded* `Arc B5`):** The party discovered Doru hidden in the **church attic**. Father Donavich begged to keep his son alive; **King Jacomir** and **Ismark** understood his paternal pain (though agreeing it's wrong to keep Doru like this), and **Jacomir was pouring his own royal blood into a cup** to let Donavich feed Doru (*in DragnaCarta's Reloaded, feeding Doru willing blood briefly restores his sanity so he weeps, reveals he stormed Ravenloft with **Dr. Rudolph van Richten** and saw Strahd's Heart of Sorrow, and begs for peace!*). **Piper** and **Yvaine** fiercely disagreed and wanted to kill Doru immediately, while **Ireena** stayed neutral—right when **Derek** froze time (`tap, tap, tap`)!
-* **Psychological Dossier:**
-  * 🧭 **Core Philosophy:** **Desperate Paternal Denial**. A year ago, Donavich's twenty-year-old son **Doru**—who idolized *Van Richten's Guide to Vampires*—rallied village youths after the scarred hunter blew his cover saving local children, marching on Castle Ravenloft with Van Richten trailing behind to keep them from dying alone. Strahd butchered the mob, turned Doru into a Vampire Spawn to extract Van Richten's identity, and sent him back to his father as a cruel joke. Donavich has kept Doru locked in the church attic for months without a single drop of blood, praying until his voice bleeds for a miracle cure.
-  * ⚡ **Immediate Problem:** Doru is screaming in starvation beneath the church floorboards during Burgomaster Kolyan's funeral!
-  * 🗣️ **Voice & Cue:**
-    * *Donavich:* Hoarse, weeping, muttering frantic prayers. *"He's still my boy! The Morninglord will cure him, I just need to pray louder!"*
-    * *Doru (From the Cellar):* Heartbreaking, raspy cries: *"Father! Please, I'm starving! Just one drop!"*
+### ⛪ Father Donavich & 💀 Doru (The Broken Priest & The Slain Son — Session 2 Resolved)
+* **Status:** `🟢 Donavich: ALIVE & RESTING IN CHURCH (Scratched Hugging Doru; Entrusted Burial Rites to Ismark)` • `💀 Doru: SLAIN IN SESSION 2 (Executed by King Jacomir's 2nd Nat 20; Questioned via Speak with Dead!)`
+* **Role:** Village Priest of the Morninglord (`Donavich`) & Slain Vampire Spawn (`Doru`)
+* **Location:** Church of the Village of Barovia (Area E5)
+* **Session 2 Resolution:** Despite Jacomir pouring his royal blood and Donavich hugging his son (taking a scratch to calm Doru's feral state), Yvaine and Piper opened fire and sparked a brutal, near-lethal attic battle (dropping both Jacomir and Yvaine to 0 HP before Jacomir's 2 Nat 20s executed Doru). Yvaine then cast ***Speak with Dead*** via her Amulet of the Whispering Grave on Doru's corpse—extracting the truth about **Dr. Rudolph van Richten** and the **giant red crystal beating inside Ravenloft's North Tower (*Heart of Sorrow*)**. Exhausted and grieving, Father Donavich rested while Ismark led the burial ceremony.
 
 ---
 
-### 🃏 Madam Eva (The Ancient Vistani Seer of Tser Pool — Session 2)
-* **Status:** `⚪ NOT MET`
+### 🃏 Madam Eva (The Ancient Vistani Seer of Tser Pool — Session 2 Completed!)
+* **Status:** `🟢 MET IN SESSION 2 (Dealt All 5 Tarokka Cards + Stage 1 Blank Card Bleed • Shivered in Dread Over Piper & Derek!)`
 * **Role:** Oracle of the Tarokka Deck & Secret Half-Sister to Strahd
 * **Location:** Tser Pool Vistani Encampment (Area G)
-* **Psychological Dossier:**
-  * 🧭 **Core Philosophy:** **Cryptic Fate-Weaving & MaternalMercy for a Cursed Land**. Over 400 years old, Madam Eva secretly carries royal Zarovich blood. She pledged her life to Mother Night to gain foresight so she could one day guide champions capable of breaking Barovia's curse—or replacing Strahd on the throne.
-  * ⚡ **Immediate Problem:** She sees the Dark Powers (and Vecna's encroaching multiversal monoliths) stirring in the Amber Temple, and knows these four strangers are the fulcrum of fate.
-  * 🗣️ **Voice & Cue:** Cracking, ancient, hypnotic voice thick with woodsmoke and mystery. *"Sit by the fire, children of distant mists. The cards have been waiting for your hands to turn them."*
+* **Session 2 Reading & Reactions:**
+  * Dealt all **5 Curated Tarokka Cards** (Tome in Vallaki/Wachterhaus, Holy Symbol in Argynvostholt, Sunsword in Berez, *The Marionette* gilded puppet, *The Executioner* Castle Ravenloft).
+  * Showed genuine fear toward **Piper** and her **Blank Tarokka Card**, warning that a power *above Eva and perhaps even above Strahd* walks behind her as **Stage 1 charcoal ink** bled onto the card (*Dead Pine Trees and Mortal Palms rising from Blackwater*).
+  * Confirmed for **King Jacomir** that **people from Oakenshire ARE somewhere in Barovia** and told him to follow the path of the cards.
+  * **Derek's Enigma:** When asked about **Derek**, Eva did NOT recognize him—and got chills hearing about his time-stopping power, concluding he is an **enigma above her, above Strahd, and above Barovia**, warning the party that their arrival is no coincidence and something dark is approaching.
+* **Voice & Cue:** Cracking, ancient, hypnotic voice thick with woodsmoke and mystery. *"Sit by the fire, children of distant mists. The cards have been waiting for your hands to turn them."*
 
 ---
 

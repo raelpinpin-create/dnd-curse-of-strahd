@@ -1389,10 +1389,10 @@
 <script src="cos_rpg_engine.js?v=20261122v13"></script>
 <script>
     // ==========================================
-    // 👑 JACOMIR YULLE MASTER STATE VARIABLES
+    // 👑 JACOMIR YULLE MASTER STATE VARIABLES (POST-SESSION 2 LONG REST)
     // ==========================================
     let characterLevel = 3;
-    let curHP = 23;
+    let curHP = 31;
     let maxHP = 31;
     let tempHP = 0;
     let isChainMailActive = true; // Chain Mail (16) + Defense Fighting Style (+1) = 17 AC
@@ -1403,8 +1403,8 @@
     const maxShortRests = 2;
     let rollMode = 'norm';
 
-    // Battle Master Fighter & 5.5e Human Resources
-    let curSupDice = 2;
+    // Battle Master Fighter & 5.5e Human Resources (Post-Session 2 Long Rest)
+    let curSupDice = 4;
     const maxSupDice = 4; // 4d8 per Short or Long Rest
     let curSecondWind = 3;
     const maxSecondWind = 3; // 3/Long Rest (+1 regained on Short Rest)
@@ -3042,6 +3042,9 @@
     // 🎒 INVENTORY & BAROVIAN LOOT VAULT ENGINE
     // ==========================================
     const defaultItems = [
+        "Strahd's Black Sealed Letter",
+        "Alchemical Catalyst",
+        "Apple",
         "Burgomaster Kolyan's Wizard Diary",
         "Ismark's Silvered Longsword",
         "Flask of Morninglord Spring Water",
@@ -3056,6 +3059,21 @@
     ];
 
     const worldLootVault = {
+        "black sealed letter": {
+            name: "Strahd's Black Sealed Letter (Private Invitation)",
+            category: "PRIVATE ROYAL COMPACT • Gifted by Count Strahd (Session 2)",
+            origin: "Handed to King Jacomir Inside Strahd's Silence Bubble After the 16–16 Dragonchess Stalemate",
+            desc: "A heavy obsidian-black parchment sealed in deep crimson wax bearing the Ravenloft crest—handed personally to King Jacomir by Count Strahd after Jacomir tied the Darklord at Dragonchess and respectfully declined to co-rule Barovia.",
+            effect: "• <strong>Strahd's Secret Favor:</strong> Strahd asked Jacomir to <em>convince Ireena to join him willingly</em> as her only true safety in Barovia.<br>• <strong>The Sovereign's Bait:</strong> If Jacomir accepts the favor and uses this letter to summon/visit Strahd again, the Count promised to <strong>help Jacomir find his missing people of Oakenshire</strong> (whom Madam Eva confirmed are somewhere in Barovia!)."
+        },
+        "apple": {
+            name: "Apple",
+            category: "BAROVIAN PROVISION • Consumable",
+            origin: "Session 2 Salvage / Camp Supplies",
+            desc: "A crisp, tart orchard apple packed into Jacomir's cloak.",
+            effect: "• <strong>Eat (Action):</strong> Restores <strong>1d4 + 1 HP</strong> (strictly caps at Max HP).",
+            healFormula: { dice: 1, sides: 4, bonus: 1, verb: 'Ate' }
+        },
         "wizard diary": {
             name: "Burgomaster Kolyan's Wizard Diary",
             category: "QUEST TOME & FACTION LEAD • Session 1 Indirovich Manor Loot",
@@ -3170,9 +3188,9 @@
     };
 
     function getStoredItems() {
-        const stored = localStorage.getItem('cos_inv_jacomir_v3');
+        const stored = localStorage.getItem('cos_inv_jacomir_v4');
         if (!stored) {
-            localStorage.setItem('cos_inv_jacomir_v3', JSON.stringify(defaultItems));
+            localStorage.setItem('cos_inv_jacomir_v4', JSON.stringify(defaultItems));
             return [...defaultItems];
         }
         try {
@@ -3188,7 +3206,7 @@
                 return raw;
             });
             if (migrated) {
-                localStorage.setItem('cos_inv_jacomir_v3', JSON.stringify(next));
+                localStorage.setItem('cos_inv_jacomir_v4', JSON.stringify(next));
                 try {
                     const eqRaw = localStorage.getItem('cos_equip_jacomir_v1');
                     if (eqRaw && eqRaw.includes('"silvered longsword"')) {
@@ -3201,7 +3219,7 @@
     }
 
     function saveStoredItems(items) {
-        localStorage.setItem('cos_inv_jacomir_v3', JSON.stringify(items));
+        localStorage.setItem('cos_inv_jacomir_v4', JSON.stringify(items));
     }
 
     function consumeAndHealItem(index, dice, sides, bonus, verb, itemName) {
@@ -3430,6 +3448,11 @@
     const MAX_NOTE_CHARS = 1500;
     const defaultPlayerNotes = [
         {
+            id: 'note_1795441791091',
+            title: "Strahd’s Invitation",
+            text: "A letter for dicussing things with strahd."
+        },
+        {
             id: 's1_strahd',
             title: "Strahd",
             text: "Strahd calls irina tattiana"
@@ -3468,9 +3491,9 @@
     let editingNoteId = null;
 
     function getStoredNotes() {
-        const stored = localStorage.getItem('cos_notes_jacomir_v4');
+        const stored = localStorage.getItem('cos_notes_jacomir_v5');
         if (!stored) {
-            localStorage.setItem('cos_notes_jacomir_v4', JSON.stringify(defaultPlayerNotes));
+            localStorage.setItem('cos_notes_jacomir_v5', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
         try {
@@ -3483,23 +3506,23 @@
                     changed = true;
                 }
             });
-            if (changed) localStorage.setItem('cos_notes_jacomir_v4', JSON.stringify(notes));
+            if (changed) localStorage.setItem('cos_notes_jacomir_v5', JSON.stringify(notes));
             return notes;
         } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {
-        localStorage.setItem('cos_notes_jacomir_v4', JSON.stringify(notes));
+        localStorage.setItem('cos_notes_jacomir_v5', JSON.stringify(notes));
     }
 
     function getRemovedNoteTitles() {
-        const stored = localStorage.getItem('cos_notes_removed_jacomir_v3');
+        const stored = localStorage.getItem('cos_notes_removed_jacomir_v5');
         if (!stored) return [];
         try { return JSON.parse(stored); } catch(e) { return []; }
     }
 
     function saveRemovedNoteTitles(titles) {
-        localStorage.setItem('cos_notes_removed_jacomir_v3', JSON.stringify(titles));
+        localStorage.setItem('cos_notes_removed_jacomir_v5', JSON.stringify(titles));
     }
 
     function escapeNoteHtml(str) {

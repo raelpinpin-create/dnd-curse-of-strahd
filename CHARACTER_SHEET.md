@@ -1,6 +1,6 @@
 # 🧙‍♂️ Master Party Character Sheets — Curse of Strahd
 
-> **Status:** Live Campaign Roster — Session 1 Post-Session State Synced for **ALL 3 HEROES** (**Piper**, **Jacomir**, & **Yvaine**)!  
+> **Status:** Live Campaign Roster — **Post-Session 2 (Long Rested)** State Synced from Firebase for **ALL 3 HEROES** (**Piper**, **Jacomir**, & **Yvaine**)!  
 > **Starting Level:** **Level 3** (Subclasses Unlocked • Starting *In Media Res* inside the Mist-Merged Phantom Black Coach!)  
 > **Live GitHub Pages Portal:** `https://raelpinpin-create.github.io/dnd-curse-of-strahd/`  
 > **Trilogy Destiny Note:** By the end of *Curse of Strahd* (Sessions 15–20 at the Amber Temple & Castle Ravenloft), the survivors of this party will be tempted/bound by the **Dark Powers & Vecna's Monoliths**—ultimately becoming the formidable Level 10+ rival champions whom **Eflein** and **Sylvar Link** must confront in **Campaign 3**!
@@ -21,21 +21,24 @@
 * **Class & Lineage Resources:**
   - ✨ **Sorcery Points (`Font of Magic`):** `3 / 3` *(Long Rest)* — **Metamagic:** *Subtle Spell (1 SP)*, *Twinned Spell (1–2 SP)*, *Bend Fate ("Is That Your Card?!" — 2 SP for ±1d4 to a roll)*
   - 🃏 **Tides of Chaos ("Pick-a-Card, Any Card!"):** `1 / 1 Ready` *(Gain Advantage on 1 Attack/Check/Save; once spent, her next 1st+ level spell automatically triggers a d100 Wild Magic Surge and recharges Tides of Chaos!)* • **Last Surge (S1):** `d100 = 87` (*Aerial Stage Wire — Fly*)
-  - 💖 **Legacy of Phlegethos (Fierna Lineage):** Knows *Friends* cantrip + **1/Long Rest Free 2nd-Level *Charm Person*** (`0 / 1 Used` — cast on Morgantha in Session 1; resisted by Hag Magic Resistance)
+  - 💖 **Legacy of Phlegethos (Fierna Lineage):** Knows *Friends* cantrip + **1/Long Rest Free 2nd-Level *Charm Person*** (`1 / 1 Ready` — restored after Tser Pool Long Rest)
   - 🔥 **Hellish Resistance & Darkvision:** **Resistance to Fire Damage** • **Darkvision 60 ft**
   - 🌲 **Barovian Lore & Wilderness Acumen (Native Boon):** Proficient in **Nature (+3 ★)** and **Survival (+2 ★)**. As the sole Barovian native in the party, Piper automatically identifies safe vs. dream-inducing/lethal berries & mushrooms, distinguishes normal wolf prints from dire wolf/werewolf tracks, and locates clean well-water untainted by cemetery runoff.
-  - 🤝 **Help Tokens:** `1 / 2` *(1 spent in Session 1)*
-* **Spell Slots & Known Spells *(Pre-Long Rest S1 State)*:**
-  - **1st-Level Slots (`3 / 4`):** *Chaos Bolt* (`+6 hit`, `2d8+1d6` elemental + Chaos Leap on matching d8s; `+1d4+1 Fire` if wearing Red Robe), *Mage Armor* (`16 AC` w/ Black Robe), *Charm Person* (`DC 14 WIS`)
+  - 🤝 **Help Tokens:** `2 / 2` *(Post-Long Rest)*
+* **Spell Slots & Known Spells *(Post-Session 2 Long Rest)*:**
+  - **1st-Level Slots (`4 / 4`):** *Chaos Bolt* (`+6 hit`, `2d8+1d6` elemental + Chaos Leap on matching d8s; `+1d4+1 Fire` if wearing Red Robe), *Mage Armor* (`16 AC` w/ Black Robe), *Charm Person* (`DC 14 WIS`)
   - **2nd-Level Slots (`2 / 2`):** *Web* (`DC 14 DEX` Restrained), *Misty Step* (`30ft Bonus Action teleport`), *Charm Person (Fierna 2nd-Lvl)*
   - **Cantrips (At-Will):** *Fire Bolt* (`+6 hit`, `1d10` Fire; `+1d4+1 Fire` if wearing Red Robe), *Friends*, *Prestidigitation*, *Minor Illusion* (`DC 14`), *Mage Hand*
-* **Equipment & Inventory (`15 GP, 0 SP`):**
-  - ⬛ ***Kolyan's Black Robe of Warding (EQUIPPED — Claimed S1 at Indirovich Manor):*** Grants **`+1 AC`** and **`+1` to ALL Saving Throws** while worn.
+* **Equipment & Inventory (`15 GP, 0 SP` — Synced Post-S2 Firebase `02:01 AM`):**
+  - 🏹 ***Father Donovich's Crossbow (EQUIPPED Ranged — Claimed S2 at Barovia Church):*** 2H Light Crossbow (`80/320 ft`, `1d8` Piercing, Slow) + **`10x Silvered Crossbow Bolts`** *(bypasses Vampire Spawn/Werewolf/Hag resistance!)*.
+  - ⬛ ***Kolyan's Black Robe of Warding (EQUIPPED Body — Claimed S1 at Indirovich Manor):*** Grants **`+1 AC`** and **`+1` to ALL Saving Throws** while worn.
   - 🟥 ***Kolyan's Red Robe of Embers (Claimed S1):*** Adds **`+1d4 + 1` Fire damage** to any damaging spell while worn.
   - 🟩 ***Kolyan's Green Robe of Arcana (Claimed S1):*** Grants **Advantage on all Intelligence (Arcana) checks** while worn. *(Swap robes freely out of combat; 1 robe active at a time).*
   - 🗡️ ***Kolyan's Silvered Heirloom Dagger (Claimed S1):*** Ornate curved silvered blade with **3 red gems** set into the handle (`+4 hit`, `1d4 + 2` **Silvered Piercing**, Thrown `20/60 ft`). Bypasses Vampire Spawn/Werewolf/Night Hag resistances; high resale value (`150–250 GP`).
-  - 🧪 ***2x Potions of Healing*** (`2d6 + 1 HP` — Bonus Action self / Action ally) & 🌿 ***4x Medicinal Herbs*** (**Crafting Workbench:** `2x Herbs ➔ 1x Potion of Healing [2d6+1 HP]`, `1x Herb ➔ 1x Field Bandages [1d6+1 HP]`, `4x Herbs + 1x Catalyst ➔ 1x Greater Healing Potion [4d4+4 HP]`).
-  - 🃏 ***The Blank Tarokka Card (Unwritten Vistani Omen — Give to Madam Eva):*** Given to Piper in Session 1 at *Blood on the Vine Tavern* after a Vistani stared into her eyes with deep concern (seeing misfortune and darkness) and the painted ink faded completely off the card in Piper's hand! (**Option 2 Living Omen Card:** Bleeds charcoal Mist/Vessel imagery across 3 campaign stages starting when Madam Eva touches it at Tser Pool in Session 2).
+  - 💧 ***Flask of Morninglord Spring Water (Claimed S2):*** Holy Water (`20 ft` splash, `2d6 Radiant` & halts Vampire Regeneration).
+  - 📖 ***Holy Barovian Book*** (`5 GP` trade/lore value) & 🏆 ***Barovian Holy Chalice*** (`5 GP` trade value) *(Claimed S2 at Barovia Church)*.
+  - 🧪 ***1x Potion of Healing*** (`2d6 + 1 HP` — 1 consumed in S2), 🍎 ***2x Apples*** (`1d4 + 1 HP` each), & 🌿 ***7x Medicinal Herbs*** (`4x S1 + 3x S2 Barovian Medicinal Herbs` — Crafting Workbench).
+  - 🃏 ***The Blank Tarokka Card (Stage 1 Charcoal Bleed — S2 Tser Pool!):*** Handed to Piper in S1; when **Madam Eva** touched it in S2, she recoiled in genuine dread (*power above her and perhaps even above Strahd!*). **Stage 1 charcoal ink** bled across the bottom third: ***Dead Pine Trees and Mortal Palms rising from the Blackwater***.
   - 🕰️ *Barnaby's Brass Pocket Watch* (Stopped at 11:47 PM the night Barnaby passed away in Daggerford; warm to the touch and occasionally ticks backward inside Barovia; holds blurred portrait of her purple-horned tiefling parents)
   - 🪄 *Quarterstaff (EQUIPPED 2H — Magician's Cane & Arcane Focus • `+2 hit`, `1d6/1d8` bludgeoning)*
   - 🎩 *False-Bottom Stage Props & Rigged Card Deck (EQUIPPED — Head)*
@@ -49,16 +52,16 @@
 * **Species & Class:** **Level 3 Human Battle Master Fighter (5.5e / 2024 Rules)**
 * **Background & Alignment:** **Noble (Former King of Oakenshire)** • **Lawful Neutral** *(Height: 5'11" • Age: 32)*
 * **Interactive HTML Sheet:** [`JACOMIR_PLAYER_SHEET.html`](file:///D:/Dungeons%20and%20Dragons%20Campaigns/CURSE%20OF%20STRAHD/JACOMIR_PLAYER_SHEET.html)
-* **Vitals *(Pre-Long Rest S1 State)*:** **HP:** `23 / 31` *(3d10 + CON — Fixed Average)* | **AC:** `17` *(Chain Mail 16 + Defense Fighting Style +1)* | **Init:** `+0` | **Speed:** `30 ft` | **PB:** `+2` | **Passive Perception:** `13`
+* **Vitals *(Post-Session 2 Long Rest)*:** **HP:** `31 / 31` *(3d10 + CON — Fixed Average)* | **AC:** `17` *(Chain Mail 16 + Defense Fighting Style +1)* | **Init:** `+0` | **Speed:** `30 ft` | **PB:** `+2` | **Passive Perception:** `13`
 * **Ability Scores (Noble Background +2 STR / +1 CON):** `STR 17 (+3) ★ | DEX 10 (+0) | CON 16 (+3) ★ | INT 10 (+0) | WIS 12 (+1) | CHA 12 (+1)`
 * **Saving Throws:** **STR ★ `+5`**, **CON ★ `+5`**, WIS `+1`, CHA `+1`, DEX `+0`, INT `+0`
-* **Proficient Skills:** **Athletics (STR) ★ `+5`**, **Insight (WIS) ★ `+3`**, **Perception (WIS) ★ `+3`** *(Human: Skillful)*, **Survival (WIS) ★ `+3`** *(Skilled)*, **Persuasion (CHA) ★ `+3`** *(Noble)*, **Intimidation (CHA) ★ `+3`** *(Skilled)*, **History (INT) ★ `+2`** *(Noble)* • **Tool Proficiency:** *Dragonchess Set*
+* **Proficient Skills:** **Athletics (STR) ★ `+5`**, **Insight (WIS) ★ `+3`**, **Perception (WIS) ★ `+3`** *(Human: Skillful)*, **Survival (WIS) ★ `+3`** *(Skilled)*, **Persuasion (CHA) ★ `+3`** *(Noble)*, **Intimidation (CHA) ★ `+3`** *(Skilled)*, **History (INT) ★ `+2`** *(Noble)* • **Tool Proficiency:** *Dragonchess Set* *(Tied Count Strahd in a legendary 5-round stalemate `16 vs. 16` in Session 2!)*
 * **Weapons & 5.5e Weapon Masteries:**
-  - 🗡️ **Ancestral Greatsword:** `+5 to hit`, `2d6 + 3` Slashing *(Savage Attacker: rolls 2d6 twice 1/turn and uses higher total)* • **Graze Mastery:** Deals **3 Slashing damage** (STR mod) even on a missed attack roll!
+  - 🗡️ **Ancestral Greatsword *(Liquid Silver Coating Applied in S2!)*:** `+5 to hit`, `2d6 + 3` Slashing *(Savage Attacker: rolls 2d6 twice 1/turn and uses higher total)* • **Graze Mastery:** Deals **3 Slashing damage** (STR mod) even on a missed attack roll!
   - ⚔️ **Ismark's Silvered Longsword *(Spared by Ismark in S1)*:** `+5 to hit`, `1d8 + 3` (1H) or `1d10 + 3` (2H) **Silvered Slashing** *(bypasses nonmagical resistances/immunities of Undead, Vampire Spawn, Werewolves, & Night Hags!)* • **Sap Mastery:** Target hit has **Disadvantage on its next attack roll** before the start of your next turn!
   - 🪓 **2x Handaxes (Melee or Thrown 20/60 ft):** `+5 to hit`, `1d6 + 3` Slashing • **Vex Mastery:** Hitting grants **Advantage** on the next attack roll against that target before the end of your next turn!
 * **Battle Master Combat Superiority (`Maneuver Save DC 13`):**
-  - ⚔️ **Superiority Dice:** `2 / 4 (d8s)` remaining pre-Short/Long Rest *(Recharges to 4/4 on Short or Long Rest)*
+  - ⚔️ **Superiority Dice:** `4 / 4 (d8s)` *(Post-Session 2 Long Rest)*
   - 🛡️ **Parry (Reaction):** When damaged by a melee attack, expend 1 Superiority Die to reduce damage by `1d8 + 3` (STR).
   - ⚔️ **Riposte (Reaction):** When a creature misses you with a melee attack, expend 1 Superiority Die to make an immediate melee weapon attack (`+5 hit`, adds `+1d8` to damage on hit).
   - 👹 **Menacing Attack (On Hit):** Expend 1 Superiority Die on a weapon hit to add `+1d8` damage and force a **DC 13 WIS Save** or the target is **Frightened** of you until the end of your next turn.
@@ -69,7 +72,10 @@
   - 🌟 **Heroic Inspiration (`Human: Resourceful`):** `1 / 1 Ready` — Regained on every Long Rest; reroll any die immediately after rolling it.
   - 🩸 **Origin Feats:** **Savage Attacker** *(Human Versatile)* & **Skilled** *(Noble Background)*.
   - 🤝 **Help Tokens:** `2 / 2`
-* **Equipment, Session 1 Loot & Royal Regalia (`0 GP, 0 SP`):**
+* **Equipment, Session 1–2 Loot & Royal Regalia (`0 GP, 0 SP`):**
+  - ✉️ ***Strahd's Black Sealed Letter / Invitation (Gifted S2 After Legendary Dragonchess Stalemate!):*** Handed privately to King Jacomir inside Strahd's Silence bubble after Jacomir declined to co-rule Barovia. Holds Strahd's secret favor: *convince Ireena to join Strahd willingly, and Strahd will help Jacomir locate his missing people of Oakenshire* (confirmed by Madam Eva to be somewhere in Barovia!).
+  - ⚗️ ***Alchemical Catalyst (Found S2 — Unidentified!):*** Mysterious glowing Barovian alchemical reagent found by Jacomir (function unknown to him yet; unlocks Greater Healing Potions & alchemical weapon coatings in the Crafting Workbench!).
+  - 🍎 ***1x Apple*** *(Heals `1d4 + 1 HP`)*
   - 📖 ***Burgomaster Kolyan's Wizard Diary (Davian Martikov & Keepers of the Feather Lead):*** Found by looting Indirovich Manor in Session 1. Reveals that late Burgomaster Kolyan Indirovich was a wizard who knew **Davian Martikov** and the **Keepers of the Feather**, naming them as trusted allies who can help against Strahd!
   - ⚔️ ***Ismark's Silvered Longsword (Spared by Ismark — S1 Indirovich Armory):*** Bypasses undead/werewolf/vampire resistance (`1d8/1d10 + 3` Silvered Slashing, **Sap Mastery**).
   - 💧 ***1x Flask of Morninglord Spring Water (Holy Water — Claimed S1):*** Consecrated spring water blessed by the Morninglord; splashes `20 ft` for `2d6 Radiant` vs Undead/Fiends and **halts Vampire Regeneration for 1 round**!
@@ -90,7 +96,7 @@
 * **Saving Throws:** **STR ★ `+1`**, **DEX ★ `+6`**, CON `+2`, INT `+0`, WIS `+2`, CHA `+0`
 * **Proficient Skills:** **Stealth (DEX) ★ (Expertise) `+8`**, **Perception (WIS) ★ (Expertise) `+6`**, **Acrobatics (DEX) ★ `+6`**, **Sleight of Hand (DEX) ★ `+6`**, **Survival (WIS) ★ `+4`**, **Insight (WIS) ★ `+4`**, **Arcana (INT) ★ `+2`**, **Investigation (INT) ★ `+2`** • **Tools:** **🗝️ Permanent Lockpicks (Thieves' Tools)** • **Languages:** Common, Abyssal, Infernal
 * **Monster Slayer Subclass Features (Level 3):**
-  - 🔍 **Hunter’s Sense (`1 / 2` remaining pre-Long Rest):** Bonus Action to inspect a creature within 60 ft; immediately learn damage immunities, resistances, and vulnerabilities. *(Occult Flavor: Field Dossier & anatomy analysis).*
+  - 🔍 **Hunter’s Sense (`2 / 2` Ready — Post-S2 Long Rest):** Bonus Action to inspect a creature within 60 ft; immediately learn damage immunities, resistances, and vulnerabilities. *(Occult Flavor: Field Dossier & anatomy analysis).*
   - 🎯 **Slayer’s Prey (At-Will Designation — Currently OFF):** Bonus Action to designate an enemy within 60 ft; first weapon hit each turn deals an extra **`+1d6` weapon damage**. When the marked enemy dies, untoggle and shift to a new enemy on a subsequent turn.
   - 🛡️ **Monster Slayer Magic:** Automatically knows *Protection from Evil and Good* (free prepared).
 * **Core Ranger Features & Tactical Feats (5.5e / Tasha's):**
@@ -101,23 +107,26 @@
   - ⚡ **Alert Origin Feat:** `+2` PB to Initiative (`+6` total); can swap Initiative count with a willing ally at start of combat. Cannot be surprised.
   - 🔫 **Gunner Feat (Level 1 / Background):** Firearms proficiency, ignores Loading property, no disadvantage on ranged attacks within 5 ft (point-blank execution).
   - 🤝 **Help Tokens:** `2 / 2`
-* **Spell Arsenal & Relic Magic (Spell DC 12 | Spell Attack +4 | 1st-Level Slots: `2 / 3` Pre-LR):**
+* **Spell Arsenal & Relic Magic (Spell DC 12 | Spell Attack +4 | 1st-Level Slots: `3 / 3` Post-LR):**
   - 💣 **Phosphor Grenade:** *(Hail of Thorns)* Bonus Action immediately after hit with ranged attack; target and 5-ft cube take **`1d10` Piercing & Fire damage** on failed DC 12 DEX save (half on success, no concentration).
   - 🔴 **Runic Tracer:** *(Hunter's Mark)* Bonus Action, 90 ft, Conc 1 hr. Favored Enemy 2x free/LR or 1st-level slot. Target takes an extra **`+1d6` Piercing/Force damage** on EVERY weapon hit; Advantage on Perception & Survival to track.
   - ⚡ **Longstrider:** 1 Action, Touch, 1 hr (no conc). Speed increases by **`+10 ft` (40 ft total)**.
   - 🛡️ **Protection from Evil and Good:** Subclass Magic. 1 Action, Touch, Conc 10 mins. Disadvantage on monster attacks, immunity to charm/fright/possession.
   - 🌫️ **Smokescreen:** *(Fog Cloud)* 1 Action, 120 ft, Conc 1 hr. 20-ft-radius sphere of heavy obscuration.
-  - 🩸 **Amulet of the Whispering Grave (`Speak with Dead` • `1 / 1` per Long Rest — Appraised S1):** Casts ***Speak with Dead*** (`3rd-level Necromancy`, 1 Action, 10 ft, 10 min, ask up to 5 questions of a corpse with a mouth) once per Long Rest without spending a spell slot!
-* **Weapons, Firearms Arsenal & Reload Engine *(Live S1 Chambers)*:**
-  - 🎯 **"Lament" (Heavy Long Rifle / Musket):** `+8 to hit`, `1d12 + 4` Piercing | Range 80/240 ft (5 ft point-blank w/ Gunner) | Two-Handed. Live Chamber: **`8 / 10`** • Reserve Clips: **`2 / 2`** (1 Bonus Action reload).
-  - 💥 **Twin Revolvers ("Mercy & Less" — ACTIVE STANCE):** Main-Hand `+8 to hit`, `1d6 + 4` Piercing (Action) | Off-Hand `+8 to hit`, `1d6` Piercing (Bonus Action) | Range 5/90 ft. Live Cylinders: **Mercy `5 / 6`**, **Less `5 / 6`** • Twin Speedloaders: **`2 / 2`** (1 Bonus Action reloads BOTH).
+  - 🩸 **Amulet of the Whispering Grave (`Speak with Dead` • `1 / 1` Ready Post-LR — Used on Doru in S2!):** Casts ***Speak with Dead*** (`3rd-level Necromancy`, 1 Action, 10 ft, 10 min, ask up to 5 questions of a corpse with a mouth) once per Long Rest without spending a spell slot!
+* **Weapons, Firearms Arsenal & Reload Engine *(Post-Session 2 Long Rest)*:**
+  - 🎯 **"Lament" (Heavy Long Rifle / Musket):** `+8 to hit`, `1d12 + 4` Piercing | Range 80/240 ft (5 ft point-blank w/ Gunner) | Two-Handed. Live Chamber: **`10 / 10`** *(**`5x Silvered Rounds`** currently loaded!)* • Reserve Clips: **`2 / 2`** (1 Bonus Action reload).
+  - 💥 **Twin Revolvers ("Mercy & Less" — ACTIVE STANCE):** Main-Hand `+8 to hit`, `1d6 + 4` Piercing (Action) | Off-Hand `+8 to hit`, `1d6` Piercing (Bonus Action) | Range 5/90 ft. Live Cylinders: **Mercy `6 / 6`**, **Less `6 / 6`** • Twin Speedloaders: **`2 / 2`** (1 Bonus Action reloads BOTH).
   - 🗡️ **Solmere Royal Trench Knife / Stiletto:** Backup Melee. Finesse, Light. `+6 to hit` (DEX + PB), `1d4 + 4` Piercing. Concealed boot blade, unlimited melee strikes.
   - ☕ **Short Rest Restock (Chamber Top-Off):** Yvaine hand-feeds loose powder and slugs during a short rest, fully replenishing her active firearm chambers (`10/10` for Lament, `6/6 & 6/6` for Mercy & Less). Spent emergency reserve clips and speedloaders only recharge on a **Long Rest**!
-* **Equipment, Session 1 Loot & Relics (`17 GP, 5 SP`):**
+* **Equipment, Session 1–2 Loot & Relics (`17 GP, 5 SP` — Synced Post-S2 Firebase):**
+  - 🎗️ ***Specialty Cartridge Rig (Claimed S2):*** Tactical ammunition rig for specialty/silvered rounds (`5x Silvered Rounds` loaded in *Lament*!).
+  - 💧 ***2x Consecrated Holy Water (Claimed S2):*** `20 ft` splash, `2d6 Radiant` & halts Vampire Regeneration.
+  - 🌿 ***2x Barovian Medicinal Herbs*** & 🍎 ***3x Apples*** (`1d4 + 1 HP` each) *(Claimed S2)*.
   - 🩸 ***Amulet of the Whispering Grave*** *(Appraised Red Amulet — `Speak with Dead` 1/Long Rest)*
   - 🗝️ ***Lockpicks*** *(Permanent Thieves' Tools access for picking locks & disarming traps)*
   - 🍷 ***Bottle of Expensive Barovian Wine*** *(High resale value trade treasure — `15–30 GP`)*
-  - 🥐 ***3x Fresh Croissants*** *(Action to eat: heals **`1d4 HP`** each)*
+  - 🥐 ***2x Fresh Croissants*** *(1x used in S2 to bait Cael the talking cat! Action to eat: heals **`1d4 HP`** each)*
   - 🩹 ***2x Field Bandages*** *(Action to wrap wounds: heals **`1d6 + 1 HP`** each / stabilizes dying ally)*
   - 🕰️ *Engraved Silver Pocket Watch*, 📖 *Monster-Hunting Journal (Sketches & Weaknesses)*, 💌 **Session 1 Detective Clue — Arik's Letter** *(Old tavern letter & portrait of Arik's wife and daughter reading "before you go I wanna say how much I love you" — mystery of why Arik wrote it years ago while still alive behind the bar!)*, Studded leather coat cut from charred ballgown (`AC 16`), tactical bandolier & reloading kit, chipped bloodstone pendant, hooded lantern, dungeoneer's pack, crowbar.
 * **Origin Lore & Detective Arc:** Eldest princess of the white-stone kingdom of **Solmere**. On her 13th birthday, the palace gates were opened from the inside, guards were dismissed on false orders, and her parents were slaughtered. **Yvaine never saw the traitor's face**—only that someone who knew the palace by heart had betrayed them. She buried her parents with a servant's spade, took her father's engraved rifle *"Lament"*, and spent 7 years in the undercity turning into an apex Monster Slayer hunting her missing younger sisters, **Vesper and Liora**. Right before entering Barovia, she tracked a whisper to a rain-drenched village where a safehouse was harboring one of the few survivors of that massacre who knew the traitor's identity. But the moment she entered the alleyway, it proved to be an ambush. Surrounded by armed assassins with drawn steel, back against the wall, Yvaine was ready to die fighting for that name—when freezing Mists swallowed the alley, snatching her into the runaway carriage across from Jacomir. In Barovia, she is in full **detective mode**, tracking the phantom traitor and finding proof that Vesper and Liora are safe back home. *(Secret Destiny: On her 13th birthday, the Dark Powers orchestrated the fall of Solmere to forge an apex killer; when Strahd dies, the Scion Companion channels the Root Anchor into Yvaine, turning her lethal Hunter's Sense into Vecna's targeting crosshairs across the multiverse).*

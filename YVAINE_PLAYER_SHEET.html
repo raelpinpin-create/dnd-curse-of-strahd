@@ -1732,27 +1732,27 @@
     // Active Firearm Stance: 'lament' or 'revolvers' (Session 1 end: Mercy & Less)
     let activeStance = 'revolvers';
 
-    // Firearms & Reload Engine State (Session 1 State)
+    // Firearms & Reload Engine State (Post-Session 2 Long Rest)
     let maxLamentChamber = 10;
-    let lamentChamber = 8;
+    let lamentChamber = 10;
     const maxLamentReloadReserves = 2;
     let lamentReloadReserves = 2;
 
     let maxMercyChamber = 6;
-    let mercyChamber = 5;
+    let mercyChamber = 6;
     let maxLessChamber = 6;
-    let lessChamber = 5;
+    let lessChamber = 6;
     const maxRevolverReloadReserves = 2;
     let revolverReloadReserves = 2;
 
-    // Monster Slayer Features (Session 1 State)
+    // Monster Slayer Features (Post-Session 2 Long Rest)
     const maxHuntersSenseUses = 2; // Wis mod (+2)
-    let huntersSenseUses = 1;
+    let huntersSenseUses = 2;
     let slayersPreyActive = false;
 
-    // Spells, Slots & Appraised Relic (Session 1 State)
+    // Spells, Slots & Appraised Relic (Post-Session 2 Long Rest)
     const maxSpellSlots = 3;
-    let curSpellSlots = 2;
+    let curSpellSlots = 3;
     const maxFavoredEnemyCasts = 2;
     let favoredEnemyCasts = 2;
     let isTracerActive = false;
@@ -3469,13 +3469,16 @@
     }
 
     // ==========================================
-    // 🎒 TRACKED INVENTORY ENGINE (POST-SESSION 1)
+    // 🎒 TRACKED INVENTORY ENGINE (POST-SESSION 2)
     // ==========================================
     const defaultItems = [
+        "2x Barovian Medicinal Herbs",
+        "3x Apple",
+        "Specialty Cartridge Rig",
         "Amulet of the Whispering Grave",
         "Masterwork Lockpicks",
         "Bottle of Vintage Barovian Wine",
-        "3x Fresh Croissants",
+        "2x Fresh Croissants",
         "2x Field Healing Bandages",
         "\"Lament\" Heavy Long Rifle",
         "\"Mercy\" Six-Shooter Revolver",
@@ -3493,6 +3496,14 @@
     ];
 
     const worldLootVault = {
+        "apple": {
+            name: "Apple",
+            category: "BAROVIAN PROVISION • Consumable",
+            origin: "Session 2 Salvage / Camp Supplies",
+            desc: "Crisp Barovian orchard apples stowed in Yvaine's satchel.",
+            effect: "• <strong>Eat (Action):</strong> Restores <strong>1d4 + 1 HP</strong> (strictly caps at Max HP).",
+            healFormula: { dice: 1, sides: 4, bonus: 1, verb: 'Ate' }
+        },
         "whispering grave": {
             name: "Amulet of the Whispering Grave",
             category: "APPRAISED NECROMANTIC RELIC • 1/Long Rest",
@@ -3699,9 +3710,9 @@
     }
 
     function getStoredItems() {
-        const stored = localStorage.getItem('cos_inv_yvaine_v9');
+        const stored = localStorage.getItem('cos_inv_yvaine_v10');
         if (!stored) {
-            localStorage.setItem('cos_inv_yvaine_v9', JSON.stringify(defaultItems));
+            localStorage.setItem('cos_inv_yvaine_v10', JSON.stringify(defaultItems));
             return [...defaultItems];
         }
         try {
@@ -3711,7 +3722,7 @@
     }
 
     function saveItems(items) {
-        localStorage.setItem('cos_inv_yvaine_v9', JSON.stringify(items));
+        localStorage.setItem('cos_inv_yvaine_v10', JSON.stringify(items));
     }
 
     function consumeAndHealItem(index, dice, sides, bonus, verb, itemName) {

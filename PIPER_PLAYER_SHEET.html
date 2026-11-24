@@ -1700,7 +1700,7 @@
 <script src="cos_rpg_engine.js?v=20261122v13"></script>
 <script>
     // ==========================================
-    // 🎩 PIPER MASTER STATE VARIABLES (POST-SESSION 1)
+    // 🎩 PIPER MASTER STATE VARIABLES (POST-SESSION 2 LONG REST)
     // ==========================================
     let characterLevel = 3;
     let curHP = 17;
@@ -1710,22 +1710,22 @@
     let isMageArmorActive = false;
     let isSurgeACActive = false;
     let activeRobe = localStorage.getItem('cos_robe_piper_v2') || 'black'; // 'black' (+1 AC & Saves) | 'red' (+1d4+1 Fire on spells) | 'green' (Adv on Arcana) | 'none'
-    let helpTokens = 1;
+    let helpTokens = 2;
     const maxHelpTokens = 2;
     let shortRestsRemaining = 2;
     const maxShortRests = 2;
     let rollMode = 'norm';
 
-    // Sorcerer & Fierna Lineage Resources (Session 1 Cliffhanger State)
+    // Sorcerer & Fierna Lineage Resources (Post-Session 2 Long Rest)
     let curSP = 3;
     let maxSP = 3;
     let tidesOfChaosReady = true;  // true = Ready to grant Adv; false = Primed for Auto-Surge on next leveled spell!
-    let fiernaCharmReady = false;  // Legacy of Phlegethos: 0/1 Used (cast on Morgantha in S1; restores on Long Rest)
+    let fiernaCharmReady = true;   // Legacy of Phlegethos: 1/1 Ready (Restored after Tser Pool Long Rest)
     let lastWildSurgeText = "d100=87 (Aerial Stage Wire (Fly))";
 
-    // Multi-Tier Spell Slots (Level 1 to 3 — S1 state: 3/4 L1, 2/2 L2)
+    // Multi-Tier Spell Slots (Level 1 to 3 — Post-Session 2 Long Rest: 4/4 L1, 2/2 L2)
     let spellSlots = {
-        1: { current: 3, max: 4, reqLevel: 1 },
+        1: { current: 4, max: 4, reqLevel: 1 },
         2: { current: 2, max: 2, reqLevel: 3 },
         3: { current: 0, max: 0, reqLevel: 5 }
     };
@@ -4049,12 +4049,19 @@
     // 🎒 INVENTORY, BAROVIAN LOOT VAULT & ⚗️ CRAFTING ENGINE
     // ==========================================
     const defaultItems = [
+        "2x Apple",
+        "Father Donovich's Crossbow",
+        "3x Barovian Medicinal Herbs",
+        "10x Silvered Crossbow Bolts",
+        "Holy Barovian Book",
+        "Barovian Holy Chalice",
+        "Flask of Morninglord Spring Water",
         "The Blank Tarokka Card",
         "Kolyan's Silvered Heirloom Dagger",
         "Kolyan's Black Robe of Warding",
         "Kolyan's Red Robe of Embers",
         "Kolyan's Green Robe of Arcana",
-        "2x Potion of Healing",
+        "Potion of Healing",
         "4x Medicinal Herbs",
         "Barnaby's Brass Pocket Watch",
         "False-Bottom Stage Props & Rigged Card Deck",
@@ -4069,19 +4076,48 @@
     ];
 
     const worldLootVault = {
+        "apple": {
+            name: "Apple",
+            category: "BAROVIAN PROVISION • Consumable",
+            origin: "Session 2 Salvage / Camp Supplies",
+            desc: "A crisp, tart orchard apple packed into Piper's coat pocket.",
+            effect: "• <strong>Eat (Action):</strong> Restores <strong>1d4 + 1 HP</strong> (strictly caps at Max HP).",
+            healFormula: { dice: 1, sides: 4, bonus: 1, verb: 'Ate' }
+        },
+        "holy barovian book": {
+            name: "Holy Barovian Book",
+            category: "SACRED CHURCH RELIC • Trade / Lore Value (5 GP)",
+            origin: "Church of the Village of Barovia (Session 2 Loot)",
+            desc: "A worn leather-bound prayer tome of the Morninglord salvaged from Father Donavich's church.",
+            effect: "• <strong>Value &amp; Lore:</strong> Worth roughly <strong>5 GP</strong> to priests or scholars, and contains traditional Barovian hymns and rites of the Morninglord."
+        },
+        "barovian holy chalice": {
+            name: "Barovian Holy Chalice",
+            category: "SACRED CHURCH RELIC • Trade Value (5 GP)",
+            origin: "Church of the Village of Barovia (Session 2 Loot)",
+            desc: "A tarnished ritual chalice engraved with the rising sun crest of the Morninglord.",
+            effect: "• <strong>Value &amp; Ritual:</strong> Worth roughly <strong>5 GP</strong>; can hold consecrated water or ceremonial offerings."
+        },
+        "spring water": {
+            name: "Flask of Morninglord Spring Water",
+            category: "ANTI-UNDEAD • Consecrated Holy Water (Session 2)",
+            origin: "Church of the Village of Barovia (Session 2 Loot)",
+            desc: "A stoppered glass flask of pure spring water consecrated in the name of the Morninglord.",
+            effect: "• <strong>Action (Splash / Throw up to 20 ft):</strong> Deals <strong>2d6 Radiant Damage</strong> to Undead and Fiends and <strong>halts Vampire Regeneration</strong> for 1 round!"
+        },
         "blank tarokka": {
-            name: "The Blank Tarokka Card",
-            category: "MYSTERIOUS OMEN RELIC • Session 1 Vistani Gift",
-            origin: "Given by a Deeply Concerned Vistani at Blood on the Vine Tavern",
-            desc: "A heavy, velvet-backed Vistani Tarokka card whose painted ink literally bled and faded into nothingness the moment the fortune-teller tried to read Piper's future. Its parchment surface is currently stark, cold, and unwritten.",
-            effect: "• <strong>Vistani Warning:</strong> The Vistani in the tavern stared into Piper's eyes with deep concern, warning her to stay safe because they saw gathering misfortune and darkness around her.<br>• <strong>Quest Hook:</strong> Deliver this Blank Tarokka Card directly to the ancient seer <strong>Madam Eva</strong> at the <strong>Tser Pool Encampment</strong>.<br>• <strong>Living Omen:</strong> Sometimes the edges of the blank parchment feel icy to the touch, as if waiting for dark charcoal ink to bleed back into the card as Piper approaches the truth of her awakened magic."
+            name: "The Blank Tarokka Card (Stage 1 Charcoal Bleed)",
+            category: "LIVING OMEN RELIC • Madam Eva's Dread (S1 ➔ S2)",
+            origin: "Blood on the Vine Tavern (S1) ➔ Touched by Madam Eva at Tser Pool (S2)",
+            desc: "A heavy velvet-backed Tarokka card whose ink faded to blank parchment in Piper's hand. When Madam Eva touched it at Tser Pool, the ancient seer recoiled in fear—warning that a power above her, and perhaps even above Strahd, walks behind Piper.",
+            effect: "• <strong>Stage 1 Charcoal Drawing (Unlocked S2):</strong> Dark charcoal ink bled across the bottom third of the parchment, showing <strong>Dead Pine Trees and Mortal Palms rising from the Blackwater</strong>.<br>• <strong>Living Omen:</strong> Two-thirds of the card remain stark white, waiting to bleed higher as Piper draws closer to what woke the fire in her blood."
         },
         "tarokka": {
-            name: "The Blank Tarokka Card",
-            category: "MYSTERIOUS OMEN RELIC • Session 1 Vistani Gift",
-            origin: "Given by a Deeply Concerned Vistani at Blood on the Vine Tavern",
-            desc: "A heavy, velvet-backed Vistani Tarokka card whose painted ink literally bled and faded into nothingness the moment the fortune-teller tried to read Piper's future. Its parchment surface is currently stark, cold, and unwritten.",
-            effect: "• <strong>Vistani Warning:</strong> The Vistani in the tavern stared into Piper's eyes with deep concern, warning her to stay safe because they saw gathering misfortune and darkness around her.<br>• <strong>Quest Hook:</strong> Deliver this Blank Tarokka Card directly to the ancient seer <strong>Madam Eva</strong> at the <strong>Tser Pool Encampment</strong>."
+            name: "The Blank Tarokka Card (Stage 1 Charcoal Bleed)",
+            category: "LIVING OMEN RELIC • Madam Eva's Dread (S1 ➔ S2)",
+            origin: "Blood on the Vine Tavern (S1) ➔ Touched by Madam Eva at Tser Pool (S2)",
+            desc: "A heavy velvet-backed Tarokka card whose ink faded to blank parchment in Piper's hand. When Madam Eva touched it at Tser Pool, the ancient seer recoiled in fear—warning that a power above her, and perhaps even above Strahd, walks behind Piper.",
+            effect: "• <strong>Stage 1 Charcoal Drawing (Unlocked S2):</strong> Dark charcoal ink bled across the bottom third of the parchment, showing <strong>Dead Pine Trees and Mortal Palms rising from the Blackwater</strong>."
         },
         "heirloom dagger": {
             name: "Kolyan's Silvered Heirloom Dagger",
@@ -4246,9 +4282,9 @@
     ];
 
     function getStoredItems() {
-        const stored = localStorage.getItem('cos_inv_piper_v2');
+        const stored = localStorage.getItem('cos_inv_piper_v3');
         if (!stored) {
-            localStorage.setItem('cos_inv_piper_v2', JSON.stringify(defaultItems));
+            localStorage.setItem('cos_inv_piper_v3', JSON.stringify(defaultItems));
             return [...defaultItems];
         }
         try {
@@ -4258,7 +4294,7 @@
     }
 
     function saveStoredItems(items) {
-        localStorage.setItem('cos_inv_piper_v2', JSON.stringify(items));
+        localStorage.setItem('cos_inv_piper_v3', JSON.stringify(items));
     }
 
     function getItemQtyByKeyword(keyword) {
@@ -4619,6 +4655,61 @@
     const MAX_NOTE_CHARS = 1500;
     const defaultPlayerNotes = [
         {
+            id: 'note_1795456429945',
+            title: "The Main Quest",
+            text: "- [ ] Take the book (The Tome) from the walled town.\n- [ ] Take the Silver Dawn form the dead dragons fortress\n- [ ] Take the buried sunlight from the drowned swamp"
+        },
+        {
+            id: 'note_1795455105749',
+            title: "Tatiana",
+            text: "Sole lover of Strahd."
+        },
+        {
+            id: 'note_1795454415976',
+            title: "Blue Inn in Valaki",
+            text: "• Important figures are there."
+        },
+        {
+            id: 'note_1795454254622',
+            title: "Baron Vargas Valakovich",
+            text: "Borgermeister of Valaki. Rules a tyrannical decree."
+        },
+        {
+            id: 'note_1795453972624',
+            title: "Piper’s Tarokka Reading",
+            text: "• Drawing: Dead Pine Trees and Mortal Palms from the Blackwater."
+        },
+        {
+            id: 'note_1795453505628',
+            title: "Tarokka Reading Part 2",
+            text: "Madam Eva’s Tarroka Reading\n\n• 4th Card: Even in a cage bolted with iron, the hunter uses an open hand from the inside. Look well at the gentle faces that welcome you out of the storm, strangers—for a gilded puppet walks upon the roads. Its strings were knotted in the dark long before your roads crossed the mist, yet its fingers are kind enough to break bread beside you... Watch every threshold you think is locked, for not every instrument knows the hand that pulls its thread.\"\n• 5th Card: And here the Devil waits when the bells cease tolling. I see spires of black stone piercing a lightning-split sky, and far beneath them the cold white marble where a brother's blood first bought four centuries of winter. Find him where his sin and sorrow were crowned—beneath stained glass saints with blind eyes, beside an empty white tomb—and chase him upward into the thunder until only ghosts remain on the cliff.\""
+        },
+        {
+            id: 'note_1795452943580',
+            title: "Madam Eva’s Tarroka Reading",
+            text: "• This first card tells of history—truth bled into paper that the Devil wishes ash. I see a walled town where painted smiles freeze over terror, and bells ring on command. Look past the noisy tyrant to a quiet noble door of velvet and cold mourning—where a pale widow sleeps beside the unburied dead and bows in secret to a crimson altar. Behind iron and whispers lies the confession of how a man drowned his blood to buy eternity.\n• 2nd Card (Paladin): \"This is the weapon of dawn—a sliver of the lost sun waiting for clean hands. Seek a broken fortress of silver wings and shattered oaths perched high above the pines. There waits a dead commander whose rage runs colder than mountain sleet—a knight who hates the Devil so deeply he refuses to grant his enemy the mercy of a grave. Rekindle what was dimmed in the stone dragon's sky, and the ancient symbol of the morning shall fly to your breast.\"\n• 3rd Card: \"Here lies the blade of pure mercy—a hilt without iron, forged from grief and blinding light. Follow the dying river to a drowned village sunk in black mire, where scarecrows bleed stuffing and no living songbird dares draw breath. At the heart of the bog, a crooked house stalks on living roots beneath a hag who rocks an empty cradle in a giant's skull. Reach beneath her false lullaby and wrench the buried sun from the mud.\""
+        },
+        {
+            id: 'note_1795447620216',
+            title: "Cael",
+            text: "Druid"
+        },
+        {
+            id: 'note_1795443845528',
+            title: "James and Oryn",
+            text: "Servants of Strahd"
+        },
+        {
+            id: 'note_1795441078040',
+            title: "Volenta",
+            text: "One of Strahd’s Wives"
+        },
+        {
+            id: 'note_1795427415719',
+            title: "Doctor Vanwriten",
+            text: "Infamous Monster hunter that Doru met"
+        },
+        {
             id: 's1_keepers',
             title: "Keepers of the Feather",
             text: "Located in Wizard of Wines Winery. They are mage spies that shapeshift into ravens. They are against Strahd. Some of them reside in Vallaki. Davian Martikov is one of the friends of the past borgormaster."
@@ -4627,11 +4718,6 @@
             id: 's1_heirloom',
             title: "Silver Heirloom Weapon",
             text: "From the fam"
-        },
-        {
-            id: 's1_blank_card',
-            title: "Blank Tarot Card",
-            text: "Given by one of the vistanis."
         },
         {
             id: 's1_ireena',
@@ -4667,9 +4753,9 @@
     let editingNoteId = null;
 
     function getStoredNotes() {
-        const stored = localStorage.getItem('cos_notes_piper_v3');
+        const stored = localStorage.getItem('cos_notes_piper_v4');
         if (!stored) {
-            localStorage.setItem('cos_notes_piper_v3', JSON.stringify(defaultPlayerNotes));
+            localStorage.setItem('cos_notes_piper_v4', JSON.stringify(defaultPlayerNotes));
             return JSON.parse(JSON.stringify(defaultPlayerNotes));
         }
         try {
@@ -4682,23 +4768,23 @@
                     changed = true;
                 }
             });
-            if (changed) localStorage.setItem('cos_notes_piper_v3', JSON.stringify(notes));
+            if (changed) localStorage.setItem('cos_notes_piper_v4', JSON.stringify(notes));
             return notes;
         } catch(e) { return JSON.parse(JSON.stringify(defaultPlayerNotes)); }
     }
 
     function saveStoredNotes(notes) {
-        localStorage.setItem('cos_notes_piper_v3', JSON.stringify(notes));
+        localStorage.setItem('cos_notes_piper_v4', JSON.stringify(notes));
     }
 
     function getRemovedNoteTitles() {
-        const stored = localStorage.getItem('cos_notes_removed_piper_v3');
+        const stored = localStorage.getItem('cos_notes_removed_piper_v4');
         if (!stored) return [];
         try { return JSON.parse(stored); } catch(e) { return []; }
     }
 
     function saveRemovedNoteTitles(titles) {
-        localStorage.setItem('cos_notes_removed_piper_v3', JSON.stringify(titles));
+        localStorage.setItem('cos_notes_removed_piper_v4', JSON.stringify(titles));
     }
 
     function escapeNoteHtml(str) {
@@ -5172,6 +5258,7 @@
                 head: "false-bottom stage props & rigged card deck",
                 body: "kolyan's black robe of warding",
                 mainHand: "quarterstaff",
+                ranged: "father donovich's crossbow",
                 _grip: '2h'
             },
             weaponsGridSelector: '#weapons-grid-piper',

@@ -2,7 +2,7 @@
 ### *The Starlit Shepherd, Beloved Healer, & Tragic Scion of the Dark Powers*
 > **Campaign:** Curse of Strahd (Grand Trilogy — Director's Cut)  
 > **Target Role:** Core Main Party Companion & Primary Healer (Permanent Campaign-Long Companion)  
-> **Status:** `Active & Watching (Session 1 — Feline Stalker Form)`  
+> **Status:** `🟢 JOINED PARTY IN SESSION 2 (Busted as Talking Cat -> Human Stars Druid • Currently Under Suspicion After Freezing Up Around Derek!)`  
 > **True Identity:** Scion of the Dark Powers & Shepherd of the Pact of Vecna  
 > **Google Doc (Live Tier 1 Sandbox):** [Curse of Strahd - Caelum Jude (Cael) Master Companion Dossier](https://docs.google.com/document/d/17KfeBe_-j6yAFMzWV0tdr4Xw-YsAwCwSX8aRsdwr4Gc/edit)
 
