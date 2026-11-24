@@ -442,7 +442,7 @@ flowchart TD
 | **💀 Corpse / Bandit / Monster** | Raw Wolf Pelt, Dire Wolf Fangs, Thick Spider Silk Gland (`20-ft cord`), Cold-Iron Scrap Shards, Bent Iron Crowbar (`Adv STR leverage`), Worn Bandit Coin Belt (`8 GP`), Whetstone & Oil Rag, Field Bandages | Dead Monster-Hunter's Belt Pouch (`12 GP` + Healing Potion + 2 stakes + clue), Vampire-Hunter's Steel Pitons & Stakes, Hunter's Silvered Satchel, Liquid Silver Coating, Monster Trophy | **Fallen Hunter's +1 Silvered Dagger** (1H/Leg, Finesse, Nick, Magical Silvered), **Master Monster-Hunter's Concealed Pack** (Greater Healing + Silver Coating + Smoke Bomb + `45 GP`), Scroll of Misty Step |
 | **⚗️ Lab / Study / Library** | Empty Glass Apothecary Vials (3x), Parchment & Crow-Quill Ink Set, Chalk & Charcoal Sticks, Old Family Diary, Ghost-Cap Mushrooms, Brimstone Sulfur, Cold-Iron Scrap | Sealed Alchemist's Reagent Satchel (Catalyst + Silver Dust + 2x Herbs), **Annotated Barovian Herbalist Folio** (`Adv Nature/Survival foraging`), **Cracked Brass Magnifying Glass** (`Adv Investigation`), Antitoxin, Alchemist's Fire | **Eyeglass of Arcane Appraisal** (`1/LR free Identify or Detect Magic`), **Scroll of Misty Step**, **Scroll of Lesser Restoration**, Phosphor Flash-Bomb |
 
-**🔒 DM-Only Secret Recipe Unlock Codes (Player Sheet Workbench — 14 Curated Craftables):**
+**🔒 DM-Only Secret Recipe Unlock Codes (Player Sheet Workbench — 21 Curated Craftables):**
 - **Unlocked (Session 1):** `🧪 Potion of Healing (2d6+1 HP)` (`2x Herbs`) • `🩹 Field Bandages (1d6+1 HP)` (`1x Herb`)
 - **Locked (`🔒 ???` on Player Sheets — Learned Around Barovia):**
   - `GREATER-HEAL` → **🧪 Potion of Greater Healing (`4d4+4 HP`)** = `4x Medicinal Herbs + 1x Alchemical Catalyst` *(Learned: Jeny Greenteeth / Vistani apothecary / Donavich notes)*
@@ -452,11 +452,23 @@ flowchart TD
   - `BRIMSTONE` → **🔥 Alchemist's Fire Flask (`1d4 Fire/turn`)** = `1x Brimstone Sulfur + 1x Pine Pitch Oil` *(Learned: Ezmerelda `V1` / Rictavio `N5` / Blinsky `N7`)*
   - `ASH-CLOUD` → **💨 Ash-Cloud Smoke Bomb (`15-ft Obscured`)** = `1x Brimstone Sulfur + 1x Medicinal Herbs` *(Learned: Vistani scouts / Arasek smugglers)*
   - `PHOSPHOR` → **💣 Alchemical Phosphor Flash-Bomb (`2d6 Fire/Rad + Blind`)** = `1x Brimstone Sulfur + 1x Powdered Silver Dust + 1x Alchemical Catalyst` *(Learned: Ezmerelda `V1/S19` / Van Richten's Tower)*
-  - `INCENDIARY-ROUNDS` → **Brimstone Incendiary Bullets (`x10 • +1d4 Fire`)** = `1x Brimstone Sulfur + 1x Pine Pitch & Lamp Oil` *(Learned: Petru `G` / Gadof Blinsky `N7` / Ezmerelda)*
+  - `INCENDIARY-VIAL` → **🔥 Incendiary Oil Vial (`+1d4 Fire Full Mag / Blade`)** = `1x Brimstone Sulfur + 1x Pine Pitch & Lamp Oil` *(Learned: Petru `G` / Gadof Blinsky `N7` / Ezmerelda)*
   - `MIST-CAMP` → **⛺ Mist-Ward Traveler's Camp Kit (`Wilderness True Long Rest • DC 14 Survival`)** = `2x Treated Dire-Pelt & Waxed Canvas + 2x Pine Pitch & Lamp Oil + 1x Wolfbane Root + 1x Powdered Silver Dust` *(Bought `25–50 GP` or learned from Krezk trappers / Ismark / Petru)*
+  - `WITCH-IRON` → **⚔️ Witch-Iron Oil Vial (`+1/+1 Magical Full Mag / Blade`)** = `1x Silver Dust + 1x Wolfbane Root + 1x Alchemical Catalyst` *(Learned: Berez Bog-Witch Runestone)*
+  - `NIGHT-SIGHT` → **🍄 Ghost-Cap Night-Sight Brew (`Darkvision 60 ft / +30 ft & Adv Dim Perception 2 hrs`)** = `2x Ghost-Cap Forest Mushrooms + 1x Pure Spring Water` *(Learned: Jeny Greenteeth / Vistani herbalists)*
+  - `GRAVE-SALT` → **🧂 Consecrated Grave-Salt Coating (`+1d6 Necrotic & Blocks Regen`)** = `1x Grave-Salt Ward Pouch + 1x Pine Pitch Oil` *(Learned: Ezmerelda / Van Richten notes / Barovia Church)*
+  - `SILK-SNARE` → **🕸️ Whisper-Silk Snare & Grapple Kit (`30-ft Grapple / DC 13 DEX Restrained`)** = `1x Thick Spider Silk Gland + 1x Cold-Iron Scrap Shards` *(Learned: Blinsky / Ezmerelda / Martikov scouts)*
+  - `COLD-IRON` → **⛓️ Cold-Iron Caltrops (`10-ft sq: DC 15 DEX, 1d4 +1d4 vs Fey/Hags`)** = `2x Cold-Iron Scrap Shards` *(Learned: Petru's Forge / Vallaki Smithy / Ismark)*
+  - `FANG-CHARM` → **🐺 Predator's Fang Talisman (`Amulet: Adv Intimidation + 1/LR Adv vs Frightened`)** = `2x Dire Wolf Fangs + 1x Wolfbane Root` *(Learned: Tser Pool Vistani / Krezk trappers)*
+  - `SILVER-SMELT` → **✨ Powdered Silver Dust (`Camp Crucible Refining`)** = `1x Tarnished Silver Cutlery Set OR 1x Ancient Silver-Veined Quartz`
   - `MOONPETAL` → **🧪 Potion of Superior Healing (`8d4+8 HP`)** = `4x Herbs + 2x Catalyst + 1x Svalich Moonpetal` *(Learned: Abbey infirmary `S13` / Keepers inner circle / Wachterhaus)*
   - `SUN-ASH` → **☀️ Sun-Ash Repellent Balm (`+1d4 Radiant Coat 10m`)** = `1x Moonpetal + 1x Silver Dust + 1x Spring Water` *(Learned: Order of the Silver Dragon Knights `Q` / Van Richten)*
   - `HEART-ELIXIR` → **Elixir of Health (Legendary Revival — `50% Max HP`)** = `1x Shard of the Heart of Sorrow (K20) OR 1x Night Hag Heartstone (Morgantha)` + `2x Alchemical Catalyst + 1x Svalich Moonpetal + 1x Pure Spring Water` *(Learned late-game: Amber Temple Library `X30` carved wall mural, Exethanter `X27`, or Fallen Abbot `S13` / Van Richten confession)*
+
+### 🤝 4.11 NPC Specialist Item Conversions, Buyable Spell Scrolls (Lvl 1–5) & Smart Balance Forge
+- **1-Click NPC Conversions (`🤝 NPC` badge in Item Modals & Tab 3 Party Monitor):** Raw exploration finds keep their own immediate standalone uses, OR if players hand them to a Barovian specialist (**Petru / Vallaki Smithy**, **Jeny Greenteeth / Vistani Herbalist**, **Father Donavich / Lucian**, **Blinsky / Ezmerelda**), clicking **`🤝 Convert`** atomically deducts the raw item (+ optional small GP service fee) from that hero's Firebase Backpack and injects the finished usable item!
+- **Buyable & Auto-Cast Spell Scrolls (`50 GP` Lvl 1 • `150 GP` Lvl 2 • `300 GP` Lvl 3 • `500 GP` Lvl 4 • `1,000 GP` Lvl 5):** 48 curated 5e/Barovia spells supported automatically on every player sheet (plus custom scrolls via Forge). Holding any Spell Scroll automatically displays a **`[📜 Cast <Spell>]`** button on the Quick-Belt & Backpack that auto-rolls exact spell dice/healing/DC and consumes 1 scroll.
+- **Smart DM Forge Balance Advisor & Item-Granted Spells:** The Custom Item Forge (`🛠️ Forge`) scores weapon/armor/magic stats live to auto-suggest **Rarity**, **GP Value**, and **Requires Attunement** (with reverse **`✨ Fill Stats`** per rarity), lets Weapons/Armor/Magic Items grant live rechargeable spells (`[✨ Cast <Spell> (3/3)]` with rest recharge!), and wires **5.5e Weapon Masteries** (`Topple` DC, `Graze`, `Cleave`, `Nick`, `Vex`, `Sap`, `Slow`, `Push`) directly into player weapon cards.
 
 ---
 

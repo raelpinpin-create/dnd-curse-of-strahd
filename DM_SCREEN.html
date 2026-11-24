@@ -16446,6 +16446,245 @@ const LOOT_DATA = {
         "location": "Act I–IV • 🌟 Nat 20 Exploration Jackpot — Hidden Library Alcoves, Wachterhaus Study, Victor's Lab & Amber Temple",
         "mechanics": "• <strong>🌟 Nat 20 Discovery (1/Long Rest • No Attunement):</strong> Click <strong>[Activate]</strong> (1 Action) to cast <strong>Identify</strong> OR <strong>Detect Magic</strong> without expending a spell slot or material components!",
         "lore": "A folding brass monocle fitted with a pale violet quartz lens that causes hidden enchantments to shimmer like frost."
+    },
+
+    // =========================================================================
+    // NEW EXPLORATION CRAFTABLES & NPC CONVERSION ITEMS (6 RECIPES)
+    // =========================================================================
+    "ghost_cap_night_sight": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "name": "Ghost-Cap Night-Sight Brew",
+        "rarity": "Uncommon Craftable Elixir • Herbalist Tonic",
+        "cost": "18 GP",
+        "location": "Act I–III • Craftable (NIGHT-SIGHT) OR Jeny Greenteeth / Vistani Herbalist Conversion",
+        "mechanics": "• <strong>Drink (Bonus Action):</strong> Grants <strong>60-ft Darkvision</strong> (or <strong>+30 ft</strong> if you already have Darkvision) AND <strong>Advantage on Perception checks in dim light for 2 hours</strong>!",
+        "lore": "A luminous pale-blue brew distilled from Ghost-Cap mushrooms and cold mountain spring water."
+    },
+    "grave_salt_coating": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "name": "Consecrated Grave-Salt Coating",
+        "rarity": "Uncommon Craftable Weapon Coating • Anti-Regen Vial",
+        "cost": "25 GP",
+        "location": "Act I–IV • Craftable (GRAVE-SALT) OR Father Lucian / Ezmerelda Conversion",
+        "mechanics": "• <strong>Bonus Action — Coat Blade or Full Mag:</strong> Click <strong>[Coat]</strong> in Backpack to add <strong>+1d6 Necrotic damage</strong> AND <strong>prevent target from regaining HP/regenerating until start of your next turn</strong>!",
+        "lore": "Thick black pitch suspended with consecrated chapel salt—hisses violently against vampire wounds."
+    },
+    "whisper_silk_snare": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "name": "Whisper-Silk Snare & Grapple Kit",
+        "rarity": "Uncommon Craftable Tactical Gadget • Silent Restraint",
+        "cost": "20 GP",
+        "location": "Act I–III • Craftable (SILK-SNARE) OR Blinsky / Ezmerelda Conversion",
+        "mechanics": "• <strong>1 Action:</strong> Throw as a silent snare up to <code>20 ft</code> (<code>DC 13 DEX Save</code> or <strong>Restrained &amp; Prone</strong>; <code>DC 13 STR/DEX</code> Action to break free) OR anchor as a whisper-quiet <code>30-ft</code> climbing/grapple cord!",
+        "lore": "Feather-light spider-silk line weighted with cold-iron hooks—falls silently as spiderweb in the mist."
+    },
+    "cold_iron_caltrops": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "name": "Cold-Iron Caltrops",
+        "rarity": "Uncommon Craftable Hazard • Anti-Fey & Hag Trap",
+        "cost": "15 GP",
+        "location": "Act I–III • Craftable (COLD-IRON) OR Petru / Vallaki Smithy Conversion",
+        "mechanics": "• <strong>1 Action (Cover 10-ft Square):</strong> Creatures entering must pass a <code>DC 15 DEX Save</code> or stop moving and take <code>1d4 Cold-Iron Piercing</code> damage (<strong>+1d4 bonus damage vs Fey &amp; Night Hags!</strong>) and suffer <code>-10 ft Speed</code> until healed.",
+        "lore": "Twenty four-pronged spikes hammered cold from raw iron—burns hag flesh on contact."
+    },
+    "predator_fang_talisman": {
+        "cat": "armor",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "name": "Predator's Fang Talisman",
+        "rarity": "Uncommon Craftable Amulet • Vistani Hunter Charm (No Attunement)",
+        "cost": "35 GP",
+        "location": "Act I–III • Craftable (FANG-CHARM) OR Vistani Charm-Maker Conversion",
+        "mechanics": "• <strong>Worn Amulet (No Attunement):</strong> Grants <strong>Advantage on Intimidation checks</strong>.<br>• <strong>Predator's Courage (1/Long Rest):</strong> Click <strong>[Activate]</strong> to gain <strong>Advantage on one Saving Throw against being Frightened</strong>!",
+        "lore": "Twin curved dire-wolf fangs lashed with dried Svalich wolfbane twine."
+    },
+
+    // =========================================================================
+    // BUYABLE & LOOTABLE D&D 5e SPELL SCROLLS (LEVELS 1–5 — AUTO-CAST ON SHEETS!)
+    // =========================================================================
+    "scroll_shield": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["lab_study", "room_attic"],
+        "rollTier": "high",
+        "name": "Scroll of Shield",
+        "rarity": "Common 1st-Level Spell Scroll • Buyable / Loot",
+        "cost": "50 GP",
+        "location": "Act I–IV • Tser Pool Vistani (G), Vallaki Bookshops / Rictavio (N5), Van Richten Tower & Studies",
+        "mechanics": "• <strong>Reaction (Self • Single-Use Scroll):</strong> Grants <strong>+5 AC</strong> until the start of your next turn (including against the triggering attack) and takes no damage from <em>Magic Missile</em>! Appears automatically in Quick-Belt.",
+        "lore": "Crisp blue vellum etched with interlocking silver ward-rings."
+    },
+    "scroll_healing_word": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt", "corpse_monster"],
+        "rollTier": "high",
+        "name": "Scroll of Healing Word",
+        "rarity": "Common 1st-Level Spell Scroll • Buyable / Loot",
+        "cost": "50 GP",
+        "location": "Act I–IV • Barovia Church (E5), St. Andral's (N1), Tser Pool & Krezk Abbey",
+        "mechanics": "• <strong>Bonus Action (60 ft • Single-Use Scroll):</strong> Auto-rolls <code>1d4 + 3 HP</code> healing to a creature you can see within 60 ft—lifesaving ranged pickup for downed allies!",
+        "lore": "Warm ivory parchment sealed with a tiny golden sunrise stamp."
+    },
+    "scroll_guiding_bolt": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt"],
+        "rollTier": "high",
+        "name": "Scroll of Guiding Bolt",
+        "rarity": "Common 1st-Level Spell Scroll • Buyable / Loot",
+        "cost": "50 GP",
+        "location": "Act I–IV • Barovia Church (E5), St. Andral's (N1) & Krezk Abbey",
+        "mechanics": "• <strong>1 Action (120 ft • Spell Atk +5):</strong> Auto-rolls <strong>4d6 Radiant damage</strong>, AND the next attack roll made against that target before the end of your next turn has <strong>Advantage</strong>!",
+        "lore": "Inscribed in pale gold ink that flares brightly when unrolled near undead."
+    },
+    "scroll_detect_magic": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["lab_study"],
+        "rollTier": "everyday",
+        "name": "Scroll of Detect Magic",
+        "rarity": "Common 1st-Level Spell Scroll • Buyable / Loot",
+        "cost": "50 GP",
+        "location": "Act I–IV • Vistani Traders, Vallaki Shops, Victor's Lab & Van Richten's Tower",
+        "mechanics": "• <strong>1 Action (30 ft • 10 min Conc • Single-Use Scroll):</strong> Sense the presence and school of any magic within 30 ft—essential for spotting illusions, traps & cursed Barovian relics.",
+        "lore": "Faintly iridescent ink spirals across trimmed sheepskin."
+    },
+    "scroll_prot_evil_good": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act I",
+        "sceneTags": ["church_crypt"],
+        "rollTier": "high",
+        "name": "Scroll of Protection from Evil and Good",
+        "rarity": "Common 1st-Level Spell Scroll • Buyable / Loot",
+        "cost": "50 GP",
+        "location": "Act I–IV • Barovia Church (E5), St. Andral's (N1), Ezmerelda's Wagon & Abbey",
+        "mechanics": "• <strong>1 Action (Touch • 10 min Conc • Single-Use Scroll):</strong> Undead, Fiends & Fey have <strong>Disadvantage on attacks</strong> against the warded hero and <strong>cannot Charm, Frighten, or Possess them</strong>!",
+        "lore": "Dusted with consecrated silver powder along the scroll's margin."
+    },
+    "scroll_invisibility": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act II",
+        "sceneTags": ["lab_study", "room_attic"],
+        "rollTier": "nat20",
+        "name": "Scroll of Invisibility",
+        "rarity": "Uncommon 2nd-Level Spell Scroll • Buyable / Loot",
+        "cost": "150 GP",
+        "location": "Act II–IV • Vallaki Rictavio Wagon (N5), Wachterhaus Study, Ezmerelda (V1) & Amber Temple",
+        "mechanics": "• <strong>1 Action (Touch • 1 hr Conc • Single-Use Scroll):</strong> Target turns completely <strong>Invisible</strong> for 1 hour (ends if target attacks or casts a spell). Gold-standard heist & scouting tool!",
+        "lore": "The runes seem to vanish completely if you look at them straight-on."
+    },
+    "scroll_pass_without_trace": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act II",
+        "sceneTags": ["forest_road"],
+        "rollTier": "nat20",
+        "name": "Scroll of Pass without Trace",
+        "rarity": "Uncommon 2nd-Level Spell Scroll • Buyable / Loot",
+        "cost": "150 GP",
+        "location": "Act II–IV • Keepers of the Feather Lofts, Dusk Elf Camp (N9a) & Van Richten's Tower",
+        "mechanics": "• <strong>1 Action (30-ft Aura • 1 hr Conc • Single-Use Scroll):</strong> You and every chosen ally within 30 ft gain <strong>+10 to Stealth checks</strong> and leave zero tracks!",
+        "lore": "Written in dark pine-soot ink on flexible silver-birch bark."
+    },
+    "scroll_moonbeam": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act II",
+        "sceneTags": ["forest_road", "church_crypt"],
+        "rollTier": "nat20",
+        "name": "Scroll of Moonbeam",
+        "rarity": "Uncommon 2nd-Level Spell Scroll • Anti-Werewolf Scroll",
+        "cost": "150 GP",
+        "location": "Act II–IV • Tser Pool Vistani, Dusk Elf Camp (N9a), Werewolf Den Approaches & Krezk",
+        "mechanics": "• <strong>1 Action (120 ft • DC 13 CON Save • 1 min Conc):</strong> Auto-rolls <strong>2d10 Radiant damage</strong> in a 5-ft beam; <strong>Shapechangers / Werewolves save at Disadvantage & revert to true form</strong>!",
+        "lore": "Cool silver moonlight shimmers across pale blue parchment."
+    },
+    "scroll_fireball": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act II",
+        "sceneTags": ["lab_study"],
+        "rollTier": "nat20",
+        "name": "Scroll of Fireball",
+        "rarity": "Rare 3rd-Level Spell Scroll • Buyable / Vault",
+        "cost": "300 GP",
+        "location": "Act II–IV • Victor's Attic Lab (N3t), Van Richten's Tower (V4), Amber Temple & Castle Ravenloft",
+        "mechanics": "• <strong>1 Action (150 ft • 20-ft Radius • DC 15 DEX Save):</strong> Auto-rolls a massive <strong>8d6 Fire damage</strong> blast (save for half)! Instantly appears in Quick-Belt with live 8d6 roller.",
+        "lore": "Warm to the touch, smelling sharply of sulfur and toasted parchment."
+    },
+    "scroll_dispel_magic": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act II",
+        "sceneTags": ["lab_study", "church_crypt"],
+        "rollTier": "nat20",
+        "name": "Scroll of Dispel Magic",
+        "rarity": "Rare 3rd-Level Spell Scroll • Buyable / Vault",
+        "cost": "300 GP",
+        "location": "Act II–IV • Rictavio's Wagon (N5), Ezmerelda's Wagon (V1), Krezk Abbey & Amber Temple",
+        "mechanics": "• <strong>1 Action (120 ft • Single-Use Scroll):</strong> Automatically ends any spell of <strong>3rd level or lower</strong> on target creature, object, or magical effect (higher spells require <code>DC 10 + Spell Level</code> check).",
+        "lore": "Clean geometric runes inked in mercury-bright silver."
+    },
+    "scroll_daylight": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act II",
+        "sceneTags": ["church_crypt"],
+        "rollTier": "nat20",
+        "name": "Scroll of Daylight",
+        "rarity": "Rare 3rd-Level Spell Scroll • Buyable / Vault",
+        "cost": "300 GP",
+        "location": "Act II–IV • St. Andral's Church (N1), Krezk Abbey (S13) & Argynvostholt",
+        "mechanics": "• <strong>1 Action (60 ft • 1 Hour • Single-Use Scroll):</strong> Floods a <strong>60-ft bright / 120-ft dim sphere</strong> with dazzling golden light and dispels magical darkness of 3rd level or lower!",
+        "lore": "Sealed in amber wax that glows softly like a firefly."
+    },
+    "scroll_dimension_door": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act III",
+        "name": "Scroll of Dimension Door",
+        "rarity": "Very Rare 4th-Level Spell Scroll • Endgame Escape",
+        "cost": "500 GP",
+        "location": "Act III–IV • Van Richten's Tower (V4), Baba Lysaga's Hut (U3), Amber Temple & Ravenloft Study",
+        "mechanics": "• <strong>1 Action (500 ft • Single-Use Scroll):</strong> Instantly teleport yourself plus <strong>1 willing ally</strong> up to <strong>500 ft</strong> to any spot you can see or visualize—escape impossible traps or Castle Ravenloft towers!",
+        "lore": "Deep violet vellum folded into an impossible origami archway."
+    },
+    "scroll_death_ward": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act III",
+        "name": "Scroll of Death Ward",
+        "rarity": "Very Rare 4th-Level Spell Scroll • Boss Survival",
+        "cost": "500 GP",
+        "location": "Act III–IV • Abbey of Saint Markovia (S13), Argynvostholt Beacon Vault & Castle Ravenloft Chapel",
+        "mechanics": "• <strong>1 Action (Touch • 8 Hours • No Conc • Single-Use Scroll):</strong> The first time the target would drop to <strong>0 HP</strong>, they drop to <strong>1 HP instead</strong> (also negates instant-death effects once)!",
+        "lore": "Heavy white parchment edged in gold thread and Morninglord tears."
+    },
+    "scroll_greater_restoration": {
+        "cat": "heal",
+        "bestHeroId": "all",
+        "actTag": "Act III",
+        "name": "Scroll of Greater Restoration",
+        "rarity": "Very Rare 5th-Level Spell Scroll • High Cleric Relic",
+        "cost": "1,000 GP",
+        "location": "Act III–IV • Krezk Abbey Sanctum (S13), Amber Temple Vault (X40) & Castle Ravenloft Crypts",
+        "mechanics": "• <strong>1 Action (Touch • Single-Use Scroll):</strong> Immediately ends <strong>Charmed, Petrified, any Curse, any Ability Score or Max HP reduction (Vampire Bite!)</strong>, OR reduces Exhaustion by 1 level!",
+        "lore": "Radiant alabaster scroll rolled around an ivory Morninglord spindle."
     }
 };
 
@@ -18660,6 +18899,513 @@ const DM_FORGE_KINDS = [
     { id: 'loot',       label: '🪙 Normal Loot',    hint: 'Everyday items, Valuables/Art Objects to sell (Chalices, Jewelry, Gems), Books/Letters/Clues, Trophies & Quest Items — zero crafting or potion clutter!' }
 ];
 
+const DM_FORGE_SPELLS = {
+    shield:               { name: 'Shield', level: 1, gp: 50, actionCost: 'reaction', summary: 'Reaction: +5 AC until next turn & blocks Magic Missile' },
+    bless:                { name: 'Bless', level: 1, gp: 50, actionCost: 'action', summary: '3 allies +1d4 Attack & Saves (1 min, Conc)' },
+    healing_word:         { name: 'Healing Word', level: 1, gp: 50, actionCost: 'bonus', summary: 'Bonus (60 ft): Heal 1d4+3 HP' },
+    cure_wounds:          { name: 'Cure Wounds', level: 1, gp: 50, actionCost: 'action', summary: 'Touch: Heal 1d8+3 HP' },
+    guiding_bolt:         { name: 'Guiding Bolt', level: 1, gp: 50, actionCost: 'action', summary: 'Spell Atk: 4d6 Radiant + Adv on next attack' },
+    magic_missile:        { name: 'Magic Missile', level: 1, gp: 50, actionCost: 'action', summary: '3 auto-hit darts: 3d4+3 Force' },
+    faerie_fire:          { name: 'Faerie Fire', level: 1, gp: 50, actionCost: 'action', summary: '20-ft cube DEX Save: Adv vs foes & reveals Invisible' },
+    detect_magic:         { name: 'Detect Magic', level: 1, gp: 50, actionCost: 'action', summary: 'Sense magic auras within 30 ft (10 min, Conc)' },
+    identify:             { name: 'Identify', level: 1, gp: 50, actionCost: 'action', summary: 'Reveal all properties, charges & curses of an item' },
+    fog_cloud:            { name: 'Fog Cloud', level: 1, gp: 50, actionCost: 'action', summary: '20-ft radius Heavily Obscured fog (1 hr, Conc)' },
+    prot_evil_good:       { name: 'Protection from Evil and Good', level: 1, gp: 50, actionCost: 'action', summary: 'Undead/Fiends/Fey Disadv & no Charm/Fear (10 min)' },
+    burning_hands:        { name: 'Burning Hands', level: 1, gp: 50, actionCost: 'action', summary: '15-ft cone: 3d6 Fire (DEX half)' },
+    thunderwave:          { name: 'Thunderwave', level: 1, gp: 50, actionCost: 'action', summary: '15-ft cube: 2d8 Thunder + push 10 ft (CON half)' },
+    false_life:           { name: 'False Life', level: 1, gp: 50, actionCost: 'action', summary: 'Self: +1d4+4 Temp HP (1 hr)' },
+    absorb_elements:      { name: 'Absorb Elements', level: 1, gp: 50, actionCost: 'reaction', summary: 'Reaction: Resist elemental dmg + +1d6 next melee hit' },
+    misty_step:           { name: 'Misty Step', level: 2, gp: 150, actionCost: 'bonus', summary: 'Bonus Action: Teleport up to 30 ft' },
+    lesser_restoration:   { name: 'Lesser Restoration', level: 2, gp: 150, actionCost: 'action', summary: 'Touch: Cure Blind/Deaf/Paralyzed/Poisoned/Disease' },
+    hold_person:          { name: 'Hold Person', level: 2, gp: 150, actionCost: 'action', summary: 'WIS Save or Paralyzed (1 min, Conc)' },
+    invisibility:         { name: 'Invisibility', level: 2, gp: 150, actionCost: 'action', summary: 'Touch: Invisible 1 hr (Conc)' },
+    mirror_image:         { name: 'Mirror Image', level: 2, gp: 150, actionCost: 'action', summary: 'Self: 3 illusory duplicates (1 min, no Conc)' },
+    web:                  { name: 'Web', level: 2, gp: 150, actionCost: 'action', summary: '20-ft cube DEX Save or Restrained (1 hr, Conc)' },
+    pass_without_trace:   { name: 'Pass without Trace', level: 2, gp: 150, actionCost: 'action', summary: '30-ft aura: +10 Stealth & no tracks (1 hr, Conc)' },
+    scorching_ray:        { name: 'Scorching Ray', level: 2, gp: 150, actionCost: 'action', summary: '3 rays (6d6 Fire total)' },
+    shatter:              { name: 'Shatter', level: 2, gp: 150, actionCost: 'action', summary: '10-ft sphere: 3d8 Thunder (CON half)' },
+    moonbeam:             { name: 'Moonbeam', level: 2, gp: 150, actionCost: 'action', summary: '5-ft beam: 2d10 Radiant (Werewolves Disadv & revert!)' },
+    darkness:             { name: 'Darkness', level: 2, gp: 150, actionCost: 'action', summary: '15-ft sphere magical darkness (10 min, Conc)' },
+    aid:                  { name: 'Aid', level: 2, gp: 150, actionCost: 'action', summary: '3 allies +5 Current & Max HP (8 hrs)' },
+    see_invisibility:     { name: 'See Invisibility', level: 2, gp: 150, actionCost: 'action', summary: '1 hr: See Invisible & Ethereal creatures (Night Hags!)' },
+    fireball:             { name: 'Fireball', level: 3, gp: 300, actionCost: 'action', summary: '20-ft blast: 8d6 Fire (DEX half)' },
+    revivify:             { name: 'Revivify', level: 3, gp: 300, actionCost: 'action', summary: 'Touch dead <= 1 min: Return to life with 1 HP' },
+    counterspell:         { name: 'Counterspell', level: 3, gp: 300, actionCost: 'reaction', summary: 'Reaction: Interrupt <= 3rd-lvl spell' },
+    dispel_magic:         { name: 'Dispel Magic', level: 3, gp: 300, actionCost: 'action', summary: 'End <= 3rd-lvl magical effects on target' },
+    remove_curse:         { name: 'Remove Curse', level: 3, gp: 300, actionCost: 'action', summary: 'End curses, lycanthropy infection, or cursed attunement' },
+    fly:                  { name: 'Fly', level: 3, gp: 300, actionCost: 'action', summary: 'Touch: 60-ft Flying Speed (10 min, Conc)' },
+    haste:                { name: 'Haste', level: 3, gp: 300, actionCost: 'action', summary: 'Double Speed, +2 AC, Adv DEX & +1 Action (1 min, Conc)' },
+    spirit_guardians:     { name: 'Spirit Guardians', level: 3, gp: 300, actionCost: 'action', summary: '15-ft aura: Half Speed & 3d8 Radiant (WIS half)' },
+    daylight:             { name: 'Daylight', level: 3, gp: 300, actionCost: 'action', summary: '60-ft bright light (1 hr), dispels <= 3rd-lvl darkness' },
+    lightning_bolt:       { name: 'Lightning Bolt', level: 3, gp: 300, actionCost: 'action', summary: '100-ft line: 8d6 Lightning (DEX half)' },
+    major_image:          { name: 'Major Image', level: 3, gp: 300, actionCost: 'action', summary: '20-ft realistic multi-sensory illusion (10 min, Conc)' },
+    dimension_door:       { name: 'Dimension Door', level: 4, gp: 500, actionCost: 'action', summary: 'Teleport self + 1 ally up to 500 ft' },
+    death_ward:           { name: 'Death Ward', level: 4, gp: 500, actionCost: 'action', summary: '8 hrs: First drop to 0 HP drops to 1 HP instead' },
+    greater_invisibility: { name: 'Greater Invisibility', level: 4, gp: 500, actionCost: 'action', summary: 'Invisible 1 min EVEN while attacking/casting (Conc)' },
+    polymorph:            { name: 'Polymorph', level: 4, gp: 500, actionCost: 'action', summary: 'Transform ally or foe (WIS Save) into a Beast (1 hr)' },
+    banishment:           { name: 'Banishment', level: 4, gp: 500, actionCost: 'action', summary: 'CHA Save or banished for 1 min (Conc)' },
+    greater_restoration:  { name: 'Greater Restoration', level: 5, gp: 1000, actionCost: 'action', summary: 'Cure Charm, Petrify, Curse, Max-HP Drain or Exhaustion' },
+    mass_cure_wounds:     { name: 'Mass Cure Wounds', level: 5, gp: 1000, actionCost: 'action', summary: 'Up to 6 allies regain 3d8+5 HP' },
+    cone_of_cold:         { name: 'Cone of Cold', level: 5, gp: 1000, actionCost: 'action', summary: '60-ft cone: 8d8 Cold (CON half)' },
+    raise_dead:           { name: 'Raise Dead', level: 5, gp: 1000, actionCost: 'action', summary: 'Return creature dead <= 10 days to life with 1 HP' }
+};
+
+function dmBuildSpellSelectOptionsHtml(selectedVal = '', includeCustomPower = false) {
+    const levels = [1, 2, 3, 4, 5];
+    let html = `<option value="" ${!selectedVal ? 'selected' : ''}>None</option>`;
+    if (includeCustomPower) {
+        html += `<option value="__custom__" ${selectedVal === '__custom__' ? 'selected' : ''}>✨ Custom Activated Power / Non-Spell Ability</option>`;
+    }
+    levels.forEach(lvl => {
+        const gp = lvl === 1 ? 50 : (lvl === 2 ? 150 : (lvl === 3 ? 300 : (lvl === 4 ? 500 : 1000)));
+        const entries = Object.entries(DM_FORGE_SPELLS).filter(([, s]) => s.level === lvl);
+        html += `<optgroup label="Level ${lvl} Spells (Scroll: ${gp} GP)">` +
+            entries.map(([id, s]) => `<option value="${id}" ${selectedVal === id ? 'selected' : ''}>Lvl ${lvl} — ${s.name} (${s.summary.slice(0, 48)}${s.summary.length > 48 ? '…' : ''})</option>`).join('') +
+            `</optgroup>`;
+    });
+    return html;
+}
+
+const DM_NPC_CONVERSIONS = [
+    {
+        id: 'conv_pelt_to_treated',
+        sourceKeys: ['raw_wolf_pelt'],
+        reqName: 'Raw Wolf / Beast Pelt',
+        reqMatchKeywords: ['raw wolf', 'beast pelt', 'wolf pelt'],
+        reqQty: 1,
+        npcName: 'Petru / Arasek Tanner',
+        gpFee: 2,
+        outKey: 'treated_pelt_canvas',
+        outName: 'Treated Dire-Pelt & Waxed Canvas',
+        outQty: 1,
+        desc: 'Cure & wax raw fur into camp-grade treated canvas for Mist-Ward Camp Kits.'
+    },
+    {
+        id: 'conv_cutlery_to_bolts',
+        sourceKeys: ['tarnished_silver_cutlery'],
+        reqName: 'Tarnished Silver Cutlery Set',
+        reqMatchKeywords: ['silver cutlery', 'silverware'],
+        reqQty: 1,
+        npcName: 'Petru\'s Silver Forge / Vallaki Smithy',
+        gpFee: 3,
+        outKey: 'silvered_bolts',
+        outName: 'Silvered Crossbow Bolts',
+        outQty: 5,
+        desc: 'Melt silverware down to plate 5x Silvered Crossbow Bolts (bypasses Werewolf/Vampire resist).'
+    },
+    {
+        id: 'conv_cutlery_to_dust',
+        sourceKeys: ['tarnished_silver_cutlery'],
+        reqName: 'Tarnished Silver Cutlery Set',
+        reqMatchKeywords: ['silver cutlery', 'silverware'],
+        reqQty: 1,
+        npcName: 'Petru\'s Silver Forge / Vallaki Smithy',
+        gpFee: 1,
+        outKey: 'powdered_silver_dust',
+        outName: 'Powdered Silver Dust',
+        outQty: 1,
+        desc: 'File tarnished silverware into pure Powdered Silver Dust for Holy Water or Liquid Silver.'
+    },
+    {
+        id: 'conv_quartz_to_bullets',
+        sourceKeys: ['silver_veined_quartz'],
+        reqName: 'Ancient Silver-Veined Quartz',
+        reqMatchKeywords: ['silver-veined quartz'],
+        reqQty: 1,
+        npcName: 'Petru\'s Silver Forge / Vallaki Smithy',
+        gpFee: 3,
+        outKey: 'silvered_bullets',
+        outName: 'Silvered Firearm Bullets',
+        outQty: 5,
+        desc: 'Smelt raw quartz veins into 5x Silvered Firearm Bullets.'
+    },
+    {
+        id: 'conv_ghostcap_to_brew',
+        sourceKeys: ['ghost_cap_mushrooms'],
+        reqName: 'Ghost-Cap Forest Mushrooms',
+        reqMatchKeywords: ['ghost-cap', 'forest mushrooms'],
+        reqQty: 2,
+        npcName: 'Jeny Greenteeth / Vistani Herbalist',
+        gpFee: 3,
+        outKey: 'ghost_cap_night_sight',
+        outName: 'Ghost-Cap Night-Sight Brew',
+        outQty: 1,
+        desc: 'Distill 2x Ghost-Cap Mushrooms into a 2-hr Darkvision & Dim-Light Perception elixir.'
+    },
+    {
+        id: 'conv_gravesalt_to_coating',
+        sourceKeys: ['grave_salt_ward_pouch'],
+        reqName: 'Grave-Salt Ward Pouch',
+        reqMatchKeywords: ['grave-salt'],
+        reqQty: 1,
+        npcName: 'Father Lucian / Ezmerelda',
+        gpFee: 5,
+        outKey: 'grave_salt_coating',
+        outName: 'Consecrated Grave-Salt Coating',
+        outQty: 1,
+        desc: 'Suspend consecrated grave-salt in pitch oil (+1d6 Necrotic & blocks target regen!).'
+    },
+    {
+        id: 'conv_silk_to_snare',
+        sourceKeys: ['spider_silk_gland'],
+        reqName: 'Thick Spider Silk Gland',
+        reqMatchKeywords: ['spider silk'],
+        reqQty: 1,
+        npcName: 'Gadof Blinsky / Ezmerelda',
+        gpFee: 4,
+        outKey: 'whisper_silk_snare',
+        outName: 'Whisper-Silk Snare & Grapple Kit',
+        outQty: 1,
+        desc: 'Spin silk gland into a silent 30-ft grapple cord & DC 13 DEX Restraining Snare.'
+    },
+    {
+        id: 'conv_coldiron_to_caltrops',
+        sourceKeys: ['cold_iron_scrap_shards'],
+        reqName: 'Cold-Iron Scrap Shards',
+        reqMatchKeywords: ['cold-iron scrap', 'cold-iron'],
+        reqQty: 2,
+        npcName: 'Vallaki Smithy / Petru',
+        gpFee: 3,
+        outKey: 'cold_iron_caltrops',
+        outName: 'Cold-Iron Caltrops',
+        outQty: 1,
+        desc: 'Hammer 2x Cold-Iron Scrap into anti-Hag / anti-Fey caltrops (10-ft hazard, +1d4 vs Fey/Hags).'
+    },
+    {
+        id: 'conv_fangs_to_talisman',
+        sourceKeys: ['dire_wolf_fangs'],
+        reqName: 'Dire Wolf Fangs',
+        reqMatchKeywords: ['dire wolf fangs', 'wolf fangs'],
+        reqQty: 2,
+        npcName: 'Vistani Charm-Maker / Muriel',
+        gpFee: 5,
+        outKey: 'predator_fang_talisman',
+        outName: 'Predator\'s Fang Talisman',
+        outQty: 1,
+        desc: 'Bind 2x Dire Wolf Fangs into an Amulet (Adv Intimidation + 1/LR Adv vs Frightened).'
+    },
+    {
+        id: 'conv_censer_to_holywater',
+        sourceKeys: ['tarnished_silver_censer'],
+        reqName: 'Tarnished Silver Censer',
+        reqMatchKeywords: ['silver censer'],
+        reqQty: 1,
+        npcName: 'Father Donavich / Father Lucian',
+        gpFee: 5,
+        outKey: 'holy_water',
+        outName: 'Morninglord Holy Water Flask',
+        outQty: 2,
+        desc: 'Shave blessed silver filings from the censer to consecrate 2x Flasks of Holy Water.'
+    },
+    {
+        id: 'conv_trophy_to_catalyst',
+        sourceKeys: ['vampire_ash_fang'],
+        reqName: 'Harvested Monster Trophy',
+        reqMatchKeywords: ['monster trophy', 'vampire ash', 'harvested monster'],
+        reqQty: 1,
+        npcName: 'Ezmerelda / Vistani Apothecary',
+        gpFee: 0,
+        outKey: 'alchemical_catalyst',
+        outName: 'Alchemical Catalyst',
+        outQty: 1,
+        desc: 'Trade rare harvested monster residue straight for 1x Alchemical Catalyst!'
+    }
+];
+
+function dmGetConversionsForKey(lootKey) {
+    return DM_NPC_CONVERSIONS.filter(c => Array.isArray(c.sourceKeys) && c.sourceKeys.includes(lootKey));
+}
+
+function dmHeroMatchesConversion(heroId, conv) {
+    const st = dmLiveHeroes[heroId] || dmSyncedCheckpoints[heroId];
+    if (!st || !Array.isArray(st.items)) return false;
+    const kws = (conv.reqMatchKeywords || []).map(k => k.toLowerCase());
+    let qtyFound = 0;
+    st.items.forEach(raw => {
+        const low = String(raw || '').toLowerCase();
+        if (kws.some(kw => low.includes(kw))) {
+            const m = String(raw).match(/(\d+)\s*[xX]|[xX]\s*(\d+)/);
+            qtyFound += m ? (parseInt(m[1] || m[2], 10) || 1) : 1;
+        }
+    });
+    return qtyFound >= (conv.reqQty || 1);
+}
+
+function dmRunNpcConversion(convId, heroId, heroName, ev) {
+    if (ev) ev.stopPropagation();
+    const conv = DM_NPC_CONVERSIONS.find(c => c.id === convId);
+    if (!conv) return;
+    const rtdb = dmGetRtdb();
+    if (!rtdb) {
+        dmShowQuickToast('⚠️ Firebase is offline — use Quick Handout to swap manually.');
+        return;
+    }
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    const outLoot = conv.outKey && LOOT_DATA[conv.outKey] ? LOOT_DATA[conv.outKey] : null;
+    rtdb.ref(`campaigns/${room}/heroes/${heroId}/dm_commands`).push({
+        action: 'convert_item',
+        npcName: conv.npcName,
+        reqName: conv.reqName,
+        reqMatchKeywords: conv.reqMatchKeywords,
+        reqQty: conv.reqQty || 1,
+        gpFee: conv.gpFee || 0,
+        outName: conv.outName,
+        outQty: conv.outQty || 1,
+        outMeta: (outLoot && outLoot.customMeta) || null,
+        createdAt: Date.now()
+    }).then(() => {
+        dmShowQuickToast(`🤝 <strong>${escapeEncounterHtml(conv.npcName)} Converted for ${heroName}:</strong><br><small style="color:#a7f3d0;">${conv.reqQty > 1 ? conv.reqQty + 'x ' : ''}${escapeEncounterHtml(conv.reqName)} ➔ <strong>${conv.outQty > 1 ? conv.outQty + 'x ' : ''}${escapeEncounterHtml(conv.outName)}</strong>${conv.gpFee ? ` (-${conv.gpFee} GP)` : ''}</small>`);
+    });
+}
+
+function dmEvaluateForgeBalance() {
+    let score = 0;
+    let baseGp = 10;
+    let attune = false;
+    let attuneReason = 'Mundane / simple gear needs no attunement';
+    const reasons = [];
+
+    const spellSel = document.getElementById('dm-forge-item-spell')?.value || '';
+    const chargesSel = document.getElementById('dm-forge-item-charges')?.value || '1|long';
+    const [chgCnt] = chargesSel.split('|').map(Number);
+    const customPowerTxt = (document.getElementById('dm-forge-magic-power')?.value || '').trim();
+
+    const scoreSpellPower = () => {
+        if (spellSel && spellSel !== '__custom__' && DM_FORGE_SPELLS[spellSel]) {
+            const sp = DM_FORGE_SPELLS[spellSel];
+            const mult = (chgCnt >= 5) ? 2.2 : (chgCnt >= 3 ? 1.6 : (chgCnt >= 2 ? 1.3 : 1));
+            score += Math.round((sp.level * 1.4 + 0.8) * mult * 10) / 10;
+            reasons.push(`Casts ${sp.name} (Lvl ${sp.level})`);
+            attune = true;
+            attuneReason = `Grants spellcasting (${sp.name})`;
+        } else if ((spellSel === '__custom__' || dmForgeKind === 'magic') && customPowerTxt) {
+            score += 2.2;
+            reasons.push('Activated Power');
+            if (chgCnt >= 2 || score >= 3.5) {
+                attune = true;
+                attuneReason = 'Activated magical relic';
+            }
+        }
+    };
+
+    if (dmForgeKind === 'weapon') {
+        const archKey = document.getElementById('dm-forge-wpn-arch')?.value || 'longsword';
+        const wpnPrices = { dagger: 2, sling: 1, club: 1, mace: 5, spear: 1, quarterstaff: 2, handaxe: 5, shortsword: 10, scimitar: 25, rapier: 25, longsword: 15, greatsword: 50, battleaxe: 10, greataxe: 30, warhammer: 15, maul: 10, glaive: 20, whip: 2, shortbow: 25, longbow: 50, light_crossbow: 25, heavy_crossbow: 50, hand_crossbow: 75, revolver: 150, long_rifle: 220, blunderbuss: 180, custom: 20 };
+        baseGp = wpnPrices[archKey] || 20;
+        const magic = parseInt(document.getElementById('dm-forge-wpn-magic')?.value, 10) || 0;
+        const extraRaw = document.getElementById('dm-forge-wpn-extra')?.value || '';
+        const dmgType = (document.getElementById('dm-forge-wpn-type')?.value || '').toLowerCase();
+        const isSilvered = dmgType.includes('silver');
+        const isElemBase = !['slashing', 'piercing', 'bludgeoning'].some(t => dmgType === t || dmgType === 'silvered ' + t);
+
+        if (isSilvered) { baseGp += 100; score += 0.8; reasons.push('Silvered'); }
+        if (isElemBase) { score += 1.5; reasons.push('Elemental Base Dmg'); }
+        if (magic === 1) { score += 2.2; reasons.push('+1 Magic'); }
+        else if (magic === 2) { score += 4.5; reasons.push('+2 Magic'); }
+        else if (magic >= 3) { score += 7.5; reasons.push('+3 Legendary'); }
+
+        if (extraRaw) {
+            const [eDice] = extraRaw.split('|');
+            if (eDice === '1d4') { score += 1.6; reasons.push('+1d4 Bonus'); }
+            else if (eDice === '1d6') { score += 2.5; reasons.push('+1d6 Bonus'); }
+            else if (eDice === '1d8') { score += 3.2; reasons.push('+1d8 Bonus'); }
+            else if (eDice === '2d6') { score += 4.5; reasons.push('+2d6 Bonus'); }
+            if (magic >= 1 || eDice === '1d6' || eDice === '1d8' || eDice === '2d6') {
+                attune = true;
+                attuneReason = `Extra elemental dice (${eDice})${magic ? ' + magic bonus' : ''}`;
+            }
+        }
+        scoreSpellPower();
+        if (magic >= 3) { attune = true; attuneReason = '+3 Legendary weapon tier'; }
+        else if (magic === 2 && (extraRaw || isElemBase)) { attune = true; attuneReason = '+2 weapon with extra magic properties'; }
+        else if (!attune && magic >= 1 && !extraRaw && !spellSel) { attuneReason = 'Clean +1/+2 weapon needs no attunement in 5e'; }
+    } else if (dmForgeKind === 'armor') {
+        const slot = document.getElementById('dm-forge-slot')?.value || 'body';
+        const baseAcRaw = document.getElementById('dm-forge-baseac')?.value || '0';
+        const acBonus = parseInt(document.getElementById('dm-forge-ac')?.value, 10) || 0;
+        const saves = parseInt(document.getElementById('dm-forge-saves')?.value, 10) || 0;
+        const resist = document.getElementById('dm-forge-resist')?.value || '';
+        const skillAdv = document.getElementById('dm-forge-skilladv')?.value || '';
+        const baseArmorPrices = { '0': slot === 'offHand' ? 10 : 15, '11|full': 10, '12|full': 45, '13|2': 50, '14|2': 400, '15|2': 750, '16|0': 75, '17|0': 200, '18|0': 1500 };
+        baseGp = baseArmorPrices[baseAcRaw] || 15;
+        const effMagicAc = (slot === 'offHand') ? Math.max(0, acBonus - 2) : Math.max(0, acBonus);
+        if (effMagicAc === 1) { score += 2.6; reasons.push('+1 AC'); }
+        else if (effMagicAc === 2) { score += 5.0; reasons.push('+2 AC'); }
+        else if (effMagicAc >= 3) { score += 7.8; reasons.push('+3 AC'); }
+        if (saves > 0) { score += saves * 2.4; reasons.push(`+${saves} Saves`); attune = true; attuneReason = 'Grants universal Saving Throw bonus'; }
+        if (resist) { score += 2.8; reasons.push(`${resist} Resist`); attune = true; attuneReason = `Grants ${resist} Damage Resistance`; }
+        if (skillAdv) { score += 1.6; reasons.push(`Adv ${skillAdv}`); }
+        scoreSpellPower();
+    } else if (dmForgeKind === 'magic') {
+        const spellB = parseInt(document.getElementById('dm-forge-spell')?.value, 10) || 0;
+        const spellFire = document.getElementById('dm-forge-spellfire')?.value || '';
+        const acB = parseInt(document.getElementById('dm-forge-ac')?.value, 10) || 0;
+        const saveB = parseInt(document.getElementById('dm-forge-saves')?.value, 10) || 0;
+        const initB = parseInt(document.getElementById('dm-forge-init')?.value, 10) || 0;
+        const resist = document.getElementById('dm-forge-resist')?.value || '';
+        const skillAdv = document.getElementById('dm-forge-skilladv')?.value || '';
+        baseGp = 100;
+        if (spellB > 0) { score += spellB * 2.6; reasons.push(`+${spellB} Spell DC/Atk`); attune = true; attuneReason = 'Boosts Spell Save DC & Attack'; }
+        if (spellFire) { score += 2.4; reasons.push(`+${spellFire} Spell Dmg`); attune = true; attuneReason = 'Boosts Spell Damage'; }
+        if (acB > 0) { score += acB * 2.5; reasons.push(`+${acB} AC`); attune = true; attuneReason = 'Grants passive +AC'; }
+        if (saveB > 0) { score += saveB * 2.4; reasons.push(`+${saveB} Saves`); attune = true; attuneReason = 'Grants +Saves'; }
+        if (initB > 0) { score += initB * 1.2; reasons.push(`+${initB} Init`); }
+        if (resist) { score += 2.8; reasons.push(`${resist} Resist`); attune = true; attuneReason = `Grants ${resist} Resistance`; }
+        if (skillAdv) { score += 1.8; reasons.push(`Adv ${skillAdv}`); }
+        scoreSpellPower();
+        if (score === 0) { score = 1.5; reasons.push('Minor Wondrous Charm'); attune = false; attuneReason = 'Minor utility charm needs no attunement'; }
+    } else if (dmForgeKind === 'ammo') {
+        const eff = document.getElementById('dm-forge-ammo-effect')?.value || 'silvered';
+        const isCoat = document.getElementById('dm-forge-ammo-form')?.value === 'coating';
+        const priceMap = { standard: 1, silvered: isCoat ? 25 : 15, plus1: isCoat ? 45 : 35, incendiary: isCoat ? 20 : 12, sun_ash: isCoat ? 40 : 25, sunburst: isCoat ? 95 : 75, poison: isCoat ? 35 : 25, necrotic: isCoat ? 35 : 25, custom: isCoat ? 50 : 35 };
+        baseGp = priceMap[eff] || 15;
+        score = eff === 'standard' ? 0 : (eff === 'sunburst' ? 4.2 : 2.0);
+    } else if (dmForgeKind === 'consumable') {
+        const cType = document.getElementById('dm-forge-cons-type')?.value || 'heal';
+        if (cType === 'scroll') {
+            const spId = document.getElementById('dm-forge-scroll-spell')?.value || '';
+            const sp = DM_FORGE_SPELLS[spId];
+            baseGp = sp ? sp.gp : 100;
+            score = sp ? (sp.level === 1 ? 0.5 : (sp.level === 2 ? 2.0 : (sp.level === 3 ? 4.2 : (sp.level === 4 ? 6.5 : 8.5)))) : 2.0;
+        } else {
+            const [dC, dS] = (document.getElementById('dm-forge-cons-dice')?.value || '2|6').split('|').map(Number);
+            const avg = dC * ((dS + 1) / 2);
+            baseGp = Math.max(15, Math.round(avg * 6));
+            score = avg >= 20 ? 5.0 : (avg >= 12 ? 3.6 : 1.8);
+        }
+    } else if (dmForgeKind === 'food') {
+        const eff = document.getElementById('dm-forge-food-effect')?.value || 'heal';
+        baseGp = eff === 'flavor' ? 0 : (eff === 'overheal' ? 5 : (eff === 'buff' ? 3 : 1));
+        score = 0;
+    } else if (dmForgeKind === 'material') {
+        const ca = document.getElementById('dm-forge-mat-craftas')?.value || '';
+        const matPrices = { '': 5, pelt_canvas: 6, medicinal_herb: 2, spring_water: 1, silver_dust: 15, wolfbane: 3, sulfur: 4, pitch_oil: 2, catalyst: 30, moonpetal: 45 };
+        baseGp = matPrices[ca] || 5;
+        score = ca === 'moonpetal' ? 3.8 : (ca === 'catalyst' ? 2.2 : 0.4);
+    } else {
+        const sub = document.getElementById('dm-forge-loot-sub')?.value || 'everyday';
+        baseGp = sub === 'valuable' ? 25 : (sub === 'trophy' ? 15 : (sub === 'book' ? 5 : 2));
+        score = 0;
+    }
+
+    let suggestedRarity = 'Common / Mundane';
+    let suggestedGp = baseGp;
+    if (dmForgeKind === 'weapon' || dmForgeKind === 'armor' || dmForgeKind === 'magic') {
+        if (score >= 8.2) { suggestedRarity = 'Legendary'; suggestedGp = Math.max(baseGp, 15000); }
+        else if (score >= 5.6) { suggestedRarity = 'Very Rare'; suggestedGp = Math.max(baseGp, Math.round((4500 + (score - 5.6) * 1400) / 100) * 100); }
+        else if (score >= 3.4) { suggestedRarity = 'Rare'; suggestedGp = Math.max(baseGp, Math.round((1200 + (score - 3.4) * 550) / 50) * 50); }
+        else if (score >= 1.4) { suggestedRarity = 'Uncommon'; suggestedGp = Math.max(baseGp, Math.round((250 + (score - 1.4) * 160) / 25) * 25); }
+        else { suggestedRarity = 'Common / Mundane'; suggestedGp = baseGp; }
+    } else {
+        if (score >= 8.0) suggestedRarity = 'Very Rare';
+        else if (score >= 4.0) suggestedRarity = 'Rare';
+        else if (score >= 1.5) suggestedRarity = 'Uncommon';
+        else suggestedRarity = 'Common / Mundane';
+    }
+
+    const gpText = suggestedGp === 0 ? '2 SP' : `${suggestedGp.toLocaleString()} GP`;
+    return { score, suggestedRarity, suggestedGp, gpText, attune, attuneReason, reasons };
+}
+
+function dmUpdateForgeBalance(forceApply = false) {
+    const bar = document.getElementById('dm-forge-balance-bar');
+    if (!bar) return;
+    const ev = dmEvaluateForgeBalance();
+
+    const costEl = document.getElementById('dm-forge-cost');
+    if (costEl && (forceApply || (!costEl.dataset.userEdited && !dmForgeEditKey))) {
+        costEl.value = ev.gpText;
+    }
+    const attEl = document.getElementById('dm-forge-attune');
+    if (attEl && (forceApply || (!attEl.dataset.userEdited && !dmForgeEditKey))) {
+        attEl.value = ev.attune ? 'yes' : 'no';
+    }
+
+    const curRarity = document.getElementById('dm-forge-rarity-tier')?.value || 'Common / Mundane';
+    const rarityMismatch = curRarity !== ev.suggestedRarity && curRarity !== 'Cursed Relic';
+    const applyRarityBtn = rarityMismatch
+        ? `<button type="button" class="btn-modal-mini" style="border-color:#c084fc; color:#e9d5ff; padding:2px 7px; font-size:0.66rem;" onclick="dmApplySuggestedForgeRarity('${ev.suggestedRarity}')">✨ Set ${ev.suggestedRarity}</button>`
+        : `<span class="pill green" style="font-size:0.62rem; padding:1px 6px;">✓ Balanced</span>`;
+
+    bar.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+            <div style="font-size:0.73rem; color:#e2e8f0; line-height:1.4;">
+                <strong style="color:#fde68a;">⚖️ Balance Advisor:</strong>
+                Suggested Rarity <strong style="color:#d8b4fe;">${ev.suggestedRarity}</strong> ${applyRarityBtn}
+                • Suggested Price <strong style="color:#facc15;">${ev.gpText}</strong>
+                ${attEl ? `• Auto-Attune: <strong style="color:${ev.attune ? '#fca5a5' : '#6ee7b7'};">${ev.attune ? 'Yes' : 'No'}</strong> <small style="color:#94a3b8;">(${escapeEncounterHtml(ev.attuneReason)})</small>` : ''}
+            </div>
+            <button type="button" class="btn-modal-mini" style="border-color:#facc15; color:#fef08a; padding:2px 8px; font-size:0.66rem;" onclick="dmApplySuggestedForgeAll()">⚡ Sync Suggested GP &amp; Attune</button>
+        </div>
+    `;
+}
+
+function dmApplySuggestedForgeRarity(rar) {
+    const el = document.getElementById('dm-forge-rarity-tier');
+    if (el) el.value = rar;
+    dmUpdateForgeBalance();
+}
+
+function dmApplySuggestedForgeAll() {
+    const costEl = document.getElementById('dm-forge-cost');
+    const attEl = document.getElementById('dm-forge-attune');
+    if (costEl) delete costEl.dataset.userEdited;
+    if (attEl) delete attEl.dataset.userEdited;
+    const ev = dmEvaluateForgeBalance();
+    const rarEl = document.getElementById('dm-forge-rarity-tier');
+    if (rarEl) rarEl.value = ev.suggestedRarity;
+    dmUpdateForgeBalance(true);
+}
+
+function dmAutoFillStatsForRarity() {
+    const rar = document.getElementById('dm-forge-rarity-tier')?.value || 'Uncommon';
+    const setV = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+    const costEl = document.getElementById('dm-forge-cost');
+    const attEl = document.getElementById('dm-forge-attune');
+    if (costEl) delete costEl.dataset.userEdited;
+    if (attEl) delete attEl.dataset.userEdited;
+
+    if (dmForgeKind === 'weapon') {
+        if (rar === 'Common / Mundane') { setV('dm-forge-wpn-magic', '0'); setV('dm-forge-wpn-extra', ''); setV('dm-forge-item-spell', ''); }
+        else if (rar === 'Uncommon')    { setV('dm-forge-wpn-magic', '1'); setV('dm-forge-wpn-extra', ''); setV('dm-forge-item-spell', ''); }
+        else if (rar === 'Rare')        { setV('dm-forge-wpn-magic', '1'); setV('dm-forge-wpn-extra', '1d6|Radiant'); setV('dm-forge-item-spell', ''); }
+        else if (rar === 'Very Rare')   { setV('dm-forge-wpn-magic', '2'); setV('dm-forge-wpn-extra', '1d6|Radiant'); setV('dm-forge-item-spell', 'misty_step'); setV('dm-forge-item-charges', '1|long'); }
+        else if (rar === 'Legendary')   { setV('dm-forge-wpn-magic', '3'); setV('dm-forge-wpn-extra', '2d6|Radiant'); setV('dm-forge-item-spell', 'daylight'); setV('dm-forge-item-charges', '3|long'); }
+    } else if (dmForgeKind === 'armor') {
+        const isShield = document.getElementById('dm-forge-slot')?.value === 'offHand';
+        const shBase = isShield ? 2 : 0;
+        if (rar === 'Common / Mundane') { setV('dm-forge-ac', String(shBase)); setV('dm-forge-saves', '0'); setV('dm-forge-resist', ''); setV('dm-forge-item-spell', ''); }
+        else if (rar === 'Uncommon')    { setV('dm-forge-ac', String(shBase + 1)); setV('dm-forge-saves', '0'); setV('dm-forge-resist', ''); setV('dm-forge-item-spell', ''); }
+        else if (rar === 'Rare')        { setV('dm-forge-ac', String(shBase + 1)); setV('dm-forge-saves', '1'); setV('dm-forge-resist', 'Necrotic'); setV('dm-forge-item-spell', ''); }
+        else if (rar === 'Very Rare')   { setV('dm-forge-ac', String(shBase + 2)); setV('dm-forge-saves', '1'); setV('dm-forge-resist', 'Necrotic'); setV('dm-forge-item-spell', 'death_ward'); setV('dm-forge-item-charges', '1|long'); }
+        else if (rar === 'Legendary')   { setV('dm-forge-ac', String(shBase + 3)); setV('dm-forge-saves', '2'); setV('dm-forge-resist', 'Necrotic'); setV('dm-forge-item-spell', 'daylight'); setV('dm-forge-item-charges', '3|long'); }
+    } else if (dmForgeKind === 'magic') {
+        if (rar === 'Common / Mundane') { setV('dm-forge-spell', '0'); setV('dm-forge-ac', '0'); setV('dm-forge-saves', '0'); setV('dm-forge-resist', ''); setV('dm-forge-item-spell', 'detect_magic'); setV('dm-forge-item-charges', '1|long'); }
+        else if (rar === 'Uncommon')    { setV('dm-forge-spell', '1'); setV('dm-forge-ac', '0'); setV('dm-forge-saves', '0'); setV('dm-forge-resist', ''); setV('dm-forge-item-spell', 'misty_step'); setV('dm-forge-item-charges', '1|long'); }
+        else if (rar === 'Rare')        { setV('dm-forge-spell', '1'); setV('dm-forge-ac', '1'); setV('dm-forge-saves', '1'); setV('dm-forge-resist', 'Necrotic'); setV('dm-forge-item-spell', 'fireball'); setV('dm-forge-item-charges', '1|long'); }
+        else if (rar === 'Very Rare')   { setV('dm-forge-spell', '2'); setV('dm-forge-ac', '1'); setV('dm-forge-saves', '1'); setV('dm-forge-resist', 'Necrotic'); setV('dm-forge-item-spell', 'dimension_door'); setV('dm-forge-item-charges', '3|long'); }
+        else if (rar === 'Legendary')   { setV('dm-forge-spell', '3'); setV('dm-forge-ac', '2'); setV('dm-forge-saves', '2'); setV('dm-forge-resist', 'Radiant'); setV('dm-forge-item-spell', 'greater_restoration'); setV('dm-forge-item-charges', '3|long'); }
+    }
+    dmOnForgeSubChange();
+    dmShowQuickToast(`✨ Auto-filled balanced <strong>${escapeEncounterHtml(rar)}</strong> stats! Tweak freely.`);
+}
+
+function dmOnForgeScrollSpellChange(spId) {
+    const sp = DM_FORGE_SPELLS[spId];
+    if (!sp) return;
+    const nameEl = document.getElementById('dm-forge-name');
+    if (nameEl && (!nameEl.value.trim() || /^Scroll of /i.test(nameEl.value.trim()))) {
+        nameEl.value = `Scroll of ${sp.name}`;
+    }
+    const rarEl = document.getElementById('dm-forge-rarity-tier');
+    if (rarEl) {
+        rarEl.value = sp.level === 1 ? 'Common / Mundane' : (sp.level === 2 ? 'Uncommon' : (sp.level === 3 ? 'Rare' : 'Very Rare'));
+    }
+    const costEl = document.getElementById('dm-forge-cost');
+    if (costEl) { delete costEl.dataset.userEdited; costEl.value = `${sp.gp.toLocaleString()} GP`; }
+    dmUpdateForgeBalance();
+}
+
 function openDmCustomDropModal(initialTab, opts = {}) {
     const modal = resetDmModalChrome();
     modalNavStack = [];
@@ -18791,7 +19537,7 @@ function dmOnForgeSubChange() {
         foodVerb.value = (foodForm === 'drink') ? 'Drank' : 'Ate';
     }
 
-    // Consumable (Potion / Bomb) field visibility
+    // Consumable (Potion / Bomb / Spell Scroll) field visibility
     const consType = document.getElementById('dm-forge-cons-type')?.value;
     const consDiceWrap = document.getElementById('dm-forge-cons-dice-wrap');
     if (consDiceWrap) consDiceWrap.style.display = ['heal', 'tempHp', 'overheal', 'customBomb'].includes(consType) ? 'contents' : 'none';
@@ -18799,6 +19545,17 @@ function dmOnForgeSubChange() {
     if (consBombWrap) consBombWrap.style.display = (consType === 'customBomb') ? 'contents' : 'none';
     const consDurWrap = document.getElementById('dm-forge-cons-dur-wrap');
     if (consDurWrap) consDurWrap.style.display = ['tempHp', 'overheal', 'utilityLog'].includes(consType) ? 'flex' : 'none';
+    const consScrollWrap = document.getElementById('dm-forge-cons-scroll-wrap');
+    if (consScrollWrap) consScrollWrap.style.display = (consType === 'scroll') ? 'flex' : 'none';
+
+    // Item-Granted Spell / Custom Power field visibility
+    const itemSpell = document.getElementById('dm-forge-item-spell')?.value || '';
+    const chgWrap = document.getElementById('dm-forge-item-charges-wrap');
+    if (chgWrap) chgWrap.style.display = itemSpell ? 'flex' : 'none';
+    const custPwrWrap = document.getElementById('dm-forge-magic-power-wrap');
+    if (custPwrWrap) custPwrWrap.style.display = (itemSpell === '__custom__') ? 'flex' : 'none';
+
+    dmUpdateForgeBalance();
 }
 
 function renderDmDropModalBody() {
@@ -18893,8 +19650,11 @@ function renderDmDropModalBody() {
 
         const raritySelectHtml = (defVal = 'Common / Mundane') => `
             <div class="dm-forge-field">
-                <label for="dm-forge-rarity-tier" style="color:#d8b4fe;">Rarity Tier</label>
-                <select id="dm-forge-rarity-tier" class="dm-forge-select">
+                <label for="dm-forge-rarity-tier" style="color:#d8b4fe; display:flex; justify-content:space-between; align-items:center; gap:4px;">
+                    <span>Rarity Tier</span>
+                    ${['weapon', 'armor', 'magic'].includes(dmForgeKind) ? `<button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.62rem; border-color:#c084fc; color:#e9d5ff;" onclick="dmAutoFillStatsForRarity()" title="Auto-fill balanced stats &amp; GP for the chosen Rarity">✨ Fill Stats</button>` : ''}
+                </label>
+                <select id="dm-forge-rarity-tier" class="dm-forge-select" onchange="dmUpdateForgeBalance()">
                     <option value="Common / Mundane" ${defVal === 'Common / Mundane' ? 'selected' : ''}>Common / Mundane</option>
                     <option value="Uncommon" ${defVal === 'Uncommon' ? 'selected' : ''}>Uncommon</option>
                     <option value="Rare" ${defVal === 'Rare' ? 'selected' : ''}>Rare</option>
@@ -18902,6 +19662,30 @@ function renderDmDropModalBody() {
                     <option value="Legendary" ${defVal === 'Legendary' ? 'selected' : ''}>Legendary</option>
                     <option value="Cursed Relic" ${defVal === 'Cursed Relic' ? 'selected' : ''}>Cursed Relic</option>
                 </select>
+            </div>
+        `;
+
+        const itemSpellPickerHtml = (defSpell = '') => `
+            <div class="dm-forge-field">
+                <label for="dm-forge-item-spell" style="color:#c084fc;">Granted Spell / Power (Adds Live [✨ Cast] Button on Sheet!)</label>
+                <select id="dm-forge-item-spell" class="dm-forge-select" onchange="dmOnForgeSubChange()">
+                    ${dmBuildSpellSelectOptionsHtml(defSpell, true)}
+                </select>
+            </div>
+            <div class="dm-forge-field" id="dm-forge-item-charges-wrap" style="display:none;">
+                <label for="dm-forge-item-charges" style="color:#c084fc;">Charges &amp; Rest Recharge</label>
+                <select id="dm-forge-item-charges" class="dm-forge-select" onchange="dmUpdateForgeBalance()">
+                    <option value="1|long" selected>1 / Long Rest (1 Charge)</option>
+                    <option value="1|short">1 / Short Rest (1 Charge)</option>
+                    <option value="2|long">2 Charges (Long Rest)</option>
+                    <option value="3|long">3 Charges (Long Rest / Dawn)</option>
+                    <option value="5|long">5 Charges (Long Rest / Dawn)</option>
+                    <option value="0|long">At-Will / Always Active (Unlimited)</option>
+                </select>
+            </div>
+            <div class="dm-forge-field span-2" id="dm-forge-magic-power-wrap" style="display:none;">
+                <label for="dm-forge-magic-power" style="color:#c084fc;">Custom Activated Power Description</label>
+                <input type="text" id="dm-forge-magic-power" class="dm-forge-input" placeholder="e.g. Reveal Invisible Foes 30 ft, +1d6 Necrotic Smite, Turn Undead Pulse...">
             </div>
         `;
 
@@ -19083,12 +19867,13 @@ function renderDmDropModalBody() {
                     </select>
                 </div>
                 <div class="dm-forge-field">
-                    <label for="dm-forge-attune" style="color:#d8b4fe;">Requires Attunement?</label>
-                    <select id="dm-forge-attune" class="dm-forge-select">
+                    <label for="dm-forge-attune" style="color:#d8b4fe;">Requires Attunement? <small style="color:#94a3b8;">(Auto-Suggested)</small></label>
+                    <select id="dm-forge-attune" class="dm-forge-select" onchange="this.dataset.userEdited='1'; dmUpdateForgeBalance();">
                         <option value="no">No</option>
                         <option value="yes">Yes (Uses 1/3 Attunement Slot)</option>
                     </select>
                 </div>
+                ${itemSpellPickerHtml('')}
             `;
         } else if (dmForgeKind === 'ammo') {
             dynamicFieldsHtml = `
@@ -19232,20 +20017,13 @@ function renderDmDropModalBody() {
                     </select>
                 </div>
                 <div class="dm-forge-field">
-                    <label for="dm-forge-attune" style="color:#d8b4fe;">Requires Attunement?</label>
-                    <select id="dm-forge-attune" class="dm-forge-select">
+                    <label for="dm-forge-attune" style="color:#d8b4fe;">Requires Attunement? <small style="color:#94a3b8;">(Auto-Suggested)</small></label>
+                    <select id="dm-forge-attune" class="dm-forge-select" onchange="this.dataset.userEdited='1'; dmUpdateForgeBalance();">
                         <option value="yes">Yes (Uses 1/3 Attunement Slot)</option>
                         <option value="no">No</option>
                     </select>
                 </div>
-                <div class="dm-forge-field">
-                    <label for="dm-forge-magic-power" style="color:#c084fc;">Optional Activated Power (Adds Clickable [Activate] Button)</label>
-                    <input type="text" id="dm-forge-magic-power" class="dm-forge-input" placeholder="e.g. Cast Misty Step, Reveal Invisible Foes 30 ft, Speak with Dead...">
-                </div>
-                <div class="dm-forge-field">
-                    <label for="dm-forge-magic-charges" style="color:#c084fc;">Charges / Uses Per Rest</label>
-                    <input type="text" id="dm-forge-magic-charges" class="dm-forge-input" placeholder="e.g. 1/Long Rest, 3 Charges (regain 1d3 at dawn)">
-                </div>
+                ${itemSpellPickerHtml('')}
             `;
         } else if (dmForgeKind === 'food') {
             dynamicFieldsHtml = `
@@ -19330,6 +20108,12 @@ function renderDmDropModalBody() {
                     </select>
                 </div>
                 ${raritySelectHtml('Uncommon')}
+                <div class="dm-forge-field span-2" id="dm-forge-cons-scroll-wrap" style="display:none;">
+                    <label for="dm-forge-scroll-spell" style="color:#fef08a;">📜 Choose 5e Spell Scroll (Auto-Fills Name, Price &amp; Live Quick-Belt Cast Button!)</label>
+                    <select id="dm-forge-scroll-spell" class="dm-forge-select" onchange="dmOnForgeScrollSpellChange(this.value)">
+                        ${dmBuildSpellSelectOptionsHtml('', false)}
+                    </select>
+                </div>
                 <div id="dm-forge-cons-dice-wrap" style="display:contents;">
                     <div class="dm-forge-field">
                         <label for="dm-forge-cons-dice" style="color:#6ee7b7;">Dice Rolled on Use</label>
@@ -19503,12 +20287,13 @@ function renderDmDropModalBody() {
                     </select>
                 </div>
                 <div class="dm-forge-field">
-                    <label for="dm-forge-attune" style="color:#d8b4fe;">Requires Attunement?</label>
-                    <select id="dm-forge-attune" class="dm-forge-select">
+                    <label for="dm-forge-attune" style="color:#d8b4fe;">Requires Attunement? <small style="color:#94a3b8;">(Auto-Suggested)</small></label>
+                    <select id="dm-forge-attune" class="dm-forge-select" onchange="this.dataset.userEdited='1'; dmUpdateForgeBalance();">
                         <option value="no">No</option>
                         <option value="yes">Yes (Uses 1/3 Attunement Slot)</option>
                     </select>
                 </div>
+                ${itemSpellPickerHtml('')}
             `;
         }
 
@@ -19523,7 +20308,7 @@ function renderDmDropModalBody() {
             : 'e.g. Fur-Lined Traveler Cloak, Iron Buckler Shield...'))))));
 
         contentEl.innerHTML = tabsHtml + `
-            <form id="dm-forge-form" novalidate onsubmit="event.preventDefault(); submitDmForgeItem(true);" style="display:flex; flex-direction:column; gap:10px; background:#0b1120; border:1px solid #334155; border-radius:8px; padding:12px;">
+            <form id="dm-forge-form" novalidate onchange="dmUpdateForgeBalance()" onsubmit="event.preventDefault(); submitDmForgeItem(true);" style="display:flex; flex-direction:column; gap:10px; background:#0b1120; border:1px solid #334155; border-radius:8px; padding:12px;">
                 ${dmForgeEditKey ? `
                     <div class="nbox nbox-amber" style="margin:0; display:flex; justify-content:space-between; align-items:center; gap:8px;">
                         <span>🛠️ <strong>Editing Custom Vault Item:</strong> Saving will update <strong>${pfName}</strong> in-place across Firebase &amp; Section 4.</span>
@@ -19547,8 +20332,8 @@ function renderDmDropModalBody() {
                         <input type="text" id="dm-forge-name" class="dm-forge-input" value="${pfName}" required placeholder="${namePlaceholder}" oninput="this.removeAttribute('aria-invalid'); const e=document.getElementById('dm-forge-error'); if(e) e.textContent='';">
                     </div>
                     <div class="dm-forge-field">
-                        <label for="dm-forge-cost" style="color:#facc15;">Cost / Gold Value</label>
-                        <input type="text" id="dm-forge-cost" class="dm-forge-input" value="${pfCost}" placeholder="e.g. 5 GP, 5 SP, 2 CP, 150 GP, Priceless...">
+                        <label for="dm-forge-cost" style="color:#facc15;">Cost / Gold Value <small style="color:#94a3b8;">(Auto-Suggested)</small></label>
+                        <input type="text" id="dm-forge-cost" class="dm-forge-input" value="${pfCost}" oninput="this.dataset.userEdited='1'" placeholder="e.g. 5 GP, 5 SP, 2 CP, 150 GP, Priceless...">
                     </div>
                     <div class="dm-forge-field">
                         <label for="dm-forge-loc">Where Found / Source</label>
@@ -19600,6 +20385,7 @@ function renderDmDropModalBody() {
                     </div>
                 </div>
 
+                <div id="dm-forge-balance-bar" role="status" aria-live="polite" style="background:linear-gradient(135deg, rgba(28,22,46,0.92), rgba(15,23,42,0.96)); border:1px solid rgba(250,204,21,0.4); border-radius:7px; padding:8px 11px;"></div>
                 <div id="dm-forge-error" class="dm-forge-error" role="status" aria-live="polite"></div>
 
                 <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; border-top:1px solid #1e293b; padding-top:10px;">
@@ -19753,6 +20539,19 @@ function renderDmDropModalBody() {
                         ${itemsHtml}
                     </div>
                 </div>
+                ${(() => {
+                    const readyConvs = DM_NPC_CONVERSIONS.filter(c => dmHeroMatchesConversion(t.id, c));
+                    if (!readyConvs.length) return '';
+                    const btns = readyConvs.map(c =>
+                        `<button type="button" class="btn-modal-mini" style="background:rgba(6,78,59,0.45); border-color:#34d399; color:#d1fae5; padding:3px 8px; font-size:0.67rem;" onclick="dmRunNpcConversion('${c.id}', '${t.id}', '${t.label}', event)" title="${escapeEncounterHtml(c.desc)}">🤝 ${escapeEncounterHtml(c.npcName.split('/')[0].trim())}: ${c.reqQty > 1 ? c.reqQty + 'x ' : ''}${escapeEncounterHtml(c.reqName.split('/')[0].trim())} ➔ ${c.outQty > 1 ? c.outQty + 'x ' : ''}${escapeEncounterHtml(c.outName)}${c.gpFee ? ` (-${c.gpFee} GP)` : ''}</button>`
+                    ).join('');
+                    return `
+                        <div style="background:rgba(6,78,59,0.16); border:1px solid rgba(52,211,153,0.38); border-radius:6px; padding:6px 8px;">
+                            <div style="font-size:0.66rem; font-weight:800; color:#6ee7b7; text-transform:uppercase; margin-bottom:4px;">🤝 NPC Item Conversions Ready for ${t.label} (1-Click Swap!)</div>
+                            <div style="display:flex; flex-wrap:wrap; gap:5px;">${btns}</div>
+                        </div>
+                    `;
+                })()}
 
                 <div>
                     <div style="font-size:0.66rem; font-weight:800; color:#c084fc; text-transform:uppercase; margin-bottom:4px;">📓 Live Verbatim Player Notes (${notesList.length} notes — Newest on Top)</div>
@@ -19839,6 +20638,44 @@ function submitDmForgeItem(andSendToHero = true) {
     let defaultLore = `Recovered during your journey through ${rawWhere || 'Barovia'}.`;
     let customMeta = null;
 
+    // Shared helper for Item-Granted Spells & Activated Powers (works on Weapons, Armor & Magic Items!)
+    const buildGrantedSpellMeta = () => {
+        const spVal = document.getElementById('dm-forge-item-spell')?.value || '';
+        if (!spVal) return { useAction: null, labelText: '', mechanicsLine: '' };
+        const chgRaw = document.getElementById('dm-forge-item-charges')?.value || '1|long';
+        const [maxChg, recType] = chgRaw.split('|');
+        const maxCharges = parseInt(maxChg, 10) || 0;
+        const recharge = recType === 'short' ? 'short' : 'long';
+        const chgLabel = maxCharges > 0 ? `${maxCharges}/${recharge === 'short' ? 'Short Rest' : 'Long Rest'}` : 'At-Will';
+        if (spVal === '__custom__') {
+            const pwr = (document.getElementById('dm-forge-magic-power')?.value || '').trim() || note || 'Activated Magic Power';
+            return {
+                useAction: { type: 'magicPower', keepItem: true, maxCharges, recharge, actionCost: 'action', label: shortN, charges: chgLabel, effect: pwr },
+                labelText: `${pwr} (${chgLabel})`,
+                mechanicsLine: `<br>• <strong>Activated Power (${chgLabel}):</strong> ${escapeEncounterHtml(pwr)}`
+            };
+        }
+        const sp = DM_FORGE_SPELLS[spVal];
+        if (!sp) return { useAction: null, labelText: '', mechanicsLine: '' };
+        return {
+            useAction: {
+                type: 'itemSpell',
+                keepItem: true,
+                spellId: spVal,
+                spellName: sp.name,
+                spellLevel: sp.level,
+                actionCost: sp.actionCost || 'action',
+                maxCharges,
+                recharge,
+                label: sp.name,
+                charges: chgLabel,
+                effect: sp.summary
+            },
+            labelText: `Cast ${sp.name} (${chgLabel})`,
+            mechanicsLine: `<br>• <strong>Granted Spell (${chgLabel}):</strong> Click <strong>[✨ ${escapeEncounterHtml(sp.name)}]</strong> on your Quick-Belt — ${escapeEncounterHtml(sp.summary)}`
+        };
+    };
+
     if (dmForgeKind === 'weapon') {
         vaultCat = 'weapon';
         const archKey = document.getElementById('dm-forge-wpn-arch')?.value || 'custom';
@@ -19863,13 +20700,14 @@ function submitDmForgeItem(andSendToHero = true) {
         const isManual = abilMode === 'manual';
         const manualAtk = parseInt(document.getElementById('dm-forge-wpn-atk')?.value, 10) || 5;
         const manualDmg = parseInt(document.getElementById('dm-forge-wpn-dmgmod')?.value, 10) || 3;
+        const granted = buildGrantedSpellMeta();
         const weaponClasses = ammoKind
             ? ['ranged', ammoKind]
             : (dmgType.toLowerCase().includes('bludgeoning') ? ['melee', 'blunt', ...(arch.classes.includes('caster_weapon') ? ['caster_weapon'] : [])] : ['melee', 'slashing_piercing', ...(arch.classes.includes('caster_weapon') ? ['caster_weapon'] : [])]);
 
         const weaponStats = isManual
-            ? { atkBonus: manualAtk, dmgDice, dmgBonus: manualDmg, dmgType, extraDice, extraType, magicBonus }
-            : { autoScale: true, abilityMode: abilMode, magicBonus, dmgDice, dmgType, extraDice, extraType };
+            ? { atkBonus: manualAtk, dmgDice, dmgBonus: manualDmg, dmgType, extraDice, extraType, magicBonus, mastery: masteryTxt }
+            : { autoScale: true, abilityMode: abilMode, magicBonus, dmgDice, dmgType, extraDice, extraType, mastery: masteryTxt };
 
         const summaryParts = [
             `${gripLabel} ${arch.label}`,
@@ -19878,12 +20716,13 @@ function submitDmForgeItem(andSendToHero = true) {
             extraDice ? `+${extraDice} ${extraType}` : '',
             ammoNoun ? `Loads ${ammoNoun}` : '',
             masteryTxt ? `${masteryTxt} Mastery` : '',
+            granted.labelText || '',
             attune ? 'Attune' : ''
         ].filter(Boolean);
 
         const profLabel = reqWeapon === 'martial' ? 'Martial' : (reqWeapon === 'firearm' ? 'Firearm' : (reqWeapon === 'simple' ? 'Simple' : 'Exotic'));
         rarity = `${rarityTier} ${profLabel} ${ammoKind ? 'Ranged' : 'Melee'} Weapon • ${arch.label}${magicBonus ? ` (+${magicBonus})` : ''}${attune ? ' • Attunement' : ''}`;
-        mechanicsHtml = `• <strong>${profLabel} ${ammoKind ? 'Ranged' : 'Melee'} Weapon (${arch.label} • ${gripLabel}${rangeTxt ? ', ' + escapeEncounterHtml(rangeTxt) : ''}):</strong> Deals <code>${dmgDice}${magicBonus ? ' + ' + magicBonus : ''} + ${isManual ? manualDmg : abilMode.toUpperCase()}</code> <strong>${escapeEncounterHtml(dmgType)}</strong> damage${extraDice ? ` + <code>${extraDice} ${escapeEncounterHtml(extraType)}</code>` : ''}${masteryTxt ? ` (<strong>5.5e ${escapeEncounterHtml(masteryTxt)} Mastery</strong>)` : ''}.${ammoNoun ? `<br>• <strong>Ammunition:</strong> Fires <strong>${ammoNoun}</strong>${magCap ? ` (<code>${magCap}-shot capacity</code>)` : ''} — click <strong>[Load]</strong> on the weapon card or ammo pack!` : ''}${escNote ? `<br>• <strong>Special:</strong> ${escNote}` : ''}`;
+        mechanicsHtml = `• <strong>${profLabel} ${ammoKind ? 'Ranged' : 'Melee'} Weapon (${arch.label} • ${gripLabel}${rangeTxt ? ', ' + escapeEncounterHtml(rangeTxt) : ''}):</strong> Deals <code>${dmgDice}${magicBonus ? ' + ' + magicBonus : ''} + ${isManual ? manualDmg : abilMode.toUpperCase()}</code> <strong>${escapeEncounterHtml(dmgType)}</strong> damage${extraDice ? ` + <code>${extraDice} ${escapeEncounterHtml(extraType)}</code>` : ''}${masteryTxt ? ` (<strong>5.5e ${escapeEncounterHtml(masteryTxt)} Mastery</strong>)` : ''}.${ammoNoun ? `<br>• <strong>Ammunition:</strong> Fires <strong>${ammoNoun}</strong>${magCap ? ` (<code>${magCap}-shot capacity</code>)` : ''} — click <strong>[Load]</strong> on the weapon card or ammo pack!` : ''}${granted.mechanicsLine}${escNote ? `<br>• <strong>Special:</strong> ${escNote}` : ''}`;
         defaultLore = `A distinctive ${arch.label.toLowerCase()} discovered in ${rawWhere || 'Barovia'}.`;
         customMeta = {
             category: 'weapon',
@@ -19893,11 +20732,13 @@ function submitDmForgeItem(andSendToHero = true) {
             maxCap: magCap || null,
             weaponArchetype: archKey,
             weaponClasses,
+            mastery: masteryTxt || '',
             hands: handsVal === '2' ? 2 : 1,
             versatile: handsVal === 'versatile',
             attune,
             isLegDagger: slots.includes('legSheath'),
             weaponStats,
+            ...(granted.useAction ? { quickBelt: true, useAction: granted.useAction } : {}),
             summary: summaryParts.join(' • ')
         };
     } else if (dmForgeKind === 'ammo') {
@@ -20013,8 +20854,7 @@ function submitDmForgeItem(andSendToHero = true) {
         const initBonus = parseInt(document.getElementById('dm-forge-init')?.value, 10) || 0;
         const resistance = document.getElementById('dm-forge-resist')?.value || '';
         const skillAdvVal = document.getElementById('dm-forge-skilladv')?.value || '';
-        const powerTxt = (document.getElementById('dm-forge-magic-power')?.value || '').trim();
-        const chargesTxt = (document.getElementById('dm-forge-magic-charges')?.value || '').trim();
+        const granted = buildGrantedSpellMeta();
         const slots = slot === 'pocket' ? [] : (slot === 'ring1' ? ['ring1', 'ring2'] : [slot]);
         const parts = [
             spellBonus ? `+${spellBonus} Spell DC & Hit` : '',
@@ -20024,11 +20864,11 @@ function submitDmForgeItem(andSendToHero = true) {
             initBonus ? `${initBonus > 0 ? '+' : ''}${initBonus} Init` : '',
             resistance ? `${resistance} Resistance` : '',
             skillAdvVal ? `Adv ${skillAdvVal}` : '',
-            powerTxt ? `${powerTxt}${chargesTxt ? ` (${chargesTxt})` : ''}` : '',
+            granted.labelText || '',
             attune ? 'Attune' : ''
         ].filter(Boolean);
         rarity = `${rarityTier} Magic Item${attune ? ' • Attunement' : ''}`;
-        mechanicsHtml = `• <strong>Magic Properties:</strong> ${parts.map(p => escapeEncounterHtml(p)).join(' • ') || 'Wondrous Magic Relic'}.${escNote ? `<br>• <strong>Details:</strong> ${escNote}` : ''}`;
+        mechanicsHtml = `• <strong>Magic Properties:</strong> ${parts.map(p => escapeEncounterHtml(p)).join(' • ') || 'Wondrous Magic Relic'}.${granted.mechanicsLine}${escNote ? `<br>• <strong>Details:</strong> ${escNote}` : ''}`;
         defaultLore = `An enchanted relic found in ${rawWhere || 'Barovia'}, pulsing faintly with arcane residue.`;
         customMeta = {
             category: slot === 'body' ? 'armor' : (['mainHand', 'offHand'].includes(slot) ? 'weapon' : 'accessory'),
@@ -20043,10 +20883,7 @@ function submitDmForgeItem(andSendToHero = true) {
             resistance: resistance || null,
             skillAdv: skillAdvVal ? [skillAdvVal] : [],
             attune,
-            ...(powerTxt ? {
-                quickBelt: true,
-                useAction: { type: 'magicPower', keepItem: true, actionCost: 'action', label: shortN, charges: chargesTxt, effect: powerTxt }
-            } : {}),
+            ...(granted.useAction ? { quickBelt: true, useAction: granted.useAction } : {}),
             summary: parts.join(' • ') || 'Wondrous Magic Item'
         };
     } else if (dmForgeKind === 'food') {
@@ -20135,10 +20972,18 @@ function submitDmForgeItem(andSendToHero = true) {
             sumTxt = `Throw (${bRange}): ${fStr} ${bType} Damage${bSave ? ' • ' + bSave : ''}`;
             rarity = `${rarityTier} Throwable Bomb • ${fStr} ${bType}`;
         } else if (cType === 'scroll') {
-            const scrollDesc = note || 'Single-use arcane or divine spell scroll.';
-            useAction = { type: 'utilityLog', verb: 'Cast', actionCost: 'action', label: `${shortN} (Scroll)`, effect: scrollDesc };
-            sumTxt = `Spell Scroll (1 Action): ${scrollDesc}`;
-            rarity = `${rarityTier} Spell Scroll`;
+            const spId = document.getElementById('dm-forge-scroll-spell')?.value || '';
+            const sp = DM_FORGE_SPELLS[spId];
+            if (sp) {
+                useAction = { type: 'spellScroll', spellId: spId, spellName: sp.name, spellLevel: sp.level, actionCost: sp.actionCost || 'action', label: `📜 ${sp.name}`, effect: note || sp.summary };
+                sumTxt = `Lvl ${sp.level} Spell Scroll (${sp.actionCost === 'bonus' ? 'Bonus Action' : (sp.actionCost === 'reaction' ? 'Reaction' : '1 Action')}): ${note || sp.summary}`;
+                rarity = `${rarityTier} Level ${sp.level} Spell Scroll`;
+            } else {
+                const scrollDesc = note || 'Single-use arcane or divine spell scroll.';
+                useAction = { type: 'spellScroll', spellName: shortN, spellLevel: 1, actionCost: 'action', label: `📜 ${shortN}`, effect: scrollDesc };
+                sumTxt = `Spell Scroll (1 Action): ${scrollDesc}`;
+                rarity = `${rarityTier} Spell Scroll`;
+            }
         } else {
             const utilDesc = note || 'Special alchemical potion effect.';
             useAction = { type: 'utilityLog', verb: 'Drank', actionCost: 'bonus', label: `${shortN} (${durTxt})`, effect: `${utilDesc}${durTxt ? ` (${durTxt})` : ''}` };
@@ -20208,6 +21053,7 @@ function submitDmForgeItem(andSendToHero = true) {
         const baseAcRaw = document.getElementById('dm-forge-baseac')?.value || '0';
         const resistance = document.getElementById('dm-forge-resist')?.value || '';
         const skillAdvVal = document.getElementById('dm-forge-skilladv')?.value || '';
+        const granted = buildGrantedSpellMeta();
         const slots = [slot];
         let baseAC = null, addDex = false, maxDex = null, armorWorn = false, heavyArmor = false;
         if (slot === 'body' && baseAcRaw !== '0') {
@@ -20224,10 +21070,11 @@ function submitDmForgeItem(andSendToHero = true) {
             saveBonus ? `${saveBonus > 0 ? '+' : ''}${saveBonus} Saves` : '',
             resistance ? `${resistance} Resistance` : '',
             skillAdvVal ? `Adv ${skillAdvVal}` : '',
+            granted.labelText || '',
             attune ? 'Attune' : ''
         ].filter(Boolean);
         rarity = `${rarityTier} ${slot === 'offHand' ? 'Shield' : 'Armor & Gear'}${attune ? ' • Attunement' : ''}`;
-        mechanicsHtml = `• <strong>Equipped Stats:</strong> ${parts.map(p => escapeEncounterHtml(p)).join(' • ') || 'Protective Gear'}.${escNote ? `<br>• <strong>Special:</strong> ${escNote}` : ''}`;
+        mechanicsHtml = `• <strong>Equipped Stats:</strong> ${parts.map(p => escapeEncounterHtml(p)).join(' • ') || 'Protective Gear'}.${granted.mechanicsLine}${escNote ? `<br>• <strong>Special:</strong> ${escNote}` : ''}`;
         defaultLore = `Protective gear acquired in ${rawWhere || 'Barovia'}.`;
         const reqArmorExplicit = document.getElementById('dm-forge-armor-prof')?.value || '';
         const derivedReqArmor = reqArmorExplicit || (slot === 'offHand' && acBonus > 0 ? 'shield' : (heavyArmor ? 'heavy' : (maxDex === 2 ? 'medium' : (armorWorn ? 'light' : null))));
@@ -20247,6 +21094,7 @@ function submitDmForgeItem(andSendToHero = true) {
             skillAdv: skillAdvVal ? [skillAdvVal] : [],
             attune,
             isShield: slot === 'offHand' && acBonus > 0,
+            ...(granted.useAction ? { quickBelt: true, useAction: granted.useAction } : {}),
             summary: parts.join(' • ') || 'Equippable Gear'
         };
     }
@@ -20604,6 +21452,31 @@ function openItemModal(key, fromNav = false) {
             </div>
         </div>
         `}
+        ${(() => {
+            const convs = dmGetConversionsForKey(key);
+            if (!convs.length) return '';
+            return `
+                <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(52,211,153,0.42); border-radius:7px; padding:9px 12px; margin-bottom:12px;">
+                    <div style="font-size:0.75rem; font-weight:800; color:#6ee7b7; margin-bottom:6px;">🤝 NPC Specialist Conversions (Keep Standalone Effect OR Hand to an NPC to Transform!)</div>
+                    ${convs.map(c => `
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; padding:5px 8px; background:#090e1a; border:1px solid #1e293b; border-radius:6px; margin-top:5px;">
+                            <div style="font-size:0.73rem; color:#e2e8f0;">
+                                <strong style="color:#fde68a;">${escapeEncounterHtml(c.npcName)}:</strong>
+                                ${c.reqQty > 1 ? c.reqQty + 'x ' : ''}${escapeEncounterHtml(c.reqName)} ${c.gpFee ? `<span style="color:#facc15;">(+${c.gpFee} GP)</span> ` : ''}➔
+                                <strong style="color:#6ee7b7;">${c.outQty > 1 ? c.outQty + 'x ' : ''}${escapeEncounterHtml(c.outName)}</strong>
+                                <div style="font-size:0.68rem; color:#94a3b8;">${escapeEncounterHtml(c.desc)}</div>
+                            </div>
+                            <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                                ${DM_PARTY_TARGETS.map(t => {
+                                    const hasIt = dmHeroMatchesConversion(t.id, c);
+                                    return `<button type="button" class="btn-modal-mini" style="padding:2px 7px; font-size:0.66rem; background:${hasIt ? '#065f46' : '#1e293b'}; border-color:${hasIt ? '#34d399' : '#475569'}; color:${hasIt ? '#ecfdf5' : '#cbd5e1'};" onclick="dmRunNpcConversion('${c.id}', '${t.id}', '${t.label}', event)" title="Remove raw item from ${t.label} &amp; inject converted result">🤝 ${t.label}${hasIt ? ' ✓' : ''}</button>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        })()}
         <h4>⚔️ D&D 5e Mechanics & Effects</h4>
         <div class="nbox nbox-emerald">
             <div style="margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid rgba(52,211,153,0.22); font-size:0.78rem; color:#d1fae5;">
@@ -21986,7 +22859,13 @@ const CRAFT_TAG_TO_MAT_KEY = {
     pitch_oil: 'pitch_oil',
     catalyst: 'alchemical_catalyst',
     moonpetal: 'svalich_moonpetal',
-    heart_core: 'heart_of_sorrow_shard'
+    heart_core: 'heart_of_sorrow_shard',
+    ghost_cap: 'ghost_cap_mushrooms',
+    grave_salt: 'grave_salt_ward_pouch',
+    spider_silk: 'spider_silk_gland',
+    cold_iron: 'cold_iron_scrap_shards',
+    wolf_fang: 'dire_wolf_fangs',
+    silver_scrap: 'tarnished_silver_cutlery'
 };
 
 function getRecipesForMaterial(k, it) {
@@ -22225,6 +23104,70 @@ const DM_CRAFTING_RECIPES = [
             { key: 'pure_spring_water', qty: 1 }
         ],
         note: 'Heartstone Transmutation: Permanently consumes EITHER Heart of Sorrow Shard (K20) OR Night Hag Heartstone.'
+    },
+    {
+        id: 'craft_night_sight_brew',
+        lootKey: 'ghost_cap_night_sight',
+        badge: 'Darkvision 60 ft • 2 hrs',
+        code: 'NIGHT-SIGHT',
+        ingredients: [
+            { key: 'ghost_cap_mushrooms', qty: 2 },
+            { key: 'pure_spring_water', qty: 1 }
+        ],
+        note: 'Herbalist Concoction: Learned from Jeny Greenteeth, Vistani herbalists, or DC 13 Nature.'
+    },
+    {
+        id: 'craft_grave_salt_coating',
+        lootKey: 'grave_salt_coating',
+        badge: '+1d6 Necrotic • Blocks Regen',
+        code: 'GRAVE-SALT',
+        ingredients: [
+            { key: 'grave_salt_ward_pouch', qty: 1 },
+            { key: 'pitch_oil', qty: 1 }
+        ],
+        note: 'Sanctified Hunter Coating: Learned from Ezmerelda, Van Richten notes, or Barovia Church.'
+    },
+    {
+        id: 'craft_whisper_silk_snare',
+        lootKey: 'whisper_silk_snare',
+        badge: '30-ft Grapple / DC 13 Snare',
+        code: 'SILK-SNARE',
+        ingredients: [
+            { key: 'spider_silk_gland', qty: 1 },
+            { key: 'cold_iron_scrap_shards', qty: 1 }
+        ],
+        note: 'Tinker / Ranger Trap: Learned from Blinsky, Ezmerelda, or Martikov scouts.'
+    },
+    {
+        id: 'craft_cold_iron_caltrops',
+        lootKey: 'cold_iron_caltrops',
+        badge: '1d4 (+1d4 vs Fey/Hags)',
+        code: 'COLD-IRON',
+        ingredients: [
+            { key: 'cold_iron_scrap_shards', qty: 2 }
+        ],
+        note: 'Anti-Hag Smithing: Learned at Petru\'s Forge, Vallaki Smithy, or Ismark.'
+    },
+    {
+        id: 'craft_predator_fang_talisman',
+        lootKey: 'predator_fang_talisman',
+        badge: 'Adv Intimidation • 1/LR vs Fear',
+        code: 'FANG-CHARM',
+        ingredients: [
+            { key: 'dire_wolf_fangs', qty: 2 },
+            { key: 'wolfbane_root', qty: 1 }
+        ],
+        note: 'Vistani Hunter Charm: Learned at Tser Pool Camp or Krezk trappers.'
+    },
+    {
+        id: 'craft_silver_smelt',
+        lootKey: 'powdered_silver_dust',
+        badge: 'Smelt Silverware / Quartz ➔ Silver Dust',
+        code: 'SILVER-SMELT',
+        ingredients: [
+            { key: 'tarnished_silver_cutlery', orKeys: ['tarnished_silver_cutlery', 'silver_veined_quartz'], qty: 1 }
+        ],
+        note: 'Camp Crucible: File Tarnished Silver Cutlery or crush Silver-Veined Quartz into 1x Powdered Silver Dust!'
     }
 ];
 const DM_CRAFTING_BY_LOOT = Object.fromEntries(DM_CRAFTING_RECIPES.map(r => [r.lootKey, r]));
@@ -22254,6 +23197,9 @@ function renderLootCardHtml(k, it) {
         : '';
     const craftBadge = DM_CRAFTING_BY_LOOT[k]
         ? ` <span class="pill green" style="font-size:0.59rem; padding:1px 5px; vertical-align:middle;" title="Craftable (${DM_CRAFTING_BY_LOOT[k].code})">⚗️ CRAFT</span>`
+        : '';
+    const npcConvBadge = dmGetConversionsForKey(k).length > 0
+        ? ` <span class="pill blue" style="font-size:0.58rem; padding:1px 5px; vertical-align:middle;" title="Can be converted into a finished item by an NPC specialist (click item to convert!)">🤝 NPC</span>`
         : '';
     const stInfo = getItemScenesAndTier(k, it);
     const tierBadge = (stInfo.scenes.length > 0 || it.rollTier)
@@ -22316,7 +23262,7 @@ function renderLootCardHtml(k, it) {
         <div class="loot-dense-card searchable-row ${cardCls}">
             <div class="loot-card-top">
                 <div class="loot-card-title">
-                    <button type="button" class="link-btn" onclick="openItemModal('${k}')">${escapeEncounterHtml(it.name)}</button>${slotPill}${upgBadge}${craftBadge}${foodBadge}${tierBadge}${customBadge}${renamedBadge}
+                    <button type="button" class="link-btn" onclick="openItemModal('${k}')">${escapeEncounterHtml(it.name)}</button>${slotPill}${upgBadge}${craftBadge}${npcConvBadge}${foodBadge}${tierBadge}${customBadge}${renamedBadge}
                 </div>
                 ${rowActionsHtml}
             </div>

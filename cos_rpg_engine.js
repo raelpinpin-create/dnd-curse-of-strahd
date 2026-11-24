@@ -2198,7 +2198,7 @@
             category: 'accessory',
             slots: [],
             quickBelt: true,
-            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: 'Luckstone (+1d4)', charges: '1/Long Rest', effect: 'Add +1d4 to a failed Ability Check or Saving Throw (1/Long Rest • No Attunement)!' },
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'none', label: 'Luckstone (+1d4)', charges: '1/Long Rest', effect: 'Add +1d4 to a failed Ability Check or Saving Throw (1/Long Rest • No Attunement)!' },
             summary: '1/LR: Add +1d4 to a failed Check or Save (No Attunement)'
         },
         {
@@ -2215,7 +2215,7 @@
             category: 'accessory',
             slots: [],
             quickBelt: true,
-            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: 'Re-Roll Nat 1', charges: '1/Long Rest', effect: 'Re-roll a Natural 1 on any Ability Check (1/Long Rest • No Attunement)!' },
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'none', label: 'Re-Roll Nat 1', charges: '1/Long Rest', effect: 'Re-roll a Natural 1 on any Ability Check (1/Long Rest • No Attunement)!' },
             summary: '1/LR: Re-roll a Natural 1 on an Ability Check'
         },
         {
@@ -2223,7 +2223,7 @@
             category: 'accessory',
             slots: ['amulet'],
             quickBelt: true,
-            useAction: { type: 'magicPower', keepItem: true, actionCost: 'action', label: 'Dawn Light (15 ft)', charges: '1/Long Rest (10 min)', effect: 'Sheds warm 15-ft bright dawn light (10 min): allies inside have Advantage on saves vs Fear & Charm; chimes softly if Undead enter 30 ft!' },
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'action', label: 'Dawn Light (15 ft)', charges: '1/Long Rest (10 min)', effect: 'Sheds warm 15-ft bright dawn light (10 min): allies inside have Advantage on saves vs Fear & Charm; chimes softly if Undead enter 30 ft!' },
             summary: '1/LR Dawn Light (Adv vs Fear/Charm) • Undead Chime 30 ft'
         },
         {
@@ -2231,7 +2231,7 @@
             category: 'accessory',
             slots: ['head'],
             quickBelt: true,
-            useAction: { type: 'magicPower', keepItem: true, actionCost: 'action', label: 'Identify / Detect Magic', charges: '1/Long Rest', effect: 'Cast Identify or Detect Magic without expending a spell slot or material components (1/Long Rest)!' },
+            useAction: { type: 'itemSpell', keepItem: true, spellId: 'detect_magic', maxCharges: 1, recharge: 'long', actionCost: 'action', label: 'Identify / Detect Magic', charges: '1/Long Rest', effect: 'Cast Identify or Detect Magic without expending a spell slot or material components (1/Long Rest)!' },
             summary: '1/LR: Free Identify or Detect Magic'
         },
         {
@@ -2239,24 +2239,74 @@
             category: 'accessory',
             slots: ['amulet'],
             quickBelt: true,
-            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: 'Prayer (+1d4)', charges: '1/Long Rest', effect: 'Add +1d4 to a Religion check or Death Saving Throw (1/Long Rest • No Attunement)!' },
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'none', label: 'Prayer (+1d4)', charges: '1/Long Rest', effect: 'Add +1d4 to a Religion check or Death Saving Throw (1/Long Rest • No Attunement)!' },
             summary: '1/LR: +1d4 to Religion Check or Death Save'
+        },
+        // --- NEW EXPLORATION CRAFTABLES & NPC CONVERSION ITEMS ---
+        {
+            match: ['ghost-cap night-sight', 'night-sight brew', 'night-sight elixir'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Drank', actionCost: 'bonus', label: 'Night-Sight (2 hrs)', effect: 'Gain 60-ft Darkvision (or +30 ft if you already have Darkvision) & Advantage on Perception checks in dim light for 2 hours!' },
+            summary: 'Drink (Bonus): Darkvision 60 ft (+30 ft) & Adv Dim Perception (2 hrs)'
+        },
+        {
+            match: ['grave-salt necrotic coating', 'grave-salt coating', 'consecrated grave-salt'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            ammoMeta: { ammoId: 'necrotic', ammoKind: 'coating', isCoating: true, coatingFullMag: true, coatingRounds: 10 },
+            coatMelee: { id: 'necrotic', label: 'Grave-Salt (+1d6 Necro)', extraDice: '1d6', extraType: 'Necrotic', blocksHealing: true, targetClasses: ['melee'], duration: '10 Min', singleHit: false },
+            summary: 'Coat Blade/Mag: +1d6 Necrotic & Blocks Target Healing/Regen!'
+        },
+        {
+            match: ['whisper-silk snare', 'whisper-silk grapple', 'silk snare'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Deployed', actionCost: 'action', label: 'Silk Snare (DC 13)', effect: '30-ft whisper-quiet spider-silk snare/grapple cord: Target makes DC 13 DEX Save or becomes Restrained & knocked Prone (DC 13 STR/DEX Action to escape)!' },
+            summary: '1 Action: 30-ft Silent Grapple or DC 13 DEX Snare (Restrained)'
+        },
+        {
+            match: ['cold-iron caltrops', 'hag-bane caltrops'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'customBomb', verb: 'Scattered', actionCost: 'action', dice: 1, sides: 4, bonus: 0, dmgType: 'Cold-Iron Piercing', range: '10-ft square', saveNote: 'DC 15 DEX Save or stop moving & take 1d4 (+1d4 bonus vs Fey & Hags!); Speed -10 ft until healed', label: 'Cold-Iron Caltrops' },
+            summary: '1 Action (10-ft sq): DC 15 DEX • 1d4 Piercing (+1d4 vs Fey/Hags) & Stop!'
+        },
+        {
+            match: ['predator\'s fang talisman', 'fang talisman'],
+            category: 'accessory',
+            slots: ['amulet'],
+            skillAdv: ['Intimidation'],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'none', label: 'Predator Courage', charges: '1/Long Rest', effect: 'Gain Advantage on one Saving Throw against being Frightened (1/Long Rest • No Attunement)!' },
+            summary: 'Amulet: Adv Intimidation • 1/LR Adv vs Frightened'
+        },
+        {
+            match: ['tarnished silver cutlery', 'silver cutlery'],
+            category: 'gear',
+            craftAs: 'silver_scrap',
+            slots: [],
+            summary: '10 GP Silverware • Smelt at Forge/Craft into Powdered Silver Dust or 5x Silvered Ammo!'
         },
         {
             match: ['scroll of lesser restoration'],
             category: 'consumable',
             slots: [],
             quickBelt: true,
-            useAction: { type: 'utilityLog', verb: 'Cast', actionCost: 'action', label: 'Lesser Restoration', effect: 'Touch 1 creature to end Blinded, Deafened, Paralyzed, Poisoned, or 1 Disease (Single-Use Scroll)!' },
-            summary: 'Scroll (1 Action): Cure Blind/Paralyzed/Poisoned/Disease'
+            useAction: { type: 'spellScroll', spellId: 'lesser_restoration', label: '📜 Lesser Restoration' },
+            summary: '2nd-Lvl Scroll (Action): Cure Blind/Deaf/Paralyzed/Poisoned/Disease'
         },
         {
             match: ['scroll of misty step'],
             category: 'consumable',
             slots: [],
             quickBelt: true,
-            useAction: { type: 'utilityLog', verb: 'Cast', actionCost: 'bonus', label: 'Misty Step (30 ft)', effect: 'Teleport up to 30 ft to an unoccupied space you can see (Bonus Action • Single-Use Scroll)!' },
-            summary: 'Scroll (Bonus Action): Teleport 30 ft'
+            useAction: { type: 'spellScroll', spellId: 'misty_step', label: '📜 Misty Step (30 ft)' },
+            summary: '2nd-Lvl Scroll (Bonus Action): Teleport 30 ft'
         },
         {
             match: ['fallen hunter\'s +1 silvered dagger', '+1 silvered dagger'],
@@ -2322,6 +2372,109 @@
             summary: 'Adventuring / Trade Gear'
         }
     ];
+
+    // =========================================================================
+    // CURATED D&D 5e / BAROVIA SPELL SCROLL & MAGIC-ITEM SPELL LIBRARY (48 SPELLS)
+    // =========================================================================
+    const SCROLL_STATS_BY_LEVEL = {
+        1: { dc: 13, atk: 5, cost: '50 GP' },
+        2: { dc: 13, atk: 5, cost: '150 GP' },
+        3: { dc: 15, atk: 7, cost: '300 GP' },
+        4: { dc: 15, atk: 7, cost: '500 GP' },
+        5: { dc: 17, atk: 9, cost: '1,000 GP' }
+    };
+
+    const SPELL_SCROLL_LIBRARY = {
+        // Level 1 (15)
+        shield:                 { name: 'Shield', level: 1, actionCost: 'reaction', range: 'Self', conc: false, kind: 'buff', summary: 'Reaction: +5 AC until start of next turn & blocks Magic Missile!' },
+        bless:                  { name: 'Bless', level: 1, actionCost: 'action', range: '30 ft', conc: true, kind: 'buff', summary: 'Up to 3 allies add +1d4 to Attack Rolls & Saving Throws (1 min, Conc).' },
+        healing_word:           { name: 'Healing Word', level: 1, actionCost: 'bonus', range: '60 ft', conc: false, kind: 'heal', dice: '1d4', bonus: 3, summary: 'Bonus Action (60 ft): Restore 1d4+3 HP to a creature you can see.' },
+        cure_wounds:            { name: 'Cure Wounds', level: 1, actionCost: 'action', range: 'Touch', conc: false, kind: 'heal', dice: '1d8', bonus: 3, summary: 'Action (Touch): Restore 1d8+3 HP to a living creature.' },
+        guiding_bolt:           { name: 'Guiding Bolt', level: 1, actionCost: 'action', range: '120 ft', conc: false, kind: 'dmg', atkRoll: true, dice: '4d6', dmgType: 'Radiant', summary: 'Spell Attack (120 ft): 4d6 Radiant & next attack vs target has Advantage!' },
+        magic_missile:          { name: 'Magic Missile', level: 1, actionCost: 'action', range: '120 ft', conc: false, kind: 'dmg', dice: '3d4', bonus: 3, dmgType: 'Force', summary: '3 auto-hit darts (120 ft): 3d4+3 Force damage (split or focus).' },
+        faerie_fire:            { name: 'Faerie Fire', level: 1, actionCost: 'action', range: '60 ft (20-ft cube)', conc: true, kind: 'buff', save: 'DEX Save', summary: 'DEX Save or outlined in light (1 min, Conc): attacks have Advantage, negates Invisibility!' },
+        detect_magic:           { name: 'Detect Magic', level: 1, actionCost: 'action', range: 'Self (30 ft)', conc: true, kind: 'utility', summary: 'Sense magical auras & schools of magic within 30 ft (10 min, Conc).' },
+        identify:               { name: 'Identify', level: 1, actionCost: 'action', range: 'Touch', conc: false, kind: 'utility', summary: 'Reveal all magical properties, attunement, charges & spells on an object or creature.' },
+        fog_cloud:              { name: 'Fog Cloud', level: 1, actionCost: 'action', range: '120 ft (20-ft rad)', conc: true, kind: 'utility', summary: '20-ft radius sphere becomes Heavily Obscured for 1 hour (Conc).' },
+        prot_evil_good:         { name: 'Protection from Evil and Good', level: 1, actionCost: 'action', range: 'Touch', conc: true, kind: 'buff', summary: '10 min (Conc): Undead/Fiends/Fey have Disadv on attacks & cannot Charm/Frighten/Possess target!' },
+        burning_hands:          { name: 'Burning Hands', level: 1, actionCost: 'action', range: '15-ft cone', conc: false, kind: 'dmg', dice: '3d6', dmgType: 'Fire', save: 'DEX Save (half)', summary: '15-ft cone: 3d6 Fire damage (DEX Save for half; ignites flammables).' },
+        thunderwave:            { name: 'Thunderwave', level: 1, actionCost: 'action', range: '15-ft cube', conc: false, kind: 'dmg', dice: '2d8', dmgType: 'Thunder', save: 'CON Save (half)', summary: '15-ft cube: 2d8 Thunder damage & pushed 10 ft (CON Save for half, no push).' },
+        false_life:             { name: 'False Life', level: 1, actionCost: 'action', range: 'Self', conc: false, kind: 'tempHp', dice: '1d4', bonus: 4, duration: '1 hour', summary: 'Gain 1d4+4 Temporary HP for 1 hour (Non-Stacking).' },
+        absorb_elements:        { name: 'Absorb Elements', level: 1, actionCost: 'reaction', range: 'Self', conc: false, kind: 'buff', summary: 'Reaction: Resistance to triggering Acid/Cold/Fire/Lightning/Thunder + +1d6 on next melee hit!' },
+        // Level 2 (13)
+        misty_step:             { name: 'Misty Step', level: 2, actionCost: 'bonus', range: 'Self (30 ft)', conc: false, kind: 'utility', summary: 'Bonus Action: Teleport up to 30 ft to an unoccupied space you can see.' },
+        lesser_restoration:     { name: 'Lesser Restoration', level: 2, actionCost: 'action', range: 'Touch', conc: false, kind: 'utility', summary: 'Touch: Immediately end Blinded, Deafened, Paralyzed, Poisoned, or 1 Disease!' },
+        hold_person:            { name: 'Hold Person', level: 2, actionCost: 'action', range: '60 ft', conc: true, kind: 'buff', save: 'WIS Save', summary: 'Humanoid makes WIS Save or is Paralyzed (1 min, Conc; auto-crits within 5 ft!).' },
+        invisibility:           { name: 'Invisibility', level: 2, actionCost: 'action', range: 'Touch', conc: true, kind: 'buff', summary: '1 creature turns Invisible for 1 hour (Conc; ends on attack or cast).' },
+        mirror_image:           { name: 'Mirror Image', level: 2, actionCost: 'action', range: 'Self', conc: false, kind: 'buff', summary: '3 illusory duplicates (1 min, no Conc): redirect attacks on 6+/8+/11+ d20!' },
+        web:                    { name: 'Web', level: 2, actionCost: 'action', range: '60 ft (20-ft cube)', conc: true, kind: 'utility', save: 'DEX Save', summary: 'Difficult terrain; DEX Save or Restrained in sticky flammable webs (1 hr, Conc).' },
+        pass_without_trace:     { name: 'Pass without Trace', level: 2, actionCost: 'action', range: 'Self (30-ft aura)', conc: true, kind: 'buff', summary: 'All allies within 30 ft gain +10 Stealth & leave no tracks (1 hr, Conc)!' },
+        scorching_ray:          { name: 'Scorching Ray', level: 2, actionCost: 'action', range: '120 ft', conc: false, kind: 'dmg', atkRoll: true, dice: '6d6', dmgType: 'Fire', summary: '3 rays (2d6 Fire each, total 6d6 Fire) — make separate Spell Attack rolls!' },
+        shatter:                { name: 'Shatter', level: 2, actionCost: 'action', range: '60 ft (10-ft rad)', conc: false, kind: 'dmg', dice: '3d8', dmgType: 'Thunder', save: 'CON Save (half)', summary: '10-ft sphere: 3d8 Thunder damage (CON Save half; Disadv for stone/metal constructs).' },
+        moonbeam:               { name: 'Moonbeam', level: 2, actionCost: 'action', range: '120 ft (5-ft cyl)', conc: true, kind: 'dmg', dice: '2d10', dmgType: 'Radiant', save: 'CON Save (half)', summary: '5-ft beam (1 min, Conc): 2d10 Radiant; Shapechangers/Werewolves save at Disadv & revert form!' },
+        darkness:               { name: 'Darkness', level: 2, actionCost: 'action', range: '60 ft (15-ft rad)', conc: true, kind: 'utility', summary: '15-ft sphere of magical darkness blocking Darkvision (10 min, Conc).' },
+        aid:                    { name: 'Aid', level: 2, actionCost: 'action', range: '30 ft', conc: false, kind: 'buff', summary: 'Up to 3 allies gain +5 Current & Maximum HP for 8 hours!' },
+        see_invisibility:       { name: 'See Invisibility', level: 2, actionCost: 'action', range: 'Self', conc: false, kind: 'utility', summary: '1 hour: See invisible creatures/objects AND into the Ethereal Plane (spots Night Hags!).' },
+        // Level 3 (11)
+        fireball:               { name: 'Fireball', level: 3, actionCost: 'action', range: '150 ft (20-ft rad)', conc: false, kind: 'dmg', dice: '8d6', dmgType: 'Fire', save: 'DEX Save (half)', summary: '20-ft explosion: 8d6 Fire damage (DEX Save for half)!' },
+        revivify:               { name: 'Revivify', level: 3, actionCost: 'action', range: 'Touch', conc: false, kind: 'utility', summary: 'Touch a creature dead <= 1 minute: returns to life with 1 HP (no diamond needed on scroll)!' },
+        counterspell:           { name: 'Counterspell', level: 3, actionCost: 'reaction', range: '60 ft', conc: false, kind: 'utility', summary: 'Reaction: Automatically interrupts a <= 3rd-level spell (or DC 10+Lvl ability check)!' },
+        dispel_magic:           { name: 'Dispel Magic', level: 3, actionCost: 'action', range: '120 ft', conc: false, kind: 'utility', summary: 'Automatically ends <= 3rd-level magical effects on target (or DC 10+Lvl check).' },
+        remove_curse:           { name: 'Remove Curse', level: 3, actionCost: 'action', range: 'Touch', conc: false, kind: 'utility', summary: 'Touch: Ends all curses, lycanthropy infection, or cursed attunement on 1 creature/object!' },
+        fly:                    { name: 'Fly', level: 3, actionCost: 'action', range: 'Touch', conc: true, kind: 'buff', summary: 'Target gains a 60-ft Flying Speed for 10 minutes (Conc).' },
+        haste:                  { name: 'Haste', level: 3, actionCost: 'action', range: '30 ft', conc: true, kind: 'buff', summary: '1 min (Conc): Double Speed, +2 AC, Adv DEX Saves & +1 Extra Action per turn!' },
+        spirit_guardians:       { name: 'Spirit Guardians', level: 3, actionCost: 'action', range: 'Self (15-ft rad)', conc: true, kind: 'dmg', dice: '3d8', dmgType: 'Radiant', save: 'WIS Save (half)', summary: '15-ft aura (10 min, Conc): Foes halved Speed & 3d8 Radiant on entry/turn start!' },
+        daylight:               { name: 'Daylight', level: 3, actionCost: 'action', range: '60 ft (60-ft rad)', conc: false, kind: 'utility', summary: '60-ft bright light + 60-ft dim light for 1 hour; dispels <= 3rd-lvl magical darkness.' },
+        lightning_bolt:         { name: 'Lightning Bolt', level: 3, actionCost: 'action', range: '100-ft line', conc: false, kind: 'dmg', dice: '8d6', dmgType: 'Lightning', save: 'DEX Save (half)', summary: '100-ft x 5-ft line: 8d6 Lightning damage (DEX Save for half)!' },
+        major_image:            { name: 'Major Image', level: 3, actionCost: 'action', range: '120 ft (20-ft cube)', conc: true, kind: 'utility', summary: 'Create a realistic visual/sound/smell illusion up to 20-ft cube (10 min, Conc).' },
+        // Level 4 (5)
+        dimension_door:         { name: 'Dimension Door', level: 4, actionCost: 'action', range: '500 ft', conc: false, kind: 'utility', summary: 'Teleport yourself + 1 willing ally up to 500 ft anywhere you can visualize!' },
+        death_ward:             { name: 'Death Ward', level: 4, actionCost: 'action', range: 'Touch', conc: false, kind: 'buff', summary: '8 hours (no Conc): First time target drops to 0 HP, drops to 1 HP instead (also blocks instant death)!' },
+        greater_invisibility:   { name: 'Greater Invisibility', level: 4, actionCost: 'action', range: 'Touch', conc: true, kind: 'buff', summary: '1 min (Conc): Target stays Invisible EVEN while attacking and casting spells!' },
+        polymorph:              { name: 'Polymorph', level: 4, actionCost: 'action', range: '60 ft', conc: true, kind: 'buff', save: 'WIS Save', summary: '1 hr (Conc): Transform ally (Giant Ape/T-Rex!) or foe (WIS Save) into a Beast!' },
+        banishment:             { name: 'Banishment', level: 4, actionCost: 'action', range: '60 ft', conc: true, kind: 'utility', save: 'CHA Save', summary: 'CHA Save or banished to harmless demiplane for 1 min (Conc; extraplanar foes stay gone)!' },
+        // Level 5 (4)
+        greater_restoration:    { name: 'Greater Restoration', level: 5, actionCost: 'action', range: 'Touch', conc: false, kind: 'utility', summary: 'Cure Charm, Petrification, Curse, Stat/Max-HP reduction, or 1 Exhaustion level!' },
+        mass_cure_wounds:       { name: 'Mass Cure Wounds', level: 5, actionCost: 'action', range: '60 ft (30-ft rad)', conc: false, kind: 'heal', dice: '3d8', bonus: 5, summary: 'Up to 6 creatures in 30-ft sphere regain 3d8+5 HP!' },
+        cone_of_cold:           { name: 'Cone of Cold', level: 5, actionCost: 'action', range: '60-ft cone', conc: false, kind: 'dmg', dice: '8d8', dmgType: 'Cold', save: 'CON Save (half)', summary: '60-ft blast: 8d8 Cold damage (CON Save for half)!' },
+        raise_dead:             { name: 'Raise Dead', level: 5, actionCost: 'action', range: 'Touch', conc: false, kind: 'utility', summary: 'Return a creature dead <= 10 days to life with 1 HP (cures poisons/diseases; -4 penalty fading 1/LR).' }
+    };
+
+    function getSpellScrollDef(spellIdOrName) {
+        if (!spellIdOrName) return null;
+        if (SPELL_SCROLL_LIBRARY[spellIdOrName]) return { id: spellIdOrName, ...SPELL_SCROLL_LIBRARY[spellIdOrName] };
+        const low = String(spellIdOrName).toLowerCase().trim();
+        for (const [id, def] of Object.entries(SPELL_SCROLL_LIBRARY)) {
+            if (def.name.toLowerCase() === low || low.includes(def.name.toLowerCase())) {
+                return { id, ...def };
+            }
+        }
+        return null;
+    }
+
+    function detectSpellScrollMeta(itemStr) {
+        const low = String(itemStr || '').toLowerCase();
+        if (!low.includes('scroll')) return null;
+        const m = low.match(/(?:spell\s+)?scroll(?:\s+of)?\s+([a-z0-9' -]+)/i);
+        const query = m ? m[1].replace(/\([^)]*\)/g, '').trim() : low;
+        const sp = getSpellScrollDef(query) || getSpellScrollDef(low);
+        if (!sp) return null;
+        const stats = SCROLL_STATS_BY_LEVEL[sp.level] || SCROLL_STATS_BY_LEVEL[1];
+        return {
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: {
+                type: 'spellScroll',
+                spellId: sp.id,
+                spellName: sp.name,
+                spellLevel: sp.level,
+                actionCost: sp.actionCost,
+                label: `📜 ${sp.name}`
+            },
+            summary: `Lvl ${sp.level} Scroll (DC ${stats.dc} / +${stats.atk}) • ${sp.summary}`
+        };
+    }
 
     // Unified Extensible Crafting Recipes (Vials, Potions, Gadgets — NEVER craft bullets directly!)
     const CRAFTING_RECIPES = [
@@ -2549,6 +2702,94 @@
             ],
             outputRaw: 'Elixir of Health',
             outputMatch: 'elixir of health'
+        },
+        {
+            id: 'craft_night_sight_brew',
+            unlocked: false,
+            unlockCode: 'NIGHT-SIGHT',
+            tierHint: 'Herbalist Concoction',
+            name: 'Ghost-Cap Night-Sight Brew',
+            badge: 'Darkvision 60 ft (2 hrs)',
+            desc: 'Steep luminescent Ghost-Cap Forest Mushrooms in Pure Mountain Spring Water to pierce Barovian darkness and fog for 2 hours.',
+            ingredients: [
+                { keyword: 'ghost-cap', label: 'Ghost-Cap Forest Mushrooms', qty: 2 },
+                { keyword: 'spring water', label: 'Pure Mountain Spring Water', qty: 1 }
+            ],
+            outputRaw: 'Ghost-Cap Night-Sight Brew',
+            outputMatch: 'night-sight'
+        },
+        {
+            id: 'craft_grave_salt_coating',
+            unlocked: false,
+            unlockCode: 'GRAVE-SALT',
+            tierHint: 'Sanctified Hunter Vial',
+            name: 'Consecrated Grave-Salt Coating',
+            badge: '+1d6 Necrotic • Blocks Regen',
+            desc: 'Suspend consecrated Grave-Salt in Pine Pitch Oil. Press Coat to apply +1d6 Necrotic & block target healing/regeneration on a blade or full mag.',
+            ingredients: [
+                { keyword: 'grave-salt', label: 'Grave-Salt Ward Pouch', qty: 1 },
+                { keyword: ['pine pitch', 'pitch oil', 'lamp oil'], label: 'Pine Pitch & Lamp Oil', qty: 1 }
+            ],
+            outputRaw: 'Consecrated Grave-Salt Coating',
+            outputMatch: 'grave-salt'
+        },
+        {
+            id: 'craft_whisper_silk_snare',
+            unlocked: false,
+            unlockCode: 'SILK-SNARE',
+            tierHint: 'Trapper Gadget',
+            name: 'Whisper-Silk Snare & Grapple Kit',
+            badge: '30-ft Grapple / DC 13 Snare',
+            desc: 'Weave a Thick Spider Silk Gland around Cold-Iron barbs into a whisper-quiet 30-ft grapple cord or throwable snare (DC 13 DEX or Restrained).',
+            ingredients: [
+                { keyword: 'spider silk', label: 'Thick Spider Silk Gland', qty: 1 },
+                { keyword: 'cold-iron', label: 'Cold-Iron Scrap Shards', qty: 1 }
+            ],
+            outputRaw: 'Whisper-Silk Snare & Grapple Kit',
+            outputMatch: 'whisper-silk'
+        },
+        {
+            id: 'craft_cold_iron_caltrops',
+            unlocked: false,
+            unlockCode: 'COLD-IRON',
+            tierHint: 'Anti-Hag Smithing',
+            name: 'Cold-Iron Caltrops',
+            badge: '1d4 (+1d4 vs Fey/Hags)',
+            desc: 'Hammer raw Cold-Iron Scrap Shards into jagged four-pronged caltrops covering a 10-ft square (DC 15 DEX Save or Speed 0 + bonus damage vs Fey & Hags!).',
+            ingredients: [
+                { keyword: 'cold-iron', label: 'Cold-Iron Scrap Shards', qty: 2 }
+            ],
+            outputRaw: 'Cold-Iron Caltrops',
+            outputMatch: 'cold-iron caltrops'
+        },
+        {
+            id: 'craft_predator_fang_talisman',
+            unlocked: false,
+            unlockCode: 'FANG-CHARM',
+            tierHint: 'Vistani Hunter Charm',
+            name: 'Predator\'s Fang Talisman',
+            badge: 'Adv Intimidation • 1/LR vs Fear',
+            desc: 'Bind two Dire Wolf Fangs with braided Svalich Wolfbane Root into an amulet granting Advantage on Intimidation and 1/Long Rest Advantage vs Frightened.',
+            ingredients: [
+                { keyword: 'wolf fang', label: 'Dire Wolf Fangs', qty: 2 },
+                { keyword: 'wolfbane', label: 'Svalich Wolfbane Root', qty: 1 }
+            ],
+            outputRaw: 'Predator\'s Fang Talisman',
+            outputMatch: 'fang talisman'
+        },
+        {
+            id: 'craft_silver_smelt',
+            unlocked: false,
+            unlockCode: 'SILVER-SMELT',
+            tierHint: 'Camp Crucible Refining',
+            name: 'Powdered Silver Dust',
+            badge: 'Refine Silverware / Quartz',
+            desc: 'File down Tarnished Silver Cutlery or crush Ancient Silver-Veined Quartz into 1 pure pouch of Powdered Silver Dust for Holy Water or Silver Coatings.',
+            ingredients: [
+                { keyword: ['silver cutlery', 'silverware', 'silver-veined quartz', 'silver scrap'], label: 'Silver Cutlery or Silver-Veined Quartz', qty: 1 }
+            ],
+            outputRaw: 'Powdered Silver Dust',
+            outputMatch: 'powdered silver dust'
         }
     ];
 
@@ -3628,6 +3869,53 @@
             useViaRpg: true,
             useBtnLabel: "🍯 Drink 1 (1d6+2 HP + Exhaustion)",
             useBtnClass: "btn-act-heal"
+        },
+        {
+            match: ['ghost-cap night-sight', 'night-sight brew', 'night-sight elixir'],
+            name: "Ghost-Cap Night-Sight Brew",
+            category: "CRAFTED ALCHEMY • Herbalist Tonic (18 GP)",
+            desc: "A pale blue-glowing tincture steeped from bioluminescent Ghost-Cap mushrooms and mountain spring water.",
+            effect: "• <strong>Drink (Bonus Action):</strong> Grants <strong>60-ft Darkvision</strong> (or <strong>+30 ft</strong> if you already have Darkvision) and <strong>Advantage on Perception checks in dim light</strong> for 2 hours!",
+            useViaRpg: true,
+            useBtnLabel: "🍄 Drink 1 (Darkvision 2 hrs)",
+            useBtnClass: "btn-act-temp"
+        },
+        {
+            match: ['grave-salt necrotic coating', 'grave-salt coating', 'consecrated grave-salt'],
+            name: "Consecrated Grave-Salt Coating",
+            category: "CRAFTED WEAPON COATING • Hunter Vial (25 GP)",
+            desc: "Pitch-black suspension of chapel grave-salt and pine resin that sizzles against unnatural regeneration.",
+            effect: "• <strong>Coat Weapon or Full Mag:</strong> Click <strong>[Coat]</strong> in Backpack to add <strong>+1d6 Necrotic damage</strong> and <strong>prevent the target from regaining HP until the start of your next turn</strong>!"
+        },
+        {
+            match: ['whisper-silk snare', 'whisper-silk grapple', 'silk snare'],
+            name: "Whisper-Silk Snare & Grapple Kit",
+            category: "CRAFTED GADGET • Tactical Trap (20 GP)",
+            desc: "Thirty feet of feather-light spider-silk line weighted with cold-iron hooks—silent as mist when thrown.",
+            effect: "• <strong>1 Action:</strong> Use as a silent 30-ft climbing/grapple cord OR hurl as a snare (<code>DC 13 DEX Save</code> or target is <strong>Restrained &amp; knocked Prone</strong>; <code>DC 13 STR/DEX</code> Action to escape).",
+            useViaRpg: true,
+            useBtnLabel: "🕸️ Deploy Snare (DC 13 DEX)",
+            useBtnClass: "btn-act-temp"
+        },
+        {
+            match: ['cold-iron caltrops', 'hag-bane caltrops'],
+            name: "Cold-Iron Caltrops",
+            category: "CRAFTED ANTI-FEY HAZARD • Tactical Trap (15 GP)",
+            desc: "A leather pouch of twenty jagged cold-iron spikes hammered specifically to punish Barovian hags and prowling fey.",
+            effect: "• <strong>1 Action (10-ft square):</strong> Creatures entering must pass a <code>DC 15 DEX Save</code> or stop moving and take <strong>1d4 Cold-Iron Piercing</strong> damage (<strong>+1d4 bonus damage vs Fey &amp; Night Hags!</strong>) with Speed -10 ft until healed.",
+            useViaRpg: true,
+            useBtnLabel: "⛓️ Scatter Caltrops (10-ft sq)",
+            useBtnClass: "btn-act-dmg"
+        },
+        {
+            match: ['predator\'s fang talisman', 'fang talisman'],
+            name: "Predator's Fang Talisman",
+            category: "CRAFTED AMULET • Vistani Hunter Charm (35 GP)",
+            desc: "Twin curved dire-wolf fangs bound in dried wolfbane twine—worn openly to stare down Barovian nightmares.",
+            effect: "• <strong>Worn Amulet (No Attunement):</strong> Grants <strong>Advantage on Intimidation checks</strong>.<br>• <strong>Predator's Courage (1/Long Rest):</strong> Click <strong>[Activate]</strong> to gain <strong>Advantage on one Saving Throw vs Frightened</strong>!",
+            useViaRpg: true,
+            useBtnLabel: "🐺 Activate Courage (Adv vs Fear)",
+            useBtnClass: "btn-act-temp"
         }
     ];
 
@@ -3658,6 +3946,8 @@
     function buildUseBtnDescriptor(useAction) {
         if (!useAction || !useAction.type) return null;
         if (useAction.type === 'learnRecipe') return { label: `📜 ${useAction.label || 'Study Recipe'}`, cls: 'btn-act-temp' };
+        if (useAction.type === 'spellScroll') return { label: `📜 Cast ${useAction.spellName || useAction.label || 'Spell Scroll'}`, cls: 'btn-act-temp' };
+        if (useAction.type === 'itemSpell') return { label: `✨ Cast ${useAction.spellName || useAction.label || 'Item Spell'}`, cls: 'btn-act-temp' };
         if (useAction.type === 'magicPower') return { label: `✨ Activate: ${useAction.label || 'Magic Power'}`, cls: 'btn-act-temp' };
         if (useAction.type === 'customBomb' || useAction.type === 'holyWater' || useAction.type === 'alchemistsFire' || useAction.type === 'phosphorBomb') {
             return { label: `💣 Throw / Splash (${useAction.label || '1 Action'})`, cls: 'btn-act-dmg' };
@@ -3717,6 +4007,24 @@
         for (const entry of SHARED_ITEM_LORE) {
             if (entry.match.some(m => (m instanceof RegExp ? m.test(low) : low.includes(m)))) {
                 return { ...entry, origin: entry.origin || '' };
+            }
+        }
+        const scrollMeta = detectSpellScrollMeta(rawName);
+        if (scrollMeta && scrollMeta.useAction && scrollMeta.useAction.spellId) {
+            const sp = getSpellScrollDef(scrollMeta.useAction.spellId);
+            if (sp) {
+                const st = SCROLL_STATS_BY_LEVEL[sp.level] || SCROLL_STATS_BY_LEVEL[1];
+                const actLbl = sp.actionCost === 'bonus' ? 'Bonus Action' : (sp.actionCost === 'reaction' ? 'Reaction' : '1 Action');
+                return {
+                    name: `Scroll of ${sp.name}`,
+                    category: `LEVEL ${sp.level} SPELL SCROLL • ${st.cost}`,
+                    origin: 'Barovian Apothecary, Relic Vault or Treasure Cache',
+                    desc: `A tightly rolled parchment inscribed with glowing arcane/divine runes for the Level ${sp.level} spell <strong>${esc(sp.name)}</strong>.`,
+                    effect: `• <strong>Cast (${actLbl} • Range: ${esc(sp.range)}${sp.conc ? ' • Concentration' : ''}):</strong> ${esc(sp.summary)}<br>• <strong>Scroll Stats:</strong> Save DC <code>${st.dc}</code> • Spell Attack <code>+${st.atk}</code>. Consumes 1 scroll upon casting.`,
+                    useViaRpg: true,
+                    useBtnLabel: `📜 Cast ${sp.name} (Lvl ${sp.level})`,
+                    useBtnClass: 'btn-act-temp'
+                };
             }
         }
         return null;
@@ -3805,13 +4113,64 @@
     function getFbUnlockedRecipesKey() { return `cos_fb_unlocked_recipes_v1`; }
     function getCheckpointBackupKey() { return `cos_synced_checkpoint_${adapter ? adapter.heroId : 'hero'}_v1`; }
 
+    function getItemChargesKey() { return `cos_item_charges_${adapter ? adapter.heroId : 'hero'}_v1`; }
+    function getItemChargesMap() {
+        try {
+            const raw = localStorage.getItem(getItemChargesKey());
+            return raw ? (JSON.parse(raw) || {}) : {};
+        } catch (e) { return {}; }
+    }
+    function saveItemChargesMap(map) {
+        try { localStorage.setItem(getItemChargesKey(), JSON.stringify(map || {})); } catch (e) {}
+    }
+    function getItemRemainingCharges(itemKey, act) {
+        if (!act || !act.maxCharges || act.maxCharges <= 0) return null;
+        const map = getItemChargesMap();
+        if (typeof map[itemKey] === 'number') return Math.max(0, Math.min(act.maxCharges, map[itemKey]));
+        return act.maxCharges;
+    }
+    function setItemRemainingCharges(itemKey, val) {
+        const map = getItemChargesMap();
+        map[itemKey] = Math.max(0, parseInt(val, 10) || 0);
+        saveItemChargesMap(map);
+    }
+    function rechargeItemCharges(restType = 'long') {
+        if (!adapter) return 0;
+        const items = adapter.getItems();
+        const map = getItemChargesMap();
+        let restoredCount = 0;
+        items.forEach(raw => {
+            const meta = getItemMeta(raw);
+            const act = meta && meta.useAction;
+            if (!act || !act.maxCharges || act.maxCharges <= 0) return;
+            const rec = act.recharge || 'long';
+            if (restType === 'long' || rec === 'short') {
+                const k = normKey(raw);
+                if (typeof map[k] === 'number' && map[k] < act.maxCharges) {
+                    map[k] = act.maxCharges;
+                    restoredCount++;
+                }
+            }
+        });
+        saveItemChargesMap(map);
+        if (restoredCount > 0) {
+            adapter.log(`✨ <strong>Recharged ${restoredCount} Magic Item Power(s)</strong> on ${restType === 'short' ? 'Short' : 'Long'} Rest!`);
+        }
+        applyEquipmentToSheet(true);
+        return restoredCount;
+    }
+
     function getConsumableTurnSlot(useAction) {
         if (!useAction || !useAction.type || useAction.type === 'learnRecipe' || useAction.type === 'flavor') return 'none';
         if (useAction.actionCost === 'none') return 'none';
         if (useAction.actionCost === 'action' || useAction.actionCost === 'bonus' || useAction.actionCost === 'reaction') {
             return useAction.actionCost;
         }
-        if (['holyWater', 'alchemistsFire', 'phosphorBomb', 'customBomb', 'utilityLog', 'magicPower'].includes(useAction.type)) return 'action';
+        if ((useAction.type === 'spellScroll' || useAction.type === 'itemSpell') && useAction.spellId) {
+            const sp = getSpellScrollDef(useAction.spellId);
+            if (sp && sp.actionCost) return sp.actionCost;
+        }
+        if (['holyWater', 'alchemistsFire', 'phosphorBomb', 'customBomb', 'utilityLog', 'magicPower', 'spellScroll', 'itemSpell'].includes(useAction.type)) return 'action';
         return 'bonus';
     }
 
@@ -5832,6 +6191,8 @@
                 return { ...rule };
             }
         }
+        const autoScroll = detectSpellScrollMeta(itemStr);
+        if (autoScroll) return autoScroll;
         return { category: 'gear', slots: [], summary: 'Carried Item' };
     }
 
@@ -6050,14 +6411,46 @@
         return map[String(baseDice || '').toLowerCase()] || baseDice;
     }
 
+    const WEAPON_MASTERY_INFO = {
+        Sap:    { badge: 'Sap',    rider: 'Sap Mastery: Target has Disadvantage on its next attack roll before your next turn!' },
+        Slow:   { badge: 'Slow',   rider: 'Slow Mastery: Target Speed reduced by -10 ft until the start of your next turn!' },
+        Vex:    { badge: 'Vex',    rider: 'Vex Mastery: You have Advantage on your next attack roll against this target!' },
+        Push:   { badge: 'Push',   rider: 'Push Mastery: Push Large or smaller target up to 10 ft straight away from you!' },
+        Graze:  { badge: 'Graze',  rider: 'Graze Mastery: Even on a miss, click [⚡ Graze] to deal Ability Mod damage!' },
+        Nick:   { badge: 'Nick',   rider: 'Nick Mastery: Make your Light extra attack as part of the Attack action (free Bonus Action)!' },
+        Topple: { badge: 'Topple', rider: 'Topple Mastery: Target makes a CON Save or is knocked Prone!' },
+        Cleave: { badge: 'Cleave', rider: 'Cleave Mastery: On hit, click [🪓 Cleave] to strike a 2nd creature within 5 ft!' }
+    };
+
+    function resolveWeaponMastery(raw, meta) {
+        if (meta && meta.mastery && WEAPON_MASTERY_INFO[meta.mastery]) return meta.mastery;
+        if (meta && meta.weaponStats && meta.weaponStats.mastery && WEAPON_MASTERY_INFO[meta.weaponStats.mastery]) return meta.weaponStats.mastery;
+        const sum = String((meta && meta.summary) || '');
+        for (const mName of Object.keys(WEAPON_MASTERY_INFO)) {
+            if (new RegExp(`\\b${mName}\\s+Mastery\\b`, 'i').test(sum)) return mName;
+        }
+        const low = String(raw || '').toLowerCase();
+        if (low.includes('greatsword') || low.includes('glaive') || low.includes('vladimir')) return 'Graze';
+        if (low.includes('greataxe') || low.includes('halberd')) return 'Cleave';
+        if (low.includes('battleaxe') || low.includes('maul') || low.includes('quarterstaff') || low.includes('staff')) return 'Topple';
+        if (low.includes('dagger') || low.includes('scimitar') || low.includes('stiletto') || low.includes('knife')) return 'Nick';
+        if (low.includes('rapier') || low.includes('shortsword') || low.includes('shortbow') || low.includes('hand crossbow') || low.includes('handaxe') || low.includes('revolver') || low.includes('pistol')) return 'Vex';
+        if (low.includes('heavy crossbow') || low.includes('warhammer') || low.includes('pike') || low.includes('blunderbuss') || low.includes('shotgun')) return 'Push';
+        if (low.includes('longbow') || low.includes('light crossbow') || low.includes('crossbow') || low.includes('whip') || low.includes('sling') || low.includes('rifle') || low.includes('musket')) return 'Slow';
+        if (low.includes('longsword') || low.includes('mace') || low.includes('spear') || low.includes('flail') || low.includes('sunsword') || low.includes('morningstar')) return 'Sap';
+        return '';
+    }
+
     function resolveWeaponCombatStats(raw, meta, isTwoHanded = false) {
+        const mastery = resolveWeaponMastery(raw, meta);
+        const heroMods = getHeroAbilityMods();
         if (meta && meta.weaponStats) {
             const ws = meta.weaponStats;
             const effDice = (meta.versatile && isTwoHanded)
                 ? (ws.versatileDice || stepVersatileDice(ws.dmgDice))
                 : (ws.dmgDice || '1d8');
             if (ws.autoScale || ws.abilityMode) {
-                const m = getHeroAbilityMods();
+                const m = heroMods;
                 const mode = ws.abilityMode || (meta.ammoKind ? 'dex' : 'auto');
                 let abil = m.str;
                 if (mode === 'dex') abil = m.dex;
@@ -6073,10 +6466,14 @@
                     atkBonus: abil + profAdd + magic,
                     dmgDice: effDice,
                     dmgBonus: abil + magic,
+                    abilityMod: abil,
+                    mastery,
+                    toppleDc: 8 + m.pb + abil,
                     isTwoHanded: Boolean(isTwoHanded)
                 };
             }
-            return { ...ws, dmgDice: effDice, isTwoHanded: Boolean(isTwoHanded) };
+            const estAbil = Math.max(0, (parseInt(ws.dmgBonus) || 0) - (parseInt(ws.magicBonus) || 0));
+            return { ...ws, dmgDice: effDice, abilityMod: estAbil, mastery, toppleDc: 8 + heroMods.pb + estAbil, isTwoHanded: Boolean(isTwoHanded) };
         }
         const low = String(raw || '').toLowerCase();
         // Auto-detect magic bonus (+1/+2/+3)
@@ -6085,7 +6482,7 @@
         if (mMatch) magic = parseInt(mMatch[1]) || 0;
         // Default ability mod by hero (Piper DEX +2, Jacomir STR +3, Yvaine DEX +4)
         const heroAbil = adapter.heroId === 'yvaine' ? 4 : (adapter.heroId === 'jacomir' ? 3 : 2);
-        const pb = 2;
+        const pb = heroMods.pb || 2;
         let dice = '1d6', dmgType = low.includes('silver') ? 'Silvered Slashing' : 'Slashing';
         let extraDice = '', extraType = '';
         if (low.includes('sunsword')) {
@@ -6116,6 +6513,9 @@
             atkBonus: heroAbil + pb + magic,
             dmgDice: dice,
             dmgBonus: heroAbil + magic,
+            abilityMod: heroAbil,
+            mastery,
+            toppleDc: 8 + pb + heroAbil,
             dmgType,
             extraDice,
             extraType,
@@ -6177,6 +6577,10 @@
 
         spendTurnAction('action');
 
+        const masteryRiderHtml = st.mastery && WEAPON_MASTERY_INFO[st.mastery]
+            ? `<br><small style="color:#93c5fd;">⚔️ <strong>${st.mastery === 'Topple' ? `Topple Mastery (DC ${st.toppleDc} CON Save or Prone!)` : esc(WEAPON_MASTERY_INFO[st.mastery].rider)}</strong></small>`
+            : '';
+
         if (d20 === 20) {
             const base = rollDiceExpr(st.dmgDice);
             let critTotal = base.max + base.sum + effDmgBonus;
@@ -6196,7 +6600,7 @@
                 critTotal += exR.max + exR.sum;
                 extraHtml += ` + ${exR.max}+[${exR.rolls.join('+')}](${esc(exM.type)})`;
             });
-            adapter.log(`<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>]${modeNote} + ${effAtkBonus} = <strong>${total} to Hit</strong>!${ammoTag}${modBadgeTag}${coatBadgeTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${effDmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!`);
+            adapter.log(`<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>]${modeNote} + ${effAtkBonus} = <strong>${total} to Hit</strong>!${ammoTag}${modBadgeTag}${coatBadgeTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${effDmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!${masteryRiderHtml}`);
             return;
         }
         setRollFollowup({
@@ -6205,7 +6609,39 @@
             onDamage: () => rollDynamicWeaponDamage(invIdx)
         });
         const tag = d20 === 1 ? ' <strong style="color:#f87171;">(NAT 1 MISS!)</strong>' : '';
-        adapter.log(`<strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>]${modeNote} + ${effAtkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}${ammoTag}${modBadgeTag}${coatBadgeTag}`);
+        adapter.log(`<strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>]${modeNote} + ${effAtkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}${ammoTag}${modBadgeTag}${coatBadgeTag}${masteryRiderHtml}`);
+    }
+
+    function rollDynamicWeaponMastery(invIdx, masteryKind) {
+        const raw = adapter.getItems()[invIdx];
+        if (!raw) return;
+        const meta = getItemMeta(raw);
+        const is2H = isDynamicWeaponTwoHanded(raw, meta);
+        const st = resolveWeaponCombatStats(raw, meta, is2H);
+        const weaponId = normKey(raw);
+        const wCombat = getWeaponCombatMods(weaponId);
+        const effAtkBonus = st.atkBonus + wCombat.atkBonus;
+        const magicOnly = (st.magicBonus || 0) + (wCombat.dmgBonus || 0);
+        const name = shortLabel(raw);
+
+        if (masteryKind === 'Graze') {
+            const grazeDmg = Math.max(0, st.abilityMod || 0);
+            adapter.log(`⚡ <strong>${esc(name)} — Graze Mastery (Miss!):</strong> Even on a missed attack, deal <span style="color:#fb923c; font-size:1.08rem; font-weight:800;">${grazeDmg} ${esc(st.dmgType)} Damage</span> (Ability Modifier)!`);
+            return;
+        }
+        if (masteryKind === 'Cleave' || masteryKind === 'Nick') {
+            const d20 = Math.floor(Math.random() * 20) + 1;
+            const totalHit = d20 + effAtkBonus;
+            const base = rollDiceExpr(st.dmgDice);
+            const modAdd = (st.abilityMod < 0 ? st.abilityMod : 0) + magicOnly;
+            const dmgTotal = (d20 === 20 ? base.max + base.sum : base.sum) + modAdd;
+            const extraTitle = masteryKind === 'Cleave' ? '🪓 Cleave Bonus Strike (2nd Adjacent Foe)' : '🗡️ Nick Extra Light Attack (Free Bonus Action)';
+            adapter.log(`<strong>${extraTitle} — ${esc(name)}:</strong> d20[<strong>${d20}</strong>] + ${effAtkBonus} = <strong style="color:#fde68a;">${totalHit} to Hit</strong>${d20 === 20 ? ' (NAT 20 CRIT!)' : ''} • Damage (no positive Ability Mod): ${st.dmgDice}[${base.rolls.join('+')}]${modAdd ? (modAdd > 0 ? ' + ' + modAdd : ' - ' + Math.abs(modAdd)) : ''} = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">${dmgTotal} ${esc(st.dmgType)} Damage</span>!`);
+            return;
+        }
+        if (masteryKind === 'Topple') {
+            adapter.log(`🦶 <strong>${esc(name)} — Topple Mastery:</strong> Target must succeed on a <strong style="color:#fde68a;">DC ${st.toppleDc} CON Save</strong> or be knocked <strong>Prone</strong>!`);
+        }
     }
 
     function rollDynamicWeaponDamage(invIdx) {
@@ -6304,6 +6740,16 @@
                 : st.dmgType;
             const ammoStripHtml = meta.ammoKind ? buildWeaponAmmoBarHtml(weaponId, { id: weaponId, kind: meta.ammoKind, maxCap: detectWeaponMaxCap(raw, meta) }) : '';
             const modCoatHtml = buildWeaponModAndCoatingBadgesHtml(weaponId);
+            const masteryPillHtml = st.mastery
+                ? `<span class="rpg-card-equipped-pill" style="background:rgba(59,130,246,0.16); color:#93c5fd; border-color:rgba(96,165,250,0.45);" title="${esc((WEAPON_MASTERY_INFO[st.mastery] && WEAPON_MASTERY_INFO[st.mastery].rider) || '')}">⚔️ ${esc(st.mastery)}${st.mastery === 'Topple' ? ` DC ${st.toppleDc}` : (st.mastery === 'Graze' ? ` +${Math.max(0, st.abilityMod || 0)}` : '')}</span>`
+                : '';
+            const masteryBtnHtml = st.mastery === 'Graze'
+                ? `<button type="button" class="btn-act btn-act-temp" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Graze')" title="Deal Graze Mastery damage on a missed attack">⚡ Graze (+${Math.max(0, st.abilityMod || 0)})</button>`
+                : (st.mastery === 'Cleave'
+                    ? `<button type="button" class="btn-act btn-act-temp" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Cleave')" title="Roll Cleave Mastery strike against a 2nd creature within 5 ft">🪓 Cleave</button>`
+                    : (st.mastery === 'Nick'
+                        ? `<button type="button" class="btn-act btn-act-temp" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Nick')" title="Roll Nick Mastery extra Light attack as part of Attack action">🗡️ Nick</button>`
+                        : ''));
             const card = document.createElement('div');
             card.className = 'action-card rpg-dyn-weapon-card';
             card.style.borderLeft = '3px solid #f59e0b';
@@ -6315,7 +6761,7 @@
                         </div>
                         <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Equipped in ${slotObj.label}${meta.versatile ? (is2H ? ' (2H)' : ' (1H)') : (slotId === 'mainHand' && bonuses.mainHand2H ? ' (2-Handed)' : '')} • +${effAtk} Hit • ${esc(dmgLabel)} ${esc(effDmgType)}</div>
                     </div>
-                    <span class="rpg-card-equipped-pill">${meta.versatile ? (is2H ? '2H' : '1H') : 'WORN'}</span>
+                    <div style="display:flex; gap:4px; align-items:center;">${masteryPillHtml}<span class="rpg-card-equipped-pill">${meta.versatile ? (is2H ? '2H' : '1H') : 'WORN'}</span></div>
                 </div>
                 <div class="action-desc">${esc(meta.summary || 'Equipped weapon from Backpack.')}</div>
                 ${modCoatHtml}
@@ -6323,6 +6769,7 @@
                 <div class="action-btn-row" style="flex-wrap:wrap;">
                     <button type="button" class="btn-roll-action" data-rpg-turn-slot="${slotId === 'offHand' ? 'bonus' : 'action'}" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${effAtk})</button>
                     <button type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${gripLabel}${esc(dmgLabel)})</button>
+                    ${masteryBtnHtml}
                     ${buildWeaponModalActionButtonsHtml(weaponId)}
                     <button type="button" class="btn-act btn-act-pre" onclick="COS_RPG.unequipSlot('${slotId}')">Unequip</button>
                 </div>
@@ -6911,8 +7358,70 @@
         applyEquipmentToSheet(true);
     }
 
+    function executeSpellEffectLog(sourceLabel, act, isScroll, remAfter, maxCharges) {
+        const sp = act.spellId ? getSpellScrollDef(act.spellId) : null;
+        const spellName = (sp && sp.name) || act.spellName || act.label || 'Arcane Spell';
+        const spellLevel = (sp && sp.level) || parseInt(act.spellLevel, 10) || 1;
+        const actionSlot = act.actionCost || (sp && sp.actionCost) || 'action';
+        if (actionSlot && actionSlot !== 'none') spendTurnAction(actionSlot);
+
+        const lvlStats = SCROLL_STATS_BY_LEVEL[spellLevel] || SCROLL_STATS_BY_LEVEL[1];
+        const m = getHeroAbilityMods();
+        const heroDc = 8 + m.pb + m.spell;
+        const heroAtk = m.pb + m.spell;
+        const effDc = act.customDc || (isScroll ? lvlStats.dc : Math.max(lvlStats.dc, heroDc));
+        const effAtk = act.customAtk || (isScroll ? lvlStats.atk : Math.max(lvlStats.atk, heroAtk));
+
+        const kind = act.spellKind || (sp && sp.kind) || 'utility';
+        const diceExpr = act.spellDice || (sp && sp.dice) || '';
+        const flatBonus = typeof act.spellBonus === 'number' ? act.spellBonus : ((sp && sp.bonus) || 0);
+        const dmgType = act.spellDmgType || (sp && sp.dmgType) || 'Force';
+        const saveLbl = act.spellSave || (sp && sp.save) || '';
+        const rangeTxt = act.spellRange || (sp && sp.range) || '';
+        const concFlag = typeof act.spellConc === 'boolean' ? act.spellConc : Boolean(sp && sp.conc);
+        const descTxt = act.effect || (sp && sp.summary) || 'Spell activated.';
+
+        const prefixIcon = isScroll ? '📜' : '✨';
+        const chgBadge = (!isScroll && maxCharges > 0)
+            ? ` <span style="color:#d8b4fe; font-size:0.75rem; font-weight:700;">(${remAfter}/${maxCharges} charges left)</span>`
+            : (isScroll ? ` <span style="color:#fde68a; font-size:0.74rem;">(Lvl ${spellLevel} Scroll consumed)</span>` : '');
+        const concBadge = concFlag ? ' <span style="color:#fbbf24; font-size:0.72rem; font-weight:700;">[Concentration]</span>' : '';
+        const nonCasterHint = (isScroll && adapter && adapter.heroId === 'jacomir')
+            ? `<br><small style="color:#94a3b8;">💡 Non-caster emergency scroll read: DM may ask for a DC ${10 + spellLevel} Arcana check if enforcing strict class scroll lists.</small>`
+            : '';
+
+        if (kind === 'heal' && diceExpr) {
+            const r = rollDiceExpr(diceExpr);
+            const total = r.sum + flatBonus;
+            adapter.healHP(total, false);
+            adapter.log(`${prefixIcon} <strong>Cast ${esc(spellName)}</strong> <em>(via ${esc(sourceLabel)})</em>${chgBadge}: ${diceExpr}[${r.rolls.join('+')}]${flatBonus ? ' + ' + flatBonus : ''} = <span style="color:#4ade80; font-size:1.1rem; font-weight:800;">+${total} HP Healed</span>! <small style="color:#cbd5e1;">(${esc(descTxt)})</small>${nonCasterHint}`);
+            return;
+        }
+        if (kind === 'tempHp' && diceExpr) {
+            const r = rollDiceExpr(diceExpr);
+            const total = r.sum + flatBonus;
+            adapter.healHP(total, 'temp');
+            adapter.log(`${prefixIcon} <strong>Cast ${esc(spellName)}</strong> <em>(via ${esc(sourceLabel)})</em>${chgBadge}: ${diceExpr}[${r.rolls.join('+')}]${flatBonus ? ' + ' + flatBonus : ''} = <span style="color:#38bdf8; font-size:1.1rem; font-weight:800;">+${total} Temp HP</span>! <small style="color:#cbd5e1;">(${esc(descTxt)})</small>${nonCasterHint}`);
+            return;
+        }
+        if (kind === 'dmg' && diceExpr) {
+            const r = rollDiceExpr(diceExpr);
+            const total = r.sum + flatBonus;
+            let atkHtml = '';
+            if (act.spellAtkRoll || (sp && sp.atkRoll)) {
+                const d20 = Math.floor(Math.random() * 20) + 1;
+                atkHtml = `Spell Attack: d20[<strong>${d20}</strong>] + ${effAtk} = <strong style="color:#fde68a;">${d20 + effAtk} to Hit</strong> • `;
+            }
+            const saveHtml = saveLbl ? ` <span style="color:#fde68a; font-weight:700;">(DC ${effDc} ${esc(saveLbl)})</span>` : '';
+            adapter.log(`${prefixIcon} <strong>Cast ${esc(spellName)}</strong> <em>(via ${esc(sourceLabel)})</em>${chgBadge}${concBadge}: ${atkHtml}${diceExpr}[${r.rolls.join('+')}]${flatBonus ? ' + ' + flatBonus : ''} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(dmgType)} Damage</span>!${saveHtml}<br><small style="color:#cbd5e1;">${rangeTxt ? esc(rangeTxt) + ' • ' : ''}${esc(descTxt)}</small>${nonCasterHint}`);
+            return;
+        }
+        const saveHtml = saveLbl ? ` <span style="color:#fde68a; font-weight:700;">(DC ${effDc} ${esc(saveLbl)})</span>` : '';
+        adapter.log(`${prefixIcon} <strong>Cast ${esc(spellName)}</strong> <em>(via ${esc(sourceLabel)})</em>${chgBadge}${concBadge}:${saveHtml} ${rangeTxt ? `<code>${esc(rangeTxt)}</code> — ` : ''}${esc(descTxt)}${nonCasterHint}`);
+    }
+
     // =========================================================================
-    // CONSUMABLE USE ENGINE (QUICK-BELT & BACKPACK)
+    // CONSUMABLE, SPELL SCROLL & MAGIC-ITEM POWER ENGINE (QUICK-BELT & BACKPACK)
     // =========================================================================
     function useConsumableByIndex(invIndex) {
         const items = adapter.getItems();
@@ -6923,6 +7432,7 @@
         if (!meta.useAction) return;
 
         const act = meta.useAction;
+        const itemKey = normKey(raw);
         if (act.type === 'learnRecipe' && act.recipeId) {
             const rec = CRAFTING_RECIPES.find(r => r.id === act.recipeId);
             if (rec && isRecipeUnlocked(rec)) {
@@ -6935,19 +7445,50 @@
             return;
         }
 
+        if (act.type === 'itemSpell') {
+            let remAfter = null;
+            if (act.maxCharges > 0) {
+                const rem = getItemRemainingCharges(itemKey, act);
+                if (rem <= 0) {
+                    adapter.log(`⚠️ <strong>${esc(shortLabel(raw))}</strong> has <strong>0/${act.maxCharges} charges</strong> left — take a ${act.recharge === 'short' ? 'Short or Long' : 'Long'} Rest to recharge!`);
+                    return;
+                }
+                remAfter = rem - 1;
+                setItemRemainingCharges(itemKey, remAfter);
+            }
+            executeSpellEffectLog(shortLabel(raw), act, false, remAfter, act.maxCharges || 0);
+            applyEquipmentToSheet(true);
+            return;
+        }
+
         if (act.type === 'magicPower' || act.keepItem) {
-            spendTurnAction(act.actionCost || 'action');
-            const chgTag = act.charges ? ` <span style="color:#d8b4fe; font-size:0.76rem;">(${esc(act.charges)})</span>` : '';
+            let chgTag = act.charges ? ` <span style="color:#d8b4fe; font-size:0.76rem;">(${esc(act.charges)})</span>` : '';
+            if (act.maxCharges > 0) {
+                const rem = getItemRemainingCharges(itemKey, act);
+                if (rem <= 0) {
+                    adapter.log(`⚠️ <strong>${esc(shortLabel(raw))}</strong> has <strong>0/${act.maxCharges} uses</strong> left — take a ${act.recharge === 'short' ? 'Short or Long' : 'Long'} Rest to recharge!`);
+                    return;
+                }
+                const remAfter = rem - 1;
+                setItemRemainingCharges(itemKey, remAfter);
+                chgTag = ` <span style="color:#d8b4fe; font-size:0.76rem; font-weight:700;">(${remAfter}/${act.maxCharges} left)</span>`;
+            }
+            if (act.actionCost && act.actionCost !== 'none') spendTurnAction(act.actionCost);
             adapter.log(`✨ <strong>Activated ${esc(shortLabel(raw))}:</strong>${chgTag} ${esc(act.effect || act.label || 'Magic ability triggered!')}`);
             applyEquipmentToSheet(true);
             return;
         }
 
-        // Deduct 1 from inventory
+        // Deduct 1 from inventory (Scrolls, Potions, Food, Bombs)
         const newQty = parsed.qty - 1;
         if (newQty <= 0) items.splice(invIndex, 1);
         else items[invIndex] = `${parsed.emoji}${newQty > 1 ? newQty + 'x ' : ''}${parsed.name}`.trim();
         adapter.saveItems(items);
+        if (act.type === 'spellScroll') {
+            executeSpellEffectLog(shortLabel(raw), act, true, 0, 0);
+            applyEquipmentToSheet(true);
+            return;
+        }
         if (act.type === 'heal') {
             spendTurnAction(act.actionCost || 'bonus');
             let rolls = [], sum = 0;
@@ -7059,7 +7600,13 @@
         pelt_canvas:    ['dire-pelt', 'treated pelt', 'waxed canvas', 'wolf pelt', 'bear pelt', 'beast pelt', 'thick hide', 'tent canvas', 'stagecoach tarp', 'heavy pelt'],
         catalyst:       ['alchemical catalyst', 'alembic salt'],
         moonpetal:      ['moonpetal'],
-        heart_core:     ['heart of sorrow', 'heartstone']
+        heart_core:     ['heart of sorrow', 'heartstone'],
+        ghost_cap:      ['ghost-cap', 'ghost cap', 'forest mushroom'],
+        grave_salt:     ['grave-salt', 'grave salt'],
+        spider_silk:    ['spider silk', 'silk gland'],
+        cold_iron:      ['cold-iron', 'cold iron'],
+        wolf_fang:      ['wolf fang', 'dire wolf fang', 'beast fang'],
+        silver_scrap:   ['silver cutlery', 'silverware', 'silver-veined quartz', 'silver scrap', 'silver censer']
     };
 
     function inferCraftTagsForKeyword(keyword) {
@@ -7538,6 +8085,8 @@
                         }
                     } else if (cmd.action === 'upgrade_item' && cmd.upgradedName) {
                         applyRemoteItemUpgrade(cmd);
+                    } else if (cmd.action === 'convert_item' && cmd.outName) {
+                        applyRemoteNpcConversion(cmd);
                     } else if (cmd.action === 'request_checkpoint') {
                         pushSyncedCheckpoint(true);
                     } else if (cmd.action === 'reset_sheet_baseline') {
@@ -7567,6 +8116,45 @@
             liveCombatState = (val && val.active && Array.isArray(val.combatants)) ? val : null;
             renderPublicCombatStrip();
         });
+    }
+
+    function applyRemoteNpcConversion(cmd) {
+        if (!adapter || !cmd || !cmd.outName) return false;
+        const items = adapter.getItems();
+        const kws = Array.isArray(cmd.reqMatchKeywords)
+            ? cmd.reqMatchKeywords.map(k => String(k || '').toLowerCase()).filter(Boolean)
+            : (cmd.reqName ? [String(cmd.reqName).toLowerCase()] : []);
+        let remainingToRemove = Math.max(1, parseInt(cmd.reqQty, 10) || 1);
+        for (let i = items.length - 1; i >= 0 && remainingToRemove > 0; i--) {
+            const p = parseItem(items[i]);
+            const low = p.name.toLowerCase();
+            if (kws.some(kw => low.includes(kw))) {
+                const take = Math.min(p.qty, remainingToRemove);
+                remainingToRemove -= take;
+                const left = p.qty - take;
+                if (left <= 0) items.splice(i, 1);
+                else items[i] = `${p.emoji}${left > 1 ? left + 'x ' : ''}${p.name}`.trim();
+            }
+        }
+        const outQty = Math.max(1, parseInt(cmd.outQty, 10) || 1);
+        addRawItemToList(items, cmd.outName, outQty);
+        adapter.saveItems(items);
+        if (cmd.outMeta) {
+            const map = getCustomGearMap();
+            map[normKey(cmd.outName)] = cmd.outMeta;
+            saveCustomGearMap(map);
+            registerCustomAmmoFromMeta(cmd.outMeta);
+            registerCustomLoreFromMeta(cmd.outName, cmd.outMeta);
+        }
+        const gpFee = Math.max(0, parseInt(cmd.gpFee, 10) || 0);
+        if (gpFee > 0 && typeof adapter.spendGold === 'function') {
+            adapter.spendGold(gpFee, 0, `${cmd.npcName || 'NPC'} Conversion`);
+        }
+        applyEquipmentToSheet(true);
+        const npcLbl = cmd.npcName || 'Barovian Specialist';
+        const feeNote = gpFee > 0 ? ` (-${gpFee} GP fee)` : '';
+        adapter.log(`🤝 <strong>${esc(npcLbl)} Converted Item:</strong> ${cmd.reqQty > 1 ? cmd.reqQty + 'x ' : ''}${esc(cmd.reqName || 'Material')} ➔ <strong style="color:#6ee7b7;">${outQty > 1 ? outQty + 'x ' : ''}${esc(shortLabel(cmd.outName))}</strong>${feeNote}!`);
+        return true;
     }
 
     function applyRemoteItemUpgrade(cmd) {
@@ -8972,13 +9560,22 @@
             `);
         }
 
-        // Build Quick-Belt combat consumables & coating vials
+        // Build Quick-Belt combat consumables, Spell Scrolls, Equipped Item Spells & coating vials
+        const equippedKeySet = new Set(Object.values(eq || {}).filter(Boolean));
         const quickBtns = [];
         items.forEach((raw, idx) => {
             const meta = getItemMeta(raw);
-            if (!meta.quickBelt) return;
+            const act = meta && meta.useAction;
+            const isScrollOrSpell = Boolean(act && (act.type === 'spellScroll' || act.type === 'itemSpell'));
+            if (!meta.quickBelt && !isScrollOrSpell) return;
+            // If an equippable item (slots.length > 0) has an itemSpell / magicPower, only surface its spell button on the Quick-Belt while equipped!
+            const itemKey = normKey(raw);
+            const hasEquipSlots = Array.isArray(meta.slots) && meta.slots.length > 0;
+            if (hasEquipSlots && act && (act.type === 'itemSpell' || act.type === 'magicPower' || act.keepItem) && !equippedKeySet.has(itemKey)) {
+                return;
+            }
             const p = parseItem(raw);
-            if (meta.coatMelee && !meta.useAction) {
+            if (meta.coatMelee && !act) {
                 quickBtns.push(`
                     <button type="button" class="rpg-qb-btn" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })" title="Coat Weapon or Magazine (${esc(p.name)})">
                         Coat: ${esc(meta.coatMelee.label)}${p.qty > 1 ? ` <span style="color:#6ee7b7; font-family:'JetBrains Mono',monospace;">(${p.qty}x)</span>` : ''}
@@ -8986,11 +9583,19 @@
                 `);
                 return;
             }
-            if (!meta.useAction) return;
-            const qbSlot = getConsumableTurnSlot(meta.useAction);
+            if (!act) return;
+            const qbSlot = getConsumableTurnSlot(act);
+            const remChg = act.maxCharges > 0 ? getItemRemainingCharges(itemKey, act) : null;
+            const chgPill = remChg !== null
+                ? ` <span style="color:${remChg > 0 ? '#d8b4fe' : '#f87171'}; font-family:'JetBrains Mono',monospace;">(${remChg}/${act.maxCharges})</span>`
+                : (p.qty > 1 ? ` <span style="color:#6ee7b7; font-family:'JetBrains Mono',monospace;">(${p.qty}x)</span>` : '');
+            const btnStyle = act.type === 'spellScroll'
+                ? 'border-color:rgba(250,204,21,0.55); color:#fef08a;'
+                : (act.type === 'itemSpell' ? 'border-color:rgba(192,132,252,0.6); color:#e9d5ff;' : '');
+            const lblPrefix = act.type === 'spellScroll' ? '' : (act.type === 'itemSpell' ? '✨ ' : p.emoji);
             quickBtns.push(`
-                <button type="button" class="rpg-qb-btn" data-rpg-turn-slot="${qbSlot}" onclick="COS_RPG.useConsumableByIndex(${idx})" title="1-Tap Combat Use (${esc(p.name)})">
-                    ${p.emoji}${esc(meta.useAction.label)}${p.qty > 1 ? ` <span style="color:#6ee7b7; font-family:'JetBrains Mono',monospace;">(${p.qty}x)</span>` : ''}
+                <button type="button" class="rpg-qb-btn" style="${btnStyle}" data-rpg-turn-slot="${qbSlot}" onclick="COS_RPG.useConsumableByIndex(${idx})" title="${act.type === 'spellScroll' ? 'Cast Single-Use Spell Scroll' : (act.type === 'itemSpell' ? 'Cast Item Spell (keeps item)' : '1-Tap Combat Use')} (${esc(p.name)})">
+                    ${lblPrefix}${esc(act.label || act.spellName || p.name)}${chgPill}
                 </button>
             `);
         });
@@ -10132,12 +10737,15 @@
             const isAttachMod = Boolean(meta.attachMeta);
             const ammoNeedsContainer = Boolean(hasLoadableAmmo && !isCoatingVial && meta.ammoMeta.ammoKind === 'firearm' && !hasBulletContainerInBag());
             const isStudyAction = Boolean(meta.useAction && meta.useAction.type === 'learnRecipe');
+            const bpRemChg = (meta.useAction && meta.useAction.maxCharges > 0) ? getItemRemainingCharges(key, meta.useAction) : null;
             const useBtnLbl = !meta.useAction ? ''
                 : (isStudyAction ? 'Study'
-                : (meta.useAction.type === 'magicPower' ? 'Activate'
+                : (meta.useAction.type === 'spellScroll' ? '📜 Cast Scroll'
+                : (meta.useAction.type === 'itemSpell' ? `✨ Cast${bpRemChg !== null ? ` (${bpRemChg}/${meta.useAction.maxCharges})` : ''}`
+                : (meta.useAction.type === 'magicPower' ? `Activate${bpRemChg !== null ? ` (${bpRemChg}/${meta.useAction.maxCharges})` : ''}`
                 : (['customBomb', 'holyWater', 'alchemistsFire', 'phosphorBomb'].includes(meta.useAction.type) ? 'Throw'
                 : (meta.useAction.verb === 'Ate' ? 'Eat'
-                : (meta.useAction.verb === 'Drank' ? 'Drink' : 'Use')))));
+                : (meta.useAction.verb === 'Drank' ? 'Drink' : 'Use')))))));
             const catLbl = BP_CATS.find(c => c.id === meta.category)?.label || '🪙 Gear & Loot';
 
             rows.push(`
@@ -12243,12 +12851,12 @@
                 <div class="rpg-rest-card">
                     <h3><span>☕ Short Rest</span><span class="pill-badge pill-blue">1 Hour</span></h3>
                     <ul>${shortBullets.map(b => `<li>${b}</li>`).join('')}</ul>
-                    <button type="button" class="btn-act btn-act-temp" style="width:100%; min-block-size:34px;" onclick="COS_RPG.closeModal('rpg-rest-modal'); if(typeof shortRest==='function'){shortRest();}">☕ Take Short Rest</button>
+                    <button type="button" class="btn-act btn-act-temp" style="width:100%; min-block-size:34px;" onclick="COS_RPG.closeModal('rpg-rest-modal'); COS_RPG.rechargeItemCharges('short'); if(typeof shortRest==='function'){shortRest();}">☕ Take Short Rest</button>
                 </div>
                 <div class="rpg-rest-card" style="border-color: rgba(63, 185, 128, 0.32);">
                     <h3><span>⛺ Long Rest</span><span class="pill-badge" style="color:#86efac; border-color:rgba(63,185,128,0.4);">8 Hours</span></h3>
                     <ul>${longBullets.map(b => `<li>${b}</li>`).join('')}</ul>
-                    <button type="button" class="btn-act btn-act-heal" style="width:100%; min-block-size:34px;" onclick="COS_RPG.closeModal('rpg-rest-modal'); if(typeof longRest==='function'){longRest();}">⛺ Take Long Rest</button>
+                    <button type="button" class="btn-act btn-act-heal" style="width:100%; min-block-size:34px;" onclick="COS_RPG.closeModal('rpg-rest-modal'); COS_RPG.rechargeItemCharges('long'); if(typeof longRest==='function'){longRest();}">⛺ Take Long Rest</button>
                 </div>
             </div>
         `;
@@ -13908,6 +14516,9 @@
         deleteBackpackItem,
         addBackpackItem,
         resetBackpack,
+        rollDynamicWeaponMastery,
+        rechargeItemCharges,
+        SPELL_SCROLL_LIBRARY,
         useConsumableByIndex,
         openItemDetails: (idx) => {
             if (adapter && typeof adapter.openItemModal === 'function') {
