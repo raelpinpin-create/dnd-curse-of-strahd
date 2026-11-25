@@ -10656,8 +10656,8 @@
                     ? { ...hudState.turn }
                     : { action: true, bonus: true, reaction: true, move: true },
                 advLocked: isRemoteSync ? Boolean(hudState.advLocked) : false,
-                rightTab: hudState.rightTab || 'combat',
-                mobileTab: hudState.mobileTab || 'combat',
+                rightTab: (hudState.rightTab && hudState.rightTab !== 'magic') ? hudState.rightTab : 'combat',
+                mobileTab: (hudState.mobileTab && hudState.mobileTab !== 'magic') ? hudState.mobileTab : 'combat',
                 tabPrefV3: true,
                 skillsTrainedOnly: Boolean(hudState.skillsTrainedOnly),
                 showPartyHud: isRemoteSync
@@ -13583,8 +13583,10 @@
                 };
             }
             hudState.advLocked = Boolean(p.advLocked);
-            hudState.rightTab = (p.tabPrefV3 && typeof p.rightTab === 'string') ? p.rightTab : 'combat';
-            hudState.mobileTab = (typeof p.mobileTab === 'string' && ['combat', 'magic', 'checks', 'gear', 'notes', 'all'].includes(p.mobileTab)) ? p.mobileTab : 'combat';
+            const rawRightTab = (p.tabPrefV3 && typeof p.rightTab === 'string') ? (p.rightTab === 'magic' ? 'combat' : p.rightTab) : 'combat';
+            hudState.rightTab = ['combat', 'gear', 'all'].includes(rawRightTab) ? rawRightTab : 'combat';
+            const rawMobTab = (typeof p.mobileTab === 'string') ? (p.mobileTab === 'magic' ? 'combat' : p.mobileTab) : 'combat';
+            hudState.mobileTab = ['combat', 'checks', 'gear', 'notes', 'all'].includes(rawMobTab) ? rawMobTab : 'combat';
             hudState.tabPrefV3 = true;
             hudState.skillsTrainedOnly = Boolean(p.skillsTrainedOnly);
             hudState.showPartyHud = Boolean(p.showPartyHud);
@@ -13997,37 +13999,21 @@
                 return;
             }
             const titleTxt = (p.querySelector('.panel-title')?.innerText || '').toLowerCase();
+            p.dataset.rpgCats = 'combat';
+            p.dataset.mobileCats = 'combat';
             if (titleTxt.includes('weapon') || titleTxt.includes('firearm') || titleTxt.includes('arsenal')) {
-                p.dataset.rpgCats = 'combat';
-                p.dataset.mobileCats = 'combat';
                 p.dataset.mobileOrder = '30';
-            } else if (titleTxt.includes('wild magic')) {
-                p.dataset.rpgCats = 'magic';
-                p.dataset.mobileCats = 'combat magic';
-                p.dataset.mobileOrder = '28';
-            } else if (titleTxt.includes('starry form') || titleTxt.includes('circle of the stars')) {
-                p.dataset.rpgCats = 'magic';
-                p.dataset.mobileCats = 'magic';
+            } else if (titleTxt.includes('wild magic') || titleTxt.includes('starry form') || titleTxt.includes('circle of the stars')) {
                 p.dataset.mobileOrder = '28';
             } else if (titleTxt.includes('maneuver') || titleTxt.includes('monster slayer')) {
-                p.dataset.rpgCats = 'combat magic';
-                p.dataset.mobileCats = 'combat magic';
                 p.dataset.mobileOrder = '32';
-            } else if (titleTxt.includes('fighter')) {
-                p.dataset.rpgCats = 'combat magic';
-                p.dataset.mobileCats = 'combat magic';
-                p.dataset.mobileOrder = '34';
             } else if (titleTxt.includes('spell') || titleTxt.includes('occult')) {
-                p.dataset.rpgCats = (adapter && adapter.heroId === 'cael') ? 'magic' : 'combat magic';
-                p.dataset.mobileCats = (adapter && adapter.heroId === 'piper') ? 'combat magic' : 'magic';
                 p.dataset.mobileOrder = '33';
+            } else if (titleTxt.includes('fighter')) {
+                p.dataset.mobileOrder = '34';
             } else if (titleTxt.includes('font of magic') || titleTxt.includes('metamagic')) {
-                p.dataset.rpgCats = 'magic';
-                p.dataset.mobileCats = 'magic';
                 p.dataset.mobileOrder = '36';
             } else {
-                p.dataset.rpgCats = 'combat magic';
-                p.dataset.mobileCats = 'combat magic';
                 p.dataset.mobileOrder = String(35 + idx);
             }
         });
@@ -14041,7 +14027,8 @@
     }
 
     function setRightColumnTab(tabId) {
-        hudState.rightTab = tabId || 'all';
+        const normalized = (tabId === 'magic') ? 'combat' : (tabId || 'all');
+        hudState.rightTab = ['combat', 'gear', 'all'].includes(normalized) ? normalized : 'combat';
         saveHudState();
         classifyRightColumnPanels();
         const unifiedMode = isUnifiedTabMode();
@@ -14053,7 +14040,7 @@
                     el.classList.remove('rpg-tab-hidden');
                     return;
                 }
-                const cats = (el.dataset.rpgCats || 'combat magic gear').split(/\s+/);
+                const cats = (el.dataset.rpgCats || 'combat gear').split(/\s+/);
                 const show = (hudState.rightTab === 'all') || cats.includes(hudState.rightTab);
                 el.classList.toggle('rpg-tab-hidden', !show);
             });
@@ -14074,7 +14061,7 @@
         const vm = document.documentElement.getAttribute('data-view-mode') || 'pc';
         const isPortraitTablet = (vm === 'tablet' && document.documentElement.getAttribute('data-tablet-orient') !== 'landscape');
         const unifiedMode = isUnifiedTabMode();
-        const mobTab = hudState.mobileTab || 'combat';
+        const mobTab = (hudState.mobileTab === 'magic' || !hudState.mobileTab) ? 'combat' : hudState.mobileTab;
 
         // Clear desktop right-tab hiding when in Mobile / Portrait-Tablet mode; clear mobile-tab hiding when in PC / Landscape-Tablet mode
         document.querySelectorAll('.main-layout [data-mobile-cats]').forEach(el => {
@@ -14098,7 +14085,7 @@
             if (rightCol) {
                 Array.from(rightCol.children).forEach(el => {
                     if (!el.classList || !el.classList.contains('panel')) return;
-                    const cats = (el.dataset.rpgCats || 'combat magic gear').split(/\s+/);
+                    const cats = (el.dataset.rpgCats || 'combat gear').split(/\s+/);
                     const show = (hudState.rightTab === 'all') || cats.includes(hudState.rightTab);
                     el.classList.toggle('rpg-tab-hidden', !show);
                 });
@@ -14118,8 +14105,9 @@
     }
 
     function setMobileTab(tabId) {
-        const valid = ['combat', 'magic', 'checks', 'gear', 'notes', 'all'];
-        hudState.mobileTab = valid.includes(tabId) ? tabId : 'combat';
+        const normalized = (tabId === 'magic') ? 'combat' : tabId;
+        const valid = ['combat', 'checks', 'gear', 'notes', 'all'];
+        hudState.mobileTab = valid.includes(normalized) ? normalized : 'combat';
         saveHudState();
         applyMobileTabLayout();
     }
@@ -16255,16 +16243,11 @@
             tabs.setAttribute('role', 'toolbar');
             tabs.setAttribute('focusgroup', 'toolbar wrap');
             tabs.setAttribute('aria-label', 'Sheet View Filter');
-            const combatTabLbl = (adapter && adapter.heroId === 'cael') ? '🪄 Weapons &amp; Cantrips' : '⚔️ Combat';
-            const combatMobIco = (adapter && adapter.heroId === 'cael') ? '🪄' : '⚔️';
-            const combatMobLbl = (adapter && adapter.heroId === 'cael') ? 'Weapons' : 'Combat';
             tabs.innerHTML = `
-                <button type="button" class="rpg-view-tab" data-tab="combat" aria-pressed="true" onclick="COS_RPG.setRightColumnTab('combat')">${combatTabLbl}</button>
-                <button type="button" class="rpg-view-tab" data-tab="magic" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('magic')">✨ Magic &amp; Features</button>
+                <button type="button" class="rpg-view-tab" data-tab="combat" aria-pressed="true" onclick="COS_RPG.setRightColumnTab('combat')">⚔️ Combat &amp; Magic</button>
                 <button type="button" class="rpg-view-tab" data-tab="gear" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('gear')">🎒 Gear &amp; Bag</button>
                 <button type="button" class="rpg-view-tab" data-tab="all" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('all')">📋 All</button>
             `;
-            const magicLbl = (adapter && adapter.heroId === 'jacomir') ? 'Feats' : 'Magic';
             const mobTabs = document.createElement('div');
             mobTabs.id = 'rpg-mobile-tabs';
             mobTabs.className = 'rpg-mobile-tabs';
@@ -16273,12 +16256,8 @@
             mobTabs.setAttribute('aria-label', 'Mobile Sheet Sections');
             mobTabs.innerHTML = `
                 <button type="button" class="rpg-mobile-tab" data-mob-tab="combat" aria-pressed="true" onclick="COS_RPG.setMobileTab('combat')">
-                    <span class="mob-tab-ico" aria-hidden="true">${combatMobIco}</span>
-                    <span class="mob-tab-lbl">${combatMobLbl}</span>
-                </button>
-                <button type="button" class="rpg-mobile-tab" data-mob-tab="magic" aria-pressed="false" onclick="COS_RPG.setMobileTab('magic')">
-                    <span class="mob-tab-ico" aria-hidden="true">✨</span>
-                    <span class="mob-tab-lbl">${magicLbl}</span>
+                    <span class="mob-tab-ico" aria-hidden="true">⚔️</span>
+                    <span class="mob-tab-lbl">Combat</span>
                 </button>
                 <button type="button" class="rpg-mobile-tab" data-mob-tab="checks" aria-pressed="false" onclick="COS_RPG.setMobileTab('checks')">
                     <span class="mob-tab-ico" aria-hidden="true">🎯</span>
