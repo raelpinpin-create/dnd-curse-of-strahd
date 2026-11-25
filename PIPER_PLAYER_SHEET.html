@@ -2131,16 +2131,16 @@
             tray.className = 'piper-wild-hud-tray is-visible is-check';
             tray.innerHTML = `
                 <div class="piper-wild-tray-head">
-                    <span class="piper-wild-tray-title">🌀 Wild Magic Check (2024) — ${safeSpell}${lvlTag} <span class="piper-wild-tray-badge">Nat 20 = Surge</span></span>
+                    <span class="piper-wild-tray-title">🌀 Wild Magic Check — ${safeSpell}${lvlTag} <span class="piper-wild-tray-badge">Nat 1 or 20 = Surge</span></span>
                     ${closeBtn}
                 </div>
                 <div class="piper-wild-tray-row">
-                    ${formatWildDiePill('1d20', 'Nat 20 = Surge')}
-                    <span class="piper-wild-tray-note">Roll physical <strong>1d20</strong> (1–19 Safe • Nat 20 triggers Surge). Stays pinned while you click Hit / Damage!</span>
+                    ${formatWildDiePill('1d20', '1 or 20 = Surge')}
+                    <span class="piper-wild-tray-note">Roll physical <strong>1d20</strong> (2–19 Safe • Nat 1 or 20 triggers Surge). Stays pinned while you click Hit / Damage!</span>
                 </div>
                 <div class="piper-wild-tray-row">
-                    <button type="button" class="btn-roll-action btn-roll-heal" onclick="resolveWildCheckSafeInTray(event)">✅ Safe (1–19)</button>
-                    <button type="button" class="btn-roll-action btn-roll-wild" onclick="openWildSurgePromptInTray(event)">💥 Rolled a 20! Roll d100 Surge</button>
+                    <button type="button" class="btn-roll-action btn-roll-heal" onclick="resolveWildCheckSafeInTray(event)">✅ Safe (2–19)</button>
+                    <button type="button" class="btn-roll-action btn-roll-wild" onclick="openWildSurgePromptInTray(event)">💥 Rolled 1 or 20! Roll d100 Surge</button>
                     <button type="button" class="btn-act btn-act-pre" style="padding:4px 9px; font-size:0.72rem;" onclick="rollWildCheckDigitalInTray(event)">💻 Roll d20</button>
                 </div>
             `;
@@ -2151,7 +2151,7 @@
             tray.className = 'piper-wild-hud-tray is-visible is-surged';
             tray.innerHTML = `
                 <div class="piper-wild-tray-head">
-                    <span class="piper-wild-tray-title">💥 Natural 20! Wild Magic Surge (${safeSpell}${lvlTag}) <span class="piper-wild-tray-badge">Table 01–00</span></span>
+                    <span class="piper-wild-tray-title">💥 Nat 1 / 20! Wild Magic Surge (${safeSpell}${lvlTag}) <span class="piper-wild-tray-badge">Table 01–00</span></span>
                     ${closeBtn}
                 </div>
                 <div class="piper-wild-tray-note">Roll physical <strong>1d100</strong> and enter the number below (or spin digitally) — your damage guide stays open above!</div>
@@ -2163,8 +2163,8 @@
         if (ctx.mode === 'safe') {
             tray.className = 'piper-wild-hud-tray is-visible is-safe';
             const rollTxt = ctx.d20Result
-                ? `d20 = <strong>${ctx.d20Result}</strong> (Safe — triggers on Nat 20)`
-                : 'Physical d20: <strong>Safe (1–19)</strong>';
+                ? `d20 = <strong>${ctx.d20Result}</strong> (Safe — triggers on Nat 1 or 20)`
+                : 'Physical d20: <strong>Safe (2–19)</strong>';
             tray.innerHTML = `
                 <div class="piper-wild-tray-head">
                     <div class="piper-wild-tray-row">
@@ -2247,8 +2247,8 @@
         if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
         const prev = activeWildSpellContext || { spellName: 'Spell', slotLevel: 1 };
         const d20 = Math.floor(Math.random() * 20) + 1;
-        if (d20 === 20) {
-            triggerWildMagicSurge(`Nat 20 on Wild Magic Check [d20 = 20] after ${prev.spellName}`, false, null, { inTrayOnly: true });
+        if (d20 === 1 || d20 === 20) {
+            triggerWildMagicSurge(`Nat ${d20} on Wild Magic Check [d20 = ${d20}] after ${prev.spellName}`, false, null, { inTrayOnly: true });
         } else {
             activeWildSpellContext = { ...prev, mode: 'safe', d20Result: d20 };
             renderPiperWildHudTray();
@@ -2454,8 +2454,8 @@
                 return;
             }
             const d20 = Math.floor(Math.random() * 20) + 1;
-            if (d20 === 20) {
-                triggerWildMagicSurge(`Nat 20 on Wild Magic Check [d20 = 20] after ${spellName}!`, false, null, { inTrayOnly: true });
+            if (d20 === 1 || d20 === 20) {
+                triggerWildMagicSurge(`Nat ${d20} on Wild Magic Check [d20 = ${d20}] after ${spellName}!`, false, null, { inTrayOnly: true });
             } else {
                 activeWildSpellContext = { ...activeWildSpellContext, mode: 'safe', d20Result: d20 };
                 renderPiperWildHudTray();
@@ -2467,21 +2467,21 @@
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
             COS_RPG.logManualSpell({
                 icon: '🌀',
-                title: `${reason} (2024 d20 Surge Check)`,
-                diceParts: [{ expr: '1d20', type: 'Nat 20 = Surge!' }],
-                notes: 'Roll a physical d20. On a 1–19 you are safe; on a Natural 20 (2024 5.5e), trigger the Wild Magic Surge d100 table!',
+                title: `${reason} (d20 Surge Check)`,
+                diceParts: [{ expr: '1d20', type: '1 or 20 = Surge!' }],
+                notes: 'Roll a physical d20. On a 2–19 you are safe; on a Natural 1 or Natural 20, trigger the Wild Magic Surge d100 table!',
                 extraButtons: [
-                    { label: '💥 Rolled a 20! Spin Wild Magic d100', cls: 'btn-crit', onClick: () => triggerWildMagicSurge(`${reason} rolled a physical NAT 20!`) }
+                    { label: '💥 Rolled 1 or 20! Spin Wild Magic d100', cls: 'btn-crit', onClick: () => triggerWildMagicSurge(`${reason} rolled a physical NAT 1/20!`) }
                 ],
                 onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollWildMagicD20Check(reason))
             });
             return;
         }
         const d20 = Math.floor(Math.random() * 20) + 1;
-        if (d20 === 20) {
-            triggerWildMagicSurge(`${reason} rolled a NAT 20 on d20!`);
+        if (d20 === 1 || d20 === 20) {
+            triggerWildMagicSurge(`${reason} rolled a NAT ${d20} on d20!`);
         } else {
-            logRoll(`🎲 <strong>${reason} (d20):</strong> Rolled <strong>${d20}</strong> (No Surge — triggers on a 20). <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.7rem; margin-left:6px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Override')">💥 Trigger d100 Surge Anyway</button>`);
+            logRoll(`🎲 <strong>${reason} (d20):</strong> Rolled <strong>${d20}</strong> (No Surge — triggers on a 1 or 20). <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.7rem; margin-left:6px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Override')">💥 Trigger d100 Surge Anyway</button>`);
         }
     }
 
