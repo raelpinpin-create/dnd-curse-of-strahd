@@ -2659,7 +2659,7 @@
             padding: 6px 9px;
         }
 
-        /* Always-Accessible Forging Button in Sticky Nav & Floating Scroll Dock */
+        /* Always-Accessible Forging Button in Sticky Nav + Rarity Pills, Collapsible Explore & Shopkeepers */
         .nav-btn.nav-btn-forge {
             background: linear-gradient(135deg, rgba(180, 125, 32, 0.34), rgba(113, 63, 18, 0.36));
             border-color: #f59e0b;
@@ -2672,78 +2672,97 @@
             color: #ffffff;
         }
         .container {
-            padding-bottom: 84px;
+            padding-bottom: 28px;
         }
-        .dm-scroll-sentinel {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 1px;
-            height: 240px;
-            pointer-events: none;
-            visibility: hidden;
+        #loot-scene-bar:not(.is-open) {
+            display: none !important;
         }
-        .dm-floating-dock {
-            position: fixed;
-            bottom: 18px;
-            right: 18px;
-            z-index: 140;
+        .loot-rarity-bar {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 5px 6px;
-            border-radius: 999px;
-            background: rgba(13, 18, 30, 0.92);
-            border: 1.5px solid rgba(245, 158, 11, 0.55);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65);
-        }
-        .dm-dock-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            flex-wrap: wrap;
             gap: 5px;
-            min-block-size: 38px;
-            padding: 0 13px;
+            padding: 6px 10px;
+            margin-bottom: 8px;
+            background: rgba(11, 17, 32, 0.78);
+            border: 1px solid #1e293b;
+            border-radius: 7px;
+        }
+        .btn-loot-rarity {
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: #cbd5e1;
             border-radius: 999px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-            color: var(--text-main);
-            font-family: 'Inter', system-ui, sans-serif;
-            font-size: 0.78rem;
+            padding: 3px 9px;
+            font-size: 0.71rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background-color 0.14s ease, border-color 0.14s ease, transform 0.14s ease;
+            transition: border-color 0.14s ease, background-color 0.14s ease, color 0.14s ease;
+        }
+        .btn-loot-rarity:hover { border-color: var(--accent-gold); color: #fff; }
+        .btn-loot-rarity.active {
+            background: rgba(245, 158, 11, 0.22);
+            border-color: #fbbf24;
+            color: #fef3c7;
+        }
+        .rarity-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 0.61rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            padding: 1px 6px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            vertical-align: middle;
             white-space: nowrap;
         }
-        .dm-dock-btn:hover {
-            border-color: var(--accent-gold);
-            color: #ffffff;
-            transform: translateY(-1px);
-        }
-        .dm-dock-btn:focus-visible {
-            outline: 2.5px solid #fde047;
-            outline-offset: 2px;
-        }
-        .dm-dock-btn.is-forge {
-            background: linear-gradient(135deg, #92400e, #b45309);
-            border-color: #fbbf24;
-            color: #fffbeb;
-        }
-        .dm-dock-btn.is-forge:hover {
-            background: linear-gradient(135deg, #b45309, #d97706);
-            border-color: #fef08a;
-        }
-        .dm-dock-btn.is-top {
-            min-inline-size: 38px;
-            padding: 0 10px;
+        .rarity-pill.rarity-common    { background: rgba(148, 163, 184, 0.14); border-color: rgba(148, 163, 184, 0.42); color: #e2e8f0; }
+        .rarity-pill.rarity-uncommon  { background: rgba(16, 185, 129, 0.16);  border-color: rgba(52, 211, 153, 0.55);  color: #6ee7b7; }
+        .rarity-pill.rarity-rare      { background: rgba(59, 130, 246, 0.18);  border-color: rgba(96, 165, 250, 0.6);   color: #93c5fd; }
+        .rarity-pill.rarity-very_rare { background: rgba(168, 85, 247, 0.2);   border-color: rgba(192, 132, 252, 0.65); color: #e9d5ff; }
+        .rarity-pill.rarity-legendary { background: linear-gradient(135deg, rgba(217, 119, 6, 0.28), rgba(146, 64, 14, 0.34)); border-color: #fbbf24; color: #fef08a; }
+        .rarity-pill.rarity-cursed    { background: linear-gradient(135deg, rgba(159, 18, 57, 0.32), rgba(88, 28, 135, 0.32)); border-color: #fb7185; color: #fecdd3; }
+        .loot-dense-card.card-legendary { border-left: 3px solid #fbbf24; }
+        .loot-dense-card.card-cursed    { border-left: 3px solid #f43f5e; }
+        .loot-shop-panel {
             display: none;
+            flex-direction: column;
+            gap: 8px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, rgba(20, 28, 46, 0.96), rgba(11, 17, 32, 0.98));
+            border: 1.5px solid rgba(251, 191, 36, 0.5);
+            border-radius: 8px;
         }
-        body.dm-scrolled .dm-dock-btn.is-top {
-            display: inline-flex;
+        .loot-shop-panel.is-open { display: flex; }
+        .loot-shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+            gap: 8px;
+        }
+        .loot-shop-card {
+            background: #0b1120;
+            border: 1px solid #28354f;
+            border-radius: 7px;
+            padding: 8px 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .loot-awaken-panel {
+            background: linear-gradient(135deg, rgba(46, 16, 38, 0.88), rgba(15, 23, 42, 0.96));
+            border: 1.5px solid rgba(244, 63, 94, 0.55);
+            border-radius: 8px;
+            padding: 11px 13px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
         }
         @media (pointer: coarse) {
-            .dm-dock-btn { min-block-size: 44px; padding: 0 14px; font-size: 0.84rem; }
             .dm-forge-input, .dm-forge-select { font-size: 1rem; min-block-size: 42px; }
         }
         .dm-forge-kind-grid {
@@ -2829,7 +2848,6 @@
     </style>
 </head>
 <body>
-<div id="dm-top-sentinel" class="dm-scroll-sentinel" aria-hidden="true"></div>
 
 <header class="dm-compact-header">
     <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
@@ -2837,7 +2855,7 @@
         <span class="badge-mode">🩸 S2 READY • CHURCH ATTIC CLIFFHANGER (LVL 3)</span>
     </div>
     <div class="dm-header-right">
-        <span class="dm-hotkey-hint" title="Keyboard Hotkeys (when not typing in a field)">⌨️ Hotkeys: <strong>C</strong> Combat · <strong>N</strong> Next Turn · <strong>F</strong> Forge · <strong>1–9</strong> Tabs · <strong>0</strong> Focus/All · <strong>/</strong> Search</span>
+        <span class="dm-hotkey-hint" title="Keyboard Hotkeys (when not typing in a field)">⌨️ Hotkeys: <strong>F</strong> Forge · <strong>D</strong> Drop · <strong>C</strong> Combat · <strong>N</strong> Next Turn · <strong>1–9</strong> Tabs · <strong>0</strong> Focus/All · <strong>/</strong> Search</span>
     </div>
 </header>
 
@@ -2863,8 +2881,7 @@
         <button type="button" id="dm-collapse-all-btn" class="nav-btn" style="display:none;" onclick="toggleAllDmSections()" title="Collapse or Expand all sections">▾ Collapse All</button>
         <button type="button" class="nav-btn" onclick="openWorldMapLightbox()" title="Open Full High-Res Map of Barovia">🗺️ Map</button>
         <button type="button" class="nav-btn" style="border-color:#34d399; color:#86efac;" onclick="openDmCustomDropModal('party')" title="Live Party Monitor, Remote Inventory &amp; Checkpoints">📡 Sync</button>
-        <button type="button" class="nav-btn nav-btn-forge" onclick="openDmCustomDropModal('forge')" title="Open Custom Item Forge from any section (Hotkey: F)">🛠️ Forge</button>
-        <button type="button" class="nav-btn" style="border-color:#f59e0b; color:#fde68a;" onclick="openDmCustomDropModal('handout')" title="Send Loot, Gold or Custom Forged Item to Players">🎁 Drop</button>
+        <button type="button" class="nav-btn nav-btn-forge" onclick="openDmCustomDropModal('forge')" title="Open Custom Item Forge from any section (Hotkey: F • Quick Drop Hotkey: D)">🛠️ Forge</button>
         <button type="button" id="dm-whisper-btn" class="nav-btn" style="border-color:#60a5fa; color:#bfdbfe;" onclick="openDmWhisperModal()" title="Private DM-to-Player Whispers">💬 Whispers</button>
         <div class="dm-theme-wrap" id="dm-theme-wrap">
             <button type="button" id="dm-theme-btn" class="nav-btn" aria-expanded="false" onclick="toggleDmThemePopover()" title="Switch DM Screen Color Theme">🎨 Theme</button>
@@ -2886,7 +2903,6 @@
             <span>🛡️ SECTION 0: LIVE PARTY HUD &amp; COMPANION ROSTER</span>
             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                 <button type="button" class="btn-modal-mini" style="border-color:#34d399; color:#a7f3d0;" onclick="openDmCustomDropModal('party')">📡 Full Monitor &amp; Checkpoints</button>
-                <button type="button" class="btn-modal-mini" style="border-color:#f59e0b; color:#fef08a;" onclick="openDmCustomDropModal('forge')">🛠️ Custom Item Forge</button>
                 <button type="button" class="btn-modal-mini" onclick="addPartyToEncounter(); jumpToCombatBoard();">⚔️ + All 4 to Combat</button>
                 <button type="button" class="dm-sec-collapse-btn" data-sec-btn="party-specs" onclick="toggleDmSectionCollapse('party-specs')">▾ Collapse</button>
             </div>
@@ -3437,7 +3453,6 @@
         <div class="section-header">
             <span id="loot-sec-title">🎒 SECTION 4: BAROVIAN WORLD LOOT VAULT, ATTACHMENTS &amp; CRAFTING LEDGER</span>
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                <button type="button" class="btn-modal-mini" style="border-color:#f59e0b; color:#fef08a; background:rgba(180,83,9,0.28);" onclick="openDmCustomDropModal('forge')" title="Forge a new weapon, magic item, food, material, or normal loot (Hotkey: F)">🛠️ + Forge Item</button>
                 <search class="section-search-wrap" aria-label="Search World Loot Vault">
                     <label class="visually-hidden" for="loot-search">Search Section 4 Loot</label>
                     <input type="search" id="loot-search" class="section-search-input" placeholder="🔍 Search items, slots, costs, heroes, acts, materials..." autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" oninput="filterSectionSearch('loot', this.value)">
@@ -3445,7 +3460,7 @@
                 </search>
             </div>
         </div>
-        <div class="loot-filter-bar" id="loot-filter-bar" role="group" aria-label="Filter loot by Act or Hero">
+        <div class="loot-filter-bar" id="loot-filter-bar" role="group" aria-label="Filter loot by Act, Hero, Exploration, or Shopkeeper">
             <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:2px;">1. Act / Hero:</span>
             <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Acts</button>
             <button type="button" class="btn-loot-filter active" data-loottag="Act I" onclick="filterLootVault('Act I', this)">🩸 Act I</button>
@@ -3456,19 +3471,24 @@
             <button type="button" class="btn-loot-filter" data-loottag="Piper" onclick="filterLootVault('Piper', this)">🎩 Piper</button>
             <button type="button" class="btn-loot-filter" data-loottag="Jacomir" onclick="filterLootVault('Jacomir', this)">👑 Jacomir</button>
             <button type="button" class="btn-loot-filter" data-loottag="Yvaine" onclick="filterLootVault('Yvaine', this)">🔫 Yvaine</button>
+            <span style="margin-left:auto; display:inline-flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" id="btn-toggle-explore" class="btn-loot-filter" style="border-color:rgba(52,211,153,0.6); color:#6ee7b7;" aria-expanded="false" aria-controls="loot-scene-bar" onclick="toggleLootExploreBar()">🔎 Exploring ▾</button>
+                <button type="button" id="btn-toggle-shops" class="btn-loot-filter" style="border-color:rgba(251,191,36,0.65); color:#fde68a;" aria-expanded="false" aria-controls="loot-shop-panel" onclick="toggleLootShopBar()">🏪 Shopkeepers ▾</button>
+            </span>
         </div>
         <div class="loot-loc-bar" id="loot-loc-bar" role="group" aria-label="Filter by specific location in active Act"></div>
         <div class="loot-scene-bar" id="loot-scene-bar" role="group" aria-label="Quick search where players are exploring right now">
-            <span style="font-family:'Cinzel',serif; font-size:0.73rem; color:#6ee7b7; font-weight:700; margin-right:2px;">🔎 Exploring Now:</span>
+            <span style="font-family:'Cinzel',serif; font-size:0.73rem; color:#6ee7b7; font-weight:700; margin-right:2px;">🔎 Exploring Scene:</span>
             <button type="button" class="btn-loot-scene" data-lootscene="room_attic" onclick="filterLootScene('room_attic')" aria-pressed="false">🏠 Room / Attic</button>
             <button type="button" class="btn-loot-scene" data-lootscene="forest_road" onclick="filterLootScene('forest_road')" aria-pressed="false">🌲 Forest / Travel</button>
             <button type="button" class="btn-loot-scene" data-lootscene="tavern_kitchen" onclick="filterLootScene('tavern_kitchen')" aria-pressed="false">🍺 Tavern / Kitchen</button>
             <button type="button" class="btn-loot-scene" data-lootscene="church_crypt" onclick="filterLootScene('church_crypt')" aria-pressed="false">⛪ Church / Crypt</button>
             <button type="button" class="btn-loot-scene" data-lootscene="corpse_monster" onclick="filterLootScene('corpse_monster')" aria-pressed="false">💀 Corpse / Monster</button>
             <button type="button" class="btn-loot-scene" data-lootscene="lab_study" onclick="filterLootScene('lab_study')" aria-pressed="false">⚗️ Lab / Study</button>
-            <button type="button" id="btn-loot-scene-clear" class="btn-modal-mini" style="display:none; margin-left:auto; border-color:#f87171; color:#fca5a5;" onclick="filterLootScene(null)">✕ Exit Scene Mode</button>
+            <button type="button" id="btn-loot-scene-clear" class="btn-modal-mini" style="margin-left:auto; border-color:#f87171; color:#fca5a5;" onclick="closeLootExploreBar()">✕ Close Exploring</button>
         </div>
         <div class="loot-tier-bar" id="loot-tier-bar" role="group" aria-label="Filter or roll exploration loot by check tier"></div>
+        <div id="loot-shop-panel" class="loot-shop-panel" role="region" aria-label="Barovian Area Shopkeeper Stock Generator"></div>
         <div class="loot-cat-bar" id="loot-cat-bar">
             <span style="font-family:'Cinzel',serif; font-size:0.74rem; color:#93c5fd; font-weight:700; margin-right:2px;">2. Category:</span>
             <button type="button" id="btn-lcat-overview" class="btn-loot-cat active" data-lootcat="overview" onclick="filterLootCategory('overview', this)">📋 Overview</button>
@@ -3476,12 +3496,14 @@
             <button type="button" id="btn-loot-attachments" class="btn-loot-cat" style="border-color:rgba(96,165,250,0.55); color:#93c5fd;" data-lootcat="attachments" onclick="filterLootCategory('attachments', this)">🔧 Attachments</button>
             <button type="button" id="btn-loot-upgrades" class="btn-loot-cat" style="border-color:rgba(251,191,36,0.55); color:#fde68a;" data-lootcat="upgrades" onclick="filterLootCategory('upgrades', this)">⬆️ Upgrades</button>
             <button type="button" id="btn-lcat-caster" class="btn-loot-cat" data-lootcat="caster" onclick="filterLootCategory('caster', this)">🔮 Caster &amp; Relics</button>
+            <button type="button" id="btn-lcat-scrolls" class="btn-loot-cat" style="border-color:rgba(250,204,21,0.55); color:#fef08a;" data-lootcat="scrolls" onclick="filterLootCategory('scrolls', this)">📜 Spell Scrolls</button>
             <button type="button" id="btn-lcat-armor" class="btn-loot-cat" data-lootcat="armor" onclick="filterLootCategory('armor', this)">🛡️ Armor &amp; Gear</button>
             <button type="button" id="btn-lcat-consumables" class="btn-loot-cat" data-lootcat="consumables" onclick="filterLootCategory('consumables', this)">🧪 Potions &amp; Food</button>
             <button type="button" id="btn-loot-craftables" class="btn-loot-cat" style="border-color:rgba(192,132,252,0.55); color:#e9d5ff;" data-lootcat="craftables" onclick="filterLootCategory('craftables', this)">⚗️ Craft &amp; Recipes</button>
             <button type="button" id="btn-loot-materials" class="btn-loot-cat" style="border-color:rgba(52,211,153,0.55); color:#6ee7b7;" data-lootcat="materials" onclick="filterLootCategory('materials', this)">🌿 Materials</button>
             <button type="button" id="btn-lcat-quest" class="btn-loot-cat" data-lootcat="quest" onclick="filterLootCategory('quest', this)">🗝️ Quest &amp; Loot</button>
         </div>
+        <div class="loot-rarity-bar" id="loot-rarity-bar" role="group" aria-label="Filter loot by power scale and rarity"></div>
         <div class="loot-slot-bar" id="loot-slot-bar">
             <span style="font-size:0.72rem; color:#7dd3fc; font-weight:700; margin-right:2px;">3. Weapon Slot:</span>
             <button type="button" class="btn-loot-slot active" data-lootslot="all" onclick="filterLootSlot('all', this)">All Slots</button>
@@ -13241,26 +13263,6 @@ const LOOT_DATA = {
         "mechanics": "• <strong>Martial Ranged Weapon (Heavy, Two-Handed, 150/600 ft):</strong> Deals <code>1d8 + DEX</code> <strong>Piercing</strong> damage (<strong>5.5e Slow Mastery:</strong> target Speed −10 ft until start of your next turn).<br>• <strong>Ammunition:</strong> Fires <strong>Arrows</strong>.",
         "lore": "A tall six-foot yew warbow strung with waxed linen for long-range sentry work along misty walls."
     },
-    "crossbow_bolts_20": {
-        "cat": "weapon",
-        "actTag": "Act I",
-        "name": "20x Crossbow Bolts",
-        "rarity": "Common Ammunition",
-        "cost": "1 GP (Case of 20)",
-        "location": "Act I–IV • Bildrath's Mercantile (E1), Ismark's Armory (E4) & Arasek Stockyard (N5)",
-        "mechanics": "• <strong>Standard Crossbow Bolts (20):</strong> Standard ammunition for Light, Heavy, and Hand Crossbows (fired automatically whenever the crossbow is set to <em>Standard</em>).",
-        "lore": "A leather case of twenty iron-headed quarrels fletched with stiff goose feathers."
-    },
-    "arrows_20": {
-        "cat": "weapon",
-        "actTag": "Act I",
-        "name": "20x Arrows",
-        "rarity": "Common Ammunition",
-        "cost": "1 GP (Quiver of 20)",
-        "location": "Act I–IV • Bildrath's Mercantile (E1), Tser Pool Vistani (G) & Arasek Stockyard (N5)",
-        "mechanics": "• <strong>Standard Arrows (20):</strong> Standard ammunition for Shortbows and Longbows (fired automatically whenever the bow is set to <em>Standard</em>).",
-        "lore": "A stitched leather quiver holding twenty ashwood bodkin arrows."
-    },
     "silvered_bullets": {
         "cat": "weapon",
         "name": "Silvered Bullets",
@@ -15490,6 +15492,90 @@ const LOOT_DATA = {
         "location": "Act IV • Lighting the Beacon of Argynvostholt",
         "mechanics": "<strong>DM Remote Upgrade:</strong> Click <strong>[Upgrade]</strong> when Argynvost's Beacon is lit to bless the hero's <em>Silvered Dragonplate +1</em> into <strong>Reforged Silvered Dragonplate +2 (Base AC 20; AC 21 with Defense Style)</strong>.",
         "lore": "Silver scales etched across the cuirass gleam with warm spectral dragonlight."
+    },
+    "awaken_yvaine_legendary": {
+        "cat": "weapon",
+        "bestHeroId": "yvaine",
+        "actTag": "Act IV",
+        "isUpgradeItem": true,
+        "isAwakeningItem": true,
+        "awakenSpec": { "heroId": "yvaine", "heroLabel": "🔫 Yvaine", "mode": "legendary", "presetId": "yvaine_legendary" },
+        "name": "☀️ Yvaine's Dawn-Crowned Arsenal (Lament, Mercy & Less +3)",
+        "rarity": "Legendary Signature Weapon Awakening • Attunement",
+        "cost": "Endgame Dawn Awakening (1-Click Transform)",
+        "location": "Act IV • Solmere Vow / Morninglord Consecration • Transforms Lament, Mercy & Less in-place!",
+        "mechanics": "• <strong>1-Click Signature Firearm Awakening:</strong> Keeps Yvaine's beloved <em>Lament (10-Round)</em>, <em>Mercy (6-Cyl)</em>, and <em>Less (6-Cyl)</em> intact while transforming them into <strong>☀️ Dawn-Piercer of Solmere +3 (+1d8 Radiant, Mist-Sight, Halts Regen)</strong> and <strong>☀️ Morning-Star &amp; Solmere's Last Light +3 (+1d6 Radiant, Silvered/Magical)</strong>.<br>• <strong>1/Long Rest Quick-Belt Power:</strong> Grants <strong>☀️ Solmere Dawn-Flare (Daylight)</strong>.",
+        "lore": "Golden dawnlight races down every rifled groove—turning Solmere's mourning guns into twin stars cutting clean through Barovia's fog."
+    },
+    "awaken_yvaine_cursed": {
+        "cat": "weapon",
+        "bestHeroId": "yvaine",
+        "actTag": "Act IV",
+        "isUpgradeItem": true,
+        "isAwakeningItem": true,
+        "awakenSpec": { "heroId": "yvaine", "heroLabel": "🔫 Yvaine", "mode": "cursed", "presetId": "yvaine_cursed" },
+        "name": "🩸 Yvaine's Mist-Wrought Arsenal (Lament, Mercy & Less +3)",
+        "rarity": "Cursed Legendary Signature Weapon Awakening • Attunement",
+        "cost": "Domain Zero Root-Mist Binding (1-Click Transform)",
+        "location": "Act IV • Amber Vault X42 / Root Anchor Collapse • Cursed Transformation of Lament, Mercy & Less!",
+        "mechanics": "• <strong>1-Click Cursed Signature Awakening:</strong> Transforms <em>Lament</em>, <em>Mercy</em>, and <em>Less</em> in-place into <strong>🩸 Hollow-Mist Repeater +3 (+1d8 Necrotic, Mist-Sight, Blocks Healing)</strong> and <strong>🩸 Phantom &amp; Grim-Smile +3 (+1d6 Necrotic, Silvered/Magical)</strong>.<br>• <strong>2/Short Rest Quick-Belt Power:</strong> Grants <strong>🌫️ Phantom Mist-Step</strong> (Bonus Action 30-ft teleport).<br>• <strong>🩸 Curse Trade-Off:</strong> Cold whispers of Domain Zero impose <strong>-1 to Saving Throws</strong>.",
+        "lore": "Freezing gray fog pours out of the breech with every trigger pull, locking the crosshairs onto whoever breathes in the dark."
+    },
+    "awaken_jacomir_legendary": {
+        "cat": "weapon",
+        "bestHeroId": "jacomir",
+        "actTag": "Act IV",
+        "isUpgradeItem": true,
+        "isAwakeningItem": true,
+        "awakenSpec": { "heroId": "jacomir", "heroLabel": "👑 Jacomir", "mode": "legendary", "presetId": "jacomir_legendary" },
+        "name": "☀️ Sovereign's Dawnblade of Oakenshire +3 (Ancestral Greatsword)",
+        "rarity": "Legendary Signature Weapon Awakening • Attunement",
+        "cost": "Endgame Dawn Awakening (1-Click Transform)",
+        "location": "Act IV • Beacon of Argynvost / True Royal Oath • Transforms Ancestral Greatsword in-place!",
+        "mechanics": "• <strong>1-Click Signature Greatsword Awakening:</strong> Transforms Jacomir's <em>Ancestral Greatsword</em> (keeping <strong>Savage Attacker</strong> &amp; <strong>Graze</strong>!) into a <strong>+3 Legendary Greatsword</strong> dealing <strong>+1d8 Radiant</strong>, granting <strong>+1 AC &amp; +1 All Saving Throws</strong>, Silvered/Magical, and halting Vampire Regeneration.<br>• <strong>1/Long Rest Quick-Belt Power:</strong> <strong>☀️ Sovereign's Dawn Aura</strong> (Bonus Action: allies within 30 ft deal +1d4 Radiant &amp; Adv vs Frightened for 1 min).",
+        "lore": "The battered heirloom steel of Oakenshire blazes awake like a rising crown of unyielding sunlight."
+    },
+    "awaken_jacomir_cursed": {
+        "cat": "weapon",
+        "bestHeroId": "jacomir",
+        "actTag": "Act IV",
+        "isUpgradeItem": true,
+        "isAwakeningItem": true,
+        "awakenSpec": { "heroId": "jacomir", "heroLabel": "👑 Jacomir", "mode": "cursed", "presetId": "jacomir_cursed" },
+        "name": "🩸 Dreadblade of the Mist-Bound King +3 (Ancestral Greatsword)",
+        "rarity": "Cursed Legendary Signature Weapon Awakening • Attunement",
+        "cost": "Domain Zero Dread-Crown Binding (1-Click Transform)",
+        "location": "Act IV • Amber Sarcophagus / Root Anchor Turn • Cursed Transformation of Ancestral Greatsword!",
+        "mechanics": "• <strong>1-Click Cursed Signature Awakening:</strong> Transforms Jacomir's <em>Ancestral Greatsword</em> (keeping <strong>Savage Attacker</strong> &amp; <strong>Graze</strong>!) into a <strong>+3 Cursed Dreadblade</strong> dealing <strong>+2d6 Necrotic</strong>, granting <strong>+1 AC</strong>, Silvered/Magical, and siphoning <strong>+1d8 Temp HP</strong> on kills.<br>• <strong>1/Long Rest Quick-Belt Power:</strong> <strong>🩸 Dread Sovereign's Roar (Fear — 30-ft cone)</strong>.<br>• <strong>🩸 Curse Trade-Off:</strong> Disadvantage on Persuasion checks to parley peacefully while drawn.",
+        "lore": "Obsidian frost creeps across the Oakenshire fuller—turning a king's promise to save his people into an iron command over the fog."
+    },
+    "awaken_piper_cursed": {
+        "cat": "caster",
+        "bestHeroId": "piper",
+        "actTag": "Act IV",
+        "isUpgradeItem": true,
+        "isAwakeningItem": true,
+        "awakenSpec": { "heroId": "piper", "heroLabel": "🎩 Piper", "mode": "cursed", "presetId": "piper_cursed" },
+        "name": "🩸 Nocturne, Staff of the Weeping Mists +2 & Fused Mist-Core",
+        "rarity": "Cursed Legendary Staff & Fused Arcane Core • Attunement",
+        "cost": "Domain Zero Chaotic Conduit Binding (1-Click Transform)",
+        "location": "Act IV • Stage 3 Blank Card / Amber Vault X42 • Transforms Piper's Staff AND Fuses Cursed Core!",
+        "mechanics": "• <strong>1-Click Cursed Staff + Core Transformation:</strong> Completely transforms Piper's held <em>Quarterstaff (Magician's Cane)</em> into <strong>🩸 Nocturne, Staff of the Weeping Mists +2</strong> AND fuses the <strong>🩸 Heart-Core of the Weeping Mists</strong> directly into its Arcane Core slot!<br>• <strong>Combined Power:</strong> Grants <strong>+2 Spell Save DC &amp; +2 Spell Attack</strong>, <strong>+1 AC</strong>, <strong>+1 All Saves</strong>, <strong>Mist-Sight</strong>, <strong>+2 Staff Hit/Dmg + 1d8 Psychic</strong>, and <strong>1/Long Rest 🩸 Hunger of the Weeping Mists (4d8 Necrotic 20-ft fog sphere)</strong>.<br>• <strong>🩸 Curse Trade-Off:</strong> Rolling a Nat 1 on a leveled spell triggers an immediate Dark Mist Surge!",
+        "lore": "Charcoal ink bleeds out of Piper's Blank Tarokka Card straight up her sleeve, twisting polished stage-wood around a beating sphere of captive midnight fog."
+    },
+    "awaken_piper_legendary": {
+        "cat": "caster",
+        "bestHeroId": "piper",
+        "actTag": "Act IV",
+        "isUpgradeItem": true,
+        "isAwakeningItem": true,
+        "awakenSpec": { "heroId": "piper", "heroLabel": "🎩 Piper", "mode": "legendary", "presetId": "piper_legendary" },
+        "name": "☀️ Astral Cane of the Unbroken Dawn +2 & Phoenix-Sun Core",
+        "rarity": "Legendary Signature Staff & Arcane Core • Attunement",
+        "cost": "Endgame Dawn Awakening (1-Click Transform)",
+        "location": "Act IV • Defying the Mists • Transforms Piper's Staff AND Mounts Radiant Phoenix-Sun Core!",
+        "mechanics": "• <strong>1-Click Legendary Staff + Core Transformation:</strong> Transforms Piper's <em>Quarterstaff</em> into <strong>☀️ Astral Cane of the Unbroken Dawn +2</strong> AND mounts the <strong>☀️ Radiant Phoenix-Sun Core</strong> into its Arcane Core slot!<br>• <strong>Combined Power:</strong> Grants <strong>+2 Spell Save DC &amp; +2 Spell Attack</strong>, <strong>+1 AC</strong>, <strong>+2 All Saves</strong>, <strong>+1 Initiative</strong>, <strong>+1d8 Radiant</strong>, and <strong>1/Long Rest ☀️ Sunburst Lance (6d8 Radiant 60-ft beam)</strong>.",
+        "lore": "Her theatrical magician's cane blossoms into spun star-gold crowned with a warm, unquenchable ember of dawn."
     },
     "quicksilver_quickdraw_pommel": {
         "cat": "weapon",
@@ -18040,7 +18126,12 @@ function dmHeroOwnsUpgradeBase(heroId, it) {
 function dmSendItemUpgrade(lootKey, toId, toName, ev) {
     if (ev) ev.stopPropagation();
     const it = LOOT_DATA[lootKey];
-    if (!it || !it.upgradeTarget) return;
+    if (!it) return;
+    if (it.isAwakeningItem && it.awakenSpec) {
+        dmTriggerSignatureAwakening(toId || it.awakenSpec.heroId, toName || it.awakenSpec.heroLabel, it.awakenSpec.mode, it.awakenSpec.presetId, '', ev);
+        return;
+    }
+    if (!it.upgradeTarget) return;
     if (toId === 'all') {
         DM_PARTY_TARGETS.forEach(t => dmSendItemUpgrade(lootKey, t.id, t.label, null));
         return;
@@ -18063,6 +18154,131 @@ function dmSendItemUpgrade(lootKey, toId, toName, ev) {
     } else {
         dmShowQuickToast(`⚠️ Firebase not connected — connect Firebase to remotely upgrade ${toName}'s item.`);
     }
+}
+
+function dmTriggerSignatureAwakening(heroId, heroName, mode = 'legendary', presetId = '', customTitle = '', ev = null) {
+    if (ev) ev.stopPropagation();
+    const cleanHeroId = String(heroId || '').trim().toLowerCase();
+    if (!cleanHeroId) return;
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    const rtdb = dmGetRtdb();
+    const cmdPayload = {
+        action: 'awaken_weapon',
+        mode: mode === 'cursed' ? 'cursed' : 'legendary',
+        presetId: presetId || '',
+        customTitle: String(customTitle || '').trim(),
+        createdAt: Date.now()
+    };
+    if (rtdb) {
+        rtdb.ref(`campaigns/${room}/heroes/${cleanHeroId}/dm_commands`).push(cmdPayload).then(() => {
+            const tag = mode === 'cursed' ? '🩸 CURSED MIST AWAKENING' : '🟠 LEGENDARY DAWN AWAKENING';
+            dmShowQuickToast(`${tag} sent to <strong>${escapeEncounterHtml(heroName || cleanHeroId)}</strong>! Their signature weapon transformed in-place.`);
+        }).catch(err => {
+            dmShowQuickToast(`⚠️ Awakening command failed: ${err.message}`);
+        });
+    } else {
+        dmShowQuickToast(`⚠️ Firebase not connected — open online to awaken ${escapeEncounterHtml(heroName || cleanHeroId)}'s weapon live.`);
+    }
+}
+
+function dmRevertSignatureAwakening(heroId, heroName, ev = null) {
+    if (ev) ev.stopPropagation();
+    const cleanHeroId = String(heroId || '').trim().toLowerCase();
+    if (!cleanHeroId) return;
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    const rtdb = dmGetRtdb();
+    if (rtdb) {
+        rtdb.ref(`campaigns/${room}/heroes/${cleanHeroId}/dm_commands`).push({
+            action: 'revert_awakening',
+            targetTag: 'all',
+            createdAt: Date.now()
+        }).then(() => {
+            dmShowQuickToast(`↺ Reverted <strong>${escapeEncounterHtml(heroName || cleanHeroId)}</strong>'s signature weapon back to original form.`);
+        }).catch(err => {
+            dmShowQuickToast(`⚠️ Revert failed: ${err.message}`);
+        });
+    } else {
+        dmShowQuickToast(`⚠️ Firebase not connected.`);
+    }
+}
+
+function dmRunUniversalAwakenerForm(mode) {
+    const selVal = (document.getElementById('dm-univ-awaken-hero')?.value || 'piper|🎩 Piper').split('|');
+    const customHeroInput = (document.getElementById('dm-univ-awaken-custom-id')?.value || '').trim().toLowerCase();
+    const customTitle = (document.getElementById('dm-univ-awaken-title')?.value || '').trim();
+    const targetId = (selVal[0] === '__custom__') ? customHeroInput : selVal[0];
+    const targetName = (selVal[0] === '__custom__') ? (customHeroInput ? `🆕 ${customHeroInput}` : '') : selVal[1];
+    if (!targetId) {
+        dmShowQuickToast(`⚠️ Enter the new player's Hero ID (e.g. <code>kaelen</code>) first!`);
+        return;
+    }
+    if (mode === 'revert') {
+        dmRevertSignatureAwakening(targetId, targetName);
+        return;
+    }
+    // Use bespoke preset for Piper/Jacomir/Yvaine unless customTitle overrides or hero is a new character!
+    const presetId = (['piper', 'jacomir', 'yvaine'].includes(targetId) && !customTitle)
+        ? `${targetId}_${mode}`
+        : 'universal';
+    dmTriggerSignatureAwakening(targetId, targetName, mode, presetId, customTitle);
+}
+
+function renderDmSignatureAwakeningPanelHtml(compact = false) {
+    return `
+        <div class="loot-awaken-panel">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
+                <div>
+                    <div style="font-family:'Cinzel',serif; font-size:0.86rem; font-weight:800; color:#fecdd3;">🌑☀️ ENDGAME SIGNATURE WEAPON AWAKENING STUDIO (DAWN LEGENDARY vs. CURSED MIST)</div>
+                    <div style="font-size:0.73rem; color:#cbd5e1; margin-top:2px;">Transforms each hero's starter weapon <strong>in-place</strong> (preserving Yvaine's 10/6/6 chambers, Jacomir's Savage + Graze, &amp; fusing a Cursed/Dawn Core into Piper's Staff — plus works on <strong>any future new player</strong>!).</div>
+                </div>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(235px, 1fr)); gap:8px;">
+                <div style="background:#090e1a; border:1px solid #334155; border-top:2.5px solid #38bdf8; border-radius:7px; padding:8px 10px; display:flex; flex-direction:column; gap:5px;">
+                    <div style="font-size:0.77rem; font-weight:800; color:#f8fafc;">🔫 Yvaine — Lament, Mercy &amp; Less</div>
+                    <div style="font-size:0.68rem; color:#94a3b8;">Awakens all 3 guns (+3, Radiant Dawn-Piercer vs. Necrotic Hollow-Mist + Mist-Step).</div>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:auto;">
+                        <button type="button" class="btn-modal-mini" style="border-color:#fbbf24; color:#fef08a;" onclick="dmTriggerSignatureAwakening('yvaine', '🔫 Yvaine', 'legendary', 'yvaine_legendary')">☀️ Legendary</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.28);" onclick="dmTriggerSignatureAwakening('yvaine', '🔫 Yvaine', 'cursed', 'yvaine_cursed')">🩸 Cursed Mist</button>
+                        <button type="button" class="btn-modal-mini" onclick="dmRevertSignatureAwakening('yvaine', '🔫 Yvaine')" title="Revert back to starter guns">↺</button>
+                    </div>
+                </div>
+                <div style="background:#090e1a; border:1px solid #334155; border-top:2.5px solid #f59e0b; border-radius:7px; padding:8px 10px; display:flex; flex-direction:column; gap:5px;">
+                    <div style="font-size:0.77rem; font-weight:800; color:#f8fafc;">👑 Jacomir — Ancestral Greatsword</div>
+                    <div style="font-size:0.68rem; color:#94a3b8;">Keeps Savage + Graze (+3 Dawnblade +1d8 Rad vs. Cursed Dreadblade +2d6 Necrotic).</div>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:auto;">
+                        <button type="button" class="btn-modal-mini" style="border-color:#fbbf24; color:#fef08a;" onclick="dmTriggerSignatureAwakening('jacomir', '👑 Jacomir', 'legendary', 'jacomir_legendary')">☀️ Legendary</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.28);" onclick="dmTriggerSignatureAwakening('jacomir', '👑 Jacomir', 'cursed', 'jacomir_cursed')">🩸 Cursed Mist</button>
+                        <button type="button" class="btn-modal-mini" onclick="dmRevertSignatureAwakening('jacomir', '👑 Jacomir')" title="Revert back to Ancestral Greatsword">↺</button>
+                    </div>
+                </div>
+                <div style="background:#090e1a; border:1px solid #334155; border-top:2.5px solid #c084fc; border-radius:7px; padding:8px 10px; display:flex; flex-direction:column; gap:5px;">
+                    <div style="font-size:0.77rem; font-weight:800; color:#f8fafc;">🎩 Piper — Staff + Fused Core</div>
+                    <div style="font-size:0.68rem; color:#94a3b8;">Transforms Staff <em>and</em> fuses 🩸 Cursed Mist-Core (+2 Spell DC/Atk, 4d8 Mist Storm) or ☀️ Sun Core!</div>
+                    <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:auto;">
+                        <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.32);" onclick="dmTriggerSignatureAwakening('piper', '🎩 Piper', 'cursed', 'piper_cursed')">🩸 Cursed Staff + Core</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#fbbf24; color:#fef08a;" onclick="dmTriggerSignatureAwakening('piper', '🎩 Piper', 'legendary', 'piper_legendary')">☀️ Legendary</button>
+                        <button type="button" class="btn-modal-mini" onclick="dmRevertSignatureAwakening('piper', '🎩 Piper')" title="Revert Staff &amp; Core">↺</button>
+                    </div>
+                </div>
+            </div>
+            ${compact ? '' : `
+            <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center; background:#090e1a; border:1px dashed #475569; border-radius:7px; padding:7px 10px;">
+                <span style="font-size:0.72rem; font-weight:800; color:#fde68a;">🆕 Any / New Player Starter Weapon:</span>
+                <select id="dm-univ-awaken-hero" class="dm-forge-select" style="width:auto; padding:4px 8px; font-size:0.74rem;" aria-label="Choose hero to awaken weapon" onchange="const el=document.getElementById('dm-univ-awaken-custom-id'); if(el) el.style.display=(this.value.startsWith('__custom__')?'inline-block':'none');">
+                    <option value="cael|🐾 Cael">🐾 Cael (Companion)</option>
+                    <option value="__custom__|New Hero">🆕 New / Replacement Player (Type ID)...</option>
+                    <option value="piper|🎩 Piper">🎩 Piper (Custom Title)</option>
+                    <option value="jacomir|👑 Jacomir">👑 Jacomir (Custom Title)</option>
+                    <option value="yvaine|🔫 Yvaine">🔫 Yvaine (Custom Title)</option>
+                </select>
+                <input type="text" id="dm-univ-awaken-custom-id" class="dm-forge-input" style="display:none; width:130px; padding:4px 8px; font-size:0.74rem;" placeholder="heroId (e.g. kael)" aria-label="Custom hero ID">
+                <input type="text" id="dm-univ-awaken-title" class="dm-forge-input" style="flex:1 1 190px; min-width:160px; padding:4px 8px; font-size:0.74rem;" placeholder="Optional custom awakened name (auto-names if blank)" aria-label="Optional custom awakened weapon name">
+                <button type="button" class="btn-modal-mini" style="border-color:#fbbf24; color:#fef08a;" onclick="dmRunUniversalAwakenerForm('legendary')">🟠 Awaken Legendary</button>
+                <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.28);" onclick="dmRunUniversalAwakenerForm('cursed')">🩸 Awaken Cursed</button>
+                <button type="button" class="btn-modal-mini" onclick="dmRunUniversalAwakenerForm('revert')" title="Revert target hero's weapon">↺ Revert</button>
+            </div>`}
+        </div>
+    `;
 }
 
 // =========================================================
@@ -20583,6 +20799,7 @@ function renderDmDropModalBody() {
             </div>
         </div>
         <div style="display:flex; flex-direction:column; gap:10px;">
+            ${renderDmSignatureAwakeningPanelHtml(false)}
             ${heroCards}
         </div>
     `;
@@ -21420,7 +21637,15 @@ function openItemModal(key, fromNav = false) {
                 </form>
             ` : ''}
         </div>
-        ${it.isUpgradeItem && it.upgradeTarget ? `
+        ${it.isAwakeningItem && it.awakenSpec ? `
+        <div style="background:${it.awakenSpec.mode === 'cursed' ? 'rgba(159,18,57,0.14)' : 'rgba(245,158,11,0.1)'}; border:1px solid ${it.awakenSpec.mode === 'cursed' ? 'rgba(244,63,94,0.55)' : 'rgba(251,191,36,0.5)'}; border-radius:7px; padding:9px 12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <span style="font-size:0.76rem; font-weight:800; color:${it.awakenSpec.mode === 'cursed' ? '#fecdd3' : '#fde68a'};">${it.awakenSpec.mode === 'cursed' ? '🩸 Cursed Mist' : '☀️ Legendary Dawn'} Signature Awakening (Transforms ${it.awakenSpec.heroLabel}'s Weapon In-Place):</span>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" class="btn-modal-mini" style="border-color:${it.awakenSpec.mode === 'cursed' ? '#f43f5e' : '#fbbf24'}; color:${it.awakenSpec.mode === 'cursed' ? '#fecdd3' : '#fef08a'};" onclick="dmTriggerSignatureAwakening('${it.awakenSpec.heroId}', '${it.awakenSpec.heroLabel}', '${it.awakenSpec.mode}', '${it.awakenSpec.presetId}', '', event)">${it.awakenSpec.mode === 'cursed' ? '🩸' : '☀️'} Awaken Now</button>
+                <button type="button" class="btn-modal-mini" onclick="dmRevertSignatureAwakening('${it.awakenSpec.heroId}', '${it.awakenSpec.heroLabel}', event)">↺ Revert</button>
+            </div>
+        </div>
+        ` : it.isUpgradeItem && it.upgradeTarget ? `
         <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(251,191,36,0.45); border-radius:7px; padding:9px 12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <span style="font-size:0.76rem; font-weight:800; color:#fde68a;">⬆️ Remote DM Item Upgrade (Transforms Owned Base Item):</span>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
@@ -22911,16 +23136,66 @@ function matchesLootLocation(it, actTag, locId) {
     return def.match.some(kw => blob.includes(kw));
 }
 
+function isSpellScrollItem(it, itemKey = '') {
+    if (!it) return false;
+    if (String(itemKey || '').startsWith('scroll_')) return true;
+    if (it.customMeta && it.customMeta.useAction && it.customMeta.useAction.type === 'spellScroll') return true;
+    const nm = String(it.name || '');
+    const rar = String(it.rarity || '');
+    return (/^scroll of\b/i.test(nm) || /\bspell scroll\b/i.test(rar)) && !it.isRecipeWriting && it.cat !== 'quest';
+}
+
 function getLootViewBucket(it, itemKey = '') {
     if (it.cat === 'material') return 'materials';
-    if (it.isUpgradeItem) return 'upgrades';
+    if (it.isUpgradeItem || it.isAwakeningItem) return 'upgrades';
     if (it.isAttachment) return 'attachments';
     if (it.isRecipeWriting) return 'craftables';
+    if (isSpellScrollItem(it, itemKey)) return 'scrolls';
     if (it.cat === 'weapon') return 'weapons';
     if (it.cat === 'caster') return 'caster';
     if (it.cat === 'armor') return 'armor';
     if (it.cat === 'heal' || it.cat === 'buff' || it.cat === 'food') return 'consumables';
     return 'quest';
+}
+
+const LOOT_RARITY_TIERS = [
+    { id: 'all',       label: 'All Rarities', short: 'All' },
+    { id: 'common',    label: '⚪ Common',     short: '⚪ Common' },
+    { id: 'uncommon',  label: '🟢 Uncommon',   short: '🟢 Uncommon' },
+    { id: 'rare',      label: '🔵 Rare',       short: '🔵 Rare' },
+    { id: 'very_rare', label: '🟣 Very Rare',  short: '🟣 Very Rare' },
+    { id: 'legendary', label: '🟠 Legendary',  short: '🟠 Legendary' },
+    { id: 'cursed',    label: '🩸 Cursed',     short: '🩸 Cursed' }
+];
+
+function detectLootRarityTier(it) {
+    const r = String((it && it.rarity) || '').toLowerCase();
+    const m = String((it && it.mechanics) || '').toLowerCase();
+    if (r.includes('cursed') || (it && it.awakenSpec && it.awakenSpec.mode === 'cursed')) return 'cursed';
+    if (r.includes('legendary') || r.includes('artifact') || r.includes('fated tarokka relic')) return 'legendary';
+    if (r.includes('very rare')) return 'very_rare';
+    if (/\brare\b/.test(r)) return 'rare';
+    if (r.includes('uncommon')) return 'uncommon';
+    if (r.includes('common') || r.includes('mundane') || r.includes('everyday')) return 'common';
+    // Smart fallback for untagged story/relic items using cost/mechanics cues
+    const c = String((it && it.cost) || '').toLowerCase();
+    if (c.includes('priceless') || /sunsword|holy symbol of ravenkind|tome of strahd|staff of power|luck blade|icon of ravenloft/i.test(String(it && it.name))) return 'legendary';
+    if (m.includes('+2 ') || m.includes('very rare')) return 'very_rare';
+    if (m.includes('attunement')) return 'rare';
+    return 'common';
+}
+
+function renderRarityBadgeHtml(it) {
+    const tier = detectLootRarityTier(it);
+    const meta = {
+        common:    { cls: 'rarity-common',    txt: '⚪ Common' },
+        uncommon:  { cls: 'rarity-uncommon',  txt: '🟢 Uncommon' },
+        rare:      { cls: 'rarity-rare',      txt: '🔵 Rare' },
+        very_rare: { cls: 'rarity-very_rare', txt: '🟣 Very Rare' },
+        legendary: { cls: 'rarity-legendary', txt: '🟠 Legendary' },
+        cursed:    { cls: 'rarity-cursed',    txt: '🩸 Cursed' }
+    }[tier] || { cls: 'rarity-common', txt: '⚪ Common' };
+    return `<span class="rarity-pill ${meta.cls}">${meta.txt}</span>`;
 }
 
 function matchesLootFilter(it, filterTag, itemKey = '') {
@@ -23175,10 +23450,300 @@ const DM_CRAFTING_BY_LOOT = Object.fromEntries(DM_CRAFTING_RECIPES.map(r => [r.l
 let activeLootTag = 'Act I';
 let activeLootLoc = 'all';
 let activeLootCat = 'overview';
+let activeLootRarity = 'all';
 let activeLootSlot = 'all';
 let activeLootScene = null;
 let activeLootRollTier = 'all';
 let rolledSceneFinds = null;
+let lootExploreBarOpen = false;
+let lootShopBarOpen = false;
+let activeShopId = 'bildrath';
+let activeShopMult = 3;
+let activeShopShowAll = false;
+let generatedShopShelf = null;
+
+const DM_AREA_SHOPS = {
+    bildrath: {
+        id: 'bildrath',
+        label: "🏪 Bildrath's Mercantile (Barovia • 3x)",
+        title: "Bildrath's Mercantile — Village of Barovia (Area E1)",
+        keeper: 'Bildrath Cantemir & nephew Parriwimple ("If you want it badly enough, you\'ll pay for it!")',
+        defaultMult: 3,
+        maxRarity: ['common', 'uncommon'],
+        guaranteedKeys: ['bandages_field', 'silvered_bolts', 'silvered_arrows', 'sturdy_hempen_rope', 'bent_iron_crowbar', 'box_beeswax_candles', 'iron_hunters_bear_trap', 'empty_glass_vials_3', 'pitch_oil', 'clean_linen_cloth', 'light_crossbow', 'shortbow']
+    },
+    tser_pool: {
+        id: 'tser_pool',
+        label: "🔮 Tser Pool Vistani & Petru (1x)",
+        title: "Tser Pool Vistani Wagons & Petru's Crucible (Area G)",
+        keeper: "Madam Eva's Vistani Traders & silversmith Petru (Fair 1x prices to honored guests)",
+        defaultMult: 1,
+        maxRarity: ['common', 'uncommon', 'rare'],
+        guaranteedKeys: ['silvered_bullets', 'silvered_bolts', 'silvered_arrows', 'liquid_silver_coating', 'bullet_sling', 'healing_potion', 'vistani_stag_tonic', 'quicksilver_quickdraw_pommel', 'vistani_snap_sight', 'powdered_silver_dust', 'scroll_identify', 'scroll_mage_armor', 'scroll_protection_evil', 'scroll_detect_magic']
+    },
+    arasek: {
+        id: 'arasek',
+        label: "📦 Vallaki Arasek & Smithy (1.2x)",
+        title: "Arasek Stockyard & Vallaki Master Smithy (Area N5)",
+        keeper: "Gunther & Yelena Arasek + Vallaki Town Weaponsmith",
+        defaultMult: 1.2,
+        maxRarity: ['common', 'uncommon', 'rare'],
+        guaranteedKeys: ['healing_potion', 'mist_ward_camp_kit', 'silvered_bullets', 'silvered_bolts', 'silvered_arrows', 'fire_bolts', 'fire_arrows', 'heavy_crossbow', 'hand_crossbow', 'longbow', 'rapier_martial', 'breastplate_armor', 'half_plate_armor', 'alchemists_fire', 'ash_smoke_bomb', 'balinok_frost_sight']
+    },
+    blinsky: {
+        id: 'blinsky',
+        label: "🧸 Blinsky's Curios (Vallaki • 1x)",
+        title: "Blinsky Toys & Clockwork Oddities (Vallaki Area N7)",
+        keeper: 'Gadof Blinsky & Piccolo ("Is No Fun, Is No Blinsky!")',
+        defaultMult: 1,
+        maxRarity: ['common', 'uncommon', 'rare'],
+        guaranteedKeys: ['carved_blinsky_toy', 'whisper_silk_snare', 'ash_smoke_bomb', 'vistani_snap_sight', 'quicksilver_quickdraw_pommel', 'bag_of_tricks', 'hat_of_disguise', 'sewing_mending_kit', 'brass_chamber_candlestick', 'scroll_feather_fall', 'scroll_invisibility']
+    },
+    jeny: {
+        id: 'jeny',
+        label: "🌿 Herbalist / Apothecary (1x)",
+        title: "Barovian Herbalist & Apothecary Stall (Jeny Greenteeth / Vistani)",
+        keeper: "Hedge-herbalist remedies, poultices, reagents & restoration scrolls",
+        defaultMult: 1,
+        maxRarity: ['common', 'uncommon', 'rare'],
+        guaranteedKeys: ['healing_potion', 'greater_healing', 'barovian_antitoxin', 'ghost_cap_night_sight', 'bandages_field', 'medicinal_herbs', 'wolfbane_root', 'ghost_cap_mushrooms', 'alchemical_catalyst', 'scroll_cure_wounds', 'scroll_lesser_restoration', 'scroll_remove_curse', 'recipe_greater_healing', 'recipe_antitoxin']
+    },
+    ezmerelda: {
+        id: 'ezmerelda',
+        label: "⚔️ Ezmerelda / Hunter Wagon (1x)",
+        title: "Monster Hunter's Supply Cache (Ezmerelda / Van Richten)",
+        keeper: "Vampire-slaying ordnance, sanctified coatings, optics & tactical scrolls",
+        defaultMult: 1,
+        maxRarity: ['common', 'uncommon', 'rare'],
+        guaranteedKeys: ['holy_water', 'phosphor_grenades', 'alchemists_fire', 'liquid_silver_coating', 'sun_ash_balm', 'grave_salt_coating', 'silvered_bullets', 'sunburst_bolts', 'sunburst_arrows', 'storm_coil_barrel', 'scroll_protection_evil', 'scroll_see_invisibility', 'scroll_daylight', 'scroll_revivify']
+    },
+    abbey_church: {
+        id: 'abbey_church',
+        label: "⛪ Church / Abbey Sanctum (1x)",
+        title: "Morninglord Parish & Abbey Sanctum Offerings (St. Andral / Krezk)",
+        keeper: "Father Lucian Petrovich / Parish Vestry Donations & Sanctified Rites",
+        defaultMult: 1,
+        maxRarity: ['common', 'uncommon', 'rare', 'very_rare'],
+        guaranteedKeys: ['holy_water', 'bundle_morninglord_incense', 'grave_salt_ward_pouch', 'healing_potion', 'greater_healing', 'sun_ash_balm', 'scroll_cure_wounds', 'scroll_protection_evil', 'scroll_lesser_restoration', 'scroll_prayer_of_healing', 'scroll_remove_curse', 'scroll_revivify', 'scroll_death_ward', 'scroll_greater_restoration']
+    }
+};
+
+function dmParseShopPriceSp(costStr, mult = 1) {
+    const raw = String(costStr || '');
+    const gpM = raw.match(/(\d[\d,]*)\s*GP/i);
+    const spM = raw.match(/(\d[\d,]*)\s*SP/i);
+    const cpM = raw.match(/(\d[\d,]*)\s*CP/i);
+    let baseSp = 0;
+    if (gpM) baseSp += (parseInt(gpM[1].replace(/,/g, ''), 10) || 0) * 10;
+    if (spM) baseSp += (parseInt(spM[1].replace(/,/g, ''), 10) || 0);
+    if (!gpM && !spM && cpM) baseSp += Math.max(1, Math.round((parseInt(cpM[1].replace(/,/g, ''), 10) || 1) / 10));
+    if (baseSp <= 0) baseSp = 20; // fallback 2 GP
+    const scaledSp = Math.max(1, Math.round(baseSp * (Number(mult) || 1)));
+    const gp = Math.floor(scaledSp / 10);
+    const sp = scaledSp % 10;
+    const label = [gp ? `${gp.toLocaleString()} GP` : '', sp ? `${sp} SP` : ''].filter(Boolean).join(' ') || '1 SP';
+    return { gp, sp, totalSp: scaledSp, label };
+}
+
+function getShopEligiblePool(shopId) {
+    const shop = DM_AREA_SHOPS[shopId] || DM_AREA_SHOPS.bildrath;
+    const allowedRar = new Set(shop.maxRarity || ['common', 'uncommon']);
+    const pool = [];
+    const seen = new Set();
+    (shop.guaranteedKeys || []).forEach(k => {
+        if (LOOT_DATA[k] && !seen.has(k)) {
+            seen.add(k);
+            pool.push([k, LOOT_DATA[k]]);
+        }
+    });
+    // Also include matching location items that have an actual GP/SP price and aren't unique story artifacts/upgrades
+    const locKw = shopId === 'bildrath' ? ['bildrath'] : (shopId === 'tser_pool' ? ['tser pool', 'petru'] : (shopId === 'arasek' ? ['arasek', 'vallaki smithy', 'vallaki armory'] : (shopId === 'blinsky' ? ['blinsky'] : (shopId === 'jeny' ? ['jeny', 'apothecary', 'herbalist'] : (shopId === 'ezmerelda' ? ['ezmerelda', 'richten'] : ['st. andral', 'krezk abbey'])))));
+    Object.entries(LOOT_DATA).forEach(([k, it]) => {
+        if (seen.has(k) || !it || it.isUpgradeItem || it.isAwakeningItem || it.cat === 'quest') return;
+        const rar = detectLootRarityTier(it);
+        if (!allowedRar.has(rar)) return;
+        const c = String(it.cost || '').toLowerCase();
+        if (!/\d+\s*(?:gp|sp)/i.test(c) || c.includes('priceless') || c.includes('no sale')) return;
+        const loc = String(it.location || '').toLowerCase();
+        if (locKw.some(kw => loc.includes(kw))) {
+            seen.add(k);
+            pool.push([k, it]);
+        }
+    });
+    return pool;
+}
+
+function rollShopkeeperStock(shopId = activeShopId) {
+    activeShopId = shopId || 'bildrath';
+    activeShopShowAll = false;
+    const pool = getShopEligiblePool(activeShopId);
+    const shuffled = [...pool];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    generatedShopShelf = shuffled.slice(0, Math.min(8, shuffled.length)).map(([k]) => k);
+    renderLootShopPanel();
+}
+
+function selectShopkeeperPreset(shopId) {
+    activeShopId = shopId || 'bildrath';
+    const shop = DM_AREA_SHOPS[activeShopId] || DM_AREA_SHOPS.bildrath;
+    activeShopMult = shop.defaultMult || 1;
+    rollShopkeeperStock(activeShopId);
+}
+
+function setShopMultiplier(mult) {
+    activeShopMult = Number(mult) || 1;
+    renderLootShopPanel();
+}
+
+function toggleShopShowAll() {
+    activeShopShowAll = !activeShopShowAll;
+    renderLootShopPanel();
+}
+
+function dmSellShopItem(lootKey, toId, toName, ev) {
+    if (ev) ev.stopPropagation();
+    const it = LOOT_DATA[lootKey];
+    if (!it) return;
+    const shop = DM_AREA_SHOPS[activeShopId] || DM_AREA_SHOPS.bildrath;
+    const price = dmParseShopPriceSp(it.cost, activeShopMult);
+    const spec = dmParseDropItemAndQty(it.name);
+    const rtdb = dmGetRtdb();
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    if (!rtdb) {
+        dmShowQuickToast(`⚠️ Connect Firebase to auto-deduct ${price.label} &amp; deliver <strong>${escapeEncounterHtml(it.name)}</strong>.`);
+        return;
+    }
+    rtdb.ref(`campaigns/${room}/heroes/${toId}/dm_commands`).push({
+        action: 'buy_shop_item',
+        shopName: shop.title.split('—')[0].trim(),
+        itemRaw: spec.itemRaw,
+        qty: spec.defaultQty,
+        costGp: price.gp,
+        costSp: price.sp,
+        customMeta: it.customMeta || null,
+        createdAt: Date.now()
+    }).then(() => {
+        dmShowQuickToast(`🏪 <strong>Sold to ${toName}:</strong> ${spec.defaultQty > 1 ? spec.defaultQty + 'x ' : ''}<strong>${escapeEncounterHtml(spec.itemRaw)}</strong> for <strong style="color:#facc15;">${price.label}</strong> (auto-checked &amp; deducted from purse)!`);
+    }).catch(err => {
+        dmShowQuickToast(`⚠️ Shop sale failed: ${err.message}`);
+    });
+}
+
+function renderLootShopPanel() {
+    const panel = document.getElementById('loot-shop-panel');
+    const btn = document.getElementById('btn-toggle-shops');
+    if (btn) {
+        btn.classList.toggle('active', lootShopBarOpen);
+        btn.setAttribute('aria-expanded', lootShopBarOpen ? 'true' : 'false');
+        btn.innerText = lootShopBarOpen ? '🏪 Shopkeepers ▴' : '🏪 Shopkeepers ▾';
+    }
+    if (!panel) return;
+    panel.classList.toggle('is-open', lootShopBarOpen);
+    if (!lootShopBarOpen) {
+        panel.innerHTML = '';
+        return;
+    }
+    const shop = DM_AREA_SHOPS[activeShopId] || DM_AREA_SHOPS.bildrath;
+    const fullPool = getShopEligiblePool(activeShopId);
+    if (!Array.isArray(generatedShopShelf) || generatedShopShelf.length === 0) {
+        generatedShopShelf = fullPool.slice(0, Math.min(8, fullPool.length)).map(([k]) => k);
+    }
+    const visibleKeys = activeShopShowAll ? fullPool.map(([k]) => k) : generatedShopShelf;
+    const multOptions = [
+        { v: 0.8, lbl: '0.8x Ally' },
+        { v: 1,   lbl: '1x Fair' },
+        { v: 1.2, lbl: '1.2x Town' },
+        { v: 1.5, lbl: '1.5x Steep' },
+        { v: 3,   lbl: '3x Bildrath Gouge' }
+    ];
+
+    const cardsHtml = visibleKeys.map(k => {
+        const it = LOOT_DATA[k];
+        if (!it) return '';
+        const price = dmParseShopPriceSp(it.cost, activeShopMult);
+        const spec = dmParseDropItemAndQty(it.name);
+        const plainMech = String(it.mechanics || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+        const shortMech = plainMech.length > 115 ? plainMech.slice(0, 112) + '…' : plainMech;
+        const escName = escapeEncounterHtml(it.name);
+        return `
+            <div class="loot-shop-card">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
+                    <div>
+                        <button type="button" class="link-btn" style="font-size:0.81rem;" onclick="openItemModal('${k}')">${escName}</button>
+                        ${renderRarityBadgeHtml(it)}
+                    </div>
+                    <span class="loot-cost-pill" style="background:rgba(250,204,21,0.18); border-color:#facc15; color:#fef08a; font-weight:800;">💰 ${escapeEncounterHtml(price.label)}</span>
+                </div>
+                <div style="font-size:0.7rem; color:#94a3b8; line-height:1.35;">${escapeEncounterHtml(shortMech)}</div>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:4px; margin-top:auto; padding-top:4px; border-top:1px solid #1e293b;">
+                    <span style="font-size:0.65rem; color:#6ee7b7; font-weight:700;">${spec.defaultQty > 1 ? `Pack: ${spec.defaultQty}x` : '1x Stock'}</span>
+                    <span style="display:inline-flex; gap:3px; align-items:center;">
+                        <span style="font-size:0.63rem; color:#fde68a; font-weight:700;">Sell:</span>
+                        <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.64rem; border-color:#f59e0b; color:#fef08a;" onclick="dmSellShopItem('${k}', 'piper', '🎩 Piper', event)" title="Deduct ${price.label} from Piper &amp; add item">💰🎩</button>
+                        <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.64rem; border-color:#f59e0b; color:#fef08a;" onclick="dmSellShopItem('${k}', 'jacomir', '👑 Jacomir', event)" title="Deduct ${price.label} from Jacomir &amp; add item">💰👑</button>
+                        <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.64rem; border-color:#f59e0b; color:#fef08a;" onclick="dmSellShopItem('${k}', 'yvaine', '🔫 Yvaine', event)" title="Deduct ${price.label} from Yvaine &amp; add item">💰🔫</button>
+                    </span>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    panel.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+            <div>
+                <div style="font-family:'Cinzel',serif; font-size:0.84rem; font-weight:800; color:#fde68a;">🏪 ${escapeEncounterHtml(shop.title)}</div>
+                <div style="font-size:0.72rem; color:#cbd5e1;">${escapeEncounterHtml(shop.keeper)} • Clicking <strong>[💰🎩/👑/🔫]</strong> deducts GP/SP &amp; delivers the item!</div>
+            </div>
+            <button type="button" class="btn-modal-mini" style="border-color:#f87171; color:#fca5a5;" onclick="toggleLootShopBar(false)">✕ Close Shop</button>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:5px; align-items:center;">
+            ${Object.values(DM_AREA_SHOPS).map(s => {
+                const on = s.id === activeShopId;
+                return `<button type="button" class="btn-loot-loc ${on ? 'active' : ''}" aria-pressed="${on ? 'true' : 'false'}" onclick="selectShopkeeperPreset('${s.id}')">${escapeEncounterHtml(s.label)}</button>`;
+            }).join('')}
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; padding-top:4px; border-top:1px solid #1e293b;">
+            <div style="display:flex; flex-wrap:wrap; gap:4px; align-items:center;">
+                <span style="font-size:0.7rem; color:#fde68a; font-weight:700;">⚖️ Markup:</span>
+                ${multOptions.map(m => `<button type="button" class="btn-loot-rarity ${activeShopMult === m.v ? 'active' : ''}" aria-pressed="${activeShopMult === m.v ? 'true' : 'false'}" onclick="setShopMultiplier(${m.v})">${m.lbl}</button>`).join('')}
+            </div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" class="btn-modal-mini" style="border-color:#38bdf8; color:#bae6fd;" onclick="rollShopkeeperStock('${activeShopId}')">🎲 Re-Roll Shelf (8)</button>
+                <button type="button" class="btn-modal-mini" style="border-color:#a78bfa; color:#ddd6fe;" onclick="toggleShopShowAll()">${activeShopShowAll ? `📋 Shelf Only (8)` : `📦 Full Merchant Pool (${fullPool.length})`}</button>
+            </div>
+        </div>
+        <div class="loot-shop-grid">${cardsHtml}</div>
+    `;
+}
+
+function toggleLootExploreBar(forceState) {
+    lootExploreBarOpen = typeof forceState === 'boolean' ? forceState : !(lootExploreBarOpen || Boolean(activeLootScene));
+    if (!lootExploreBarOpen) {
+        activeLootScene = null;
+        activeLootRollTier = 'all';
+        rolledSceneFinds = null;
+    }
+    syncLootBarButtonsUI();
+    renderLootVault(activeLootTag);
+}
+
+function closeLootExploreBar() {
+    toggleLootExploreBar(false);
+}
+
+function toggleLootShopBar(forceState) {
+    lootShopBarOpen = typeof forceState === 'boolean' ? forceState : !lootShopBarOpen;
+    if (lootShopBarOpen && (!generatedShopShelf || generatedShopShelf.length === 0)) {
+        const defShop = DM_AREA_SHOPS[activeShopId] || DM_AREA_SHOPS.bildrath;
+        activeShopMult = defShop.defaultMult || 3;
+        rollShopkeeperStock(activeShopId);
+        return;
+    }
+    renderLootShopPanel();
+}
 
 function renderLootCardHtml(k, it) {
     const customBadge = it.isCustomForged
@@ -23216,7 +23781,14 @@ function renderLootCardHtml(k, it) {
     const rowDropSpec = dmParseDropItemAndQty(it.name);
     const splitRC = dmSplitRarityAndCost(it);
     const shortRarity = splitRC.rarityText.replace(/\s*\([^)]*\)\s*/g, ' ').replace(/\s+/g, ' ').trim();
-    const rowActionsHtml = it.isUpgradeItem && it.upgradeTarget
+    const rarityBadgeHtml = renderRarityBadgeHtml(it);
+    const detectedTier = detectLootRarityTier(it);
+    const rowActionsHtml = (it.isAwakeningItem && it.awakenSpec)
+        ? `<span class="loot-row-actions" title="1-click transform hero's signature weapon in-place">
+                <button type="button" class="btn-modal-mini" style="padding:2px 8px; font-size:0.66rem; border-color:${it.awakenSpec.mode === 'cursed' ? '#f43f5e' : '#fbbf24'}; color:${it.awakenSpec.mode === 'cursed' ? '#fecdd3' : '#fef08a'}; background:${it.awakenSpec.mode === 'cursed' ? 'rgba(159,18,57,0.3)' : 'rgba(180,83,9,0.28)'};" onclick="dmTriggerSignatureAwakening('${it.awakenSpec.heroId}', '${it.awakenSpec.heroLabel}', '${it.awakenSpec.mode}', '${it.awakenSpec.presetId}', '', event)">${it.awakenSpec.mode === 'cursed' ? '🩸' : '☀️'} Awaken ${it.awakenSpec.heroLabel}</button>
+                <button type="button" class="btn-modal-mini" style="padding:2px 6px; font-size:0.65rem;" onclick="dmRevertSignatureAwakening('${it.awakenSpec.heroId}', '${it.awakenSpec.heroLabel}', event)" title="Revert back to original starter weapon">↺</button>
+           </span>`
+        : ((it.isUpgradeItem && it.upgradeTarget)
         ? `<span class="loot-row-actions" title="Upgrade owned base item directly in hero's sheet">
                 <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.65rem; border-color:${dmHeroOwnsUpgradeBase('piper', it) ? '#34d399' : '#f59e0b'}; color:${dmHeroOwnsUpgradeBase('piper', it) ? '#a7f3d0' : '#fde68a'};" onclick="dmSendItemUpgrade('${k}', 'piper', '🎩 Piper', event)" title="Upgrade Piper's base item">⬆️ 🎩</button>
                 <button type="button" class="btn-modal-mini" style="padding:1px 6px; font-size:0.65rem; border-color:${dmHeroOwnsUpgradeBase('jacomir', it) ? '#34d399' : '#f59e0b'}; color:${dmHeroOwnsUpgradeBase('jacomir', it) ? '#a7f3d0' : '#fde68a'};" onclick="dmSendItemUpgrade('${k}', 'jacomir', '👑 Jacomir', event)" title="Upgrade Jacomir's base item">⬆️ 👑</button>
@@ -23232,7 +23804,7 @@ function renderLootCardHtml(k, it) {
                 <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${k}', 'jacomir', '👑 Jacomir', event)" title="Drop to Jacomir" aria-label="Drop ${escItemAttr} to Jacomir">👑</button>
                 <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${k}', 'yvaine', '🔫 Yvaine', event)" title="Drop to Yvaine" aria-label="Drop ${escItemAttr} to Yvaine">🔫</button>
                 <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" data-loot-edit-btn="${k}" onclick="dmStartInlineLootRename('${k}', event)" title="Edit item name" aria-label="Edit name of ${escItemAttr}">✏️</button>
-           </span>`;
+           </span>`);
     const inlineFormHtml = (dmEditingLootKey === k) ? `
         <form class="dm-loot-rename-form" onsubmit="dmSaveInlineLootRename(event, '${k}')" novalidate>
             <label for="dm-loot-rename-${k}" class="visually-hidden">Edit name of ${escItemAttr}</label>
@@ -23257,19 +23829,20 @@ function renderLootCardHtml(k, it) {
         matStripHtml = `<div class="loot-mat-strip"><strong style="color:#6ee7b7;">Builds:</strong> ${recPills}</div>`;
     }
 
-    const cardCls = it.isUpgradeItem ? 'card-upgrade' : (it.isAttachment ? 'card-attach' : (it.isCustomForged ? 'card-custom' : ''));
+    const rarCls = detectedTier === 'cursed' ? 'card-cursed' : (detectedTier === 'legendary' ? 'card-legendary' : '');
+    const cardCls = [it.isUpgradeItem ? 'card-upgrade' : (it.isAttachment ? 'card-attach' : (it.isCustomForged ? 'card-custom' : '')), rarCls].filter(Boolean).join(' ');
     return `
         <div class="loot-dense-card searchable-row ${cardCls}">
             <div class="loot-card-top">
                 <div class="loot-card-title">
-                    <button type="button" class="link-btn" onclick="openItemModal('${k}')">${escapeEncounterHtml(it.name)}</button>${slotPill}${upgBadge}${craftBadge}${npcConvBadge}${foodBadge}${tierBadge}${customBadge}${renamedBadge}
+                    <button type="button" class="link-btn" onclick="openItemModal('${k}')">${escapeEncounterHtml(it.name)}</button> ${rarityBadgeHtml}${slotPill}${upgBadge}${craftBadge}${npcConvBadge}${foodBadge}${tierBadge}${customBadge}${renamedBadge}
                 </div>
                 ${rowActionsHtml}
             </div>
             ${inlineFormHtml}
             <div class="loot-card-meta">
                 <span class="loot-cost-pill">${escapeEncounterHtml(splitRC.costText)}</span>
-                <span style="color:#fde68a; font-weight:600;">${escapeEncounterHtml(shortRarity)}</span>
+                <span style="color:#cbd5e1; font-weight:600;">${escapeEncounterHtml(shortRarity)}</span>
                 <span class="loot-card-loc" title="${escapeEncounterHtml(String(it.location || '').replace(/<[^>]+>/g, ''))}">• ${it.location}</span>
             </div>
             ${matStripHtml}
@@ -23374,7 +23947,7 @@ function renderLootLocationBar(renderScope, allEntries) {
 function renderLootTierBar(sceneEntries) {
     const tierBar = document.getElementById('loot-tier-bar');
     const clearBtn = document.getElementById('btn-loot-scene-clear');
-    if (clearBtn) clearBtn.style.display = activeLootScene ? 'inline-flex' : 'none';
+    if (clearBtn) clearBtn.style.display = (lootExploreBarOpen || activeLootScene) ? 'inline-flex' : 'none';
     if (!tierBar) return;
     if (!activeLootScene || !LOOT_SCENES[activeLootScene]) {
         tierBar.classList.remove('is-open');
@@ -23555,13 +24128,50 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
     renderLootLocationBar(isSearchExpand ? 'all' : renderScope, allEntries);
     renderLootTierBar(sceneBaseEntries);
     renderRolledScenePanel();
+    renderLootShopPanel();
+
+    // Sync collapsible Exploring Scene bar visibility
+    const sceneBarEl = document.getElementById('loot-scene-bar');
+    const exploreToggleBtn = document.getElementById('btn-toggle-explore');
+    const exploreOpenNow = Boolean(lootExploreBarOpen || inSceneMode);
+    if (sceneBarEl) sceneBarEl.classList.toggle('is-open', exploreOpenNow);
+    if (exploreToggleBtn) {
+        exploreToggleBtn.classList.toggle('active', exploreOpenNow);
+        exploreToggleBtn.setAttribute('aria-expanded', exploreOpenNow ? 'true' : 'false');
+        exploreToggleBtn.innerText = exploreOpenNow ? '🔎 Exploring ▴' : '🔎 Exploring ▾';
+    }
+
+    // Live Rarity Filter Bar counts (scoped to current Act/Location/Scene BEFORE rarity filter so counts stay visible!)
+    const rarityBarEl = document.getElementById('loot-rarity-bar');
+    if (rarityBarEl) {
+        const baseForRarity = (!isSearchExpand && renderCat === 'scrolls' && renderScope === 'Act I' && activeLootLoc === 'all')
+            ? allEntries.filter(([k, it]) => isSpellScrollItem(it, k))
+            : scopeEntries;
+        const rarCounts = { all: baseForRarity.length, common: 0, uncommon: 0, rare: 0, very_rare: 0, legendary: 0, cursed: 0 };
+        baseForRarity.forEach(([_, it]) => {
+            const rt = detectLootRarityTier(it);
+            if (rarCounts[rt] !== undefined) rarCounts[rt]++;
+        });
+        rarityBarEl.innerHTML = `<span style="font-family:'Cinzel',serif; font-size:0.72rem; color:#facc15; font-weight:700; margin-right:2px;">3. Rarity Scale:</span>` +
+            LOOT_RARITY_TIERS.map(rt => {
+                const on = activeLootRarity === rt.id;
+                const cnt = rarCounts[rt.id] || 0;
+                return `<button type="button" class="btn-loot-rarity ${on ? 'active' : ''}" data-lootrarity="${rt.id}" aria-pressed="${on ? 'true' : 'false'}" onclick="filterLootRarity('${rt.id}')">${rt.label} (${cnt})</button>`;
+            }).join('');
+    }
+
+    // Apply Rarity filter cleanly when selected
+    if (!isSearchExpand && activeLootRarity && activeLootRarity !== 'all') {
+        scopeEntries = scopeEntries.filter(([_, it]) => detectLootRarityTier(it) === activeLootRarity);
+    }
 
     // Live counts for Category Bar buttons scoped to current Act/Location or Scene!
     const catDefs = [
         { id: 'weapons', btnId: 'btn-lcat-weapons', shortLabel: '⚔️ Weapons & Ammo', title: '⚔️ Weapons, Silvered Arms & Specialty Ammo', cls: 'loot-header-weapon' },
         { id: 'attachments', btnId: 'btn-loot-attachments', shortLabel: '🔧 Attachments', title: '🔧 Weapon Attachments (2 Non-Overlapping Slots per Weapon)', cls: 'loot-header-weapon' },
-        { id: 'upgrades', btnId: 'btn-loot-upgrades', shortLabel: '⬆️ Upgrades', title: '⬆️ DM-Exclusive Remote Gear Upgrades', cls: 'loot-header-quest' },
+        { id: 'upgrades', btnId: 'btn-loot-upgrades', shortLabel: '⬆️ Upgrades', title: '⬆️ DM Remote Gear Upgrades & Signature Weapon Awakenings', cls: 'loot-header-quest' },
         { id: 'caster', btnId: 'btn-lcat-caster', shortLabel: '🔮 Caster & Relics', title: '🔮 Arcane Staves, Spellbooks, Foci & Relics', cls: 'loot-header-caster' },
+        { id: 'scrolls', btnId: 'btn-lcat-scrolls', shortLabel: '📜 Spell Scrolls', title: '📜 Buyable & Dungeon Spell Scrolls (Auto-Cast on Quick-Belt!)', cls: 'loot-header-caster' },
         { id: 'armor', btnId: 'btn-lcat-armor', shortLabel: '🛡️ Armor & Gear', title: '🛡️ Armor, Shields, Rings, Cloaks & Camp Gear', cls: 'loot-header-armor' },
         { id: 'consumables', btnId: 'btn-lcat-consumables', shortLabel: '🧪 Potions & Food', title: '🧪 Potions, Food & Drink, Coating Vials, Bombs & Boons', cls: 'loot-header-heal' },
         { id: 'craftables', btnId: 'btn-loot-craftables', shortLabel: '⚗️ Craft & Recipes', title: '📜 Physical Crafting Recipe Writings & Formula Scrolls', cls: 'loot-header-quest' },
@@ -23576,8 +24186,10 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         if (byBucket[b]) byBucket[b].push([k, it]);
     });
     const matGlobal = allEntries.filter(([_, it]) => it.cat === 'material');
+    const scrollsGlobal = allEntries.filter(([k, it]) => isSpellScrollItem(it, k) && (activeLootRarity === 'all' || detectLootRarityTier(it) === activeLootRarity));
+    const upgradesGlobal = allEntries.filter(([k, it]) => (it.isUpgradeItem || it.isAwakeningItem) && (activeLootRarity === 'all' || detectLootRarityTier(it) === activeLootRarity));
     if (!inSceneMode && activeLootLoc === 'all' && (renderScope === 'all' || renderScope === 'search_all')) {
-        byBucket.materials = matGlobal;
+        byBucket.materials = matGlobal.filter(([_, it]) => activeLootRarity === 'all' || detectLootRarityTier(it) === activeLootRarity);
     }
 
     const totalTreasureInScope = inSceneMode
@@ -23592,7 +24204,13 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         if (bEl) {
             const cnt = c.id === 'craftables'
                 ? DM_CRAFTING_RECIPES.length
-                : (c.id === 'materials' && !inSceneMode && activeLootLoc === 'all' ? matGlobal.length : (byBucket[c.id] ? byBucket[c.id].length : 0));
+                : (c.id === 'materials' && !inSceneMode && activeLootLoc === 'all'
+                    ? matGlobal.filter(([_, it]) => activeLootRarity === 'all' || detectLootRarityTier(it) === activeLootRarity).length
+                    : (c.id === 'scrolls' && !inSceneMode && activeLootLoc === 'all' && byBucket.scrolls.length === 0
+                        ? scrollsGlobal.length
+                        : (c.id === 'upgrades' && !inSceneMode && activeLootLoc === 'all' && byBucket.upgrades.length === 0
+                            ? upgradesGlobal.length
+                            : (byBucket[c.id] ? byBucket[c.id].length : 0))));
             bEl.innerText = `${c.shortLabel} (${cnt})`;
         }
     });
@@ -23647,17 +24265,33 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         if (renderCat === 'craftables' || isSearchExpand) {
             html += renderDmCraftingTableHtml();
         }
+        // Signature Weapon Awakening Studio appears right at the top of ⬆️ Upgrades!
+        if (renderCat === 'upgrades') {
+            html += renderDmSignatureAwakeningPanelHtml(false);
+        }
 
         html += catsToRender.map((c, idx) => {
             let items = (byBucket[c.id] || []);
             let matShowingGlobalFallback = false;
             if (c.id === 'materials') {
+                const filtMats = matGlobal.filter(([_, it]) => activeLootRarity === 'all' || detectLootRarityTier(it) === activeLootRarity);
                 if (!inSceneMode && activeLootLoc === 'all') {
-                    items = matGlobal;
+                    items = filtMats;
                 } else if (items.length === 0) {
-                    items = matGlobal;
+                    items = filtMats;
                     matShowingGlobalFallback = true;
                 }
+            } else if (c.id === 'scrolls' && renderCat === 'scrolls' && items.length === 0 && !inSceneMode && activeLootLoc === 'all') {
+                items = scrollsGlobal;
+            } else if (c.id === 'upgrades' && renderCat === 'upgrades' && items.length === 0 && !inSceneMode && activeLootLoc === 'all') {
+                items = upgradesGlobal;
+            }
+            if (c.id === 'scrolls') {
+                const parseScrollLvl = (it) => {
+                    const m = String(it.rarity || '').match(/Level\s*(\d+)/i);
+                    return m ? parseInt(m[1], 10) : 9;
+                };
+                items = [...items].sort((a, b) => parseScrollLvl(a[1]) - parseScrollLvl(b[1]));
             }
             if (c.id === 'attachments' && renderCat === 'attachments' && activeLootSlot && activeLootSlot !== 'all') {
                 items = items.filter(([_, it]) => it.attachSlot === activeLootSlot);
@@ -23792,6 +24426,7 @@ function filterLootScene(sceneId) {
     searchExpandedAll = false;
     sectionSearchExpanded.loot = false;
     activeLootScene = (sceneId && activeLootScene === sceneId) ? null : (sceneId || null);
+    if (sceneId) lootExploreBarOpen = true;
     activeLootRollTier = 'all';
     rolledSceneFinds = null;
     if (activeLootScene) {
@@ -23815,6 +24450,15 @@ function filterLootCategory(catId, btnEl) {
     sectionSearchExpanded.loot = false;
     activeLootCat = catId || 'overview';
     if (activeLootCat !== 'attachments') activeLootSlot = 'all';
+    syncLootBarButtonsUI();
+    renderLootVault(activeLootTag);
+    if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
+}
+
+function filterLootRarity(rarityId) {
+    searchExpandedAll = false;
+    sectionSearchExpanded.loot = false;
+    activeLootRarity = (rarityId && activeLootRarity === rarityId && rarityId !== 'all') ? 'all' : (rarityId || 'all');
     syncLootBarButtonsUI();
     renderLootVault(activeLootTag);
     if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
@@ -25092,7 +25736,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-// Fast DM Keyboard Hotkeys (C = Combat, N = Next Turn, F = Forge, 1-9 = Tabs, 0 = Focus/All, / = Search)
+// Fast DM Keyboard Hotkeys (F = Forge, D = Drop, C = Combat, N = Next Turn, 1-9 = Tabs, 0 = Focus/All, / = Search)
 document.addEventListener('keydown', (e) => {
     if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
     const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
@@ -25107,6 +25751,9 @@ document.addEventListener('keydown', (e) => {
     } else if (e.key === 'f' || e.key === 'F') {
         e.preventDefault();
         openDmCustomDropModal('forge');
+    } else if (e.key === 'd' || e.key === 'D') {
+        e.preventDefault();
+        openDmCustomDropModal('handout');
     } else if (e.key === 'c' || e.key === 'C') {
         e.preventDefault();
         jumpToCombatBoard();
@@ -25144,30 +25791,7 @@ document.addEventListener('DOMContentLoaded', () => {
     syncDmSectionLayout();
     renderDmThemePopover();
     initDmFirebaseSync();
-    // Scroll-position-aware Back-to-Top toggle for the always-accessible bottom-right Quick-Forge Dock
-    const topSentinel = document.getElementById('dm-top-sentinel');
-    const topBtn = document.getElementById('dm-dock-top-btn');
-    if (topSentinel && 'IntersectionObserver' in window) {
-        const obs = new IntersectionObserver((entries) => {
-            entries.forEach(ent => {
-                const scrolled = !ent.isIntersecting;
-                document.body.classList.toggle('dm-scrolled', scrolled);
-                if (!scrolled && document.activeElement === topBtn) {
-                    const forgeDockBtn = document.getElementById('dm-dock-forge-btn');
-                    if (forgeDockBtn) forgeDockBtn.focus();
-                }
-            });
-        }, { threshold: 0 });
-        obs.observe(topSentinel);
-    }
 });
 </script>
-
-<!-- ALWAYS-ACCESSIBLE FLOATING QUICK-FORGE DOCK (ACCESSIBLE WHILE SCROLLING ANY SECTION INCLUDING LORE!) -->
-<aside id="dm-floating-forge-dock" class="dm-floating-dock" aria-label="Quick DM Forge and Handout Controls">
-    <button type="button" id="dm-dock-forge-btn" class="dm-dock-btn is-forge" onclick="openDmCustomDropModal('forge')" title="Forge a new Weapon, Magic Item, Food, Material, or Normal Loot (Hotkey: F)">🛠️ Forge</button>
-    <button type="button" class="dm-dock-btn" onclick="openDmCustomDropModal('handout')" title="Quick Send Vault Item or Gold">🎁 Drop</button>
-    <button type="button" id="dm-dock-top-btn" class="dm-dock-btn is-top" onclick="window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })" title="Scroll back to top" aria-label="Scroll back to top">↑</button>
-</aside>
 </body>
 </html>

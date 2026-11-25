@@ -5231,29 +5231,70 @@
         }
     }
 
+    function getAwakenedWeaponsStorageKey() {
+        return `cos_awakened_weapons_${adapter ? adapter.heroId : 'hero'}_v1`;
+    }
+
+    function getAwakenedWeaponsMap() {
+        try {
+            const raw = localStorage.getItem(getAwakenedWeaponsStorageKey());
+            const parsed = raw ? JSON.parse(raw) : {};
+            return (parsed && typeof parsed === 'object') ? parsed : {};
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function saveAwakenedWeaponsMap(map) {
+        try {
+            const clean = (map && typeof map === 'object') ? map : {};
+            if (Object.keys(clean).length === 0) localStorage.removeItem(getAwakenedWeaponsStorageKey());
+            else localStorage.setItem(getAwakenedWeaponsStorageKey(), JSON.stringify(clean));
+        } catch (e) {}
+    }
+
+    function getWeaponAwakening(weaponId) {
+        if (!weaponId) return null;
+        const map = getAwakenedWeaponsMap();
+        return map[weaponId] || null;
+    }
+
     function getWeaponCombatMods(weaponId) {
         const modB = getWeaponAttachmentBonuses(weaponId);
         const coat = getWeaponMeleeCoating(weaponId);
+        const awk = getWeaponAwakening(weaponId);
         const extras = [...(modB.extras || [])];
+        if (awk && awk.extraDice && !awk.statsInWeaponMeta) {
+            extras.push({ dice: awk.extraDice, type: awk.extraType || 'Radiant', label: awk.badgeLabel || 'Awakened' });
+        }
         if (coat && coat.extraDice) extras.push({ dice: coat.extraDice, type: coat.extraType || 'Coating', label: coat.label || 'Coating' });
         const saveNotes = [];
+        if (awk && awk.saveNote) saveNotes.push(awk.saveNote);
+        if (awk && awk.curseNote) saveNotes.push(awk.curseNote);
         if (coat && coat.saveNote) saveNotes.push(coat.saveNote);
         if (modB.debuffNotes && modB.debuffNotes.length) {
             modB.debuffNotes.forEach(n => saveNotes.push(n));
         }
+        const awkAtk = (awk && !awk.statsInWeaponMeta) ? (awk.atkBonus || 0) : 0;
+        const awkDmg = (awk && !awk.statsInWeaponMeta) ? (awk.dmgBonus || 0) : 0;
+        const awkAc  = (awk && !awk.statsInWeaponMeta) ? (awk.acBonus || 0) : 0;
+        const awkSav = (awk && !awk.statsInWeaponMeta) ? (awk.saveBonus || 0) : 0;
+        const awkDc  = (awk && !awk.statsInWeaponMeta) ? (awk.spellDcBonus || 0) : 0;
+        const awkSpA = (awk && !awk.statsInWeaponMeta) ? (awk.spellAtkBonus || 0) : 0;
+        const awkIni = (awk && !awk.statsInWeaponMeta) ? (awk.initBonus || 0) : 0;
         return {
-            atkBonus: (modB.atkBonus || 0) + (coat ? (coat.atkBonus || 0) : 0),
-            dmgBonus: (modB.dmgBonus || 0) + (coat ? (coat.dmgBonus || 0) : 0),
+            atkBonus: (modB.atkBonus || 0) + (coat ? (coat.atkBonus || 0) : 0) + awkAtk,
+            dmgBonus: (modB.dmgBonus || 0) + (coat ? (coat.dmgBonus || 0) : 0) + awkDmg,
             magCapDelta: modB.magCapDelta || 0,
-            acBonus: modB.acBonus || 0,
-            saveBonus: modB.saveBonus || 0,
-            spellDcBonus: modB.spellDcBonus || 0,
-            spellAtkBonus: modB.spellAtkBonus || 0,
-            initBonus: modB.initBonus || 0,
+            acBonus: (modB.acBonus || 0) + awkAc,
+            saveBonus: (modB.saveBonus || 0) + awkSav,
+            spellDcBonus: (modB.spellDcBonus || 0) + awkDc,
+            spellAtkBonus: (modB.spellAtkBonus || 0) + awkSpA,
+            initBonus: (modB.initBonus || 0) + awkIni,
             extras,
-            isSilvered: Boolean(modB.isSilvered || (coat && coat.isSilvered)),
-            isMagical: Boolean(modB.isMagical || (coat && coat.isMagical)),
-            mistSight: Boolean(modB.mistSight),
+            isSilvered: Boolean(modB.isSilvered || (coat && coat.isSilvered) || (awk && awk.isSilvered)),
+            isMagical: Boolean(modB.isMagical || (coat && coat.isMagical) || (awk && awk.isMagical)),
+            mistSight: Boolean(modB.mistSight || (awk && awk.mistSight)),
             silenced: Boolean(modB.silenced),
             stealthDisadv: Boolean(modB.stealthDisadv),
             saveNotes,
@@ -5261,7 +5302,8 @@
             mods: modB.mods || [],
             slotsMap: modB.slotsMap || {},
             mod: modB.mod,
-            coating: coat
+            coating: coat,
+            awakening: awk || null
         };
     }
 
@@ -6692,13 +6734,117 @@
         const wCombat = getWeaponCombatMods(weaponId);
         const pills = [];
         const encW = encArg(weaponId);
+        if (wCombat.awakening) {
+            const awk = wCombat.awakening;
+            const isCursed = awk.mode === 'cursed';
+            const pillStyle = isCursed
+                ? 'background:linear-gradient(135deg,rgba(159,18,57,0.34),rgba(88,28,135,0.34)); color:#fecdd3; border-color:rgba(244,63,94,0.7);'
+                : 'background:linear-gradient(135deg,rgba(180,83,9,0.34),rgba(120,53,15,0.34)); color:#fef08a; border-color:rgba(251,191,36,0.75);';
+            const prefix = isCursed ? '🩸 CURSED MIST' : '🟠 LEGENDARY';
+            pills.push(`<span class="rpg-card-equipped-pill" style="${pillStyle}" title="${esc(awk.curseNote || awk.saveNote || awk.summary || '')}">${prefix}: ${esc(awk.badgeLabel || awk.summary || 'Awakened')}</span>`);
+            if (awk.curseNote) {
+                pills.push(`<span class="rpg-card-equipped-pill" style="background:rgba(127,29,29,0.28); color:#fca5a5; border-color:rgba(239,68,68,0.55);">${esc(awk.curseNote)}</span>`);
+            }
+        }
         (wCombat.mods || []).forEach(m => {
-            pills.push(`<span class="rpg-card-equipped-pill" style="background:rgba(59,130,246,0.16); color:#93c5fd; border-color:rgba(59,130,246,0.45);">Attached: ${esc(m.badge)} <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:18px; padding:0 5px; font-size:0.62rem;" onclick="COS_RPG.detachWeaponMod(decodeURIComponent('${encW}'), '${esc(m.slotId || '')}')">Detach</button></span>`);
+            const isCursedMod = String(m.modKey || '').includes('cursed_core');
+            const isDawnMod = String(m.modKey || '').includes('dawn_core');
+            const modStyle = isCursedMod
+                ? 'background:rgba(136,19,55,0.3); color:#fbcfe8; border-color:rgba(236,72,153,0.65);'
+                : (isDawnMod
+                    ? 'background:rgba(180,83,9,0.28); color:#fef08a; border-color:rgba(251,191,36,0.65);'
+                    : 'background:rgba(59,130,246,0.16); color:#93c5fd; border-color:rgba(59,130,246,0.45);');
+            const detachBtn = (isCursedMod)
+                ? `<span style="font-size:0.6rem; color:#f9a8d4; margin-left:3px;">(Fused Core)</span>`
+                : ` <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:18px; padding:0 5px; font-size:0.62rem;" onclick="COS_RPG.detachWeaponMod(decodeURIComponent('${encW}'), '${esc(m.slotId || '')}')">Detach</button>`;
+            pills.push(`<span class="rpg-card-equipped-pill" style="${modStyle}">Attached: ${esc(m.badge)}${detachBtn}</span>`);
         });
         if (wCombat.coating) {
             pills.push(`<span class="rpg-card-equipped-pill" style="background:rgba(16,185,129,0.16); color:#6ee7b7; border-color:rgba(52,211,153,0.45);">Coated: ${esc(wCombat.coating.label)} <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:18px; padding:0 5px; font-size:0.62rem;" onclick="COS_RPG.clearWeaponMeleeCoating(decodeURIComponent('${encW}'))">Clear</button></span>`);
         }
         return pills.length ? `<div style="display:flex; flex-wrap:wrap; gap:4px; margin:4px 0;">${pills.join('')}</div>` : '';
+    }
+
+    function syncAwakenedNativeWeaponCards() {
+        if (!adapter || typeof document === 'undefined') return;
+        const awkMap = getAwakenedWeaponsMap();
+        const cardSpecs = [
+            { wid: 'staff', cardId: 'card-wpn-quarterstaff', badgeSpanId: 'eq-badge-staff' },
+            { wid: 'greatsword', cardId: 'card-wpn-greatsword', badgeSpanId: 'eq-badge-greatsword' },
+            { wid: 'lament', cardId: 'card-lament', badgeSpanId: null },
+            { wid: 'mercy', cardId: 'card-mercy', badgeSpanId: null },
+            { wid: 'less', cardId: 'card-less', badgeSpanId: null }
+        ];
+        cardSpecs.forEach(spec => {
+            const card = document.getElementById(spec.cardId);
+            if (!card) return;
+            const titleEl = card.querySelector('.action-header > div > div:first-child');
+            const pillEl = card.querySelector('.action-header > .pill-badge');
+            if (titleEl && card.dataset.origTitleHtml === undefined) {
+                card.dataset.origTitleHtml = titleEl.innerHTML;
+            }
+            if (pillEl && card.dataset.origPillText === undefined) {
+                card.dataset.origPillText = pillEl.textContent || '';
+                card.dataset.origPillStyle = pillEl.getAttribute('style') || '';
+            }
+            const awk = awkMap[spec.wid];
+            if (awk) {
+                const isCursed = awk.mode === 'cursed';
+                card.style.borderColor = isCursed ? 'rgba(244, 63, 94, 0.8)' : 'rgba(245, 158, 11, 0.85)';
+                card.style.boxShadow = isCursed
+                    ? '0 0 18px rgba(168, 85, 247, 0.2), inset 0 0 0 1px rgba(244, 63, 94, 0.28)'
+                    : '0 0 18px rgba(245, 158, 11, 0.2), inset 0 0 0 1px rgba(251, 191, 36, 0.28)';
+                if (titleEl) {
+                    const eqSpanHtml = spec.badgeSpanId ? `<span id="${spec.badgeSpanId}"></span>` : '';
+                    titleEl.innerHTML = `<span style="color:${isCursed ? '#fecdd3' : '#fef08a'}; font-weight:800;">${esc(awk.displayName)}</span> <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>${eqSpanHtml}`;
+                }
+                if (pillEl) {
+                    pillEl.textContent = isCursed ? '🩸 CURSED MIST' : '🟠 LEGENDARY';
+                    pillEl.setAttribute('style', isCursed
+                        ? 'background:rgba(159,18,57,0.36); color:#fecdd3; border:1px solid rgba(244,63,94,0.75);'
+                        : 'background:rgba(180,83,9,0.38); color:#fef08a; border:1px solid rgba(251,191,36,0.8);');
+                }
+            } else if (card.dataset.origTitleHtml !== undefined) {
+                card.style.borderColor = '';
+                card.style.boxShadow = '';
+                if (titleEl) titleEl.innerHTML = card.dataset.origTitleHtml;
+                if (pillEl && card.dataset.origPillText !== undefined) {
+                    pillEl.textContent = card.dataset.origPillText;
+                    if (card.dataset.origPillStyle) pillEl.setAttribute('style', card.dataset.origPillStyle);
+                    else pillEl.removeAttribute('style');
+                }
+            }
+        });
+
+        // Also update Yvaine's top firearm Stance Switcher labels when Lament or Mercy/Less awaken!
+        const lamTab = document.getElementById('btn-stance-lament');
+        if (lamTab) {
+            const tDiv = lamTab.querySelector('div > div:first-child');
+            if (tDiv && lamTab.dataset.origLbl === undefined) lamTab.dataset.origLbl = tDiv.textContent || '';
+            if (tDiv) {
+                if (awkMap.lament) {
+                    tDiv.textContent = awkMap.lament.mode === 'cursed' ? '🩸 "LAMENT" (MIST-CURSED +3)' : '☀️ "LAMENT" (LEGENDARY +3)';
+                    tDiv.style.color = awkMap.lament.mode === 'cursed' ? '#fecdd3' : '#fef08a';
+                } else if (lamTab.dataset.origLbl !== undefined) {
+                    tDiv.textContent = lamTab.dataset.origLbl;
+                    tDiv.style.color = '';
+                }
+            }
+        }
+        const revTab = document.getElementById('btn-stance-revolvers');
+        if (revTab) {
+            const tDiv = revTab.querySelector('div > div:first-child');
+            if (tDiv && revTab.dataset.origLbl === undefined) revTab.dataset.origLbl = tDiv.textContent || '';
+            if (tDiv) {
+                if (awkMap.mercy) {
+                    tDiv.textContent = awkMap.mercy.mode === 'cursed' ? '🩸 "MERCY & LESS" (CURSED +3)' : '☀️ "MERCY & LESS" (LEGENDARY +3)';
+                    tDiv.style.color = awkMap.mercy.mode === 'cursed' ? '#fecdd3' : '#fef08a';
+                } else if (revTab.dataset.origLbl !== undefined) {
+                    tDiv.textContent = revTab.dataset.origLbl;
+                    tDiv.style.color = '';
+                }
+            }
+        }
     }
 
     function renderDynamicWeaponCards(bonuses) {
@@ -6752,16 +6898,30 @@
                         : ''));
             const card = document.createElement('div');
             card.className = 'action-card rpg-dyn-weapon-card';
-            card.style.borderLeft = '3px solid #f59e0b';
+            const dynAwk = wCombat.awakening;
+            const dynAwkPill = dynAwk
+                ? (dynAwk.mode === 'cursed'
+                    ? `<span class="rpg-card-equipped-pill" style="background:rgba(159,18,57,0.36); color:#fecdd3; border-color:rgba(244,63,94,0.75);">🩸 CURSED MIST</span>`
+                    : `<span class="rpg-card-equipped-pill" style="background:rgba(180,83,9,0.38); color:#fef08a; border-color:rgba(251,191,36,0.8);">🟠 LEGENDARY</span>`)
+                : '';
+            if (dynAwk) {
+                card.style.borderColor = dynAwk.mode === 'cursed' ? 'rgba(244, 63, 94, 0.85)' : 'rgba(245, 158, 11, 0.88)';
+                card.style.boxShadow = dynAwk.mode === 'cursed'
+                    ? '0 0 16px rgba(168, 85, 247, 0.22)'
+                    : '0 0 16px rgba(245, 158, 11, 0.22)';
+                card.style.borderLeft = dynAwk.mode === 'cursed' ? '3.5px solid #f43f5e' : '3.5px solid #fbbf24';
+            } else {
+                card.style.borderLeft = '3px solid #f59e0b';
+            }
             card.innerHTML = `
                 <div class="action-header">
                     <div>
-                        <div onclick="COS_RPG.openItemDetails(${idx})" style="cursor:pointer; color:#f8fafc;">
+                        <div onclick="COS_RPG.openItemDetails(${idx})" style="cursor:pointer; color:${dynAwk ? (dynAwk.mode === 'cursed' ? '#fecdd3' : '#fef08a') : '#f8fafc'};">
                             ${esc(shortLabel(raw))} <span style="font-size:0.68rem; color:var(--text-muted);">ℹ️</span>
                         </div>
                         <div style="font-size:0.66rem; font-weight:700; color:#fde68a;">Equipped in ${slotObj.label}${meta.versatile ? (is2H ? ' (2H)' : ' (1H)') : (slotId === 'mainHand' && bonuses.mainHand2H ? ' (2-Handed)' : '')} • +${effAtk} Hit • ${esc(dmgLabel)} ${esc(effDmgType)}</div>
                     </div>
-                    <div style="display:flex; gap:4px; align-items:center;">${masteryPillHtml}<span class="rpg-card-equipped-pill">${meta.versatile ? (is2H ? '2H' : '1H') : 'WORN'}</span></div>
+                    <div style="display:flex; gap:4px; align-items:center; flex-wrap:wrap;">${dynAwkPill}${masteryPillHtml}<span class="rpg-card-equipped-pill">${meta.versatile ? (is2H ? '2H' : '1H') : 'WORN'}</span></div>
                 </div>
                 <div class="action-desc">${esc(meta.summary || 'Equipped weapon from Backpack.')}</div>
                 ${modCoatHtml}
@@ -6779,6 +6939,7 @@
     }
 
     function applyEquipmentToSheet(silent = false) {
+        syncAwakenedNativeWeaponCards();
         const bonuses = getGearBonuses();
         if (adapter && typeof adapter.onEquipmentChange === 'function') {
             adapter.onEquipmentChange(bonuses, bonuses.equippedMap);
@@ -7832,6 +7993,7 @@
             ammoState: getAmmoState(),
             weaponMods: getWeaponModsStore().mods,
             weaponCoatings: getWeaponCoatingStore().coatings,
+            awakenedWeapons: getAwakenedWeaponsMap(),
             dmOverrideActive: isDmOverrideActive(),
             concentration: hudState.conc || null,
             conditions: Array.isArray(hudState.statuses) ? [...hudState.statuses] : [],
@@ -7862,6 +8024,7 @@
                     am: snap.ammoState,
                     wm: snap.weaponMods,
                     wc: snap.weaponCoatings,
+                    aw: snap.awakenedWeapons,
                     ov: snap.dmOverrideActive,
                     cn: snap.concentration,
                     st: snap.conditions,
@@ -8085,6 +8248,12 @@
                         }
                     } else if (cmd.action === 'upgrade_item' && cmd.upgradedName) {
                         applyRemoteItemUpgrade(cmd);
+                    } else if (cmd.action === 'awaken_weapon') {
+                        applyRemoteWeaponAwakening(cmd);
+                    } else if (cmd.action === 'revert_awakening') {
+                        revertWeaponAwakening(cmd.targetTag || 'all');
+                    } else if (cmd.action === 'buy_shop_item' && cmd.itemRaw) {
+                        applyRemoteShopPurchase(cmd);
                     } else if (cmd.action === 'convert_item' && cmd.outName) {
                         applyRemoteNpcConversion(cmd);
                     } else if (cmd.action === 'request_checkpoint') {
@@ -8255,6 +8424,624 @@
             adapter.log(`⚠️ <strong>DM Upgrade Notice:</strong> Could not find base item for <strong>${esc(upgradedName)}</strong> in Backpack or mounted slots.`);
         }
         return upgradedSomething;
+    }
+
+    // =========================================================================
+    // 🌑☀️ ENDGAME SIGNATURE WEAPON AWAKENING & ATOMIC SHOP PURCHASE ENGINE
+    // =========================================================================
+    function replacePresetWeaponPointers(oldKey, newKey) {
+        if (!oldKey || !newKey || oldKey === newKey) return;
+        try {
+            const rawV2 = localStorage.getItem(getUnifiedPresetsKey());
+            if (!rawV2) return;
+            const parsed = JSON.parse(rawV2);
+            if (!parsed || !Array.isArray(parsed.presets)) return;
+            let touched = false;
+            parsed.presets.forEach(p => {
+                if (!p || !p.slots || typeof p.slots !== 'object') return;
+                Object.keys(p.slots).forEach(sid => {
+                    if (sid !== '_grip' && p.slots[sid] === oldKey) {
+                        p.slots[sid] = newKey;
+                        touched = true;
+                    }
+                });
+                if (touched) p.slotLabels = computePresetSlotLabels(p.slots);
+            });
+            if (touched) localStorage.setItem(getUnifiedPresetsKey(), JSON.stringify(parsed));
+        } catch (e) {}
+    }
+
+    function applyRemoteShopPurchase(cmd) {
+        if (!adapter || !cmd || !cmd.itemRaw) return false;
+        const costGp = Math.max(0, parseInt(cmd.costGp, 10) || 0);
+        const costSp = Math.max(0, parseInt(cmd.costSp, 10) || 0);
+        const qty = Math.max(1, parseInt(cmd.qty, 10) || 1);
+        const shopName = String(cmd.shopName || 'Barovian Merchant').trim();
+        const wallet = (typeof adapter.getGold === 'function') ? adapter.getGold() : { gp: 0, sp: 0 };
+        const haveSp = (wallet.gp || 0) * 10 + (wallet.sp || 0);
+        const needSp = costGp * 10 + costSp;
+        const priceLabel = [costGp ? `${costGp} GP` : '', costSp ? `${costSp} SP` : ''].filter(Boolean).join(', ') || '0 GP';
+
+        if (!cmd.allowCredit && needSp > haveSp) {
+            adapter.log(`⚠️ <strong>${esc(shopName)} — Not Enough Coin:</strong> <strong>${qty > 1 ? qty + 'x ' : ''}${esc(shortLabel(cmd.itemRaw))}</strong> costs <strong style="color:#facc15;">${esc(priceLabel)}</strong>, and your purse holds <strong>${wallet.gp || 0} GP, ${wallet.sp || 0} SP</strong>.`);
+            syncHeroStateToFirebase(true);
+            return false;
+        }
+        if (needSp > 0 && typeof adapter.spendGold === 'function') {
+            adapter.spendGold(costGp, costSp, `Bought from ${shopName}: ${shortLabel(cmd.itemRaw)}`);
+        }
+        const items = adapter.getItems();
+        addRawItemToList(items, cmd.itemRaw, qty);
+        adapter.saveItems(items);
+        if (cmd.customMeta) {
+            const map = getCustomGearMap();
+            map[normKey(cmd.itemRaw)] = cmd.customMeta;
+            saveCustomGearMap(map);
+            registerCustomAmmoFromMeta(cmd.customMeta);
+            registerCustomLoreFromMeta(cmd.itemRaw, cmd.customMeta);
+        }
+        applyEquipmentToSheet(true);
+        syncHeroStateToFirebase(true);
+        adapter.log(`🏪 <strong>Bought from ${esc(shopName)}:</strong> <strong style="color:#6ee7b7;">${qty > 1 ? qty + 'x ' : ''}${esc(shortLabel(cmd.itemRaw))}</strong> <span style="color:#facc15;">(-${esc(priceLabel)})</span>!`);
+        return true;
+    }
+
+    function buildHeroSignatureAwakeningPlan(mode, presetId, customTitle) {
+        const isCursed = mode === 'cursed';
+        const hid = adapter ? adapter.heroId : '';
+        const effPreset = presetId || (hid === 'yvaine' ? `yvaine_${mode}` : (hid === 'jacomir' ? `jacomir_${mode}` : (hid === 'piper' ? `piper_${mode}` : 'universal')));
+
+        if (effPreset.startsWith('yvaine_')) {
+            if (!isCursed) {
+                return {
+                    title: '☀️ Arsenal of the Unbroken Dawn (Lament, Mercy & Less)',
+                    targets: [
+                        {
+                            wid: 'lament',
+                            matchKeywords: ['lament'],
+                            newRaw: customTitle || '🎯 "Lament", Dawn-Piercer of Solmere +3',
+                            displayName: customTitle || '☀️ "Lament", Dawn-Piercer of Solmere +3',
+                            atkBonus: 3, dmgBonus: 3, extraDice: '1d8', extraType: 'Radiant',
+                            isSilvered: true, isMagical: true, mistSight: true,
+                            saveNote: 'Halts Vampire Regeneration for 1 round & pierces Barovian Mist',
+                            badgeLabel: '+3 Hit/Dmg • +1d8 Radiant • Silvered • Halts Regen',
+                            meta: {
+                                category: 'weapon', slots: ['ranged'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 2,
+                                weaponTag: 'lament', stance: 'lament', attune: true, quickBelt: true,
+                                useAction: { type: 'itemSpell', keepItem: true, spellId: 'daylight', spellName: 'Solmere Dawn-Flare (Daylight)', spellLevel: 3, actionCost: 'action', maxCharges: 1, recharge: 'long', label: '☀️ Dawn-Flare (Daylight)', effect: '60-ft bright sunlight-clear flare dispelling darkness & revealing mist stalkers (1 hr).' },
+                                summary: '🟠 Legendary Rifle • +3 Hit/Dmg • +1d8 Radiant • Halts Regen • 1/LR Dawn-Flare'
+                            },
+                            lore: { rarity: 'Legendary Awakened Signature Rifle • Attunement', cost: 'Priceless (Dawn-Crowned)', mechanics: '• <strong>Signature Awakening (+3):</strong> +3 to Attack &amp; Damage rolls, deals <strong>+1d8 Radiant</strong> damage on every shot, counts as <strong>Silvered &amp; Magical</strong>, grants <strong>Mist-Piercing Sight</strong>, and halts Vampire Regeneration for 1 round.<br>• <strong>1/Long Rest — Solmere Dawn-Flare:</strong> Cast <em>Daylight</em> from your Quick-Belt.' }
+                        },
+                        {
+                            wid: 'mercy',
+                            matchKeywords: ['"mercy"', 'mercy'],
+                            newRaw: '🔴 "Mercy", Morning-Star Six-Shooter +3',
+                            displayName: '☀️ "Mercy", Morning-Star +3',
+                            atkBonus: 3, dmgBonus: 3, extraDice: '1d6', extraType: 'Radiant',
+                            isSilvered: true, isMagical: true,
+                            badgeLabel: '+3 Hit/Dmg • +1d6 Radiant • Silvered',
+                            meta: {
+                                category: 'weapon', slots: ['mainHand', 'offHand'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 1,
+                                weaponTag: 'mercy', stance: 'revolvers',
+                                summary: '🟠 Legendary Sidearm • +3 Hit/Dmg • +1d6 Radiant • 6-Cyl'
+                            },
+                            lore: { rarity: 'Legendary Awakened Sidearm', cost: 'Priceless', mechanics: '• <strong>Twin Star of Dawn (+3):</strong> +3 to Attack &amp; Damage rolls, +1d6 Radiant damage, Silvered &amp; Magical.' }
+                        },
+                        {
+                            wid: 'less',
+                            matchKeywords: ['"less"', 'less (off', 'less revolver'],
+                            newRaw: '🔵 "Less", Solmere\'s Last Light +3',
+                            displayName: '☀️ "Less", Solmere\'s Last Light +3',
+                            atkBonus: 3, dmgBonus: 3, extraDice: '1d6', extraType: 'Radiant',
+                            isSilvered: true, isMagical: true,
+                            badgeLabel: '+3 Hit/Dmg • +1d6 Radiant • Silvered',
+                            meta: {
+                                category: 'weapon', slots: ['offHand', 'mainHand'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 1,
+                                weaponTag: 'less', stance: 'revolvers',
+                                summary: '🟠 Legendary Off-Hand Sidearm • +3 Hit/Dmg • +1d6 Radiant • 6-Cyl'
+                            },
+                            lore: { rarity: 'Legendary Awakened Off-Hand Sidearm', cost: 'Priceless', mechanics: '• <strong>Twin Star of Dawn (+3):</strong> +3 to Attack &amp; Damage rolls, +1d6 Radiant damage, Silvered &amp; Magical.' }
+                        }
+                    ]
+                };
+            }
+            return {
+                title: '🩸 Arsenal of Domain Zero (Cursed Mist Lament, Mercy & Less)',
+                targets: [
+                    {
+                        wid: 'lament',
+                        matchKeywords: ['lament'],
+                        newRaw: customTitle || '🩸 "Lament", Hollow-Mist Repeater +3',
+                        displayName: customTitle || '🩸 "Lament", Hollow-Mist Repeater +3',
+                        atkBonus: 3, dmgBonus: 3, extraDice: '1d8', extraType: 'Necrotic', saveBonus: -1,
+                        isSilvered: true, isMagical: true, mistSight: true,
+                        saveNote: 'Target cannot regain HP until start of your next turn',
+                        curseNote: 'Curse of the Crosshairs: -1 to Saving Throws as cold Mist whispers echo behind every shot',
+                        badgeLabel: '+3 Hit/Dmg • +1d8 Necrotic • Mist-Sight • Blocks Healing',
+                        meta: {
+                            category: 'weapon', slots: ['ranged'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 2,
+                            weaponTag: 'lament', stance: 'lament', attune: true, quickBelt: true,
+                            useAction: { type: 'itemSpell', keepItem: true, spellId: 'misty_step', spellName: 'Phantom Mist-Step', spellLevel: 2, actionCost: 'bonus', maxCharges: 2, recharge: 'short', label: '🌫️ Phantom Mist-Step', effect: 'Bonus Action: Dissolve into freezing gray Mist and teleport up to 30 ft to an unoccupied space.' },
+                            summary: '🩸 Cursed Legendary Rifle • +3 Hit/Dmg • +1d8 Necrotic • 2/SR Mist-Step • Curse (-1 Saves)'
+                        },
+                        lore: { rarity: 'Cursed Legendary Mist-Bound Rifle • Attunement', cost: 'Soul-Bound', mechanics: '• <strong>Mist-Wrought Rifle (+3):</strong> +3 Hit/Dmg, +1d8 Necrotic, Silvered/Magical, Mist-Sight, and blocks target HP healing.<br>• <strong>2/Short Rest — Phantom Mist-Step:</strong> Bonus Action 30-ft teleport.<br>• <strong>🩸 Curse Trade-Off:</strong> Imposes -1 to Saving Throws while bound to the Mists.' }
+                    },
+                    {
+                        wid: 'mercy',
+                        matchKeywords: ['"mercy"', 'mercy'],
+                        newRaw: '🩸 "Mercy", Phantom of Domain Zero +3',
+                        displayName: '🩸 "Mercy", Phantom +3',
+                        atkBonus: 3, dmgBonus: 3, extraDice: '1d6', extraType: 'Necrotic',
+                        isSilvered: true, isMagical: true,
+                        badgeLabel: '+3 Hit/Dmg • +1d6 Necrotic • Silvered',
+                        meta: {
+                            category: 'weapon', slots: ['mainHand', 'offHand'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 1,
+                            weaponTag: 'mercy', stance: 'revolvers',
+                            summary: '🩸 Cursed Sidearm • +3 Hit/Dmg • +1d6 Necrotic • 6-Cyl'
+                        },
+                        lore: { rarity: 'Cursed Legendary Sidearm', cost: 'Soul-Bound', mechanics: '• <strong>Domain Zero Sidearm (+3):</strong> +3 Hit/Dmg, +1d6 Necrotic, Silvered &amp; Magical.' }
+                    },
+                    {
+                        wid: 'less',
+                        matchKeywords: ['"less"', 'less (off', 'less revolver'],
+                        newRaw: '🩸 "Less", Grim-Smile Sidearm +3',
+                        displayName: '🩸 "Less", Grim-Smile +3',
+                        atkBonus: 3, dmgBonus: 3, extraDice: '1d6', extraType: 'Necrotic',
+                        isSilvered: true, isMagical: true,
+                        badgeLabel: '+3 Hit/Dmg • +1d6 Necrotic • Silvered',
+                        meta: {
+                            category: 'weapon', slots: ['offHand', 'mainHand'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 1,
+                            weaponTag: 'less', stance: 'revolvers',
+                            summary: '🩸 Cursed Off-Hand Sidearm • +3 Hit/Dmg • +1d6 Necrotic • 6-Cyl'
+                        },
+                        lore: { rarity: 'Cursed Legendary Off-Hand Sidearm', cost: 'Soul-Bound', mechanics: '• <strong>Domain Zero Off-Hand (+3):</strong> +3 Hit/Dmg, +1d6 Necrotic, Silvered &amp; Magical.' }
+                    }
+                ]
+            };
+        }
+
+        if (effPreset.startsWith('jacomir_')) {
+            if (!isCursed) {
+                const nm = customTitle || "☀️ Sovereign's Dawnblade of Oakenshire +3";
+                return {
+                    title: nm,
+                    targets: [{
+                        wid: 'greatsword',
+                        matchKeywords: ['ancestral greatsword', 'greatsword'],
+                        autoEquipSlot: 'mainHand',
+                        autoEquipGrip: '2h',
+                        newRaw: nm,
+                        displayName: nm,
+                        atkBonus: 3, dmgBonus: 3, acBonus: 1, saveBonus: 1, extraDice: '1d8', extraType: 'Radiant',
+                        isSilvered: true, isMagical: true,
+                        saveNote: 'Halts Vampire Regeneration & sheds 20-ft Golden Dawnlight',
+                        badgeLabel: '+3 Hit/Dmg • +1d8 Radiant • +1 AC/Saves • Silvered',
+                        meta: {
+                            category: 'weapon', slots: ['mainHand'], reqWeapon: 'martial', hands: 2,
+                            weaponTag: 'greatsword', attune: true, quickBelt: true,
+                            useAction: { type: 'itemSpell', keepItem: true, spellName: "Sovereign's Dawn Aura", spellLevel: 3, spellKind: 'utility', spellRange: '30-ft aura (1 min)', actionCost: 'bonus', maxCharges: 1, recharge: 'long', label: '☀️ Dawn Aura (+1d4 Rad)', effect: 'Allies within 30 ft deal +1d4 Radiant damage on weapon hits and have Advantage vs Frightened for 1 minute!' },
+                            summary: '🟠 Legendary Greatsword • +3 Hit/Dmg • +1d8 Radiant • +1 AC & Saves • Savage + Graze'
+                        },
+                        lore: { rarity: 'Legendary Awakened Royal Greatsword • Attunement', cost: 'Priceless (Oakenshire Crown)', mechanics: '• <strong>Awakened Royal Greatsword (+3):</strong> Retains <strong>Savage Attacker</strong> &amp; <strong>Graze</strong>, gains <strong>+3 Hit/Dmg</strong>, <strong>+1d8 Radiant</strong>, <strong>+1 AC &amp; All Saves</strong>, Silvered &amp; Magical.<br>• <strong>1/Long Rest — Sovereign\'s Dawn Aura:</strong> Bonus Action 30-ft royal aura (+1d4 Radiant to allies).' }
+                    }]
+                };
+            }
+            const nm = customTitle || '🩸 Dreadblade of the Mist-Bound King +3';
+            return {
+                title: nm,
+                targets: [{
+                    wid: 'greatsword',
+                    matchKeywords: ['ancestral greatsword', 'greatsword'],
+                    autoEquipSlot: 'mainHand',
+                    autoEquipGrip: '2h',
+                    newRaw: nm,
+                    displayName: nm,
+                    atkBonus: 3, dmgBonus: 3, acBonus: 1, extraDice: '2d6', extraType: 'Necrotic',
+                    isSilvered: true, isMagical: true,
+                    saveNote: 'On reducing a hostile creature to 0 HP, siphon +1d8 Temp HP',
+                    curseNote: 'Dread-Crown Curse: Disadvantage on Persuasion checks to parley peacefully while drawn',
+                    badgeLabel: '+3 Hit/Dmg • +2d6 Necrotic • +1 AC • Life-Siphon',
+                    meta: {
+                        category: 'weapon', slots: ['mainHand'], reqWeapon: 'martial', hands: 2,
+                        weaponTag: 'greatsword', attune: true, quickBelt: true,
+                        useAction: { type: 'itemSpell', keepItem: true, spellId: 'fear', spellName: 'Dread Sovereign\'s Roar (Fear)', spellLevel: 3, spellKind: 'utility', spellSave: 'WIS Save (Frightened)', spellRange: '30-ft cone', actionCost: 'action', maxCharges: 1, recharge: 'long', label: '🩸 Dread Sovereign\'s Roar', effect: 'Unleash a 30-ft cone of freezing Mist dread — creatures fail WIS Save or drop held items and flee Frightened!' },
+                        summary: '🩸 Cursed Legendary Greatsword • +3 Hit/Dmg • +2d6 Necrotic • +1 AC • 1/LR Dread Roar'
+                    },
+                    lore: { rarity: 'Cursed Legendary Mist-Bound Greatsword • Attunement', cost: 'Soul-Bound', mechanics: '• <strong>Mist-Tempered Ancestral Blade (+3):</strong> Retains <strong>Savage Attacker</strong> &amp; <strong>Graze</strong>, gains <strong>+3 Hit/Dmg</strong>, <strong>+2d6 Necrotic</strong>, <strong>+1 AC</strong>, Silvered/Magical, and siphons <strong>+1d8 Temp HP</strong> on kills.<br>• <strong>1/Long Rest — Dread Sovereign\'s Roar:</strong> Cast <em>Fear</em> (30-ft cone).<br>• <strong>🩸 Curse Trade-Off:</strong> Disadvantage on peaceful Persuasion parleys while drawn.' }
+                }]
+            };
+        }
+
+        if (effPreset.startsWith('piper_')) {
+            if (isCursed) {
+                const nm = customTitle || '🩸 Nocturne, Cursed Staff of the Weeping Mists +2';
+                return {
+                    title: `${nm} + 🩸 Cursed Obsidian Mist-Core`,
+                    targets: [{
+                        wid: 'staff',
+                        matchKeywords: ['quarterstaff', "magician's cane", 'cane', 'staff'],
+                        fallbackCreateRaw: '🪄 Quarterstaff',
+                        autoEquipSlot: 'mainHand',
+                        autoEquipGrip: '2h',
+                        newRaw: nm,
+                        displayName: nm,
+                        atkBonus: 2, dmgBonus: 2, saveBonus: 1,
+                        isSilvered: true, isMagical: true,
+                        curseNote: 'Cursed Mist Conduit: Rolling a natural 1 on a leveled spell triggers an immediate Dark Mist Surge',
+                        badgeLabel: '+2 Staff Hit/Dmg • +1 Saves • Silvered Focus',
+                        injectCore: {
+                            slotId: 'crown',
+                            modObj: {
+                                modKey: 'piper_cursed_core_mist',
+                                slotType: 'crown',
+                                raw: '🩸 Heart-Core of the Weeping Mists',
+                                modName: '🩸 Heart-Core of the Weeping Mists',
+                                atkBonus: 0, dmgBonus: 0, acBonus: 1, saveBonus: 0,
+                                spellDcBonus: 2, spellAtkBonus: 2, initBonus: 0,
+                                extraDice: '1d8', extraType: 'Psychic',
+                                isSilvered: true, isMagical: true, mistSight: true,
+                                debuffNote: '🩸 Cursed Core: Whispers of the Root Anchor echo in your spells (Nat 1 triggers Mist Surge)',
+                                badgeLabel: '🩸 Cursed Mist-Core (+2 Spell DC/Atk, +1 AC, +1d8 Psychic, Mist-Sight)'
+                            }
+                        },
+                        meta: {
+                            category: 'weapon', slots: ['mainHand'], reqWeapon: 'simple', hands: 1, versatile: true,
+                            weaponTag: 'staff', attune: true, quickBelt: true,
+                            useAction: { type: 'itemSpell', keepItem: true, spellName: 'Hunger of the Weeping Mists', spellLevel: 3, spellKind: 'dmg', spellDice: '4d8', spellDmgType: 'Necrotic', spellSave: 'CON Save (half & Blinded in fog)', spellRange: '20-ft sphere (120 ft)', actionCost: 'action', maxCharges: 1, recharge: 'long', label: '🩸 Hunger of the Mists (4d8)', effect: '20-ft sphere of freezing black Barovian Mist deals 4d8 Necrotic (CON Save half) and heavily obscures foes for 1 round!' },
+                            summary: '🩸 Cursed Staff + Fused Mist-Core • +2 Spell DC/Atk • +1 AC/Saves • +1d8 Psychic • 1/LR Mist Storm'
+                        },
+                        lore: { rarity: 'Cursed Legendary Staff & Fused Mist-Core • Attunement', cost: 'Soul-Bound', mechanics: '• <strong>Transformed Staff &amp; Fused Cursed Core:</strong> Replaces your staff\'s crown with the <strong>🩸 Heart-Core of the Weeping Mists</strong> — granting <strong>+2 Spell Save DC &amp; +2 Spell Attack</strong>, <strong>+1 AC</strong>, <strong>+1 All Saves</strong>, <strong>Mist-Sight</strong>, and <strong>+2 Hit/Dmg + 1d8 Psychic</strong> on staff strikes.<br>• <strong>1/Long Rest — Hunger of the Weeping Mists:</strong> Unleash a 20-ft sphere of 4d8 Necrotic fog from your Quick-Belt.<br>• <strong>🩸 Curse Trade-Off:</strong> Rolling a Nat 1 on a leveled spell triggers an immediate Dark Mist Surge!' }
+                    }]
+                };
+            }
+            const nm = customTitle || '☀️ Astral Cane of the Unbroken Dawn +2';
+            return {
+                title: `${nm} + ☀️ Radiant Phoenix-Sun Core`,
+                targets: [{
+                    wid: 'staff',
+                    matchKeywords: ['quarterstaff', "magician's cane", 'cane', 'staff'],
+                    fallbackCreateRaw: '🪄 Quarterstaff',
+                    autoEquipSlot: 'mainHand',
+                    autoEquipGrip: '2h',
+                    newRaw: nm,
+                    displayName: nm,
+                    atkBonus: 2, dmgBonus: 2, saveBonus: 1,
+                    isSilvered: true, isMagical: true,
+                    badgeLabel: '+2 Staff Hit/Dmg • +1 Saves • Dawn Focus',
+                    injectCore: {
+                        slotId: 'crown',
+                        modObj: {
+                            modKey: 'piper_dawn_core_sun',
+                            slotType: 'crown',
+                            raw: '☀️ Radiant Phoenix-Sun Core',
+                            modName: '☀️ Radiant Phoenix-Sun Core',
+                            atkBonus: 0, dmgBonus: 0, acBonus: 1, saveBonus: 1,
+                            spellDcBonus: 2, spellAtkBonus: 2, initBonus: 1,
+                            extraDice: '1d8', extraType: 'Radiant',
+                            isSilvered: true, isMagical: true, mistSight: true,
+                            badgeLabel: '☀️ Phoenix-Sun Core (+2 Spell DC/Atk, +1 AC/Saves, +1d8 Radiant)'
+                        }
+                    },
+                    meta: {
+                        category: 'weapon', slots: ['mainHand'], reqWeapon: 'simple', hands: 1, versatile: true,
+                        weaponTag: 'staff', attune: true, quickBelt: true,
+                        useAction: { type: 'itemSpell', keepItem: true, spellName: 'Sunburst Lance of Dawn', spellLevel: 4, spellKind: 'dmg', spellDice: '6d8', spellDmgType: 'Radiant', spellSave: 'CON Save (half & Blinded)', spellRange: '60-ft line', actionCost: 'action', maxCharges: 1, recharge: 'long', label: '☀️ Sunburst Lance (6d8)', effect: '60-ft beam of true golden dawnlight deals 6d8 Radiant damage (CON Save half; Undead have Disadvantage on the save)!' },
+                        summary: '🟠 Legendary Staff + Phoenix-Sun Core • +2 Spell DC/Atk • +1 AC • +2 Saves • 1/LR Sunburst'
+                    },
+                    lore: { rarity: 'Legendary Awakened Arcane Staff & Core • Attunement', cost: 'Priceless', mechanics: '• <strong>Awakened Staff &amp; Phoenix-Sun Core:</strong> Grants <strong>+2 Spell Save DC &amp; +2 Spell Attack</strong>, <strong>+1 AC</strong>, <strong>+2 All Saves</strong>, <strong>+1d8 Radiant</strong>, and <strong>1/Long Rest Sunburst Lance (6d8 Radiant)</strong>.' }
+                }]
+            };
+        }
+
+        // UNIVERSAL ANY-HERO / FUTURE NEW PLAYER STARTER WEAPON AWAKENER!
+        const items = adapter.getItems();
+        const eq = getEquippedState();
+        let chosenRaw = null;
+        let chosenSlot = null;
+        for (const sid of ['mainHand', 'ranged', 'offHand']) {
+            if (eq[sid]) {
+                const r = findInventoryRawByKey(eq[sid]);
+                if (r && !getItemMeta(r).isShield) {
+                    chosenRaw = r;
+                    chosenSlot = sid;
+                    break;
+                }
+            }
+        }
+        if (!chosenRaw) {
+            chosenRaw = items.find(r => {
+                const m = getItemMeta(r);
+                return m.category === 'weapon' && !m.isShield;
+            }) || null;
+        }
+        if (!chosenRaw) return null;
+
+        const baseMeta = getItemMeta(chosenRaw);
+        const baseLabel = shortLabel(chosenRaw).replace(/\s*\+\d+\s*$/g, '').trim();
+        const nativeSet = new Set((adapter && adapter.nativeWeaponTags) || []);
+        const isCasterStaff = Boolean(baseMeta.weaponTag === 'staff' || /staff|wand|rod|cane|scepter|orb/i.test(baseLabel));
+        const newName = customTitle || (isCursed
+            ? `🩸 ${baseLabel}, Mist-Cursed +3`
+            : `☀️ ${baseLabel}, Dawn-Awakened +3`);
+        const resolvedWid = (baseMeta.weaponTag && nativeSet.has(baseMeta.weaponTag))
+            ? baseMeta.weaponTag
+            : normKey(newName);
+        const baseSt = resolveWeaponCombatStats(chosenRaw, baseMeta, false);
+        const isNativeCard = Boolean(baseMeta.weaponTag && nativeSet.has(baseMeta.weaponTag));
+
+        return {
+            title: newName,
+            targets: [{
+                wid: resolvedWid,
+                exactRaw: chosenRaw,
+                autoEquipSlot: chosenSlot || ((baseMeta.slots && baseMeta.slots[0]) || 'mainHand'),
+                newRaw: newName,
+                displayName: newName,
+                statsInWeaponMeta: !isNativeCard,
+                atkBonus: 3,
+                dmgBonus: 3,
+                acBonus: 1,
+                saveBonus: isCursed ? -1 : 1,
+                spellDcBonus: isCasterStaff ? 2 : 0,
+                spellAtkBonus: isCasterStaff ? 2 : 0,
+                extraDice: isCursed ? '2d6' : '1d8',
+                extraType: isCursed ? 'Necrotic' : 'Radiant',
+                isSilvered: true,
+                isMagical: true,
+                mistSight: true,
+                saveNote: isCursed ? 'Blocks target HP healing until your next turn' : 'Halts Vampire Regeneration for 1 round',
+                curseNote: isCursed ? 'Mist-Bound Curse: -1 to Saving Throws while whispers of Domain Zero cling to the weapon' : '',
+                badgeLabel: isCursed
+                    ? `+3 Hit/Dmg • +2d6 Necrotic${isCasterStaff ? ' • +2 Spell DC/Atk' : ''} • Silvered`
+                    : `+3 Hit/Dmg • +1d8 Radiant${isCasterStaff ? ' • +2 Spell DC/Atk' : ''} • +1 AC/Saves`,
+                ...(isCasterStaff ? {
+                    injectCore: {
+                        slotId: 'crown',
+                        modObj: {
+                            modKey: isCursed ? 'univ_cursed_core_mist' : 'univ_dawn_core_sun',
+                            slotType: 'crown',
+                            raw: isCursed ? '🩸 Cursed Obsidian Mist-Core' : '☀️ Radiant Dawn Core',
+                            modName: isCursed ? '🩸 Cursed Obsidian Mist-Core' : '☀️ Radiant Dawn Core',
+                            atkBonus: 0, dmgBonus: 0, acBonus: 0, saveBonus: 0,
+                            spellDcBonus: 0, spellAtkBonus: 0, initBonus: 0,
+                            isSilvered: true, isMagical: true, mistSight: true,
+                            badgeLabel: isCursed ? '🩸 Fused Cursed Mist-Core' : '☀️ Fused Radiant Dawn Core'
+                        }
+                    }
+                } : {}),
+                meta: {
+                    ...baseMeta,
+                    category: 'weapon',
+                    slots: (baseMeta.slots && baseMeta.slots.length) ? baseMeta.slots : ['mainHand'],
+                    attune: true,
+                    quickBelt: true,
+                    // Native-card weapons get these via the awakening record (getWeaponCombatMods) — avoid double counting!
+                    acBonus: isNativeCard ? 0 : 1,
+                    saveBonus: isNativeCard ? 0 : (isCursed ? -1 : 1),
+                    spellDcBonus: (isCasterStaff && !isNativeCard) ? 2 : 0,
+                    spellAtkBonus: (isCasterStaff && !isNativeCard) ? 2 : 0,
+                    weaponStats: {
+                        autoScale: true,
+                        abilityMode: baseMeta.ammoKind ? 'dex' : 'auto',
+                        magicBonus: 3,
+                        dmgDice: baseSt.dmgDice || '1d8',
+                        dmgType: `Silvered ${String(baseSt.dmgType || 'Slashing').replace(/^Silvered\s+/i, '')}`,
+                        extraDice: isCursed ? '2d6' : '1d8',
+                        extraType: isCursed ? 'Necrotic' : 'Radiant',
+                        mastery: baseSt.mastery || ''
+                    },
+                    useAction: isCursed
+                        ? { type: 'itemSpell', keepItem: true, spellId: 'misty_step', spellName: 'Mist-Bound Ghost Step', spellLevel: 2, actionCost: 'bonus', maxCharges: 2, recharge: 'short', label: '🩸 Mist-Step (2/SR)', effect: 'Bonus Action: Dissolve into gray Barovian Mist and teleport up to 30 ft.' }
+                        : { type: 'itemSpell', keepItem: true, spellId: 'daylight', spellName: 'Dawnbreaker Flare', spellLevel: 3, actionCost: 'action', maxCharges: 1, recharge: 'long', label: '☀️ Dawnbreaker Flare', effect: 'Ignite a 60-ft aura of golden dawnlight for 1 hour.' },
+                    summary: isCursed
+                        ? `🩸 Cursed Signature Weapon (+3) • +2d6 Necrotic${isCasterStaff ? ' • +2 Spell DC/Atk' : ''} • 2/SR Mist-Step • Curse (-1 Saves)`
+                        : `🟠 Legendary Signature Weapon (+3) • +1d8 Radiant${isCasterStaff ? ' • +2 Spell DC/Atk' : ''} • +1 AC & Saves • 1/LR Dawn Flare`
+                },
+                lore: {
+                    rarity: isCursed ? 'Cursed Legendary Mist-Bound Signature Weapon • Attunement' : 'Legendary Dawn-Awakened Signature Weapon • Attunement',
+                    cost: isCursed ? 'Soul-Bound' : 'Priceless',
+                    mechanics: isCursed
+                        ? `• <strong>Mist-Bound Awakening (+3):</strong> Transforms <em>${esc(baseLabel)}</em> into a +3 Silvered/Magical weapon dealing <strong>+2d6 Necrotic</strong> damage, granting Mist-Sight &amp; <strong>2/SR Mist-Step</strong>.<br>• <strong>🩸 Curse Trade-Off:</strong> -1 to Saving Throws.`
+                        : `• <strong>Dawn-Crowned Awakening (+3):</strong> Transforms <em>${esc(baseLabel)}</em> into a +3 Silvered/Magical weapon dealing <strong>+1d8 Radiant</strong> damage, +1 AC &amp; Saves, and <strong>1/LR Dawnbreaker Flare</strong>.`
+                }
+            }]
+        };
+    }
+
+    function applyRemoteWeaponAwakening(cmd) {
+        if (!adapter || !cmd) return false;
+        // First cleanly revert any existing awakening on the same weapon tags so re-awakening (e.g. Legendary <-> Cursed) never nests names!
+        const mode = cmd.mode === 'cursed' ? 'cursed' : 'legendary';
+        const existingMap = getAwakenedWeaponsMap();
+        if (Object.keys(existingMap).length > 0) {
+            revertWeaponAwakening('all', true);
+        }
+
+        const plan = buildHeroSignatureAwakeningPlan(mode, cmd.presetId || '', (cmd.customTitle || '').trim());
+        if (!plan || !Array.isArray(plan.targets) || plan.targets.length === 0) {
+            adapter.log(`⚠️ <strong>Weapon Awakening Notice:</strong> No eligible weapon found in ${esc(adapter.heroName)}'s Backpack or Equipment.`);
+            return false;
+        }
+
+        const items = adapter.getItems();
+        const eq = getEquippedState();
+        const customMap = getCustomGearMap();
+        const awkMap = getAwakenedWeaponsMap();
+        const modStore = getWeaponModsStore();
+        let eqChanged = false;
+        let modChanged = false;
+        let awakenedCount = 0;
+
+        plan.targets.forEach(t => {
+            let idx = -1;
+            if (t.exactRaw) {
+                idx = items.findIndex(r => r === t.exactRaw || normKey(r) === normKey(t.exactRaw));
+            }
+            if (idx === -1 && Array.isArray(t.matchKeywords)) {
+                idx = items.findIndex(r => {
+                    const low = String(r || '').toLowerCase();
+                    return t.matchKeywords.some(kw => low.includes(kw.toLowerCase()));
+                });
+            }
+            if (idx === -1 && t.fallbackCreateRaw) {
+                items.unshift(t.fallbackCreateRaw);
+                idx = 0;
+            }
+            if (idx === -1) return;
+
+            const origRaw = items[idx];
+            const origParsed = parseItem(origRaw);
+            const oldKey = normKey(origRaw);
+            const nextRaw = `${origParsed.qty > 1 ? origParsed.qty + 'x ' : ''}${t.newRaw}`.trim();
+            const newKey = normKey(nextRaw);
+
+            items[idx] = nextRaw;
+            customMap[newKey] = t.meta;
+            if (t.lore) {
+                registerCustomLoreFromMeta(t.newRaw, {
+                    ...t.meta,
+                    rarity: t.lore.rarity,
+                    cost: t.lore.cost,
+                    location: mode === 'cursed' ? 'Domain Zero • Power of the Mists' : 'Barovia Endgame • Dawn Awakening',
+                    mechanics: t.lore.mechanics,
+                    lore: mode === 'cursed'
+                        ? 'Cold silver-violet mist coils permanently along its frame, answering the call of Domain Zero.'
+                        : 'Warm, unbroken dawnlight hums along its edge in defiance of Barovia\'s four-century night.'
+                });
+            }
+
+            Object.keys(eq).forEach(slotId => {
+                if (slotId !== '_grip' && eq[slotId] === oldKey) {
+                    eq[slotId] = newKey;
+                    eqChanged = true;
+                }
+            });
+            if (t.autoEquipSlot && !Object.values(eq).includes(newKey)) {
+                eq[t.autoEquipSlot] = newKey;
+                if (t.autoEquipGrip) eq._grip = t.autoEquipGrip;
+                eqChanged = true;
+            }
+            replacePresetWeaponPointers(oldKey, newKey);
+
+            let prevCoreBackup = null;
+            if (t.injectCore && t.injectCore.slotId && t.injectCore.modObj) {
+                const curSlots = { ...getWeaponSlotsMap(t.wid) };
+                const prevMod = curSlots[t.injectCore.slotId] || null;
+                if (prevMod && prevMod.modKey && !String(prevMod.modKey).includes('_core_')) {
+                    prevCoreBackup = prevMod;
+                    addRawItemToList(items, prevMod.raw || prevMod.modName, 1);
+                }
+                curSlots[t.injectCore.slotId] = t.injectCore.modObj;
+                modStore.mods[t.wid] = { slots: curSlots };
+                modChanged = true;
+            }
+
+            awkMap[t.wid] = {
+                wid: t.wid,
+                mode,
+                originalRaw: origRaw,
+                originalKey: oldKey,
+                awakenedRaw: t.newRaw,
+                awakenedKey: newKey,
+                displayName: t.displayName || t.newRaw,
+                statsInWeaponMeta: Boolean(t.statsInWeaponMeta),
+                atkBonus: t.atkBonus || 0,
+                dmgBonus: t.dmgBonus || 0,
+                acBonus: t.acBonus || 0,
+                saveBonus: t.saveBonus || 0,
+                spellDcBonus: t.spellDcBonus || 0,
+                spellAtkBonus: t.spellAtkBonus || 0,
+                initBonus: t.initBonus || 0,
+                extraDice: t.extraDice || null,
+                extraType: t.extraType || null,
+                isSilvered: Boolean(t.isSilvered),
+                isMagical: Boolean(t.isMagical),
+                mistSight: Boolean(t.mistSight),
+                saveNote: t.saveNote || '',
+                curseNote: t.curseNote || '',
+                badgeLabel: t.badgeLabel || '',
+                summary: (t.meta && t.meta.summary) || '',
+                injectedCoreSlot: t.injectCore ? t.injectCore.slotId : null,
+                injectedCoreKey: (t.injectCore && t.injectCore.modObj) ? t.injectCore.modObj.modKey : null,
+                prevCoreBackup
+            };
+            awakenedCount++;
+        });
+
+        if (awakenedCount === 0) return false;
+        adapter.saveItems(items);
+        saveCustomGearMap(customMap);
+        saveAwakenedWeaponsMap(awkMap);
+        if (eqChanged) saveEquippedState(eq);
+        if (modChanged) saveWeaponModsStore(modStore);
+
+        applyEquipmentToSheet(true);
+        refreshAllAmmoDisplays();
+        syncHeroStateToFirebase(true);
+        const bannerIcon = mode === 'cursed' ? '🩸🌫️' : '🟠☀️';
+        const bannerColor = mode === 'cursed' ? '#fecdd3' : '#fef08a';
+        adapter.log(`${bannerIcon} <strong style="color:${bannerColor};">SIGNATURE WEAPON AWAKENED (${mode === 'cursed' ? 'CURSED MIST FORM' : 'LEGENDARY DAWN FORM'}):</strong> <strong>${esc(plan.title)}</strong>!`);
+        return true;
+    }
+
+    function revertWeaponAwakening(targetTag = 'all', silent = false) {
+        if (!adapter) return false;
+        const awkMap = getAwakenedWeaponsMap();
+        const entries = Object.values(awkMap).filter(a => a && (targetTag === 'all' || a.wid === targetTag));
+        if (entries.length === 0) return false;
+
+        const items = adapter.getItems();
+        const eq = getEquippedState();
+        const customMap = getCustomGearMap();
+        const modStore = getWeaponModsStore();
+        let eqChanged = false;
+        let modChanged = false;
+
+        entries.forEach(a => {
+            const idx = items.findIndex(r => normKey(r) === a.awakenedKey || r === a.awakenedRaw);
+            const cleanOrig = a.originalRaw || a.originalKey;
+            const origKey = normKey(cleanOrig);
+            if (idx !== -1 && cleanOrig) {
+                items[idx] = cleanOrig;
+            }
+            if (a.awakenedKey && customMap[a.awakenedKey]) {
+                delete customMap[a.awakenedKey];
+            }
+            Object.keys(eq).forEach(sid => {
+                if (sid !== '_grip' && eq[sid] === a.awakenedKey && origKey) {
+                    eq[sid] = origKey;
+                    eqChanged = true;
+                }
+            });
+            replacePresetWeaponPointers(a.awakenedKey, origKey);
+
+            if (a.injectedCoreSlot && modStore.mods[a.wid] && modStore.mods[a.wid].slots) {
+                const slots = { ...modStore.mods[a.wid].slots };
+                if (slots[a.injectedCoreSlot] && (!a.injectedCoreKey || slots[a.injectedCoreSlot].modKey === a.injectedCoreKey)) {
+                    if (a.prevCoreBackup) slots[a.injectedCoreSlot] = a.prevCoreBackup;
+                    else delete slots[a.injectedCoreSlot];
+                    if (Object.keys(slots).length === 0) delete modStore.mods[a.wid];
+                    else modStore.mods[a.wid] = { slots };
+                    modChanged = true;
+                }
+            }
+            delete awkMap[a.wid];
+        });
+
+        adapter.saveItems(items);
+        saveCustomGearMap(customMap);
+        saveAwakenedWeaponsMap(awkMap);
+        if (eqChanged) saveEquippedState(eq);
+        if (modChanged) saveWeaponModsStore(modStore);
+
+        applyEquipmentToSheet(true);
+        refreshAllAmmoDisplays();
+        syncHeroStateToFirebase(true);
+        if (!silent) {
+            adapter.log(`↺ <strong>Reverted Signature Weapon Awakening:</strong> Restored original starter weapon state.`);
+        }
+        return true;
     }
 
     // =========================================================================
@@ -8646,6 +9433,11 @@
             } else {
                 localStorage.removeItem(getAmmoStorageKey());
             }
+            if (cp.awakenedWeapons && typeof cp.awakenedWeapons === 'object') {
+                saveAwakenedWeaponsMap(cp.awakenedWeapons);
+            } else {
+                saveAwakenedWeaponsMap({});
+            }
 
             // 5. Restore HUD State (Concentration, Statuses, Death Saves) & fresh Turn Pips
             hudState = {
@@ -8722,6 +9514,7 @@
             localStorage.removeItem(getAmmoStorageKey());
             localStorage.removeItem(getWeaponModsStorageKey());
             localStorage.removeItem(getWeaponCoatingStorageKey());
+            localStorage.removeItem(getAwakenedWeaponsStorageKey());
             localStorage.removeItem(getHudStorageKey());
             hudState = {
                 conc: null,
@@ -14468,6 +15261,10 @@
         confirmAttachWeaponMod,
         detachWeaponMod,
         applyRemoteItemUpgrade,
+        getAwakenedWeaponsMap,
+        applyRemoteWeaponAwakening,
+        revertWeaponAwakening,
+        applyRemoteShopPurchase,
         computeThreadId,
         toggleMsgRecipient,
         setQuickMsgThread,
