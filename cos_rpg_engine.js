@@ -7894,7 +7894,7 @@
                 ? `<span class="rpg-card-equipped-pill" style="background:rgba(59,130,246,0.16); color:#93c5fd; border-color:rgba(96,165,250,0.45);" title="${esc((WEAPON_MASTERY_INFO[st.mastery] && WEAPON_MASTERY_INFO[st.mastery].rider) || '')}">⚔️ ${esc(st.mastery)}${st.mastery === 'Topple' ? ` DC ${st.toppleDc}` : (st.mastery === 'Graze' ? ` +${Math.max(0, st.abilityMod || 0)}` : '')}</span>`
                 : '';
             const masteryBtnHtml = st.mastery === 'Graze'
-                ? `<button type="button" class="btn-act btn-act-temp rpg-manual-hide" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Graze')" title="Deal Graze Mastery damage on a missed attack">Graze (+${Math.max(0, st.abilityMod || 0)})</button>`
+                ? `<button type="button" class="btn-act btn-act-temp rpg-manual-hide" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Graze')" title="Deal Graze Mastery damage on a missed attack (+${Math.max(0, st.abilityMod || 0)})">Graze</button>`
                 : (st.mastery === 'Cleave'
                     ? `<button type="button" class="btn-act btn-act-temp" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Cleave')" title="Roll Cleave Mastery strike against a 2nd creature within 5 ft">Cleave</button>`
                     : (st.mastery === 'Nick'
@@ -7931,8 +7931,8 @@
                 ${modCoatHtml}
                 ${ammoStripHtml}
                 <div class="action-btn-row" style="flex-wrap:wrap;">
-                    <button type="button" class="btn-roll-action" data-rpg-turn-slot="${slotId === 'offHand' ? 'bonus' : 'action'}" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${effAtk})</button>
-                    <button type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${gripLabel}${esc(dmgLabel)})</button>
+                    <button type="button" class="btn-roll-action" data-rpg-turn-slot="${slotId === 'offHand' ? 'bonus' : 'action'}" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack</button>
+                    <button type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage</button>
                     ${masteryBtnHtml}
                     ${buildWeaponModalActionButtonsHtml(weaponId)}
                     <button type="button" class="btn-act btn-act-pre" onclick="COS_RPG.unequipSlot('${slotId}')">Unequip</button>

@@ -1089,12 +1089,12 @@
                                 </div>
                                 <span class="pill-badge pill-gold">GRAZE</span>
                             </div>
-                            <div class="action-desc"><strong>+5 to Hit</strong>, <strong>2d6 + 3 Slashing</strong>. <em>Savage Attacker:</em> rolls 2d6 twice &amp; takes higher! <em>Graze:</em> deals <strong>3 Slashing</strong> on a miss!</div>
+                            <div class="action-desc" id="desc-wpn-gs"><strong>+5 to Hit</strong>, <strong>2d6 + 3 Slashing</strong>. <em>Savage Attacker:</em> rolls 2d6 twice &amp; takes higher! <em>Graze:</em> deals <strong>3 Slashing</strong> on a miss!</div>
                             <div id="jacomir-mods-greatsword"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-gs" class="btn-roll-action" onclick="rollWeaponAttack('Ancestral Greatsword (Graze: 3 Dmg on Miss)', 5, 'greatsword')">Attack (+5)</button>
-                                <button id="btn-dmg-gs" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollSavageGreatswordDamage()">2d6+3 (Savage)</button>
-                                <button id="btn-graze-gs" class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.69rem; color:var(--accent-gold); border-color:var(--border-gold);" onclick="applyGrazeDamage()" title="Weapon Mastery — Graze: On a missed attack roll, deal 3 Slashing damage (STR mod)">Graze (3)</button>
+                                <button id="btn-atk-gs" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Ancestral Greatsword (Graze: 3 Dmg on Miss)', 5, 'greatsword')">Attack</button>
+                                <button id="btn-dmg-gs" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollSavageGreatswordDamage()">Damage</button>
+                                <button id="btn-graze-gs" type="button" class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.69rem; color:var(--accent-gold); border-color:var(--border-gold);" onclick="applyGrazeDamage()" title="Weapon Mastery — Graze: On a missed attack roll, deal 3 Slashing damage (STR mod)">Graze</button>
                             </div>
                         </div>
 
@@ -1109,12 +1109,12 @@
                                 </div>
                                 <span class="pill-badge">SAP · SILVER</span>
                             </div>
-                            <div class="action-desc"><strong>+5 to Hit</strong>, <strong>1d8+3 (1H)</strong> or <strong>1d10+3 (2H) Silvered Slashing</strong>. Bypasses vampire/werewolf resistance! <em>Sap:</em> target has <strong>Disadvantage</strong> on next attack.</div>
+                            <div class="action-desc" id="desc-wpn-sls"><strong>+5 to Hit</strong>, <strong>1d8+3 (1H)</strong> or <strong>1d10+3 (2H) Silvered Slashing</strong>. Bypasses vampire/werewolf resistance! <em>Sap:</em> target has <strong>Disadvantage</strong> on next attack.</div>
                             <div id="jacomir-mods-silvered_longsword"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-sls" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Ismark\'s Silvered Longsword (Sap • Bypasses Undead Resist)', 5, 'silvered_longsword')">Silver Attack (+5)</button>
-                                <button id="btn-dmg-sls-2h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollSavageLongswordDamage(true)">2H 1d10+3</button>
-                                <button id="btn-dmg-sls-1h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" style="display:none;" onclick="rollSavageLongswordDamage(false)">1H 1d8+3</button>
+                                <button id="btn-atk-sls" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Ismark\'s Silvered Longsword (Sap • Bypasses Undead Resist)', 5, 'silvered_longsword')">Attack</button>
+                                <button id="btn-dmg-sls-2h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollSavageLongswordDamage(true)">Damage</button>
+                                <button id="btn-dmg-sls-1h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" style="display:none;" onclick="rollSavageLongswordDamage(false)">Damage</button>
                                 <button type="button" class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.69rem;" onclick="applySapDebuff()" title="5.5e Weapon Mastery — Sap: Target has Disadvantage on its next attack roll!">Sap</button>
                             </div>
                         </div>
@@ -1130,12 +1130,12 @@
                                 </div>
                                 <span class="pill-badge pill-blue">VEX</span>
                             </div>
-                            <div class="action-desc"><strong>+5 to Hit</strong>, <strong>1d6 + 3 Slashing</strong>. <em>Vex Mastery:</em> hitting grants <strong>Advantage</strong> on your next attack vs target before end of next turn.</div>
+                            <div class="action-desc" id="desc-wpn-axe"><strong>+5 to Hit</strong>, <strong>1d6 + 3 Slashing</strong>. <em>Vex Mastery:</em> hitting grants <strong>Advantage</strong> on your next attack vs target before end of next turn.</div>
                             <div id="jacomir-mods-handaxe"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-axe" class="btn-roll-action" onclick="rollWeaponAttack('Handaxe (Melee / Thrown 20/60ft • Vex)', 5, 'handaxe')">Attack (+5)</button>
-                                <button id="btn-dmg-axe" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollSavageHandaxeDamage()">1d6+3 (Savage)</button>
-                                <button class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.69rem; color:var(--accent-blue);" onclick="activateVexAdvantage()" title="Vex Mastery: Activate Advantage on your next attack roll!">Vex (+Adv)</button>
+                                <button id="btn-atk-axe" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Handaxe (Melee / Thrown 20/60ft • Vex)', 5, 'handaxe')">Attack</button>
+                                <button id="btn-dmg-axe" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollSavageHandaxeDamage()">Damage</button>
+                                <button type="button" class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.69rem; color:var(--accent-blue);" onclick="activateVexAdvantage()" title="Vex Mastery: Activate Advantage on your next attack roll!">Vex (+Adv)</button>
                             </div>
                         </div>
 
@@ -1152,8 +1152,8 @@
                             </div>
                             <div class="action-desc"><strong>Pommel:</strong> +5 Hit, <strong>4 Bludgeoning</strong>. <strong>Grapple / Shove:</strong> Target makes <strong>DC 13 STR/DEX Save</strong> or Grappled / Prone / Pushed 5 ft.</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" onclick="castUtility('✊ <strong>Grapple / Shove (5.5e Unarmed Strike):</strong> Target within 5 ft must succeed on a <strong>DC 13 STR or DEX Saving Throw</strong> or be <strong>Grappled</strong> (Speed 0), knocked <strong>Prone</strong>, or pushed <strong>5 ft</strong>!')">✊ Grapple / Shove</button>
-                                <button class="btn-roll-action btn-roll-dmg" onclick="castUtility('✊ <strong>Gauntlet Pommel Strike (+5 Hit):</strong> Deals <strong>4 Bludgeoning Damage</strong> (1 + 3 STR)!')">💥 4 Bludgeon</button>
+                                <button type="button" class="btn-roll-action" onclick="castUtility('✊ <strong>Grapple / Shove (5.5e Unarmed Strike):</strong> Target within 5 ft must succeed on a <strong>DC 13 STR or DEX Saving Throw</strong> or be <strong>Grappled</strong> (Speed 0), knocked <strong>Prone</strong>, or pushed <strong>5 ft</strong>!')">✊ Grapple / Shove</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg" onclick="castUtility('✊ <strong>Gauntlet Pommel Strike (+5 Hit):</strong> Deals <strong>4 Bludgeoning Damage</strong> (1 + 3 STR)!')">Damage</button>
                             </div>
                         </div>
                     </div>
@@ -4405,37 +4405,47 @@
                 const fmtFlat = v => v > 0 ? `+${v}` : (v < 0 ? `${v}` : '');
                 const gsMods = getJacomirWpnMods('greatsword');
                 const gsEx = (gsMods.extras || []).map(e => `+${e.dice}`).join('');
+                const gsHit = fmtFlat(5 + (gsMods.atkBonus || 0)) || '+0';
+                const gsDmg = `2d6${fmtFlat(3 + (gsMods.dmgBonus || 0))}${gsEx}`;
+                const gsGraze = 3 + (gsMods.dmgBonus || 0);
+                const descGs = document.getElementById('desc-wpn-gs');
+                if (descGs) descGs.innerHTML = `<strong>${gsHit} to Hit</strong>, <strong>${gsDmg} Slashing</strong>. <em>Savage Attacker:</em> rolls 2d6 twice &amp; takes higher! <em>Graze:</em> deals <strong>${gsGraze} Slashing</strong> on a miss!`;
                 const btnAtkGs = document.getElementById('btn-atk-gs');
                 const btnDmgGs = document.getElementById('btn-dmg-gs');
                 const btnGrazeGs = document.getElementById('btn-graze-gs');
-                if (btnAtkGs) btnAtkGs.textContent = `Attack (${fmtFlat(5 + (gsMods.atkBonus || 0)) || '+0'})`;
-                if (btnDmgGs) btnDmgGs.textContent = `2d6${fmtFlat(3 + (gsMods.dmgBonus || 0))}${gsEx} (Savage)`;
-                if (btnGrazeGs) btnGrazeGs.textContent = `Graze (${3 + (gsMods.dmgBonus || 0)})`;
+                if (btnAtkGs) btnAtkGs.textContent = 'Attack';
+                if (btnDmgGs) btnDmgGs.textContent = 'Damage';
+                if (btnGrazeGs) btnGrazeGs.textContent = 'Graze';
 
                 const slsHit = bonuses.equippedWeaponTags.find(w => w.tag === 'silvered_longsword');
                 const slsIs2H = Boolean(slsHit && slsHit.grip === '2h');
                 const slsMods = getJacomirWpnMods('silvered_longsword');
                 const slsEx = (slsMods.extras || []).map(e => `+${e.dice}`).join('');
                 const slsFlat = fmtFlat(3 + (slsMods.dmgBonus || 0));
+                const slsAtkStr = fmtFlat(5 + (slsMods.atkBonus || 0)) || '+0';
+                const descSls = document.getElementById('desc-wpn-sls');
+                if (descSls) descSls.innerHTML = `<strong>${slsAtkStr} to Hit</strong>, <strong>${slsIs2H ? `1d10${slsFlat}${slsEx} (2H)` : `1d8${slsFlat}${slsEx} (1H)`} Silvered Slashing</strong>. Bypasses vampire/werewolf resistance! <em>Sap:</em> target has <strong>Disadvantage</strong> on next attack.`;
                 const btnAtkSls = document.getElementById('btn-atk-sls');
                 const btnDmgSls2h = document.getElementById('btn-dmg-sls-2h');
                 const btnDmgSls1h = document.getElementById('btn-dmg-sls-1h');
-                if (btnAtkSls) btnAtkSls.textContent = `Silver Attack (${fmtFlat(5 + (slsMods.atkBonus || 0)) || '+0'})`;
+                if (btnAtkSls) btnAtkSls.textContent = 'Attack';
                 if (btnDmgSls2h) {
-                    btnDmgSls2h.textContent = `2H 1d10${slsFlat}${slsEx}`;
+                    btnDmgSls2h.textContent = 'Damage';
                     btnDmgSls2h.style.display = slsIs2H ? '' : 'none';
                 }
                 if (btnDmgSls1h) {
-                    btnDmgSls1h.textContent = `1H 1d8${slsFlat}${slsEx}`;
+                    btnDmgSls1h.textContent = 'Damage';
                     btnDmgSls1h.style.display = slsIs2H ? 'none' : '';
                 }
 
                 const axeMods = getJacomirWpnMods('handaxe');
                 const axeEx = (axeMods.extras || []).map(e => `+${e.dice}`).join('');
+                const descAxe = document.getElementById('desc-wpn-axe');
+                if (descAxe) descAxe.innerHTML = `<strong>+${5 + (axeMods.atkBonus || 0)} to Hit</strong>, <strong>1d6+${3 + (axeMods.dmgBonus || 0)}${axeEx} Slashing</strong>. <em>Vex Mastery:</em> hitting grants <strong>Advantage</strong> on your next attack vs target before end of next turn.`;
                 const btnAtkAxe = document.getElementById('btn-atk-axe');
                 const btnDmgAxe = document.getElementById('btn-dmg-axe');
-                if (btnAtkAxe) btnAtkAxe.textContent = `Attack (+${5 + (axeMods.atkBonus || 0)})`;
-                if (btnDmgAxe) btnDmgAxe.textContent = `1d6+${3 + (axeMods.dmgBonus || 0)}${axeEx} (Savage)`;
+                if (btnAtkAxe) btnAtkAxe.textContent = 'Attack';
+                if (btnDmgAxe) btnDmgAxe.textContent = 'Damage';
 
                 renderManeuvers();
             },

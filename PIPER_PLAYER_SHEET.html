@@ -1431,10 +1431,10 @@
                                 </div>
                                 <span class="pill-badge pill-crimson">EVOCATION</span>
                             </div>
-                            <div class="action-desc">Ranged 120ft. <strong id="firebolt-hit-txt">+6 to Hit</strong>, <strong id="firebolt-dmg-txt">1d10</strong> Fire &amp; ignites flammable objects.</div>
+                            <div class="action-desc">Ranged 120ft. <strong id="firebolt-hit-txt">+6 to Hit</strong>, <strong id="firebolt-dmg-txt">1d10</strong> Fire<span id="firebolt-robe-txt"></span> &amp; ignites flammable objects.</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" onclick="rollSpellAttack('Fire Bolt (Thumb-Fire Trick)')" id="btn-firebolt-atk">Attack (+6)</button>
-                                <button class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFireBoltDamage()" id="btn-firebolt-dmg">1d10 Fire</button>
+                                <button type="button" class="btn-roll-action" onclick="rollSpellAttack('Fire Bolt (Thumb-Fire Trick)')" id="btn-firebolt-atk">Attack</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFireBoltDamage()" id="btn-firebolt-dmg">Damage</button>
                             </div>
                         </div>
 
@@ -1517,11 +1517,11 @@
                                 </div>
                                 <span class="pill-badge pill-crimson">SILVERED</span>
                             </div>
-                            <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong>. Bypasses nonmagical resistance/immunity of Vampire Spawn, Werewolves &amp; Night Hags!</div>
+                            <div class="action-desc" id="desc-wpn-kolyan"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong>. Bypasses nonmagical resistance/immunity of Vampire Spawn, Werewolves &amp; Night Hags!</div>
                             <div id="piper-mods-kolyan_dagger"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-kolyan" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Kolyan\'s Silvered Heirloom Dagger', 2, 'kolyan_dagger')">Attack (+4)</button>
-                                <button id="btn-dmg-kolyan" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFormulaDamage('Kolyan\'s Silvered Heirloom Dagger', 4, 2, 'Silvered Piercing', 1, 'kolyan_dagger')">1d4+2 Silver</button>
+                                <button id="btn-atk-kolyan" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Kolyan\'s Silvered Heirloom Dagger', 2, 'kolyan_dagger')">Attack</button>
+                                <button id="btn-dmg-kolyan" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFormulaDamage('Kolyan\'s Silvered Heirloom Dagger', 4, 2, 'Silvered Piercing', 1, 'kolyan_dagger')">Damage</button>
                             </div>
                         </div>
 
@@ -1536,12 +1536,12 @@
                                 </div>
                                 <span class="pill-badge pill-purple">VERSATILE</span>
                             </div>
-                            <div class="action-desc"><strong>+2 to Hit</strong>, <strong>1d6 Bludgeoning (1H)</strong> or <strong>1d8 Bludgeoning (2H)</strong>. Doubles as Piper's theatrical cane &amp; arcane focus.</div>
+                            <div class="action-desc" id="desc-wpn-staff"><strong>+2 to Hit</strong>, <strong>1d6 Bludgeoning (1H)</strong> or <strong>1d8 Bludgeoning (2H)</strong>. Doubles as Piper's theatrical cane &amp; arcane focus.</div>
                             <div id="piper-mods-staff"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-staff" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Quarterstaff (Magician\'s Cane)', 0, 'staff')">Attack (+2)</button>
-                                <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning', 1, 'staff')">2H (1d8)</button>
-                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" style="display:none;" onclick="rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning', 1, 'staff')">1H (1d6)</button>
+                                <button id="btn-atk-staff" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Quarterstaff (Magician\'s Cane)', 0, 'staff')">Attack</button>
+                                <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning', 1, 'staff')">Damage</button>
+                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" style="display:none;" onclick="rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning', 1, 'staff')">Damage</button>
                             </div>
                         </div>
 
@@ -1556,12 +1556,12 @@
                                 </div>
                                 <span class="pill-badge">LIGHT</span>
                             </div>
-                            <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Piercing</strong> (Main-Hand) or <strong>1d4 Piercing</strong> (Off-Hand Bonus Action).</div>
+                            <div class="action-desc" id="desc-wpn-dagger"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Piercing</strong> (Main-Hand) or <strong>1d4 Piercing</strong> (Off-Hand Bonus Action).</div>
                             <div id="piper-mods-dagger"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Standard Dagger', 2, 'dagger')">Attack (+4)</button>
-                                <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFormulaDamage('Standard Dagger', 4, 2, 'Piercing', 1, 'dagger')">1d4+2</button>
-                                <button id="btn-dmg-dagger-oh" type="button" class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.68rem;" onclick="rollFormulaDamage('Off-Hand Dagger', 4, 0, 'Piercing', 1, 'dagger')">Off-Hand 1d4</button>
+                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Standard Dagger', 2, 'dagger')">Attack</button>
+                                <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFormulaDamage('Standard Dagger', 4, 2, 'Piercing', 1, 'dagger')">Damage</button>
+                                <button id="btn-dmg-dagger-oh" type="button" class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.68rem;" onclick="rollFormulaDamage('Off-Hand Dagger', 4, 0, 'Piercing', 1, 'dagger')">Off-Hand Damage</button>
                             </div>
                         </div>
                     </div>
@@ -2131,16 +2131,16 @@
             tray.className = 'piper-wild-hud-tray is-visible is-check';
             tray.innerHTML = `
                 <div class="piper-wild-tray-head">
-                    <span class="piper-wild-tray-title">🌀 Wild Magic Check — ${safeSpell}${lvlTag} <span class="piper-wild-tray-badge">Nat 1 = Surge</span></span>
+                    <span class="piper-wild-tray-title">🌀 Wild Magic Check (2024) — ${safeSpell}${lvlTag} <span class="piper-wild-tray-badge">Nat 20 = Surge</span></span>
                     ${closeBtn}
                 </div>
                 <div class="piper-wild-tray-row">
-                    ${formatWildDiePill('1d20', 'Nat 1 = Surge')}
-                    <span class="piper-wild-tray-note">Roll physical <strong>1d20</strong> (2–20 Safe • Nat 1 triggers Surge). Stays pinned while you click Hit / Damage!</span>
+                    ${formatWildDiePill('1d20', 'Nat 20 = Surge')}
+                    <span class="piper-wild-tray-note">Roll physical <strong>1d20</strong> (1–19 Safe • Nat 20 triggers Surge). Stays pinned while you click Hit / Damage!</span>
                 </div>
                 <div class="piper-wild-tray-row">
-                    <button type="button" class="btn-roll-action btn-roll-heal" onclick="resolveWildCheckSafeInTray(event)">✅ Safe (2–20)</button>
-                    <button type="button" class="btn-roll-action btn-roll-wild" onclick="openWildSurgePromptInTray(event)">💥 Rolled a 1! Roll d100 Surge</button>
+                    <button type="button" class="btn-roll-action btn-roll-heal" onclick="resolveWildCheckSafeInTray(event)">✅ Safe (1–19)</button>
+                    <button type="button" class="btn-roll-action btn-roll-wild" onclick="openWildSurgePromptInTray(event)">💥 Rolled a 20! Roll d100 Surge</button>
                     <button type="button" class="btn-act btn-act-pre" style="padding:4px 9px; font-size:0.72rem;" onclick="rollWildCheckDigitalInTray(event)">💻 Roll d20</button>
                 </div>
             `;
@@ -2151,7 +2151,7 @@
             tray.className = 'piper-wild-hud-tray is-visible is-surged';
             tray.innerHTML = `
                 <div class="piper-wild-tray-head">
-                    <span class="piper-wild-tray-title">💥 Natural 1! Wild Magic Surge (${safeSpell}${lvlTag}) <span class="piper-wild-tray-badge">Table 01–00</span></span>
+                    <span class="piper-wild-tray-title">💥 Natural 20! Wild Magic Surge (${safeSpell}${lvlTag}) <span class="piper-wild-tray-badge">Table 01–00</span></span>
                     ${closeBtn}
                 </div>
                 <div class="piper-wild-tray-note">Roll physical <strong>1d100</strong> and enter the number below (or spin digitally) — your damage guide stays open above!</div>
@@ -2163,8 +2163,8 @@
         if (ctx.mode === 'safe') {
             tray.className = 'piper-wild-hud-tray is-visible is-safe';
             const rollTxt = ctx.d20Result
-                ? `d20 = <strong>${ctx.d20Result}</strong> (Safe — triggers on Nat 1)`
-                : 'Physical d20: <strong>Safe (2–20)</strong>';
+                ? `d20 = <strong>${ctx.d20Result}</strong> (Safe — triggers on Nat 20)`
+                : 'Physical d20: <strong>Safe (1–19)</strong>';
             tray.innerHTML = `
                 <div class="piper-wild-tray-head">
                     <div class="piper-wild-tray-row">
@@ -2247,8 +2247,8 @@
         if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
         const prev = activeWildSpellContext || { spellName: 'Spell', slotLevel: 1 };
         const d20 = Math.floor(Math.random() * 20) + 1;
-        if (d20 === 1) {
-            triggerWildMagicSurge(`Nat 1 on Wild Magic Check [d20 = 1] after ${prev.spellName}`, false, null, { inTrayOnly: true });
+        if (d20 === 20) {
+            triggerWildMagicSurge(`Nat 20 on Wild Magic Check [d20 = 20] after ${prev.spellName}`, false, null, { inTrayOnly: true });
         } else {
             activeWildSpellContext = { ...prev, mode: 'safe', d20Result: d20 };
             renderPiperWildHudTray();
@@ -2454,8 +2454,8 @@
                 return;
             }
             const d20 = Math.floor(Math.random() * 20) + 1;
-            if (d20 === 1) {
-                triggerWildMagicSurge(`Nat 1 on Wild Magic Check [d20 = 1] after ${spellName}!`, false, null, { inTrayOnly: true });
+            if (d20 === 20) {
+                triggerWildMagicSurge(`Nat 20 on Wild Magic Check [d20 = 20] after ${spellName}!`, false, null, { inTrayOnly: true });
             } else {
                 activeWildSpellContext = { ...activeWildSpellContext, mode: 'safe', d20Result: d20 };
                 renderPiperWildHudTray();
@@ -2467,21 +2467,21 @@
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
             COS_RPG.logManualSpell({
                 icon: '🌀',
-                title: `${reason} (d20 Surge Check)`,
-                diceParts: [{ expr: '1d20', type: 'Nat 1 = Surge!' }],
-                notes: 'Roll a physical d20. On a 2–20 you are safe; on a Natural 1, trigger the Wild Magic Surge d100 table!',
+                title: `${reason} (2024 d20 Surge Check)`,
+                diceParts: [{ expr: '1d20', type: 'Nat 20 = Surge!' }],
+                notes: 'Roll a physical d20. On a 1–19 you are safe; on a Natural 20 (2024 5.5e), trigger the Wild Magic Surge d100 table!',
                 extraButtons: [
-                    { label: '💥 Rolled a 1! Spin Wild Magic d100', cls: 'btn-crit', onClick: () => triggerWildMagicSurge(`${reason} rolled a physical NAT 1!`) }
+                    { label: '💥 Rolled a 20! Spin Wild Magic d100', cls: 'btn-crit', onClick: () => triggerWildMagicSurge(`${reason} rolled a physical NAT 20!`) }
                 ],
                 onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollWildMagicD20Check(reason))
             });
             return;
         }
         const d20 = Math.floor(Math.random() * 20) + 1;
-        if (d20 === 1) {
-            triggerWildMagicSurge(`${reason} rolled a NAT 1 on d20!`);
+        if (d20 === 20) {
+            triggerWildMagicSurge(`${reason} rolled a NAT 20 on d20!`);
         } else {
-            logRoll(`🎲 <strong>${reason} (d20):</strong> Rolled <strong>${d20}</strong> (No Surge — triggers on a 1). <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.7rem; margin-left:6px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Override')">💥 Trigger d100 Surge Anyway</button>`);
+            logRoll(`🎲 <strong>${reason} (d20):</strong> Rolled <strong>${d20}</strong> (No Surge — triggers on a 20). <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.7rem; margin-left:6px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Override')">💥 Trigger d100 Surge Anyway</button>`);
         }
     }
 
@@ -2788,8 +2788,8 @@
                 3: "Lvl 3 (2d8+3d6)"
             },
             buttons: [
-                { label: "⚡ Leap / Attack (+6)", class: "btn-roll-action rpg-manual-hide", costSlot: false, onClick: (lvl) => rollChaosBoltAttack(lvl) },
-                { label: "Cast Chaos Bolt (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castChaosBoltSpell(lvl) }
+                { label: "Cast & Attack (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castChaosBoltSpell(lvl) },
+                { label: "Damage", class: "btn-roll-action btn-roll-dmg rpg-manual-hide", costSlot: false, onClick: (lvl) => withWildTrayPreserved(() => rollChaosBoltScaled(lvl, false, true)) }
             ]
         },
         {
@@ -3277,7 +3277,7 @@
         const typeChoiceStr = (d8_1 === d8_2) ? `${type1}` : `${type1} or ${type2}`;
         let leapAlert = '';
         if (d8_1 === d8_2) {
-            leapAlert = `<br>🎉 <span style="color:#facc15; font-weight:800; background:rgba(250,204,21,0.15); border:1px solid #facc15; padding:2px 7px; border-radius:4px;">⚡ CHAOS LEAP TRIGGERED! Both d8s rolled [${d8_1}]! The bolt leaps to a 2nd target within 30 ft—roll another Attack &amp; Damage!</span>`;
+            leapAlert = `<br>🎉 <span style="color:#facc15; font-weight:800; background:rgba(250,204,21,0.15); border:1px solid #facc15; padding:2px 7px; border-radius:4px;">⚡ CHAOS LEAP TRIGGERED! Both d8s rolled [${d8_1}]! The bolt leaps to a 2nd target within 30 ft!</span> <button type="button" class="btn-roll-action btn-roll-wild" style="margin-left:6px; padding:2px 8px; font-size:0.72rem;" onclick="event.stopPropagation(); withWildTrayPreserved(() => rollChaosBoltAttack(${lvl}, { skipTidesTray: true }))">⚡ Roll Chaos Leap Attack (Free)</button>`;
         }
 
         let redRobeStr = '';
@@ -3452,8 +3452,10 @@
         document.getElementById('firebolt-tag-disp').innerText = `Cantrip • 1 Action • 120ft (${fbDice})`;
         document.getElementById('firebolt-hit-txt').innerText = `+${hit} to Hit`;
         document.getElementById('firebolt-dmg-txt').innerText = fbDice;
-        document.getElementById('btn-firebolt-atk').innerText = `Attack (+${hit})`;
-        document.getElementById('btn-firebolt-dmg').innerText = `${fbDice} Fire`;
+        const fbAtkEl = document.getElementById('btn-firebolt-atk');
+        const fbDmgEl = document.getElementById('btn-firebolt-dmg');
+        if (fbAtkEl) fbAtkEl.innerText = 'Attack';
+        if (fbDmgEl) fbDmgEl.innerText = 'Damage';
 
         updateHPUI();
         updateSorceryPointsUI();
@@ -3955,11 +3957,16 @@
         if (arcBadge) {
             arcBadge.style.display = (activeRobe === 'green') ? 'inline' : 'none';
         }
+        const fbRobeTxt = document.getElementById('firebolt-robe-txt');
+        if (fbRobeTxt) {
+            fbRobeTxt.innerHTML = (activeRobe === 'red') ? ` <strong style="color:#fb923c;">+ 1d4+1 Fire (Red Robe)</strong>` : '';
+        }
         if (fbDmgBtn) {
-            fbDmgBtn.innerText = (activeRobe === 'red') ? `${fbDice}+1d4+1 Fire` : `${fbDice} Fire`;
+            fbDmgBtn.innerText = 'Damage';
         }
         updateACDisplay();
         updateSavesUI();
+        renderSpellbook();
     }
 
     function equipRobe(robeKey) {
@@ -4110,9 +4117,13 @@
                         label = fiernaCharmReady ? '💖 Free Fierna (2nd-Lvl)' : '💖 Fierna (0/1 Used)';
                     }
                     const slotVal = (sp.id === 'chaos_bolt' && bIdx === 1) ? 'none' : defaultSlot;
-                    controlsHtml += `<button class="${btn.class}" data-rpg-turn-slot="${slotVal}" onclick="execSpellButton('${sp.id}', ${bIdx})">${label}</button>`;
+                    controlsHtml += `<button type="button" class="${btn.class}" data-rpg-turn-slot="${slotVal}" onclick="execSpellButton('${sp.id}', ${bIdx})">${label}</button>`;
                 });
             }
+
+            const descHtml = (sp.id === 'chaos_bolt')
+                ? `<strong>+${getSpellAttackMod()} to Hit</strong> (120ft): <strong>2d8 + 1d6</strong> random elemental dmg${activeRobe === 'red' ? ' <strong style="color:#fb923c;">+ 1d4+1 Fire (Red Robe)</strong>' : ''}. Matching d8s leap to a 2nd target within 30ft!`
+                : sp.desc;
 
             card.innerHTML = `
                 <div class="action-header">
@@ -4124,7 +4135,7 @@
                     </div>
                     <span class="pill-badge pill-purple">KNOWN</span>
                 </div>
-                <div class="action-desc">${sp.desc}</div>
+                <div class="action-desc">${descHtml}</div>
                 <div class="action-btn-row">${controlsHtml}</div>
             `;
             container.appendChild(card);
@@ -6084,7 +6095,7 @@
                     initEl.innerText = totInit >= 0 ? `+${totInit}` : `${totInit}`;
                 }
                 const fbAtk = document.getElementById('btn-firebolt-atk');
-                if (fbAtk) fbAtk.innerText = `Attack (+${getSpellAttackMod()})`;
+                if (fbAtk) fbAtk.innerText = 'Attack';
                 const fbTxt = document.getElementById('firebolt-hit-txt');
                 if (fbTxt) fbTxt.innerText = `+${getSpellAttackMod()} to Hit`;
 
@@ -6108,10 +6119,14 @@
                 const fmtFlat = v => v > 0 ? `+${v}` : (v < 0 ? `${v}` : '');
                 const kMods = getPiperWpnMods('kolyan_dagger');
                 const kEx = (kMods.extras || []).map(e => `+${e.dice}`).join('');
+                const kHitStr = fmtFlat(2 + pb + (kMods.atkBonus || 0)) || '+0';
+                const kDmgStr = `1d4${fmtFlat(2 + (kMods.dmgBonus || 0))}${kEx}`;
+                const descKol = document.getElementById('desc-wpn-kolyan');
+                if (descKol) descKol.innerHTML = `<strong>${kHitStr} to Hit</strong>, <strong>${kDmgStr} Silvered Piercing</strong>. Bypasses nonmagical resistance/immunity of Vampire Spawn, Werewolves &amp; Night Hags!`;
                 const btnAtkKol = document.getElementById('btn-atk-kolyan');
                 const btnDmgKol = document.getElementById('btn-dmg-kolyan');
-                if (btnAtkKol) btnAtkKol.textContent = `Attack (${fmtFlat(2 + pb + (kMods.atkBonus || 0)) || '+0'})`;
-                if (btnDmgKol) btnDmgKol.textContent = `1d4${fmtFlat(2 + (kMods.dmgBonus || 0))}${kEx} Silver`;
+                if (btnAtkKol) btnAtkKol.textContent = 'Attack';
+                if (btnDmgKol) btnDmgKol.textContent = 'Damage';
 
                 const staffHit = bonuses.equippedWeaponTags.find(w => w.tag === 'staff');
                 const staffIs2H = Boolean(staffHit && staffHit.grip === '2h');
@@ -6124,28 +6139,36 @@
                 const sMods = getPiperWpnMods('staff');
                 const sEx = (sMods.extras || []).map(e => `+${e.dice}`).join('');
                 const sDmgFlat = fmtFlat(sMods.dmgBonus || 0);
+                const sHitStr = fmtFlat(pb + (sMods.atkBonus || 0)) || '+0';
+                const descStaff = document.getElementById('desc-wpn-staff');
+                if (descStaff) descStaff.innerHTML = `<strong>${sHitStr} to Hit</strong>, <strong>${staffIs2H ? `1d8${sDmgFlat}${sEx} Bludgeoning (2H)` : `1d6${sDmgFlat}${sEx} Bludgeoning (1H)`}</strong>. Doubles as Piper's theatrical cane &amp; arcane focus.`;
                 const btnAtkStaff = document.getElementById('btn-atk-staff');
                 const btnDmgStaff2h = document.getElementById('btn-dmg-staff-2h');
                 const btnDmgStaff1h = document.getElementById('btn-dmg-staff-1h');
-                if (btnAtkStaff) btnAtkStaff.textContent = `Attack (${fmtFlat(pb + (sMods.atkBonus || 0)) || '+0'})`;
+                if (btnAtkStaff) btnAtkStaff.textContent = 'Attack';
                 if (btnDmgStaff2h) {
-                    btnDmgStaff2h.textContent = `2H (1d8${sDmgFlat}${sEx})`;
+                    btnDmgStaff2h.textContent = 'Damage';
                     btnDmgStaff2h.style.display = staffIs2H ? '' : 'none';
                 }
                 if (btnDmgStaff1h) {
-                    btnDmgStaff1h.textContent = `1H (1d6${sDmgFlat}${sEx})`;
+                    btnDmgStaff1h.textContent = 'Damage';
                     btnDmgStaff1h.style.display = staffIs2H ? 'none' : '';
                 }
 
                 const dMods = getPiperWpnMods('dagger');
                 const dEx = (dMods.extras || []).map(e => `+${e.dice}`).join('');
                 const dOhFlat = dMods.dmgBonus ? `+${dMods.dmgBonus}` : '';
+                const dHitStr = `+${2 + pb + (dMods.atkBonus || 0)}`;
+                const dMainDmg = `1d4+${2 + (dMods.dmgBonus || 0)}${dEx}`;
+                const dOffDmg = `1d4${dOhFlat}${dEx}`;
+                const descDag = document.getElementById('desc-wpn-dagger');
+                if (descDag) descDag.innerHTML = `<strong>${dHitStr} to Hit</strong>, <strong>${dMainDmg} Piercing</strong> (Main-Hand) or <strong>${dOffDmg} Piercing</strong> (Off-Hand Bonus Action).`;
                 const btnAtkDag = document.getElementById('btn-atk-dagger');
                 const btnDmgDag = document.getElementById('btn-dmg-dagger');
                 const btnDmgDagOh = document.getElementById('btn-dmg-dagger-oh');
-                if (btnAtkDag) btnAtkDag.textContent = `Attack (+${2 + pb + (dMods.atkBonus || 0)})`;
-                if (btnDmgDag) btnDmgDag.textContent = `1d4+${2 + (dMods.dmgBonus || 0)}${dEx}`;
-                if (btnDmgDagOh) btnDmgDagOh.textContent = `Off-Hand 1d4${dOhFlat}${dEx}`;
+                if (btnAtkDag) btnAtkDag.textContent = 'Attack';
+                if (btnDmgDag) btnDmgDag.textContent = 'Damage';
+                if (btnDmgDagOh) btnDmgDagOh.textContent = 'Off-Hand Damage';
             }
         });
     }

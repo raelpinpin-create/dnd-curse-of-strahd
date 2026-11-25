@@ -1174,8 +1174,8 @@
                             </div>
                             <div class="action-desc"><strong id="wisp-hit-txt">+5 to Hit</strong>, <strong id="wisp-dmg-txt">1d8</strong> Radiant. Target emits dim light &amp; cannot benefit from Invisible!</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollStarryWispAttack()" id="btn-wisp-atk">Attack (+5)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollStarryWispDamage()" id="btn-wisp-dmg">1d8 Radiant</button>
+                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollStarryWispAttack()" id="btn-wisp-atk">Attack</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollStarryWispDamage()" id="btn-wisp-dmg">Damage</button>
                             </div>
                         </div>
 
@@ -1192,8 +1192,8 @@
                             </div>
                             <div class="action-desc">Bonus Action torchlight (10m) or hurl 60 ft (<strong id="flame-hit-txt">+5 to Hit</strong>, <strong id="flame-dmg-txt">1d8</strong> Fire damage).</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollProduceFlameAttack()" id="btn-flame-atk">Hurl (+5)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollProduceFlameDamage()" id="btn-flame-dmg">1d8 Fire</button>
+                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollProduceFlameAttack()" id="btn-flame-atk">Attack</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollProduceFlameDamage()" id="btn-flame-dmg">Damage</button>
                             </div>
                         </div>
 
@@ -1245,9 +1245,9 @@
                             <div class="action-desc" id="staff-desc-txt"><strong>+2 to Hit</strong>, <strong>1d8 Bludgeoning (2H)</strong>. Toggle <em>Shillelagh</em> for <strong>+5 Hit, 1d8+3 Force/Bludge</strong>!</div>
                             <div id="cael-mods-staff"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-staff" type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollCaelStaffAttack()">Attack (+2)</button>
-                                <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollCaelStaffDamage('2h')">2H (1d8)</button>
-                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" style="display:none;" onclick="rollCaelStaffDamage('1h')">1H (1d6)</button>
+                                <button id="btn-atk-staff" type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollCaelStaffAttack()">Attack</button>
+                                <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollCaelStaffDamage('2h')">Damage</button>
+                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" style="display:none;" onclick="rollCaelStaffDamage('1h')">Damage</button>
                             </div>
                         </div>
 
@@ -1262,11 +1262,11 @@
                                 </div>
                                 <span class="pill-badge pill-gold">SILVERED</span>
                             </div>
-                            <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong>. Bypasses nonmagical Vampire/Werewolf resistances!</div>
+                            <div class="action-desc" id="desc-wpn-dagger"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong>. Bypasses nonmagical Vampire/Werewolf resistances!</div>
                             <div id="cael-mods-dagger"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollCaelWeaponAttack('Silvered Hunting Dagger', 2, 'dagger')">Attack (+4)</button>
-                                <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollFormulaDamage('Silvered Hunting Dagger', 4, 2, 'Silvered Piercing', 1, 'dagger')">1d4+2 Silver</button>
+                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollCaelWeaponAttack('Silvered Hunting Dagger', 2, 'dagger')">Attack</button>
+                                <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollFormulaDamage('Silvered Hunting Dagger', 4, 2, 'Silvered Piercing', 1, 'dagger')">Damage</button>
                             </div>
                         </div>
                     </div>
@@ -1885,10 +1885,10 @@
             }
             if (staffTag) staffTag.innerText = 'Shillelagh Active (WIS) • Force or Bludgeoning';
             if (staffPill) { staffPill.innerText = `WIS +${3 + pb + (sMods.atkBonus || 0)}`; staffPill.className = 'pill-badge pill-emerald'; }
-            if (staffDesc) staffDesc.innerHTML = `<strong style="color:#4ade80;">+${3 + pb + (sMods.atkBonus || 0)} to Hit</strong>, <strong>1d8 + ${3 + (sMods.dmgBonus || 0)} Force or Bludgeoning</strong> (uses WIS)!`;
-            if (btnAtk) btnAtk.innerText = `Attack (+${3 + pb + (sMods.atkBonus || 0)})`;
-            if (btn2h) btn2h.innerText = `1d8+${3 + (sMods.dmgBonus || 0)}${sEx} Force`;
-            if (btn1h) btn1h.innerText = `1d8+${3 + (sMods.dmgBonus || 0)}${sEx} Force`;
+            if (staffDesc) staffDesc.innerHTML = `<strong style="color:#4ade80;">+${3 + pb + (sMods.atkBonus || 0)} to Hit</strong>, <strong>1d8+${3 + (sMods.dmgBonus || 0)}${sEx} Force or Bludgeoning</strong> (uses WIS)!`;
+            if (btnAtk) btnAtk.innerText = 'Attack';
+            if (btn2h) btn2h.innerText = 'Damage';
+            if (btn1h) btn1h.innerText = 'Damage';
         } else {
             if (card) card.classList.remove('active-buff');
             if (badge) { badge.innerText = 'OFF'; badge.className = 'pill-badge pill-neutral'; }
@@ -1896,13 +1896,15 @@
                 btn.innerText = '🪄 Imbue Staff (BA)';
                 btn.dataset.rpgTurnSlot = 'bonus';
             }
+            const staffHit = window.__caelGearCache?.equippedWeaponTags?.find(w => w.tag === 'staff');
+            const is2H = Boolean(!staffHit || staffHit.grip === '2h');
+            const flat = sMods.dmgBonus ? `+${sMods.dmgBonus}` : '';
             if (staffTag) staffTag.innerText = 'Versatile (1H/2H) • Druidic Focus';
             if (staffPill) { staffPill.innerText = 'FOCUS'; staffPill.className = 'pill-badge pill-emerald'; }
-            if (staffDesc) staffDesc.innerHTML = `<strong>+${pb + (sMods.atkBonus || 0)} to Hit</strong>, <strong>1d8 Bludgeoning (2H)</strong>. Toggle <em>Shillelagh</em> for <strong>+${3 + pb} Hit, 1d8+3 Force/Bludge</strong>!`;
-            if (btnAtk) btnAtk.innerText = `Attack (+${pb + (sMods.atkBonus || 0)})`;
-            const flat = sMods.dmgBonus ? `+${sMods.dmgBonus}` : '';
-            if (btn2h) btn2h.innerText = `2H (1d8${flat}${sEx})`;
-            if (btn1h) btn1h.innerText = `1H (1d6${flat}${sEx})`;
+            if (staffDesc) staffDesc.innerHTML = `<strong>+${pb + (sMods.atkBonus || 0)} to Hit</strong>, <strong>${is2H ? `1d8${flat}${sEx} Bludgeoning (2H)` : `1d6${flat}${sEx} Bludgeoning (1H)`}</strong>. Toggle <em>Shillelagh</em> for <strong>+${3 + pb} Hit, 1d8+3 Force/Bludge</strong>!`;
+            if (btnAtk) btnAtk.innerText = 'Attack';
+            if (btn2h) btn2h.innerText = 'Damage';
+            if (btn1h) btn1h.innerText = 'Damage';
         }
         if (window.COS_RPG && typeof COS_RPG.syncCombatActionLocks === 'function') COS_RPG.syncCombatActionLocks();
     }
@@ -1919,25 +1921,26 @@
         const wispHit = document.getElementById('wisp-hit-txt');
         const wispBtn = document.getElementById('btn-wisp-atk');
         if (wispHit) wispHit.innerText = `+${atk} to Hit`;
-        if (wispBtn) wispBtn.innerText = `Attack (+${atk})`;
+        if (wispBtn) wispBtn.innerText = 'Attack';
 
         const flameHit = document.getElementById('flame-hit-txt');
         const flameBtn = document.getElementById('btn-flame-atk');
         if (flameHit) flameHit.innerText = `+${atk} to Hit`;
-        if (flameBtn) flameBtn.innerText = `Hurl (+${atk})`;
+        if (flameBtn) flameBtn.innerText = 'Attack';
 
         const wispDmg = document.getElementById('wisp-dmg-txt');
         const wispDmgBtn = document.getElementById('btn-wisp-dmg');
         if (wispDmg) wispDmg.innerText = `${diceCount}d8`;
-        if (wispDmgBtn) wispDmgBtn.innerText = `${diceCount}d8 Radiant`;
+        if (wispDmgBtn) wispDmgBtn.innerText = 'Damage';
 
         const flameDmg = document.getElementById('flame-dmg-txt');
         const flameDmgBtn = document.getElementById('btn-flame-dmg');
         if (flameDmg) flameDmg.innerText = `${diceCount}d8`;
-        if (flameDmgBtn) flameDmgBtn.innerText = `${diceCount}d8 Fire`;
+        if (flameDmgBtn) flameDmgBtn.innerText = 'Damage';
 
         updateStarMapUI();
         updateStarryFormUI();
+        renderSpellbook();
     }
 
     function toggleShillelagh() {
@@ -2217,7 +2220,8 @@
             hasLevelSelect: true,
             levelOptions: { 1: "Lvl 1 (4d6)", 2: "Lvl 2 (5d6)", 3: "Lvl 3 (6d6)" },
             buttons: [
-                { label: "Cast w/ Slot", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castGuidingBoltSlot(lvl) }
+                { label: "Cast & Attack (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castGuidingBoltSlot(lvl) },
+                { label: "Damage", class: "btn-roll-action btn-roll-dmg rpg-manual-hide", costSlot: false, onClick: (lvl) => rollGuidingBoltDamage(lvl) }
             ]
         },
         {
@@ -2286,7 +2290,7 @@
             hasLevelSelect: true,
             levelOptions: { 2: "Lvl 2 (2d10 Rad)", 3: "Lvl 3 (3d10 Rad)" },
             buttons: [
-                { label: "Cast Moonbeam", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castMoonbeamSpell(lvl) },
+                { label: "Cast Moonbeam (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castMoonbeamSpell(lvl) },
                 { label: "Move / Turn Dmg", class: "btn-roll-action btn-roll-dmg", costSlot: false, onClick: (lvl) => { pendingActionForArcher = true; rollFormulaDamage(`Moonbeam (Lvl ${lvl})`, 10, 0, 'Radiant', lvl); } }
             ]
         },
@@ -2871,10 +2875,14 @@
 
             if (sp.buttons) {
                 sp.buttons.forEach((btn, bIdx) => {
-                    const slotVal = (sp.id === 'moonbeam' && bIdx === 1) ? 'none' : defaultSlot;
+                    const slotVal = ((sp.id === 'moonbeam' || sp.id === 'guiding_bolt') && bIdx === 1) ? 'none' : defaultSlot;
                     controlsHtml += `<button type="button" class="${btn.class}" data-rpg-turn-slot="${slotVal}" onclick="execSpellButton('${sp.id}', ${bIdx})">${btn.label}</button>`;
                 });
             }
+
+            const descHtml = (sp.id === 'guiding_bolt')
+                ? `120ft (<strong>+${getSpellAttackMod()} to Hit</strong>): <strong>4d6 Radiant</strong> (+1d6/lvl) &amp; target glows—the NEXT attack roll has Advantage!`
+                : sp.desc;
 
             card.innerHTML = `
                 <div class="action-header">
@@ -2886,7 +2894,7 @@
                     </div>
                     <span class="pill-badge pill-emerald">PREPARED</span>
                 </div>
-                <div class="action-desc">${sp.desc}</div>
+                <div class="action-desc">${descHtml}</div>
                 <div class="action-btn-row">${controlsHtml}</div>
             `;
             container.appendChild(card);
@@ -4299,6 +4307,12 @@
                 const btn1h = document.getElementById('btn-dmg-staff-1h');
                 if (btn2h) btn2h.style.display = staffIs2H ? '' : 'none';
                 if (btn1h) btn1h.style.display = staffIs2H ? 'none' : '';
+
+                const dMods = getCaelWpnMods('dagger');
+                const dEx = (dMods.extras || []).map(e => `+${e.dice}`).join('');
+                const dDesc = document.getElementById('desc-wpn-dagger');
+                if (dDesc) dDesc.innerHTML = `<strong>+${2 + getProfBonus() + (dMods.atkBonus || 0)} to Hit</strong>, <strong>1d4+${2 + (dMods.dmgBonus || 0)}${dEx} Silvered Piercing</strong>. Bypasses nonmagical Vampire/Werewolf resistances!`;
+
                 updateShillelaghUI();
                 updateDynamicSpellUI();
             }

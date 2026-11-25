@@ -1231,7 +1231,7 @@
                                 </div>
                                 <span class="pill-badge pill-gold" id="lament-mag-badge">10-ROUND MAG</span>
                             </div>
-                            <div class="action-desc">
+                            <div class="action-desc" id="desc-wpn-lament">
                                 <strong>+8 to Hit</strong>, <strong>1d12 + 4 Piercing</strong>. Gunner Mastery: no loading penalty, point-blank execution with no disadvantage.
                             </div>
 
@@ -1257,8 +1257,8 @@
                             <div id="yvaine-mods-lament"></div>
 
                             <div class="action-btn-row">
-                                <button id="btn-atk-lament" class="btn-roll-action" onclick="fireLamentShot()">Attack (+8)</button>
-                                <button id="btn-dmg-lament" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollLamentDamage()">Damage (1d12+4)</button>
+                                <button id="btn-atk-lament" type="button" class="btn-roll-action" onclick="fireLamentShot()">Attack</button>
+                                <button id="btn-dmg-lament" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollLamentDamage()">Damage</button>
                             </div>
                         </div>
                     </div>
@@ -1277,7 +1277,7 @@
                                     </div>
                                     <span class="pill-badge pill-crimson" id="mercy-badge">6-CYLINDER</span>
                                 </div>
-                                <div class="action-desc">
+                                <div class="action-desc" id="desc-wpn-mercy">
                                     <strong>+8 to Hit</strong>, <strong>1d6 + 4 Piercing</strong>. Scarred steel six-shooter drawn on right hip with hair trigger.
                                 </div>
 
@@ -1295,8 +1295,8 @@
                                 <div id="yvaine-mods-mercy"></div>
 
                                 <div class="action-btn-row">
-                                    <button id="btn-atk-mercy" class="btn-roll-action" onclick="fireMercyShot()">Attack (+8)</button>
-                                    <button id="btn-dmg-mercy" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollMercyDamage()">Damage (1d6+4)</button>
+                                    <button id="btn-atk-mercy" type="button" class="btn-roll-action" onclick="fireMercyShot()">Attack</button>
+                                    <button id="btn-dmg-mercy" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollMercyDamage()">Damage</button>
                                 </div>
                             </div>
 
@@ -1311,7 +1311,7 @@
                                     </div>
                                     <span class="pill-badge pill-blue" id="less-badge">6-CYLINDER</span>
                                 </div>
-                                <div class="action-desc">
+                                <div class="action-desc" id="desc-wpn-less">
                                     <strong>+8 to Hit</strong>, <strong>1d6 Piercing</strong> (Off-Hand bonus attack). Cross-drawn from her left side in rapid rhythm.
                                 </div>
 
@@ -1329,8 +1329,8 @@
                                 <div id="yvaine-mods-less"></div>
 
                                 <div class="action-btn-row">
-                                    <button type="button" id="btn-atk-less" class="btn-roll-action" onclick="fireLessShot()">Attack (+8)</button>
-                                    <button type="button" id="btn-dmg-less" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollLessDamage()">Damage (1d6)</button>
+                                    <button type="button" id="btn-atk-less" class="btn-roll-action" onclick="fireLessShot()">Attack</button>
+                                    <button type="button" id="btn-dmg-less" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollLessDamage()">Damage</button>
                                     <button type="button" id="btn-swap-to-leg-dagger" class="btn-act btn-act-pre" style="font-size:0.68rem; color:var(--accent-gold); border-color:var(--border-gold);" onclick="toggleYvaineOffhandDagger()">Swap to Leg Dagger</button>
                                 </div>
                             </div>
@@ -1352,9 +1352,9 @@
                                 <div id="yvaine-mods-leg-dagger"></div>
 
                                 <div class="action-btn-row">
-                                    <button type="button" id="btn-leg-dagger-atk" class="btn-roll-action" onclick="rollStrappedDaggerAttack()">Attack (+6)</button>
-                                    <button type="button" id="btn-leg-dagger-off" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollStrappedDaggerDamage(true)">Off-Hand (1d4)</button>
-                                    <button type="button" id="btn-leg-dagger-main" class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.68rem;" onclick="rollStrappedDaggerDamage(false)">Full (1d4+4)</button>
+                                    <button type="button" id="btn-leg-dagger-atk" class="btn-roll-action" onclick="rollStrappedDaggerAttack()">Attack</button>
+                                    <button type="button" id="btn-leg-dagger-off" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollStrappedDaggerDamage(true)">Off-Hand Damage</button>
+                                    <button type="button" id="btn-leg-dagger-main" class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.68rem;" onclick="rollStrappedDaggerDamage(false)">Full Damage</button>
                                     <button type="button" id="btn-swap-back-less" class="btn-act btn-act-pre" style="font-size:0.68rem; color:var(--accent-blue);" onclick="toggleYvaineOffhandDagger()">Swap to Less</button>
                                     <button type="button" class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="COS_RPG && COS_RPG.openEquipModal('legSheath')">Change Leg Dagger</button>
                                 </div>
@@ -1384,14 +1384,14 @@
                             </div>
                             <span class="pill-badge">BACKUP MELEE</span>
                         </div>
-                        <div class="action-desc">
+                        <div class="action-desc" id="desc-wpn-knife">
                             <strong>+6 to Hit</strong>, <strong>1d4 + 4 Piercing</strong> (Action) / <strong>1d4 Piercing</strong> (Off-Hand BA). Silent takedowns; never runs out of ammo.
                         </div>
                         <div id="yvaine-mods-knife"></div>
                         <div class="action-btn-row">
-                            <button id="btn-atk-knife" class="btn-roll-action" onclick="rollKnifeAttack()">Attack (+6)</button>
-                            <button id="btn-dmg-knife" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollKnifeDamage(false)">Damage (1d4+4)</button>
-                            <button class="btn-act btn-act-pre rpg-manual-hide" onclick="rollKnifeDamage(true)" style="font-size:0.68rem;">Off-Hand (1d4)</button>
+                            <button id="btn-atk-knife" type="button" class="btn-roll-action" onclick="rollKnifeAttack()">Attack</button>
+                            <button id="btn-dmg-knife" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollKnifeDamage(false)">Damage</button>
+                            <button type="button" class="btn-act btn-act-pre rpg-manual-hide" onclick="rollKnifeDamage(true)" style="font-size:0.68rem;">Off-Hand Damage</button>
                         </div>
                     </div>
 
@@ -2455,31 +2455,34 @@
             if (sEl) sEl.innerText = `${daggerInfo.source === 'LEG SHEATH' ? 'Leg Sheath Quick-Draw' : 'Equipped Off-Hand'} • Finesse • Light • Nick${daggerInfo.isSilvered ? ' • Silvered' : ''}`;
             if (bEl) bEl.innerText = daggerInfo.source;
             if (dEl) dEl.innerHTML = `<strong>+${daggerInfo.atkBonus} to Hit</strong>, <strong>${offFormula} ${daggerInfo.dmgType}</strong> (Off-Hand BA / Nick) or <strong>${mainFormula}</strong> (Action).${daggerInfo.isSilvered ? ' Bypasses Vampire/Werewolf resistance!' : ' Quick-drawn on the fly in place of Less!'}`;
-            if (aBtn) aBtn.innerText = `Attack (+${daggerInfo.atkBonus})`;
-            if (oBtn) oBtn.innerText = `Off-Hand (${offFormula})`;
-            if (mBtn) mBtn.innerText = `Full (${mainFormula})`;
+            if (aBtn) aBtn.innerText = 'Attack';
+            if (oBtn) oBtn.innerText = 'Off-Hand Damage';
+            if (mBtn) mBtn.innerText = 'Full Damage';
             if (modLegEl && window.COS_RPG && COS_RPG.buildWeaponModAndCoatingBadgesHtml) {
                 modLegEl.innerHTML = COS_RPG.buildWeaponModAndCoatingBadgesHtml(daggerInfo.weaponId);
             }
         }
 
-        // Sync live firearm & trench knife attachment/coating badges and button labels
+        // Sync live firearm & trench knife attachment/coating badges and live descriptions (clean Attack / Damage buttons)
         if (window.COS_RPG && COS_RPG.getWeaponCombatMods && COS_RPG.buildWeaponModAndCoatingBadgesHtml) {
-            const syncGunCard = (wid, atkBtnId, dmgBtnId, mountId, diceStr, baseDmg) => {
+            const syncGunCard = (wid, atkBtnId, dmgBtnId, mountId, descId, diceStr, baseDmg, tailHtml) => {
                 const wm = COS_RPG.getWeaponCombatMods(wid);
                 const mEl = document.getElementById(mountId);
                 if (mEl) mEl.innerHTML = COS_RPG.buildWeaponModAndCoatingBadgesHtml(wid);
-                const ab = document.getElementById(atkBtnId);
-                if (ab) ab.innerText = `Attack (+${getRangedAttackBonus() + (wm.atkBonus || 0)})`;
-                const db = document.getElementById(dmgBtnId);
+                const effHit = getRangedAttackBonus() + (wm.atkBonus || 0);
                 const totFlat = baseDmg + (wm.dmgBonus || 0);
                 const flatStr = totFlat > 0 ? `+${totFlat}` : (totFlat < 0 ? `${totFlat}` : '');
                 const exStr = (wm.extras || []).map(x => `+${x.dice}`).join('');
-                if (db) db.innerText = `Damage (${diceStr}${flatStr}${exStr})`;
+                const dEl = document.getElementById(descId);
+                if (dEl) dEl.innerHTML = `<strong>+${effHit} to Hit</strong>, <strong>${diceStr}${flatStr}${exStr} Piercing</strong>${tailHtml}`;
+                const ab = document.getElementById(atkBtnId);
+                if (ab) ab.innerText = 'Attack';
+                const db = document.getElementById(dmgBtnId);
+                if (db) db.innerText = 'Damage';
             };
-            syncGunCard('lament', 'btn-atk-lament', 'btn-dmg-lament', 'yvaine-mods-lament', '1d12', 4);
-            syncGunCard('mercy', 'btn-atk-mercy', 'btn-dmg-mercy', 'yvaine-mods-mercy', '1d6', 4);
-            syncGunCard('less', 'btn-atk-less', 'btn-dmg-less', 'yvaine-mods-less', '1d6', 0);
+            syncGunCard('lament', 'btn-atk-lament', 'btn-dmg-lament', 'yvaine-mods-lament', 'desc-wpn-lament', '1d12', 4, '. Gunner Mastery: no loading penalty, point-blank execution with no disadvantage.');
+            syncGunCard('mercy', 'btn-atk-mercy', 'btn-dmg-mercy', 'yvaine-mods-mercy', 'desc-wpn-mercy', '1d6', 4, '. Scarred steel six-shooter drawn on right hip with hair trigger.');
+            syncGunCard('less', 'btn-atk-less', 'btn-dmg-less', 'yvaine-mods-less', 'desc-wpn-less', '1d6', 0, ' (Off-Hand bonus attack). Cross-drawn from her left side in rapid rhythm.');
 
             // Sync live Max Magazine Capacity with Barrel / Speed-Cylinder attachments (+2 / -2 Mag)
             const nextLamentMax = Math.max(1, 10 + (COS_RPG.getWeaponCombatMods('lament').magCapDelta || 0));
@@ -2501,10 +2504,14 @@
             const km = COS_RPG.getWeaponCombatMods('knife');
             const kmEl = document.getElementById('yvaine-mods-knife');
             if (kmEl) kmEl.innerHTML = COS_RPG.buildWeaponModAndCoatingBadgesHtml('knife');
+            const kEx = (km.extras || []).map(x => '+' + x.dice).join('');
+            const kOffFlat = km.dmgBonus ? `+${km.dmgBonus}` : '';
+            const kDesc = document.getElementById('desc-wpn-knife');
+            if (kDesc) kDesc.innerHTML = `<strong>+${6 + (km.atkBonus || 0)} to Hit</strong>, <strong>1d4+${4 + (km.dmgBonus || 0)}${kEx} Piercing</strong> (Action) / <strong>1d4${kOffFlat}${kEx} Piercing</strong> (Off-Hand BA). Silent takedowns; never runs out of ammo.`;
             const kab = document.getElementById('btn-atk-knife');
-            if (kab) kab.innerText = `Attack (+${6 + (km.atkBonus || 0)})`;
+            if (kab) kab.innerText = 'Attack';
             const kdb = document.getElementById('btn-dmg-knife');
-            if (kdb) kdb.innerText = `Damage (1d4+${4 + (km.dmgBonus || 0)}${(km.extras || []).map(x => '+' + x.dice).join('')})`;
+            if (kdb) kdb.innerText = 'Damage';
         }
 
         // Main-hand Trench Knife card only shows if she explicitly puts Trench Knife in Main Hand
