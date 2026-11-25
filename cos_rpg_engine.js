@@ -15441,6 +15441,15 @@
             st.bodyEl.appendChild(line);
         }
 
+        // Mirror appended add-on line into static #roll-res console when present so both trays stay in sync
+        const rollResEl = document.getElementById('roll-res');
+        if (rollResEl && rollResEl !== st.bodyEl) {
+            const mirrorLine = document.createElement('div');
+            mirrorLine.className = line.className;
+            mirrorLine.innerHTML = line.innerHTML;
+            rollResEl.appendChild(mirrorLine);
+        }
+
         // Re-evaluate remaining eligible follow-ups on this Damage result
         if (st.wrapEl) {
             const nextEligible = resolveEligibleFollowups({
@@ -16355,6 +16364,11 @@
                     adapter.onAfterLogRoll(hudBody, htmlMsg);
                 }
             };
+            if (adapter && (!adapter.log || adapter.log === window.__origLogRoll)) {
+                adapter.log = window.logRoll;
+            }
+        } else if (typeof window.logRoll === 'function' && adapter && adapter.log === window.__origLogRoll) {
+            adapter.log = window.logRoll;
         }
         // Wrap rollD20 & rollCustomDie so unlocked Adv/Dis auto-resets cleanly after 1 d20 roll
         if (typeof window.rollD20 === 'function' && !window.__origRollD20) {
