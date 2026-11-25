@@ -9250,21 +9250,30 @@
         const origLog = window.logRoll;
         try {
             window.logRoll = () => {};
-            if (typeof window.resetGoldPurse === 'function') window.resetGoldPurse();
-            if (typeof window.clearGoldHistory === 'function') window.clearGoldHistory();
-            if (typeof window.resetPlayerNotes === 'function') window.resetPlayerNotes();
-            if (typeof adapter.resetItems === 'function') adapter.resetItems();
-            localStorage.removeItem(getCheckpointBackupKey());
-            localStorage.removeItem(getEquipStorageKey());
-            localStorage.removeItem(getCustomGearKey());
-            localStorage.removeItem(getCustomPresetsKey());
-            localStorage.removeItem(getUnifiedPresetsKey());
-            localStorage.removeItem(getLocalDmOverrideKey());
-            localStorage.removeItem(getAmmoStorageKey());
-            localStorage.removeItem(getWeaponModsStorageKey());
-            localStorage.removeItem(getWeaponCoatingStorageKey());
-            localStorage.removeItem(getAwakenedWeaponsStorageKey());
-            localStorage.removeItem(getLocalUpdatedAtKey());
+            // Remove stale RPG engine keys FIRST so subsequent default-gear/item resets always hydrate clean baseline defaults
+            [
+                getCheckpointBackupKey(),
+                getEquipStorageKey(),
+                getCustomGearKey(),
+                getCustomPresetsKey(),
+                getUnifiedPresetsKey(),
+                getLocalDmOverrideKey(),
+                getAmmoStorageKey(),
+                getWeaponModsStorageKey(),
+                getWeaponCoatingStorageKey(),
+                getAwakenedWeaponsStorageKey(),
+                getLocalUpdatedAtKey()
+            ].forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+
+            try { if (typeof window.resetGoldPurse === 'function') window.resetGoldPurse(); } catch (e) {}
+            try { if (typeof window.clearGoldHistory === 'function') window.clearGoldHistory(); } catch (e) {}
+            try {
+                const defNotes = getDefaultNotesList();
+                if (defNotes.length > 0 && typeof saveNotesSafe === 'function') {
+                    saveNotesSafe(JSON.parse(JSON.stringify(defNotes)));
+                }
+            } catch (e) {}
+            try { if (typeof adapter.resetItems === 'function') adapter.resetItems(); } catch (e) {}
 
             loadHudState();
             hudState = {

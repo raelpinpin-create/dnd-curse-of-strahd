@@ -3802,6 +3802,7 @@
     :root[data-view-mode="tablet"]:not([data-tablet-orient="landscape"]) [data-mobile-order="42"] { order: 42; }
     :root[data-view-mode="tablet"]:not([data-tablet-orient="landscape"]) [data-mobile-order="50"] { order: 50; }
     :root[data-view-mode="tablet"]:not([data-tablet-orient="landscape"]) [data-mobile-order="55"] { order: 55; }
+    :root[data-view-mode="tablet"]:not([data-tablet-orient="landscape"]) [data-mobile-order="58"] { order: 58; }
     :root[data-view-mode="tablet"]:not([data-tablet-orient="landscape"]) [data-mobile-order="60"] { order: 60; }
 
     /* Sticky Horizontal Section Tab Bar on Portrait Tablet */
@@ -4073,6 +4074,7 @@
     :root[data-view-mode="mobile"] [data-mobile-order="42"]           { order: 42; }
     :root[data-view-mode="mobile"] [data-mobile-order="50"]           { order: 50; }
     :root[data-view-mode="mobile"] [data-mobile-order="55"]           { order: 55; }
+    :root[data-view-mode="mobile"] [data-mobile-order="58"]           { order: 58; }
     :root[data-view-mode="mobile"] [data-mobile-order="60"]           { order: 60; }
 
     /* Hide Desktop Right-Column Tabs in Mobile Mode; Show Sticky Mobile 5-Tab Bar */
@@ -4403,13 +4405,26 @@
         inset: -6px;
     }
 
-    /* Mobile Inventory Hub & Coin Pouch */
+    /* Mobile Inventory Hub, Trade Panel & Coin Pouch */
     :root[data-view-mode="mobile"] .rpg-hub-btn-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         gap: 8px;
     }
     :root[data-view-mode="mobile"] .rpg-hub-btn-grid .rpg-hub-tile:last-child:nth-child(odd) {
         grid-column: 1 / -1;
+    }
+    :root[data-view-mode="mobile"] .rpg-trade-inline-panel .rpg-form-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+    :root[data-view-mode="mobile"] .rpg-trade-inline-panel .rpg-form-grid > * {
+        grid-column: auto !important;
+        min-width: 0;
+    }
+    :root[data-view-mode="mobile"] .rpg-trade-inline-panel .rpg-recipient-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    :root[data-view-mode="mobile"] .rpg-trade-inline-panel .rpg-tab-bar {
+        flex-wrap: wrap;
     }
 
     :root[data-view-mode="mobile"] .rpg-hub-tile {
