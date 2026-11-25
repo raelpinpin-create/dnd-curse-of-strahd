@@ -1852,17 +1852,36 @@
     function handleWildMagicAfterSpell(spellName, slotLevel) {
         const autoCheck = document.getElementById('auto-surge-check');
         const isAuto = autoCheck ? autoCheck.checked : true;
+        const isManual = Boolean(window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode());
 
-        // 1. If Tides of Chaos was spent, automatically trigger Wild Magic Surge and recharge Tides of Chaos!
+        // 1. If Tides of Chaos was spent, trigger Wild Magic Surge and recharge Tides of Chaos!
         if (!tidesOfChaosReady && isAuto) {
+            if (isManual) {
+                setTimeout(() => {
+                    const hudBody = document.getElementById('floating-roll-body');
+                    if (hudBody) {
+                        hudBody.innerHTML += `<div style="margin-top:6px; padding:5px 8px; border-radius:6px; background:rgba(168,85,247,0.18); border:1px solid #c084fc; font-size:0.76rem; color:#f3e8ff;">🃏 <strong>Tides of Chaos Payback Primed!</strong> <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.7rem; margin-left:4px; color:#fde68a;" onclick="triggerWildMagicSurge('Tides of Chaos Payback after ${String(spellName || 'Spell').replace(/'/g, '')} (Lvl ${slotLevel})', true)">⚡ Spin Wild Magic d100 Surge!</button></div>`;
+                    }
+                }, 60);
+                return;
+            }
             setTimeout(() => {
                 triggerWildMagicSurge(`Tides of Chaos Payback after ${spellName} (Lvl ${slotLevel})`, true);
             }, 60);
             return;
         }
 
-        // 2. Otherwise, if Auto-Check is enabled, roll the d20 Wild Magic Check!
+        // 2. Otherwise, if Auto-Check is enabled, prompt (Manual) or roll (Digital) the d20 Wild Magic Check!
         if (isAuto) {
+            if (isManual) {
+                setTimeout(() => {
+                    const hudBody = document.getElementById('floating-roll-body');
+                    if (hudBody) {
+                        hudBody.innerHTML += `<div style="margin-top:6px; padding:5px 8px; border-radius:6px; background:rgba(30,41,59,0.85); border:1px solid #64748b; font-size:0.75rem; color:#e2e8f0; display:flex; align-items:center; flex-wrap:wrap; gap:5px;">🎲 <strong>Wild Magic Check:</strong> Roll physical <code>1d20</code> (Nat 1 = Surge!) <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.69rem; color:#fde68a;" onclick="triggerWildMagicSurge('Nat 1 Physical d20 after ${String(spellName || 'Spell').replace(/'/g, '')}')">💥 Rolled a 1! Spin d100</button> <button type="button" class="btn-act btn-act-pre" style="padding:2px 7px; font-size:0.68rem;" onclick="COS_RPG.runManualDigitalFallback(() => rollWildMagicD20Check('Wild Check after ${String(spellName || 'Spell').replace(/'/g, '')}'))">💻 Roll d20</button></div>`;
+                    }
+                }, 60);
+                return;
+            }
             const d20 = Math.floor(Math.random() * 20) + 1;
             if (d20 === 1) {
                 setTimeout(() => {
@@ -1877,6 +1896,19 @@
     }
 
     function rollWildMagicD20Check(reason = 'Wild Magic Check') {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualSpell({
+                icon: '🌀',
+                title: `${reason} (d20 Surge Check)`,
+                diceParts: [{ expr: '1d20', type: 'Nat 1 = Surge!' }],
+                notes: 'Roll a physical d20. On a 2–20 you are safe; on a Natural 1, trigger the Wild Magic Surge d100 table!',
+                extraButtons: [
+                    { label: '💥 Rolled a 1! Spin Wild Magic d100', cls: 'btn-crit', onClick: () => triggerWildMagicSurge(`${reason} rolled a physical NAT 1!`) }
+                ],
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollWildMagicD20Check(reason))
+            });
+            return;
+        }
         const d20 = Math.floor(Math.random() * 20) + 1;
         if (d20 === 1) {
             triggerWildMagicSurge(`${reason} rolled a NAT 1 on d20!`);
@@ -2559,6 +2591,21 @@
     // ==========================================
     function rollChaosBoltScaled(slotLevel) {
         const lvl = slotLevel || 1;
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const parts = [
+                { expr: '2d8', type: 'Elemental Core' },
+                { expr: `${lvl}d6`, type: 'Chaos Bolt' }
+            ];
+            if (activeRobe === 'red') parts.push({ expr: '1d4+1', type: 'Red Robe Fire' });
+            COS_RPG.logManualDamage({
+                label: `🌈 Chaos Bolt (Level ${lvl} Slot)`,
+                diceParts: parts,
+                dmgType: 'Elemental',
+                htmlNote: `<strong>d8 Element Chart:</strong> 1=Acid • 2=Cold • 3=Fire • 4=Force • 5=Lightning • 6=Poison • 7=Psychic • 8=Thunder.<br><span style="color:#fde68a;">⚡ If both d8s match, CHAOS LEAP triggers to a 2nd target within 30 ft!</span>`,
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl))
+            });
+            return;
+        }
         const d8_1 = Math.floor(Math.random() * 8) + 1;
         const d8_2 = Math.floor(Math.random() * 8) + 1;
         const extraD6Count = lvl;
@@ -2680,6 +2727,17 @@
 
     function rollFireBoltDamage() {
         const diceCount = characterLevel >= 5 ? 2 : 1;
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const parts = [{ expr: `${diceCount}d10`, type: 'Fire' }];
+            if (activeRobe === 'red') parts.push({ expr: '1d4+1', type: 'Red Robe Fire' });
+            COS_RPG.logManualDamage({
+                label: `Fire Bolt (${diceCount}d10${activeRobe === 'red' ? ' + 🟥 Red Robe' : ''})`,
+                diceParts: parts,
+                dmgType: 'Fire',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollFireBoltDamage())
+            });
+            return;
+        }
         if (activeRobe === 'red') {
             let rolls = [];
             let baseSum = 0;
@@ -3293,6 +3351,19 @@
         }
         helpTokens--;
         updateHelpDisplay();
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualSpell({
+                icon: '🤝',
+                title: `Help Token Spent (${helpTokens}/2 left)`,
+                diceParts: [{ expr: '1d6', type: 'Ally Bonus' }],
+                notes: 'Hand a physical d6 to an ally within 30 ft to add to their check or attack!',
+                onDigitalRoll: () => {
+                    const d6 = Math.floor(Math.random() * 6) + 1;
+                    logRoll(`🤝 <strong>Piper spent a Help Token (+1d6 within 30ft):</strong> Rolled <span style="color:#67e8f9; font-weight:700;">+${d6}</span> to ally's check! (${helpTokens}/2 left)`);
+                }
+            });
+            return;
+        }
         const d6 = Math.floor(Math.random() * 6) + 1;
         logRoll(`🤝 <strong>Piper spent a Help Token (+1d6 within 30ft):</strong> Rolled <span style="color:#67e8f9; font-weight:700;">+${d6}</span> to ally's check! (${helpTokens}/2 left)`);
     }
@@ -3751,22 +3822,39 @@
         logRoll(msg);
     }
 
-    function rollD20(label, mod) {
-        const modInput = parseInt(document.getElementById('dice-mod').value) || 0;
+    function rollD20(label, mod, opts = {}) {
+        const modInput = parseInt(document.getElementById('dice-mod')?.value) || 0;
         const totalMod = mod + modInput;
         const modStr = totalMod >= 0 ? `+${totalMod}` : `${totalMod}`;
 
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualD20({
+                label,
+                mod: totalMod,
+                mode: rollMode,
+                isInitiative: Boolean(opts && opts.isInitiative),
+                advReasons: (opts && opts.advReasons) || [],
+                notes: (opts && opts.notes) || '',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollD20(label, mod, opts))
+            });
+            return null;
+        }
+
+        let chosen = 0;
         if (rollMode !== 'norm') {
             const r1 = Math.floor(Math.random() * 20) + 1;
             const r2 = Math.floor(Math.random() * 20) + 1;
-            const chosen = (rollMode === 'adv') ? Math.max(r1, r2) : Math.min(r1, r2);
+            chosen = (rollMode === 'adv') ? Math.max(r1, r2) : Math.min(r1, r2);
             const total = chosen + totalMod;
             const modeLabel = rollMode === 'adv' ? 'Advantage' : 'Disadvantage';
             let msg = `🎯 <strong>${label}:</strong> [${r1}, ${r2}] ➔ d20(${chosen}) ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span> <small style="color:var(--text-muted);">(${modeLabel})</small>`;
             if (chosen === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT! (Max Die + Rolled Die + Mod)</span>";
             if (chosen === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
             logRoll(msg);
-            return;
+            if (opts && opts.isInitiative && window.COS_RPG && COS_RPG.publishInitiativeRoll) {
+                COS_RPG.publishInitiativeRoll(total, 'digital');
+            }
+            return total;
         }
 
         const d20 = Math.floor(Math.random() * 20) + 1;
@@ -3775,9 +3863,23 @@
         if (d20 === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT! (Max Die + Rolled Die + Mod)</span>";
         if (d20 === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
         logRoll(msg);
+        if (opts && opts.isInitiative && window.COS_RPG && COS_RPG.publishInitiativeRoll) {
+            COS_RPG.publishInitiativeRoll(total, 'digital');
+        }
+        return total;
     }
 
     function rollWithForcedAdv(label, mod) {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualD20({
+                label,
+                mod,
+                mode: 'adv',
+                advReasons: ['Forced Advantage (Roll 2d20, keep HIGHER)'],
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollWithForcedAdv(label, mod))
+            });
+            return;
+        }
         const r1 = Math.floor(Math.random() * 20) + 1;
         const r2 = Math.floor(Math.random() * 20) + 1;
         const chosen = Math.max(r1, r2);
@@ -3789,7 +3891,7 @@
         const gb = window.__piperGearCache?.initBonus || 0;
         const tot = 2 + gb;
         const tag = gb ? ` [Gear ${gb > 0 ? '+' : ''}${gb}]` : '';
-        rollD20(`Initiative Roll (DEX +2${tag})`, tot);
+        rollD20(`Initiative Roll (DEX +2${tag})`, tot, { isInitiative: true });
     }
 
     function rollSave(label, baseStatMod, isProf) {
@@ -3803,6 +3905,10 @@
     function rollSkill(label, baseStatMod, isProf) {
         const bonus = baseStatMod + (isProf ? getProfBonus() : 0);
         if (activeRobe === 'green' && label.toLowerCase().startsWith('arcana')) {
+            if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+                rollD20(`${label} [Green Robe Adv]`, bonus, { advReasons: ['🟩 Green Robe of Useful Items (Arcana Advantage)'] });
+                return;
+            }
             const modInput = parseInt(document.getElementById('dice-mod').value) || 0;
             const totalMod = bonus + modInput;
             const r1 = Math.floor(Math.random() * 20) + 1;
@@ -3820,6 +3926,23 @@
 
     function rollFormulaDamage(label, sides, bonus, type, diceCount = 1, weaponId = null) {
         const wMods = getPiperWpnMods(weaponId);
+        const flatBonus = bonus + (wMods.dmgBonus || 0);
+        const finalType = (wMods.isSilvered && !String(type).toLowerCase().includes('silver')) ? `Silvered ${type}` : type;
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const parts = [{ expr: `${diceCount}d${sides}`, type: finalType }];
+            if (wMods && Array.isArray(wMods.extras)) {
+                wMods.extras.forEach(ex => { if (ex.dice) parts.push({ expr: ex.dice, type: ex.type || 'Bonus' }); });
+            }
+            COS_RPG.logManualDamage({
+                label,
+                diceParts: parts,
+                flatMod: flatBonus,
+                dmgType: finalType,
+                notes: (wMods.saveNotes && wMods.saveNotes.length) ? wMods.saveNotes.join(' • ') : '',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollFormulaDamage(label, sides, bonus, type, diceCount, weaponId))
+            });
+            return;
+        }
         let total = 0;
         let rolls = [];
         for (let i = 0; i < diceCount; i++) {
@@ -3827,7 +3950,6 @@
             rolls.push(r);
             total += r;
         }
-        const flatBonus = bonus + (wMods.dmgBonus || 0);
         total += flatBonus;
         const extraParts = [];
         if (wMods && Array.isArray(wMods.extras)) {
@@ -3840,7 +3962,6 @@
             });
         }
         const bonusStr = flatBonus > 0 ? ` + ${flatBonus}` : '';
-        const finalType = (wMods.isSilvered && !String(type).toLowerCase().includes('silver')) ? `Silvered ${type}` : type;
         const notes = wMods.saveNotes && wMods.saveNotes.length ? ` <small style="color:#fde68a;">(${wMods.saveNotes.join(' • ')})</small>` : '';
         logRoll(`💥 <strong>${label}:</strong> [${rolls.join('+')}]${bonusStr}${extraParts.join('')} = <span style="font-size:1.05rem; color:#f87171; font-weight:700;">${total}</span> ${finalType} Damage${notes}`);
     }

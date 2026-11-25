@@ -1836,9 +1836,22 @@
         }
     }
 
-    function rollD20(label, bonus = 0) {
+    function rollD20(label, bonus = 0, opts = {}) {
         const mod = parseInt(document.getElementById('dice-mod')?.value) || 0;
         const totalBonus = bonus + mod;
+
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualD20({
+                label,
+                mod: totalBonus,
+                mode: rollMode,
+                isInitiative: Boolean(opts && opts.isInitiative),
+                notes: (opts && opts.notes) || '',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollD20(label, bonus, opts))
+            });
+            return { roll: null, total: null, isCrit: false, isFumble: false, manual: true };
+        }
+
         const d1 = Math.floor(Math.random() * 20) + 1;
         const d2 = Math.floor(Math.random() * 20) + 1;
 
@@ -1863,6 +1876,9 @@
 
         const bonusStr = totalBonus !== 0 ? ` + ${totalBonus}` : '';
         logRoll(`🎯 <strong>${label}:</strong> [d20: <strong>${roll}</strong>]${bonusStr}${modeNote} = <span style="font-size:1.15rem; color:${isCrit ? '#fde68a' : (isFumble ? '#f87171' : 'var(--accent-gold)')}; font-weight:800;">${total}</span>${critBadge}`);
+        if (opts && opts.isInitiative && window.COS_RPG && COS_RPG.publishInitiativeRoll) {
+            COS_RPG.publishInitiativeRoll(total, 'digital');
+        }
         return { roll, total, isCrit, isFumble };
     }
 
@@ -2006,22 +2022,57 @@
             COS_RPG.setRollFollowup({
                 label: `💥 Roll ${niceName} Damage`,
                 critLabel: `🔥 ROLL BRUTAL CRIT (${niceName})!`,
-                onDamage: () => dmgFn(),
-                onCrit: () => dmgFn()
+                onDamage: () => dmgFn(false),
+                onCrit: () => dmgFn(true)
             });
         }
-        const res = rollD20(`${baseLabel} (+${effAtk})${tag}`, effAtk);
+        const chamberTxt = weaponId === 'lament' ? `Chamber: ${lamentChamber}/${maxLamentChamber}` : (weaponId === 'mercy' ? `Mercy Cylinder: ${mercyChamber}/${maxMercyChamber}` : `Less Cylinder: ${lessChamber}/${maxLessChamber}`);
+        const noteBits = [chamberTxt];
+        if (slayersPreyActive) noteBits.push("🎯 Slayer's Prey (+1d6)");
+        if (isTracerActive) noteBits.push("🏹 Hunter's Mark (+1d6)");
+        if (aDef) noteBits.push(`Ammo: ${aDef.shortName} (${shot.remaining} left)`);
+        const res = rollD20(`${baseLabel} (+${effAtk})${tag}`, effAtk, { notes: noteBits.join(' • ') });
         lastShotCritByWeapon[weaponId] = Boolean(res && res.isCrit);
         return { shot, res };
     }
 
-    function rollYvaineFirearmDamage(weaponId, weaponLabel, dieSides, dexBonus, chamberRemain, maxChamber, accentColor) {
-        const isCrit = Boolean(lastShotCritByWeapon[weaponId]);
+    function rollYvaineFirearmDamage(weaponId, weaponLabel, dieSides, dexBonus, chamberRemain, maxChamber, accentColor, forceCrit = false) {
+        const isCrit = Boolean(forceCrit || lastShotCritByWeapon[weaponId]);
         lastShotCritByWeapon[weaponId] = false;
         const aDef = (window.COS_RPG && COS_RPG.getWeaponLastShotDef) ? COS_RPG.getWeaponLastShotDef(weaponId) : null;
         const wMods = (window.COS_RPG && COS_RPG.getWeaponCombatMods) ? COS_RPG.getWeaponCombatMods(weaponId) : { atkBonus: 0, dmgBonus: 0, extras: [], isSilvered: false, mistSight: false };
         const modExtraDmg = (aDef ? (aDef.dmgBonus || 0) : 0) + (wMods.dmgBonus || 0);
         const modBonus = dexBonus + modExtraDmg;
+        const isSilv = Boolean((aDef && aDef.isSilvered) || wMods.isSilvered);
+        const dmgLabel = isSilv ? 'Silvered Piercing Damage' : 'Piercing Damage';
+        const notes = [];
+        if (isSilv) notes.push('Bypasses Werewolf, Vampire & Hag resistance');
+        if (wMods.isMagical) notes.push('Counts as Magical');
+        if (wMods.mistSight) notes.push('Mist-Piercing Sight (120ft)');
+        if (aDef && aDef.haltsRegen) notes.push('Halts Vampire Regeneration for 1 round');
+        if (aDef && aDef.blocksHealing) notes.push('Target cannot regain HP until start of your next turn');
+        if (aDef && aDef.saveNote) notes.push(aDef.saveNote);
+        notes.push(`Chamber: ${chamberRemain}/${maxChamber} left`);
+
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const parts = [{ expr: `1d${dieSides}`, type: isSilv ? 'Silvered Piercing' : 'Piercing' }];
+            if (slayersPreyActive) parts.push({ expr: '1d6', type: "Slayer's Prey" });
+            if (isTracerActive) parts.push({ expr: '1d6', type: "Hunter's Mark" });
+            if (aDef && aDef.extraDice) parts.push({ expr: aDef.extraDice, type: aDef.extraType || aDef.shortName });
+            if (Array.isArray(wMods.extras)) {
+                wMods.extras.forEach(exM => { if (exM.dice) parts.push({ expr: exM.dice, type: exM.type || 'Mod' }); });
+            }
+            COS_RPG.logManualDamage({
+                label: weaponLabel,
+                diceParts: parts,
+                flatMod: modBonus,
+                dmgType: isSilv ? 'Silvered Piercing' : 'Piercing',
+                isCrit,
+                notes: notes.join(' • '),
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollYvaineFirearmDamage(weaponId, weaponLabel, dieSides, dexBonus, chamberRemain, maxChamber, accentColor, isCrit))
+            });
+            return;
+        }
 
         const baseRoll = Math.floor(Math.random() * dieSides) + 1;
         let total = isCrit ? (dieSides + baseRoll + modBonus) : (baseRoll + modBonus);
@@ -2064,19 +2115,10 @@
             });
         }
 
-        const isSilv = Boolean((aDef && aDef.isSilvered) || wMods.isSilvered);
-        const dmgLabel = isSilv ? 'Silvered Piercing Damage' : 'Piercing Damage';
-        const notes = [];
-        if (isSilv) notes.push('Bypasses Werewolf, Vampire &amp; Hag resistance');
-        if (wMods.isMagical) notes.push('Counts as Magical');
-        if (wMods.mistSight) notes.push('Mist-Piercing Sight (120ft)');
-        if (aDef && aDef.haltsRegen) notes.push('Halts Vampire Regeneration for 1 round');
-        if (aDef && aDef.blocksHealing) notes.push('Target cannot regain HP until start of your next turn');
-        if (aDef && aDef.saveNote) notes.push(aDef.saveNote);
         const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.join(' &bull; ')})</small>` : '';
         const critHead = isCrit ? `<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — </strong>` : '';
         const valColor = isSilv ? '#e2e8f0' : accentColor;
-        logRoll(`${critHead}<strong>${weaponLabel} Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:${valColor}; font-weight:800;">${total} ${dmgLabel}</span>!${noteHtml} <span style="font-size:0.75rem; color:var(--text-dim);">(Chamber: <strong>${chamberRemain}/${maxChamber}</strong> left)</span>`);
+        logRoll(`${critHead}<strong>${weaponLabel} Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:${valColor}; font-weight:800;">${total} ${dmgLabel}</span>!${noteHtml}`);
     }
 
     function fireLamentShot() {
@@ -2091,8 +2133,8 @@
         updateLamentAmmoUI();
     }
 
-    function rollLamentDamage() {
-        rollYvaineFirearmDamage('lament', '"Lament"', 12, 4, lamentChamber, maxLamentChamber, '#f87171');
+    function rollLamentDamage(forceCrit = false) {
+        rollYvaineFirearmDamage('lament', '"Lament"', 12, 4, lamentChamber, maxLamentChamber, '#f87171', forceCrit);
     }
 
     function reloadLament() {
@@ -2177,8 +2219,8 @@
         updateRevolversAmmoUI();
     }
 
-    function rollMercyDamage() {
-        rollYvaineFirearmDamage('mercy', '"Mercy"', 6, 4, mercyChamber, maxMercyChamber, '#f87171');
+    function rollMercyDamage(forceCrit = false) {
+        rollYvaineFirearmDamage('mercy', '"Mercy"', 6, 4, mercyChamber, maxMercyChamber, '#f87171', forceCrit);
     }
 
     function fireLessShot() {
@@ -2193,8 +2235,8 @@
         updateRevolversAmmoUI();
     }
 
-    function rollLessDamage() {
-        rollYvaineFirearmDamage('less', '"Less" Off-Hand', 6, 0, lessChamber, maxLessChamber, '#38bdf8');
+    function rollLessDamage(forceCrit = false) {
+        rollYvaineFirearmDamage('less', '"Less" Off-Hand', 6, 0, lessChamber, maxLessChamber, '#38bdf8', forceCrit);
     }
 
     function reloadBothRevolvers() {
@@ -2289,39 +2331,64 @@
     function rollStrappedDaggerAttack() {
         const info = getStrappedDaggerInfo();
         const label = info ? `${info.name} Attack (+${info.atkBonus})` : 'Trench Knife Attack (+6)';
+        if (window.COS_RPG && typeof COS_RPG.setRollFollowup === 'function') {
+            COS_RPG.setRollFollowup({
+                label: `💥 Roll ${info ? info.name : 'Knife'} Off-Hand Damage`,
+                critLabel: `🔥 ROLL BRUTAL CRIT (${info ? info.name : 'Knife'})!`,
+                onDamage: () => rollStrappedDaggerDamage(true),
+                onCrit: () => rollStrappedDaggerDamage(true, true)
+            });
+        }
         rollD20(label, info ? info.atkBonus : 6);
     }
 
-    function rollStrappedDaggerDamage(isOffhand = true) {
+    function rollStrappedDaggerDamage(isOffhand = true, forceCrit = false) {
         const info = getStrappedDaggerInfo();
         const name = info ? info.name : 'Solmere Trench Knife';
         const mb = info ? info.magicBonus : 0;
         const dmgType = info ? info.dmgType : 'Piercing';
+        const flat = mb + (isOffhand ? 0 : 4);
+        const notes = [];
+        if (info && info.isSilvered) notes.push('Bypasses Werewolf, Vampire & Hag resistance');
+        if (info && Array.isArray(info.saveNotes)) info.saveNotes.forEach(sn => notes.push(sn));
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const parts = [{ expr: '1d4', type: dmgType }];
+            if (slayersPreyActive) parts.push({ expr: '1d6', type: "Slayer's Prey" });
+            if (isTracerActive) parts.push({ expr: '1d6', type: "Hunter's Mark" });
+            if (info && Array.isArray(info.extras)) info.extras.forEach(exM => { if (exM.dice) parts.push({ expr: exM.dice, type: exM.type || 'Mod' }); });
+            COS_RPG.logManualDamage({
+                label: `${name} (${isOffhand ? 'Off-Hand / Nick' : 'Main-Hand'})`,
+                diceParts: parts,
+                flatMod: flat,
+                dmgType,
+                isCrit: Boolean(forceCrit),
+                notes: notes.join(' • '),
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollStrappedDaggerDamage(isOffhand, forceCrit))
+            });
+            return;
+        }
         const d4 = Math.floor(Math.random() * 4) + 1;
-        let total = d4 + mb + (isOffhand ? 0 : 4);
-        let breakdown = `[1d4: ${d4}]` + (isOffhand ? '' : ' + 4 DEX') + (mb ? ` + ${mb} Mod/Coat` : '');
+        let total = (forceCrit ? 4 : 0) + d4 + flat;
+        let breakdown = `${forceCrit ? 'Max(4) + ' : ''}[1d4: ${d4}]` + (isOffhand ? '' : ' + 4 DEX') + (mb ? ` + ${mb} Mod/Coat` : '');
         if (slayersPreyActive) {
             const spD6 = Math.floor(Math.random() * 6) + 1;
-            total += spD6;
-            breakdown += ` + <span style="color:#f87171;">Slayer's Prey (+${spD6})</span>`;
+            total += (forceCrit ? 6 : 0) + spD6;
+            breakdown += ` + <span style="color:#f87171;">Slayer's Prey (+${forceCrit ? '6+' : ''}${spD6})</span>`;
         }
         if (isTracerActive) {
             const trD6 = Math.floor(Math.random() * 6) + 1;
-            total += trD6;
-            breakdown += ` + <span style="color:#ef4444;">Hunter's Mark (+${trD6})</span>`;
+            total += (forceCrit ? 6 : 0) + trD6;
+            breakdown += ` + <span style="color:#ef4444;">Hunter's Mark (+${forceCrit ? '6+' : ''}${trD6})</span>`;
         }
         if (info && Array.isArray(info.extras)) {
             info.extras.forEach(exM => {
                 const exR = rollDiceExprLocal(exM.dice);
-                total += exR.sum;
-                breakdown += ` + <span style="color:#fde68a;">+${exR.sum} ${exM.type} (${exM.dice}: ${exR.rolls.join('+')})</span>`;
+                total += (forceCrit ? exR.max : 0) + exR.sum;
+                breakdown += ` + <span style="color:#fde68a;">+${forceCrit ? exR.max + '+' : ''}${exR.sum} ${exM.type} (${exM.dice}: ${exR.rolls.join('+')})</span>`;
             });
         }
-        const notes = [];
-        if (info && info.isSilvered) notes.push('Bypasses Werewolf, Vampire &amp; Hag resistance');
-        if (info && Array.isArray(info.saveNotes)) info.saveNotes.forEach(sn => notes.push(sn));
         const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.join(' &bull; ')})</small>` : '';
-        logRoll(`🗡️ <strong>${name} Damage (${isOffhand ? 'Off-Hand / Nick' : 'Main-Hand'}):</strong> ${breakdown} = <span style="font-size:1.15rem; color:#cbd5e1; font-weight:800;">${total} ${dmgType} Damage</span>!${noteHtml}`);
+        logRoll(`🗡️ <strong>${forceCrit ? 'BRUTAL CRIT — ' : ''}${name} Damage (${isOffhand ? 'Off-Hand / Nick' : 'Main-Hand'}):</strong> ${breakdown} = <span style="font-size:1.15rem; color:#cbd5e1; font-weight:800;">${total} ${dmgType} Damage</span>!${noteHtml}`);
     }
 
     function syncYvaineWeaponsUI(bonuses) {
@@ -2445,23 +2512,45 @@
     function rollKnifeAttack() {
         const km = (window.COS_RPG && COS_RPG.getWeaponCombatMods) ? COS_RPG.getWeaponCombatMods('knife') : { atkBonus: 0 };
         const atk = 4 + 2 + (km.atkBonus || 0);
+        if (window.COS_RPG && typeof COS_RPG.setRollFollowup === 'function') {
+            COS_RPG.setRollFollowup({
+                label: '💥 Roll Trench Knife Damage',
+                critLabel: '🔥 ROLL BRUTAL CRIT (Knife)!',
+                onDamage: () => rollKnifeDamage(false),
+                onCrit: () => rollKnifeDamage(false, true)
+            });
+        }
         rollD20(`Trench Knife Attack (+${atk})`, atk);
     }
 
-    function rollKnifeDamage(isOffhand = false) {
+    function rollKnifeDamage(isOffhand = false, forceCrit = false) {
         const km = (window.COS_RPG && COS_RPG.getWeaponCombatMods) ? COS_RPG.getWeaponCombatMods('knife') : { dmgBonus: 0, extras: [], isSilvered: false, saveNotes: [] };
-        const d4 = Math.floor(Math.random() * 4) + 1;
         const flat = (isOffhand ? 0 : 4) + (km.dmgBonus || 0);
-        let total = d4 + flat;
-        let breakdown = `[1d4: ${d4}]` + (isOffhand ? '' : ' + 4 DEX') + (km.dmgBonus ? ` + ${km.dmgBonus} Mod/Coat` : '');
+        const dmgLabel = km.isSilvered ? 'Silvered Piercing Damage' : 'Piercing Damage';
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const parts = [{ expr: '1d4', type: km.isSilvered ? 'Silvered Piercing' : 'Piercing' }];
+            (km.extras || []).forEach(exM => { if (exM.dice) parts.push({ expr: exM.dice, type: exM.type || 'Mod' }); });
+            COS_RPG.logManualDamage({
+                label: `Solmere Trench Knife (${isOffhand ? 'Off-Hand' : 'Main-Hand'})`,
+                diceParts: parts,
+                flatMod: flat,
+                dmgType: km.isSilvered ? 'Silvered Piercing' : 'Piercing',
+                isCrit: Boolean(forceCrit),
+                notes: (km.saveNotes && km.saveNotes.length) ? km.saveNotes.join(' • ') : '',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollKnifeDamage(isOffhand, forceCrit))
+            });
+            return;
+        }
+        const d4 = Math.floor(Math.random() * 4) + 1;
+        let total = (forceCrit ? 4 : 0) + d4 + flat;
+        let breakdown = `${forceCrit ? 'Max(4) + ' : ''}[1d4: ${d4}]` + (isOffhand ? '' : ' + 4 DEX') + (km.dmgBonus ? ` + ${km.dmgBonus} Mod/Coat` : '');
         (km.extras || []).forEach(exM => {
             const exR = rollDiceExprLocal(exM.dice);
-            total += exR.sum;
-            breakdown += ` + <span style="color:#fde68a;">+${exR.sum} ${exM.type} (${exM.dice}: ${exR.rolls.join('+')})</span>`;
+            total += (forceCrit ? exR.max : 0) + exR.sum;
+            breakdown += ` + <span style="color:#fde68a;">+${forceCrit ? exR.max + '+' : ''}${exR.sum} ${exM.type} (${exM.dice}: ${exR.rolls.join('+')})</span>`;
         });
-        const dmgLabel = km.isSilvered ? 'Silvered Piercing Damage' : 'Piercing Damage';
         const noteHtml = (km.saveNotes && km.saveNotes.length) ? ` <small style="color:#cbd5e1;">(${km.saveNotes.join(' &bull; ')})</small>` : '';
-        logRoll(`🗡️ <strong>Solmere Trench Knife Damage (${isOffhand ? 'Off-Hand' : 'Main-Hand'}):</strong> ${breakdown} = <span style="font-size:1.15rem; color:#cbd5e1; font-weight:800;">${total} ${dmgLabel}</span>!${noteHtml}`);
+        logRoll(`🗡️ <strong>${forceCrit ? 'BRUTAL CRIT — ' : ''}Solmere Trench Knife Damage (${isOffhand ? 'Off-Hand' : 'Main-Hand'}):</strong> ${breakdown} = <span style="font-size:1.15rem; color:#cbd5e1; font-weight:800;">${total} ${dmgLabel}</span>!${noteHtml}`);
     }
 
     // ==========================================
@@ -2500,6 +2589,15 @@
     }
 
     function rollSlayerDieOnly() {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualDamage({
+                label: "Slayer's Prey Extra Die",
+                diceParts: [{ expr: '1d6', type: 'Extra Weapon Damage' }],
+                dmgType: 'Extra Damage',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollSlayerDieOnly())
+            });
+            return;
+        }
         const d6 = Math.floor(Math.random() * 6) + 1;
         logRoll(`🎯 <strong>Slayer's Prey Extra Die:</strong> [1d6: <strong>${d6}</strong>] = <span style="font-size:1.15rem; color:#f87171; font-weight:800;">+${d6} Extra Damage</span>!`);
     }
@@ -2539,6 +2637,22 @@
         }
         curSpellSlots--;
         updateSpellSlotsUI();
+
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualSpell({
+                icon: '💣',
+                title: `Phosphor Grenade (1st-Lvl Slot Spent • ${curSpellSlots}/3 left)`,
+                saveText: 'Tell DM: DC 12 DEX Save (5-ft cube, half on save)',
+                diceParts: [{ expr: '1d10', type: 'Piercing & Fire' }],
+                dmgType: 'Piercing & Fire',
+                notes: 'Triggered immediately on hit!',
+                onDigitalRoll: () => {
+                    const d10 = Math.floor(Math.random() * 10) + 1;
+                    logRoll(`💣 <strong>Phosphor Grenade Thrown (1st-Level Slot Spent):</strong> DC 12 DEX Save, taking [1d10: <strong>${d10}</strong>] = <span style="font-size:1.15rem; color:#f97316; font-weight:800;">${d10} Piercing &amp; Fire Damage</span> (half on save). <em>(${curSpellSlots}/3 slots remaining).</em>`);
+                }
+            });
+            return;
+        }
 
         const d10 = Math.floor(Math.random() * 10) + 1;
         logRoll(`💣 <strong>Phosphor Grenade Thrown (1st-Level Slot Spent):</strong> Triggered immediately on hit! Target and each creature within a 5-ft cube must make a <strong>DC 12 Dexterity Save</strong>, taking [1d10: <strong>${d10}</strong>] = <span style="font-size:1.15rem; color:#f97316; font-weight:800;">${d10} Piercing &amp; Fire Damage</span> (half on save). <em>(${curSpellSlots}/3 slots remaining).</em>`);
@@ -2724,6 +2838,19 @@
         }
         helpTokens--;
         document.getElementById('help-tokens-disp').innerText = `${helpTokens} / ${maxHelpTokens}`;
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualSpell({
+                icon: '🤝',
+                title: `Help Token Spent (${helpTokens}/2 left)`,
+                diceParts: [{ expr: '1d6', type: 'Ally Bonus' }],
+                notes: 'Hand a physical d6 to an ally within 30 ft to add to their check or attack!',
+                onDigitalRoll: () => {
+                    const d6 = Math.floor(Math.random() * 6) + 1;
+                    logRoll(`🤝 <strong>Help Token Spent:</strong> Yvaine provides covering fire or tactical coordination! Ally within 30 ft gains <strong style="color:#67e8f9;">+${d6}</strong> to their check or attack! <em>(${helpTokens}/2 tokens remaining).</em>`);
+                }
+            });
+            return;
+        }
         const d6 = Math.floor(Math.random() * 6) + 1;
         logRoll(`🤝 <strong>Help Token Spent:</strong> Yvaine provides covering fire or tactical coordination! Ally within 30 ft gains <strong style="color:#67e8f9;">+${d6}</strong> to their check or attack! <em>(${helpTokens}/2 tokens remaining).</em>`);
     }
@@ -2985,7 +3112,7 @@
         const gb = window.__yvaineGearCache?.initBonus || 0;
         const tot = 6 + gb;
         const tag = gb ? ` [Gear ${gb > 0 ? '+' : ''}${gb}]` : '';
-        rollD20(`Initiative Roll (DEX +4 + Alert +2${tag})`, tot);
+        rollD20(`Initiative Roll (DEX +4 + Alert +2${tag})`, tot, { isInitiative: true });
     }
 
     function rollSave(name, mod, prof) {

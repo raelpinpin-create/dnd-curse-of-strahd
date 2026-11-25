@@ -1447,6 +1447,16 @@
     }
 
     function rollSuperiorityDieRaw() {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualSpell({
+                icon: '⚔️',
+                title: `Superiority Die (${curSupDice}/${maxSupDice} d8s left)`,
+                diceParts: [{ expr: '1d8', type: 'Maneuver Die' }],
+                notes: 'Roll a physical d8 for your Battle Master maneuver!',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollSuperiorityDieRaw())
+            });
+            return;
+        }
         const d8 = Math.floor(Math.random() * 8) + 1;
         logRoll(`⚔️ <strong>Superiority Die Roll (1d8):</strong> Rolled <span style="color:var(--accent-gold); font-size:1.05rem; font-weight:800;">${d8}</span>!`);
     }
@@ -1527,11 +1537,35 @@
             return;
         }
         curSecondWind--;
+        updateFighterResourcesUI();
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualHeal({
+                label: `💨 Second Wind (Bonus Action • ${curSecondWind}/${maxSecondWind} left)`,
+                diceParts: [{ expr: '1d10', type: 'Heal' }],
+                flatMod: characterLevel,
+                healMode: false,
+                notes: `Roll 1d10 + ${characterLevel} (Fighter Level), then type the total below to apply HP!`,
+                onApplyCustom: (val) => {
+                    const before = curHP;
+                    curHP = Math.min(maxHP, curHP + val);
+                    updateHPUI();
+                    const actual = curHP - before;
+                    logRoll(`💨 <strong>Second Wind Applied (🎲 Real Dice):</strong> Restored <span style="color:#4ade80; font-weight:800;">+${actual} HP</span>${actual < val ? ' <small style="color:#94a3b8;">(capped at Max HP)</small>' : ''}! (Current HP: <strong>${curHP}/${maxHP}</strong>)`);
+                },
+                onDigitalRoll: () => {
+                    const d10 = Math.floor(Math.random() * 10) + 1;
+                    const healAmt = d10 + characterLevel;
+                    curHP = Math.min(maxHP, curHP + healAmt);
+                    updateHPUI();
+                    logRoll(`💨 <strong>Second Wind (Bonus Action • ${curSecondWind}/${maxSecondWind} left):</strong> Rolled 1d10(${d10}) + ${characterLevel} = <span style="color:#4ade80; font-size:1.05rem; font-weight:800;">+${healAmt} HP</span> restored! (Current HP: <strong>${curHP}/${maxHP}</strong>)`);
+                }
+            });
+            return;
+        }
         const d10 = Math.floor(Math.random() * 10) + 1;
         const healAmt = d10 + characterLevel; // 1d10 + 3
         curHP = Math.min(maxHP, curHP + healAmt);
         updateHPUI();
-        updateFighterResourcesUI();
         logRoll(`💨 <strong>Second Wind (Bonus Action • ${curSecondWind}/${maxSecondWind} left):</strong> Rolled 1d10(${d10}) + ${characterLevel} = <span style="color:#4ade80; font-size:1.05rem; font-weight:800;">+${healAmt} HP</span> restored! (Current HP: <strong>${curHP}/${maxHP}</strong>)`);
     }
 
@@ -1542,6 +1576,22 @@
         }
         curSecondWind--;
         updateFighterResourcesUI();
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualSpell({
+                icon: '🧠',
+                title: `Tactical Mind (${curSecondWind}/${maxSecondWind} SW left)`,
+                diceParts: [{ expr: '1d10', type: 'Ability Check Bonus' }],
+                notes: 'Roll 1d10 and add it to your failed Ability Check! If the check still fails, tap Refund below.',
+                extraButtons: [
+                    { label: '↩️ Check Still Failed (Refund Charge)', onClick: () => refundTacticalMind() }
+                ],
+                onDigitalRoll: () => {
+                    const d10 = Math.floor(Math.random() * 10) + 1;
+                    logRoll(`🧠 <strong>Tactical Mind (5.5e Fighter • ${curSecondWind}/${maxSecondWind} SW left):</strong> Add <strong>1d10 = <span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${d10}</span></strong> to your failed Ability Check! <button class="btn-act btn-act-pre" style="margin-left:6px; color:#86efac;" onclick="refundTacticalMind()">↩️ Check Still Failed (Refund Charge)</button>`);
+                }
+            });
+            return;
+        }
         const d10 = Math.floor(Math.random() * 10) + 1;
         logRoll(`🧠 <strong>Tactical Mind (5.5e Fighter • ${curSecondWind}/${maxSecondWind} SW left):</strong> Add <strong>1d10 = <span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${d10}</span></strong> to your failed Ability Check! <button class="btn-act btn-act-pre" style="margin-left:6px; color:#86efac;" onclick="refundTacticalMind()">↩️ Check Still Failed (Refund Charge)</button>`);
     }
@@ -1603,6 +1653,7 @@
         if (wMods.mod) modTags.push(wMods.mod.itemName);
         if (wMods.coating) modTags.push(wMods.coating.itemName);
         const tagStr = modTags.length ? ` • ${modTags.join(' + ')}` : '';
+        const extraOpts = {};
         if (window.COS_RPG && weaponId) {
             const flatMod = 3 + (wMods.dmgBonus || 0);
             const extras = wMods.extras || [];
@@ -1613,6 +1664,8 @@
                     onDamage: () => rollSavageGreatswordDamage(),
                     onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Ancestral Greatsword', diceCount: 2, sides: 6, flatMod, dmgType: wMods.isSilvered ? 'Silvered Slashing' : 'Slashing', extras, isSavage: true })
                 });
+                extraOpts.onGraze = () => applyGrazeDamage();
+                extraOpts.grazeLabel = `⚡ Graze (+${flatMod} on Miss)`;
             } else if (weaponId === 'silvered_longsword') {
                 const hit = window.__jacomirGearCache?.equippedWeaponTags?.find(w => w.tag === 'silvered_longsword');
                 const is2H = Boolean(!hit || hit.grip === '2h');
@@ -1632,12 +1685,28 @@
                 });
             }
         }
-        rollD20(`${weaponLabel}${tagStr}`, attackBonus + (wMods.atkBonus || 0));
+        rollD20(`${weaponLabel}${tagStr}`, attackBonus + (wMods.atkBonus || 0), extraOpts);
     }
 
     function rollSavageGreatswordDamage() {
-        // Savage Attacker: Roll 2d6 twice and take the higher total + 3 STR!
         const wMods = getJacomirWpnMods('greatsword');
+        const flatMod = 3 + (wMods.dmgBonus || 0);
+        const dmgType = wMods.isSilvered ? 'Silvered Slashing' : 'Slashing';
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const parts = [{ expr: '2d6', type: dmgType }];
+            (wMods.extras || []).forEach(ex => { if (ex.dice) parts.push({ expr: ex.dice, type: ex.type || 'Mod' }); });
+            COS_RPG.logManualDamage({
+                label: 'Ancestral Greatsword',
+                diceParts: parts,
+                flatMod,
+                dmgType,
+                isSavage: true,
+                notes: (wMods.saveNotes && wMods.saveNotes.length) ? wMods.saveNotes.join(' • ') : 'Graze Mastery: Still deals +' + flatMod + ' on a miss.',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollSavageGreatswordDamage())
+            });
+            return;
+        }
+        // Savage Attacker: Roll 2d6 twice and take the higher total + 3 STR!
         const r1a = Math.floor(Math.random() * 6) + 1;
         const r1b = Math.floor(Math.random() * 6) + 1;
         const sum1 = r1a + r1b;
@@ -1647,10 +1716,8 @@
         const sum2 = r2a + r2b;
 
         const chosenSum = Math.max(sum1, sum2);
-        const flatMod = 3 + (wMods.dmgBonus || 0);
         const ex = rollJacomirExtraDice(wMods);
         const total = chosenSum + flatMod + ex.extraSum;
-        const dmgType = wMods.isSilvered ? 'Silvered Slashing' : 'Slashing';
         const notes = wMods.saveNotes && wMods.saveNotes.length ? ` <small style="color:#fde68a;">(${wMods.saveNotes.join(' • ')})</small>` : '';
         logRoll(`🗡️ <strong>Ancestral Greatsword Damage (Savage Attacker):</strong> Roll 1 [${r1a}+${r1b}=${sum1}] vs Roll 2 [${r2a}+${r2b}=${sum2}] ➔ Kept <strong>${chosenSum}</strong> + ${flatMod}${ex.extraText} = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} ${dmgType} Damage</span>!${notes}`);
     }
@@ -1666,6 +1733,20 @@
         const sides = twoHanded ? 10 : 8;
         const flatMod = 3 + (wMods.dmgBonus || 0);
         const grip = twoHanded ? `2H Versatile (1d10+${flatMod})` : `1H (1d8+${flatMod})`;
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const parts = [{ expr: `1d${sides}`, type: 'Silvered Slashing' }];
+            (wMods.extras || []).forEach(ex => { if (ex.dice) parts.push({ expr: ex.dice, type: ex.type || 'Mod' }); });
+            COS_RPG.logManualDamage({
+                label: `Ismark's Silvered Longsword (${twoHanded ? '2H' : '1H'})`,
+                diceParts: parts,
+                flatMod,
+                dmgType: 'Silvered Slashing',
+                isSavage: true,
+                notes: 'Bypasses Undead/Werewolf Resistance • 🛡️ Sap Mastery: Target has Disadvantage on its next attack!' + (wMods.saveNotes && wMods.saveNotes.length ? ' • ' + wMods.saveNotes.join(' • ') : ''),
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollSavageLongswordDamage(twoHanded))
+            });
+            return;
+        }
         const d1 = Math.floor(Math.random() * sides) + 1;
         const d2 = Math.floor(Math.random() * sides) + 1;
         const chosen = Math.max(d1, d2);
@@ -1681,13 +1762,27 @@
 
     function rollSavageHandaxeDamage() {
         const wMods = getJacomirWpnMods('handaxe');
+        const flatMod = 3 + (wMods.dmgBonus || 0);
+        const dmgType = wMods.isSilvered ? 'Silvered Slashing' : 'Slashing';
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const parts = [{ expr: '1d6', type: dmgType }];
+            (wMods.extras || []).forEach(ex => { if (ex.dice) parts.push({ expr: ex.dice, type: ex.type || 'Mod' }); });
+            COS_RPG.logManualDamage({
+                label: 'Handaxe (Vex)',
+                diceParts: parts,
+                flatMod,
+                dmgType,
+                isSavage: true,
+                notes: '🎯 Vex Mastery: Gain Advantage on your next attack roll against this target!' + (wMods.saveNotes && wMods.saveNotes.length ? ' • ' + wMods.saveNotes.join(' • ') : ''),
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollSavageHandaxeDamage())
+            });
+            return;
+        }
         const d1 = Math.floor(Math.random() * 6) + 1;
         const d2 = Math.floor(Math.random() * 6) + 1;
         const chosen = Math.max(d1, d2);
-        const flatMod = 3 + (wMods.dmgBonus || 0);
         const ex = rollJacomirExtraDice(wMods);
         const total = chosen + flatMod + ex.extraSum;
-        const dmgType = wMods.isSilvered ? 'Silvered Slashing' : 'Slashing';
         const notes = wMods.saveNotes && wMods.saveNotes.length ? ` <small style="color:#fde68a;">(${wMods.saveNotes.join(' • ')})</small>` : '';
         logRoll(`🪓 <strong>Handaxe Damage (Savage Attacker • Vex):</strong> Roll 1 [${d1}] vs Roll 2 [${d2}] ➔ Kept <strong>${chosen}</strong> + ${flatMod}${ex.extraText} = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} ${dmgType} Damage</span>! <em>(🎯 Vex: You have Advantage on your next attack roll against this target before the end of your next turn!)</em>${notes}`);
     }
@@ -1818,12 +1913,46 @@
     }
 
     function execParryManeuver() {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualHeal({
+                label: `🛡️ Maneuver — Parry (Reaction • ${curSupDice}/4 d8s left)`,
+                diceParts: [{ expr: '1d8', type: 'Superiority' }],
+                flatMod: 3,
+                healMode: false,
+                applyLabel: '💚 Refund Prevented HP',
+                notes: 'Roll 1d8 + 3 STR to reduce incoming melee damage! If you already subtracted the hit, type the prevented total below to refund HP.',
+                onApplyCustom: (val) => stepHPMulti(val, 'Parry Damage Reduction (Real Dice)'),
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => execParryManeuver())
+            });
+            return;
+        }
         const d8 = Math.floor(Math.random() * 8) + 1;
         const red = d8 + 3; // 1d8 + STR (+3)
         logRoll(`🛡️ <strong>Maneuver — Parry (Reaction • ${curSupDice}/4 d8s left):</strong> Rolled 1d8(${d8}) + 3 STR = Reduce incoming melee damage by <strong><span style="color:#38bdf8; font-size:1.08rem;">-${red} Damage</span></strong>! <button class="btn-act btn-act-heal" style="margin-left:6px;" onclick="stepHPMulti(${red}, 'Parry Damage Reduction')">💚 Refund ${red} HP</button>`);
     }
 
     function execRiposteAttack() {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualD20({
+                label: `⚔️ Maneuver — Riposte Counter-Attack (Reaction • ${curSupDice}/4 d8s left)`,
+                mod: 5,
+                suppressPendingFollowup: true,
+                hitLabel: '💥 Hit! Greatsword (2d6+1d8+3)',
+                onHit: () => execRiposteDamage(),
+                onCrit: () => COS_RPG.logManualDamage({
+                    label: 'Riposte Greatsword',
+                    diceParts: [{ expr: '2d6', type: 'Slashing' }, { expr: '1d8', type: 'Superiority' }],
+                    flatMod: 3,
+                    dmgType: 'Slashing',
+                    isCrit: true
+                }),
+                extraButtons: [
+                    { label: '⚔️ Hit! Silver LS (1d10+1d8+3)', cls: 'btn-hit', onClick: () => execRiposteSilverLongswordDamage() }
+                ],
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => execRiposteAttack())
+            });
+            return;
+        }
         const d20 = Math.floor(Math.random() * 20) + 1;
         const atkTotal = d20 + 5;
         let critNote = d20 === 20 ? " 🔥 <span style='color:#facc15; font-weight:800;'>NAT 20 BRUTAL CRIT!</span>" : (d20 === 1 ? " 💀 <span style='color:#ef4444; font-weight:800;'>NAT 1!</span>" : "");
@@ -1831,6 +1960,16 @@
     }
 
     function execRiposteDamage() {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualDamage({
+                label: 'Riposte Greatsword',
+                diceParts: [{ expr: '2d6', type: 'Slashing' }, { expr: '1d8', type: 'Superiority' }],
+                flatMod: 3,
+                dmgType: 'Slashing',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => execRiposteDamage())
+            });
+            return;
+        }
         const g1 = Math.floor(Math.random() * 6) + 1;
         const g2 = Math.floor(Math.random() * 6) + 1;
         const sup = Math.floor(Math.random() * 8) + 1;
@@ -1839,6 +1978,17 @@
     }
 
     function execRiposteSilverLongswordDamage() {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualDamage({
+                label: "Riposte — Ismark's Silvered Longsword (2H)",
+                diceParts: [{ expr: '1d10', type: 'Silvered Slashing' }, { expr: '1d8', type: 'Superiority' }],
+                flatMod: 3,
+                dmgType: 'Silvered Slashing',
+                notes: 'Bypasses Undead/Werewolf Resistance + 🛡️ Sap!',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => execRiposteSilverLongswordDamage())
+            });
+            return;
+        }
         const ls = Math.floor(Math.random() * 10) + 1;
         const sup = Math.floor(Math.random() * 8) + 1;
         const total = ls + sup + 3;
@@ -1846,6 +1996,17 @@
     }
 
     function execMenacingAttack() {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualSpell({
+                icon: '👹',
+                title: `Maneuver — Menacing Attack (${curSupDice}/4 d8s left)`,
+                saveText: 'Tell DM: DC 13 WIS Save or Frightened until end of next turn!',
+                diceParts: [{ expr: '1d8', type: 'Bonus Damage' }],
+                notes: 'Add 1d8 to your weapon hit damage!',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => execMenacingAttack())
+            });
+            return;
+        }
         const d8 = Math.floor(Math.random() * 8) + 1;
         logRoll(`👹 <strong>Maneuver — Menacing Attack (${curSupDice}/4 d8s left):</strong> Add <strong><span style="color:#f87171; font-size:1.08rem;">+${d8} Damage</span></strong> (1d8) to your weapon hit, AND the target must succeed on a <strong>DC 13 Wisdom Saving Throw</strong> or be <strong>Frightened of Jacomir</strong> until the end of your next turn!`);
     }
@@ -2685,6 +2846,19 @@
         }
         helpTokens--;
         updateHelpDisplay();
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualSpell({
+                icon: '🤝',
+                title: `Help Token Spent (${helpTokens}/2 left)`,
+                diceParts: [{ expr: '1d6', type: 'Ally Bonus' }],
+                notes: 'Hand a physical d6 to an ally within 30 ft to add to their check or attack!',
+                onDigitalRoll: () => {
+                    const d6 = Math.floor(Math.random() * 6) + 1;
+                    logRoll(`🤝 <strong>King Jacomir spent a Help Token (+1d6 within 30ft):</strong> Rolled <span style="color:#67e8f9; font-weight:700;">+${d6}</span> to ally's check! (${helpTokens}/2 left)`);
+                }
+            });
+            return;
+        }
         const d6 = Math.floor(Math.random() * 6) + 1;
         logRoll(`🤝 <strong>King Jacomir spent a Help Token (+1d6 within 30ft):</strong> Rolled <span style="color:#67e8f9; font-weight:700;">+${d6}</span> to ally's check! (${helpTokens}/2 left)`);
     }
@@ -2781,10 +2955,23 @@
         logRoll(msg);
     }
 
-    function rollD20(label, mod) {
-        const modInput = parseInt(document.getElementById('dice-mod').value) || 0;
+    function rollD20(label, mod, opts = {}) {
+        const modInput = parseInt(document.getElementById('dice-mod')?.value) || 0;
         const totalMod = mod + modInput;
         const modStr = totalMod >= 0 ? `+${totalMod}` : `${totalMod}`;
+
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualD20({
+                label,
+                mod: totalMod,
+                mode: rollMode,
+                isInitiative: Boolean(opts && opts.isInitiative),
+                onGraze: opts && opts.onGraze,
+                grazeLabel: opts && opts.grazeLabel,
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollD20(label, mod, opts))
+            });
+            return null;
+        }
 
         if (rollMode !== 'norm') {
             const r1 = Math.floor(Math.random() * 20) + 1;
@@ -2796,7 +2983,10 @@
             if (chosen === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT! (Max Die + Rolled Die + Mod)</span>";
             if (chosen === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
             logRoll(msg);
-            return;
+            if (opts && opts.isInitiative && window.COS_RPG && COS_RPG.publishInitiativeRoll) {
+                COS_RPG.publishInitiativeRoll(total, 'digital');
+            }
+            return total;
         }
 
         const d20 = Math.floor(Math.random() * 20) + 1;
@@ -2805,13 +2995,17 @@
         if (d20 === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT! (Max Die + Rolled Die + Mod)</span>";
         if (d20 === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
         logRoll(msg);
+        if (opts && opts.isInitiative && window.COS_RPG && COS_RPG.publishInitiativeRoll) {
+            COS_RPG.publishInitiativeRoll(total, 'digital');
+        }
+        return total;
     }
 
     function rollJacomirInitiative() {
         const gb = window.__jacomirGearCache?.initBonus || 0;
         const tot = 0 + gb;
         const tag = gb ? ` [Gear ${gb > 0 ? '+' : ''}${gb}]` : '';
-        rollD20(`Initiative Roll (DEX +0${tag})`, tot);
+        rollD20(`Initiative Roll (DEX +0${tag})`, tot, { isInitiative: true });
     }
 
     function rollSave(label, baseStatMod, isProf) {
@@ -2826,6 +3020,16 @@
     }
 
     function rollFormulaDamage(label, sides, bonus, type, diceCount = 1) {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualDamage({
+                label,
+                diceParts: [{ expr: `${diceCount}d${sides}`, type }],
+                flatMod: bonus,
+                dmgType: type,
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollFormulaDamage(label, sides, bonus, type, diceCount))
+            });
+            return;
+        }
         let total = 0;
         let rolls = [];
         for (let i = 0; i < diceCount; i++) {

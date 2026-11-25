@@ -7385,16 +7385,6 @@
         const effAtkBonus = st.atkBonus + (aDef ? (aDef.atkBonus || 0) : 0) + wCombat.atkBonus;
         const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0) + wCombat.dmgBonus;
         const mode = (typeof window.rollMode === 'string') ? window.rollMode : 'norm';
-        let d20 = Math.floor(Math.random() * 20) + 1;
-        let modeNote = '';
-        if (mode === 'adv' || mode === 'dis') {
-            const d2 = Math.floor(Math.random() * 20) + 1;
-            const chosen = mode === 'adv' ? Math.max(d20, d2) : Math.min(d20, d2);
-            modeNote = ` <small style="color:#94a3b8;">(${mode === 'adv' ? 'Adv' : 'Dis'} [${d20}, ${d2}])</small>`;
-            d20 = chosen;
-            consumeTempRollMode();
-        }
-        const total = d20 + effAtkBonus;
         const name = shortLabel(raw);
         const ammoTag = aDef
             ? ` <span style="color:#e2e8f0; font-size:0.74rem; font-weight:700;">[${esc(aDef.shortName)} &bull; ${shotInfo.remaining} left${shotInfo.exhausted ? ' &mdash; last loaded round fired' : ''}]</span>`
@@ -7408,39 +7398,80 @@
 
         spendTurnAction('action');
 
-        const masteryRiderHtml = st.mastery && WEAPON_MASTERY_INFO[st.mastery]
-            ? `<br><small style="color:#93c5fd;">⚔️ <strong>${st.mastery === 'Topple' ? `Topple Mastery (DC ${st.toppleDc} CON Save or Prone!)` : esc(WEAPON_MASTERY_INFO[st.mastery].rider)}</strong></small>`
+        const masteryRiderText = st.mastery && WEAPON_MASTERY_INFO[st.mastery]
+            ? (st.mastery === 'Topple' ? `Topple Mastery (DC ${st.toppleDc} CON Save or Prone!)` : WEAPON_MASTERY_INFO[st.mastery].rider)
+            : '';
+        const masteryRiderHtml = masteryRiderText
+            ? `<br><small style="color:#93c5fd;">⚔️ <strong>${esc(masteryRiderText)}</strong></small>`
             : '';
 
-        if (d20 === 20) {
-            const base = rollDiceExpr(st.dmgDice);
-            let critTotal = base.max + base.sum + effDmgBonus;
-            let extraHtml = '';
-            if (st.extraDice) {
-                const ex = rollDiceExpr(st.extraDice);
-                critTotal += ex.max + ex.sum;
-                extraHtml += ` + ${ex.max}+[${ex.rolls.join('+')}](${esc(st.extraType || 'Bonus')})`;
+        const runDigitalDynamicAttack = () => {
+            let d20 = Math.floor(Math.random() * 20) + 1;
+            let modeNote = '';
+            if (mode === 'adv' || mode === 'dis') {
+                const d2 = Math.floor(Math.random() * 20) + 1;
+                const chosen = mode === 'adv' ? Math.max(d20, d2) : Math.min(d20, d2);
+                modeNote = ` <small style="color:#94a3b8;">(${mode === 'adv' ? 'Adv' : 'Dis'} [${d20}, ${d2}])</small>`;
+                d20 = chosen;
+                consumeTempRollMode();
             }
-            if (aDef && aDef.extraDice) {
-                const exA = rollDiceExpr(aDef.extraDice);
-                critTotal += exA.max + exA.sum;
-                extraHtml += ` + ${exA.max}+[${exA.rolls.join('+')}](${esc(aDef.extraType || aDef.shortName)})`;
+            const total = d20 + effAtkBonus;
+            if (d20 === 20) {
+                const base = rollDiceExpr(st.dmgDice);
+                let critTotal = base.max + base.sum + effDmgBonus;
+                let extraHtml = '';
+                if (st.extraDice) {
+                    const ex = rollDiceExpr(st.extraDice);
+                    critTotal += ex.max + ex.sum;
+                    extraHtml += ` + ${ex.max}+[${ex.rolls.join('+')}](${esc(st.extraType || 'Bonus')})`;
+                }
+                if (aDef && aDef.extraDice) {
+                    const exA = rollDiceExpr(aDef.extraDice);
+                    critTotal += exA.max + exA.sum;
+                    extraHtml += ` + ${exA.max}+[${exA.rolls.join('+')}](${esc(aDef.extraType || aDef.shortName)})`;
+                }
+                wCombat.extras.forEach(exM => {
+                    const exR = rollDiceExpr(exM.dice);
+                    critTotal += exR.max + exR.sum;
+                    extraHtml += ` + ${exR.max}+[${exR.rolls.join('+')}](${esc(exM.type)})`;
+                });
+                adapter.log(`<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>]${modeNote} + ${effAtkBonus} = <strong>${total} to Hit</strong>!${ammoTag}${modBadgeTag}${coatBadgeTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${effDmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!${masteryRiderHtml}`);
+                return;
             }
-            wCombat.extras.forEach(exM => {
-                const exR = rollDiceExpr(exM.dice);
-                critTotal += exR.max + exR.sum;
-                extraHtml += ` + ${exR.max}+[${exR.rolls.join('+')}](${esc(exM.type)})`;
+            setRollFollowup({
+                label: `💥 Roll ${name} Damage`,
+                isCrit: false,
+                onDamage: () => rollDynamicWeaponDamage(invIdx, false),
+                onCrit: () => rollDynamicWeaponDamage(invIdx, true)
             });
-            adapter.log(`<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>]${modeNote} + ${effAtkBonus} = <strong>${total} to Hit</strong>!${ammoTag}${modBadgeTag}${coatBadgeTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${effDmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!${masteryRiderHtml}`);
+            const tag = d20 === 1 ? ' <strong style="color:#f87171;">(NAT 1 MISS!)</strong>' : '';
+            adapter.log(`<strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>]${modeNote} + ${effAtkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}${ammoTag}${modBadgeTag}${coatBadgeTag}${masteryRiderHtml}`);
+        };
+
+        if (isManualDiceMode()) {
+            const noteBits = [];
+            if (aDef) noteBits.push(`Ammo: ${aDef.shortName} (${shotInfo.remaining} left${shotInfo.exhausted ? ' — last round fired' : ''})`);
+            if (wCombat.mod) noteBits.push(`Mod: ${wCombat.mod.badge}`);
+            if (wCombat.coating) noteBits.push(`Coating: ${wCombat.coating.label}`);
+            if (masteryRiderText) noteBits.push(`⚔️ ${masteryRiderText}`);
+            consumeTempRollMode();
+            logManualD20({
+                label: `${name} Attack`,
+                mod: effAtkBonus,
+                mode,
+                notes: noteBits.join(' • '),
+                suppressPendingFollowup: true,
+                hitLabel: `💥 Hit! Show Damage (${st.dmgDice}${effDmgBonus >= 0 ? (effDmgBonus ? '+' + effDmgBonus : '') : effDmgBonus})`,
+                onHit: () => rollDynamicWeaponDamage(invIdx, false),
+                onCrit: () => rollDynamicWeaponDamage(invIdx, true),
+                grazeLabel: st.mastery === 'Graze' ? `⚡ Graze (+${Math.max(0, st.abilityMod || 0)} on Miss)` : null,
+                onGraze: st.mastery === 'Graze' ? () => rollDynamicWeaponMastery(invIdx, 'Graze') : null,
+                onDigitalRoll: () => runManualDigitalFallback(runDigitalDynamicAttack)
+            });
             return;
         }
-        setRollFollowup({
-            label: `💥 Roll ${name} Damage`,
-            isCrit: false,
-            onDamage: () => rollDynamicWeaponDamage(invIdx)
-        });
-        const tag = d20 === 1 ? ' <strong style="color:#f87171;">(NAT 1 MISS!)</strong>' : '';
-        adapter.log(`<strong>${esc(name)} Attack:</strong> d20[<strong>${d20}</strong>]${modeNote} + ${effAtkBonus} = <span style="color:#fde68a; font-size:1.1rem; font-weight:800;">${total} to Hit</span>${tag}${ammoTag}${modBadgeTag}${coatBadgeTag}${masteryRiderHtml}`);
+
+        runDigitalDynamicAttack();
     }
 
     function rollDynamicWeaponMastery(invIdx, masteryKind) {
@@ -7461,12 +7492,38 @@
             return;
         }
         if (masteryKind === 'Cleave' || masteryKind === 'Nick') {
+            const modAdd = (st.abilityMod < 0 ? st.abilityMod : 0) + magicOnly;
+            const extraTitle = masteryKind === 'Cleave' ? '🪓 Cleave Bonus Strike (2nd Adjacent Foe)' : '🗡️ Nick Extra Light Attack (Free Bonus Action)';
+            if (isManualDiceMode()) {
+                logManualD20({
+                    label: `${extraTitle} — ${name}`,
+                    mod: effAtkBonus,
+                    notes: `On hit: roll ${st.dmgDice}${modAdd ? (modAdd > 0 ? ' + ' + modAdd : ' - ' + Math.abs(modAdd)) : ''} ${st.dmgType} (no positive Ability Mod).`,
+                    suppressPendingFollowup: true,
+                    onHit: () => logManualDamage({
+                        label: `${extraTitle} — ${name}`,
+                        diceParts: [{ expr: st.dmgDice, type: st.dmgType }],
+                        flatMod: modAdd,
+                        dmgType: st.dmgType,
+                        notes: 'No positive Ability Modifier added on Cleave/Nick extra strike.',
+                        onDigitalRoll: () => runManualDigitalFallback(() => rollDynamicWeaponMastery(invIdx, masteryKind))
+                    }),
+                    onCrit: () => logManualDamage({
+                        label: `${extraTitle} — ${name}`,
+                        diceParts: [{ expr: st.dmgDice, type: st.dmgType }],
+                        flatMod: modAdd,
+                        dmgType: st.dmgType,
+                        isCrit: true,
+                        onDigitalRoll: () => runManualDigitalFallback(() => rollDynamicWeaponMastery(invIdx, masteryKind))
+                    }),
+                    onDigitalRoll: () => runManualDigitalFallback(() => rollDynamicWeaponMastery(invIdx, masteryKind))
+                });
+                return;
+            }
             const d20 = Math.floor(Math.random() * 20) + 1;
             const totalHit = d20 + effAtkBonus;
             const base = rollDiceExpr(st.dmgDice);
-            const modAdd = (st.abilityMod < 0 ? st.abilityMod : 0) + magicOnly;
             const dmgTotal = (d20 === 20 ? base.max + base.sum : base.sum) + modAdd;
-            const extraTitle = masteryKind === 'Cleave' ? '🪓 Cleave Bonus Strike (2nd Adjacent Foe)' : '🗡️ Nick Extra Light Attack (Free Bonus Action)';
             adapter.log(`<strong>${extraTitle} — ${esc(name)}:</strong> d20[<strong>${d20}</strong>] + ${effAtkBonus} = <strong style="color:#fde68a;">${totalHit} to Hit</strong>${d20 === 20 ? ' (NAT 20 CRIT!)' : ''} • Damage (no positive Ability Mod): ${st.dmgDice}[${base.rolls.join('+')}]${modAdd ? (modAdd > 0 ? ' + ' + modAdd : ' - ' + Math.abs(modAdd)) : ''} = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">${dmgTotal} ${esc(st.dmgType)} Damage</span>!`);
             return;
         }
@@ -7475,7 +7532,7 @@
         }
     }
 
-    function rollDynamicWeaponDamage(invIdx) {
+    function rollDynamicWeaponDamage(invIdx, forceCrit = false) {
         const raw = adapter.getItems()[invIdx];
         if (!raw) return;
         const meta = getItemMeta(raw);
@@ -7486,37 +7543,58 @@
         const aDef = meta.ammoKind ? getWeaponLastShotDef(weaponId) : null;
         const wCombat = getWeaponCombatMods(weaponId);
         const effDmgBonus = st.dmgBonus + (aDef ? (aDef.dmgBonus || 0) : 0) + wCombat.dmgBonus;
-        const base = rollDiceExpr(st.dmgDice);
-        let total = base.sum + effDmgBonus;
-        let breakdown = `${st.dmgDice}[<strong>${base.rolls.join('+')}</strong>]${effDmgBonus ? (effDmgBonus > 0 ? ' + ' + effDmgBonus : ' - ' + Math.abs(effDmgBonus)) : ''}`;
-        if (st.extraDice) {
-            const ex = rollDiceExpr(st.extraDice);
-            total += ex.sum;
-            breakdown += ` + <span style="color:#fb923c;">${st.extraDice}[${ex.rolls.join('+')} ${esc(st.extraType || 'Bonus')}]</span>`;
-        }
-        if (aDef && aDef.extraDice) {
-            const exA = rollDiceExpr(aDef.extraDice);
-            total += exA.sum;
-            breakdown += ` + <span style="color:#fde68a;">${aDef.extraDice}[${exA.rolls.join('+')} ${esc(aDef.extraType || aDef.shortName)}]</span>`;
-        }
-        wCombat.extras.forEach(exM => {
-            const exR = rollDiceExpr(exM.dice);
-            total += exR.sum;
-            breakdown += ` + <span style="color:#fde68a;">${exM.dice}[${exR.rolls.join('+')} ${esc(exM.type)}]</span>`;
-        });
         const isSilv = Boolean((aDef && aDef.isSilvered) || wCombat.isSilvered);
         const effDmgType = (isSilv && !String(st.dmgType).toLowerCase().includes('silver'))
             ? `Silvered ${st.dmgType}`
             : st.dmgType;
         const notes = [];
-        if (isSilv || String(effDmgType).toLowerCase().includes('silver')) notes.push('Bypasses Werewolf, Vampire &amp; Hag resistance');
+        if (isSilv || String(effDmgType).toLowerCase().includes('silver')) notes.push('Bypasses Werewolf, Vampire & Hag resistance');
         if (wCombat.isMagical) notes.push('Counts as Magical');
         if (aDef && aDef.haltsRegen) notes.push('Halts Vampire Regeneration for 1 round');
         if (aDef && aDef.blocksHealing) notes.push('Target cannot regain HP until start of your next turn');
-        if (aDef && aDef.saveNote) notes.push(esc(aDef.saveNote));
-        wCombat.saveNotes.forEach(sn => notes.push(esc(sn)));
-        const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.join(' &bull; ')})</small>` : '';
-        adapter.log(`<strong>${esc(shortLabel(raw))}${gripTag} Damage:</strong> ${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(effDmgType)} Damage</span>!${noteHtml}`);
+        if (aDef && aDef.saveNote) notes.push(aDef.saveNote);
+        wCombat.saveNotes.forEach(sn => notes.push(sn));
+
+        if (isManualDiceMode()) {
+            const diceParts = [{ expr: st.dmgDice, type: effDmgType }];
+            if (st.extraDice) diceParts.push({ expr: st.extraDice, type: st.extraType || 'Bonus' });
+            if (aDef && aDef.extraDice) diceParts.push({ expr: aDef.extraDice, type: aDef.extraType || aDef.shortName });
+            wCombat.extras.forEach(exM => diceParts.push({ expr: exM.dice, type: exM.type || 'Mod' }));
+            logManualDamage({
+                label: `${shortLabel(raw)}${gripTag}`,
+                diceParts,
+                flatMod: effDmgBonus,
+                dmgType: effDmgType,
+                isCrit: Boolean(forceCrit),
+                notes: notes.join(' • '),
+                onDigitalRoll: () => runManualDigitalFallback(() => rollDynamicWeaponDamage(invIdx, forceCrit))
+            });
+            return;
+        }
+
+        const base = rollDiceExpr(st.dmgDice);
+        let total = (forceCrit ? base.max : 0) + base.sum + effDmgBonus;
+        let breakdown = forceCrit
+            ? `Max(${base.max}) + ${st.dmgDice}[<strong>${base.rolls.join('+')}</strong>]${effDmgBonus ? (effDmgBonus > 0 ? ' + ' + effDmgBonus : ' - ' + Math.abs(effDmgBonus)) : ''}`
+            : `${st.dmgDice}[<strong>${base.rolls.join('+')}</strong>]${effDmgBonus ? (effDmgBonus > 0 ? ' + ' + effDmgBonus : ' - ' + Math.abs(effDmgBonus)) : ''}`;
+        if (st.extraDice) {
+            const ex = rollDiceExpr(st.extraDice);
+            total += (forceCrit ? ex.max : 0) + ex.sum;
+            breakdown += ` + <span style="color:#fb923c;">${forceCrit ? ex.max + '+' : ''}${st.extraDice}[${ex.rolls.join('+')} ${esc(st.extraType || 'Bonus')}]</span>`;
+        }
+        if (aDef && aDef.extraDice) {
+            const exA = rollDiceExpr(aDef.extraDice);
+            total += (forceCrit ? exA.max : 0) + exA.sum;
+            breakdown += ` + <span style="color:#fde68a;">${forceCrit ? exA.max + '+' : ''}${aDef.extraDice}[${exA.rolls.join('+')} ${esc(aDef.extraType || aDef.shortName)}]</span>`;
+        }
+        wCombat.extras.forEach(exM => {
+            const exR = rollDiceExpr(exM.dice);
+            total += (forceCrit ? exR.max : 0) + exR.sum;
+            breakdown += ` + <span style="color:#fde68a;">${forceCrit ? exR.max + '+' : ''}${exM.dice}[${exR.rolls.join('+')} ${esc(exM.type)}]</span>`;
+        });
+        const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.map(esc).join(' &bull; ')})</small>` : '';
+        const headPrefix = forceCrit ? `<strong style="color:#facc15;">🔥 BRUTAL CRIT — ${esc(shortLabel(raw))}${gripTag}:</strong> ` : `<strong>${esc(shortLabel(raw))}${gripTag} Damage:</strong> `;
+        adapter.log(`${headPrefix}${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(effDmgType)} Damage</span>!${noteHtml}`);
     }
 
     function buildWeaponModAndCoatingBadgesHtml(weaponId) {
@@ -8341,29 +8419,106 @@
             : '';
 
         if (kind === 'heal' && diceExpr) {
-            const r = rollDiceExpr(diceExpr);
-            const total = r.sum + flatBonus;
-            adapter.healHP(total, false);
-            adapter.log(`${prefixIcon} <strong>Cast ${esc(spellName)}</strong> <em>(via ${esc(sourceLabel)})</em>${chgBadge}: ${diceExpr}[${r.rolls.join('+')}]${flatBonus ? ' + ' + flatBonus : ''} = <span style="color:#4ade80; font-size:1.1rem; font-weight:800;">+${total} HP Healed</span>! <small style="color:#cbd5e1;">(${esc(descTxt)})</small>${nonCasterHint}`);
+            const runDigitalHealSpell = () => {
+                const r = rollDiceExpr(diceExpr);
+                const total = r.sum + flatBonus;
+                adapter.healHP(total, false);
+                adapter.log(`${prefixIcon} <strong>Cast ${esc(spellName)}</strong> <em>(via ${esc(sourceLabel)})</em>${chgBadge}: ${diceExpr}[${r.rolls.join('+')}]${flatBonus ? ' + ' + flatBonus : ''} = <span style="color:#4ade80; font-size:1.1rem; font-weight:800;">+${total} HP Healed</span>! <small style="color:#cbd5e1;">(${esc(descTxt)})</small>${nonCasterHint}`);
+            };
+            if (isManualDiceMode()) {
+                logManualHeal({
+                    label: `${prefixIcon} ${spellName} (${sourceLabel})`,
+                    diceParts: [{ expr: diceExpr, type: 'Heal' }],
+                    flatMod: flatBonus,
+                    healMode: false,
+                    notes: `${!isScroll && maxCharges > 0 ? `${remAfter}/${maxCharges} charges left • ` : (isScroll ? `Lvl ${spellLevel} Scroll consumed • ` : '')}${descTxt}`,
+                    onDigitalRoll: () => runManualDigitalFallback(runDigitalHealSpell)
+                });
+                return;
+            }
+            runDigitalHealSpell();
             return;
         }
         if (kind === 'tempHp' && diceExpr) {
-            const r = rollDiceExpr(diceExpr);
-            const total = r.sum + flatBonus;
-            adapter.healHP(total, 'temp');
-            adapter.log(`${prefixIcon} <strong>Cast ${esc(spellName)}</strong> <em>(via ${esc(sourceLabel)})</em>${chgBadge}: ${diceExpr}[${r.rolls.join('+')}]${flatBonus ? ' + ' + flatBonus : ''} = <span style="color:#38bdf8; font-size:1.1rem; font-weight:800;">+${total} Temp HP</span>! <small style="color:#cbd5e1;">(${esc(descTxt)})</small>${nonCasterHint}`);
+            const runDigitalTempSpell = () => {
+                const r = rollDiceExpr(diceExpr);
+                const total = r.sum + flatBonus;
+                adapter.healHP(total, 'temp');
+                adapter.log(`${prefixIcon} <strong>Cast ${esc(spellName)}</strong> <em>(via ${esc(sourceLabel)})</em>${chgBadge}: ${diceExpr}[${r.rolls.join('+')}]${flatBonus ? ' + ' + flatBonus : ''} = <span style="color:#38bdf8; font-size:1.1rem; font-weight:800;">+${total} Temp HP</span>! <small style="color:#cbd5e1;">(${esc(descTxt)})</small>${nonCasterHint}`);
+            };
+            if (isManualDiceMode()) {
+                logManualHeal({
+                    label: `${prefixIcon} ${spellName} (${sourceLabel})`,
+                    diceParts: [{ expr: diceExpr, type: 'Temp HP' }],
+                    flatMod: flatBonus,
+                    healMode: 'temp',
+                    notes: `${!isScroll && maxCharges > 0 ? `${remAfter}/${maxCharges} charges left • ` : (isScroll ? `Lvl ${spellLevel} Scroll consumed • ` : '')}${descTxt}`,
+                    onDigitalRoll: () => runManualDigitalFallback(runDigitalTempSpell)
+                });
+                return;
+            }
+            runDigitalTempSpell();
             return;
         }
         if (kind === 'dmg' && diceExpr) {
-            const r = rollDiceExpr(diceExpr);
-            const total = r.sum + flatBonus;
-            let atkHtml = '';
-            if (act.spellAtkRoll || (sp && sp.atkRoll)) {
-                const d20 = Math.floor(Math.random() * 20) + 1;
-                atkHtml = `Spell Attack: d20[<strong>${d20}</strong>] + ${effAtk} = <strong style="color:#fde68a;">${d20 + effAtk} to Hit</strong> • `;
+            const hasSpellAtk = Boolean(act.spellAtkRoll || (sp && sp.atkRoll));
+            const runDigitalDmgSpell = () => {
+                const r = rollDiceExpr(diceExpr);
+                const total = r.sum + flatBonus;
+                let atkHtml = '';
+                if (hasSpellAtk) {
+                    const d20 = Math.floor(Math.random() * 20) + 1;
+                    atkHtml = `Spell Attack: d20[<strong>${d20}</strong>] + ${effAtk} = <strong style="color:#fde68a;">${d20 + effAtk} to Hit</strong> • `;
+                }
+                const saveHtml = saveLbl ? ` <span style="color:#fde68a; font-weight:700;">(DC ${effDc} ${esc(saveLbl)})</span>` : '';
+                adapter.log(`${prefixIcon} <strong>Cast ${esc(spellName)}</strong> <em>(via ${esc(sourceLabel)})</em>${chgBadge}${concBadge}: ${atkHtml}${diceExpr}[${r.rolls.join('+')}]${flatBonus ? ' + ' + flatBonus : ''} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(dmgType)} Damage</span>!${saveHtml}<br><small style="color:#cbd5e1;">${rangeTxt ? esc(rangeTxt) + ' • ' : ''}${esc(descTxt)}</small>${nonCasterHint}`);
+            };
+            if (isManualDiceMode()) {
+                const chargeNote = !isScroll && maxCharges > 0 ? `${remAfter}/${maxCharges} charges left` : (isScroll ? `Lvl ${spellLevel} Scroll consumed` : '');
+                if (hasSpellAtk) {
+                    logManualD20({
+                        label: `${prefixIcon} ${spellName} (${sourceLabel})`,
+                        mod: effAtk,
+                        notes: [chargeNote, concFlag ? 'Concentration' : '', rangeTxt, descTxt].filter(Boolean).join(' • '),
+                        suppressPendingFollowup: true,
+                        hitLabel: `💥 Hit! Show Damage (${diceExpr}${flatBonus ? '+' + flatBonus : ''} ${dmgType})`,
+                        onHit: () => logManualDamage({
+                            label: `${spellName} Damage`,
+                            diceParts: [{ expr: diceExpr, type: dmgType }],
+                            flatMod: flatBonus,
+                            dmgType,
+                            notes: descTxt,
+                            onDigitalRoll: () => runManualDigitalFallback(runDigitalDmgSpell)
+                        }),
+                        onCrit: () => logManualDamage({
+                            label: `${spellName} Damage`,
+                            diceParts: [{ expr: diceExpr, type: dmgType }],
+                            flatMod: flatBonus,
+                            dmgType,
+                            isCrit: true,
+                            notes: descTxt,
+                            onDigitalRoll: () => runManualDigitalFallback(runDigitalDmgSpell)
+                        }),
+                        onDigitalRoll: () => runManualDigitalFallback(runDigitalDmgSpell)
+                    });
+                } else {
+                    logManualSpell({
+                        icon: prefixIcon,
+                        title: `${spellName} (${sourceLabel})`,
+                        subtitle: chargeNote,
+                        saveText: saveLbl ? `Tell DM: DC ${effDc} ${saveLbl}` : '',
+                        rangeText: rangeTxt,
+                        conc: concFlag,
+                        diceParts: [{ expr: diceExpr, type: dmgType }],
+                        flatMod: flatBonus,
+                        dmgType,
+                        notes: descTxt,
+                        onDigitalRoll: () => runManualDigitalFallback(runDigitalDmgSpell)
+                    });
+                }
+                return;
             }
-            const saveHtml = saveLbl ? ` <span style="color:#fde68a; font-weight:700;">(DC ${effDc} ${esc(saveLbl)})</span>` : '';
-            adapter.log(`${prefixIcon} <strong>Cast ${esc(spellName)}</strong> <em>(via ${esc(sourceLabel)})</em>${chgBadge}${concBadge}: ${atkHtml}${diceExpr}[${r.rolls.join('+')}]${flatBonus ? ' + ' + flatBonus : ''} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(dmgType)} Damage</span>!${saveHtml}<br><small style="color:#cbd5e1;">${rangeTxt ? esc(rangeTxt) + ' • ' : ''}${esc(descTxt)}</small>${nonCasterHint}`);
+            runDigitalDmgSpell();
             return;
         }
         const saveHtml = saveLbl ? ` <span style="color:#fde68a; font-weight:700;">(DC ${effDc} ${esc(saveLbl)})</span>` : '';
@@ -8429,9 +8584,22 @@
             const c = consumeReusableCharges();
             if (!c.ok) return;
             const beasts = ['Weasel (AC 13, 1 HP)', 'Giant Rat (AC 12, 7 HP)', 'Badger (AC 10, 3 HP)', 'Boar (AC 11, 11 HP)', 'Panther (AC 12, 13 HP)', 'Giant Badger (AC 10, 13 HP)', 'Dire Wolf (AC 14, 37 HP, Pack Tactics!)', 'Giant Elk (AC 14, 42 HP, Charge!)'];
-            const roll = Math.floor(Math.random() * 8);
             if (act.actionCost && act.actionCost !== 'none') spendTurnAction(act.actionCost);
-            adapter.log(`🐾 <strong>${esc(shortLabel(raw))}</strong> <span style="color:#d8b4fe;">(${c.remAfter}/${c.maxCharges} left)</span>: Tossed fuzzy ball ➔ d8[<strong>${roll + 1}</strong>] summoned a loyal <strong style="color:#6ee7b7;">${esc(beasts[roll])}</strong> until dawn!`);
+            const rollBagDigital = () => {
+                const roll = Math.floor(Math.random() * 8);
+                adapter.log(`🐾 <strong>${esc(shortLabel(raw))}</strong> <span style="color:#d8b4fe;">(${c.remAfter}/${c.maxCharges} left)</span>: Tossed fuzzy ball ➔ d8[<strong>${roll + 1}</strong>] summoned a loyal <strong style="color:#6ee7b7;">${esc(beasts[roll])}</strong> until dawn!`);
+            };
+            if (isManualDiceMode()) {
+                logManualSpell({
+                    icon: '🐾',
+                    title: `${shortLabel(raw)} (${c.remAfter}/${c.maxCharges} left)`,
+                    diceParts: [{ expr: '1d8', type: 'Summon Table' }],
+                    notes: beasts.map((b, idx) => `${idx + 1}: ${b.split(' (')[0]}`).join(' • '),
+                    onDigitalRoll: rollBagDigital
+                });
+            } else {
+                rollBagDigital();
+            }
             applyEquipmentToSheet(true);
             return;
         }
@@ -8468,109 +8636,223 @@
         }
 
         // Deduct 1 from inventory (Scrolls, Potions, Food, Bombs)
+        const itemDisplayName = shortLabel(raw);
         const newQty = parsed.qty - 1;
         if (newQty <= 0) items.splice(invIndex, 1);
         else items[invIndex] = `${parsed.emoji}${newQty > 1 ? newQty + 'x ' : ''}${parsed.name}`.trim();
         adapter.saveItems(items);
         if (act.type === 'spellScroll') {
-            executeSpellEffectLog(shortLabel(raw), act, true, 0, 0);
+            executeSpellEffectLog(itemDisplayName, act, true, 0, 0);
             applyEquipmentToSheet(true);
             return;
         }
         if (act.type === 'heal') {
             spendTurnAction(act.actionCost || 'bonus');
-            let rolls = [], sum = 0;
             const dCnt = parseInt(act.dice) || 0;
-            for (let i = 0; i < dCnt; i++) {
-                const r = Math.floor(Math.random() * (act.sides || 4)) + 1;
-                rolls.push(r); sum += r;
+            const dSides = act.sides || 4;
+            const runHealDigital = () => {
+                let rolls = [], sum = 0;
+                for (let i = 0; i < dCnt; i++) {
+                    const r = Math.floor(Math.random() * dSides) + 1;
+                    rolls.push(r); sum += r;
+                }
+                const total = sum + (act.bonus || 0);
+                const res = adapter.healHP(total, false);
+                const capNote = (res && typeof res.healed === 'number' && res.healed < total)
+                    ? ` <small style="color:#94a3b8;">(+${res.healed} restored, capped at Max HP — no Temp HP)</small>`
+                    : '';
+                const extraTxt = act.extraNote ? `<br><small style="color:#fde68a;">✨ ${esc(act.extraNote)}</small>` : '';
+                const rollExpr = dCnt > 0 ? `[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = ` : '';
+                adapter.log(`💚 <strong>${esc(act.verb || 'Used')} ${esc(itemDisplayName)}:</strong> ${rollExpr}<span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span>${capNote}${extraTxt}`);
+            };
+            if (isManualDiceMode() && dCnt > 0) {
+                logManualHeal({
+                    label: `💚 ${act.verb || 'Used'} ${itemDisplayName} (Consumed)`,
+                    diceParts: [{ expr: `${dCnt}d${dSides}`, type: 'Heal' }],
+                    flatMod: act.bonus || 0,
+                    healMode: false,
+                    extraNote: act.extraNote || '',
+                    onDigitalRoll: runHealDigital
+                });
+            } else {
+                runHealDigital();
             }
-            const total = sum + (act.bonus || 0);
-            const res = adapter.healHP(total, false);
-            const capNote = (res && typeof res.healed === 'number' && res.healed < total)
-                ? ` <small style="color:#94a3b8;">(+${res.healed} restored, capped at Max HP — no Temp HP)</small>`
-                : '';
-            const extraTxt = act.extraNote ? `<br><small style="color:#fde68a;">✨ ${esc(act.extraNote)}</small>` : '';
-            const rollExpr = dCnt > 0 ? `[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = ` : '';
-            adapter.log(`💚 <strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${rollExpr}<span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span>${capNote}${extraTxt}`);
         } else if (act.type === 'tempHp') {
             spendTurnAction(act.actionCost || 'bonus');
-            let rolls = [], sum = 0;
             const dCnt = parseInt(act.dice) || 0;
-            for (let i = 0; i < dCnt; i++) {
-                const r = Math.floor(Math.random() * (act.sides || 4)) + 1;
-                rolls.push(r); sum += r;
+            const dSides = act.sides || 4;
+            const runTempDigital = () => {
+                let rolls = [], sum = 0;
+                for (let i = 0; i < dCnt; i++) {
+                    const r = Math.floor(Math.random() * dSides) + 1;
+                    rolls.push(r); sum += r;
+                }
+                const total = sum + (act.bonus || 0);
+                const res = adapter.healHP(total, 'temp');
+                const durTxt = act.duration ? ` (${esc(act.duration)})` : '';
+                const keptTxt = (res && res.keptExisting)
+                    ? ` <small style="color:#94a3b8;">(kept higher existing +${res.prevTemp} Temp HP — 5e non-stacking)</small>`
+                    : '';
+                const extraTxt = act.extraNote ? `<br><small style="color:#fde68a;">✨ ${esc(act.extraNote)}</small>` : '';
+                const rollExpr = dCnt > 0 ? `[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = ` : '';
+                adapter.log(`🛡️ <strong>${esc(act.verb || 'Drank')} ${esc(itemDisplayName)}:</strong> ${rollExpr}<span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${total} Temp HP</span>${durTxt}!${keptTxt}${extraTxt}`);
+            };
+            if (isManualDiceMode() && dCnt > 0) {
+                logManualHeal({
+                    label: `🛡️ ${act.verb || 'Drank'} ${itemDisplayName} (Consumed)`,
+                    diceParts: [{ expr: `${dCnt}d${dSides}`, type: 'Temp HP' }],
+                    flatMod: act.bonus || 0,
+                    healMode: 'temp',
+                    notes: act.duration ? `Duration: ${act.duration} (5e non-stacking)` : '5e Temp HP does not stack.',
+                    extraNote: act.extraNote || '',
+                    onDigitalRoll: runTempDigital
+                });
+            } else {
+                runTempDigital();
             }
-            const total = sum + (act.bonus || 0);
-            const res = adapter.healHP(total, 'temp');
-            const durTxt = act.duration ? ` (${esc(act.duration)})` : '';
-            const keptTxt = (res && res.keptExisting)
-                ? ` <small style="color:#94a3b8;">(kept higher existing +${res.prevTemp} Temp HP — 5e non-stacking)</small>`
-                : '';
-            const extraTxt = act.extraNote ? `<br><small style="color:#fde68a;">✨ ${esc(act.extraNote)}</small>` : '';
-            const rollExpr = dCnt > 0 ? `[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = ` : '';
-            adapter.log(`🛡️ <strong>${esc(act.verb || 'Drank')} ${esc(shortLabel(raw))}:</strong> ${rollExpr}<span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${total} Temp HP</span>${durTxt}!${keptTxt}${extraTxt}`);
         } else if (act.type === 'overheal') {
             spendTurnAction(act.actionCost || 'bonus');
-            let rolls = [], sum = 0;
             const dCnt = parseInt(act.dice) || 0;
-            for (let i = 0; i < dCnt; i++) {
-                const r = Math.floor(Math.random() * (act.sides || 4)) + 1;
-                rolls.push(r); sum += r;
+            const dSides = act.sides || 4;
+            const runOverhealDigital = () => {
+                let rolls = [], sum = 0;
+                for (let i = 0; i < dCnt; i++) {
+                    const r = Math.floor(Math.random() * dSides) + 1;
+                    rolls.push(r); sum += r;
+                }
+                const total = sum + (act.bonus || 0);
+                const res = adapter.healHP(total, 'overheal');
+                const durTxt = act.duration ? ` for ${esc(act.duration)}` : '';
+                let detailTxt = `<span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span> restored!`;
+                if (res && typeof res.overflowTemp === 'number' && res.overflowTemp > 0) {
+                    const tempPart = res.keptExisting
+                        ? `<span style="color:#94a3b8;">${res.overflowTemp} excess (kept higher +${res.prevTemp} Temp HP)</span>`
+                        : `<span style="color:#38bdf8; font-weight:800;">+${res.overflowTemp} Temp HP</span>${durTxt}`;
+                    detailTxt = res.healed > 0
+                        ? `<span style="color:#4ade80; font-weight:800;">+${res.healed} HP</span> + Overheal ➔ ${tempPart}!`
+                        : `Full HP — Overheal ➔ ${tempPart}!`;
+                }
+                const extraTxt = act.extraNote ? `<br><small style="color:#fde68a;">✨ ${esc(act.extraNote)}</small>` : '';
+                const rollExpr = dCnt > 0 ? `[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} (${total})` : `(${total})`;
+                adapter.log(`✨ <strong>${esc(act.verb || 'Used')} ${esc(itemDisplayName)}:</strong> ${rollExpr} ➔ ${detailTxt}${extraTxt}`);
+            };
+            if (isManualDiceMode() && dCnt > 0) {
+                logManualHeal({
+                    label: `✨ ${act.verb || 'Used'} ${itemDisplayName} (Consumed)`,
+                    diceParts: [{ expr: `${dCnt}d${dSides}`, type: 'Overheal' }],
+                    flatMod: act.bonus || 0,
+                    healMode: 'overheal',
+                    notes: act.duration ? `Excess above Max HP converts into Temp HP (${act.duration}).` : 'Excess above Max HP converts into Temp HP.',
+                    extraNote: act.extraNote || '',
+                    onDigitalRoll: runOverhealDigital
+                });
+            } else {
+                runOverhealDigital();
             }
-            const total = sum + (act.bonus || 0);
-            const res = adapter.healHP(total, 'overheal');
-            const durTxt = act.duration ? ` for ${esc(act.duration)}` : '';
-            let detailTxt = `<span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span> restored!`;
-            if (res && typeof res.overflowTemp === 'number' && res.overflowTemp > 0) {
-                const tempPart = res.keptExisting
-                    ? `<span style="color:#94a3b8;">${res.overflowTemp} excess (kept higher +${res.prevTemp} Temp HP)</span>`
-                    : `<span style="color:#38bdf8; font-weight:800;">+${res.overflowTemp} Temp HP</span>${durTxt}`;
-                detailTxt = res.healed > 0
-                    ? `<span style="color:#4ade80; font-weight:800;">+${res.healed} HP</span> + Overheal ➔ ${tempPart}!`
-                    : `Full HP — Overheal ➔ ${tempPart}!`;
-            }
-            const extraTxt = act.extraNote ? `<br><small style="color:#fde68a;">✨ ${esc(act.extraNote)}</small>` : '';
-            const rollExpr = dCnt > 0 ? `[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} (${total})` : `(${total})`;
-            adapter.log(`✨ <strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${rollExpr} ➔ ${detailTxt}${extraTxt}`);
         } else if (act.type === 'customBomb') {
             spendTurnAction(act.actionCost || 'action');
-            let rolls = [], sum = 0;
             const dCnt = Math.max(1, parseInt(act.dice) || 2);
             const dSides = Math.max(2, parseInt(act.sides) || 6);
-            for (let i = 0; i < dCnt; i++) {
-                const r = Math.floor(Math.random() * dSides) + 1;
-                rolls.push(r); sum += r;
+            const rngTag = act.range ? ` (${act.range}${act.aoe ? ', ' + act.aoe : ''})` : '';
+            const runBombDigital = () => {
+                let rolls = [], sum = 0;
+                for (let i = 0; i < dCnt; i++) {
+                    const r = Math.floor(Math.random() * dSides) + 1;
+                    rolls.push(r); sum += r;
+                }
+                const total = sum + (act.bonus || 0);
+                const saveTxt = act.saveNote ? ` <small style="color:#fde68a;">(${esc(act.saveNote)})</small>` : '';
+                adapter.log(`💣 <strong>${esc(act.verb || 'Threw')} ${esc(itemDisplayName)}${esc(rngTag)}:</strong> ${dCnt}d${dSides}[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = <span style="color:#fb923c; font-size:1.1rem; font-weight:800;">${total} ${esc(act.dmgType || 'Fire')} Damage</span>!${saveTxt}`);
+            };
+            if (isManualDiceMode()) {
+                logManualDamage({
+                    label: `💣 ${act.verb || 'Threw'} ${itemDisplayName}${rngTag}`,
+                    diceParts: [{ expr: `${dCnt}d${dSides}`, type: act.dmgType || 'Fire' }],
+                    flatMod: act.bonus || 0,
+                    dmgType: act.dmgType || 'Fire',
+                    notes: act.saveNote || 'Item consumed from Backpack.',
+                    onDigitalRoll: runBombDigital
+                });
+            } else {
+                runBombDigital();
             }
-            const total = sum + (act.bonus || 0);
-            const rngTag = act.range ? ` (${esc(act.range)}${act.aoe ? ', ' + esc(act.aoe) : ''})` : '';
-            const saveTxt = act.saveNote ? ` <small style="color:#fde68a;">(${esc(act.saveNote)})</small>` : '';
-            adapter.log(`💣 <strong>${esc(act.verb || 'Threw')} ${esc(shortLabel(raw))}${rngTag}:</strong> ${dCnt}d${dSides}[${rolls.join('+')}]${act.bonus ? ' + ' + act.bonus : ''} = <span style="color:#fb923c; font-size:1.1rem; font-weight:800;">${total} ${esc(act.dmgType || 'Fire')} Damage</span>!${saveTxt}`);
         } else if (act.type === 'flavor') {
             const icon = act.verb === 'Drank' ? '🍷' : '🍽️';
-            adapter.log(`${icon} <strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${esc(act.effect || 'Consumed from Backpack.')}`);
+            adapter.log(`${icon} <strong>${esc(act.verb || 'Used')} ${esc(itemDisplayName)}:</strong> ${esc(act.effect || 'Consumed from Backpack.')}`);
         } else if (act.type === 'holyWater') {
             spendTurnAction('action');
-            const d1 = Math.floor(Math.random() * 6) + 1;
-            const d2 = Math.floor(Math.random() * 6) + 1;
-            adapter.log(`💧 <strong>Splashed ${esc(shortLabel(raw))}:</strong> 2d6[${d1}+${d2}] = <span style="color:#fde68a; font-size:1.08rem; font-weight:800;">${d1 + d2} Radiant Damage</span> to Undead/Fiends — <strong>VAMPIRE REGEN HALTED FOR 1 ROUND!</strong>`);
+            const runHolyDigital = () => {
+                const d1 = Math.floor(Math.random() * 6) + 1;
+                const d2 = Math.floor(Math.random() * 6) + 1;
+                adapter.log(`💧 <strong>Splashed ${esc(itemDisplayName)}:</strong> 2d6[${d1}+${d2}] = <span style="color:#fde68a; font-size:1.08rem; font-weight:800;">${d1 + d2} Radiant Damage</span> to Undead/Fiends — <strong>VAMPIRE REGEN HALTED FOR 1 ROUND!</strong>`);
+            };
+            if (isManualDiceMode()) {
+                logManualDamage({
+                    label: `💧 Splashed ${itemDisplayName} (Consumed)`,
+                    diceParts: [{ expr: '2d6', type: 'Radiant' }],
+                    dmgType: 'Radiant (Undead/Fiends)',
+                    notes: 'VAMPIRE REGENERATION HALTED FOR 1 ROUND!',
+                    onDigitalRoll: runHolyDigital
+                });
+            } else {
+                runHolyDigital();
+            }
         } else if (act.type === 'dreamPastry') {
             spendTurnAction('bonus');
-            const d6 = Math.floor(Math.random() * 6) + 1;
-            adapter.healHP(d6, true);
-            adapter.log(`🥧 <strong>Ate Morgantha's Dream Pastry:</strong> Gained <span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${d6} Temp HP</span> &amp; cured 1 Exhaustion! <small style="color:#f87171;">(⚠️ 8-hr blissful dream trance — DC 13 CON Save at dawn!)</small>`);
+            const runPastryDigital = () => {
+                const d6 = Math.floor(Math.random() * 6) + 1;
+                adapter.healHP(d6, true);
+                adapter.log(`🥧 <strong>Ate Morgantha's Dream Pastry:</strong> Gained <span style="color:#38bdf8; font-size:1.08rem; font-weight:800;">+${d6} Temp HP</span> &amp; cured 1 Exhaustion! <small style="color:#f87171;">(⚠️ 8-hr blissful dream trance — DC 13 CON Save at dawn!)</small>`);
+            };
+            if (isManualDiceMode()) {
+                logManualHeal({
+                    label: `🥧 Ate Morgantha's Dream Pastry (Consumed)`,
+                    diceParts: [{ expr: '1d6', type: 'Temp HP' }],
+                    healMode: 'temp',
+                    notes: 'Cures 1 Exhaustion! ⚠️ 8-hr blissful dream trance — DC 13 CON Save at dawn!',
+                    onDigitalRoll: runPastryDigital
+                });
+            } else {
+                runPastryDigital();
+            }
         } else if (act.type === 'alchemistsFire') {
             spendTurnAction('action');
-            const d4 = Math.floor(Math.random() * 4) + 1;
-            adapter.log(`🔥 <strong>Threw ${esc(shortLabel(raw))} (20 ft):</strong> Target takes <span style="color:#fb923c; font-size:1.08rem; font-weight:800;">${d4} Fire Damage</span> at the start of each of its turns until doused (<code>DC 10 DEX Check</code>)!`);
+            const runAlchDigital = () => {
+                const d4 = Math.floor(Math.random() * 4) + 1;
+                adapter.log(`🔥 <strong>Threw ${esc(itemDisplayName)} (20 ft):</strong> Target takes <span style="color:#fb923c; font-size:1.08rem; font-weight:800;">${d4} Fire Damage</span> at the start of each of its turns until doused (<code>DC 10 DEX Check</code>)!`);
+            };
+            if (isManualDiceMode()) {
+                logManualDamage({
+                    label: `🔥 Threw ${itemDisplayName} (20 ft • Consumed)`,
+                    diceParts: [{ expr: '1d4', type: 'Fire / Turn' }],
+                    dmgType: 'Fire (Recurring)',
+                    notes: 'Target takes 1d4 Fire at start of each turn until doused (DC 10 DEX Check).',
+                    onDigitalRoll: runAlchDigital
+                });
+            } else {
+                runAlchDigital();
+            }
         } else if (act.type === 'phosphorBomb') {
             spendTurnAction('action');
-            const d1 = Math.floor(Math.random() * 6) + 1;
-            const d2 = Math.floor(Math.random() * 6) + 1;
-            adapter.log(`💣 <strong>Threw ${esc(shortLabel(raw))} (30 ft, 10-ft radius):</strong> 2d6[${d1}+${d2}] = <span style="color:#fde68a; font-size:1.08rem; font-weight:800;">${d1 + d2} Fire/Radiant Damage</span> + <strong>Blinded 1 turn</strong> (<code>DC 13 DEX/CON Save</code>; lights up blood-mist &amp; invisible foes!).`);
+            const runPhosDigital = () => {
+                const d1 = Math.floor(Math.random() * 6) + 1;
+                const d2 = Math.floor(Math.random() * 6) + 1;
+                adapter.log(`💣 <strong>Threw ${esc(itemDisplayName)} (30 ft, 10-ft radius):</strong> 2d6[${d1}+${d2}] = <span style="color:#fde68a; font-size:1.08rem; font-weight:800;">${d1 + d2} Fire/Radiant Damage</span> + <strong>Blinded 1 turn</strong> (<code>DC 13 DEX/CON Save</code>; lights up blood-mist &amp; invisible foes!).`);
+            };
+            if (isManualDiceMode()) {
+                logManualDamage({
+                    label: `💣 Threw ${itemDisplayName} (30 ft, 10-ft radius)`,
+                    diceParts: [{ expr: '2d6', type: 'Fire/Radiant' }],
+                    dmgType: 'Fire/Radiant',
+                    notes: 'DC 13 DEX/CON Save — Blinded 1 turn & lights up blood-mist / invisible foes!',
+                    onDigitalRoll: runPhosDigital
+                });
+            } else {
+                runPhosDigital();
+            }
         } else if (act.type === 'utilityLog') {
             if (act.actionCost && act.actionCost !== 'none') spendTurnAction(act.actionCost);
-            adapter.log(`✨ <strong>${esc(act.verb || 'Used')} ${esc(shortLabel(raw))}:</strong> ${esc(act.effect || act.label)}`);
+            adapter.log(`✨ <strong>${esc(act.verb || 'Used')} ${esc(itemDisplayName)}:</strong> ${esc(act.effect || act.label)}`);
         }
         applyEquipmentToSheet(true);
     }
@@ -8826,6 +9108,8 @@
             conditions: Array.isArray(hudState.statuses) ? [...hudState.statuses] : [],
             deathSaves: hudState.deathSaves ? { ...hudState.deathSaves } : { succ: 0, fail: 0 },
             showPartyHud: Boolean(hudState.showPartyHud),
+            diceMode: manualDiceMode ? 'manual' : 'digital',
+            rolledInit: latestRolledInit ? { ...latestRolledInit } : null,
             resourcesSummary: resSummary,
             sheetExportStr: sheetStr,
             notesExportStr: notesStr,
@@ -8856,6 +9140,7 @@
                     cn: snap.concentration,
                     st: snap.conditions,
                     ds: snap.deathSaves,
+                    ri: snap.rolledInit ? snap.rolledInit.rolledAt : 0,
                     rs: snap.resourcesSummary
                 });
                 if (!forceNow && fp === lastSyncedFingerprint) return;
@@ -10741,10 +11026,20 @@
             syncBtn.onclick = () => pushSyncedCheckpoint(false);
             syncBtn.innerHTML = `☁️ Sync`;
 
-            // Ultra-clean 3-button right bar: [🛡️ Gear] [🎒 Bag] [☁️ Sync]
+            const diceModeBtn = document.createElement('button');
+            diceModeBtn.type = 'button';
+            diceModeBtn.id = 'rpg-hdr-dicemode-btn';
+            diceModeBtn.className = 'rpg-header-btn rpg-dice-mode-btn';
+            diceModeBtn.setAttribute('aria-pressed', manualDiceMode ? 'true' : 'false');
+            diceModeBtn.title = 'Switch between Digital auto-rolls and Real Dice (Manual Table Mode) for in-person play';
+            diceModeBtn.onclick = () => toggleManualDiceMode();
+            diceModeBtn.innerHTML = manualDiceMode ? `🎲 Real Dice` : `💻 Digital`;
+
+            // Clean right bar: [🎲 Real Dice / 💻 Digital] [🛡️ Gear] [🎒 Bag] [☁️ Sync]
             badgeGroup.insertBefore(syncBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(bpBtn, badgeGroup.firstChild);
             badgeGroup.insertBefore(equipBtn, badgeGroup.firstChild);
+            badgeGroup.insertBefore(diceModeBtn, badgeGroup.firstChild);
         }
 
         // Mount 👥 Live Party Mini-HUD & ⚔️ Fog-of-War Combat Turn Strip right under Header / Incoming Banner
@@ -13563,6 +13858,39 @@
         const spell = hudState.conc || 'Spell';
         const conMod = getLiveConSaveBonus();
         const mode = (typeof window.rollMode === 'string') ? window.rollMode : 'norm';
+        const minDie = (adapter && typeof adapter.getConSaveMinDie === 'function') ? (parseInt(adapter.getConSaveMinDie()) || 1) : 1;
+
+        if (isManualDiceMode()) {
+            const extraCues = [{ text: `🎯 Beat DC ${targetDc} to keep ${spell}`, cls: 'is-save' }];
+            if (minDie > 1) extraCues.push({ text: `🐉 Starry Dragon: Treat natural 1–${minDie - 1} on d20 as ${minDie}!`, cls: 'is-adv' });
+            if (hudState.statuses.includes('blessed')) extraCues.push({ text: '✨ Blessed: Add +1d4!', cls: 'is-adv' });
+            if (hudState.statuses.includes('bane')) extraCues.push({ text: '💀 Bane: Subtract -1d4!', cls: 'is-dis' });
+            consumeTempRollMode();
+            logManualD20({
+                label: `🧠 Concentration CON Save — ${spell}`,
+                mod: conMod,
+                mode,
+                extraCues,
+                suppressPendingFollowup: true,
+                extraButtons: [
+                    {
+                        label: '✅ Held! (Beat DC ' + targetDc + ')',
+                        cls: 'btn-help',
+                        onClick: () => {
+                            if (adapter && adapter.log) adapter.log(`🧠 <strong>Concentration Held (🎲 DC ${targetDc}):</strong> <strong style="color:#4ade80;">${esc(spell)}</strong> remains active!`);
+                        }
+                    },
+                    {
+                        label: '💔 Failed! Drop Concentration',
+                        cls: 'btn-hit',
+                        onClick: () => dropConcentration()
+                    }
+                ],
+                onDigitalRoll: () => runManualDigitalFallback(() => rollConcentrationSave(targetDc))
+            });
+            return;
+        }
+
         let d20 = Math.floor(Math.random() * 20) + 1;
         let modeNote = '';
         if (mode === 'adv' || mode === 'dis') {
@@ -13584,7 +13912,6 @@
             blessNote += ` - Bane(${b})`;
         }
         const total = (() => {
-            const minDie = (adapter && typeof adapter.getConSaveMinDie === 'function') ? (parseInt(adapter.getConSaveMinDie()) || 1) : 1;
             const eff = Math.max(minDie, d20);
             if (minDie > 1 && d20 < minDie) {
                 modeNote += ` [🐉 Dragon: ${d20} ➔ ${eff}]`;
@@ -13714,6 +14041,7 @@
         }
         box.classList.add('is-dying');
         const { succ, fail } = hudState.deathSaves;
+        const locked = succ >= 3 || fail >= 3;
         const statusBanner = succ >= 3
             ? `<span style="color:#4ade80; font-weight:800;">✅ STABILIZED (0 HP)</span>`
             : (fail >= 3
@@ -13727,10 +14055,23 @@
             <button type="button" class="rpg-ds-pip ${fail >= n ? 'is-fail' : ''}" onclick="COS_RPG.setDeathSavePip('fail', ${n})" aria-label="Death Save Failure ${n}" title="Toggle Failure ${n}">${fail >= n ? '✕' : ''}</button>
         `).join('');
 
+        const actionControls = isManualDiceMode()
+            ? `<button type="button" class="rpg-mini-btn" style="min-block-size:24px; padding:2px 8px; font-size:0.66rem;" onclick="COS_RPG.runManualDigitalFallback(() => COS_RPG.rollDeathSave())" ${locked ? 'disabled' : ''}>💻 Roll</button>`
+            : `<button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:24px; padding:2px 9px; font-size:0.7rem;" onclick="COS_RPG.rollDeathSave()" ${locked ? 'disabled' : ''}>🎲 Roll Death Save</button>`;
+
+        const manualGrid = isManualDiceMode() && !locked
+            ? `<div class="rpg-ds-manual-grid" role="group" aria-label="Physical d20 Death Save Result">
+                <button type="button" class="rpg-ds-man-btn is-nat20" onclick="COS_RPG.recordManualDeathSave('nat20')">🌟 Nat 20 (+1 HP!)</button>
+                <button type="button" class="rpg-ds-man-btn is-pass" onclick="COS_RPG.recordManualDeathSave('pass')">✅ 10+ (Pass)</button>
+                <button type="button" class="rpg-ds-man-btn is-fail" onclick="COS_RPG.recordManualDeathSave('fail')">❌ 2–9 (Fail)</button>
+                <button type="button" class="rpg-ds-man-btn is-nat1" onclick="COS_RPG.recordManualDeathSave('nat1')">💀 Nat 1 (2 Fails)</button>
+            </div>`
+            : '';
+
         box.innerHTML = `
             <div class="rpg-ds-row">
                 ${statusBanner}
-                <button type="button" class="rpg-mini-btn btn-danger" style="min-block-size:24px; padding:2px 9px; font-size:0.7rem;" onclick="COS_RPG.rollDeathSave()" ${succ >= 3 || fail >= 3 ? 'disabled' : ''}>🎲 Roll Death Save</button>
+                ${actionControls}
             </div>
             <div class="rpg-ds-row">
                 <span style="color:#86efac;">Successes (${succ}/3)</span>
@@ -13740,15 +14081,55 @@
                 <span style="color:#fca5a5;">Failures (${fail}/3)</span>
                 <div class="rpg-ds-pips">${failPips}</div>
             </div>
+            ${manualGrid}
         `;
     }
 
     function setDeathSavePip(kind, n) {
         const cur = hudState.deathSaves[kind] || 0;
-        hudState.deathSaves[kind] = (cur === n) ? n - 1 : n;
+        hudState.deathSaves[kind] = Math.max(0, Math.min(3, (cur === n) ? n - 1 : n));
         saveHudState();
         renderDeathSavesBox(parseCurrentVitalsFromDom().cur);
         syncHeroStateToFirebase(false);
+    }
+
+    function recordManualDeathSave(outcome) {
+        if (outcome === 'nat20') {
+            hudState.deathSaves = { succ: 0, fail: 0 };
+            saveHudState();
+            if (adapter && adapter.healHP) adapter.healHP(1, false);
+            if (adapter && adapter.log) {
+                adapter.log(`🌟 <strong>NAT 20 DEATH SAVE (🎲 Real Dice)!</strong> You gasp back to consciousness and immediately regain <strong style="color:#4ade80;">1 HP</strong>!`);
+            }
+            return;
+        }
+        if (outcome === 'nat1') {
+            hudState.deathSaves.fail = Math.min(3, (hudState.deathSaves.fail || 0) + 2);
+            saveHudState();
+            renderDeathSavesBox(0);
+            syncHeroStateToFirebase(true);
+            if (adapter && adapter.log) {
+                adapter.log(`💀 <strong>NAT 1 DEATH SAVE (🎲 Real Dice)!</strong> Suffers <strong style="color:#f87171;">2 Failures</strong> (${hudState.deathSaves.fail}/3 Fails, ${hudState.deathSaves.succ}/3 Successes)!${hudState.deathSaves.fail >= 3 ? ' <strong>CHARACTER HAS FALLEN!</strong>' : ''}`);
+            }
+            return;
+        }
+        if (outcome === 'pass') {
+            hudState.deathSaves.succ = Math.min(3, (hudState.deathSaves.succ || 0) + 1);
+            saveHudState();
+            renderDeathSavesBox(0);
+            syncHeroStateToFirebase(true);
+            if (adapter && adapter.log) {
+                adapter.log(`💚 <strong>Death Save SUCCESS (🎲 10+):</strong> ${hudState.deathSaves.succ}/3 Successes, ${hudState.deathSaves.fail}/3 Failures.${hudState.deathSaves.succ >= 3 ? ' <strong style="color:#4ade80;">✅ STABILIZED AT 0 HP!</strong>' : ''}`);
+            }
+            return;
+        }
+        hudState.deathSaves.fail = Math.min(3, (hudState.deathSaves.fail || 0) + 1);
+        saveHudState();
+        renderDeathSavesBox(0);
+        syncHeroStateToFirebase(true);
+        if (adapter && adapter.log) {
+            adapter.log(`🩸 <strong>Death Save FAILURE (🎲 2–9):</strong> ${hudState.deathSaves.fail}/3 Failures, ${hudState.deathSaves.succ}/3 Successes.${hudState.deathSaves.fail >= 3 ? ' <strong style="color:#f87171;">💀 3 FAILURES — CHARACTER HAS FALLEN!</strong>' : ''}`);
+        }
     }
 
     function rollDeathSave() {
@@ -14262,6 +14643,552 @@
         }
     }
 
+    // =========================================================================
+    // 🎲 REAL DICE (MANUAL TABLE MODE) & LIVE INITIATIVE SYNC ENGINE
+    // =========================================================================
+    let manualDiceMode = false;
+    let manualDiceBypassDepth = 0;
+    let latestRolledInit = null;
+    let manualActionSeq = 0;
+    const manualActionRegistry = new Map();
+
+    function getDiceModeStorageKey() {
+        return `cos_dice_mode_${adapter ? adapter.heroId : 'hero'}_v1`;
+    }
+
+    function loadManualDiceMode() {
+        try {
+            manualDiceMode = localStorage.getItem(getDiceModeStorageKey()) === 'manual';
+        } catch (e) {
+            manualDiceMode = false;
+        }
+        if (typeof document !== 'undefined' && document.documentElement) {
+            if (typeof document.documentElement.setAttribute === 'function') {
+                document.documentElement.setAttribute('data-dice-mode', manualDiceMode ? 'manual' : 'digital');
+            }
+        }
+    }
+
+    function isManualDiceMode() {
+        return Boolean(manualDiceMode && manualDiceBypassDepth === 0);
+    }
+
+    function syncDiceModeUI() {
+        if (typeof document === 'undefined') return;
+        if (document.documentElement && typeof document.documentElement.setAttribute === 'function') {
+            document.documentElement.setAttribute('data-dice-mode', manualDiceMode ? 'manual' : 'digital');
+        }
+        const hdrBtn = document.getElementById('rpg-hdr-dicemode-btn');
+        if (hdrBtn) {
+            hdrBtn.setAttribute('aria-pressed', manualDiceMode ? 'true' : 'false');
+            hdrBtn.innerHTML = manualDiceMode ? `🎲 Real Dice` : `💻 Digital`;
+        }
+        const fabBtn = document.getElementById('rpg-fab-dicemode-btn');
+        if (fabBtn) {
+            fabBtn.setAttribute('aria-pressed', manualDiceMode ? 'true' : 'false');
+            fabBtn.textContent = manualDiceMode ? '🎲 Mode: Real Dice' : '💻 Mode: Digital';
+        }
+        const trayBtn = document.getElementById('rpg-tray-dicemode-btn');
+        if (trayBtn) {
+            trayBtn.setAttribute('aria-pressed', manualDiceMode ? 'true' : 'false');
+            trayBtn.textContent = manualDiceMode ? '🎲 Real Dice ON' : '💻 Digital';
+        }
+        const vitals = parseCurrentVitalsFromDom();
+        if (vitals && vitals.cur <= 0) {
+            renderDeathSavesBox(vitals.cur);
+        }
+    }
+
+    function setManualDiceMode(enabled, silent = false) {
+        manualDiceMode = Boolean(enabled);
+        try {
+            localStorage.setItem(getDiceModeStorageKey(), manualDiceMode ? 'manual' : 'digital');
+        } catch (e) {}
+        syncDiceModeUI();
+        if (!silent && adapter && adapter.log) {
+            if (manualDiceMode) {
+                adapter.log(`🎲 <strong>Real Dice Mode ENABLED!</strong> Clicking weapons, spells, skills, potions &amp; initiative now tracks your slots/ammo automatically and shows exact physical dice guides + Brutal Crit totals — with a <code>💻 Roll</code> fallback whenever you need it.`);
+            } else {
+                adapter.log(`💻 <strong>Digital Dice Mode ENABLED!</strong> All attacks, spells, checks &amp; potions will roll automatically on screen.`);
+            }
+        }
+    }
+
+    function toggleManualDiceMode() {
+        setManualDiceMode(!manualDiceMode, false);
+    }
+
+    function runManualDigitalFallback(fn) {
+        if (typeof fn !== 'function') return;
+        manualDiceBypassDepth++;
+        try {
+            return fn();
+        } finally {
+            manualDiceBypassDepth = Math.max(0, manualDiceBypassDepth - 1);
+        }
+    }
+
+    function registerManualAction(fn) {
+        if (typeof fn !== 'function') return 0;
+        const id = ++manualActionSeq;
+        manualActionRegistry.set(id, fn);
+        if (manualActionRegistry.size > 48) {
+            const oldest = manualActionRegistry.keys().next().value;
+            if (oldest !== undefined) manualActionRegistry.delete(oldest);
+        }
+        return id;
+    }
+
+    function runManualAction(id, btnEl) {
+        const fn = manualActionRegistry.get(Number(id));
+        if (typeof fn === 'function') fn(btnEl || null);
+    }
+
+    function parseManualDicePart(expr) {
+        const str = String(expr || '').trim();
+        const m = str.match(/^(\d+)d(\d+)(?:\s*([+-])\s*(\d+))?$/i);
+        if (!m) return { count: 0, sides: 0, flat: 0, max: 0, expr: str };
+        const count = Math.max(1, parseInt(m[1], 10) || 1);
+        const sides = Math.max(2, parseInt(m[2], 10) || 6);
+        const flat = m[4] ? (m[3] === '-' ? -parseInt(m[4], 10) : parseInt(m[4], 10)) : 0;
+        return { count, sides, flat, max: count * sides, expr: `${count}d${sides}` };
+    }
+
+    function diePillClass(sides) {
+        const allowed = [4, 6, 8, 10, 12, 20, 100];
+        return allowed.includes(Number(sides)) ? `die-d${Number(sides)}` : 'die-flat';
+    }
+
+    function formatDicePillsHtml(diceParts = [], flatMod = 0) {
+        const pills = [];
+        let extraFlat = 0;
+        (diceParts || []).forEach(part => {
+            if (!part) return;
+            const rawExpr = typeof part === 'string' ? part : part.expr;
+            const parsed = parseManualDicePart(rawExpr);
+            const subTxt = (typeof part === 'object' && (part.label || part.type)) ? String(part.label || part.type) : '';
+            if (parsed.count > 0) {
+                extraFlat += parsed.flat;
+                pills.push(`<span class="rpg-die-pill ${diePillClass(parsed.sides)}">${esc(parsed.expr)}${subTxt ? ` <span class="rpg-die-sub">${esc(subTxt)}</span>` : ''}</span>`);
+            } else if (rawExpr) {
+                pills.push(`<span class="rpg-die-pill die-flat">${esc(rawExpr)}</span>`);
+            }
+        });
+        const totalFlat = (parseInt(flatMod, 10) || 0) + extraFlat;
+        if (totalFlat !== 0) {
+            const sign = totalFlat > 0 ? `+${totalFlat}` : `${totalFlat}`;
+            pills.push(`<span class="rpg-die-pill die-flat">${sign}</span>`);
+        }
+        return pills.join(' <span style="color:#64748b; font-weight:800;">+</span> ');
+    }
+
+    function computeBrutalCritGuide(diceParts = [], flatMod = 0) {
+        let maxSum = 0;
+        let extraFlat = 0;
+        const maxBits = [];
+        const cleanParts = [];
+        (diceParts || []).forEach(part => {
+            if (!part) return;
+            const rawExpr = typeof part === 'string' ? part : part.expr;
+            const parsed = parseManualDicePart(rawExpr);
+            const subTxt = (typeof part === 'object' && (part.label || part.type)) ? String(part.label || part.type) : '';
+            if (parsed.count > 0) {
+                maxSum += parsed.max;
+                extraFlat += parsed.flat;
+                maxBits.push(`${parsed.max} (${parsed.expr} Max)`);
+                cleanParts.push({ expr: parsed.expr, label: subTxt });
+            }
+        });
+        const totalFlat = (parseInt(flatMod, 10) || 0) + extraFlat;
+        if (totalFlat !== 0) {
+            maxBits.push(`${totalFlat > 0 ? '+' : ''}${totalFlat} Mod`);
+        }
+        return {
+            staticStart: maxSum + totalFlat,
+            breakdownStr: maxBits.join(' + '),
+            diceToRollHtml: formatDicePillsHtml(cleanParts, 0)
+        };
+    }
+
+    function detectGearRollHints(label) {
+        const advReasons = [];
+        const disReasons = [];
+        const s = String(label || '').toLowerCase();
+        const gb = getGearBonuses();
+        if (gb && Array.isArray(gb.skillAdv)) {
+            gb.skillAdv.forEach(entry => {
+                const lowE = String(entry || '').toLowerCase();
+                if (!lowE) return;
+                const skillWord = lowE.split(/[\s:(]/)[0];
+                if (skillWord && skillWord.length >= 4 && s.includes(skillWord)) {
+                    advReasons.push(`Gear Advantage (${entry})`);
+                }
+            });
+        }
+        if (gb && gb.stealthDisadv && s.includes('stealth')) {
+            disReasons.push('Heavy Armor Stealth Disadvantage');
+        }
+        return { advReasons, disReasons };
+    }
+
+    function publishInitiativeRoll(total, source = 'digital') {
+        const val = parseInt(total, 10);
+        if (Number.isNaN(val)) return null;
+        latestRolledInit = {
+            total: val,
+            rolledAt: Date.now(),
+            source: source === 'manual' ? 'manual' : 'digital'
+        };
+        syncHeroStateToFirebase(true);
+        return latestRolledInit;
+    }
+
+    function submitManualInitForm(event, formEl) {
+        if (event && typeof event.preventDefault === 'function') event.preventDefault();
+        if (!formEl) return false;
+        const inp = formEl.querySelector('.rpg-manual-num');
+        const errEl = formEl.querySelector('.rpg-manual-err');
+        const btn = formEl.querySelector('button[type="submit"]');
+        const rawVal = inp ? String(inp.value || '').trim() : '';
+        const parsed = parseInt(rawVal, 10);
+        if (!rawVal || !/^-?\d+$/.test(rawVal) || Number.isNaN(parsed) || parsed < -10 || parsed > 60) {
+            if (inp) {
+                inp.setAttribute('aria-invalid', 'true');
+                inp.focus();
+            }
+            if (errEl) errEl.textContent = 'Enter your final d20 + mod total (e.g. 14).';
+            return false;
+        }
+        if (inp) inp.removeAttribute('aria-invalid');
+        if (errEl) errEl.textContent = '';
+        if (btn) {
+            btn.disabled = true;
+            btn.textContent = `✓ Sent (${parsed})`;
+        }
+        publishInitiativeRoll(parsed, 'manual');
+        if (adapter && adapter.log) {
+            adapter.log(`⚡ <strong>Initiative Locked (${parsed})!</strong> Sent live to the DM's Encounter Board${firebaseReady ? ' via Firebase' : ' (local only — offline)'}!`);
+        }
+        return false;
+    }
+
+    function submitManualHealForm(event, formEl, actionId) {
+        if (event && typeof event.preventDefault === 'function') event.preventDefault();
+        if (!formEl) return false;
+        const inp = formEl.querySelector('.rpg-manual-num');
+        const errEl = formEl.querySelector('.rpg-manual-err');
+        const btn = formEl.querySelector('button[type="submit"]');
+        const rawVal = inp ? String(inp.value || '').trim() : '';
+        const parsed = parseInt(rawVal, 10);
+        if (!rawVal || !/^\d+$/.test(rawVal) || Number.isNaN(parsed) || parsed <= 0 || parsed > 500) {
+            if (inp) {
+                inp.setAttribute('aria-invalid', 'true');
+                inp.focus();
+            }
+            if (errEl) errEl.textContent = 'Enter rolled HP total (1+).';
+            return false;
+        }
+        if (inp) inp.removeAttribute('aria-invalid');
+        if (errEl) errEl.textContent = '';
+        if (btn) {
+            btn.disabled = true;
+            btn.textContent = `✓ Applied (+${parsed})`;
+        }
+        const cb = manualActionRegistry.get(Number(actionId));
+        if (typeof cb === 'function') cb(parsed);
+        return false;
+    }
+
+    function clearManualInputError(inpEl) {
+        if (!inpEl) return;
+        inpEl.removeAttribute('aria-invalid');
+        const errEl = inpEl.closest('form')?.querySelector('.rpg-manual-err');
+        if (errEl) errEl.textContent = '';
+    }
+
+    function buildManualButtonsHtml(btnSpecs = []) {
+        const items = (btnSpecs || []).filter(Boolean).map(spec => {
+            const aid = registerManualAction(spec.onClick);
+            const cls = spec.cls ? `rpg-manual-btn ${spec.cls}` : 'rpg-manual-btn';
+            return `<button type="button" class="${cls}" onclick="COS_RPG.runManualAction(${aid}, this)">${esc(spec.label)}</button>`;
+        });
+        return items.length ? `<div class="rpg-manual-actions">${items.join('')}</div>` : '';
+    }
+
+    function logManualD20(opts = {}) {
+        const label = String(opts.label || 'd20 Roll');
+        const mod = parseInt(opts.mod, 10) || 0;
+        const mode = opts.mode || (typeof window.rollMode === 'string' ? window.rollMode : 'norm');
+        const gearHints = detectGearRollHints(label);
+        const advList = [...(opts.advReasons || []), ...gearHints.advReasons];
+        const disList = [...(opts.disReasons || []), ...gearHints.disReasons];
+        if (mode === 'adv' && !advList.some(x => /adv/i.test(x))) advList.unshift('Advantage Active (Roll 2d20, keep HIGHER)');
+        if (mode === 'dis' && !disList.some(x => /dis/i.test(x))) disList.unshift('Disadvantage Active (Roll 2d20, keep LOWER)');
+
+        const isAdv = advList.length > 0 && disList.length === 0;
+        const isDis = disList.length > 0 && advList.length === 0;
+        const dieExpr = (isAdv || isDis) ? '2d20' : '1d20';
+        const dieSub = isAdv ? 'keep HIGH' : (isDis ? 'keep LOW' : '');
+
+        // Absorb fresh pendingRollFollowup from sheet attacks so Hit & Brutal Crit live inline on the guide card!
+        let capturedFollowup = null;
+        if (!opts.suppressPendingFollowup && pendingRollFollowup && (Date.now() - pendingRollFollowup.ts < 500)) {
+            capturedFollowup = pendingRollFollowup;
+            pendingRollFollowup = null;
+        }
+
+        const cues = [];
+        advList.forEach(r => cues.push(`<span class="rpg-manual-cue is-adv">▲ ${esc(r)}</span>`));
+        disList.forEach(r => cues.push(`<span class="rpg-manual-cue is-dis">▼ ${esc(r)}</span>`));
+        if (advList.length > 0 && disList.length > 0) {
+            cues.push(`<span class="rpg-manual-cue">⚖️ Adv &amp; Dis Cancel ➔ Roll 1d20 Normal</span>`);
+        }
+        if (opts.extraCues && opts.extraCues.length) {
+            opts.extraCues.forEach(c => cues.push(`<span class="rpg-manual-cue ${esc(c.cls || '')}">${esc(c.text)}</span>`));
+        }
+
+        const actionBtns = [];
+        const hitFn = opts.onHit || (capturedFollowup && capturedFollowup.onDamage);
+        const critFn = opts.onCrit || (capturedFollowup && capturedFollowup.onCrit);
+        if (typeof hitFn === 'function') {
+            actionBtns.push({
+                label: opts.hitLabel || (capturedFollowup && capturedFollowup.label ? capturedFollowup.label.replace(/^💥\s*Roll\s*/i, '💥 Hit! ') : '💥 Hit! Show Damage'),
+                cls: 'btn-hit',
+                onClick: hitFn
+            });
+        }
+        if (typeof critFn === 'function') {
+            actionBtns.push({
+                label: opts.critLabel || '🔥 NAT 20! Brutal Crit',
+                cls: 'btn-crit',
+                onClick: critFn
+            });
+        }
+        if (typeof opts.onGraze === 'function') {
+            actionBtns.push({
+                label: opts.grazeLabel || '⚡ Graze (Miss)',
+                onClick: opts.onGraze
+            });
+        }
+        (opts.extraButtons || []).forEach(b => actionBtns.push(b));
+        if (typeof window.rollHelpToken === 'function' && !opts.hideHelpBtn) {
+            const helpEl = typeof document !== 'undefined' ? document.getElementById('help-tokens-disp') : null;
+            const helpRem = helpEl ? parseInt(helpEl.innerText, 10) : 0;
+            if (helpRem > 0) {
+                actionBtns.push({
+                    label: `🤝 +1d6 Help (${helpRem} left)`,
+                    cls: 'btn-help',
+                    onClick: () => window.rollHelpToken()
+                });
+            }
+        }
+        if (typeof opts.onDigitalRoll === 'function') {
+            actionBtns.push({
+                label: '💻 Roll for Me',
+                cls: 'btn-escape',
+                onClick: () => {
+                    if (capturedFollowup) setRollFollowup(capturedFollowup);
+                    opts.onDigitalRoll();
+                }
+            });
+        }
+
+        const initFormHtml = opts.isInitiative
+            ? `<form class="rpg-manual-inline-form" onsubmit="return COS_RPG.submitManualInitForm(event, this)">
+                <label class="rpg-manual-inline-lbl">Final Init Total:</label>
+                <input type="text" inputmode="numeric" pattern="-?\\d+" enterkeyhint="done" class="rpg-manual-num" placeholder="e.g. ${10 + mod}" aria-label="Rolled Initiative Total" oninput="COS_RPG.clearManualInputError(this)">
+                <button type="submit" class="rpg-manual-submit-btn is-init">⚡ Send to DM Board</button>
+                <span class="rpg-manual-err" aria-live="polite"></span>
+            </form>`
+            : '';
+
+        const pillsHtml = formatDicePillsHtml([{ expr: dieExpr, label: dieSub }], mod);
+        const cardTone = opts.isInitiative ? 'tone-init' : '';
+        const badgeTxt = opts.isInitiative ? '⚡ INITIATIVE • REAL DICE' : '🎲 REAL DICE';
+        const html = `
+            <div class="rpg-manual-card ${cardTone}">
+                <div class="rpg-manual-head">
+                    <span class="rpg-manual-title">${esc(label)}</span>
+                    <span class="rpg-manual-badge">${badgeTxt}</span>
+                </div>
+                <div class="rpg-manual-tray-row">
+                    <span class="rpg-manual-tray-lbl">Roll:</span>
+                    ${pillsHtml}
+                </div>
+                ${cues.length ? `<div class="rpg-manual-hints">${cues.join('')}</div>` : ''}
+                ${opts.notes ? `<div class="rpg-manual-notes">${esc(opts.notes)}</div>` : ''}
+                ${initFormHtml}
+                ${buildManualButtonsHtml(actionBtns)}
+            </div>
+        `;
+        if (adapter && adapter.log) adapter.log(html);
+    }
+
+    function logManualDamage(opts = {}) {
+        const label = String(opts.label || 'Damage');
+        const diceParts = Array.isArray(opts.diceParts) ? opts.diceParts : [];
+        const flatMod = parseInt(opts.flatMod, 10) || 0;
+        const dmgType = String(opts.dmgType || '').trim();
+        const isCrit = Boolean(opts.isCrit);
+        const isSavage = Boolean(opts.isSavage);
+
+        let trayHtml = '';
+        if (isCrit) {
+            const crit = computeBrutalCritGuide(diceParts, flatMod);
+            trayHtml = `
+                <div class="rpg-manual-tray-row">
+                    <span class="rpg-manual-tray-lbl">Brutal Crit:</span>
+                    <span class="rpg-die-pill die-static">Start at ${crit.staticStart}</span>
+                    <span style="color:#fde68a; font-weight:800;">+ Roll</span>
+                    ${crit.diceToRollHtml}
+                </div>
+                <div class="rpg-manual-notes" style="color:#fde68a;"><strong>Auto-Base (${crit.staticStart}):</strong> ${esc(crit.breakdownStr)} — roll the physical dice above and add!</div>
+            `;
+        } else {
+            trayHtml = `
+                <div class="rpg-manual-tray-row">
+                    <span class="rpg-manual-tray-lbl">Grab &amp; Roll:</span>
+                    ${formatDicePillsHtml(diceParts, flatMod)}
+                    ${dmgType ? `<span style="color:#fca5a5; font-weight:800; font-size:0.78rem; margin-inline-start:3px;">${esc(dmgType)}</span>` : ''}
+                </div>
+            `;
+        }
+
+        const cues = [];
+        if (isSavage) {
+            cues.push(`<span class="rpg-manual-cue is-savage">⚔️ Savage Attacker: Roll weapon dice TWICE &amp; keep the higher roll!</span>`);
+        }
+        (opts.extraCues || []).forEach(c => cues.push(`<span class="rpg-manual-cue ${esc(c.cls || '')}">${esc(c.text)}</span>`));
+
+        const actionBtns = [...(opts.extraButtons || [])];
+        if (!isCrit && opts.allowCritSwitch !== false && diceParts.length > 0) {
+            actionBtns.push({
+                label: '🔥 Switch to Brutal Crit',
+                cls: 'btn-crit',
+                onClick: () => logManualDamage({ ...opts, isCrit: true })
+            });
+        }
+        if (typeof opts.onDigitalRoll === 'function') {
+            actionBtns.push({
+                label: '💻 Roll for Me',
+                cls: 'btn-escape',
+                onClick: opts.onDigitalRoll
+            });
+        }
+
+        const html = `
+            <div class="rpg-manual-card ${isCrit ? 'tone-crit' : 'tone-dmg'}">
+                <div class="rpg-manual-head">
+                    <span class="rpg-manual-title">${isCrit ? '🔥 BRUTAL CRIT — ' : '💥 '}${esc(label)}${dmgType && isCrit ? ` (${esc(dmgType)})` : ''}</span>
+                    <span class="rpg-manual-badge">${isCrit ? '🔥 NAT 20 CRIT' : '🎲 REAL DICE'}</span>
+                </div>
+                ${trayHtml}
+                ${cues.length ? `<div class="rpg-manual-hints">${cues.join('')}</div>` : ''}
+                ${opts.notes ? `<div class="rpg-manual-notes">${esc(opts.notes)}</div>` : ''}
+                ${opts.htmlNote ? `<div class="rpg-manual-notes">${opts.htmlNote}</div>` : ''}
+                ${buildManualButtonsHtml(actionBtns)}
+            </div>
+        `;
+        if (adapter && adapter.log) adapter.log(html);
+    }
+
+    function logManualHeal(opts = {}) {
+        const label = String(opts.label || 'Healing');
+        const diceParts = Array.isArray(opts.diceParts) ? opts.diceParts : [];
+        const flatMod = parseInt(opts.flatMod, 10) || 0;
+        const healMode = opts.healMode || false; // false | 'temp' | 'overheal'
+        const isTemp = healMode === 'temp';
+        const applyLabel = opts.applyLabel || (isTemp ? '🛡️ Apply Temp HP' : (healMode === 'overheal' ? '✨ Apply Overheal' : '💚 Apply Heal'));
+        const actionId = registerManualAction((val) => {
+            if (typeof opts.onApplyCustom === 'function') {
+                opts.onApplyCustom(val);
+                return;
+            }
+            if (!adapter || typeof adapter.healHP !== 'function') return;
+            const res = adapter.healHP(val, healMode);
+            if (isTemp) {
+                const kept = (res && res.keptExisting) ? ` <small style="color:#94a3b8;">(kept higher existing +${res.prevTemp} Temp HP — 5e non-stacking)</small>` : '';
+                adapter.log(`🛡️ <strong>${esc(label)} (🎲 Real Dice):</strong> Applied <span style="color:#38bdf8; font-weight:800;">+${val} Temp HP</span>!${kept}`);
+            } else if (healMode === 'overheal') {
+                adapter.log(`✨ <strong>${esc(label)} (🎲 Real Dice):</strong> Applied <span style="color:#4ade80; font-weight:800;">+${val} Overheal</span>!`);
+            } else {
+                const capNote = (res && typeof res.healed === 'number' && res.healed < val)
+                    ? ` <small style="color:#94a3b8;">(+${res.healed} restored, capped at Max HP)</small>`
+                    : '';
+                adapter.log(`💚 <strong>${esc(label)} (🎲 Real Dice):</strong> Restored <span style="color:#4ade80; font-weight:800;">+${val} HP</span>${capNote}!`);
+            }
+        });
+
+        const actionBtns = [...(opts.extraButtons || [])];
+        if (typeof opts.onDigitalRoll === 'function') {
+            actionBtns.push({
+                label: '💻 Roll for Me',
+                cls: 'btn-escape',
+                onClick: opts.onDigitalRoll
+            });
+        }
+
+        const html = `
+            <div class="rpg-manual-card ${isTemp ? 'tone-temp' : 'tone-heal'}">
+                <div class="rpg-manual-head">
+                    <span class="rpg-manual-title">${esc(label)}</span>
+                    <span class="rpg-manual-badge">🎲 REAL DICE</span>
+                </div>
+                <div class="rpg-manual-tray-row">
+                    <span class="rpg-manual-tray-lbl">Roll:</span>
+                    ${formatDicePillsHtml(diceParts, flatMod)}
+                </div>
+                ${opts.notes ? `<div class="rpg-manual-notes">${esc(opts.notes)}</div>` : ''}
+                ${opts.extraNote ? `<div class="rpg-manual-notes" style="color:#fde68a;">✨ ${esc(opts.extraNote)}</div>` : ''}
+                <form class="rpg-manual-inline-form" onsubmit="return COS_RPG.submitManualHealForm(event, this, ${actionId})">
+                    <label class="rpg-manual-inline-lbl">Rolled Total:</label>
+                    <input type="text" inputmode="numeric" pattern="\\d+" enterkeyhint="done" class="rpg-manual-num" placeholder="Total" aria-label="Rolled Healing Total" oninput="COS_RPG.clearManualInputError(this)">
+                    <button type="submit" class="rpg-manual-submit-btn ${isTemp ? 'is-temp' : ''}">${esc(applyLabel)}</button>
+                    <span class="rpg-manual-err" aria-live="polite"></span>
+                </form>
+                ${buildManualButtonsHtml(actionBtns)}
+            </div>
+        `;
+        if (adapter && adapter.log) adapter.log(html);
+    }
+
+    function logManualSpell(opts = {}) {
+        const icon = opts.icon || '✨';
+        const title = String(opts.title || 'Spell');
+        const diceParts = Array.isArray(opts.diceParts) ? opts.diceParts : [];
+        const flatMod = parseInt(opts.flatMod, 10) || 0;
+        const dmgType = String(opts.dmgType || '').trim();
+        const cues = [];
+        if (opts.saveText) cues.push(`<span class="rpg-manual-cue is-save">🛡️ ${esc(opts.saveText)}</span>`);
+        if (opts.conc) cues.push(`<span class="rpg-manual-cue">⚡ Concentration Active</span>`);
+        if (opts.rangeText) cues.push(`<span class="rpg-manual-cue">📏 ${esc(opts.rangeText)}</span>`);
+        if (opts.subtitle) cues.push(`<span class="rpg-manual-cue">${esc(opts.subtitle)}</span>`);
+
+        const actionBtns = [...(opts.extraButtons || [])];
+        if (typeof opts.onDigitalRoll === 'function') {
+            actionBtns.push({
+                label: '💻 Roll for Me',
+                cls: 'btn-escape',
+                onClick: opts.onDigitalRoll
+            });
+        }
+
+        const html = `
+            <div class="rpg-manual-card tone-spell">
+                <div class="rpg-manual-head">
+                    <span class="rpg-manual-title">${icon} ${esc(title)}</span>
+                    <span class="rpg-manual-badge">🎲 REAL DICE</span>
+                </div>
+                ${cues.length ? `<div class="rpg-manual-hints">${cues.join('')}</div>` : ''}
+                ${diceParts.length ? `<div class="rpg-manual-tray-row"><span class="rpg-manual-tray-lbl">Roll:</span> ${formatDicePillsHtml(diceParts, flatMod)} ${dmgType ? `<span style="color:#fca5a5; font-weight:800; font-size:0.78rem; margin-inline-start:3px;">${esc(dmgType)}</span>` : ''}</div>` : ''}
+                ${opts.notes ? `<div class="rpg-manual-notes">${esc(opts.notes)}</div>` : ''}
+                ${opts.htmlNote ? `<div class="rpg-manual-notes">${opts.htmlNote}</div>` : ''}
+                ${buildManualButtonsHtml(actionBtns)}
+            </div>
+        `;
+        if (adapter && adapter.log) adapter.log(html);
+    }
+
     // 💥 1-CLICK ATTACK ➔ DAMAGE & BRUTAL CRIT ENGINE INSIDE FLOATING ROLL HUD
     function setRollFollowup(spec) {
         pendingRollFollowup = spec ? { ...spec, ts: Date.now() } : null;
@@ -14279,6 +15206,22 @@
         const diceCount = Math.max(1, parseInt(opts.diceCount) || 1);
         const sides = Math.max(4, parseInt(opts.sides) || 6);
         const flatMod = parseInt(opts.flatMod) || 0;
+        if (isManualDiceMode()) {
+            const diceParts = [{ expr: `${diceCount}d${sides}`, type: opts.dmgType || '' }];
+            (opts.extras || []).forEach(ex => {
+                if (ex && ex.dice) diceParts.push({ expr: ex.dice, type: ex.type || 'Bonus' });
+            });
+            logManualDamage({
+                label: opts.label || 'Attack',
+                diceParts,
+                flatMod,
+                dmgType: opts.dmgType || '',
+                isCrit: true,
+                isSavage: Boolean(opts.isSavage),
+                onDigitalRoll: () => runManualDigitalFallback(() => rollBrutalCrit(opts))
+            });
+            return;
+        }
         const maxBase = diceCount * sides;
         const rollOneSet = () => {
             const arr = [];
@@ -14537,7 +15480,10 @@
                 <div id="rpg-dice-tray" class="rpg-dice-tray" role="region" aria-label="Quick Dice Roller">
                     <div class="rpg-dice-tray-head">
                         <span>🎲 Quick Dice &amp; Modifiers</span>
-                        <button type="button" class="btn-act btn-act-pre" style="padding:1px 6px; font-size:0.66rem;" onclick="COS_RPG.toggleDiceTray(false)" aria-label="Close Dice Tray">✕</button>
+                        <span style="display:inline-flex; align-items:center; gap:5px;">
+                            <button type="button" id="rpg-tray-dicemode-btn" class="rpg-tray-mode-pill" aria-pressed="${manualDiceMode ? 'true' : 'false'}" onclick="COS_RPG.toggleManualDiceMode()" title="Switch sheet between Digital Rolls and Real Physical Dice Mode">${manualDiceMode ? '🎲 Real Dice ON' : '💻 Digital'}</button>
+                            <button type="button" class="btn-act btn-act-pre" style="padding:1px 6px; font-size:0.66rem;" onclick="COS_RPG.toggleDiceTray(false)" aria-label="Close Dice Tray">✕</button>
+                        </span>
                     </div>
                     <div class="rpg-dice-tray-grid">
                         <button type="button" class="dice-btn" onclick="rollCustomDie(20)">d20</button>
@@ -14634,14 +15580,16 @@
                     <button type="button" id="rpg-fab-format-btn" class="rpg-fab-bubble bubble-format" role="menuitem" onclick="COS_RPG.toggleFormatTray(true)" title="Swap sheet display format between PC (Default), Tablet, and Mobile">🖥️ Format: PC</button>
                     <button type="button" id="rpg-fab-theme-btn" class="rpg-fab-bubble bubble-theme" role="menuitem" onclick="COS_RPG.toggleThemeTray(true)" title="Choose Sheet Color Theme (Obsidian, Midnight, Velvet, Pine Forest, Parchment, System)">🎨 Theme</button>
                     <button type="button" id="rpg-fab-dice-btn" class="rpg-fab-bubble bubble-dice" role="menuitem" onclick="COS_RPG.toggleDiceTray(true)" title="Open Quick Dice Roller &amp; Adv/Dis Modifiers">🎲 Quick Dice</button>
+                    <button type="button" id="rpg-fab-dicemode-btn" class="rpg-fab-bubble bubble-dicemode" role="menuitemcheckbox" aria-pressed="${manualDiceMode ? 'true' : 'false'}" onclick="COS_RPG.toggleManualDiceMode()" title="Switch between Digital Rolls and Real Physical Dice Table Mode">${manualDiceMode ? '🎲 Mode: Real Dice' : '💻 Mode: Digital'}</button>
                     <button type="button" id="rpg-fab-trade-btn" class="rpg-fab-bubble bubble-trade" role="menuitem" onclick="COS_RPG.toggleFabMenu(false); COS_RPG.openTradeModal('messages');" title="Open Party Chat, Whispers &amp; Item/Gold Trade">💬 Chat <span id="rpg-fab-trade-badge" class="rpg-badge-count pulse-alert" style="display:none;"></span></button>
                     <button type="button" id="rpg-fab-party-btn" class="rpg-fab-bubble bubble-party" role="menuitemcheckbox" aria-pressed="false" onclick="COS_RPG.togglePartyHud()" title="Toggle Live Teammate HP &amp; Status Row">👥 Live Party</button>
                 </div>
-                <button type="button" id="rpg-dice-fab-btn" class="rpg-dice-fab" aria-expanded="false" aria-controls="rpg-fab-bubbles" onclick="COS_RPG.toggleFabMenu()" title="Open Quick Menu (Live Party, Chat, Dice, Theme, Format, Rules, Reset &amp; Portal)"><span id="rpg-fab-label">✦ Menu</span> <span id="rpg-fab-alert-dot" class="rpg-fab-dot" style="display:none;"></span></button>
+                <button type="button" id="rpg-dice-fab-btn" class="rpg-dice-fab" aria-expanded="false" aria-controls="rpg-fab-bubbles" onclick="COS_RPG.toggleFabMenu()" title="Open Quick Menu (Live Party, Chat, Dice Mode, Theme, Format, Rules, Reset &amp; Portal)"><span id="rpg-fab-label">✦ Menu</span> <span id="rpg-fab-alert-dot" class="rpg-fab-dot" style="display:none;"></span></button>
             `;
             document.body.appendChild(fabWrap);
             syncThemeTrayUI();
             syncFormatTrayUI();
+            syncDiceModeUI();
 
             // Light-dismiss floating speed-dial, theme tray, format tray & dice tray on outside click or Escape
             document.addEventListener('click', (e) => {
@@ -15889,6 +16837,7 @@
 
     function init(sheetAdapter) {
         adapter = sheetAdapter;
+        loadManualDiceMode();
         hydrateCustomAmmoDefs();
         loadCachedMsgThreads();
         initThemeListeners();
@@ -15898,6 +16847,7 @@
         startLiveSheetWatcher();
         initFirebaseSync();
         applyEquipmentToSheet(true);
+        syncDiceModeUI();
         checkUrlClaimParam();
     }
 
@@ -16116,7 +17066,24 @@
         inspectStatus,
         renderStatusStrip,
         setDeathSavePip,
+        recordManualDeathSave,
         rollDeathSave,
+        isManualDiceMode,
+        setManualDiceMode,
+        toggleManualDiceMode,
+        runManualDigitalFallback,
+        registerManualAction,
+        runManualAction,
+        formatDicePillsHtml,
+        computeBrutalCritGuide,
+        logManualD20,
+        logManualDamage,
+        logManualHeal,
+        logManualSpell,
+        publishInitiativeRoll,
+        submitManualInitForm,
+        submitManualHealForm,
+        clearManualInputError,
         applySkillsFilter,
         toggleSkillsTrainedFilter,
         toggleAdvLock,

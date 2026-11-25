@@ -1635,6 +1635,19 @@
     }
 
     function rollChaliceBonusHeal() {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualHeal({
+                label: '🏺 Starry Form — Chalice Bonus Heal (30 ft)',
+                diceParts: [{ expr: '1d8', type: 'Heal' }],
+                flatMod: 3,
+                healMode: false,
+                applyLabel: '💚 Apply to Cael',
+                notes: 'Roll 1d8 + 3 (WIS) for Cael or an injured ally within 30 ft!',
+                onApplyCustom: (val) => applyHealAmount(val, 'Starry Chalice Heal (Real Dice)'),
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaliceBonusHeal())
+            });
+            return;
+        }
         const d8 = Math.floor(Math.random() * 8) + 1;
         const total = d8 + 3;
         logRoll(`🏺 <strong>Starry Form — Chalice Bonus Heal (30 ft):</strong> [1d8(${d8}) + 3] = <span style="color:#4ade80; font-size:1.08rem; font-weight:800;">+${total} HP</span> restored to Cael or an injured ally within 30 ft! <button class="btn-act btn-act-heal" style="margin-left:6px; font-size:0.7rem;" onclick="applyHealAmount(${total}, 'Starry Chalice Heal')">💚 Apply to Cael</button>`);
@@ -1787,6 +1800,18 @@
     }
 
     function rollCatPurrHeal() {
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualHeal({
+                label: '🐾 Black Cat Purr-Heal (Temp HP)',
+                diceParts: [{ expr: '1d4', type: 'Temp HP' }],
+                flatMod: 1,
+                healMode: 'temp',
+                applyLabel: '🛡️ Apply to Cael',
+                notes: 'Roll 1d4 + 1 Temp HP for Cael or an ally!',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollCatPurrHeal())
+            });
+            return;
+        }
         const d4 = Math.floor(Math.random() * 4) + 1;
         const tot = d4 + 1;
         logRoll(`🐾 <strong>Black Cat Purr-Heal:</strong> Cael brushes warmly against an ally's ankle—a painless silver pulse grants <span style="color:#38bdf8; font-weight:800;">+${tot} Temporary HP</span>!`);
@@ -1954,8 +1979,19 @@
         if (window.COS_RPG && typeof COS_RPG.setConcentration === 'function') {
             COS_RPG.setConcentration('Guidance');
         }
-        const d4 = Math.floor(Math.random() * 4) + 1;
         pendingActionForArcher = true;
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualSpell({
+                icon: '🌿',
+                title: 'Guidance (Touch • Conc 1m)',
+                conc: true,
+                diceParts: [{ expr: '1d4', type: 'Ability Check Bonus' }],
+                notes: "Cael places a warm starlit hand on an ally's shoulder — roll 1d4 and add to one ability check!",
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => castGuidanceCantrip())
+            });
+            return;
+        }
+        const d4 = Math.floor(Math.random() * 4) + 1;
         logRoll(`🌿 <strong>Guidance (Touch • Conc 1m):</strong> Cael places a warm starlit hand on an ally's shoulder — add <span style="color:#4ade80; font-weight:800; font-size:1.05rem;">+${d4}</span> (1d4) to one ability check!`);
     }
 
@@ -2012,6 +2048,29 @@
     // ==========================================
     function rollHealingSpell(name, dicePerLvl, sides, slotLvl, triggerChaliceNote) {
         const diceCount = dicePerLvl * slotLvl;
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const parts = [{ expr: `${diceCount}d${sides}`, type: name }];
+            let flat = 3;
+            let notes = `Spell Slot Lvl ${slotLvl} spent! Roll ${diceCount}d${sides} + 3 (WIS) for your target.`;
+            if (activeStarryForm === 'chalice') {
+                parts.push({ expr: '1d8', type: '🏺 Chalice Bonus' });
+                flat += 3;
+                notes = `🏺 Starry Chalice active! Base spell is ${diceCount}d${sides}+3, plus Chalice bonus 1d8+3 (same target or split to another ally within 30 ft)!`;
+            } else if (triggerChaliceNote) {
+                notes += ' (Activate 🏺 Chalice to auto-add +1d8+3!)';
+            }
+            COS_RPG.logManualHeal({
+                label: `💚 ${name} (Lvl ${slotLvl}${activeStarryForm === 'chalice' ? ' + 🏺 Chalice' : ''})`,
+                diceParts: parts,
+                flatMod: flat,
+                healMode: false,
+                applyLabel: '💚 Apply to Cael',
+                notes,
+                onApplyCustom: (val) => applyHealAmount(val, `${name} (Real Dice)`),
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollHealingSpell(name, dicePerLvl, sides, slotLvl, triggerChaliceNote))
+            });
+            return;
+        }
         let rolls = [];
         let sum = 0;
         for (let i = 0; i < diceCount; i++) {
@@ -2051,6 +2110,20 @@
 
     function castMoonbeamSpell(slotLvl) {
         const diceCount = slotLvl;
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualSpell({
+                icon: '🌙',
+                title: `Moonbeam (Lvl ${slotLvl} • 5-ft Radius Cylinder)`,
+                saveText: `Tell DM: DC ${getSpellSaveDC()} CON Save (Shapechangers Disadv & revert!)`,
+                rangeText: '120 ft',
+                conc: true,
+                diceParts: [{ expr: `${diceCount}d10`, type: 'Radiant' }],
+                dmgType: 'Radiant (half on save)',
+                notes: 'Targets entering or starting turn inside the beam make the CON Save!',
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => castMoonbeamSpell(slotLvl))
+            });
+            return;
+        }
         let rolls = [];
         let sum = 0;
         for (let i = 0; i < diceCount; i++) {
@@ -2689,6 +2762,19 @@
         }
         helpTokens--;
         updateHelpDisplay();
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualSpell({
+                icon: '🤝',
+                title: `Help Token Spent (${helpTokens}/2 left)`,
+                diceParts: [{ expr: '1d6', type: 'Ally Bonus' }],
+                notes: 'Hand a physical d6 to an ally within 30 ft to add to their check or attack!',
+                onDigitalRoll: () => {
+                    const d6 = Math.floor(Math.random() * 6) + 1;
+                    logRoll(`🤝 <strong>Cael spent a Help Token (+1d6 within 30ft):</strong> Rolled <span style="color:#67e8f9; font-weight:700;">+${d6}</span> to ally's check! (${helpTokens}/2 left)`);
+                }
+            });
+            return;
+        }
         const d6 = Math.floor(Math.random() * 6) + 1;
         logRoll(`🤝 <strong>Cael spent a Help Token (+1d6 within 30ft):</strong> Rolled <span style="color:#67e8f9; font-weight:700;">+${d6}</span> to ally's check! (${helpTokens}/2 left)`);
     }
@@ -3107,10 +3193,25 @@
             || /\b(constitution|con)\s+(saving throw|save|check|concentration)\b/i.test(s);
     }
 
-    function rollD20(label, mod) {
+    function rollD20(label, mod, opts = {}) {
         const modInput = parseInt(document.getElementById('dice-mod')?.value) || 0;
         const totalMod = mod + modInput;
         const dragonActive = isDragonProtectedRoll(label);
+
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const extraCues = [];
+            if (dragonActive) extraCues.push({ text: '🐉 Starry Dragon Active: Treat any natural 1–9 on d20 as a 10!', cls: 'is-adv' });
+            COS_RPG.logManualD20({
+                label,
+                mod: totalMod,
+                mode: rollMode,
+                isInitiative: Boolean(opts && opts.isInitiative),
+                extraCues,
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollD20(label, mod, opts))
+            });
+            return null;
+        }
+
         if (rollMode !== 'norm') {
             const r1 = Math.floor(Math.random() * 20) + 1;
             const r2 = Math.floor(Math.random() * 20) + 1;
@@ -3123,7 +3224,10 @@
             if (chosen === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT!</span>";
             if (chosen === 1 && !dragonActive) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
             logRoll(msg);
-            return;
+            if (opts && opts.isInitiative && window.COS_RPG && COS_RPG.publishInitiativeRoll) {
+                COS_RPG.publishInitiativeRoll(total, 'digital');
+            }
+            return total;
         }
         const d20 = Math.floor(Math.random() * 20) + 1;
         const eff = dragonActive ? Math.max(10, d20) : d20;
@@ -3134,12 +3238,16 @@
         if (d20 === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT!</span>";
         if (d20 === 1 && !dragonActive) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
         logRoll(msg);
+        if (opts && opts.isInitiative && window.COS_RPG && COS_RPG.publishInitiativeRoll) {
+            COS_RPG.publishInitiativeRoll(total, 'digital');
+        }
+        return total;
     }
 
     function rollCaelInitiative() {
         const gb = window.__caelGearCache?.initBonus || 0;
         const tot = 2 + gb;
-        rollD20(`Initiative Roll (DEX +2${gb ? ` + Gear ${gb}` : ''})`, tot);
+        rollD20(`Initiative Roll (DEX +2${gb ? ` + Gear ${gb}` : ''})`, tot, { isInitiative: true });
     }
 
     function rollConSave() {
@@ -3164,6 +3272,22 @@
 
     function rollFormulaDamage(label, sides, bonus, type, diceCount = 1, weaponId = null) {
         const wMods = getCaelWpnMods(weaponId);
+        const flatBonus = bonus + (wMods.dmgBonus || 0);
+        const finalType = (wMods.isSilvered && !String(type).toLowerCase().includes('silver')) ? `Silvered ${type}` : type;
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const parts = [{ expr: `${diceCount}d${sides}`, type: finalType }];
+            if (wMods && Array.isArray(wMods.extras)) {
+                wMods.extras.forEach(ex => { if (ex.dice) parts.push({ expr: ex.dice, type: ex.type || 'Bonus' }); });
+            }
+            COS_RPG.logManualDamage({
+                label,
+                diceParts: parts,
+                flatMod: flatBonus,
+                dmgType: finalType,
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollFormulaDamage(label, sides, bonus, type, diceCount, weaponId))
+            });
+            return;
+        }
         let total = 0;
         let rolls = [];
         for (let i = 0; i < diceCount; i++) {
@@ -3171,7 +3295,6 @@
             rolls.push(r);
             total += r;
         }
-        const flatBonus = bonus + (wMods.dmgBonus || 0);
         total += flatBonus;
         const extraParts = [];
         if (wMods && Array.isArray(wMods.extras)) {
@@ -3184,7 +3307,6 @@
             });
         }
         const bonusStr = flatBonus > 0 ? ` + ${flatBonus}` : '';
-        const finalType = (wMods.isSilvered && !String(type).toLowerCase().includes('silver')) ? `Silvered ${type}` : type;
         logRoll(`💥 <strong>${label}:</strong> [${rolls.join('+')}]${bonusStr}${extraParts.join('')} = <span style="font-size:1.05rem; color:#f87171; font-weight:700;">${total}</span> ${finalType} Damage`);
     }
 

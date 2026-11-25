@@ -4710,7 +4710,7 @@ const DM_COMBAT_CONDITIONS = [
 
 function resolveAllyEncounterVitals(entry) {
     const preset = entry && entry.allyKey ? PARTY_INIT_PRESETS.find(p => p.allyKey === entry.allyKey) : null;
-    const isHero = Boolean(entry && (entry.allyKey === 'piper' || entry.allyKey === 'jacomir' || entry.allyKey === 'yvaine'));
+    const isHero = Boolean(entry && (entry.allyKey === 'piper' || entry.allyKey === 'jacomir' || entry.allyKey === 'yvaine' || entry.allyKey === 'cael'));
     if (isHero) {
         const st = (typeof dmLiveHeroes !== 'undefined' && dmLiveHeroes[entry.allyKey]) ||
                    (typeof dmSyncedCheckpoints !== 'undefined' && dmSyncedCheckpoints[entry.allyKey]) || null;
@@ -19394,6 +19394,90 @@ function initDmFirebaseSync() {
         }
     });
 
+    // Live Player Initiative ➔ DM Encounter Board Auto-Sync (Manual & Digital Rolls!)
+    const DM_SEEN_HERO_INITS_KEY = 'cos_dm_seen_hero_inits_v1';
+    let dmSeenHeroInitAt = (() => {
+        try {
+            const raw = localStorage.getItem(DM_SEEN_HERO_INITS_KEY);
+            const parsed = raw ? JSON.parse(raw) : {};
+            return (parsed && typeof parsed === 'object') ? parsed : {};
+        } catch (e) { return {}; }
+    })();
+
+    function dmSyncIncomingHeroInitiatives(heroesMap) {
+        if (!heroesMap || typeof heroesMap !== 'object') return [];
+        const now = Date.now();
+        const updates = [];
+        let seenDirty = false;
+        Object.entries(heroesMap).forEach(([hid, st]) => {
+            const ri = st && st.rolledInit;
+            if (!ri || typeof ri.total !== 'number' || !ri.rolledAt) return;
+            const prevSeen = Number(dmSeenHeroInitAt[hid] || 0);
+            if (ri.rolledAt <= prevSeen) return;
+            // On cold first-ever sync, silently skip stale rolls older than 2 minutes so old sessions never stomp the board
+            if (!prevSeen && (now - ri.rolledAt) > 120000) {
+                dmSeenHeroInitAt[hid] = ri.rolledAt;
+                seenDirty = true;
+                return;
+            }
+            dmSeenHeroInitAt[hid] = ri.rolledAt;
+            seenDirty = true;
+
+            const preset = PARTY_INIT_PRESETS.find(p => p.allyKey === hid);
+            const heroLabel = (preset && preset.name) || `${st.heroEmoji || '🛡️'} ${st.heroName || hid}`;
+            let entry = encounterEntries.find(e => e.kind === 'ally' && e.allyKey === hid);
+            let autoAdded = false;
+            if (!entry) {
+                let maxAllyNum = 0;
+                encounterEntries.forEach(e => {
+                    if (e.kind === 'ally' && e.num > maxAllyNum) maxAllyNum = e.num;
+                });
+                const num = maxAllyNum + 1;
+                entry = {
+                    uid: `ally_${hid}_${Date.now().toString(36)}_${num}`,
+                    kind: 'ally',
+                    key: hid,
+                    allyKey: hid,
+                    num,
+                    customLabel: heroLabel,
+                    variantTag: '',
+                    init: ri.total,
+                    initBonus: preset ? preset.initBonus : 0,
+                    visibleToPlayers: true,
+                    masked: false,
+                    playerAlias: '',
+                    hideTier: false,
+                    conditions: [],
+                    targets: []
+                };
+                encounterEntries.push(entry);
+                autoAdded = true;
+            } else {
+                entry.init = ri.total;
+            }
+            updates.push({ hid, label: heroLabel, total: ri.total, source: ri.source || 'digital', autoAdded });
+        });
+
+        if (seenDirty) {
+            try { localStorage.setItem(DM_SEEN_HERO_INITS_KEY, JSON.stringify(dmSeenHeroInitAt)); } catch (e) {}
+        }
+        if (updates.length > 0) {
+            if (encounterBoardCollapsed) encounterBoardCollapsed = false;
+            sortEncounterBoard(false);
+            saveEncounterBoard();
+            renderEncounterBoard();
+            const summaryTxt = updates.map(u => `<strong>${escapeEncounterHtml(u.label)}</strong>: <strong style="color:#fde68a;">${u.total}</strong> (${u.source === 'manual' ? '🎲 Real Dice' : '💻 Digital'}${u.autoAdded ? ', auto-added' : ''})`).join(' • ');
+            if (typeof logRoll === 'function') {
+                logRoll(`⚡ <strong>Live Party Initiative Synced:</strong> ${summaryTxt} — Encounter Board sorted!`);
+            }
+            if (typeof dmShowQuickToast === 'function') {
+                dmShowQuickToast(`⚡ Initiative synced: ${summaryTxt}`);
+            }
+        }
+        return updates;
+    }
+    window.dmSyncIncomingHeroInitiatives = dmSyncIncomingHeroInitiatives;
+
     // 3. Live sync party hero states, Synced Checkpoints, AND DM Encounter Board / Enemy HPs
     rtdb.ref(`campaigns/${room}/heroes`).on('value', snap => {
         const val = snap.val() || {};
@@ -19408,6 +19492,7 @@ function initDmFirebaseSync() {
         });
         dmUpdateSection0LiveVitals();
         updateEncounterBoardLivePartyVitals();
+        dmSyncIncomingHeroInitiatives(dmLiveHeroes);
         if (activeModalKind === 'dm_drop' && dmDropActiveTab === 'party') {
             renderDmDropModalBody();
         }
