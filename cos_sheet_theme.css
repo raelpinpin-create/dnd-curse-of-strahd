@@ -2753,6 +2753,9 @@
 
     /* Right-Column Segmented View Tabs */
     .rpg-view-tabs {
+        display: flex;
+        align-items: center;
+        justify-content: safe center;
         background: var(--bg-well);
         border: 1px solid var(--card-border);
         border-radius: 10px;
@@ -2761,7 +2764,10 @@
         margin-bottom: 0;
     }
     .rpg-view-tab {
-        flex: 1;
+        flex: 1 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         border-radius: 7px;
         border: 1px solid transparent;

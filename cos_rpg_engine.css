@@ -1895,6 +1895,7 @@ header.header-banner .pill-badge-group {
 .rpg-view-tabs {
     display: flex;
     align-items: center;
+    justify-content: safe center;
     gap: 5px;
     margin-bottom: 10px;
     overflow-x: auto;
@@ -1930,6 +1931,8 @@ header.header-banner .pill-badge-group {
 .rpg-view-tab {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     gap: 5px;
 }
 .rpg-tab-alert-badge {
