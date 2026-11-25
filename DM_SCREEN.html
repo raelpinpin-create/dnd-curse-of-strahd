@@ -3497,13 +3497,15 @@
             <button type="button" id="btn-loot-upgrades" class="btn-loot-cat" style="border-color:rgba(251,191,36,0.55); color:#fde68a;" data-lootcat="upgrades" onclick="filterLootCategory('upgrades', this)">⬆️ Upgrades</button>
             <button type="button" id="btn-lcat-caster" class="btn-loot-cat" data-lootcat="caster" onclick="filterLootCategory('caster', this)">🔮 Caster &amp; Relics</button>
             <button type="button" id="btn-lcat-scrolls" class="btn-loot-cat" style="border-color:rgba(250,204,21,0.55); color:#fef08a;" data-lootcat="scrolls" onclick="filterLootCategory('scrolls', this)">📜 Spell Scrolls</button>
-            <button type="button" id="btn-lcat-armor" class="btn-loot-cat" data-lootcat="armor" onclick="filterLootCategory('armor', this)">🛡️ Armor &amp; Gear</button>
+            <button type="button" id="btn-lcat-armor" class="btn-loot-cat" style="border-color:rgba(56,189,248,0.55); color:#7dd3fc;" data-lootcat="armor" onclick="filterLootCategory('armor', this)">🛡️ Armor</button>
+            <button type="button" id="btn-lcat-gear" class="btn-loot-cat" data-lootcat="gear" onclick="filterLootCategory('gear', this)">🎒 Gear &amp; Rings</button>
             <button type="button" id="btn-lcat-consumables" class="btn-loot-cat" data-lootcat="consumables" onclick="filterLootCategory('consumables', this)">🧪 Potions &amp; Food</button>
             <button type="button" id="btn-loot-craftables" class="btn-loot-cat" style="border-color:rgba(192,132,252,0.55); color:#e9d5ff;" data-lootcat="craftables" onclick="filterLootCategory('craftables', this)">⚗️ Craft &amp; Recipes</button>
             <button type="button" id="btn-loot-materials" class="btn-loot-cat" style="border-color:rgba(52,211,153,0.55); color:#6ee7b7;" data-lootcat="materials" onclick="filterLootCategory('materials', this)">🌿 Materials</button>
             <button type="button" id="btn-lcat-quest" class="btn-loot-cat" data-lootcat="quest" onclick="filterLootCategory('quest', this)">🗝️ Quest &amp; Loot</button>
         </div>
         <div class="loot-rarity-bar" id="loot-rarity-bar" role="group" aria-label="Filter loot by power scale and rarity"></div>
+        <div class="loot-slot-bar" id="loot-armor-slot-bar" role="group" aria-label="Filter armor by slot or synergy set"></div>
         <div class="loot-slot-bar" id="loot-slot-bar">
             <span style="font-size:0.72rem; color:#7dd3fc; font-weight:700; margin-right:2px;">3. Weapon Slot:</span>
             <button type="button" class="btn-loot-slot active" data-lootslot="all" onclick="filterLootSlot('all', this)">All Slots</button>
@@ -23435,6 +23437,53 @@ function isSpellScrollItem(it, itemKey = '') {
     return (/^scroll of\b/i.test(nm) || /\bspell scroll\b/i.test(rar)) && !it.isRecipeWriting && it.cat !== 'quest';
 }
 
+const ARMOR_SLOT_FILTERS = [
+    { id: 'all',    label: 'All Armor' },
+    { id: 'body',   label: '🛡️ Body & Robes' },
+    { id: 'head',   label: '🪖 Head & Helms' },
+    { id: 'cape',   label: '🧥 Cloaks & Mantles' },
+    { id: 'legs',   label: '👖 Legs & Greaves' },
+    { id: 'feet',   label: '🥾 Boots & Feet' },
+    { id: 'shield', label: '🛡️ Shields & Bracers' },
+    { id: 'sets',   label: '⚡ Armor Sets' }
+];
+
+function getArmorSlotType(it, itemKey = '') {
+    if (!it) return null;
+    if (it.cat === 'material' || it.cat === 'weapon' || it.cat === 'heal' || it.cat === 'buff' || it.cat === 'food') return null;
+    if (it.isUpgradeItem || it.isAwakeningItem || it.isAttachment || it.isRecipeWriting) return null;
+    if (isSpellScrollItem(it, itemKey)) return null;
+    const k = String(itemKey || '').toLowerCase();
+    if (['werewolf_den_hoard', 'ravenloft_bride_regalia', 'shield_guardian_amulet', 'ring_mind_shielding', 'holy_symbol', 'icon_ravenloft'].includes(k)) return null;
+    if (it.customMeta) {
+        const cm = it.customMeta;
+        if (cm.isShield || cm.unarmoredAcBonus) return 'shield';
+        if (cm.category === 'armor' && Array.isArray(cm.slots) && cm.slots.length > 0) {
+            const s = cm.slots[0];
+            if (['head', 'cape', 'body', 'legs', 'feet'].includes(s)) return s;
+            if (s === 'offHand') return 'shield';
+        }
+    }
+    const nm = String(it.name || '').toLowerCase();
+    const rar = String(it.rarity || '').toLowerCase();
+    if (/\b(bracers of defense|shield)\b/.test(nm) && !nm.includes('shield guardian') && !nm.includes('mind shielding')) return 'shield';
+    if (/\b(helm|hood|circlet|crown|hat of disguise|sallet|barbute)\b/.test(nm) || rar.includes('headgear') || rar.includes('head slot')) return 'head';
+    if (/\b(cloak|mantle|shawl|pelt)\b/.test(nm) || rar.includes('cape slot')) return 'cape';
+    if (/\b(greaves|trousers|leggings|cuisses)\b/.test(nm) || rar.includes('leg armor') || rar.includes('legs slot')) return 'legs';
+    if (/\b(boots|sabatons|slippers)\b/.test(nm) || rar.includes('footwear') || rar.includes('feet slot')) return 'feet';
+    if (/\b(plate|leather|chain shirt|breastplate|half plate|splint|studded coat|elven chain|robe)\b/.test(nm) || rar.includes('body slot') || rar.includes('heavy armor') || rar.includes('medium armor') || rar.includes('light armor')) return 'body';
+    return null;
+}
+
+function isArmorSetPiece(it, itemKey = '') {
+    if (!it) return false;
+    const k = String(itemKey || '').toLowerCase();
+    if (['silvered_dragonplate', 'shield_plus2', 'kolyan_black_robe'].includes(k)) return true;
+    const rar = String(it.rarity || '').toLowerCase();
+    const mech = String(it.mechanics || '').toLowerCase();
+    return rar.includes('set piece') || mech.includes('set synergy') || mech.includes('set piece');
+}
+
 function getLootViewBucket(it, itemKey = '') {
     if (it.cat === 'material') return 'materials';
     if (it.isUpgradeItem || it.isAwakeningItem) return 'upgrades';
@@ -23442,9 +23491,12 @@ function getLootViewBucket(it, itemKey = '') {
     if (it.isRecipeWriting) return 'craftables';
     if (isSpellScrollItem(it, itemKey)) return 'scrolls';
     if (it.cat === 'weapon') return 'weapons';
-    if (it.cat === 'caster') return 'caster';
-    if (it.cat === 'armor') return 'armor';
     if (it.cat === 'heal' || it.cat === 'buff' || it.cat === 'food') return 'consumables';
+    if (getArmorSlotType(it, itemKey)) return 'armor';
+    const k = String(itemKey || '').toLowerCase();
+    if (['werewolf_den_hoard', 'ravenloft_bride_regalia'].includes(k)) return 'quest';
+    if (it.cat === 'armor' || ['ring_mind_shielding', 'ludmilla_spell_ring', 'shield_guardian_amulet', 'consecrated_prayer_medallion'].includes(k)) return 'gear';
+    if (it.cat === 'caster') return 'caster';
     return 'quest';
 }
 
@@ -23742,6 +23794,7 @@ let activeLootLoc = 'all';
 let activeLootCat = 'overview';
 let activeLootRarity = 'all';
 let activeLootSlot = 'all';
+let activeLootArmorSlot = 'all';
 let activeLootScene = null;
 let activeLootRollTier = 'all';
 let rolledSceneFinds = null;
@@ -24438,7 +24491,8 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         { id: 'upgrades', btnId: 'btn-loot-upgrades', shortLabel: '⬆️ Upgrades', title: '⬆️ DM Remote Gear Upgrades & Cursed Signature Awakenings', cls: 'loot-header-quest' },
         { id: 'caster', btnId: 'btn-lcat-caster', shortLabel: '🔮 Caster & Relics', title: '🔮 Arcane Staves, Spellbooks, Foci & Relics', cls: 'loot-header-caster' },
         { id: 'scrolls', btnId: 'btn-lcat-scrolls', shortLabel: '📜 Spell Scrolls', title: '📜 Buyable & Dungeon Spell Scrolls (Auto-Cast on Quick-Belt!)', cls: 'loot-header-caster' },
-        { id: 'armor', btnId: 'btn-lcat-armor', shortLabel: '🛡️ Armor & Gear', title: '🛡️ Armor, Shields, Set Regalia, Rings, Cloaks & Camp Gear', cls: 'loot-header-armor' },
+        { id: 'armor', btnId: 'btn-lcat-armor', shortLabel: '🛡️ Armor', title: '🛡️ Wearable Armor, Shields, Bracers, Helms, Cloaks, Legs, Boots & Set Regalia', cls: 'loot-header-armor' },
+        { id: 'gear', btnId: 'btn-lcat-gear', shortLabel: '🎒 Gear & Rings', title: '🎒 Wondrous Gear, Rings, Amulets, Camp Kits & Utility Relics', cls: 'loot-header-armor' },
         { id: 'consumables', btnId: 'btn-lcat-consumables', shortLabel: '🧪 Potions & Food', title: '🧪 Potions, Food & Drink, Coating Vials, Bombs & Boons', cls: 'loot-header-heal' },
         { id: 'craftables', btnId: 'btn-loot-craftables', shortLabel: '⚗️ Craft & Recipes', title: '📜 Physical Crafting Recipe Writings & Formula Scrolls', cls: 'loot-header-quest' },
         { id: 'materials', btnId: 'btn-loot-materials', shortLabel: '🌿 Materials', title: '🌿 All Barovian Crafting Materials & Wilderness Forage (Where Found & Recipes)', cls: 'loot-header-material' },
@@ -24454,8 +24508,13 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
     const matGlobalPre = allEntries.filter(([_, it]) => it.cat === 'material');
     const scrollsGlobalPre = allEntries.filter(([k, it]) => isSpellScrollItem(it, k));
     const upgradesGlobalPre = allEntries.filter(([k, it]) => (it.isUpgradeItem || it.isAwakeningItem));
+    const filterArmorBySlot = (entries, slotId) => {
+        if (!slotId || slotId === 'all') return entries;
+        if (slotId === 'sets') return entries.filter(([k, it]) => isArmorSetPiece(it, k));
+        return entries.filter(([k, it]) => getArmorSlotType(it, k) === slotId);
+    };
 
-    // Live Rarity Filter Bar counts (strictly scoped to current Act/Location/Scene AND active Category!)
+    // Live Rarity Filter Bar counts (strictly scoped to current Act/Location/Scene AND active Category + Slot!)
     const rarityBarEl = document.getElementById('loot-rarity-bar');
     if (rarityBarEl) {
         let baseForRarity = scopeEntries;
@@ -24472,6 +24531,8 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
                 baseForRarity = activeLootSlot !== 'all'
                     ? byBucketPre.attachments.filter(([_, it]) => it.attachSlot === activeLootSlot)
                     : byBucketPre.attachments;
+            } else if (renderCat === 'armor') {
+                baseForRarity = filterArmorBySlot(byBucketPre.armor, activeLootArmorSlot);
             } else if (byBucketPre[renderCat]) {
                 baseForRarity = byBucketPre[renderCat];
             }
@@ -24530,11 +24591,26 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         }
     });
 
-    // Show/hide Attachment Slot sub-filter bar cleanly
+    // Show/hide Attachment Slot & Armor Slot sub-filter bars cleanly!
     const slotBar = document.getElementById('loot-slot-bar');
     if (slotBar) {
         if (renderCat === 'attachments') slotBar.classList.add('is-open');
         else slotBar.classList.remove('is-open');
+    }
+    const armorSlotBar = document.getElementById('loot-armor-slot-bar');
+    if (armorSlotBar) {
+        if (renderCat === 'armor') {
+            armorSlotBar.classList.add('is-open');
+            const armorPoolForCounts = byBucket.armor || [];
+            armorSlotBar.innerHTML = `<span style="font-size:0.72rem; color:#7dd3fc; font-weight:700; margin-right:2px;">🛡️ Armor Slot:</span>` +
+                ARMOR_SLOT_FILTERS.map(sf => {
+                    const on = activeLootArmorSlot === sf.id;
+                    const cnt = filterArmorBySlot(armorPoolForCounts, sf.id).length;
+                    return `<button type="button" class="btn-loot-slot ${on ? 'active' : ''}" data-armorslot="${sf.id}" aria-pressed="${on ? 'true' : 'false'}" onclick="filterLootArmorSlot('${sf.id}')">${sf.label} (${cnt})</button>`;
+                }).join('');
+        } else {
+            armorSlotBar.classList.remove('is-open');
+        }
     }
 
     const actOrder = ['Act I', 'Act II', 'Act III', 'Act IV'];
@@ -24610,6 +24686,9 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
             }
             if (c.id === 'attachments' && renderCat === 'attachments' && activeLootSlot && activeLootSlot !== 'all') {
                 items = items.filter(([_, it]) => it.attachSlot === activeLootSlot);
+            }
+            if (c.id === 'armor' && renderCat === 'armor' && activeLootArmorSlot && activeLootArmorSlot !== 'all') {
+                items = filterArmorBySlot(items, activeLootArmorSlot);
             }
             if (items.length === 0) return '';
 
@@ -24747,6 +24826,7 @@ function filterLootScene(sceneId) {
     if (activeLootScene) {
         activeLootCat = 'overview';
         activeLootSlot = 'all';
+        activeLootArmorSlot = 'all';
     }
     syncLootBarButtonsUI();
     renderLootVault(activeLootTag);
@@ -24765,6 +24845,7 @@ function filterLootCategory(catId, btnEl) {
     sectionSearchExpanded.loot = false;
     activeLootCat = catId || 'overview';
     if (activeLootCat !== 'attachments') activeLootSlot = 'all';
+    if (activeLootCat !== 'armor') activeLootArmorSlot = 'all';
     syncLootBarButtonsUI();
     renderLootVault(activeLootTag);
     if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
@@ -24781,6 +24862,13 @@ function filterLootRarity(rarityId) {
 
 function filterLootSlot(slotId, btnEl) {
     activeLootSlot = slotId || 'all';
+    syncLootBarButtonsUI();
+    renderLootVault(activeLootTag);
+    if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
+}
+
+function filterLootArmorSlot(slotId) {
+    activeLootArmorSlot = (slotId && activeLootArmorSlot === slotId && slotId !== 'all') ? 'all' : (slotId || 'all');
     syncLootBarButtonsUI();
     renderLootVault(activeLootTag);
     if (hasActiveQueryFor('loot')) syncSectionVisibility('loot', true);
