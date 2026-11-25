@@ -29,7 +29,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v12">
+    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261125v2">
     <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v12">
     <style>
         @layer legacy {
@@ -1080,7 +1080,10 @@
                         <div style="font-size:0.74rem; color:var(--text-dim);">
                             <strong style="color:var(--text-light);">Bonus Action (10 mins):</strong> Choose a constellation to illuminate your form (Bright Light 10 ft, Dim +10 ft).
                         </div>
-                        <button type="button" id="btn-end-starry" class="btn-act btn-act-pre" onclick="deactivateStarryForm()" style="display:none; font-size:0.68rem; color:#fca5a5;">✕ End Starry Form</button>
+                        <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                            <button type="button" id="btn-banner-archer-shot" class="btn-roll-action btn-roll-wild" data-rpg-turn-slot="bonus" onclick="rollStarryArcherAttack()" style="display:none; font-size:0.71rem;">Fire Archer Arrow (BA • +5, 1d8+3 Rad)</button>
+                            <button type="button" id="btn-end-starry" class="btn-act btn-act-pre" onclick="deactivateStarryForm()" style="display:none; font-size:0.68rem; color:#fca5a5;">✕ End Starry Form</button>
+                        </div>
                     </div>
 
                     <div class="action-grid-3col">
@@ -1146,7 +1149,7 @@
                                 <button type="button" class="btn-act btn-act-pre" onclick="modStarMapBolts(1)" style="min-block-size:20px; padding:0px 5px; font-size:0.66rem;">+</button>
                             </div>
                         </div>
-                        <button type="button" id="btn-starmap-bolt" class="btn-roll-action btn-roll-wild" data-rpg-turn-slot="action" onclick="castFreeStarMapGuidingBolt()">⚡ Free Guiding Bolt (+5, 4d6 Rad)</button>
+                        <button type="button" id="btn-starmap-bolt" class="btn-roll-action btn-roll-wild" data-rpg-turn-slot="action" onclick="castFreeStarMapGuidingBolt()">Free Guiding Bolt (+5, 4d6 Rad)</button>
                     </div>
                 </div>
 
@@ -1171,8 +1174,8 @@
                             </div>
                             <div class="action-desc"><strong id="wisp-hit-txt">+5 to Hit</strong>, <strong id="wisp-dmg-txt">1d8</strong> Radiant. Target emits dim light &amp; cannot benefit from Invisible!</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollStarryWispAttack()" id="btn-wisp-atk">✨ Attack (+5)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="rollStarryWispDamage()" id="btn-wisp-dmg">💥 1d8 Radiant</button>
+                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollStarryWispAttack()" id="btn-wisp-atk">Attack (+5)</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollStarryWispDamage()" id="btn-wisp-dmg">1d8 Radiant</button>
                             </div>
                         </div>
 
@@ -1189,8 +1192,8 @@
                             </div>
                             <div class="action-desc">Bonus Action torchlight (10m) or hurl 60 ft (<strong id="flame-hit-txt">+5 to Hit</strong>, <strong id="flame-dmg-txt">1d8</strong> Fire damage).</div>
                             <div class="action-btn-row">
-                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollProduceFlameAttack()" id="btn-flame-atk">🔥 Hurl (+5)</button>
-                                <button type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="rollProduceFlameDamage()" id="btn-flame-dmg">💥 1d8 Fire</button>
+                                <button type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollProduceFlameAttack()" id="btn-flame-atk">Hurl (+5)</button>
+                                <button type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollProduceFlameDamage()" id="btn-flame-dmg">1d8 Fire</button>
                             </div>
                         </div>
 
@@ -1242,9 +1245,9 @@
                             <div class="action-desc" id="staff-desc-txt"><strong>+2 to Hit</strong>, <strong>1d8 Bludgeoning (2H)</strong>. Toggle <em>Shillelagh</em> for <strong>+5 Hit, 1d8+3 Force/Bludge</strong>!</div>
                             <div id="cael-mods-staff"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-staff" type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollCaelStaffAttack()">🪄 Attack (+2)</button>
-                                <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="rollCaelStaffDamage('2h')">💥 2H (1d8)</button>
-                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" style="display:none;" onclick="rollCaelStaffDamage('1h')">💥 1H (1d6)</button>
+                                <button id="btn-atk-staff" type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollCaelStaffAttack()">Attack (+2)</button>
+                                <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollCaelStaffDamage('2h')">2H (1d8)</button>
+                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" style="display:none;" onclick="rollCaelStaffDamage('1h')">1H (1d6)</button>
                             </div>
                         </div>
 
@@ -1262,8 +1265,8 @@
                             <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong>. Bypasses nonmagical Vampire/Werewolf resistances!</div>
                             <div id="cael-mods-dagger"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollCaelWeaponAttack('Silvered Hunting Dagger', 2, 'dagger')">🗡️ Attack (+4)</button>
-                                <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="rollFormulaDamage('Silvered Hunting Dagger', 4, 2, 'Silvered Piercing', 1, 'dagger')">💥 1d4+2 Silver</button>
+                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" data-rpg-turn-slot="action" onclick="rollCaelWeaponAttack('Silvered Hunting Dagger', 2, 'dagger')">Attack (+4)</button>
+                                <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="rollFormulaDamage('Silvered Hunting Dagger', 4, 2, 'Silvered Piercing', 1, 'dagger')">1d4+2 Silver</button>
                             </div>
                         </div>
                     </div>
@@ -1454,7 +1457,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261123v1"></script>
+<script src="cos_rpg_engine.js?v=20261125v2"></script>
 <script>
     // ==========================================
     // 🌟 CAELUM JUDE ("CAEL") MASTER STATE VARIABLES
@@ -1549,17 +1552,22 @@
 
         const banner = document.getElementById('starry-status-banner');
         const endBtn = document.getElementById('btn-end-starry');
+        const archerBannerBtn = document.getElementById('btn-banner-archer-shot');
         if (banner) {
             const textEl = banner.querySelector('div');
             if (activeStarryForm === 'chalice') {
                 if (textEl) textEl.innerHTML = `<strong style="color:#4ade80;">🏺 Starry Chalice Active:</strong> <em>Cure Wounds</em> &amp; <em>Healing Word</em> automatically calculate and include <strong>+1d8 + 3 HP</strong> Chalice healing!`;
             } else if (activeStarryForm === 'archer') {
-                if (textEl) textEl.innerHTML = `<strong style="color:#38bdf8;">🏹 Starry Archer Active:</strong> Every Action roll automatically unlocks an <strong>[🏹 Archer Bonus Action]</strong> button (+${getSpellAttackMod()} hit, <strong>1d8 + 3 Radiant</strong>) on the result!`;
+                if (textEl) textEl.innerHTML = `<strong style="color:#38bdf8;">🏹 Starry Archer Active:</strong> Fire your <strong>Bonus Action</strong> luminous arrow (+${getSpellAttackMod()} hit, <strong>1d8 + 3 Radiant</strong>) here or directly from any Damage roll!`;
             } else if (activeStarryForm === 'dragon') {
                 if (textEl) textEl.innerHTML = `<strong style="color:#c084fc;">🐉 Starry Dragon Active:</strong> Any d20 roll of <strong>9 or lower</strong> on INT/WIS checks or CON saves/checks automatically counts as a <strong>10</strong>!`;
             } else {
                 if (textEl) textEl.innerHTML = `<strong style="color:var(--text-light);">Bonus Action (10 mins):</strong> Choose a constellation to illuminate your form (Bright Light 10 ft, Dim +10 ft).`;
             }
+        }
+        if (archerBannerBtn) {
+            archerBannerBtn.style.display = activeStarryForm === 'archer' ? 'inline-flex' : 'none';
+            archerBannerBtn.innerText = `Fire Archer Arrow (BA • +${getSpellAttackMod()}, 1d8+3 Rad)`;
         }
         if (endBtn) endBtn.style.display = activeStarryForm !== 'none' ? 'inline-flex' : 'none';
         if (window.COS_RPG && typeof COS_RPG.syncCombatActionLocks === 'function') COS_RPG.syncCombatActionLocks();
@@ -1583,12 +1591,12 @@
 
         const labels = {
             chalice: `🏺 <strong>Starry Form — Chalice Activated!</strong> Slotted healing spells now automatically roll and include <strong>+1d8 + 3 HP</strong> Chalice bonus healing! (${starryFormUses}/${maxStarryFormUses} uses left)`,
-            archer: `🏹 <strong>Starry Form — Archer Activated!</strong> Luminous constellation bow ready! Every Action you take will offer <strong>[🏹 Archer Bonus Action]</strong> in the result (${starryFormUses}/${maxStarryFormUses} uses left).`,
+            archer: `🏹 <strong>Starry Form — Archer Activated!</strong> Luminous constellation bow ready! Fire your initial arrow now, or use the Bonus Action button on the Archer banner &amp; Damage results (${starryFormUses}/${maxStarryFormUses} uses left).`,
             dragon: `🐉 <strong>Starry Form — Dragon Activated!</strong> All INT/WIS checks and CON saves/checks automatically treat d20 rolls of <strong>9 or lower as 10</strong>! (${starryFormUses}/${maxStarryFormUses} uses left)`
         };
         if (form === 'archer' && window.COS_RPG) {
             COS_RPG.setRollFollowup({
-                label: `🏹 Fire Initial Archer Arrow (+${getSpellAttackMod()}, 1d8+3 Rad)`,
+                label: `Fire Initial Archer Arrow (+${getSpellAttackMod()}, 1d8+3 Rad)`,
                 onDamage: () => rollStarryArcherAttack()
             });
         }
@@ -1657,8 +1665,9 @@
         const atkMod = getSpellAttackMod();
         if (window.COS_RPG) {
             COS_RPG.setRollFollowup({
-                label: '💥 Roll Archer Damage (1d8+3 Radiant)',
-                critLabel: '🔥 ROLL BRUTAL CRIT! (8 + 1d8+3 Radiant)',
+                label: 'Roll Archer Damage (1d8+3 Radiant)',
+                critLabel: 'Brutal Crit (8 + 1d8+3 Radiant)',
+                attackKind: 'spell',
                 suppressOnHitAddons: true,
                 onDamage: () => rollStarryArcherDamage(),
                 onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Starry Archer Arrow', diceCount: 1, sides: 8, flatMod: 3, dmgType: 'Radiant', allowOnHitAddons: false })
@@ -1668,7 +1677,7 @@
     }
 
     function rollStarryArcherDamage() {
-        rollFormulaDamage('Starry Form — Archer Arrow (60 ft)', 8, 3, 'Radiant', 1);
+        rollFormulaDamage('Starry Form — Archer Arrow (60 ft)', 8, 3, 'Radiant', 1, null, false);
     }
 
     function updateStarMapUI() {
@@ -1683,7 +1692,7 @@
             el.innerHTML = pips;
         }
         const boltBtn = document.getElementById('btn-starmap-bolt');
-        if (boltBtn) boltBtn.innerText = `⚡ Free Guiding Bolt (+${getSpellAttackMod()}, 4d6 Rad)`;
+        if (boltBtn) boltBtn.innerText = `Free Guiding Bolt (+${getSpellAttackMod()}, 4d6 Rad)`;
     }
 
     function modStarMapBolts(delta) {
@@ -1701,14 +1710,15 @@
         updateStarMapUI();
         if (window.COS_RPG) {
             COS_RPG.setRollFollowup({
-                label: '💥 Roll Guiding Bolt Damage (4d6 Radiant)',
-                critLabel: '🔥 ROLL BRUTAL CRIT! (24 + 4d6 Radiant)',
+                label: 'Roll Guiding Bolt (4d6 Radiant)',
+                critLabel: 'Brutal Crit (24 + 4d6 Radiant)',
+                attackKind: 'spell',
                 onDamage: () => rollGuidingBoltDamage(1),
-                onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Guiding Bolt', diceCount: 4, sides: 6, flatMod: 0, dmgType: 'Radiant' })
+                onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Guiding Bolt', diceCount: 4, sides: 6, flatMod: 0, dmgType: 'Radiant', attackKind: 'spell' })
             });
         }
         pendingActionForArcher = true;
-        rollD20(`⚡ Star Map Guiding Bolt (Free Cast • ${freeGuidingBolts}/${getMaxFreeBolts()} left • Next Atk Adv!)`, getSpellAttackMod());
+        rollD20(`Star Map Guiding Bolt (Free Cast • ${freeGuidingBolts}/${getMaxFreeBolts()} left • Next Atk Adv)`, getSpellAttackMod());
     }
 
     function updateWildShapeUI() {
@@ -1876,9 +1886,9 @@
             if (staffTag) staffTag.innerText = 'Shillelagh Active (WIS) • Force or Bludgeoning';
             if (staffPill) { staffPill.innerText = `WIS +${3 + pb + (sMods.atkBonus || 0)}`; staffPill.className = 'pill-badge pill-emerald'; }
             if (staffDesc) staffDesc.innerHTML = `<strong style="color:#4ade80;">+${3 + pb + (sMods.atkBonus || 0)} to Hit</strong>, <strong>1d8 + ${3 + (sMods.dmgBonus || 0)} Force or Bludgeoning</strong> (uses WIS)!`;
-            if (btnAtk) btnAtk.innerText = `🪄 Attack (+${3 + pb + (sMods.atkBonus || 0)})`;
-            if (btn2h) btn2h.innerText = `💥 1d8+${3 + (sMods.dmgBonus || 0)}${sEx} Force`;
-            if (btn1h) btn1h.innerText = `💥 1d8+${3 + (sMods.dmgBonus || 0)}${sEx} Force`;
+            if (btnAtk) btnAtk.innerText = `Attack (+${3 + pb + (sMods.atkBonus || 0)})`;
+            if (btn2h) btn2h.innerText = `1d8+${3 + (sMods.dmgBonus || 0)}${sEx} Force`;
+            if (btn1h) btn1h.innerText = `1d8+${3 + (sMods.dmgBonus || 0)}${sEx} Force`;
         } else {
             if (card) card.classList.remove('active-buff');
             if (badge) { badge.innerText = 'OFF'; badge.className = 'pill-badge pill-neutral'; }
@@ -1889,10 +1899,10 @@
             if (staffTag) staffTag.innerText = 'Versatile (1H/2H) • Druidic Focus';
             if (staffPill) { staffPill.innerText = 'FOCUS'; staffPill.className = 'pill-badge pill-emerald'; }
             if (staffDesc) staffDesc.innerHTML = `<strong>+${pb + (sMods.atkBonus || 0)} to Hit</strong>, <strong>1d8 Bludgeoning (2H)</strong>. Toggle <em>Shillelagh</em> for <strong>+${3 + pb} Hit, 1d8+3 Force/Bludge</strong>!`;
-            if (btnAtk) btnAtk.innerText = `🪄 Attack (+${pb + (sMods.atkBonus || 0)})`;
+            if (btnAtk) btnAtk.innerText = `Attack (+${pb + (sMods.atkBonus || 0)})`;
             const flat = sMods.dmgBonus ? `+${sMods.dmgBonus}` : '';
-            if (btn2h) btn2h.innerText = `💥 2H (1d8${flat}${sEx})`;
-            if (btn1h) btn1h.innerText = `💥 1H (1d6${flat}${sEx})`;
+            if (btn2h) btn2h.innerText = `2H (1d8${flat}${sEx})`;
+            if (btn1h) btn1h.innerText = `1H (1d6${flat}${sEx})`;
         }
         if (window.COS_RPG && typeof COS_RPG.syncCombatActionLocks === 'function') COS_RPG.syncCombatActionLocks();
     }
@@ -1909,22 +1919,22 @@
         const wispHit = document.getElementById('wisp-hit-txt');
         const wispBtn = document.getElementById('btn-wisp-atk');
         if (wispHit) wispHit.innerText = `+${atk} to Hit`;
-        if (wispBtn) wispBtn.innerText = `✨ Attack (+${atk})`;
+        if (wispBtn) wispBtn.innerText = `Attack (+${atk})`;
 
         const flameHit = document.getElementById('flame-hit-txt');
         const flameBtn = document.getElementById('btn-flame-atk');
         if (flameHit) flameHit.innerText = `+${atk} to Hit`;
-        if (flameBtn) flameBtn.innerText = `🔥 Hurl (+${atk})`;
+        if (flameBtn) flameBtn.innerText = `Hurl (+${atk})`;
 
         const wispDmg = document.getElementById('wisp-dmg-txt');
         const wispDmgBtn = document.getElementById('btn-wisp-dmg');
         if (wispDmg) wispDmg.innerText = `${diceCount}d8`;
-        if (wispDmgBtn) wispDmgBtn.innerText = `💥 ${diceCount}d8 Radiant`;
+        if (wispDmgBtn) wispDmgBtn.innerText = `${diceCount}d8 Radiant`;
 
         const flameDmg = document.getElementById('flame-dmg-txt');
         const flameDmgBtn = document.getElementById('btn-flame-dmg');
         if (flameDmg) flameDmg.innerText = `${diceCount}d8`;
-        if (flameDmgBtn) flameDmgBtn.innerText = `💥 ${diceCount}d8 Fire`;
+        if (flameDmgBtn) flameDmgBtn.innerText = `${diceCount}d8 Fire`;
 
         updateStarMapUI();
         updateStarryFormUI();
@@ -1942,33 +1952,35 @@
         const diceCount = characterLevel >= 5 ? 2 : 1;
         if (window.COS_RPG) {
             COS_RPG.setRollFollowup({
-                label: `💥 Roll Starry Wisp (${diceCount}d8 Radiant)`,
-                critLabel: `🔥 ROLL BRUTAL CRIT! (${diceCount * 8} + ${diceCount}d8 Radiant)`,
+                label: `Roll Starry Wisp (${diceCount}d8 Radiant)`,
+                critLabel: `Brutal Crit (${diceCount * 8} + ${diceCount}d8 Radiant)`,
+                attackKind: 'spell',
                 onDamage: () => rollStarryWispDamage(),
-                onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Starry Wisp', diceCount, sides: 8, flatMod: 0, dmgType: 'Radiant' })
+                onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Starry Wisp', diceCount, sides: 8, flatMod: 0, dmgType: 'Radiant', attackKind: 'spell' })
             });
         }
         pendingActionForArcher = true;
-        rollD20('✨ Starry Wisp (60 ft • Outlines Invisible)', getSpellAttackMod());
+        rollD20('Starry Wisp (60 ft • Outlines Invisible)', getSpellAttackMod());
     }
 
     function rollStarryWispDamage() {
         const diceCount = characterLevel >= 5 ? 2 : 1;
-        rollFormulaDamage(`Starry Wisp (${diceCount}d8 • Target Emits Dim Light!)`, 8, 0, 'Radiant', diceCount);
+        rollFormulaDamage(`Starry Wisp (${diceCount}d8 • Target Emits Dim Light)`, 8, 0, 'Radiant', diceCount);
     }
 
     function rollProduceFlameAttack() {
         const diceCount = characterLevel >= 5 ? 2 : 1;
         if (window.COS_RPG) {
             COS_RPG.setRollFollowup({
-                label: `💥 Roll Produce Flame (${diceCount}d8 Fire)`,
-                critLabel: `🔥 ROLL BRUTAL CRIT! (${diceCount * 8} + ${diceCount}d8 Fire)`,
+                label: `Roll Produce Flame (${diceCount}d8 Fire)`,
+                critLabel: `Brutal Crit (${diceCount * 8} + ${diceCount}d8 Fire)`,
+                attackKind: 'spell',
                 onDamage: () => rollProduceFlameDamage(),
-                onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Produce Flame', diceCount, sides: 8, flatMod: 0, dmgType: 'Fire' })
+                onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Produce Flame', diceCount, sides: 8, flatMod: 0, dmgType: 'Fire', attackKind: 'spell' })
             });
         }
         pendingActionForArcher = true;
-        rollD20('🔥 Produce Flame (60 ft)', getSpellAttackMod());
+        rollD20('Produce Flame (60 ft)', getSpellAttackMod());
     }
 
     function rollProduceFlameDamage() {
@@ -2012,14 +2024,15 @@
         const dType = isShillelaghActive ? 'Force / Bludgeoning' : (wMods.isMagical ? 'Magical Bludgeoning' : 'Bludgeoning');
         if (window.COS_RPG) {
             COS_RPG.setRollFollowup({
-                label: `💥 Roll Staff Damage (1d${sides}${flatMod ? '+' + flatMod : ''})`,
-                critLabel: `🔥 ROLL BRUTAL CRIT! (${sides} + 1d${sides}${flatMod ? '+' + flatMod : ''})`,
+                label: `Roll Staff Damage (1d${sides}${flatMod ? '+' + flatMod : ''})`,
+                critLabel: `Brutal Crit (${sides} + 1d${sides}${flatMod ? '+' + flatMod : ''})`,
+                attackKind: 'melee',
                 onDamage: () => rollCaelStaffDamage(is2H ? '2h' : '1h'),
-                onCrit: () => COS_RPG.rollBrutalCrit({ label: isShillelaghActive ? 'Shillelagh Staff' : 'Yew Quarterstaff', diceCount: 1, sides, flatMod, dmgType: dType, extras: wMods.extras || [] })
+                onCrit: () => COS_RPG.rollBrutalCrit({ label: isShillelaghActive ? 'Shillelagh Staff' : 'Yew Quarterstaff', diceCount: 1, sides, flatMod, dmgType: dType, extras: wMods.extras || [], attackKind: 'melee' })
             });
         }
         pendingActionForArcher = true;
-        rollD20(`${isShillelaghActive ? '🪄 Shillelagh Staff' : '🪄 Yew Quarterstaff'}`, statMod + getProfBonus() + (wMods.atkBonus || 0));
+        rollD20(`${isShillelaghActive ? 'Shillelagh Staff' : 'Yew Quarterstaff'}`, statMod + getProfBonus() + (wMods.atkBonus || 0));
     }
 
     function rollCaelStaffDamage(grip) {
@@ -2034,10 +2047,11 @@
         if (window.COS_RPG && weaponId === 'dagger') {
             const flatMod = 2 + (wMods.dmgBonus || 0);
             COS_RPG.setRollFollowup({
-                label: `💥 Roll Silver Dagger (1d4+${flatMod})`,
-                critLabel: `🔥 ROLL BRUTAL CRIT! (4 + 1d4+${flatMod})`,
+                label: `Roll Silver Dagger (1d4+${flatMod})`,
+                critLabel: `Brutal Crit (4 + 1d4+${flatMod})`,
+                attackKind: 'melee',
                 onDamage: () => rollFormulaDamage(label, 4, 2, 'Silvered Piercing', 1, 'dagger'),
-                onCrit: () => COS_RPG.rollBrutalCrit({ label, diceCount: 1, sides: 4, flatMod, dmgType: 'Silvered Piercing', extras: wMods.extras || [] })
+                onCrit: () => COS_RPG.rollBrutalCrit({ label, diceCount: 1, sides: 4, flatMod, dmgType: 'Silvered Piercing', extras: wMods.extras || [], attackKind: 'melee' })
             });
         }
         pendingActionForArcher = true;
@@ -2093,20 +2107,21 @@
 
     function rollGuidingBoltDamage(slotLvl = 1) {
         const diceCount = 4 + Math.max(0, slotLvl - 1);
-        rollFormulaDamage(`⚡ Guiding Bolt (Lvl ${slotLvl} • Next Atk Advantage!)`, 6, 0, 'Radiant', diceCount);
+        rollFormulaDamage(`Guiding Bolt (Lvl ${slotLvl} • Next Atk Advantage)`, 6, 0, 'Radiant', diceCount);
     }
 
     function castGuidingBoltSlot(slotLvl) {
         if (window.COS_RPG) {
             COS_RPG.setRollFollowup({
-                label: `💥 Roll Guiding Bolt (${3 + slotLvl}d6 Radiant)`,
-                critLabel: `🔥 ROLL BRUTAL CRIT! (${(3 + slotLvl) * 6} + ${3 + slotLvl}d6 Radiant)`,
+                label: `Roll Guiding Bolt (${3 + slotLvl}d6 Radiant)`,
+                critLabel: `Brutal Crit (${(3 + slotLvl) * 6} + ${3 + slotLvl}d6 Radiant)`,
+                attackKind: 'spell',
                 onDamage: () => rollGuidingBoltDamage(slotLvl),
-                onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Guiding Bolt', diceCount: 3 + slotLvl, sides: 6, flatMod: 0, dmgType: 'Radiant' })
+                onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Guiding Bolt', diceCount: 3 + slotLvl, sides: 6, flatMod: 0, dmgType: 'Radiant', attackKind: 'spell' })
             });
         }
         pendingActionForArcher = true;
-        rollD20(`⚡ Guiding Bolt (Lvl ${slotLvl} Slot • Next Atk Adv!)`, getSpellAttackMod());
+        rollD20(`Guiding Bolt (Lvl ${slotLvl} Slot • Next Atk Adv)`, getSpellAttackMod());
     }
 
     function castMoonbeamSpell(slotLvl) {
@@ -2202,7 +2217,7 @@
             hasLevelSelect: true,
             levelOptions: { 1: "Lvl 1 (4d6)", 2: "Lvl 2 (5d6)", 3: "Lvl 3 (6d6)" },
             buttons: [
-                { label: "⚡ Cast w/ Slot", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castGuidingBoltSlot(lvl) }
+                { label: "Cast w/ Slot", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castGuidingBoltSlot(lvl) }
             ]
         },
         {
@@ -2271,8 +2286,8 @@
             hasLevelSelect: true,
             levelOptions: { 2: "Lvl 2 (2d10 Rad)", 3: "Lvl 3 (3d10 Rad)" },
             buttons: [
-                { label: "🌙 Cast Moonbeam", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castMoonbeamSpell(lvl) },
-                { label: "💥 Move / Turn Dmg", class: "btn-roll-action btn-roll-dmg", costSlot: false, onClick: (lvl) => { pendingActionForArcher = true; rollFormulaDamage(`Moonbeam (Lvl ${lvl})`, 10, 0, 'Radiant', lvl); } }
+                { label: "Cast Moonbeam", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castMoonbeamSpell(lvl) },
+                { label: "Move / Turn Dmg", class: "btn-roll-action btn-roll-dmg", costSlot: false, onClick: (lvl) => { pendingActionForArcher = true; rollFormulaDamage(`Moonbeam (Lvl ${lvl})`, 10, 0, 'Radiant', lvl); } }
             ]
         },
         {
@@ -2333,9 +2348,9 @@
             fullRules: "A constellation of an archer appears on you. When you activate this form, and as a <strong>Bonus Action</strong> on your subsequent turns while it lasts, you can make a ranged spell attack (<strong>+5 to hit</strong>), hurling a luminous arrow that targets one creature within 60 feet of you. On a hit, the attack deals <strong>1d8 + 3 Radiant damage</strong>.",
             flavor: "Constellation light snaps taut across Cael's shoulder, loosing bolts of cold silver starlight.",
             modalButtons: [
-                { label: "🏹 Activate Archer (BA)", class: "btn-roll-action", onClick: () => { closeSpellModal(); activateStarryForm('archer'); } },
-                { label: "🏹 Archer Attack (+5)", class: "btn-roll-action btn-roll-wild", onClick: () => { closeSpellModal(); rollStarryArcherAttack(); } },
-                { label: "💥 Archer Dmg (1d8+3)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollStarryArcherDamage(); } }
+                { label: "Activate Archer (BA)", class: "btn-roll-action", onClick: () => { closeSpellModal(); activateStarryForm('archer'); } },
+                { label: "Archer Attack (+5)", class: "btn-roll-action btn-roll-wild", onClick: () => { closeSpellModal(); rollStarryArcherAttack(); } },
+                { label: "Archer Dmg (1d8+3)", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollStarryArcherDamage(); } }
             ]
         },
         "starry_dragon": {
@@ -2406,8 +2421,8 @@
             upcastNotes: "Damage increases by 1d8 at Level 5 (2d8), Level 11 (3d8), and Level 17 (4d8).",
             flavor: "A silver firefly of starlight streaks out and pins invisible stalkers in pale radiance.",
             modalButtons: [
-                { label: "✨ Attack (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollStarryWispAttack(); } },
-                { label: "💥 1d8 Radiant", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollStarryWispDamage(); } }
+                { label: "Attack (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollStarryWispAttack(); } },
+                { label: "1d8 Radiant", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollStarryWispDamage(); } }
             ]
         },
         "produce_flame": {
@@ -2425,8 +2440,8 @@
             upcastNotes: "Damage increases by 1d8 at Level 5 (2d8), Level 11 (3d8), and Level 17 (4d8).",
             flavor: "Warm amber fire dances across Cael's palm, pushing back the freezing Svalich fog.",
             modalButtons: [
-                { label: "🔥 Hurl Flame (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollProduceFlameAttack(); } },
-                { label: "💥 1d8 Fire", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollProduceFlameDamage(); } }
+                { label: "Hurl Flame (+5)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollProduceFlameAttack(); } },
+                { label: "1d8 Fire", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollProduceFlameDamage(); } }
             ]
         },
         "guidance": {
@@ -2478,8 +2493,8 @@
             fullRules: "• <strong>Versatile:</strong> 1d6 Bludgeoning (1H) or 1d8 Bludgeoning (2H).<br>• <strong>2024 Shillelagh Synergy:</strong> Bonus Action turns it into a <strong>+5 to Hit, 1d8 + 3 Force or Bludgeoning</strong> melee weapon.<br>• <strong>Druidic Focus:</strong> Channels all Druid spells requiring non-costly material components.",
             flavor: "Carved pale yew notched with star-signs and wrapped in worn leather cord.",
             modalButtons: [
-                { label: "🪄 Staff Attack", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollCaelStaffAttack(); } },
-                { label: "💥 Staff Damage", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollCaelStaffDamage('2h'); } }
+                { label: "Staff Attack", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollCaelStaffAttack(); } },
+                { label: "Staff Damage", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollCaelStaffDamage('2h'); } }
             ]
         },
         "dagger_cael": {
@@ -2496,8 +2511,8 @@
             fullRules: "• <strong>Finesse &amp; Light:</strong> Uses Dexterity (+2).<br>• <strong>Silvered Edge:</strong> Bypasses nonmagical B/P/S resistances and immunities of Werewolves, Vampire Spawn, and Night Hags.",
             flavor: "A clean silvered belt-knife Cael keeps tucked beside his healer's pouch.",
             modalButtons: [
-                { label: "🗡️ Dagger Atk (+4)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollCaelWeaponAttack('Silvered Hunting Dagger', 2, 'dagger'); } },
-                { label: "💥 1d4+2 Silver", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage('Silvered Hunting Dagger', 4, 2, 'Silvered Piercing', 1, 'dagger'); } }
+                { label: "Dagger Atk (+4)", class: "btn-roll-action", onClick: () => { closeSpellModal(); rollCaelWeaponAttack('Silvered Hunting Dagger', 2, 'dagger'); } },
+                { label: "1d4+2 Silver", class: "btn-roll-action btn-roll-dmg", onClick: () => { closeSpellModal(); rollFormulaDamage('Silvered Hunting Dagger', 4, 2, 'Silvered Piercing', 1, 'dagger'); } }
             ]
         },
         "backstory_full": {
@@ -3271,10 +3286,11 @@
         rollD20(label, bonus);
     }
 
-    function rollFormulaDamage(label, sides, bonus, type, diceCount = 1, weaponId = null) {
+    function rollFormulaDamage(label, sides, bonus, type, diceCount = 1, weaponId = null, allowOnHitAddons = true) {
         const wMods = getCaelWpnMods(weaponId);
         const flatBonus = bonus + (wMods.dmgBonus || 0);
         const finalType = (wMods.isSilvered && !String(type).toLowerCase().includes('silver')) ? `Silvered ${type}` : type;
+        const attackKind = weaponId ? 'melee' : 'spell';
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
             const parts = [{ expr: `${diceCount}d${sides}`, type: finalType }];
             if (wMods && Array.isArray(wMods.extras)) {
@@ -3285,7 +3301,9 @@
                 diceParts: parts,
                 flatMod: flatBonus,
                 dmgType: finalType,
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollFormulaDamage(label, sides, bonus, type, diceCount, weaponId))
+                attackKind,
+                allowOnHitAddons,
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollFormulaDamage(label, sides, bonus, type, diceCount, weaponId, allowOnHitAddons))
             });
             return;
         }
@@ -3308,6 +3326,9 @@
             });
         }
         const bonusStr = flatBonus > 0 ? ` + ${flatBonus}` : '';
+        if (window.COS_RPG && typeof COS_RPG.setLastDamageContext === 'function') {
+            COS_RPG.setLastDamageContext({ total, isCrit: false, label, attackKind, allowOnHitAddons });
+        }
         logRoll(`💥 <strong>${label}:</strong> [${rolls.join('+')}]${bonusStr}${extraParts.join('')} = <span style="font-size:1.05rem; color:#f87171; font-weight:700;">${total}</span> ${finalType} Damage`);
     }
 
@@ -4152,14 +4173,14 @@
             log: logRoll,
             openItemModal: openItemDetailsModal,
             getConSaveMinDie: () => (activeStarryForm === 'dragon' ? 10 : 1),
-            followupPillLabel: '✨ +Bonus Action',
+            followupPillLabel: '+ Bonus Action',
             postAttackFollowups: [
                 {
                     id: 'starry_archer_ba',
-                    label: () => `🏹 Starry Archer Shot (BA • +${getSpellAttackMod()}, 1d8+3 Rad)`,
+                    label: () => `+ Starry Archer Arrow (BA • +${getSpellAttackMod()}, 1d8+3 Rad)`,
                     cls: 'btn-help',
                     attackKinds: ['any'],
-                    phases: ['attack', 'damage'],
+                    phases: ['damage'],
                     requiresActionSlot: 'bonus',
                     spendActionSlot: 'bonus',
                     isAvailable: () => activeStarryForm === 'archer',

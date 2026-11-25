@@ -29,7 +29,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v12">
+    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261125v2">
     <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v12">
     <style>
         @layer legacy {
@@ -1092,9 +1092,9 @@
                             <div class="action-desc"><strong>+5 to Hit</strong>, <strong>2d6 + 3 Slashing</strong>. <em>Savage Attacker:</em> rolls 2d6 twice &amp; takes higher! <em>Graze:</em> deals <strong>3 Slashing</strong> on a miss!</div>
                             <div id="jacomir-mods-greatsword"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-gs" class="btn-roll-action" onclick="rollWeaponAttack('Ancestral Greatsword (Graze: 3 Dmg on Miss)', 5, 'greatsword')">🗡️ Attack (+5)</button>
-                                <button id="btn-dmg-gs" class="btn-roll-action btn-roll-dmg" onclick="rollSavageGreatswordDamage()">💥 2d6+3 (Savage)</button>
-                                <button id="btn-graze-gs" class="btn-act btn-act-pre" style="font-size:0.69rem; color:var(--accent-gold); border-color:var(--border-gold);" onclick="applyGrazeDamage()" title="Weapon Mastery — Graze: On a missed attack roll, deal 3 Slashing damage (STR mod)">⚡ Graze (3)</button>
+                                <button id="btn-atk-gs" class="btn-roll-action" onclick="rollWeaponAttack('Ancestral Greatsword (Graze: 3 Dmg on Miss)', 5, 'greatsword')">Attack (+5)</button>
+                                <button id="btn-dmg-gs" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollSavageGreatswordDamage()">2d6+3 (Savage)</button>
+                                <button id="btn-graze-gs" class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.69rem; color:var(--accent-gold); border-color:var(--border-gold);" onclick="applyGrazeDamage()" title="Weapon Mastery — Graze: On a missed attack roll, deal 3 Slashing damage (STR mod)">Graze (3)</button>
                             </div>
                         </div>
 
@@ -1112,10 +1112,10 @@
                             <div class="action-desc"><strong>+5 to Hit</strong>, <strong>1d8+3 (1H)</strong> or <strong>1d10+3 (2H) Silvered Slashing</strong>. Bypasses vampire/werewolf resistance! <em>Sap:</em> target has <strong>Disadvantage</strong> on next attack.</div>
                             <div id="jacomir-mods-silvered_longsword"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-sls" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Ismark\'s Silvered Longsword (Sap • Bypasses Undead Resist)', 5, 'silvered_longsword')">⚔️ Silver (+5)</button>
-                                <button id="btn-dmg-sls-2h" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollSavageLongswordDamage(true)">💥 2H 1d10+3</button>
-                                <button id="btn-dmg-sls-1h" type="button" class="btn-roll-action btn-roll-dmg" style="display:none;" onclick="rollSavageLongswordDamage(false)">💥 1H 1d8+3</button>
-                                <button type="button" class="btn-act btn-act-pre" style="font-size:0.69rem;" onclick="applySapDebuff()" title="5.5e Weapon Mastery — Sap: Target has Disadvantage on its next attack roll!">🛡️ Sap</button>
+                                <button id="btn-atk-sls" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Ismark\'s Silvered Longsword (Sap • Bypasses Undead Resist)', 5, 'silvered_longsword')">Silver Attack (+5)</button>
+                                <button id="btn-dmg-sls-2h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollSavageLongswordDamage(true)">2H 1d10+3</button>
+                                <button id="btn-dmg-sls-1h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" style="display:none;" onclick="rollSavageLongswordDamage(false)">1H 1d8+3</button>
+                                <button type="button" class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.69rem;" onclick="applySapDebuff()" title="5.5e Weapon Mastery — Sap: Target has Disadvantage on its next attack roll!">Sap</button>
                             </div>
                         </div>
 
@@ -1133,9 +1133,9 @@
                             <div class="action-desc"><strong>+5 to Hit</strong>, <strong>1d6 + 3 Slashing</strong>. <em>Vex Mastery:</em> hitting grants <strong>Advantage</strong> on your next attack vs target before end of next turn.</div>
                             <div id="jacomir-mods-handaxe"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-axe" class="btn-roll-action" onclick="rollWeaponAttack('Handaxe (Melee / Thrown 20/60ft • Vex)', 5, 'handaxe')">🪓 Attack (+5)</button>
-                                <button id="btn-dmg-axe" class="btn-roll-action btn-roll-dmg" onclick="rollSavageHandaxeDamage()">💥 1d6+3 (Savage)</button>
-                                <button class="btn-act btn-act-pre" style="font-size:0.69rem; color:var(--accent-blue);" onclick="activateVexAdvantage()" title="Vex Mastery: Activate Advantage on your next attack roll!">🎯 Vex (+Adv)</button>
+                                <button id="btn-atk-axe" class="btn-roll-action" onclick="rollWeaponAttack('Handaxe (Melee / Thrown 20/60ft • Vex)', 5, 'handaxe')">Attack (+5)</button>
+                                <button id="btn-dmg-axe" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollSavageHandaxeDamage()">1d6+3 (Savage)</button>
+                                <button class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.69rem; color:var(--accent-blue);" onclick="activateVexAdvantage()" title="Vex Mastery: Activate Advantage on your next attack roll!">Vex (+Adv)</button>
                             </div>
                         </div>
 
@@ -1386,7 +1386,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261122v13"></script>
+<script src="cos_rpg_engine.js?v=20261125v2"></script>
 <script>
     // ==========================================
     // 👑 JACOMIR YULLE MASTER STATE VARIABLES (POST-SESSION 2 LONG REST)
@@ -1659,27 +1659,27 @@
             const extras = wMods.extras || [];
             if (weaponId === 'greatsword') {
                 COS_RPG.setRollFollowup({
-                    label: `💥 Roll Greatsword Damage (2d6+${flatMod} Savage)`,
-                    critLabel: `🔥 ROLL BRUTAL CRIT! (12 + 2d6+${flatMod} Savage)`,
+                    label: `Roll Greatsword Damage (2d6+${flatMod} Savage)`,
+                    critLabel: `Roll Brutal Crit (12 + 2d6+${flatMod} Savage)`,
                     onDamage: () => rollSavageGreatswordDamage(),
                     onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Ancestral Greatsword', diceCount: 2, sides: 6, flatMod, dmgType: wMods.isSilvered ? 'Silvered Slashing' : 'Slashing', extras, isSavage: true })
                 });
                 extraOpts.onGraze = () => applyGrazeDamage();
-                extraOpts.grazeLabel = `⚡ Graze (+${flatMod} on Miss)`;
+                extraOpts.grazeLabel = `Graze (+${flatMod})`;
             } else if (weaponId === 'silvered_longsword') {
                 const hit = window.__jacomirGearCache?.equippedWeaponTags?.find(w => w.tag === 'silvered_longsword');
                 const is2H = Boolean(!hit || hit.grip === '2h');
                 const sides = is2H ? 10 : 8;
                 COS_RPG.setRollFollowup({
-                    label: `💥 Roll Silvered Longsword (${is2H ? '2H 1d10' : '1H 1d8'}+${flatMod})`,
-                    critLabel: `🔥 ROLL BRUTAL CRIT! (${sides} + 1d${sides}+${flatMod} Silver)`,
+                    label: `Roll Silvered Longsword (${is2H ? '2H 1d10' : '1H 1d8'}+${flatMod})`,
+                    critLabel: `Roll Brutal Crit (${sides} + 1d${sides}+${flatMod} Silver)`,
                     onDamage: () => rollSavageLongswordDamage(is2H),
                     onCrit: () => COS_RPG.rollBrutalCrit({ label: `Ismark's Silvered Longsword (${is2H ? '2H' : '1H'})`, diceCount: 1, sides, flatMod, dmgType: 'Silvered Slashing', extras, isSavage: true })
                 });
             } else if (weaponId === 'handaxe') {
                 COS_RPG.setRollFollowup({
-                    label: `💥 Roll Handaxe Damage (1d6+${flatMod})`,
-                    critLabel: `🔥 ROLL BRUTAL CRIT! (6 + 1d6+${flatMod})`,
+                    label: `Roll Handaxe Damage (1d6+${flatMod})`,
+                    critLabel: `Roll Brutal Crit (6 + 1d6+${flatMod})`,
                     onDamage: () => rollSavageHandaxeDamage(),
                     onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Handaxe (Vex)', diceCount: 1, sides: 6, flatMod, dmgType: wMods.isSilvered ? 'Silvered Slashing' : 'Slashing', extras, isSavage: true })
                 });
@@ -1775,7 +1775,8 @@
                 flatMod,
                 dmgType,
                 isSavage: true,
-                notes: '🎯 Vex Mastery: Gain Advantage on your next attack roll against this target!' + (wMods.saveNotes && wMods.saveNotes.length ? ' • ' + wMods.saveNotes.join(' • ') : ''),
+                notes: 'Vex Mastery: Gain Advantage on your next attack roll against this target!' + (wMods.saveNotes && wMods.saveNotes.length ? ' • ' + wMods.saveNotes.join(' • ') : ''),
+                extraButtons: [{ label: 'Activate Vex (+Adv)', cls: 'btn-help', onClick: () => activateVexAdvantage() }],
                 onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollSavageHandaxeDamage())
             });
             return;
@@ -1843,7 +1844,7 @@
         },
         {
             id: "maneuver_menacing",
-            name: "👹 Menacing Attack",
+            name: "Menacing Attack",
             tag: "On Weapon Hit • -1 Superiority Die • DC 13 WIS Save",
             tagColor: "#f87171",
             school: "Battle Master Maneuver (Offensive Control)",
@@ -1858,7 +1859,7 @@
             fullRules: "When you hit a creature with a weapon attack, you can expend one Superiority Die to attempt to frighten the target. You add the Superiority Die (<strong>+1d8</strong>) to the attack's damage roll, and the target must make a <strong>DC 13 Wisdom saving throw</strong>. On a failed save, it is <strong>Frightened</strong> of you until the end of your next turn (Disadvantage on all attack rolls and ability checks while you are in line of sight, and it cannot willingly move closer to you!).",
             flavor: "Jacomir's eyes lock onto his foe with the terrifying, unyielding authority of a king who has walked through the death of his own realm.",
             buttons: [
-                { label: "👹 Menacing Strike (-1 d8 • +1d8 Dmg & DC 13 WIS)", class: "btn-roll-action btn-roll-dmg", costDie: true, onClick: () => execMenacingAttack() }
+                { label: "Menacing Attack (-1 d8 • +1d8 & DC 13 WIS)", class: "btn-roll-action btn-roll-dmg", costDie: true, onClick: () => execMenacingAttack() }
             ]
         }
     ];
@@ -1910,15 +1911,15 @@
             const atkStr = wpn.atkBonus >= 0 ? `+${wpn.atkBonus}` : `${wpn.atkBonus}`;
             const formula = formatRiposteFormula(wpn);
             btns.push({
-                label: `⚔️ Riposte: ${shortNm} (-1 d8 • ${atkStr} Hit)`,
+                label: `Riposte: ${shortNm} (-1 d8 • ${atkStr} Hit)`,
                 class: 'btn-roll-action btn-roll-martial',
                 costDie: true,
                 slotKind: 'reaction',
                 onClick: () => execRiposteAttack(idx)
             });
             btns.push({
-                label: `💥 Dmg (${formula})`,
-                class: 'btn-roll-action btn-roll-dmg',
+                label: `Dmg (${formula})`,
+                class: 'btn-roll-action btn-roll-dmg rpg-manual-hide',
                 costDie: false,
                 slotKind: 'none',
                 onClick: () => execRiposteWeaponDamage(idx, false)
@@ -2061,19 +2062,19 @@
 
         const grazeOpts = wpn.mastery === 'Graze'
             ? {
-                grazeLabel: `⚡ Graze (+${wpn.flatMod} on Miss)`,
-                onGraze: () => logRoll(`⚡ <strong>Riposte Graze (${shortNm}):</strong> Even on a miss, deal <strong style="color:#fbbf24;">${wpn.flatMod} ${wpn.dmgType} Damage</strong>!`)
+                grazeLabel: `Graze (+${wpn.flatMod})`,
+                onGraze: () => logRoll(`<strong>Riposte Graze (${shortNm}):</strong> Even on a miss, deal <strong style="color:#fbbf24;">${wpn.flatMod} ${wpn.dmgType} Damage</strong>!`)
             }
             : {};
 
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
             COS_RPG.logManualD20({
-                label: `⚔️ Riposte — ${shortNm} (Reaction • ${curSupDice}/${maxSupDice} d8s left)`,
+                label: `Riposte — ${shortNm} (Reaction • ${curSupDice}/${maxSupDice} d8s left)`,
                 mod: wpn.atkBonus,
                 notes: noteStr,
                 suppressPendingFollowup: true,
                 suppressOnHitAddons: true,
-                hitLabel: `💥 Hit! Riposte (${formula})`,
+                hitLabel: 'Hit',
                 onHit: () => COS_RPG.logManualDamage(dmgSpecNormal),
                 onCrit: () => COS_RPG.logManualDamage(dmgSpecCrit),
                 ...grazeOpts,
@@ -2084,14 +2085,14 @@
 
         if (window.COS_RPG && typeof COS_RPG.setRollFollowup === 'function') {
             COS_RPG.setRollFollowup({
-                label: `💥 Roll Riposte — ${shortNm} (${formula})`,
-                critLabel: `🔥 ROLL BRUTAL CRIT — Riposte ${shortNm}!`,
+                label: `Roll Riposte — ${shortNm} (${formula})`,
+                critLabel: `Roll Brutal Crit — Riposte ${shortNm}`,
                 suppressOnHitAddons: true,
                 onDamage: () => execRiposteWeaponDamage(slotIdx, false),
                 onCrit: () => execRiposteWeaponDamage(slotIdx, true)
             });
         }
-        rollD20(`⚔️ Riposte — ${shortNm} (Reaction • ${curSupDice}/${maxSupDice} d8s left)`, wpn.atkBonus, {
+        rollD20(`Riposte — ${shortNm} (Reaction • ${curSupDice}/${maxSupDice} d8s left)`, wpn.atkBonus, {
             ...grazeOpts
         });
     }
@@ -2125,9 +2126,45 @@
         execRiposteWeaponDamage(idx >= 0 ? idx : 0, false);
     }
 
+    function applyMenacingAddon(ctx = {}) {
+        if (curSupDice <= 0) {
+            logRoll(`<strong>0 Superiority Dice remaining.</strong> Take a Short or Long Rest (or click Refill) to restore your ${maxSupDice}d8 pool.`);
+            return;
+        }
+        curSupDice--;
+        updateSuperiorityDiceUI();
+        renderManeuvers();
+
+        const isCrit = Boolean(ctx.isCrit);
+        // Real Dice Mode: merge +1d8 Menacing directly into the active Damage Guide Card!
+        if (ctx.isManual && typeof ctx.mergeManualAddon === 'function') {
+            ctx.mergeManualAddon({
+                id: 'menacing_attack',
+                dicePart: { expr: '1d8', type: 'Menacing' },
+                cue: { text: `DC 13 WIS Save or Frightened until end of next turn (${curSupDice}/${maxSupDice} d8s left)`, cls: 'is-save' }
+            });
+            return;
+        }
+        // Digital Mode: append directly onto the active Damage Result with live combined total!
+        if (!ctx.isManual && typeof ctx.appendDigitalAddon === 'function') {
+            const d8 = Math.floor(Math.random() * 8) + 1;
+            const bonus = isCrit ? (8 + d8) : d8;
+            const formulaHtml = isCrit ? `Max(<strong>8</strong>) + 1d8[<strong>${d8}</strong>]` : `1d8[<strong>${d8}</strong>]`;
+            ctx.appendDigitalAddon({
+                id: 'menacing_attack',
+                name: isCrit ? `Crit Menacing Attack (${curSupDice}/${maxSupDice} d8s left)` : `Menacing Attack (${curSupDice}/${maxSupDice} d8s left)`,
+                formulaHtml,
+                bonusDmg: bonus,
+                noteHtml: 'Target must pass a <strong>DC 13 WIS Save</strong> or be <strong>Frightened of Jacomir</strong> until end of your next turn.'
+            });
+            return;
+        }
+        execMenacingAttack(isCrit, typeof ctx.lastDamageTotal === 'number' ? ctx.lastDamageTotal : null);
+    }
+
     function spendSuperiorityOnHit(kind, isCrit = false, baseDmgTotal = null) {
         if (curSupDice <= 0) {
-            logRoll(`⚠️ <strong>0 Superiority Dice remaining!</strong> Take a Short or Long Rest (or click Refill) to restore your ${maxSupDice}d8 pool.`);
+            logRoll(`<strong>0 Superiority Dice remaining.</strong> Take a Short or Long Rest (or click Refill) to restore your ${maxSupDice}d8 pool.`);
             return;
         }
         curSupDice--;
@@ -2137,14 +2174,13 @@
             execMenacingAttack(Boolean(isCrit), baseDmgTotal);
             return;
         }
-        // Generic +1d8 Superiority Die spend on hit (crit-aware!)
         const spec = {
-            label: `⚔️ Superiority Die Spent (${curSupDice}/${maxSupDice} d8s left)`,
+            label: `Superiority Die Spent (${curSupDice}/${maxSupDice} d8s left)`,
             diceParts: [{ expr: '1d8', type: 'Superiority' }],
             flatMod: 0,
             dmgType: 'Bonus',
             isCrit: Boolean(isCrit),
-            notes: typeof baseDmgTotal === 'number' ? `Add to your ${baseDmgTotal} weapon damage!` : 'Add to your weapon hit or maneuver!',
+            notes: typeof baseDmgTotal === 'number' ? `Add to your ${baseDmgTotal} weapon damage.` : 'Add to your weapon hit or maneuver.',
             allowOnHitAddons: false
         };
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
@@ -2154,22 +2190,22 @@
         const d8 = Math.floor(Math.random() * 8) + 1;
         const bonus = isCrit ? (8 + d8) : d8;
         const combinedHtml = typeof baseDmgTotal === 'number'
-            ? ` ➔ <strong style="color:#fde68a; font-size:1.1rem;">Combined Total: ${baseDmgTotal + bonus} Damage!</strong>`
+            ? ` ➔ <strong style="color:#fde68a; font-size:1.1rem;">Combined Total: ${baseDmgTotal + bonus} Damage</strong>`
             : '';
-        logRoll(`⚔️ <strong>${isCrit ? '🔥 BRUTAL CRIT ' : ''}Superiority Die Spent (${curSupDice}/${maxSupDice} d8s left):</strong> ${isCrit ? `Max(8) + 1d8[${d8}]` : `1d8[${d8}]`} = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">+${bonus} Bonus Damage</span>!${combinedHtml}`);
+        logRoll(`<strong>${isCrit ? 'BRUTAL CRIT — ' : ''}Superiority Die (${curSupDice}/${maxSupDice} d8s left):</strong> ${isCrit ? `Max(8) + 1d8[${d8}]` : `1d8[${d8}]`} = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">+${bonus} Bonus Damage</span>${combinedHtml}`);
     }
 
     function execMenacingAttack(isCrit = false, baseDmgTotal = null) {
         const menacingSpec = {
-            label: `👹 Maneuver — Menacing Attack (${curSupDice}/${maxSupDice} d8s left)`,
-            diceParts: [{ expr: '1d8', type: 'Menacing Bonus' }],
+            label: `Menacing Attack (${curSupDice}/${maxSupDice} d8s left)`,
+            diceParts: [{ expr: '1d8', type: 'Menacing' }],
             flatMod: 0,
             dmgType: 'Weapon',
             isCrit: Boolean(isCrit),
-            extraCues: [{ text: '🛡️ Tell DM: DC 13 WIS Save or Frightened until end of next turn!', cls: 'is-save' }],
+            extraCues: [{ text: 'DC 13 WIS Save or Frightened until end of next turn', cls: 'is-save' }],
             notes: typeof baseDmgTotal === 'number'
-                ? `Add to your ${baseDmgTotal} hit damage!`
-                : 'Add to your weapon hit damage!',
+                ? `Add to your ${baseDmgTotal} hit damage.`
+                : 'Add to your weapon hit damage.',
             allowOnHitAddons: false
         };
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
@@ -2180,12 +2216,9 @@
         const bonus = isCrit ? (8 + d8) : d8;
         const rollFormula = isCrit ? `Max(<strong>8</strong>) + 1d8[<strong>${d8}</strong>]` : `1d8[<strong>${d8}</strong>]`;
         const combinedHtml = typeof baseDmgTotal === 'number'
-            ? ` ➔ <strong style="color:#fde68a; font-size:1.12rem;">Combined Total: ${baseDmgTotal + bonus} Damage!</strong>`
+            ? ` ➔ <strong style="color:#fde68a; font-size:1.12rem;">Combined Total: ${baseDmgTotal + bonus} Damage</strong>`
             : '';
-        const critBtnHtml = !isCrit
-            ? ` <button type="button" class="btn-act btn-act-pre" style="margin-left:6px; border-color:#facc15; color:#fef08a;" onclick="logRoll('🔥 <strong>Menacing Attack Brutal Crit Upgrade:</strong> Add <strong>+8 Max</strong> ➔ <strong>+${bonus + 8} Menacing Damage</strong>${typeof baseDmgTotal === 'number' ? ` (Combined: <strong>${baseDmgTotal + bonus + 8}</strong>)` : ''}!')">🔥 Nat 20? (+8 Crit Max)</button>`
-            : '';
-        logRoll(`👹 <strong>${isCrit ? '🔥 BRUTAL CRIT — ' : ''}Maneuver — Menacing Attack (${curSupDice}/${maxSupDice} d8s left):</strong> ${rollFormula} = <strong><span style="color:#f87171; font-size:1.08rem;">+${bonus} Damage</span></strong>${combinedHtml} — target must pass a <strong>DC 13 Wisdom Saving Throw</strong> or be <strong>Frightened of Jacomir</strong> until the end of your next turn!${critBtnHtml}`);
+        logRoll(`<strong>${isCrit ? 'BRUTAL CRIT — ' : ''}Menacing Attack (${curSupDice}/${maxSupDice} d8s left):</strong> ${rollFormula} = <strong><span style="color:#f87171; font-size:1.08rem;">+${bonus} Damage</span></strong>${combinedHtml} — target must pass a <strong>DC 13 Wisdom Saving Throw</strong> or be <strong>Frightened of Jacomir</strong> until the end of your next turn.`);
     }
 
     // ==========================================
@@ -4373,9 +4406,9 @@
                 const btnAtkGs = document.getElementById('btn-atk-gs');
                 const btnDmgGs = document.getElementById('btn-dmg-gs');
                 const btnGrazeGs = document.getElementById('btn-graze-gs');
-                if (btnAtkGs) btnAtkGs.textContent = `🗡️ Attack (${fmtFlat(5 + (gsMods.atkBonus || 0)) || '+0'})`;
-                if (btnDmgGs) btnDmgGs.textContent = `💥 2d6${fmtFlat(3 + (gsMods.dmgBonus || 0))}${gsEx} (Savage)`;
-                if (btnGrazeGs) btnGrazeGs.textContent = `⚡ Graze (${3 + (gsMods.dmgBonus || 0)} Dmg)`;
+                if (btnAtkGs) btnAtkGs.textContent = `Attack (${fmtFlat(5 + (gsMods.atkBonus || 0)) || '+0'})`;
+                if (btnDmgGs) btnDmgGs.textContent = `2d6${fmtFlat(3 + (gsMods.dmgBonus || 0))}${gsEx} (Savage)`;
+                if (btnGrazeGs) btnGrazeGs.textContent = `Graze (${3 + (gsMods.dmgBonus || 0)})`;
 
                 const slsHit = bonuses.equippedWeaponTags.find(w => w.tag === 'silvered_longsword');
                 const slsIs2H = Boolean(slsHit && slsHit.grip === '2h');
@@ -4385,13 +4418,13 @@
                 const btnAtkSls = document.getElementById('btn-atk-sls');
                 const btnDmgSls2h = document.getElementById('btn-dmg-sls-2h');
                 const btnDmgSls1h = document.getElementById('btn-dmg-sls-1h');
-                if (btnAtkSls) btnAtkSls.textContent = `⚔️ Silver (${fmtFlat(5 + (slsMods.atkBonus || 0)) || '+0'})`;
+                if (btnAtkSls) btnAtkSls.textContent = `Silver Attack (${fmtFlat(5 + (slsMods.atkBonus || 0)) || '+0'})`;
                 if (btnDmgSls2h) {
-                    btnDmgSls2h.textContent = `💥 2H 1d10${slsFlat}${slsEx}`;
+                    btnDmgSls2h.textContent = `2H 1d10${slsFlat}${slsEx}`;
                     btnDmgSls2h.style.display = slsIs2H ? '' : 'none';
                 }
                 if (btnDmgSls1h) {
-                    btnDmgSls1h.textContent = `💥 1H 1d8${slsFlat}${slsEx}`;
+                    btnDmgSls1h.textContent = `1H 1d8${slsFlat}${slsEx}`;
                     btnDmgSls1h.style.display = slsIs2H ? 'none' : '';
                 }
 
@@ -4399,34 +4432,23 @@
                 const axeEx = (axeMods.extras || []).map(e => `+${e.dice}`).join('');
                 const btnAtkAxe = document.getElementById('btn-atk-axe');
                 const btnDmgAxe = document.getElementById('btn-dmg-axe');
-                if (btnAtkAxe) btnAtkAxe.textContent = `🪓 Attack (+${5 + (axeMods.atkBonus || 0)})`;
-                if (btnDmgAxe) btnDmgAxe.textContent = `💥 1d6+${3 + (axeMods.dmgBonus || 0)}${axeEx} (Savage)`;
+                if (btnAtkAxe) btnAtkAxe.textContent = `Attack (+${5 + (axeMods.atkBonus || 0)})`;
+                if (btnDmgAxe) btnDmgAxe.textContent = `1d6+${3 + (axeMods.dmgBonus || 0)}${axeEx} (Savage)`;
 
                 renderManeuvers();
             },
-            followupPillLabel: '⚔️ +Maneuver',
+            followupPillLabel: '+ Maneuver',
             postAttackFollowups: [
                 {
                     id: 'menacing_attack',
                     label: ({ isCrit }) => isCrit
-                        ? `👹🔥 Crit Menacing Attack (-1 d8 • 8+1d8 • ${curSupDice}/${maxSupDice})`
-                        : `👹 Menacing Attack (-1 d8 • +1d8 & DC 13 WIS • ${curSupDice}/${maxSupDice})`,
+                        ? `+ Crit Menacing Attack (-1 d8 • 8+1d8 • ${curSupDice}/${maxSupDice})`
+                        : `+ Menacing Attack (-1 d8 • +1d8 & DC 13 WIS • ${curSupDice}/${maxSupDice})`,
                     cls: ({ isCrit }) => isCrit ? 'btn-crit' : 'btn-hit',
-                    attackKinds: ['weapon'],
-                    phases: ['attack', 'damage'],
-                    isAvailable: () => curSupDice > 0,
-                    onTrigger: ({ isCrit, lastDamageTotal }) => spendSuperiorityOnHit('menacing', Boolean(isCrit), typeof lastDamageTotal === 'number' ? lastDamageTotal : null)
-                },
-                {
-                    id: 'spend_sup_die',
-                    label: ({ isCrit }) => isCrit
-                        ? `⚔️🔥 Crit Superiority Die (-1 d8 • 8+1d8 • ${curSupDice}/${maxSupDice})`
-                        : `⚔️ Spend Superiority Die (+1d8 • ${curSupDice}/${maxSupDice})`,
-                    cls: 'btn-help',
                     attackKinds: ['weapon'],
                     phases: ['damage'],
                     isAvailable: () => curSupDice > 0,
-                    onTrigger: ({ isCrit, lastDamageTotal }) => spendSuperiorityOnHit('die', Boolean(isCrit), typeof lastDamageTotal === 'number' ? lastDamageTotal : null)
+                    onTrigger: (ctx) => applyMenacingAddon(ctx)
                 }
             ]
         });

@@ -7510,7 +7510,8 @@
                 return;
             }
             setRollFollowup({
-                label: `💥 Roll ${name} Damage`,
+                label: `Roll ${name} Damage`,
+                critLabel: `Roll Brutal Crit (${name})`,
                 isCrit: false,
                 attackKind: atkKind,
                 onDamage: () => rollDynamicWeaponDamage(invIdx, false),
@@ -7525,7 +7526,7 @@
             if (aDef) noteBits.push(`Ammo: ${aDef.shortName} (${shotInfo.remaining} left${shotInfo.exhausted ? ' — last round fired' : ''})`);
             if (wCombat.mod) noteBits.push(`Mod: ${wCombat.mod.badge}`);
             if (wCombat.coating) noteBits.push(`Coating: ${wCombat.coating.label}`);
-            if (masteryRiderText) noteBits.push(`⚔️ ${masteryRiderText}`);
+            if (masteryRiderText) noteBits.push(masteryRiderText);
             consumeTempRollMode();
             logManualD20({
                 label: `${name} Attack`,
@@ -7534,10 +7535,10 @@
                 attackKind: atkKind,
                 notes: noteBits.join(' • '),
                 suppressPendingFollowup: true,
-                hitLabel: `💥 Hit! Show Damage (${st.dmgDice}${effDmgBonus >= 0 ? (effDmgBonus ? '+' + effDmgBonus : '') : effDmgBonus})`,
+                hitLabel: 'Hit',
                 onHit: () => rollDynamicWeaponDamage(invIdx, false),
                 onCrit: () => rollDynamicWeaponDamage(invIdx, true),
-                grazeLabel: st.mastery === 'Graze' ? `⚡ Graze (+${Math.max(0, st.abilityMod || 0)} on Miss)` : null,
+                grazeLabel: st.mastery === 'Graze' ? `Graze (+${Math.max(0, st.abilityMod || 0)})` : null,
                 onGraze: st.mastery === 'Graze' ? () => rollDynamicWeaponMastery(invIdx, 'Graze') : null,
                 onDigitalRoll: () => runManualDigitalFallback(runDigitalDynamicAttack)
             });
@@ -7680,7 +7681,7 @@
             breakdown += ` + <span style="color:#f87171;">${forceCrit ? exP.max + '+' : ''}${pb.dice}[${exP.rolls.join('+')} ${esc(pb.type || 'Bonus')}]</span>`;
         });
         const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.map(esc).join(' &bull; ')})</small>` : '';
-        const headPrefix = forceCrit ? `<strong style="color:#facc15;">🔥 BRUTAL CRIT — ${esc(shortLabel(raw))}${gripTag}:</strong> ` : `<strong>${esc(shortLabel(raw))}${gripTag} Damage:</strong> `;
+        const headPrefix = forceCrit ? `<strong style="color:#facc15;">BRUTAL CRIT — ${esc(shortLabel(raw))}${gripTag}:</strong> ` : `<strong>${esc(shortLabel(raw))}${gripTag} Damage:</strong> `;
         setLastDamageContext({ total, isCrit: Boolean(forceCrit), label: `${shortLabel(raw)}${gripTag}`, attackKind: atkKind, allowOnHitAddons: true });
         adapter.log(`${headPrefix}${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(effDmgType)} Damage</span>!${noteHtml}`);
     }
@@ -7845,11 +7846,11 @@
                 ? `<span class="rpg-card-equipped-pill" style="background:rgba(59,130,246,0.16); color:#93c5fd; border-color:rgba(96,165,250,0.45);" title="${esc((WEAPON_MASTERY_INFO[st.mastery] && WEAPON_MASTERY_INFO[st.mastery].rider) || '')}">⚔️ ${esc(st.mastery)}${st.mastery === 'Topple' ? ` DC ${st.toppleDc}` : (st.mastery === 'Graze' ? ` +${Math.max(0, st.abilityMod || 0)}` : '')}</span>`
                 : '';
             const masteryBtnHtml = st.mastery === 'Graze'
-                ? `<button type="button" class="btn-act btn-act-temp" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Graze')" title="Deal Graze Mastery damage on a missed attack">⚡ Graze (+${Math.max(0, st.abilityMod || 0)})</button>`
+                ? `<button type="button" class="btn-act btn-act-temp rpg-manual-hide" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Graze')" title="Deal Graze Mastery damage on a missed attack">Graze (+${Math.max(0, st.abilityMod || 0)})</button>`
                 : (st.mastery === 'Cleave'
-                    ? `<button type="button" class="btn-act btn-act-temp" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Cleave')" title="Roll Cleave Mastery strike against a 2nd creature within 5 ft">🪓 Cleave</button>`
+                    ? `<button type="button" class="btn-act btn-act-temp" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Cleave')" title="Roll Cleave Mastery strike against a 2nd creature within 5 ft">Cleave</button>`
                     : (st.mastery === 'Nick'
-                        ? `<button type="button" class="btn-act btn-act-temp" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Nick')" title="Roll Nick Mastery extra Light attack as part of Attack action">🗡️ Nick</button>`
+                        ? `<button type="button" class="btn-act btn-act-temp" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponMastery(${idx}, 'Nick')" title="Roll Nick Mastery extra Light attack as part of Attack action">Nick</button>`
                         : ''));
             const card = document.createElement('div');
             card.className = 'action-card rpg-dyn-weapon-card';
@@ -7883,7 +7884,7 @@
                 ${ammoStripHtml}
                 <div class="action-btn-row" style="flex-wrap:wrap;">
                     <button type="button" class="btn-roll-action" data-rpg-turn-slot="${slotId === 'offHand' ? 'bonus' : 'action'}" onclick="COS_RPG.rollDynamicWeaponAttack(${idx})">Attack (+${effAtk})</button>
-                    <button type="button" class="btn-roll-action btn-roll-dmg" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${gripLabel}${esc(dmgLabel)})</button>
+                    <button type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" data-rpg-turn-slot="none" onclick="COS_RPG.rollDynamicWeaponDamage(${idx})">Damage (${gripLabel}${esc(dmgLabel)})</button>
                     ${masteryBtnHtml}
                     ${buildWeaponModalActionButtonsHtml(weaponId)}
                     <button type="button" class="btn-act btn-act-pre" onclick="COS_RPG.unequipSlot('${slotId}')">Unequip</button>
@@ -14833,9 +14834,12 @@
         return id;
     }
 
-    function runManualAction(id, btnEl) {
+    function runManualAction(id, btnEl, ev) {
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
         const fn = manualActionRegistry.get(Number(id));
         if (typeof fn === 'function') fn(btnEl || null);
+        if (typeof syncCombatActionLocks === 'function') syncCombatActionLocks();
+        if (!isCapturingExports) syncHeroStateToFirebase(false);
     }
 
     function parseManualDicePart(expr) {
@@ -15024,24 +15028,29 @@
 
     function resolveEligibleFollowups(rawCtx = {}) {
         if (!adapter) return [];
+        const appliedIds = Array.isArray(rawCtx.appliedIds) ? rawCtx.appliedIds : [];
         const ctx = {
-            phase: rawCtx.phase || 'attack',
+            phase: rawCtx.phase || 'damage',
             isCrit: Boolean(rawCtx.isCrit),
             isManual: Boolean(rawCtx.isManual),
             label: String(rawCtx.label || ''),
             lastDamageTotal: typeof rawCtx.lastDamageTotal === 'number' ? rawCtx.lastDamageTotal : null,
-            attackKind: inferAttackKind(rawCtx.attackKind, rawCtx.label)
+            attackKind: inferAttackKind(rawCtx.attackKind, rawCtx.label),
+            appliedIds,
+            mergeManualAddon: typeof rawCtx.mergeManualAddon === 'function' ? rawCtx.mergeManualAddon : null,
+            appendDigitalAddon: typeof rawCtx.appendDigitalAddon === 'function' ? rawCtx.appendDigitalAddon : null
         };
         const out = [];
 
-        // 1. Declarative Future-Proof postAttackFollowups rules
+        // 1. Declarative Future-Proof postAttackFollowups rules (Damage Phase by default!)
         const declSource = typeof adapter.postAttackFollowups === 'function'
             ? adapter.postAttackFollowups(ctx)
             : adapter.postAttackFollowups;
         if (Array.isArray(declSource)) {
             declSource.forEach(rule => {
                 if (!rule) return;
-                const phases = Array.isArray(rule.phases) ? rule.phases : ['attack', 'damage'];
+                if (rule.id && appliedIds.includes(rule.id)) return;
+                const phases = Array.isArray(rule.phases) ? rule.phases : ['damage'];
                 if (!phases.includes(ctx.phase)) return;
                 if (!matchesAttackKind(rule.attackKinds || ['weapon'], ctx.attackKind)) return;
                 if (rule.requiresActionSlot && !isTurnActionAvailable(rule.requiresActionSlot)) return;
@@ -15051,6 +15060,7 @@
                 const triggerFn = rule.onTrigger || rule.onClick;
                 if (typeof triggerFn !== 'function') return;
                 out.push({
+                    id: rule.id || '',
                     label: labelTxt,
                     cls: clsTxt,
                     onClick: () => {
@@ -15067,9 +15077,11 @@
             const legacy = adapter.getOnHitAddons(ctx) || [];
             legacy.forEach(item => {
                 if (!item || typeof item.onClick !== 'function') return;
+                if (item.id && appliedIds.includes(item.id)) return;
                 if (item.requiresActionSlot && !isTurnActionAvailable(item.requiresActionSlot)) return;
                 if (item.attackKinds && !matchesAttackKind(item.attackKinds, ctx.attackKind)) return;
                 out.push({
+                    id: item.id || '',
                     label: item.label,
                     cls: item.cls || 'btn-hit',
                     onClick: () => {
@@ -15084,7 +15096,8 @@
         return out;
     }
 
-    function toggleFollowupDrawer(btnEl) {
+    function toggleFollowupDrawer(btnEl, ev) {
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
         if (!btnEl) return;
         const host = btnEl.closest('.rpg-followup-host');
         const drawer = host ? host.querySelector('.rpg-followup-drawer') : null;
@@ -15099,19 +15112,24 @@
         if (!Array.isArray(items) || items.length === 0) {
             return { pillHtml: '', drawerHtml: '' };
         }
+        // Smart 1-vs-Many: 1 legal follow-up renders as a direct 1-click pill (zero extra dropdown click!)
+        if (items.length === 1) {
+            const spec = items[0];
+            const aid = registerManualAction(spec.onClick);
+            const critCls = ctx.isCrit ? ' is-crit' : '';
+            const pillHtml = `<button type="button" class="rpg-followup-pill is-direct${critCls}" onclick="COS_RPG.runManualAction(${aid}, this, event)">${esc(spec.label)}</button>`;
+            return { pillHtml, drawerHtml: '' };
+        }
         const customBase = (adapter && typeof adapter.followupPillLabel === 'string' && adapter.followupPillLabel.trim())
             ? adapter.followupPillLabel.trim()
-            : '⚡ +After Hit';
-        const pillText = ctx.isCrit
-            ? customBase.replace(/^([^\s]+)/, '$1🔥')
-            : customBase;
-        const pillHtml = `<button type="button" class="rpg-followup-pill ${ctx.isCrit ? 'is-crit' : ''}" aria-expanded="false" onclick="COS_RPG.toggleFollowupDrawer(this)">${esc(pillText)} (${items.length}) <span class="rpg-followup-caret" aria-hidden="true">▾</span></button>`;
+            : '+ Add-On';
+        const pillHtml = `<button type="button" class="rpg-followup-pill ${ctx.isCrit ? 'is-crit' : ''}" aria-expanded="false" onclick="COS_RPG.toggleFollowupDrawer(this, event)">${esc(customBase)} (${items.length}) <span class="rpg-followup-caret" aria-hidden="true">▾</span></button>`;
         const btnsHtml = items.map(spec => {
             const aid = registerManualAction(spec.onClick);
             const cls = spec.cls ? `rpg-manual-btn ${spec.cls}` : 'rpg-manual-btn';
-            return `<button type="button" class="${cls}" onclick="COS_RPG.runManualAction(${aid}, this)">${esc(spec.label)}</button>`;
+            return `<button type="button" class="${cls}" onclick="COS_RPG.runManualAction(${aid}, this, event)">${esc(spec.label)}</button>`;
         }).join('');
-        const drawerHtml = `<div class="rpg-followup-drawer" hidden><span class="rpg-followup-drawer-lbl">Available Now:</span>${btnsHtml}</div>`;
+        const drawerHtml = `<div class="rpg-followup-drawer" hidden><span class="rpg-followup-drawer-lbl">On Hit:</span>${btnsHtml}</div>`;
         return { pillHtml, drawerHtml };
     }
 
@@ -15119,12 +15137,12 @@
         const items = (btnSpecs || []).filter(Boolean).map(spec => {
             const aid = registerManualAction(spec.onClick);
             const cls = spec.cls ? `rpg-manual-btn ${spec.cls}` : 'rpg-manual-btn';
-            return `<button type="button" class="${cls}" onclick="COS_RPG.runManualAction(${aid}, this)">${esc(spec.label)}</button>`;
+            return `<button type="button" class="${cls}" onclick="COS_RPG.runManualAction(${aid}, this, event)">${esc(spec.label)}</button>`;
         });
         const pillHtml = (followupPack && followupPack.pillHtml) ? followupPack.pillHtml : '';
         const drawerHtml = (followupPack && followupPack.drawerHtml) ? followupPack.drawerHtml : '';
         if (!items.length && !pillHtml) return '';
-        // Place escape-hatch (Roll for Me) at the far right, with Follow-Up pill right beside Hit/Crit!
+        // Place escape-hatch (Roll) at the far right, with Follow-Up pill cleanly inline!
         const escapeIdx = items.findIndex(h => h.includes('btn-escape'));
         if (pillHtml) {
             if (escapeIdx >= 0) items.splice(escapeIdx, 0, pillHtml);
@@ -15159,7 +15177,7 @@
         advList.forEach(r => cues.push(`<span class="rpg-manual-cue is-adv">▲ ${esc(r)}</span>`));
         disList.forEach(r => cues.push(`<span class="rpg-manual-cue is-dis">▼ ${esc(r)}</span>`));
         if (advList.length > 0 && disList.length > 0) {
-            cues.push(`<span class="rpg-manual-cue">⚖️ Adv &amp; Dis Cancel ➔ Roll 1d20 Normal</span>`);
+            cues.push(`<span class="rpg-manual-cue">Adv &amp; Dis Cancel ➔ Roll 1d20 Normal</span>`);
         }
         if (opts.extraCues && opts.extraCues.length) {
             opts.extraCues.forEach(c => cues.push(`<span class="rpg-manual-cue ${esc(c.cls || '')}">${esc(c.text)}</span>`));
@@ -15170,45 +15188,28 @@
         const critFn = opts.onCrit || (capturedFollowup && capturedFollowup.onCrit);
         if (typeof hitFn === 'function') {
             actionBtns.push({
-                label: opts.hitLabel || (capturedFollowup && capturedFollowup.label ? capturedFollowup.label.replace(/^💥\s*Roll\s*/i, '💥 Hit! ') : '💥 Hit! Show Damage'),
+                label: opts.hitLabel || 'Hit',
                 cls: 'btn-hit',
                 onClick: hitFn
             });
         }
         if (typeof critFn === 'function') {
             actionBtns.push({
-                label: opts.critLabel || '🔥 NAT 20! Brutal Crit',
+                label: opts.critLabel || 'Nat 20 Crit',
                 cls: 'btn-crit',
                 onClick: critFn
             });
         }
         if (typeof opts.onGraze === 'function') {
             actionBtns.push({
-                label: opts.grazeLabel || '⚡ Graze (Miss)',
+                label: opts.grazeLabel || 'Graze (Miss)',
                 onClick: opts.onGraze
             });
         }
         (opts.extraButtons || []).forEach(b => actionBtns.push(b));
-        const resolvedAtkKind = opts.attackKind || (capturedFollowup && capturedFollowup.attackKind) || inferAttackKind(null, label);
-        let followupPack = null;
-        if ((typeof hitFn === 'function' || typeof critFn === 'function') && !opts.suppressOnHitAddons && !(capturedFollowup && capturedFollowup.suppressOnHitAddons)) {
-            const eligible = resolveEligibleFollowups({ phase: 'attack', isCrit: false, isManual: true, label, attackKind: resolvedAtkKind });
-            followupPack = buildFollowupPillAndDrawer(eligible, { isCrit: false });
-        }
-        if (typeof window.rollHelpToken === 'function' && !opts.hideHelpBtn) {
-            const helpEl = typeof document !== 'undefined' ? document.getElementById('help-tokens-disp') : null;
-            const helpRem = helpEl ? parseInt(helpEl.innerText, 10) : 0;
-            if (helpRem > 0) {
-                actionBtns.push({
-                    label: `🤝 +1d6 Help (${helpRem} left)`,
-                    cls: 'btn-help',
-                    onClick: () => window.rollHelpToken()
-                });
-            }
-        }
         if (typeof opts.onDigitalRoll === 'function') {
             actionBtns.push({
-                label: '💻 Roll for Me',
+                label: '💻 Roll',
                 cls: 'btn-escape',
                 onClick: () => {
                     if (capturedFollowup) setRollFollowup(capturedFollowup);
@@ -15221,16 +15222,16 @@
             ? `<form class="rpg-manual-inline-form" onsubmit="return COS_RPG.submitManualInitForm(event, this)">
                 <label class="rpg-manual-inline-lbl">Final Init Total:</label>
                 <input type="text" inputmode="numeric" pattern="-?\\d+" enterkeyhint="done" class="rpg-manual-num" placeholder="e.g. ${10 + mod}" aria-label="Rolled Initiative Total" oninput="COS_RPG.clearManualInputError(this)">
-                <button type="submit" class="rpg-manual-submit-btn is-init">⚡ Send to DM Board</button>
+                <button type="submit" class="rpg-manual-submit-btn is-init">Send to DM Board</button>
                 <span class="rpg-manual-err" aria-live="polite"></span>
             </form>`
             : '';
 
         const pillsHtml = formatDicePillsHtml([{ expr: dieExpr, label: dieSub }], mod);
         const cardTone = opts.isInitiative ? 'tone-init' : '';
-        const badgeTxt = opts.isInitiative ? '⚡ INITIATIVE • REAL DICE' : '🎲 REAL DICE';
+        const badgeTxt = opts.isInitiative ? 'INITIATIVE' : 'REAL DICE';
         const html = `
-            <div class="rpg-manual-card rpg-followup-host ${cardTone}">
+            <div class="rpg-manual-card ${cardTone}">
                 <div class="rpg-manual-head">
                     <span class="rpg-manual-title">${esc(label)}</span>
                     <span class="rpg-manual-badge">${badgeTxt}</span>
@@ -15242,16 +15243,63 @@
                 ${cues.length ? `<div class="rpg-manual-hints">${cues.join('')}</div>` : ''}
                 ${opts.notes ? `<div class="rpg-manual-notes">${esc(opts.notes)}</div>` : ''}
                 ${initFormHtml}
-                ${buildManualButtonsHtml(actionBtns, followupPack)}
+                ${buildManualButtonsHtml(actionBtns)}
             </div>
         `;
         if (adapter && adapter.log) adapter.log(html);
     }
 
     let pendingDamageAddons = null;
+    let activeDigitalDamageState = null;
 
     function setLastDamageContext(ctx) {
+        if (ctx) pendingRollFollowup = null;
         pendingDamageAddons = ctx ? { ...ctx, ts: Date.now() } : null;
+    }
+
+    function appendDigitalDamageAddonToHud(addon) {
+        const st = activeDigitalDamageState;
+        if (!st || !st.bodyEl || !addon) return false;
+        if (addon.id && st.appliedIds.includes(addon.id)) return false;
+        if (addon.id) st.appliedIds.push(addon.id);
+        const bonusVal = typeof addon.bonusDmg === 'number' ? addon.bonusDmg : 0;
+        st.runningTotal += bonusVal;
+
+        const line = document.createElement('div');
+        line.className = 'rpg-dmg-addon-line';
+        const formulaPart = addon.formulaHtml ? ` <span class="rpg-dmg-addon-formula">${addon.formulaHtml}</span>` : '';
+        const bonusPart = bonusVal > 0 ? ` <strong class="rpg-dmg-addon-bonus">+${bonusVal}</strong>` : '';
+        const totalPart = bonusVal > 0 ? ` <span class="rpg-dmg-addon-arrow">➔</span> <strong class="rpg-dmg-grand-total">${st.runningTotal} Total Damage</strong>` : '';
+        const notePart = addon.noteHtml ? `<div class="rpg-dmg-addon-note">${addon.noteHtml}</div>` : '';
+        line.innerHTML = `<div class="rpg-dmg-addon-main"><span class="rpg-dmg-addon-name">+ ${esc(addon.name || 'Add-On')}</span>${formulaPart}${bonusPart}${totalPart}</div>${notePart}`;
+
+        if (st.wrapEl && st.wrapEl.parentNode === st.bodyEl) {
+            st.bodyEl.insertBefore(line, st.wrapEl);
+        } else {
+            st.bodyEl.appendChild(line);
+        }
+
+        // Re-evaluate remaining eligible follow-ups on this Damage result
+        if (st.wrapEl) {
+            const nextEligible = resolveEligibleFollowups({
+                phase: 'damage',
+                isCrit: st.isCrit,
+                lastDamageTotal: st.runningTotal,
+                label: st.label,
+                attackKind: st.attackKind,
+                isManual: false,
+                appliedIds: st.appliedIds,
+                appendDigitalAddon: appendDigitalDamageAddonToHud
+            });
+            const pack = buildFollowupPillAndDrawer(nextEligible, { isCrit: st.isCrit });
+            if (pack.pillHtml) {
+                st.wrapEl.innerHTML = pack.pillHtml + pack.drawerHtml;
+            } else {
+                st.wrapEl.remove();
+                st.wrapEl = null;
+            }
+        }
+        return true;
     }
 
     function rollDigitalDamageFromManualSpec(opts = {}, forceCrit = false) {
@@ -15294,7 +15342,6 @@
                         savageTag = ` <em>(Savage: <strong>[${rolled.arr.join('+')}]</strong> vs [${set2.arr.join('+')}])</em>`;
                     }
                 }
-                const partTotal = (isCrit ? parsed.max : 0) + rolled.sum + parsed.flat;
                 total += (isCrit ? parsed.max : 0) + rolled.sum + parsed.flat;
                 const typeHint = (subLbl && subLbl.toLowerCase() !== dmgType.toLowerCase()) ? ` ${esc(subLbl)}` : '';
                 const flatInline = parsed.flat > 0 ? `+${parsed.flat}` : (parsed.flat < 0 ? `${parsed.flat}` : '');
@@ -15316,12 +15363,19 @@
             : '';
 
         if (opts.allowOnHitAddons !== false) {
-            setLastDamageContext({ total, isCrit, label, attackKind: opts.attackKind || inferAttackKind(null, label), allowOnHitAddons: true });
+            setLastDamageContext({
+                total,
+                isCrit,
+                label,
+                attackKind: opts.attackKind || inferAttackKind(null, label),
+                appliedIds: Array.isArray(opts.appliedAddonIds) ? [...opts.appliedAddonIds] : [],
+                allowOnHitAddons: true
+            });
         }
 
         const header = isCrit
-            ? `🔥 <strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(label)}!</strong>`
-            : `💥 <strong>${esc(label)}:</strong>`;
+            ? `<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(label)}:</strong>`
+            : `<strong>${esc(label)}:</strong>`;
         const dmgSuffix = dmgType ? ` ${esc(dmgType)}` : '';
         const msg = `${header} ${chunks.join(' + ')}${modStr} = <span style="font-size:1.15rem; color:#f87171; font-weight:900;">${total}${dmgSuffix} Damage</span>!${detailTail}`;
         if (adapter && adapter.log) adapter.log(msg);
@@ -15329,12 +15383,18 @@
     }
 
     function logManualDamage(opts = {}) {
-        const label = String(opts.label || 'Damage');
-        const diceParts = Array.isArray(opts.diceParts) ? opts.diceParts : [];
-        const flatMod = parseInt(opts.flatMod, 10) || 0;
-        const dmgType = String(opts.dmgType || '').trim();
-        const isCrit = Boolean(opts.isCrit);
-        const isSavage = Boolean(opts.isSavage);
+        const spec = {
+            ...opts,
+            diceParts: Array.isArray(opts.diceParts) ? opts.diceParts.map(p => (typeof p === 'object' && p ? { ...p } : p)) : [],
+            extraCues: Array.isArray(opts.extraCues) ? opts.extraCues.map(c => (typeof c === 'object' && c ? { ...c } : c)) : [],
+            appliedAddonIds: Array.isArray(opts.appliedAddonIds) ? [...opts.appliedAddonIds] : []
+        };
+        const label = String(spec.label || 'Damage');
+        const diceParts = spec.diceParts;
+        const flatMod = parseInt(spec.flatMod, 10) || 0;
+        const dmgType = String(spec.dmgType || '').trim();
+        const isCrit = Boolean(spec.isCrit);
+        const isSavage = Boolean(spec.isSavage);
 
         let trayHtml = '';
         if (isCrit) {
@@ -15346,7 +15406,7 @@
                     <span style="color:#fde68a; font-weight:800;">+ Roll</span>
                     ${crit.diceToRollHtml}
                 </div>
-                <div class="rpg-manual-notes" style="color:#fde68a;"><strong>Auto-Base (${crit.staticStart}):</strong> ${esc(crit.breakdownStr)} — roll the physical dice above and add!</div>
+                <div class="rpg-manual-notes" style="color:#fde68a;"><strong>Auto-Base (${crit.staticStart}):</strong> ${esc(crit.breakdownStr)} — roll the physical dice above and add.</div>
             `;
         } else {
             trayHtml = `
@@ -15360,42 +15420,68 @@
 
         const cues = [];
         if (isSavage) {
-            cues.push(`<span class="rpg-manual-cue is-savage">⚔️ Savage Attacker: Roll weapon dice TWICE &amp; keep the higher roll!</span>`);
+            cues.push(`<span class="rpg-manual-cue is-savage">Savage Attacker: Roll weapon dice twice &amp; keep higher</span>`);
         }
-        (opts.extraCues || []).forEach(c => cues.push(`<span class="rpg-manual-cue ${esc(c.cls || '')}">${esc(c.text)}</span>`));
+        spec.extraCues.forEach(c => cues.push(`<span class="rpg-manual-cue ${esc(c.cls || '')}">${esc(c.text)}</span>`));
 
-        const actionBtns = [...(opts.extraButtons || [])];
-        if (!isCrit && opts.allowCritSwitch !== false && diceParts.length > 0) {
+        const actionBtns = [...(spec.extraButtons || [])];
+        if (!isCrit && spec.allowCritSwitch !== false && diceParts.length > 0) {
             actionBtns.push({
-                label: '🔥 Switch to Brutal Crit',
+                label: 'Brutal Crit',
                 cls: 'btn-crit',
-                onClick: () => logManualDamage({ ...opts, isCrit: true })
+                onClick: () => logManualDamage({ ...spec, isCrit: true })
             });
         }
+
+        const mergeManualAddon = (addon = {}) => {
+            const nextSpec = {
+                ...spec,
+                diceParts: [...spec.diceParts],
+                extraCues: [...spec.extraCues],
+                appliedAddonIds: [...spec.appliedAddonIds],
+                flatMod: (parseInt(spec.flatMod, 10) || 0) + (parseInt(addon.flatDelta, 10) || 0),
+                // Clear legacy single-weapon digital fallbacks so 💻 Roll / Roll Crit rolls the FULL merged dice pool!
+                onDigitalRoll: null,
+                onDigitalCritRoll: null
+            };
+            if (addon.id && !nextSpec.appliedAddonIds.includes(addon.id)) {
+                nextSpec.appliedAddonIds.push(addon.id);
+            }
+            if (addon.dicePart) nextSpec.diceParts.push(addon.dicePart);
+            if (Array.isArray(addon.diceParts)) addon.diceParts.forEach(dp => nextSpec.diceParts.push(dp));
+            if (addon.cue) nextSpec.extraCues.push(addon.cue);
+            if (addon.note) {
+                nextSpec.notes = nextSpec.notes ? `${nextSpec.notes} • ${addon.note}` : addon.note;
+            }
+            logManualDamage(nextSpec);
+        };
+
         let followupPack = null;
-        if (opts.allowOnHitAddons !== false) {
+        if (spec.allowOnHitAddons !== false) {
             const eligible = resolveEligibleFollowups({
                 phase: 'damage',
                 isCrit,
                 isManual: true,
                 label,
-                attackKind: opts.attackKind || inferAttackKind(null, label)
+                attackKind: spec.attackKind || inferAttackKind(null, label),
+                appliedIds: spec.appliedAddonIds,
+                mergeManualAddon
             });
             followupPack = buildFollowupPillAndDrawer(eligible, { isCrit });
         }
 
-        // Universal Crit-Accurate "Roll for Me": when isCrit is true, ALWAYS roll Brutal Crit math!
+        // Universal Crit-Accurate "Roll": when isCrit is true, ALWAYS roll Brutal Crit math on ALL dice (including merged add-ons)!
         const digitalHandler = isCrit
-            ? (typeof opts.onDigitalCritRoll === 'function'
-                ? () => runManualDigitalFallback(opts.onDigitalCritRoll)
-                : (diceParts.length > 0 ? () => runManualDigitalFallback(() => rollDigitalDamageFromManualSpec(opts, true)) : null))
-            : (typeof opts.onDigitalRoll === 'function'
-                ? () => runManualDigitalFallback(opts.onDigitalRoll)
-                : (diceParts.length > 0 ? () => runManualDigitalFallback(() => rollDigitalDamageFromManualSpec(opts, false)) : null));
+            ? (typeof spec.onDigitalCritRoll === 'function'
+                ? () => runManualDigitalFallback(spec.onDigitalCritRoll)
+                : (diceParts.length > 0 ? () => runManualDigitalFallback(() => rollDigitalDamageFromManualSpec(spec, true)) : null))
+            : (typeof spec.onDigitalRoll === 'function'
+                ? () => runManualDigitalFallback(spec.onDigitalRoll)
+                : (diceParts.length > 0 ? () => runManualDigitalFallback(() => rollDigitalDamageFromManualSpec(spec, false)) : null));
 
         if (typeof digitalHandler === 'function') {
             actionBtns.push({
-                label: isCrit ? '💻 Roll Crit for Me' : '💻 Roll for Me',
+                label: isCrit ? '💻 Roll Crit' : '💻 Roll',
                 cls: 'btn-escape',
                 onClick: digitalHandler
             });
@@ -15404,13 +15490,13 @@
         const html = `
             <div class="rpg-manual-card rpg-followup-host ${isCrit ? 'tone-crit' : 'tone-dmg'}">
                 <div class="rpg-manual-head">
-                    <span class="rpg-manual-title">${isCrit ? '🔥 BRUTAL CRIT — ' : '💥 '}${esc(label)}${dmgType && isCrit ? ` (${esc(dmgType)})` : ''}</span>
-                    <span class="rpg-manual-badge">${isCrit ? '🔥 NAT 20 CRIT' : '🎲 REAL DICE'}</span>
+                    <span class="rpg-manual-title">${isCrit ? 'BRUTAL CRIT — ' : ''}${esc(label)}${dmgType && isCrit ? ` (${esc(dmgType)})` : ''}</span>
+                    <span class="rpg-manual-badge">${isCrit ? 'NAT 20 CRIT' : 'REAL DICE'}</span>
                 </div>
                 ${trayHtml}
                 ${cues.length ? `<div class="rpg-manual-hints">${cues.join('')}</div>` : ''}
-                ${opts.notes ? `<div class="rpg-manual-notes">${esc(opts.notes)}</div>` : ''}
-                ${opts.htmlNote ? `<div class="rpg-manual-notes">${opts.htmlNote}</div>` : ''}
+                ${spec.notes ? `<div class="rpg-manual-notes">${esc(spec.notes)}</div>` : ''}
+                ${spec.htmlNote ? `<div class="rpg-manual-notes">${spec.htmlNote}</div>` : ''}
                 ${buildManualButtonsHtml(actionBtns, followupPack)}
             </div>
         `;
@@ -15447,7 +15533,7 @@
         const actionBtns = [...(opts.extraButtons || [])];
         if (typeof opts.onDigitalRoll === 'function') {
             actionBtns.push({
-                label: '💻 Roll for Me',
+                label: '💻 Roll',
                 cls: 'btn-escape',
                 onClick: opts.onDigitalRoll
             });
@@ -15457,7 +15543,7 @@
             <div class="rpg-manual-card ${isTemp ? 'tone-temp' : 'tone-heal'}">
                 <div class="rpg-manual-head">
                     <span class="rpg-manual-title">${esc(label)}</span>
-                    <span class="rpg-manual-badge">🎲 REAL DICE</span>
+                    <span class="rpg-manual-badge">REAL DICE</span>
                 </div>
                 <div class="rpg-manual-tray-row">
                     <span class="rpg-manual-tray-lbl">Roll:</span>
@@ -15492,7 +15578,7 @@
         const actionBtns = [...(opts.extraButtons || [])];
         if (typeof opts.onDigitalRoll === 'function') {
             actionBtns.push({
-                label: '💻 Roll for Me',
+                label: '💻 Roll',
                 cls: 'btn-escape',
                 onClick: opts.onDigitalRoll
             });
@@ -15501,8 +15587,8 @@
         const html = `
             <div class="rpg-manual-card tone-spell">
                 <div class="rpg-manual-head">
-                    <span class="rpg-manual-title">${icon} ${esc(title)}</span>
-                    <span class="rpg-manual-badge">🎲 REAL DICE</span>
+                    <span class="rpg-manual-title">${icon ? `${icon} ` : ''}${esc(title)}</span>
+                    <span class="rpg-manual-badge">REAL DICE</span>
                 </div>
                 ${cues.length ? `<div class="rpg-manual-hints">${cues.join('')}</div>` : ''}
                 ${diceParts.length ? `<div class="rpg-manual-tray-row"><span class="rpg-manual-tray-lbl">Roll:</span> ${formatDicePillsHtml(diceParts, flatMod)} ${dmgType ? `<span style="color:#fca5a5; font-weight:800; font-size:0.78rem; margin-inline-start:3px;">${esc(dmgType)}</span>` : ''}</div>` : ''}
@@ -15516,10 +15602,12 @@
 
     // 💥 1-CLICK ATTACK ➔ DAMAGE & BRUTAL CRIT ENGINE INSIDE FLOATING ROLL HUD
     function setRollFollowup(spec) {
+        if (spec) pendingDamageAddons = null;
         pendingRollFollowup = spec ? { ...spec, ts: Date.now() } : null;
     }
 
-    function triggerRollFollowup(useCrit) {
+    function triggerRollFollowup(useCrit, ev) {
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
         const f = pendingRollFollowup;
         pendingRollFollowup = null;
         if (!f) return;
@@ -15541,6 +15629,7 @@
                 diceParts,
                 flatMod,
                 dmgType: opts.dmgType || '',
+                attackKind: opts.attackKind || inferAttackKind(null, opts.label || ''),
                 isCrit: true,
                 isSavage: Boolean(opts.isSavage),
                 notes: opts.notes || '',
@@ -15579,9 +15668,15 @@
             extraHtml += ` + <span style="color:#fde68a;">${r.max}+[${r.rolls.join('+')}] ${esc(ex.type || 'Bonus')}</span>`;
         });
         const modStr = flatMod > 0 ? ` + ${flatMod}` : (flatMod < 0 ? ` - ${Math.abs(flatMod)}` : '');
-        const msg = `🔥 <strong style="color:#facc15;">BRUTAL CRIT — ${esc(opts.label || 'Attack')}!</strong> Max(<strong>${maxBase}</strong>) + Roll([<strong>${rolled.arr.join('+')}</strong>])${savageNote}${modStr}${extraHtml} = <span style="font-size:1.18rem; color:#f87171; font-weight:900;">${total} ${esc(opts.dmgType || '')} Damage!</span>`;
+        const msg = `<strong style="color:#facc15;">BRUTAL CRIT — ${esc(opts.label || 'Attack')}:</strong> Max(<strong>${maxBase}</strong>) + Roll([<strong>${rolled.arr.join('+')}</strong>])${savageNote}${modStr}${extraHtml} = <span style="font-size:1.18rem; color:#f87171; font-weight:900;">${total} ${esc(opts.dmgType || '')} Damage!</span>`;
         if (opts.allowOnHitAddons !== false) {
-            setLastDamageContext({ total, isCrit: true, label: opts.label || 'Attack', allowOnHitAddons: true });
+            setLastDamageContext({
+                total,
+                isCrit: true,
+                label: opts.label || 'Attack',
+                attackKind: opts.attackKind || inferAttackKind(null, opts.label || ''),
+                allowOnHitAddons: true
+            });
         }
         if (adapter && adapter.log) adapter.log(msg);
     }
@@ -15974,6 +16069,7 @@
         if (typeof window.logRoll === 'function' && !window.__origLogRoll) {
             window.__origLogRoll = window.logRoll;
             window.logRoll = function (htmlMsg) {
+                activeDigitalDamageState = null;
                 window.__origLogRoll(htmlMsg);
                 const hudBody = document.getElementById('floating-roll-body');
                 if (!hudBody) return;
@@ -15981,43 +16077,32 @@
                     const f = pendingRollFollowup;
                     const isNat20 = /NAT 20|CRITICAL/i.test(String(htmlMsg || ''));
                     const wrap = document.createElement('div');
-                    wrap.className = 'rpg-hud-followup-wrap rpg-followup-host';
+                    wrap.className = 'rpg-hud-followup-wrap';
                     let btnsHtml = '';
                     if (isNat20 && typeof f.onCrit === 'function') {
-                        btnsHtml += `<button type="button" class="rpg-hud-crit-btn" onclick="COS_RPG.triggerRollFollowup(true)">${esc(f.critLabel || '🔥 ROLL BRUTAL CRIT!')}</button>`;
+                        btnsHtml += `<button type="button" class="rpg-hud-crit-btn" onclick="COS_RPG.triggerRollFollowup(true, event)">${esc(f.critLabel || 'Roll Brutal Crit')}</button>`;
                     } else if (typeof f.onDamage === 'function') {
-                        btnsHtml += `<button type="button" class="rpg-hud-followup-btn" onclick="COS_RPG.triggerRollFollowup(false)">${esc(f.label || '💥 Roll Damage')}</button>`;
-                    }
-                    let drawerHtml = '';
-                    if (!f.suppressOnHitAddons) {
-                        const eligible = resolveEligibleFollowups({
-                            phase: 'attack',
-                            isCrit: isNat20,
-                            isManual: false,
-                            label: f.label || '',
-                            attackKind: f.attackKind || inferAttackKind(null, f.label || String(htmlMsg || ''))
-                        });
-                        const pack = buildFollowupPillAndDrawer(eligible, { isCrit: isNat20 });
-                        if (pack.pillHtml) {
-                            btnsHtml += ` ${pack.pillHtml}`;
-                            drawerHtml = pack.drawerHtml;
-                        }
+                        btnsHtml += `<button type="button" class="rpg-hud-followup-btn" onclick="COS_RPG.triggerRollFollowup(false, event)">${esc(f.label || 'Roll Damage')}</button>`;
                     }
                     if (btnsHtml) {
-                        wrap.innerHTML = btnsHtml + drawerHtml;
+                        wrap.innerHTML = btnsHtml;
                         hudBody.appendChild(wrap);
                     }
                 } else if (pendingDamageAddons && (Date.now() - pendingDamageAddons.ts < 350)) {
                     const dCtx = pendingDamageAddons;
                     pendingDamageAddons = null;
                     if (dCtx.allowOnHitAddons !== false) {
+                        const appliedIds = Array.isArray(dCtx.appliedIds) ? [...dCtx.appliedIds] : [];
+                        const resolvedKind = dCtx.attackKind || inferAttackKind(null, dCtx.label || '');
                         const eligible = resolveEligibleFollowups({
                             phase: 'damage',
                             isCrit: Boolean(dCtx.isCrit),
                             lastDamageTotal: dCtx.total,
                             label: dCtx.label || '',
-                            attackKind: dCtx.attackKind || inferAttackKind(null, dCtx.label || ''),
-                            isManual: false
+                            attackKind: resolvedKind,
+                            isManual: false,
+                            appliedIds,
+                            appendDigitalAddon: appendDigitalDamageAddonToHud
                         });
                         const pack = buildFollowupPillAndDrawer(eligible, { isCrit: Boolean(dCtx.isCrit) });
                         if (pack.pillHtml) {
@@ -16025,6 +16110,16 @@
                             wrap.className = 'rpg-hud-followup-wrap rpg-followup-host';
                             wrap.innerHTML = pack.pillHtml + pack.drawerHtml;
                             hudBody.appendChild(wrap);
+                            activeDigitalDamageState = {
+                                baseTotal: dCtx.total,
+                                runningTotal: dCtx.total,
+                                isCrit: Boolean(dCtx.isCrit),
+                                label: dCtx.label || '',
+                                attackKind: resolvedKind,
+                                appliedIds,
+                                wrapEl: wrap,
+                                bodyEl: hudBody
+                            };
                         }
                     }
                 }

@@ -29,7 +29,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261122v12">
+    <link rel="stylesheet" href="cos_rpg_engine.css?v=20261125v2">
     <link rel="stylesheet" href="cos_sheet_theme.css?v=20261122v12">
     <style>
         @layer legacy {
@@ -1265,8 +1265,8 @@
                             </div>
                             <div class="action-desc">Ranged 120ft. <strong id="firebolt-hit-txt">+6 to Hit</strong>, <strong id="firebolt-dmg-txt">1d10</strong> Fire &amp; ignites flammable objects.</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" onclick="rollSpellAttack('Fire Bolt (Thumb-Fire Trick)')" id="btn-firebolt-atk">🔥 Attack (+6)</button>
-                                <button class="btn-roll-action btn-roll-dmg" onclick="rollFireBoltDamage()" id="btn-firebolt-dmg">💥 1d10 Fire</button>
+                                <button class="btn-roll-action" onclick="rollSpellAttack('Fire Bolt (Thumb-Fire Trick)')" id="btn-firebolt-atk">Attack (+6)</button>
+                                <button class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFireBoltDamage()" id="btn-firebolt-dmg">1d10 Fire</button>
                             </div>
                         </div>
 
@@ -1352,8 +1352,8 @@
                             <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Silvered Piercing</strong>. Bypasses nonmagical resistance/immunity of Vampire Spawn, Werewolves &amp; Night Hags!</div>
                             <div id="piper-mods-kolyan_dagger"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-kolyan" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Kolyan\'s Silvered Heirloom Dagger', 2, 'kolyan_dagger')">🗡️ Attack (+4)</button>
-                                <button id="btn-dmg-kolyan" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Kolyan\'s Silvered Heirloom Dagger', 4, 2, 'Silvered Piercing', 1, 'kolyan_dagger')">💥 1d4+2 Silver</button>
+                                <button id="btn-atk-kolyan" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Kolyan\'s Silvered Heirloom Dagger', 2, 'kolyan_dagger')">Attack (+4)</button>
+                                <button id="btn-dmg-kolyan" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFormulaDamage('Kolyan\'s Silvered Heirloom Dagger', 4, 2, 'Silvered Piercing', 1, 'kolyan_dagger')">1d4+2 Silver</button>
                             </div>
                         </div>
 
@@ -1371,9 +1371,9 @@
                             <div class="action-desc"><strong>+2 to Hit</strong>, <strong>1d6 Bludgeoning (1H)</strong> or <strong>1d8 Bludgeoning (2H)</strong>. Doubles as Piper's theatrical cane &amp; arcane focus.</div>
                             <div id="piper-mods-staff"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-staff" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Quarterstaff (Magician\'s Cane)', 0, 'staff')">🪄 Attack (+2)</button>
-                                <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning', 1, 'staff')">💥 2H (1d8)</button>
-                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg" style="display:none;" onclick="rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning', 1, 'staff')">💥 1H (1d6)</button>
+                                <button id="btn-atk-staff" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Quarterstaff (Magician\'s Cane)', 0, 'staff')">Attack (+2)</button>
+                                <button id="btn-dmg-staff-2h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFormulaDamage('Quarterstaff (2H)', 8, 0, 'Bludgeoning', 1, 'staff')">2H (1d8)</button>
+                                <button id="btn-dmg-staff-1h" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" style="display:none;" onclick="rollFormulaDamage('Quarterstaff (1H)', 6, 0, 'Bludgeoning', 1, 'staff')">1H (1d6)</button>
                             </div>
                         </div>
 
@@ -1391,9 +1391,9 @@
                             <div class="action-desc"><strong>+4 to Hit</strong>, <strong>1d4 + 2 Piercing</strong> (Main-Hand) or <strong>1d4 Piercing</strong> (Off-Hand Bonus Action).</div>
                             <div id="piper-mods-dagger"></div>
                             <div class="action-btn-row">
-                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Standard Dagger', 2, 'dagger')">🗡️ Attack (+4)</button>
-                                <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg" onclick="rollFormulaDamage('Standard Dagger', 4, 2, 'Piercing', 1, 'dagger')">💥 1d4+2</button>
-                                <button id="btn-dmg-dagger-oh" type="button" class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="rollFormulaDamage('Off-Hand Dagger', 4, 0, 'Piercing', 1, 'dagger')">Off-Hand 1d4</button>
+                                <button id="btn-atk-dagger" type="button" class="btn-roll-action" onclick="rollWeaponAttack('Standard Dagger', 2, 'dagger')">Attack (+4)</button>
+                                <button id="btn-dmg-dagger" type="button" class="btn-roll-action btn-roll-dmg rpg-manual-hide" onclick="rollFormulaDamage('Standard Dagger', 4, 2, 'Piercing', 1, 'dagger')">1d4+2</button>
+                                <button id="btn-dmg-dagger-oh" type="button" class="btn-act btn-act-pre rpg-manual-hide" style="font-size:0.68rem;" onclick="rollFormulaDamage('Off-Hand Dagger', 4, 0, 'Piercing', 1, 'dagger')">Off-Hand 1d4</button>
                             </div>
                         </div>
                     </div>
@@ -1697,7 +1697,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261122v13"></script>
+<script src="cos_rpg_engine.js?v=20261125v2"></script>
 <script>
     // ==========================================
     // 🎩 PIPER MASTER STATE VARIABLES (POST-SESSION 2 LONG REST)
@@ -1860,7 +1860,7 @@
                 setTimeout(() => {
                     const hudBody = document.getElementById('floating-roll-body');
                     if (hudBody) {
-                        hudBody.innerHTML += `<div style="margin-top:6px; padding:5px 8px; border-radius:6px; background:rgba(168,85,247,0.18); border:1px solid #c084fc; font-size:0.76rem; color:#f3e8ff;">🃏 <strong>Tides of Chaos Payback Primed!</strong> <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.7rem; margin-left:4px; color:#fde68a;" onclick="triggerWildMagicSurge('Tides of Chaos Payback after ${String(spellName || 'Spell').replace(/'/g, '')} (Lvl ${slotLevel})', true)">⚡ Spin Wild Magic d100 Surge!</button></div>`;
+                        hudBody.insertAdjacentHTML('beforeend', `<div style="margin-top:6px; padding:5px 8px; border-radius:6px; background:rgba(168,85,247,0.18); border:1px solid #c084fc; font-size:0.76rem; color:#f3e8ff;">🃏 <strong>Tides of Chaos Payback Primed!</strong> <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.7rem; margin-left:4px; color:#fde68a;" onclick="event.stopPropagation(); triggerWildMagicSurge('Tides of Chaos Payback after ${String(spellName || 'Spell').replace(/'/g, '')} (Lvl ${slotLevel})', true)">Spin Wild Magic d100 Surge</button></div>`);
                     }
                 }, 60);
                 return;
@@ -1877,7 +1877,7 @@
                 setTimeout(() => {
                     const hudBody = document.getElementById('floating-roll-body');
                     if (hudBody) {
-                        hudBody.innerHTML += `<div style="margin-top:6px; padding:5px 8px; border-radius:6px; background:rgba(30,41,59,0.85); border:1px solid #64748b; font-size:0.75rem; color:#e2e8f0; display:flex; align-items:center; flex-wrap:wrap; gap:5px;">🎲 <strong>Wild Magic Check:</strong> Roll physical <code>1d20</code> (Nat 1 = Surge!) <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.69rem; color:#fde68a;" onclick="triggerWildMagicSurge('Nat 1 Physical d20 after ${String(spellName || 'Spell').replace(/'/g, '')}')">💥 Rolled a 1! Spin d100</button> <button type="button" class="btn-act btn-act-pre" style="padding:2px 7px; font-size:0.68rem;" onclick="COS_RPG.runManualDigitalFallback(() => rollWildMagicD20Check('Wild Check after ${String(spellName || 'Spell').replace(/'/g, '')}'))">💻 Roll d20</button></div>`;
+                        hudBody.insertAdjacentHTML('beforeend', `<div style="margin-top:6px; padding:5px 8px; border-radius:6px; background:rgba(30,41,59,0.85); border:1px solid #64748b; font-size:0.75rem; color:#e2e8f0; display:flex; align-items:center; flex-wrap:wrap; gap:5px;">🎲 <strong>Wild Magic Check:</strong> Roll physical <code>1d20</code> (Nat 1 = Surge!) <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.69rem; color:#fde68a;" onclick="event.stopPropagation(); triggerWildMagicSurge('Nat 1 Physical d20 after ${String(spellName || 'Spell').replace(/'/g, '')}')">Rolled a 1 — Spin d100</button> <button type="button" class="btn-act btn-act-pre" style="padding:2px 7px; font-size:0.68rem;" onclick="event.stopPropagation(); COS_RPG.runManualDigitalFallback(() => rollWildMagicD20Check('Wild Check after ${String(spellName || 'Spell').replace(/'/g, '')}'))">💻 Roll d20</button></div>`);
                     }
                 }, 60);
                 return;
@@ -1888,9 +1888,9 @@
                     triggerWildMagicSurge(`Nat 1 on Wild Magic Check [d20 = 1] after ${spellName}!`, false);
                 }, 60);
             } else {
-                const checkBadge = ` <span style="margin-left:6px; padding:2px 7px; border-radius:4px; background:#1e293b; border:1px solid #475569; font-size:0.76rem; color:#cbd5e1;">🎲 Wild Check d20: <strong>${d20}</strong> (Safe) <button class="btn-act btn-act-pre" style="padding:1px 6px; font-size:0.68rem; margin-left:4px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Surge Override')">💥 Surge Anyway</button></span>`;
+                const checkBadge = ` <span style="margin-left:6px; padding:2px 7px; border-radius:4px; background:#1e293b; border:1px solid #475569; font-size:0.76rem; color:#cbd5e1;">🎲 Wild Check d20: <strong>${d20}</strong> (Safe) <button class="btn-act btn-act-pre" style="padding:1px 6px; font-size:0.68rem; margin-left:4px; color:#fde68a;" onclick="event.stopPropagation(); triggerWildMagicSurge('Manual Surge Override')">Surge Anyway</button></span>`;
                 const hudBody = document.getElementById('floating-roll-body');
-                if (hudBody) hudBody.innerHTML += checkBadge;
+                if (hudBody) hudBody.insertAdjacentHTML('beforeend', checkBadge);
             }
         }
     }
@@ -2197,8 +2197,8 @@
                 3: "Lvl 3 (2d8+3d6)"
             },
             buttons: [
-                { label: "🎯 Attack (+6)", class: "btn-roll-action", costSlot: false, onClick: () => rollSpellAttack('Chaos Bolt Attack') },
-                { label: "🌈 Cast & Roll Chaos (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => rollChaosBoltScaled(lvl) }
+                { label: "Attack (+6)", class: "btn-roll-action rpg-manual-hide", costSlot: false, onClick: (lvl) => rollChaosBoltAttack(lvl) },
+                { label: "Cast Chaos Bolt (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => rollChaosBoltScaled(lvl) }
             ]
         },
         {
@@ -2589,23 +2589,53 @@
     // ==========================================
     // 🎲 SPELL EXECUTION & CHAOS BOLT ENGINE
     // ==========================================
-    function rollChaosBoltScaled(slotLevel, forceCrit = false) {
+    function rollChaosBoltAttack(slotLevel) {
+        const lvl = slotLevel || 1;
+        if (window.COS_RPG) {
+            COS_RPG.setRollFollowup({
+                label: `Roll Chaos Bolt (2d8+${lvl}d6)`,
+                critLabel: `Roll Brutal Crit Chaos Bolt`,
+                attackKind: 'spell',
+                onDamage: () => rollChaosBoltScaled(lvl, false, true),
+                onCrit: () => rollChaosBoltScaled(lvl, true, true)
+            });
+        }
+        rollD20(`Chaos Bolt (Lvl ${lvl})`, getSpellAttackMod());
+    }
+
+    function rollChaosBoltScaled(slotLevel, forceCrit = false, skipAttackPrompt = false) {
         const lvl = slotLevel || 1;
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            // In Real Dice 1-button flow, Cast Chaos Bolt opens Attack Guide first with Hit/Nat 20 embedded!
+            if (!skipAttackPrompt && !forceCrit) {
+                COS_RPG.logManualD20({
+                    label: `Chaos Bolt (Level ${lvl} Slot)`,
+                    mod: getSpellAttackMod(),
+                    mode: rollMode,
+                    attackKind: 'spell',
+                    notes: `Ranged Spell Attack (120 ft) • On Hit: 2d8 + ${lvl}d6 Elemental${activeRobe === 'red' ? ' + 1d4+1 Red Robe Fire' : ''}`,
+                    suppressPendingFollowup: true,
+                    onHit: () => rollChaosBoltScaled(lvl, false, true),
+                    onCrit: () => rollChaosBoltScaled(lvl, true, true),
+                    onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltAttack(lvl))
+                });
+                return;
+            }
             const parts = [
                 { expr: '2d8', type: 'Elemental Core' },
                 { expr: `${lvl}d6`, type: 'Chaos Bolt' }
             ];
             if (activeRobe === 'red') parts.push({ expr: '1d4+1', type: 'Red Robe Fire' });
             COS_RPG.logManualDamage({
-                label: `🌈 Chaos Bolt (Level ${lvl} Slot)`,
+                label: `Chaos Bolt (Level ${lvl} Slot)`,
                 diceParts: parts,
                 dmgType: 'Elemental',
+                attackKind: 'spell',
                 isCrit: Boolean(forceCrit),
                 allowOnHitAddons: false,
-                htmlNote: `<strong>d8 Element Chart:</strong> 1=Acid • 2=Cold • 3=Fire • 4=Force • 5=Lightning • 6=Poison • 7=Psychic • 8=Thunder.<br><span style="color:#fde68a;">⚡ If both d8s match, CHAOS LEAP triggers to a 2nd target within 30 ft!</span>`,
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl, false)),
-                onDigitalCritRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl, true))
+                htmlNote: `<strong>d8 Element Chart:</strong> 1=Acid • 2=Cold • 3=Fire • 4=Force • 5=Lightning • 6=Poison • 7=Psychic • 8=Thunder.<br><span style="color:#fde68a;">If both d8s match, CHAOS LEAP triggers to a 2nd target within 30 ft.</span>`,
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl, false, true)),
+                onDigitalCritRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl, true, true))
             });
             return;
         }
@@ -2681,8 +2711,9 @@
             const diceCount = characterLevel >= 5 ? 2 : 1;
             const extras = activeRobe === 'red' ? [{ dice: '1d4+1', type: 'Red Robe Fire' }] : [];
             COS_RPG.setRollFollowup({
-                label: `💥 Roll Fire Bolt Damage (${diceCount}d10${activeRobe === 'red' ? '+1d4+1' : ''})`,
-                critLabel: `🔥 ROLL BRUTAL CRIT! (${diceCount * 10} + ${diceCount}d10 Fire)`,
+                label: `Roll Fire Bolt Damage (${diceCount}d10${activeRobe === 'red' ? '+1d4+1' : ''})`,
+                critLabel: `Roll Brutal Crit (${diceCount * 10} + ${diceCount}d10 Fire)`,
+                attackKind: 'spell',
                 onDamage: () => rollFireBoltDamage(),
                 onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Fire Bolt', diceCount, sides: 10, flatMod: 0, dmgType: 'Fire', extras })
             });
@@ -2708,8 +2739,8 @@
                 const flatMod = 2 + (wMods.dmgBonus || 0);
                 const dType = (weaponId === 'kolyan_dagger' || wMods.isSilvered) ? 'Silvered Piercing' : 'Piercing';
                 COS_RPG.setRollFollowup({
-                    label: `💥 Roll Dagger Damage (1d4+${flatMod})`,
-                    critLabel: `🔥 ROLL BRUTAL CRIT! (4 + 1d4+${flatMod})`,
+                    label: `Roll Dagger Damage (1d4+${flatMod})`,
+                    critLabel: `Roll Brutal Crit (4 + 1d4+${flatMod})`,
                     onDamage: () => rollFormulaDamage(label, 4, 2, dType, 1, weaponId),
                     onCrit: () => COS_RPG.rollBrutalCrit({ label, diceCount: 1, sides: 4, flatMod, dmgType: dType, extras })
                 });
@@ -2720,8 +2751,8 @@
                 const flatMod = wMods.dmgBonus || 0;
                 const dType = wMods.isSilvered ? 'Silvered Bludgeoning' : 'Bludgeoning';
                 COS_RPG.setRollFollowup({
-                    label: `💥 Roll Quarterstaff (${is2H ? '2H 1d8' : '1H 1d6'}${flatMod ? '+' + flatMod : ''})`,
-                    critLabel: `🔥 ROLL BRUTAL CRIT! (${sides} + 1d${sides}${flatMod ? '+' + flatMod : ''})`,
+                    label: `Roll Quarterstaff (${is2H ? '2H 1d8' : '1H 1d6'}${flatMod ? '+' + flatMod : ''})`,
+                    critLabel: `Roll Brutal Crit (${sides} + 1d${sides}${flatMod ? '+' + flatMod : ''})`,
                     onDamage: () => rollFormulaDamage(`Quarterstaff (${is2H ? '2H' : '1H'})`, sides, 0, dType, 1, 'staff'),
                     onCrit: () => COS_RPG.rollBrutalCrit({ label: `Quarterstaff (${is2H ? '2H' : '1H'})`, diceCount: 1, sides, flatMod, dmgType: dType, extras })
                 });
@@ -2805,8 +2836,8 @@
         document.getElementById('firebolt-tag-disp').innerText = `Cantrip • 1 Action • 120ft (${fbDice})`;
         document.getElementById('firebolt-hit-txt').innerText = `+${hit} to Hit`;
         document.getElementById('firebolt-dmg-txt').innerText = fbDice;
-        document.getElementById('btn-firebolt-atk').innerText = `🔥 Attack (+${hit})`;
-        document.getElementById('btn-firebolt-dmg').innerText = `💥 ${fbDice} Fire`;
+        document.getElementById('btn-firebolt-atk').innerText = `Attack (+${hit})`;
+        document.getElementById('btn-firebolt-dmg').innerText = `${fbDice} Fire`;
 
         updateHPUI();
         updateSorceryPointsUI();
@@ -3309,7 +3340,7 @@
             arcBadge.style.display = (activeRobe === 'green') ? 'inline' : 'none';
         }
         if (fbDmgBtn) {
-            fbDmgBtn.innerText = (activeRobe === 'red') ? `💥 ${fbDice}+1d4+1 Fire` : `💥 ${fbDice} Fire`;
+            fbDmgBtn.innerText = (activeRobe === 'red') ? `${fbDice}+1d4+1 Fire` : `${fbDice} Fire`;
         }
         updateACDisplay();
         updateSavesUI();
@@ -5407,7 +5438,7 @@
                     initEl.innerText = totInit >= 0 ? `+${totInit}` : `${totInit}`;
                 }
                 const fbAtk = document.getElementById('btn-firebolt-atk');
-                if (fbAtk) fbAtk.innerText = `🔥 Attack (+${getSpellAttackMod()})`;
+                if (fbAtk) fbAtk.innerText = `Attack (+${getSpellAttackMod()})`;
                 const fbTxt = document.getElementById('firebolt-hit-txt');
                 if (fbTxt) fbTxt.innerText = `+${getSpellAttackMod()} to Hit`;
 
@@ -5433,8 +5464,8 @@
                 const kEx = (kMods.extras || []).map(e => `+${e.dice}`).join('');
                 const btnAtkKol = document.getElementById('btn-atk-kolyan');
                 const btnDmgKol = document.getElementById('btn-dmg-kolyan');
-                if (btnAtkKol) btnAtkKol.textContent = `🗡️ Attack (${fmtFlat(2 + pb + (kMods.atkBonus || 0)) || '+0'})`;
-                if (btnDmgKol) btnDmgKol.textContent = `💥 1d4${fmtFlat(2 + (kMods.dmgBonus || 0))}${kEx} Silver`;
+                if (btnAtkKol) btnAtkKol.textContent = `Attack (${fmtFlat(2 + pb + (kMods.atkBonus || 0)) || '+0'})`;
+                if (btnDmgKol) btnDmgKol.textContent = `1d4${fmtFlat(2 + (kMods.dmgBonus || 0))}${kEx} Silver`;
 
                 const staffHit = bonuses.equippedWeaponTags.find(w => w.tag === 'staff');
                 const staffIs2H = Boolean(staffHit && staffHit.grip === '2h');
@@ -5450,13 +5481,13 @@
                 const btnAtkStaff = document.getElementById('btn-atk-staff');
                 const btnDmgStaff2h = document.getElementById('btn-dmg-staff-2h');
                 const btnDmgStaff1h = document.getElementById('btn-dmg-staff-1h');
-                if (btnAtkStaff) btnAtkStaff.textContent = `🪄 Attack (${fmtFlat(pb + (sMods.atkBonus || 0)) || '+0'})`;
+                if (btnAtkStaff) btnAtkStaff.textContent = `Attack (${fmtFlat(pb + (sMods.atkBonus || 0)) || '+0'})`;
                 if (btnDmgStaff2h) {
-                    btnDmgStaff2h.textContent = `💥 2H (1d8${sDmgFlat}${sEx})`;
+                    btnDmgStaff2h.textContent = `2H (1d8${sDmgFlat}${sEx})`;
                     btnDmgStaff2h.style.display = staffIs2H ? '' : 'none';
                 }
                 if (btnDmgStaff1h) {
-                    btnDmgStaff1h.textContent = `💥 1H (1d6${sDmgFlat}${sEx})`;
+                    btnDmgStaff1h.textContent = `1H (1d6${sDmgFlat}${sEx})`;
                     btnDmgStaff1h.style.display = staffIs2H ? 'none' : '';
                 }
 
@@ -5466,8 +5497,8 @@
                 const btnAtkDag = document.getElementById('btn-atk-dagger');
                 const btnDmgDag = document.getElementById('btn-dmg-dagger');
                 const btnDmgDagOh = document.getElementById('btn-dmg-dagger-oh');
-                if (btnAtkDag) btnAtkDag.textContent = `🗡️ Attack (+${2 + pb + (dMods.atkBonus || 0)})`;
-                if (btnDmgDag) btnDmgDag.textContent = `💥 1d4+${2 + (dMods.dmgBonus || 0)}${dEx}`;
+                if (btnAtkDag) btnAtkDag.textContent = `Attack (+${2 + pb + (dMods.atkBonus || 0)})`;
+                if (btnDmgDag) btnDmgDag.textContent = `1d4+${2 + (dMods.dmgBonus || 0)}${dEx}`;
                 if (btnDmgDagOh) btnDmgDagOh.textContent = `Off-Hand 1d4${dOhFlat}${dEx}`;
             }
         });

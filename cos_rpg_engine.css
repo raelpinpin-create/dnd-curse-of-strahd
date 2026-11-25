@@ -2576,6 +2576,11 @@ header.header-banner .pill-badge-group {
 /* =========================================================================
    🎲 REAL DICE (MANUAL TABLE MODE) — GUIDE CARDS, POLYHEDRAL PILLS & FORMS
    ========================================================================= */
+/* 1-Button Action Cards in Real Dice Mode (Digital Mode keeps 2 buttons!) */
+:root[data-dice-mode="manual"] .rpg-manual-hide {
+    display: none !important;
+}
+
 .rpg-dice-mode-btn {
     border-color: rgba(148, 163, 184, 0.42);
     color: #cbd5e1;
@@ -2964,10 +2969,74 @@ header.header-banner .pill-badge-group {
     background: linear-gradient(135deg, rgba(161, 98, 7, 0.45) 0%, rgba(127, 29, 29, 0.45) 100%);
     color: #fef08a;
 }
+.rpg-followup-pill.is-direct {
+    border-color: rgba(251, 191, 36, 0.65);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.94) 0%, rgba(15, 23, 42, 0.96) 100%);
+    color: #fef3c7;
+}
+.rpg-followup-pill.is-direct:hover {
+    border-color: #fbbf24;
+    background: linear-gradient(135deg, rgba(180, 83, 9, 0.42) 0%, rgba(30, 41, 59, 0.96) 100%);
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.25);
+}
 .rpg-followup-pill[aria-expanded="true"] {
     border-color: #fbbf24;
     background: rgba(180, 83, 9, 0.36);
     color: #fef3c7;
+}
+
+/* Inline Digital Damage Add-On Breakdown + Live Combined Total */
+.rpg-dmg-addon-line {
+    width: 100%;
+    margin-top: 6px;
+    padding: 6px 10px;
+    border-radius: 7px;
+    background: rgba(15, 23, 42, 0.86);
+    border: 1px solid rgba(251, 191, 36, 0.42);
+    border-inline-start: 3px solid #f59e0b;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 0.84rem;
+    color: #f8fafc;
+}
+.rpg-dmg-addon-main {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.rpg-dmg-addon-name {
+    font-weight: 800;
+    color: #fde68a;
+}
+.rpg-dmg-addon-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: #cbd5e1;
+}
+.rpg-dmg-addon-bonus {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    color: #f87171;
+}
+.rpg-dmg-addon-arrow {
+    color: #94a3b8;
+    font-weight: 700;
+}
+.rpg-dmg-grand-total {
+    font-size: 0.96rem;
+    font-weight: 900;
+    color: #4ade80;
+    padding: 1px 7px;
+    border-radius: 5px;
+    background: rgba(20, 83, 45, 0.42);
+    border: 1px solid rgba(74, 222, 128, 0.52);
+}
+.rpg-dmg-addon-note {
+    font-size: 0.74rem;
+    color: #cbd5e1;
+    line-height: 1.35;
 }
 .rpg-followup-caret {
     display: inline-block;
@@ -3009,6 +3078,31 @@ header.header-banner .pill-badge-group {
     background: #fef3c7;
     border-color: #b45309;
     color: #78350f;
+}
+[data-theme="parchment"] .rpg-followup-pill.is-direct {
+    background: #fef3c7;
+    border-color: #b45309;
+    color: #78350f;
+}
+[data-theme="parchment"] .rpg-dmg-addon-line {
+    background: #f5efe2;
+    border-color: #b45309;
+    color: #1c1917;
+}
+[data-theme="parchment"] .rpg-dmg-addon-name {
+    color: #92400e;
+}
+[data-theme="parchment"] .rpg-dmg-addon-formula,
+[data-theme="parchment"] .rpg-dmg-addon-note {
+    color: #44403c;
+}
+[data-theme="parchment"] .rpg-dmg-addon-bonus {
+    color: #b91c1c;
+}
+[data-theme="parchment"] .rpg-dmg-grand-total {
+    background: #dcfce7;
+    border-color: #15803d;
+    color: #14532d;
 }
 [data-theme="parchment"] .rpg-followup-drawer {
     background: #f1e9d8;
