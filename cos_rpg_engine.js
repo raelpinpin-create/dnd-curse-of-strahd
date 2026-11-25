@@ -2573,14 +2573,14 @@
             category: 'crafting',
             craftAs: 'pelt_canvas',
             slots: [],
-            summary: 'Crafting Material • Counts as Pelt / Canvas for Mist-Ward Camp Kit!'
+            summary: 'Heavy Hide / Canvas • Useful for sturdy camp gear or trade'
         },
         {
             match: ['silver-veined quartz'],
             category: 'crafting',
             craftAs: 'silver_dust',
             slots: [],
-            summary: 'Crafting Material • Counts as Silver Dust for Holy Water, Coatings & Camp Kits!'
+            summary: 'Raw Silver Ore • Valuable to silversmiths, alchemists, or merchants'
         },
         // --- NEW EXPLORATION CRAFTABLES & NPC CONVERSION ITEMS (Match BEFORE raw reagents!) ---
         {
@@ -2963,7 +2963,7 @@
             category: 'gear',
             craftAs: 'silver_scrap',
             slots: [],
-            summary: '10 GP Silverware • Smelt at Forge/Craft into Powdered Silver Dust or 5x Silvered Ammo!'
+            summary: 'Old Silverware (10 GP) • Sell for coin, or bring to a smith / Vistani forge'
         },
         {
             match: ['scroll of lesser restoration'],
@@ -3472,7 +3472,7 @@
             match: ['mist-ward', 'camp kit', 'traveler\'s camp'],
             name: "Mist-Ward Traveler's Camp Kit",
             category: "PERMANENT SURVIVAL GEAR • Wilderness Long Rest Shelter",
-            origin: "Selected Barovian Outfitters (25–50 GP) or Craftable (MIST-CAMP)",
+            origin: "Barovian Expedition Gear",
             desc: "A rugged expedition shelter woven from pitch-sealed Dire Wolf hides, heavy waxed canvas, cedar perimeter stakes, a smokeless trench brazier, and silver-salt wolfbane cord.",
             effect: "• <strong>True Wilderness Long Rest (10 Min Setup • 4–6 Travelers):</strong> Allows the party to complete a <strong>full uninterrupted True Long Rest</strong> outdoors in the Svalich Woods or on the road (restoring 100% HP, Spell Slots, Sorcery Points, Superiority Dice, Help Tokens, &amp; clearing 1 Exhaustion level).<br>• <strong>Perimeter Ward &amp; Storm Cover:</strong> Grants <strong>+5 Group Stealth / Passive Perception</strong> against road patrols, chimes softly if beasts/undead cross within 30 ft, and grants <strong>Advantage on CON Saves</strong> vs freezing mountain weather.<br>• <em>Reusable permanent gear (must pitch on dry ground outside active dungeon rooms).</em>"
         },
@@ -3647,8 +3647,8 @@
         {
             match: ['witch-iron oil', 'witch-iron vial', 'bog-witch'],
             name: "Witch-Iron Oil Vial",
-            category: "RARE ENHANCEMENT VIAL • Full Magazine / Blade • Craftable (WITCH-IRON)",
-            origin: "Found rarely in Berez Swamp Ruins / Iron Trunk (U3) or crafted once Carved Bog-Witch Runestone (WITCH-IRON) is learned",
+            category: "RARE ENHANCEMENT VIAL • Full Magazine / Blade",
+            origin: "Barovian Hedge-Alchemy",
             desc: "Viscous swamp-alchemical oil etched with cold hedge-magic shimmer that binds instantly to lead, steel, or brass.",
             effect: "• <strong>Coat Weapon or Full Magazine (Bonus Action / Free Pre-Combat):</strong> Press <strong>Coat</strong> in Backpack to coat either a <strong>full loaded firearm/crossbow/bow magazine</strong> (turning every round inside into +1 Hex-Iron rounds!) OR <strong>1 melee weapon</strong> for 1 hour (<strong>+1 Attack &amp; +1 Magical Damage</strong>, bypassing nonmagical resistance)."
         },
@@ -3656,15 +3656,15 @@
             match: ['hex-iron bullets', 'witch-iron bullets', 'baba lysaga', '+1 magical sling', '+1 firearm bullets', '+1 bullets'],
             name: "Hex-Iron Bullets",
             category: "ENCHANTED AMMUNITION • +1 Hit / +1 Magical Damage",
-            origin: "Coated with a Witch-Iron Oil Vial (or returned on Reload/Unload)",
+            origin: "Hedge-Enchanted Munitions",
             desc: "Lead-and-silver rounds shimmering with dark hedge-enchanted witch-iron.",
             effect: "• <strong>Load Into Firearm (Bonus Action):</strong> Grants a <strong>+1 bonus to Attack and Damage rolls</strong> and overcomes nonmagical resistances."
         },
         {
             match: ['incendiary oil vial', 'brimstone spark-oil', 'incendiary vial'],
             name: "Incendiary Oil Vial",
-            category: "ALCHEMICAL COATING VIAL • Full Magazine / Blade • Craftable (INCENDIARY-VIAL)",
-            origin: "Crafted (1x Brimstone Sulfur + 1x Pine Pitch & Lamp Oil) or bought at Arasek Stockyard / Petru Forge",
+            category: "ALCHEMICAL COATING VIAL • Full Magazine / Blade",
+            origin: "Barovian Alchemical Coating",
             desc: "Amber bottle of stabilized liquid brimstone formulated to glaze bullets or steel blades without fouling barrels.",
             effect: "• <strong>Coat Weapon or Magazine (Bonus Action / Free Pre-Combat):</strong> Press <strong>Coat</strong> in Backpack to coat up to <strong>10 loaded rounds</strong> (turning them into Incendiary Rounds/Arrows/Bolts) OR coat <strong>1 melee weapon</strong> for 10 minutes (<strong>+1d4 Fire damage</strong> on hit!)."
         },
@@ -3743,25 +3743,25 @@
         {
             match: ['oil of sharpness'],
             name: "Oil of Sharpness",
-            category: "VERY RARE COATING VIAL • Area U3",
-            origin: "Baba Lysaga's Creeping Hut Chest (Berez Area U3)",
+            category: "VERY RARE COATING VIAL • Masterwork Alchemy",
+            origin: "Rare Barovian Hoard",
             desc: "Clear, gelatinous alchemical oil shimmering with suspended silver diamond-shards.",
             effect: "• <strong>Coat Blade or Magazine (1 Action in Combat / Free Pre-Combat):</strong> Press <strong>Coat</strong> in Backpack to buff a slashing/piercing melee blade (1 hr) OR coat the front <strong>5 rounds</strong> of a ranged weapon for <strong>+3 Attack and +3 Damage</strong>!"
         },
         {
             match: ['wyvern venom', 'wyvern-venom'],
-            name: "Arrigal's Wyvern Venom Vial",
-            category: "RARE LETHAL VENOM VIAL • Area N9",
-            origin: "Arrigal's Assassin Belt (Vallaki Vistani Camp Area N9)",
+            name: "Wyvern Venom Vial",
+            category: "RARE LETHAL VENOM VIAL • Assassin Toxin",
+            origin: "Exotic Poisoner's Stock",
             desc: "Concentrated amber mountain-wyvern venom bottled in slender black glass ampoules.",
             effect: "• <strong>Coat Blade or Round (Bonus Action):</strong> Press <strong>Coat</strong> in Backpack to coat a slashing/piercing melee blade (next hit) OR 1 round per dose of a loaded ranged weapon. Forces a <strong>DC 15 CON Save or takes 7d6 Poison damage</strong> (half on success)."
         },
         {
             match: ['pale tincture'],
             name: "Pale Tincture Vial",
-            category: "RARE POISON COATING VIAL • Area O3",
-            origin: "Old Bonegrinder Cabinet (Area O3) or Wachterhaus Cellar",
-            desc: "Oily translucent hag poison that clings cleanly to cold steel and lead tips.",
+            category: "RARE POISON COATING VIAL • Toxic Serum",
+            origin: "Alchemical Toxin",
+            desc: "Oily translucent poison that clings cleanly to cold steel and lead tips.",
             effect: "• <strong>Coat Blade or Rounds (Bonus Action):</strong> Press <strong>Coat</strong> to coat 1 slashing/piercing melee blade (1 min) OR up to 3 loaded rounds. Target makes a <strong>DC 16 CON Save or takes +1d6 Poison damage and becomes Poisoned</strong>."
         },
         {
@@ -3815,74 +3815,74 @@
         {
             match: ['shard of the heart of sorrow', 'sorrow-crystal core', 'sorrow shard', 'heart of sorrow'],
             name: "Shard of the Heart of Sorrow",
-            category: "LEGENDARY UNIQUE CRAFTING RELIC • Strict 1-Per-Campaign Opportunity",
-            origin: "Castle Ravenloft North Tower (Recovered ONLY Upon Shattering K20 Heart of Sorrow)",
-            desc: "A cold, fist-sized prism of Khazan's blood-forged ruby crystal recovered intact from the shattered ruins of Strahd's 50-HP Heart of Sorrow (Area K20) — entirely distinct from Morgantha's Night Hag Heartstone and the Winery Life-Gems.",
-            effect: "• <strong>Single Campaign Opportunity (1 Only):</strong> Only ONE intact Sorrow-Crystal core can ever be salvaged before the rest dissolves into crimson mist.<br>• <strong>Legendary Recipe Reagent (<code>HEART-ELIXIR</code>):</strong> Combine <code>1x Shard of the Heart of Sorrow</code> with <code>2x Alchemical Catalyst + 1x Svalich Moonpetal Blossom + 1x Pure Spring Water</code> to distill Barovia's sole crafted <strong>Elixir of Health</strong>. Crafting consumes this crystal permanently.",
+            category: "MYSTERIOUS CRIMSON CRYSTAL • Unique Relic Fragment",
+            origin: "Shattered Crystal Relic",
+            desc: "A cold, fist-sized prism of dark ruby crystal that pulses faintly in the palm like a slowed heartbeat, humming with dense ancient magic.",
+            effect: "• <strong>Unusual Relic Core:</strong> Far too potent for ordinary field brewing. Only an ancient arcane scholar, forbidden text, or master alchemist might know how to unlock its true potential.",
             isCraftableReagent: true
         },
         {
             match: ['elixir of health', 'elixir of life'],
             name: "Elixir of Health",
-            category: "LEGENDARY REVIVAL POTION • Extra Rare (5,000 GP / 15,000 GP Royal Market)",
-            origin: "Martikov Secret Loft (Area N2q) OR Heartstone Transmutation Ritual (HEART-ELIXIR)",
-            desc: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—an ultra-rare heirloom either hidden in the Martikov loft (N2q) or distilled once via ancient Barovian alchemy.",
-            effect: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest.<br>• <strong>Extra Rare &amp; Expensive (<code>5,000 GP</code> Base / <code>15,000 GP</code> Royal Market):</strong> Cannot be brewed from ordinary herbs—requires ancient secrets and a sacrificed Heartstone artifact."
+            category: "LEGENDARY REVIVAL POTION • Extra Rare",
+            origin: "Ancient Barovian Masterwork Elixir",
+            desc: "A glowing golden-crimson draught radiating uncorrupted vitality and divine restoration—an exceedingly rare restorative few in Barovia have ever seen.",
+            effect: "• <strong>Action (Within 1 Minute of Death):</strong> Administer to a creature that has died within the last minute. The creature returns to life with <strong>Hit Points equal to half of its maximum HP (50%)</strong>, and any <strong>severed limbs are knit back together</strong>!<br>• <strong>Aftermath Penalty:</strong> The revived creature suffers a <strong>-2 penalty to all attack rolls, saving throws, and ability checks</strong> until finishing a Long Rest."
         },
         {
             match: ['antitoxin'],
             name: "Barovian Antitoxin Tonic",
-            category: "CRAFTED CONSUMABLE • Unlock Code: WOLFBANE",
-            origin: "Crafted (2x Medicinal Herbs + 1x Svalich Wolfbane Root) or Apothecary (5 GP)",
+            category: "ALCHEMICAL CONSUMABLE • Poison Remedy",
+            origin: "Barovian Herbal Remedy",
             desc: "A sharp, pine-bitter purple draught brewed to neutralize swamp serpents, spider venom, and hag toxins.",
             effect: "• <strong>Action to Drink (1-Hour Duration):</strong> Grants <strong>Advantage on Saving Throws against Poison</strong> (and against the Poisoned condition) for <strong>1 full hour</strong>."
         },
         {
             match: ['liquid silver'],
             name: "Liquid Silver Vial",
-            category: "CRAFTED COATING VIAL • Unlock Code: SILVER-COAT",
-            origin: "Crafted (1x Powdered Silver Dust + 1x Pine Pitch & Lamp Oil) or Bought (25 GP)",
+            category: "ALCHEMICAL COATING VIAL • Silvered Treatment",
+            origin: "Silversmith's Oil",
             desc: "A swirling glass phial of pure silver filings suspended in amber pine resin oil.",
             effect: "• <strong>Coat Melee Blade or Full Magazine (Bonus Action / Free Pre-Combat):</strong> Press <strong>Coat</strong> in Backpack to coat either <strong>1 melee weapon</strong> (1 hour) OR a <strong>full loaded magazine (up to 10 rounds)</strong>. Coated weapons &amp; rounds count as <strong>Silvered</strong> (remaining coated rounds return as Silvered Bullets/Arrows/Bolts on Reload/Unload)."
         },
         {
             match: ['alchemist\'s fire'],
             name: "Alchemist's Fire Flask",
-            category: "CRAFTED TACTICAL WEAPON • Unlock Code: BRIMSTONE",
-            origin: "Crafted (1x Brimstone Sulfur + 1x Pine Pitch & Lamp Oil) / Area V1",
+            category: "TACTICAL ALCHEMICAL FLASK • Incendiary",
+            origin: "Volatile Alchemy",
             desc: "A wax-sealed clay flask packed with volatile sulfur pitch that bursts into clinging flame on impact.",
             effect: "• <strong>Action (Ranged Attack, 20 ft):</strong> On a hit, the target takes <strong>1d4 Fire damage at the start of each of its turns</strong> until a creature uses an Action to pass a <strong>DC 10 DEX Check</strong> to extinguish the flames."
         },
         {
             match: ['phosphor'],
             name: "Alchemical Phosphor Flash-Bomb",
-            category: "CRAFTED TACTICAL GADGET • Unlock Code: PHOSPHOR / Area V1",
-            origin: "Crafted (1x Brimstone + 1x Silver Dust + 1x Catalyst) / Ezmerelda's Wagon V1",
+            category: "TACTICAL ALCHEMICAL GADGET • Flash-Bomb",
+            origin: "Hunter's Munition",
             desc: "A brass-seamed glass sphere packed with white phosphorus, magnesium flakes, and powdered silver.",
             effect: "• <strong>Action (Throw 30 ft, 10-ft Radius):</strong> Targets make a <strong>DC 13 DEX or CON Save</strong> or take <strong>2d6 Fire/Radiant damage</strong> and are <strong>Blinded until the end of their next turn</strong> (also illuminates magical blood-mist &amp; invisible foes!)."
         },
         {
             match: ['smoke bomb'],
             name: "Ash-Cloud Smoke Bomb",
-            category: "CRAFTED TACTICAL GADGET • Unlock Code: ASH-CLOUD",
-            origin: "Crafted (1x Brimstone Sulfur + 1x Medicinal Herbs)",
+            category: "TACTICAL ALCHEMICAL GADGET • Concealment",
+            origin: "Alchemical Munition",
             desc: "A tight gray clay sphere filled with dry herbs and sulfur dust.",
             effect: "• <strong>Action (Throw up to 30 ft):</strong> Bursts into a <strong>15-foot-radius cloud of thick smoke</strong> lasting <strong>1 minute</strong> (or 1 round in strong wind). The area is <strong>Heavily Obscured</strong>, breaking enemy sightlines and covering Stealth or retreats."
         },
         {
             match: ['sun-ash'],
             name: "Sun-Ash Vial",
-            category: "CRAFTED SACRED COATING VIAL • Unlock Code: SUN-ASH",
-            origin: "Crafted (1x Moonpetal + 1x Silver Dust + 1x Pure Spring Water)",
-            desc: "A luminous pale-gold salve infused with dawn-remembering Moonpetal and consecrated silver.",
+            category: "SACRED COATING VIAL • Consecrated Salve",
+            origin: "Consecrated Alchemy",
+            desc: "A luminous pale-gold salve warm to the touch, shimmering faintly like trapped dawnlight.",
             effect: "• <strong>Coat Weapon or Front Rounds (Bonus Action / Pre-Combat):</strong> Press <strong>Coat</strong> to coat <strong>1 melee weapon</strong> (10 min) OR front <strong>6 rounds</strong>. Hits deal an extra <strong>+1d4 Radiant damage</strong> (and halt regeneration on Crit)."
         },
         {
             match: ['potion of superior healing'],
             name: "Potion of Superior Healing",
-            category: "RARE HEAL CONSUMABLE • Unlock Code: MOONPETAL",
-            origin: "Crafted (4x Herbs + 2x Catalyst + 1x Moonpetal) or Abbey S13 (45 GP)",
-            desc: "A glowing scarlet elixir distilled from rare Moonpetal petals and concentrated alembic salts.",
+            category: "RARE HEALING CONSUMABLE • Master Elixir",
+            origin: "Rare Apothecary Draught",
+            desc: "A glowing scarlet elixir dense with luminous ruby flecks—far stronger than standard apothecary draughts.",
             effect: "• <strong>Bonus Action (Self) / Action (Ally):</strong> Restores <strong>8d4 + 8 Hit Points (Avg 28 HP)</strong> — caps strictly at Max HP (does not grant Temporary HP)."
         },
         {
@@ -3964,90 +3964,138 @@
         {
             match: ['treated pelt', 'dire-pelt', 'waxed canvas'],
             name: "Treated Dire-Pelt & Waxed Canvas Bundle",
-            category: "CRAFTING MATERIAL • Hunt (DC 13 Survival) / Shop (4–6 GP)",
-            origin: "Dire Wolf Skinning, Ruined Coach Tarps, Bildrath's E1, Tser Pool G & Arasek N5",
-            desc: "Heavy double-stitched waxed sailcloth layered with thick gray Dire Wolf hide.",
-            effect: "• <strong>Crafting Ingredient:</strong> Requires <code>2x</code> bundles (plus Pine Pitch, Wolfbane &amp; Silver Dust) to craft a <strong>Mist-Ward Traveler's Camp Kit</strong> (<code>MIST-CAMP</code>).",
+            category: "RAW MATERIAL • Weatherproof Hide & Cloth",
+            origin: "Barovian Wilderness & Trade Goods",
+            desc: "Heavy double-stitched waxed sailcloth rolled tightly with thick, rain-shedding gray wolf hide.",
+            effect: "• <strong>Crafting &amp; Trade Material:</strong> Sturdy enough to build rugged wilderness shelter gear if you know the craft, or worth good coin to outfitters, tanners, and traveling Vistani.",
             isCraftableReagent: true
         },
         {
             match: ['alchemical catalyst', 'catalyst'],
             name: "Alchemical Catalyst",
-            category: "RARE CRAFTING MATERIAL • 25–40 GP / Arcane Labs",
-            origin: "Old Bonegrinder Lab, Wachterhaus Cellar, Vallaki Apothecary & Abbey S13",
-            desc: "Crystalline crimson alembic salts that violently concentrate ordinary herbal infusions.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Potion of Greater Healing</strong> (<code>GREATER-HEAL</code>), <strong>Witch-Iron Oil Vial</strong> (<code>WITCH-IRON</code>), <strong>Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>Potion of Superior Healing</strong> (<code>MOONPETAL</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
+            category: "RARE ALCHEMICAL MATERIAL",
+            origin: "Refined Alembic Reagent",
+            desc: "A stoppered glass vial of crystalline crimson alembic salts that hum faintly with volatile heat. Even a pinch visibly sharpens ordinary herbal infusions.",
+            effect: "• <strong>Alchemical Reagent:</strong> A potent stabilizer capable of elevating ordinary brews, oils, or volatile mixtures into something far stronger once the right formulas are learned—or prized by skilled apothecaries and alchemists.",
             isCraftableReagent: true
         },
         {
             match: ['silver dust'],
             name: "Powdered Silver Dust",
-            category: "UNCOMMON CRAFTING MATERIAL • 15–25 GP (or 25 SP Filed)",
-            origin: "Tser Pool Vistani (15 GP), Arasek Stockyard (20 GP), Bildrath's (25+ GP)",
-            desc: "Fine moon-bright silver filings sealed inside waxed vellum.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Holy Water</strong> (<code>MORNINGLORD</code>), <strong>Liquid Silver Vial</strong> (<code>SILVER-COAT</code>), <strong>Witch-Iron Oil Vial</strong> (<code>WITCH-IRON</code>), <strong>Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>), <strong>Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>), and <strong>Sun-Ash Vial</strong> (<code>SUN-ASH</code>).",
+            category: "UNCOMMON MATERIAL • Refined Silver Filings",
+            origin: "Silversmith & Hunter Stock",
+            desc: "Fine, moon-bright silver filings sealed inside a folded packet of waxed vellum to keep out Barovia's damp.",
+            effect: "• <strong>Crafting &amp; Trade Material:</strong> Sought after by monster hunters, priests, and alchemists alike. Can be worked into protective preparations, blade treatments, or consecrated mixtures with the right know-how.",
             isCraftableReagent: true
         },
         {
             match: ['wolfbane'],
             name: "Svalich Wolfbane Root",
-            category: "COMMON FORAGE MATERIAL • DC 12 Nature / 2 GP",
-            origin: "Svalich Woods Pine Ridges & Werewolf Trails",
-            desc: "Pungent purple-hooded wildflower root hung over Barovian barn doors against wolves.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Barovian Antitoxin Tonic</strong> (<code>WOLFBANE</code>), <strong>Witch-Iron Oil Vial</strong> (<code>WITCH-IRON</code>), and <strong>Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>).",
+            category: "WILD HERB • Barovian Botanical",
+            origin: "Svalich Forest Ridge Forage",
+            desc: "A gnarled, pungent purple-hooded wildflower root that Barovian villagers hang over barn doors to keep wolves at bay.",
+            effect: "• <strong>Herbal Reagent:</strong> Bitter and mildly toxic raw, yet useful in field remedies, warding charms, or specialty brews in trained hands.",
             isCraftableReagent: true
         },
         {
             match: ['sulfur', 'brimstone'],
             name: "Brimstone & Pitch Sulfur",
-            category: "COMMON SHOP / SALVAGE MATERIAL • 3–5 GP",
-            origin: "Vallaki Smithy, Blinsky's Workshop & Old Bonegrinder Kilns",
-            desc: "Sharp yellow brimstone chunks smelling of struck flint and alchemical smoke.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Incendiary Oil Vial</strong> (<code>INCENDIARY-VIAL</code>), <strong>Alchemist's Fire Flask</strong> (<code>BRIMSTONE</code>), <strong>Ash-Cloud Smoke Bomb</strong> (<code>ASH-CLOUD</code>), and <strong>Phosphor Flash-Bomb</strong> (<code>PHOSPHOR</code>).",
+            category: "ALCHEMICAL MATERIAL • Volatile Mineral",
+            origin: "Workshop & Kiln Salvage",
+            desc: "Sharp yellow brimstone chunks smelling strongly of struck flint, furnace ash, and acrid smoke.",
+            effect: "• <strong>Volatile Reagent:</strong> Burns hot and fast. Useful for fiery, blinding, or smoke-producing concoctions if you learn how to stabilize it—or handy barter for a tinker or smith.",
             isCraftableReagent: true
         },
         {
             match: ['pitch oil', 'lamp oil'],
             name: "Pine Pitch & Lamp Oil Flask",
-            category: "COMMON SHOP / FORAGE MATERIAL • 5 SP–1 GP / DC 11 Survival",
-            origin: "General Stores & Scarred Svalich Evergreens",
-            desc: "Thick amber pine resin blended with lantern oil.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Incendiary Oil Vial</strong> (<code>INCENDIARY-VIAL</code>), <strong>Alchemist's Fire Flask</strong> (<code>BRIMSTONE</code>), <strong>Liquid Silver Vial</strong> (<code>SILVER-COAT</code>), and waterproofing <strong>Mist-Ward Camp Kit</strong> (<code>MIST-CAMP</code>).",
+            category: "COMMON SUPPLY • Resin & Oil",
+            origin: "General Supply & Forest Sap",
+            desc: "A stoppered tin flask of thick amber pine resin blended smoothly with clear lantern oil.",
+            effect: "• <strong>Utility &amp; Crafting Base:</strong> Burns cleanly, waterproofs canvas and leather, and serves as a reliable binding base for alchemical oils and weapon treatments.",
             isCraftableReagent: true
         },
         {
             match: ['moonpetal'],
             name: "Svalich Moonpetal Blossom",
-            category: "VERY RARE DUSK FORAGE • DC 15 Nature",
-            origin: "Drowned Ruins of Berez, Yester Hill & Lake Baratok at Dusk",
-            desc: "Ghost-white luminescent petals that open only in misty twilight.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Potion of Superior Healing</strong> (<code>MOONPETAL</code>), <strong>Sun-Ash Vial</strong> (<code>SUN-ASH</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
+            category: "VERY RARE BOTANICAL • Twilight Flower",
+            origin: "Rare Barovian Flora",
+            desc: "Delicate ghost-white petals that emit a faint silver luminescence and only unfurl under misty dusk skies.",
+            effect: "• <strong>Rare Reagent:</strong> Exceedingly scarce in Barovia. Herbalists, priests of the Morninglord, and master alchemists whisper that its essence can yield extraordinary restorative or dawn-touched work.",
             isCraftableReagent: true
         },
         {
             match: ['spring water', 'mountain spring water'],
             name: "Pure Mountain Spring Water",
-            category: "COMMON FORAGE MATERIAL • DC 10 Survival / 2 SP",
-            origin: "Tser Falls, Luna River & White Sun Spring",
-            desc: "Crystal-clear glacier melt free of Barovia's bog rot.",
-            effect: "• <strong>Crafting Ingredient:</strong> Used in <strong>Morninglord Holy Water</strong> (<code>MORNINGLORD</code>), <strong>Sun-Ash Vial</strong> (<code>SUN-ASH</code>), and <strong>Elixir of Health</strong> (<code>HEART-ELIXIR</code>).",
+            category: "NATURAL SUPPLY • Clean Glacier Melt",
+            origin: "Highland Springs",
+            desc: "A clear glass bottle of crisp glacier melt, completely free of Barovia's stagnant bog rot.",
+            effect: "• <strong>Clean Base &amp; Ritual Supply:</strong> Pure enough for delicate herbal infusions and alchemy—or bring it to a devout priest or shrine to be blessed.",
             isCraftableReagent: true
         },
         {
             match: ['linen wrap', 'salve jar'],
             name: "Clean Linen Wraps & Salve Jar",
             category: "CAMP MEDICAL SUPPLY • 2 SP",
-            origin: "Village Homes, Blue Water Inn & Krezk Cottages",
-            desc: "Freshly boiled white cloth strips sealed in beeswax salve.",
-            effect: "• <strong>Camp Medical Utility:</strong> Lets any ally assist with crafting <strong>Field Healing Bandages</strong> during a Short Rest, or double bandage yield on a <code>DC 14 Medicine</code> check.",
+            origin: "Field Medicine Stock",
+            desc: "Freshly boiled white cloth strips packed alongside a small clay jar of beeswax salve.",
+            effect: "• <strong>Camp Medical Utility:</strong> Lets any ally assist with preparing Field Healing Bandages during a Short Rest, or double bandage yield on a <code>DC 14 Medicine</code> check.",
             isCraftableReagent: true
         },
         {
-            match: ['monster trophy', 'spawn ash', 'wolf fang'],
+            match: ['monster trophy', 'spawn ash'],
             name: "Harvested Monster Trophy",
             category: "HUNTER HARVEST • Barter Material",
-            desc: "Dark ichor vials, obsidian wolf fangs, and silver-charred vampire cinders.",
-            effect: "• <strong>Barter Value:</strong> Trade to apothecaries, hunters, or occultists for gold, silvered ammo, or alchemical reagents.",
+            desc: "Stoppered vials of dark ichor, silver-charred cinders, or rare beast parts cut cleanly from Barovia's predators.",
+            effect: "• <strong>NPC Barter Hint:</strong> Worth coin or favors if brought to local apothecaries, Vistani traders, veteran hunters, or occult collectors.",
+            isCraftableReagent: true
+        },
+        {
+            match: ['ghost-cap'],
+            name: "Ghost-Cap Forest Mushrooms",
+            category: "FORAGED FUNGI • Luminescent Cap",
+            desc: "Pale, translucent toadstools with a faint blue-white glow beneath their gills, harvested from damp Barovian hollows.",
+            effect: "• <strong>Unusual Botanical:</strong> Too strange to eat raw safely, but a skilled herbalist or brewer might distill their strange twilight glow into a useful tonic.",
+            isCraftableReagent: true
+        },
+        {
+            match: ['grave-salt'],
+            name: "Grave-Salt Ward Pouch",
+            category: "OCCULT MATERIAL • Consecrated Salt",
+            desc: "A knotted canvas pouch of coarse gray salt scraped from old Barovian churchyard stones and warded thresholds.",
+            effect: "• <strong>Occult Reagent:</strong> Traditionally scattered against the restless dead. Could be worked into grim anti-undead treatments once you know how, or traded to a hunter or priest.",
+            isCraftableReagent: true
+        },
+        {
+            match: ['spider silk'],
+            name: "Thick Spider Silk Gland",
+            category: "MONSTER HARVEST • Tough Filament",
+            desc: "A leathery harvest sac oozing pale, feather-light silk strands far stronger than hempen rope.",
+            effect: "• <strong>Crafting &amp; Trade Material:</strong> Prized by trappers, weavers, and scouts for silent cordage or snares—or worth coin to a skilled tinker or hunter.",
+            isCraftableReagent: true
+        },
+        {
+            match: ['cold-iron'],
+            name: "Cold-Iron Scrap Shards",
+            category: "UNCOMMON METAL • Unforged Shards",
+            desc: "Jagged, dull-gray splinters of cold-worked iron that stay bitingly frigid even beside a campfire.",
+            effect: "• <strong>Smithing Material:</strong> Folk tales say cold iron burns fey and hags. Could be hammered into hazards or hardware with the right know-how, or brought to a blacksmith.",
+            isCraftableReagent: true
+        },
+        {
+            match: ['wolf fang', 'dire wolf fang'],
+            name: "Dire Wolf Fangs",
+            category: "HUNTER HARVEST • Trophy & Charm Material",
+            desc: "Heavy, ivory-curved predator fangs pulled clean from a Barovian wolf—still faintly scarred from biting iron.",
+            effect: "• <strong>Crafting &amp; Barter Hint:</strong> Vistani charm-makers and seasoned hunters fashion fangs like these into protective talismans, or buy them outright for silver.",
+            isCraftableReagent: true
+        },
+        {
+            match: ['tarnished silver cutlery', 'silver cutlery'],
+            name: "Tarnished Silver Cutlery",
+            category: "TRADE VALUABLE • Sterling Silverware (10 GP)",
+            desc: "A bundled set of heavy tarnished forks, spoons, and butter knives stamped with a faded Barovian manor crest.",
+            effect: "• <strong>Trade or Forge Hint:</strong> Worth around <strong>10 GP</strong> to merchants—or bring it to a village blacksmith or Vistani silversmith who could melt and refine the pure silver into something deadlier.",
             isCraftableReagent: true
         },
         // --- NEW, REBALANCED & SPLIT WEAPON ATTACHMENTS (ZERO LOCATION SPOILERS!) ---
@@ -4438,23 +4486,23 @@
         {
             match: ['raw wolf pelt', 'beast pelt'],
             name: "Raw Wolf / Beast Pelt",
-            category: "CRAFTING MATERIAL • Hunt & Travel Salvage (3 GP)",
+            category: "RAW MATERIAL • Hunt Salvage (3 GP)",
             desc: "A thick, rain-shedding gray Barovian wolf hide stripped clean of burrs and bound with twine.",
-            effect: "• <strong>Crafting Ingredient:</strong> Counts directly as <strong>Pelt / Waxed Canvas</strong> toward building a <strong>Mist-Ward Traveler's Camp Kit</strong> (<code>2x</code> needed) — or sells for <strong>3 GP</strong> to tanners and Vistani."
+            effect: "• <strong>Crafting &amp; Trade Hint:</strong> Tough enough for heavy wilderness camp gear or winter cloaks—or worth around <strong>3 GP</strong> to tanners, outfitters, and traveling Vistani."
         },
         {
             match: ['smuggler\'s waxed canvas', 'waxed canvas tarp'],
             name: "Smuggler's Waxed Canvas Tarp",
-            category: "UNCOMMON CRAFTING MATERIAL • Attic / Wagon Find (8 GP)",
-            desc: "Heavy double-waxed sailcloth stitched with brass grommets, hidden under dusty floorboards to keep contraband dry in Barovian storms.",
-            effect: "• <strong>Crafting Ingredient:</strong> Counts directly as <strong>Pelt / Waxed Canvas</strong> toward building a <strong>Mist-Ward Traveler's Camp Kit</strong>!"
+            category: "UNCOMMON MATERIAL • Weatherproof Cloth (8 GP)",
+            desc: "Heavy double-waxed sailcloth stitched with brass grommets, built to keep cargo dry through freezing Barovian storms.",
+            effect: "• <strong>Crafting &amp; Trade Hint:</strong> Ideal material for sturdy camp shelters if paired with hides and cordage—or easily bartered to traveling merchants and outfitters."
         },
         {
             match: ['silver-veined quartz'],
             name: "Ancient Silver-Veined Quartz",
-            category: "UNCOMMON CRAFTING MATERIAL • Forest / Cave Find (20 GP)",
+            category: "UNCOMMON ORE • Raw Mineral (20 GP)",
             desc: "A jagged fist-sized chunk of milky mountain quartz threaded with gleaming ribbons of pure Barovian silver.",
-            effect: "• <strong>Crafting Ingredient:</strong> Can be crushed or filed to count directly as <strong>Powdered Silver Dust</strong> (for <em>Holy Water</em>, <em>Liquid Silver Coating</em>, <em>Phosphor Bombs</em>, or <em>Camp Kits</em>) — or sold for <strong>20 GP</strong>."
+            effect: "• <strong>Refining &amp; Trade Hint:</strong> Worth around <strong>20 GP</strong> to a jeweler or merchant—or bring it to a smith, silversmith, or skilled alchemist to extract fine silver stock."
         },
         {
             match: ['luckstone charm', 'trinket of the forgotten sun'],
