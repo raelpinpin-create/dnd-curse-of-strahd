@@ -42,6 +42,33 @@
         { id: 'dm',      name: 'DM Vault', emoji: '🛡️', label: '🛡️ Return to DM' }
     ];
 
+    // =========================================================================
+    // ⚡ ARMOR SET SYNERGY ENGINE (2-PIECE & 3-PIECE LIVE BUILD BONUSES)
+    // =========================================================================
+    const ARMOR_SET_BONUSES = {
+        shadow_stalker: {
+            name: '🐺 Svalich Shadow-Stalker',
+            tiers: {
+                2: { acBonus: 1, initBonus: 1, summary: '+1 AC • +1 Initiative' },
+                3: { acBonus: 1, initBonus: 2, summary: '+1 AC • +2 Initiative • Ambush Strike (+1d6 dmg on 1st hit each combat!)' }
+            }
+        },
+        silver_vanguard: {
+            name: '🐉 Order of the Silver Vanguard',
+            tiers: {
+                2: { acBonus: 1, resistance: 'Cold', summary: '+1 AC • Cold Resistance' },
+                3: { acBonus: 1, saveBonus: 1, resistance: 'Cold', summary: '+1 AC • +1 All Saves • Cold Resist • 10-ft Courage Aura (Adv vs Frightened)' }
+            }
+        },
+        mist_weaver: {
+            name: '🔮 Vistani Mist-Weaver Regalia',
+            tiers: {
+                2: { acBonus: 1, spellDcBonus: 1, summary: '+1 AC • +1 Spell Save DC' },
+                3: { acBonus: 1, spellDcBonus: 1, spellAtkBonus: 1, saveBonus: 1, summary: '+1 AC • +1 Spell DC/Atk • +1 All Saves' }
+            }
+        }
+    };
+
     // Comprehensive Barovian + Starting Gear Auto-Recognition Catalog
     const GEAR_CATALOG = [
         // --- KOLYAN'S 3 ENCHANTED ROBES ---
@@ -53,7 +80,8 @@
             acBonus: 1,
             saveBonus: 1,
             robeKey: 'black',
-            summary: '+1 AC • +1 All Saves'
+            setId: 'mist_weaver',
+            summary: '+1 AC • +1 All Saves • [🔮 Mist-Weaver Set]'
         },
         {
             match: ['red robe'],
@@ -78,10 +106,12 @@
             category: 'armor',
             slots: ['body'],
             reqArmor: 'robe',
-            summary: 'Detachable Magic Patches'
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 8, recharge: 'never', actionCost: 'action', label: '🧥 Pull Magic Patch', effect: 'Peel off a patch to conjure Daggers, Bullseye Lantern, 10-ft Pit, Iron Door, 2 Riding Horses, 500 GP Coffer, or 4th-Lvl Scroll!' },
+            summary: 'Detachable Magic Patches (8 Patches)'
         },
 
-        // --- ARMOR & CLOAKS & HEADGEAR ---
+        // --- BODY ARMOR (HEAVY / MEDIUM / LIGHT / UNARMORED SETS) ---
         {
             match: ['chain mail'],
             category: 'armor',
@@ -94,6 +124,17 @@
             summary: 'Base AC 16 (Heavy • Stealth Disadv)'
         },
         {
+            match: ['adamantine splint'],
+            category: 'armor',
+            slots: ['body'],
+            reqArmor: 'heavy',
+            baseAC: 17,
+            armorWorn: true,
+            heavyArmor: true,
+            stealthDisadv: true,
+            summary: 'Base AC 17 (Heavy) • Immune to Critical Hits!'
+        },
+        {
             match: ['reforged silvered dragonplate', 'dragonplate +2'],
             category: 'armor',
             slots: ['body'],
@@ -102,7 +143,9 @@
             armorWorn: true,
             heavyArmor: true,
             stealthDisadv: true,
-            summary: 'Base AC 20 (+2 Heavy Armor • Cold Resist)'
+            resistance: 'Cold',
+            setId: 'silver_vanguard',
+            summary: 'Base AC 20 (+2 Heavy • Cold Resist) • [🐉 Silver Vanguard Set]'
         },
         {
             match: ['silvered dragonplate'],
@@ -113,7 +156,20 @@
             armorWorn: true,
             heavyArmor: true,
             stealthDisadv: true,
-            summary: 'Base AC 19 (+1 Heavy Armor • Cold Resist)'
+            resistance: 'Cold',
+            setId: 'silver_vanguard',
+            summary: 'Base AC 19 (+1 Heavy • Cold Resist) • [🐉 Silver Vanguard Set]'
+        },
+        {
+            match: ['strahd\'s +2 plate armor', '+2 plate armor'],
+            category: 'armor',
+            slots: ['body'],
+            reqArmor: 'heavy',
+            baseAC: 20,
+            armorWorn: true,
+            heavyArmor: true,
+            stealthDisadv: true,
+            summary: 'Base AC 20 (+2 Plate Armor • Heavy)'
         },
         {
             match: ['dragonplate', 'plate armor', 'full plate'],
@@ -127,6 +183,17 @@
             summary: 'Base AC 18 (Heavy Armor)'
         },
         {
+            match: ['mithral half plate'],
+            category: 'armor',
+            slots: ['body'],
+            reqArmor: 'medium',
+            baseAC: 15,
+            maxDex: 2,
+            armorWorn: true,
+            stealthDisadv: false,
+            summary: 'Base AC 15 + DEX (max 2) • NO Stealth Disadv!'
+        },
+        {
             match: ['half plate'],
             category: 'armor',
             slots: ['body'],
@@ -135,7 +202,17 @@
             maxDex: 2,
             armorWorn: true,
             stealthDisadv: true,
-            summary: 'Base AC 15 + DEX (max 2)'
+            summary: 'Base AC 15 + DEX (max 2 • Stealth Disadv)'
+        },
+        {
+            match: ['elven chain shirt', 'elven chain'],
+            category: 'armor',
+            slots: ['body'],
+            reqArmor: 'any',
+            baseAC: 14,
+            maxDex: 2,
+            armorWorn: true,
+            summary: 'Base AC 14 + DEX (max 2) • Proficient for ANY Class!'
         },
         {
             match: ['breastplate'],
@@ -146,6 +223,27 @@
             maxDex: 2,
             armorWorn: true,
             summary: 'Base AC 14 + DEX (max 2)'
+        },
+        {
+            match: ['barovian chain shirt', 'chain shirt'],
+            category: 'armor',
+            slots: ['body'],
+            reqArmor: 'medium',
+            baseAC: 13,
+            maxDex: 2,
+            armorWorn: true,
+            summary: 'Base AC 13 + DEX (max 2 • Quiet Medium)'
+        },
+        {
+            match: ['shadow-stalker studded coat', 'stalker\'s studded coat', 'shadow-stalker coat'],
+            category: 'armor',
+            slots: ['body'],
+            reqArmor: 'light',
+            baseAC: 13,
+            addDex: true,
+            armorWorn: true,
+            setId: 'shadow_stalker',
+            summary: 'AC 13 + Full DEX (+1 Light) • [🐺 Shadow-Stalker Set]'
         },
         {
             match: ['studded leather'],
@@ -167,6 +265,18 @@
             armorWorn: true,
             summary: 'AC 11 + Full DEX (Light Armor)'
         },
+
+        // --- BRACERS & WRIST GUARDS ---
+        {
+            match: ['bracers of defense'],
+            category: 'armor',
+            slots: ['offHand', 'ring1', 'ring2'],
+            attune: true,
+            unarmoredAcBonus: 2,
+            summary: '+2 AC if Unarmored & No Shield (Attune)'
+        },
+
+        // --- CLOAKS & MANTLES ---
         {
             match: ['animated cloak of ravenloft'],
             category: 'armor',
@@ -174,6 +284,30 @@
             acBonus: 2,
             attune: true,
             summary: '+2 AC • 30ft Fly (Attune)'
+        },
+        {
+            match: ['mantle of spell resistance'],
+            category: 'armor',
+            slots: ['cape'],
+            saveBonus: 1,
+            attune: true,
+            summary: 'Adv on Saves vs Spells • +1 All Saves (Attune)'
+        },
+        {
+            match: ['silver vanguard war mantle', 'vanguard war mantle'],
+            category: 'armor',
+            slots: ['cape'],
+            saveBonus: 1,
+            setId: 'silver_vanguard',
+            summary: '+1 All Saves • [🐉 Silver Vanguard Set]'
+        },
+        {
+            match: ['mist-weaver starlight shawl', 'mist-weaver shawl'],
+            category: 'armor',
+            slots: ['cape'],
+            acBonus: 1,
+            setId: 'mist_weaver',
+            summary: '+1 AC • [🔮 Mist-Weaver Set]'
         },
         {
             match: ['wereraven', 'cloak of protection'],
@@ -189,7 +323,16 @@
             category: 'armor',
             slots: ['cape'],
             acBonus: 1,
-            summary: '+1 AC • Cold Resist'
+            resistance: 'Cold',
+            skillAdv: ['Stealth', 'Athletics'],
+            summary: '+1 AC • Cold Resist • Mountain Adv'
+        },
+        {
+            match: ['moth-eaten winter wool cloak', 'winter wool cloak'],
+            category: 'armor',
+            slots: ['cape'],
+            skillAdv: ['Survival'],
+            summary: 'Warm Wool Cloak • Adv vs Mountain Cold'
         },
         {
             match: ['traveling cloak', 'royal cloak', 'fur mantle', 'cloak'],
@@ -197,25 +340,73 @@
             slots: ['cape'],
             summary: 'Weather-Worn Cloak'
         },
+
+        // --- HEADGEAR & HELMS ---
         {
             match: ['hat of disguise'],
             category: 'armor',
             slots: ['head'],
             attune: true,
-            summary: 'At-Will Disguise Self (Attune)'
+            quickBelt: true,
+            useAction: { type: 'itemSpell', keepItem: true, spellId: 'disguise_self', spellName: 'Disguise Self (At-Will)', spellLevel: 1, actionCost: 'action', label: '🎭 Disguise Self', effect: 'Transform your face, voice-vibe, clothing & silhouette at will for 1 hour (no concentration)!' },
+            summary: 'At-Will Disguise Self (Quick-Belt • Attune)'
         },
         {
             match: ['helm of brilliance'],
             category: 'armor',
             slots: ['head'],
             attune: true,
-            summary: 'Radiant Gems & Fire Resist (Attune)'
+            resistance: 'Fire',
+            quickBelt: true,
+            chargePool: { max: 10, recharge: 'long', rechargeDice: '1d4+1' },
+            multiActions: [
+                { label: '🔥 Gem Fireball (2 Chg)', cost: 2, type: 'itemSpell', spellId: 'fireball', spellName: 'Helm Fireball', spellLevel: 3, customDc: 18, actionCost: 'action', effect: '8d6 Fire in 20-ft sphere (DC 18 DEX Save half)!' },
+                { label: '☀️ Gem Daylight (1 Chg)', cost: 1, type: 'itemSpell', spellId: 'daylight', spellName: 'Helm Daylight', spellLevel: 3, actionCost: 'action', effect: '60-ft bright light dispelling magical darkness (1 hr)!' },
+                { label: '⚔️ Flame Blade (+1d6 Fire)', cost: 0, type: 'magicPower', actionCost: 'bonus', effect: 'Ignite your held weapon (+1d6 Fire per hit) & emit 30-ft Undead Burn Aura (1d6 Radiant/turn)!' }
+            ],
+            summary: 'Fire Resist • +1d6 Fire Wpn • 30-ft Undead Burn • 10 Gem Chg (Attune)'
+        },
+        {
+            match: ['shadow-stalker wolf hood', 'wolf-pelt scout hood'],
+            category: 'armor',
+            slots: ['head'],
+            initBonus: 1,
+            skillAdv: ['Perception'],
+            setId: 'shadow_stalker',
+            summary: '+1 Init • Adv Perception • [🐺 Shadow-Stalker Set]'
+        },
+        {
+            match: ['silver vanguard helm', 'vanguard silvered barbute', 'vanguard barbute'],
+            category: 'armor',
+            slots: ['head'],
+            acBonus: 1,
+            setId: 'silver_vanguard',
+            summary: '+1 AC • Adv vs Frightened • [🐉 Silver Vanguard Set]'
+        },
+        {
+            match: ['mist-weaver silver circlet', 'mist-weaver circlet'],
+            category: 'armor',
+            slots: ['head'],
+            spellAtkBonus: 1,
+            skillAdv: ['Arcana'],
+            setId: 'mist_weaver',
+            summary: '+1 Spell Atk • Adv Arcana • [🔮 Mist-Weaver Set]'
+        },
+        {
+            match: ['dented bandit iron helm', 'bandit iron sallet', 'iron sallet'],
+            category: 'armor',
+            slots: ['head'],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'short', actionCost: 'reaction', label: '🪖 Brace Helm (-2 Dmg)', effect: 'Deflect a glancing blow — reduce incoming nonmagical Bludgeoning or Slashing damage by 2 (1/Short Rest)!' },
+            summary: 'Common Iron Helm • 1/SR Reaction: -2 Nonmagic Dmg'
         },
         {
             match: ['obsidian barovian crown', 'barovian crown', 'royal crown'],
             category: 'armor',
             slots: ['head'],
-            summary: 'Royal Crown Regalia'
+            saveBonus: 1,
+            skillAdv: ['Intimidation', 'Persuasion'],
+            summary: '+1 All Saves • Adv Intimidation & Persuasion (Royal Regalia)'
         },
         {
             match: ['magician\'s hat', 'false-bottom stage'],
@@ -223,25 +414,113 @@
             slots: ['head'],
             summary: 'Stage Magician Hat & Props'
         },
+
+        // --- FOOTWEAR & BOOTS ---
         {
-            match: ['boots', 'slippers', 'greaves'],
+            match: ['winged boots'],
+            category: 'armor',
+            slots: ['feet'],
+            attune: true,
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 4, recharge: 'long', actionCost: 'none', label: '🪽 Winged Flight (1 hr)', effect: 'Gain a Magical Flying Speed equal to your walking speed (4 hrs/day total)!' },
+            summary: 'Fly Speed (4 hrs/day • Quick-Belt • Attune)'
+        },
+        {
+            match: ['boots of speed'],
+            category: 'armor',
+            slots: ['feet'],
+            attune: true,
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'bonus', label: '⚡ Click Heels (2x Speed)', effect: 'Double your walking speed & Opportunity Attacks against you have Disadvantage (up to 10 min)!' },
+            summary: 'Bonus Action: 2x Speed & OA Disadv (Attune)'
+        },
+        {
+            match: ['shadow-stalker silent boots', 'silent-tread stalker boots', 'shadow-stalker boots'],
+            category: 'armor',
+            slots: ['feet'],
+            skillAdv: ['Stealth'],
+            setId: 'shadow_stalker',
+            summary: 'Adv Stealth • Silent Footsteps • [🐺 Shadow-Stalker Set]'
+        },
+        {
+            match: ['silver vanguard sabatons', 'vanguard frost-ward sabatons', 'vanguard sabatons'],
+            category: 'armor',
+            slots: ['feet'],
+            resistance: 'Cold',
+            setId: 'silver_vanguard',
+            summary: 'Cold Resist • Sure-Footed on Ice • [🐉 Silver Vanguard Set]'
+        },
+        {
+            match: ['mist-weaver shadow slippers', 'mist-weaver slippers'],
+            category: 'armor',
+            slots: ['feet'],
+            skillAdv: ['Acrobatics'],
+            setId: 'mist_weaver',
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'short', actionCost: 'bonus', label: '🌫️ Mist-Hop (15 ft)', effect: 'Dissolve into silver fog and teleport 15 ft without provoking Opportunity Attacks (1/Short Rest)!' },
+            summary: 'Adv Acrobatics • 1/SR 15-ft Mist-Hop • [🔮 Mist-Weaver Set]'
+        },
+        {
+            match: ['hobnailed svalich road boots', 'svalich road boots'],
+            category: 'armor',
+            slots: ['feet'],
+            skillAdv: ['Survival'],
+            summary: 'Ignores Mud/Snow Terrain • Adv Trail Survival'
+        },
+
+        // --- LEG ARMOR & GREAVES ---
+        {
+            match: ['shadow-stalker strider trousers', 'strider\'s leather trousers', 'shadow-stalker trousers'],
+            category: 'armor',
+            slots: ['legs'],
+            initBonus: 1,
+            setId: 'shadow_stalker',
+            summary: '+5 ft Speed • +1 Init • [🐺 Shadow-Stalker Set]'
+        },
+        {
+            match: ['silver vanguard greaves', 'vanguard plate greaves'],
+            category: 'armor',
+            slots: ['legs'],
+            acBonus: 1,
+            setId: 'silver_vanguard',
+            summary: '+1 AC • Adv vs Prone/Shove • [🐉 Silver Vanguard Set]'
+        },
+        {
+            match: ['mist-weaver silk leggings', 'mist-weaver leggings'],
+            category: 'armor',
+            slots: ['legs'],
+            saveBonus: 1,
+            setId: 'mist_weaver',
+            summary: '+1 All Saves • [🔮 Mist-Weaver Set]'
+        },
+        {
+            match: ['patrolman\'s riveted greaves', 'riveted iron greaves'],
+            category: 'armor',
+            slots: ['legs'],
+            skillAdv: ['Athletics'],
+            summary: 'Common Iron Greaves • Adv on Athletics Footing'
+        },
+        {
+            match: ['boots', 'slippers', 'sabatons'],
             category: 'armor',
             slots: ['feet'],
             summary: 'Footwear'
         },
         {
-            match: ['leggings', 'trousers', 'cuisses'],
+            match: ['leggings', 'trousers', 'cuisses', 'greaves'],
             category: 'armor',
             slots: ['legs'],
             summary: 'Leg Armor / Attire'
         },
 
-        // --- AMULETS & RINGS ---
+        // --- AMULETS, RELICS & RINGS ---
         {
             match: ['whispering grave'],
             category: 'accessory',
             slots: ['amulet'],
             grantsAbility: 'speak_with_dead',
+            quickBelt: true,
+            useAction: { type: 'itemSpell', keepItem: true, spellName: 'Speak with Dead', spellLevel: 3, spellKind: 'utility', maxCharges: 1, recharge: 'long', actionCost: 'action', label: '💀 Speak with Dead', effect: 'Ask up to 5 questions of a corpse with a mouth (1/Long Rest)!' },
             summary: 'Speak with Dead (1/Long Rest)'
         },
         {
@@ -249,13 +528,46 @@
             category: 'accessory',
             slots: ['amulet'],
             attune: true,
-            summary: '10 Chg Sunlight / Hold Vampires (Attune)'
+            spellDcBonus: 1,
+            spellAtkBonus: 1,
+            quickBelt: true,
+            chargePool: { max: 5, recharge: 'long', rechargeDice: '1d4+1' },
+            multiActions: [
+                { label: "🛡️ Dawn's Embrace (2 Chg)", cost: 2, type: 'magicPower', actionCost: 'reaction', effect: "REACTION (Ally within 30 ft reduced to 0 HP): They drop to 1 HP instead AND gain Immunity to ALL damage until the start of their next turn!" },
+                { label: "✨ Light of Hope (1 Chg)", cost: 1, type: 'magicPower', actionCost: 'action', effect: "ACTION (Ally within 30 ft): Immediately ends Blinded, Charmed, Deafened, Frightened, Paralyzed, Poisoned, & Stunned!" },
+                { label: "☀️ Sun's Blessing (2 Chg)", cost: 2, type: 'magicPower', actionCost: 'action', effect: "ACTION (30-ft aura, 1 min): Nonhostile allies within 30 ft deal +1d4 Radiant damage on weapon attacks!" }
+            ],
+            summary: '+1 Spell DC/Atk • 5 Chg Reloaded (Dawn\'s Embrace / Light of Hope / Sun\'s Blessing • Attune)'
+        },
+        {
+            match: ['icon of ravenloft'],
+            category: 'accessory',
+            slots: ['offHand', 'amulet'],
+            attune: true,
+            saveBonus: 1,
+            quickBelt: true,
+            multiActions: [
+                { label: '💚 Icon Cure (3d8+3)', maxCharges: 1, recharge: 'long', type: 'itemSpell', spellName: 'Icon Cure Wounds', spellLevel: 3, spellKind: 'heal', spellDice: '3d8', spellBonus: 3, actionCost: 'action', effect: 'Restores 3d8+3 HP and cures all diseases, poisons, and blindness/deafness!' },
+                { label: '🔮 Icon Augury', maxCharges: 1, recharge: 'long', type: 'itemSpell', spellName: 'Augury', spellLevel: 2, spellKind: 'utility', actionCost: 'action', effect: 'Divine weal/woe omen for an action within the next 30 minutes (no components)!' }
+            ],
+            summary: '15-ft Sanctuary Aura (+1 Saves) • 1/LR Cure 3d8+3 & Augury (Attune)'
+        },
+        {
+            match: ['shield guardian control amulet', 'shield guardian amulet'],
+            category: 'accessory',
+            slots: ['amulet'],
+            attune: true,
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: '🤖 Guardian Half-Dmg Ward', effect: 'While within 60 ft of your Shield Guardian, halve ALL damage taken (transferred to Guardian) & unleash its stored 4th-Lvl Spell!' },
+            summary: 'Commands Shield Guardian • Halves Damage Within 60 ft (Attune)'
         },
         {
             match: ['donavich', 'sun-rosary', 'rosary'],
             category: 'accessory',
             slots: ['amulet'],
-            summary: 'Consecrated Morninglord Rosary'
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'bonus', label: '☀️ Sun-Rosary (+1d4)', effect: 'Whisper a Morninglord prayer — add +1d4 to a Saving Throw vs Undead or Fear (1/Long Rest)!' },
+            summary: 'Consecrated Morninglord Rosary • 1/LR +1d4 Save vs Undead/Fear'
         },
         {
             match: ['starlit bone star chart', 'bone star chart'],
@@ -264,17 +576,28 @@
             summary: '2024 Druidic Star Map (3/LR Free Guiding Bolt)'
         },
         {
-            match: ['skull-mask charm', 'volenta'],
+            match: ['skull-mask charm', 'porcelain skull-mask'],
             category: 'accessory',
             slots: ['amulet'],
-            summary: '1/LR False Life Charm'
+            skillAdv: ['Intimidation'],
+            quickBelt: true,
+            useAction: { type: 'itemSpell', keepItem: true, spellId: 'false_life', spellName: 'False Life (2nd-Lvl)', spellLevel: 2, spellKind: 'tempHp', spellDice: '1d4', spellBonus: 9, maxCharges: 1, recharge: 'long', actionCost: 'bonus', label: '💀 False Life (+1d4+9 Temp)', effect: 'Gain 1d4+9 Temporary HP for 1 hour (1/Long Rest)!' },
+            summary: 'Adv Intimidation • 1/LR False Life (+1d4+9 Temp HP)'
         },
         {
             match: ['gold statuette of saint markovia', 'gold statuette'],
             category: 'accessory',
             slots: ['amulet', 'offHand'],
             saveBonus: 1,
-            summary: '+1 All Saving Throws (Good PCs)'
+            summary: '+1 All Saving Throws (Good PCs • No Attunement)'
+        },
+        {
+            match: ['consecrated silver prayer medallion', 'prayer medallion'],
+            category: 'accessory',
+            slots: ['amulet'],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'none', label: '🙏 Prayer (+1d4)', effect: 'Add +1d4 to a Religion check or Death Saving Throw (1/Long Rest • No Attunement)!' },
+            summary: '1/LR: +1d4 to Religion Check or Death Save'
         },
         {
             match: ['karelova ruby', 'ruby engagement'],
@@ -302,28 +625,35 @@
             category: 'accessory',
             slots: ['ring1', 'ring2'],
             attune: true,
-            summary: 'Blocks Mind Reading & Lies (Attune)'
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: '🧠 Mind Shield', effect: 'Immune to telepathy, thought-reading, lie detection, and alignment/type divination!' },
+            summary: 'Blocks Mind Reading, Lies & Alignment Divination (Attune)'
         },
         {
             match: ['ring of regeneration'],
             category: 'accessory',
             slots: ['ring1', 'ring2'],
             attune: true,
-            summary: '1d6 HP / 10 min (Attune)'
+            quickBelt: true,
+            useAction: { type: 'itemSpell', keepItem: true, spellName: 'Ring of Regeneration', spellKind: 'heal', spellDice: '1d6', spellBonus: 0, actionCost: 'none', label: '💍 Regen (+1d6 HP)', effect: 'Regain 1d6 HP every 10 minutes out of combat (requires at least 1 HP)!' },
+            summary: '1d6 HP / 10 min • Quick-Belt Roll (Attune)'
         },
         {
             match: ['ring of warmth'],
             category: 'accessory',
             slots: ['ring1', 'ring2'],
+            resistance: 'Cold',
             attune: true,
-            summary: 'Cold Resist & Freeze Immunity (Attune)'
+            summary: 'Cold Resist & Extreme Freeze Immunity (Attune)'
         },
         {
             match: ['ring of spell storing', 'amber-inlaid spell ring'],
             category: 'accessory',
             slots: ['ring1', 'ring2'],
             attune: true,
-            summary: 'Stores Spells (Attune)'
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 3, recharge: 'long', actionCost: 'action', label: '💍 Cast Stored Spell', effect: 'Release a spell stored inside the ring (up to 3–5 total spell levels: e.g. Shield, Misty Step, Counterspell)!' },
+            summary: 'Stores & Casts Stored Spells (3–5 Lvls • Attune)'
         },
         {
             match: ['signet ring', /\bring\b/],
@@ -381,7 +711,7 @@
             summary: '+1/+1 & +1d6 Radiant Bolts (Silvered, Halts Regen)'
         },
         {
-            match: ['hex-iron bullets', 'witch-iron bullets', 'baba lysaga', '+1 magical sling', '+1 firearm bullets', '+1 bullets'],
+            match: ['hex-iron bullets', 'witch-iron bullets', 'baba lysaga\'s hex-iron', '+1 magical sling', '+1 firearm bullets', '+1 bullets'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'plus1', ammoKind: 'firearm', packSizeDefault: 10 },
@@ -416,7 +746,7 @@
             summary: '+1d4 Fire Bow Arrows'
         },
         {
-            match: ['fire bolts', 'fire crossbow bolts', 'brimstone fire crossbow bolts', 'incendiary bolts'],
+            match: ['fire bolts', 'fire crossbow bolts', 'brimstone fire crossbow bolts', 'incendiary bolts', 'incendiary crossbow bolts'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'incendiary', ammoKind: 'crossbow', packSizeDefault: 10 },
@@ -437,7 +767,7 @@
             summary: '+1d6 Poison + DC 12 CON Save Arrows'
         },
         {
-            match: ['poisoned bolts', 'venom-dipped', 'venom bolts', 'poison bolts'],
+            match: ['poisoned bolts', 'poisoned crossbow bolts', 'venom-dipped', 'venom bolts', 'poison bolts'],
             category: 'gear',
             slots: [],
             ammoMeta: { ammoId: 'poison', ammoKind: 'crossbow', packSizeDefault: 10 },
@@ -549,7 +879,7 @@
             summary: '+7d6 Poison (DC 15 CON) Bolts'
         },
         {
-            match: ['poisoned darts', 'crossbow bolts', 'arrows', 'bullets'],
+            match: ['crossbow bolts', 'arrows', 'bullets'],
             category: 'gear',
             slots: [],
             summary: 'Standard Ammunition Bundle'
@@ -1401,7 +1731,18 @@
             acBonus: 4,
             initBonus: 2,
             isShield: true,
-            summary: '+4 AC • +2 Initiative (Shield)'
+            setId: 'silver_vanguard',
+            summary: '+4 AC • +2 Init (Shield) • [🐉 Silver Vanguard Set]'
+        },
+        {
+            match: ['sentinel shield'],
+            category: 'weapon',
+            slots: ['offHand'],
+            reqArmor: 'shield',
+            acBonus: 2,
+            isShield: true,
+            skillAdv: ['Initiative', 'Perception'],
+            summary: '+2 AC • Adv on Initiative & Perception (Shield)'
         },
         {
             match: ['shield'],
@@ -1411,6 +1752,32 @@
             acBonus: 2,
             isShield: true,
             summary: '+2 AC (Off-Hand Shield)'
+        },
+        {
+            match: ['luck blade'],
+            category: 'weapon',
+            slots: ['mainHand'],
+            reqWeapon: 'martial',
+            hands: 1,
+            versatile: true,
+            attune: true,
+            saveBonus: 1,
+            quickBelt: true,
+            weaponStats: { autoScale: true, abilityMode: 'finesse', magicBonus: 1, dmgDice: '1d8', versatileDice: '1d10', dmgType: 'Slashing', mastery: 'Sap' },
+            multiActions: [
+                { label: '🍀 Luck Re-Roll (1/LR)', maxCharges: 1, recharge: 'long', type: 'magicPower', actionCost: 'none', effect: 'Re-roll any failed Attack Roll, Ability Check, or Saving Throw!' },
+                { label: '🌠 Cast WISH (1 Chg)', maxCharges: 1, recharge: 'never', type: 'itemSpell', spellName: 'Wish', spellLevel: 9, spellKind: 'utility', actionCost: 'action', effect: 'Reshape reality, duplicate any 8th-level or lower spell, or break a Dark Gift pact!' }
+            ],
+            summary: '+1 Longsword • +1 All Saves • 1/LR Luck Reroll • 1x Wish (Attune)'
+        },
+        {
+            match: ['rahadin\'s poisoned darts', 'poisoned darts'],
+            category: 'weapon',
+            slots: ['ranged', 'offHand', 'mainHand'],
+            reqWeapon: 'simple',
+            hands: 1,
+            weaponStats: { autoScale: true, abilityMode: 'finesse', magicBonus: 0, dmgDice: '1d4', dmgType: 'Piercing', extraDice: '1d4', extraType: 'Poison', mastery: 'Vex' },
+            summary: 'Thrown 20/60 Finesse • 1d4 Piercing + 1d4 Poison • Vex'
         },
         {
             match: ['silvered greatsword'],
@@ -1515,6 +1882,16 @@
             summary: '1H Finesse Light 1d4+DEX • Nick'
         },
         {
+            match: ['volenta\'s bone-spiked', 'returning dagger'],
+            category: 'weapon',
+            slots: ['mainHand', 'offHand', 'legSheath'],
+            reqWeapon: 'simple',
+            hands: 1,
+            isLegDagger: true,
+            weaponStats: { autoScale: true, abilityMode: 'finesse', magicBonus: 1, dmgDice: '1d4', dmgType: 'Piercing', mastery: 'Nick' },
+            summary: '+1 Returning Bone Dagger • Thrown 20/60 • Nick'
+        },
+        {
             match: ['dagger'],
             category: 'weapon',
             slots: ['mainHand', 'offHand', 'legSheath'],
@@ -1535,7 +1912,15 @@
             saveBonus: 2,
             spellAtkBonus: 2,
             attune: true,
-            summary: '+2 AC/Saves/Spell Atk • 20 Chg (Attune)'
+            quickBelt: true,
+            chargePool: { max: 20, recharge: 'long', rechargeDice: '2d8+4' },
+            multiActions: [
+                { label: '✨ Magic Missile (1 Chg)', cost: 1, type: 'itemSpell', spellId: 'magic_missile', actionCost: 'action' },
+                { label: '🔥 Fireball 10d6 (5 Chg)', cost: 5, type: 'itemSpell', spellName: 'Fireball (5th-Lvl)', spellLevel: 5, spellKind: 'dmg', spellDice: '10d6', spellDmgType: 'Fire', spellSave: 'DEX Save (half)', spellRange: '150 ft (20-ft sphere)', actionCost: 'action', effect: 'Upcast 5th-level Fireball dealing 10d6 Fire damage!' },
+                { label: '⚡ Lightning 10d6 (5 Chg)', cost: 5, type: 'itemSpell', spellName: 'Lightning Bolt (5th-Lvl)', spellLevel: 5, spellKind: 'dmg', spellDice: '10d6', spellDmgType: 'Lightning', spellSave: 'DEX Save (half)', spellRange: '100-ft line', actionCost: 'action', effect: 'Upcast 5th-level Lightning Bolt dealing 10d6 Lightning damage!' },
+                { label: '🛡️ Wall of Force (5 Chg)', cost: 5, type: 'itemSpell', spellName: 'Wall of Force', spellLevel: 5, spellKind: 'utility', spellConc: true, spellRange: '120 ft', actionCost: 'action', effect: 'Conjure an invisible, indestructible force wall or dome (10 min Conc.)!' }
+            ],
+            summary: '+2 AC/Saves/Spell Atk • 20 Chg Apex Staff (Attune)'
         },
         {
             match: ['staff of frost'],
@@ -1544,7 +1929,15 @@
             reqWeapon: 'simple',
             hands: 1,
             versatile: true,
+            resistance: 'Cold',
             attune: true,
+            quickBelt: true,
+            chargePool: { max: 10, recharge: 'long', rechargeDice: '1d6+4' },
+            multiActions: [
+                { label: '🌫️ Fog Cloud (1 Chg)', cost: 1, type: 'itemSpell', spellName: 'Fog Cloud', spellLevel: 1, spellKind: 'utility', spellConc: true, spellRange: '120 ft (20-ft sphere)', actionCost: 'action', effect: 'Heavily obscures a 20-ft sphere in dense freezing mist!' },
+                { label: '❄️ Ice Storm (4 Chg)', cost: 4, type: 'itemSpell', spellName: 'Ice Storm', spellLevel: 4, spellKind: 'dmg', spellDice: '4d6', spellDmgType: 'Cold (+2d8 Bludg)', spellSave: 'DEX Save (half)', spellRange: '300 ft (20-ft cyl)', actionCost: 'action', effect: 'Hailstorm deals 2d8 Bludgeoning + 4d6 Cold and creates difficult terrain!' },
+                { label: '🧊 Cone of Cold 8d8 (5 Chg)', cost: 5, type: 'itemSpell', spellName: 'Cone of Cold', spellLevel: 5, spellKind: 'dmg', spellDice: '8d8', spellDmgType: 'Cold', spellSave: 'CON Save (half)', spellRange: '60-ft cone', actionCost: 'action', effect: '60-ft blast of arctic cold dealing 8d8 Cold damage!' }
+            ],
             summary: 'Cold Resist • 10 Chg Ice Spells (Attune)'
         },
         {
@@ -2090,7 +2483,9 @@
             match: ['mist-ward', 'camp kit', 'traveler\'s camp'],
             category: 'gear',
             slots: [],
-            summary: 'Wilderness True Long Rest & Camp Shelter'
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: '⛺ Pitch Mist-Ward Camp', effect: 'Pitch sheltered wilderness True Long Rest (+5 Group Stealth/Perception, 30-ft silver bell ward, Adv vs mountain cold)!' },
+            summary: 'Wilderness True Long Rest • +5 Camp Stealth • Cold Ward'
         },
         {
             match: ['dream pastry'],
@@ -2187,11 +2582,305 @@
             slots: [],
             summary: 'Crafting Material • Counts as Silver Dust for Holy Water, Coatings & Camp Kits!'
         },
+        // --- NEW EXPLORATION CRAFTABLES & NPC CONVERSION ITEMS (Match BEFORE raw reagents!) ---
+        {
+            match: ['ghost-cap night-sight', 'night-sight brew', 'night-sight elixir'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Drank', actionCost: 'bonus', label: 'Night-Sight (2 hrs)', effect: 'Gain 60-ft Darkvision (or +30 ft if you already have Darkvision) & Advantage on Perception checks in dim light for 2 hours!' },
+            summary: 'Drink (Bonus): Darkvision 60 ft (+30 ft) & Adv Dim Perception (2 hrs)'
+        },
         {
             match: ['ghost-cap', 'grave-salt ward pouch', 'spider silk gland', 'cold-iron scrap', 'dire wolf fangs'],
             category: 'crafting',
             slots: [],
             summary: 'Barovian Crafting Material / Monster Salvage'
+        },
+
+        // --- SOUL-BOUND DARK GIFTS (AUTO-ACTIVE BOONS: 0 EQUIPMENT SLOTS, 0/3 ATTUNEMENT!) ---
+        {
+            match: ['dark gift of vampyr'],
+            category: 'quest',
+            slots: [],
+            autoActiveBoon: true,
+            maxHpBonus: 20,
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'reaction', label: '🩸 Misty Escape (15 HP)', effect: 'When reduced to 0 HP, dissolve into crimson mist and reform 30 ft away at 15 HP! (Passive: +20 Max HP & heal 100% of dmg dealt on Crits/Kills!)' },
+            summary: 'SOUL-BOUND BOON (0 Slots) • +20 Max HP • Vampiric Crits/Kills • 1/LR Misty Escape'
+        },
+        {
+            match: ['dark gift of the whispering hand'],
+            category: 'quest',
+            slots: [],
+            autoActiveBoon: true,
+            spellDcBonus: 1,
+            spellAtkBonus: 1,
+            resistance: 'Necrotic (Immune)',
+            quickBelt: true,
+            useAction: { type: 'itemSpell', keepItem: true, spellName: 'Dread Arcanum (Finger of Death / Disintegrate / Eyebite)', spellLevel: 7, spellKind: 'dmg', spellDice: '7d8', spellBonus: 30, spellDmgType: 'Necrotic', spellSave: 'CON Save (half)', spellRange: '60 ft', actionCost: 'action', maxCharges: 1, recharge: 'long', label: '🟣 Dread Arcanum (1/LR)', effect: 'Cast Finger of Death (7d8+30 Necrotic), Disintegrate (10d6+40 Force), or Eyebite without a spell slot!' },
+            summary: 'SOUL-BOUND BOON (0 Slots) • +1 Spell DC/Atk • Necrotic Immunity • 1/LR Dread Arcanum'
+        },
+        {
+            match: ['dark gift of zhudun', 'zhudun & sykane'],
+            category: 'quest',
+            slots: [],
+            autoActiveBoon: true,
+            acBonus: 1,
+            initBonus: 1,
+            quickBelt: true,
+            multiActions: [
+                { label: '👁️ True Seeing (1/LR)', maxCharges: 1, recharge: 'long', type: 'itemSpell', spellName: 'True Seeing', spellLevel: 6, spellKind: 'utility', actionCost: 'action', effect: '120-ft Truesight for 1 hour (pierces Mist, illusions, invisibility & Ethereal Plane)!' },
+                { label: '✨ Corpse Star Revive (1/LR)', maxCharges: 1, recharge: 'long', type: 'itemSpell', spellName: 'Corpse Star Resurrection', spellLevel: 5, spellKind: 'utility', actionCost: 'action', effect: 'Touch a dead creature to cast Revivify / Raise Dead with zero material components!' }
+            ],
+            summary: 'SOUL-BOUND BOON (0 Slots) • +1 AC & Init • +1d8 1st Hit/Turn • 1/LR True Seeing & Revive'
+        },
+        {
+            match: ['amber temple sarcophagi dark gifts', 'amber sarcophagi dark gifts'],
+            category: 'quest',
+            slots: [],
+            autoActiveBoon: true,
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 3, recharge: 'long', actionCost: 'action', label: '🌑 Invoke Amber Vestige', effect: 'Channel your bound Amber Sarcophagus vestige power (Lightning Bolt, Cone of Cold, Mind Blank, Contagion, or Bat Wings)!' },
+            summary: 'SOUL-BOUND BOON (0 Slots) • 3/LR Amber Vestige Invocation'
+        },
+
+        // --- WONDROUS RELICS, GRIMOIRES, POTIONS & SPECIAL SCROLLS ---
+        {
+            match: ['morgantha\'s night hag heartstone', 'night hag heartstone', 'hag heartstone'],
+            category: 'accessory',
+            slots: [],
+            autoActiveBoon: true,
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'action', label: '🖤 Cure Disease/Poison', effect: 'Touch a creature to instantly cure 1 disease, poison, or hag nightmare curse! (Passive: Adv on Death Saves while carried!)' },
+            summary: 'Passive Adv Death Saves • 1/LR Purifying Touch'
+        },
+        {
+            match: ['martikov gray bag of tricks', 'gray bag of tricks', 'bag of tricks'],
+            category: 'accessory',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'bagOfTricks', keepItem: true, maxCharges: 3, recharge: 'long', actionCost: 'action', label: '🐾 Pull Fuzzy Beast', effect: 'Pull a fuzzy ball and toss up to 20 ft to summon a loyal animal companion until dawn!' },
+            summary: '3/LR Action: Auto-Roll d8 Beast Summon!'
+        },
+        {
+            match: ['pipes of haunting'],
+            category: 'accessory',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 3, recharge: 'long', actionCost: 'action', label: '🎶 Haunting Dirge (DC 15)', effect: 'Play eerie swamp panpipes — enemies within 30 ft pass DC 15 WIS Save or are Frightened for 1 minute!' },
+            summary: '3/LR Action: 30-ft DC 15 WIS Frightened Dirge'
+        },
+        {
+            match: ['doss lute of ravenloft', 'doss lute'],
+            category: 'accessory',
+            slots: ['offHand'],
+            attune: true,
+            quickBelt: true,
+            multiActions: [
+                { label: '🎵 Lute: Fly (1/LR)', maxCharges: 1, recharge: 'long', type: 'itemSpell', spellId: 'fly', actionCost: 'action' },
+                { label: '🎵 Lute: Invisibility (1/LR)', maxCharges: 1, recharge: 'long', type: 'itemSpell', spellId: 'invisibility', actionCost: 'action' },
+                { label: '🎵 Lute: Prot Evil (1/LR)', maxCharges: 1, recharge: 'long', type: 'itemSpell', spellId: 'protection_from_evil_and_good', actionCost: 'action' }
+            ],
+            summary: '1/LR Fly, Invisibility & Prot. from Evil (Attune)'
+        },
+        {
+            match: ['tarokka deck of illusions', 'deck of illusions'],
+            category: 'accessory',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'deckOfIllusions', keepItem: true, maxCharges: 34, recharge: 'never', actionCost: 'action', label: '🃏 Throw Illusion Card', effect: 'Draw a card and conjure a lifelike moving illusion creature up to 30 ft away!' },
+            summary: 'Action: Pull Random Lifelike Illusion Creature (34 Cards)'
+        },
+        {
+            match: ['daern\'s instant fortress', 'instant fortress'],
+            category: 'gear',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'action', label: '🏰 Deploy Fortress', effect: 'Expands into a 20x20x30-ft adamantine siege tower (DC 15 DEX Save or 10d10 Bludg in footprint; 100 HP walls)!' },
+            summary: 'Action: Deploy 20x20x30-ft Adamantine Siege Tower'
+        },
+        {
+            match: ['alchemy jug'],
+            category: 'gear',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'action', label: '🏺 Pour Alchemy Jug', effect: 'Pour 2 gal Wine, 8 gal Water, 2 vials Acid, 1 qt Oil, or 1/2 oz Basic Poison (1/Long Rest)!' },
+            summary: '1/LR: Pour Acid, Poison, Oil, Wine, or Fresh Water'
+        },
+        {
+            match: ['mist-ward traveler\'s camp kit', 'mist-ward camp kit'],
+            category: 'gear',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: '⛺ Pitch Mist-Ward Camp', effect: 'Pitch sheltered wilderness True Long Rest (+5 Group Stealth/Perception, 30-ft silver bell ward, Adv vs mountain cold)!' },
+            summary: 'Wilderness True Long Rest • +5 Camp Stealth • Cold Ward'
+        },
+        {
+            match: ['ezmerelda\'s vistani hunter bandolier', 'vistani hunter bandolier'],
+            category: 'gear',
+            slots: [],
+            isBulletContainer: true,
+            autoActiveBoon: true,
+            initBonus: 1,
+            summary: 'Counts as Bullet Sling • +1 Init • 6 Stakes, Mirror & Hunter Tools'
+        },
+        {
+            match: ['hunter\'s silvered bolt & arrow satchel', 'silvered bolt & arrow satchel'],
+            category: 'gear',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Opened', actionCost: 'none', label: '🏹 Unpack Silver Satchel', effect: 'Unpacked 10x Silvered Bolts/Arrows ready to load into any bow or crossbow!' },
+            summary: 'Action: Unpack 10x Silvered Bolts/Arrows'
+        },
+        {
+            match: ['potion of invulnerability'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Drank', actionCost: 'bonus', label: '🛡️ Invulnerability (1 min)', effect: 'Gain Resistance to ALL damage for 1 full minute (10 rounds)!' },
+            summary: 'Bonus Action: Resistance to ALL Damage for 1 Minute!'
+        },
+        {
+            match: ['potion of clairvoyance'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Drank', actionCost: 'action', label: '👁️ Clairvoyance (10 min)', effect: 'Project an invisible seeing/hearing sensor up to 1 mile away for 10 min (no concentration)!' },
+            summary: 'Action: Invisible Spy Sensor up to 1 Mile (10 min)'
+        },
+        {
+            match: ['elixir of youth'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Drank', actionCost: 'action', label: '⏳ Elixir of Youth', effect: 'Reverses physical aging by 1d6+6 years (min 13) & restores youthful vigor!' },
+            summary: 'Action: Reverses Aging by 1d6+6 Years'
+        },
+        {
+            match: ['fallen angelic feather'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'heal', dice: 4, sides: 8, bonus: 4, verb: 'Snapped', actionCost: 'action', label: '🪶 Angelic Feather (4d8+4)', extraNote: 'OR use as a free 300 GP Revivify catalyst to revive a fallen ally!' },
+            summary: 'Action: Heal 4d8+4 Radiant HP OR Free Revivify Catalyst'
+        },
+        {
+            match: ['tome of understanding'],
+            category: 'gear',
+            slots: [],
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: '📖 Study (+2 WIS)', effect: 'After 48 hrs of study over 6 days, permanently increases Wisdom & Max Wisdom by +2 (+1 WIS Saves/Perception/DC)!' },
+            summary: '48-hr Study: Permanently +2 Wisdom (up to 22)'
+        },
+        {
+            match: ['manual of bodily health'],
+            category: 'gear',
+            slots: [],
+            useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: '📕 Study (+2 CON)', effect: 'After 48 hrs of study over 6 days, permanently increases Constitution & Max Constitution by +2 (+Level Max HP & +1 CON Saves)!' },
+            summary: '48-hr Study: Permanently +2 Constitution (up to 22)'
+        },
+        {
+            match: ['protection from fiends & undead', 'protection from fiends'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'spellScroll', spellId: 'protection_from_evil_and_good', spellName: 'Protection from Fiends & Undead', spellLevel: 2, spellConc: false, actionCost: 'action', label: '📜 Prot. Fiends & Undead', effect: '10 min (NO Concentration!): Undead & Fiends have Disadvantage on attacks & cannot charm/frighten/possess target!' },
+            summary: '1-Use Scroll: 10-min Ward vs Undead & Fiends (No Conc!)'
+        },
+        {
+            match: ['heroes\' feast', 'heroes feast'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'spellScroll', spellName: "Heroes' Feast", spellLevel: 6, spellKind: 'tempHp', spellDice: '2d10', spellBonus: 0, actionCost: 'action', label: "📜 Heroes' Feast (+2d10)", effect: '24 hrs for up to 12 diners: Poison & Frightened Immunity, Adv on ALL WIS Saves, & +2d10 Max HP!' },
+            summary: '6th-Lvl Scroll: 24-hr Poison/Fear Immunity, Adv WIS, +2d10 Max HP'
+        },
+        {
+            match: ['amber temple spell scrolls'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'spellScroll', spellName: 'Amber Vault Scroll (Chain Lightning / Wall of Stone)', spellLevel: 6, spellKind: 'dmg', spellDice: '10d8', spellDmgType: 'Lightning', spellSave: 'DEX Save (half)', spellRange: '150 ft (+3 leaps)', actionCost: 'action', label: '📜 Cast Amber Scroll', effect: 'Unleash Chain Lightning (10d8), Wall of Stone, Protection from Energy, or Sending!' },
+            summary: 'Amber Temple Scroll Cache (Chain Lightning / Wall of Stone)'
+        },
+        {
+            match: ['death house reliquary spellbook'],
+            category: 'consumable',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'spellScroll', spellName: 'Death House Scroll (Bless / Prot. Poison / Spiritual Wpn)', spellLevel: 2, spellKind: 'utility', actionCost: 'action', label: '📜 Death House Scroll', effect: 'Cast Bless, Protection from Poison, or Spiritual Weapon from the Death House cache!' },
+            summary: 'Reliquary Scroll Cache (Bless / Prot. Poison / Spiritual Wpn)'
+        },
+        {
+            match: ['victor vallakovich\'s attic spellbook', 'victor\'s attic spellbook'],
+            category: 'accessory',
+            slots: ['offHand'],
+            quickBelt: true,
+            useAction: { type: 'itemSpell', keepItem: true, spellId: 'fireball', spellName: "Victor's Grimoire (Fireball / Misty Step / Fly)", spellLevel: 3, maxCharges: 1, recharge: 'long', actionCost: 'action', label: "📖 Victor's Grimoire", effect: 'Channel Fireball (8d6), Misty Step, or Fly from Victor\'s scorched grimoire (1/Long Rest)!' },
+            summary: 'Arcane Grimoire • 1/LR Cast Fireball / Misty Step / Fly'
+        },
+        {
+            match: ['kasimir velikov\'s dusk elf spellbook', 'kasimir\'s dusk elf spellbook'],
+            category: 'accessory',
+            slots: ['offHand'],
+            quickBelt: true,
+            useAction: { type: 'itemSpell', keepItem: true, spellId: 'counterspell', spellName: "Kasimir's Grimoire (Counterspell / Ice Storm / Fly)", spellLevel: 3, maxCharges: 1, recharge: 'long', actionCost: 'action', label: "📖 Kasimir's Grimoire", effect: 'Channel Counterspell, Ice Storm, or Fly from Kasimir\'s Dusk Elf tome (1/Long Rest)!' },
+            summary: 'Dusk Elf Grimoire • 1/LR Cast Counterspell / Ice Storm / Fly'
+        },
+        {
+            match: ['baba lysaga\'s swamp grimoire', 'lysaga\'s swamp grimoire'],
+            category: 'accessory',
+            slots: ['offHand'],
+            quickBelt: true,
+            useAction: { type: 'itemSpell', keepItem: true, spellId: 'blight', spellName: "Lysaga's Grimoire (Blight 8d8 / Polymorph / Dispel)", spellLevel: 4, maxCharges: 1, recharge: 'long', actionCost: 'action', label: "📖 Lysaga's Grimoire", effect: 'Channel Blight (8d8 Necrotic), Polymorph, or Dispel Magic from Lysaga\'s toadskin grimoire (1/Long Rest)!' },
+            summary: 'Swamp Grimoire • 1/LR Cast Blight (8d8) / Polymorph'
+        },
+        {
+            match: ['patrina velikovna\'s spellbook', 'patrina\'s spellbook'],
+            category: 'accessory',
+            slots: ['offHand'],
+            quickBelt: true,
+            useAction: { type: 'itemSpell', keepItem: true, spellName: "Patrina's Archmage Tome (Wall of Force / Cloudkill / Globe)", spellLevel: 5, spellKind: 'utility', maxCharges: 1, recharge: 'long', actionCost: 'action', label: "📖 Patrina's Tome", effect: 'Channel Wall of Force, Cloudkill, or Globe of Invulnerability from Patrina\'s archmage tome (1/Long Rest)!' },
+            summary: 'Archmage Tome • 1/LR Cast Wall of Force / Cloudkill / Globe'
+        },
+        {
+            match: ['count strahd\'s master study spellbook', 'strahd\'s master study spellbook'],
+            category: 'accessory',
+            slots: ['offHand'],
+            quickBelt: true,
+            useAction: { type: 'itemSpell', keepItem: true, spellId: 'greater_invisibility', spellName: "Strahd's Master Grimoire (Greater Invis / Scrying)", spellLevel: 4, maxCharges: 1, recharge: 'long', actionCost: 'action', label: "📖 Strahd's Grimoire", effect: 'Channel Greater Invisibility, Scrying, Polymorph, or Animate Objects + Ravenloft Brazier Cipher (1/Long Rest)!' },
+            summary: 'Zarovich Masterbook • 1/LR Greater Invis / Scrying + Brazier Cipher'
+        },
+        {
+            match: ['magic mirror of ba\'al verzi'],
+            category: 'quest',
+            slots: [],
+            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'action', label: '🪞 Summon Mirror Assassin', effect: 'Recite the assassin rhyme to dispatch a spectral Ba\'al Verzi killer against a named mortal target!' },
+            summary: '1/LR: Summon Spectral Ba\'al Verzi Assassin'
+        },
+        {
+            match: ['iron hunter\'s bear trap', 'bear trap'],
+            category: 'gear',
+            slots: [],
+            quickBelt: true,
+            useAction: { type: 'utilityLog', verb: 'Set', actionCost: 'action', label: '🪤 Set Bear Trap', effect: 'Anchored trap: Target makes DC 13 DEX Save or takes 1d4 Piercing & Speed 0 (DC 13 STR Action to break free)!' },
+            summary: 'Action: Set Bear Trap (DC 13 DEX, 1d4 Piercing, Speed 0)'
+        },
+        {
+            match: ['annotated barovian herbalist folio', 'herbalist folio'],
+            category: 'quest',
+            slots: [],
+            autoActiveBoon: true,
+            skillAdv: ['Nature'],
+            summary: 'Field Guide • Passive Adv on Nature Foraging Checks (20 GP)'
+        },
+        {
+            match: ['cracked brass magnifying glass', 'brass magnifying glass'],
+            category: 'gear',
+            slots: [],
+            autoActiveBoon: true,
+            skillAdv: ['Investigation'],
+            summary: 'Detective Tool • Passive Adv on Fine Investigation Checks (25 GP)'
         },
         {
             match: ['luckstone charm', 'trinket of the forgotten sun'],
@@ -2205,10 +2894,11 @@
             match: ['mist-compass', 'compass of the old fanes'],
             category: 'accessory',
             slots: [],
+            autoActiveBoon: true,
             skillAdv: ['Survival'],
             quickBelt: true,
             useAction: { type: 'magicPower', keepItem: true, actionCost: 'none', label: 'Mist-Compass', charges: 'Always Active', effect: 'Points true north through Barovian Mist & grants Advantage on Survival checks to navigate or track!' },
-            summary: 'Points True North in Mist • Adv on Survival'
+            summary: 'Points True North in Mist • Passive Adv on Survival'
         },
         {
             match: ['gambler\'s bones', 'vistani luck'],
@@ -2233,23 +2923,6 @@
             quickBelt: true,
             useAction: { type: 'itemSpell', keepItem: true, spellId: 'detect_magic', maxCharges: 1, recharge: 'long', actionCost: 'action', label: 'Identify / Detect Magic', charges: '1/Long Rest', effect: 'Cast Identify or Detect Magic without expending a spell slot or material components (1/Long Rest)!' },
             summary: '1/LR: Free Identify or Detect Magic'
-        },
-        {
-            match: ['consecrated silver prayer medallion', 'prayer medallion'],
-            category: 'accessory',
-            slots: ['amulet'],
-            quickBelt: true,
-            useAction: { type: 'magicPower', keepItem: true, maxCharges: 1, recharge: 'long', actionCost: 'none', label: 'Prayer (+1d4)', charges: '1/Long Rest', effect: 'Add +1d4 to a Religion check or Death Saving Throw (1/Long Rest • No Attunement)!' },
-            summary: '1/LR: +1d4 to Religion Check or Death Save'
-        },
-        // --- NEW EXPLORATION CRAFTABLES & NPC CONVERSION ITEMS ---
-        {
-            match: ['ghost-cap night-sight', 'night-sight brew', 'night-sight elixir'],
-            category: 'consumable',
-            slots: [],
-            quickBelt: true,
-            useAction: { type: 'utilityLog', verb: 'Drank', actionCost: 'bonus', label: 'Night-Sight (2 hrs)', effect: 'Gain 60-ft Darkvision (or +30 ft if you already have Darkvision) & Advantage on Perception checks in dim light for 2 hours!' },
-            summary: 'Drink (Bonus): Darkvision 60 ft (+30 ft) & Adv Dim Perception (2 hrs)'
         },
         {
             match: ['grave-salt necrotic coating', 'grave-salt coating', 'consecrated grave-salt'],
@@ -4123,16 +4796,38 @@
     function saveItemChargesMap(map) {
         try { localStorage.setItem(getItemChargesKey(), JSON.stringify(map || {})); } catch (e) {}
     }
-    function getItemRemainingCharges(itemKey, act) {
+    function getItemChargeStorageId(itemKey, subIdx, hasPool) {
+        if (hasPool || subIdx === null || subIdx === undefined) return itemKey;
+        return `${itemKey}::${subIdx}`;
+    }
+    function getItemRemainingCharges(itemKey, act, subIdx = null, chargePool = null) {
+        if (chargePool && chargePool.max > 0) {
+            const map = getItemChargesMap();
+            if (typeof map[itemKey] === 'number') return Math.max(0, Math.min(chargePool.max, map[itemKey]));
+            return chargePool.max;
+        }
         if (!act || !act.maxCharges || act.maxCharges <= 0) return null;
         const map = getItemChargesMap();
-        if (typeof map[itemKey] === 'number') return Math.max(0, Math.min(act.maxCharges, map[itemKey]));
+        const k = getItemChargeStorageId(itemKey, subIdx, false);
+        if (typeof map[k] === 'number') return Math.max(0, Math.min(act.maxCharges, map[k]));
         return act.maxCharges;
     }
-    function setItemRemainingCharges(itemKey, val) {
+    function setItemRemainingCharges(itemKey, val, subIdx = null, hasPool = false) {
         const map = getItemChargesMap();
-        map[itemKey] = Math.max(0, parseInt(val, 10) || 0);
+        const k = getItemChargeStorageId(itemKey, subIdx, hasPool);
+        map[k] = Math.max(0, parseInt(val, 10) || 0);
         saveItemChargesMap(map);
+    }
+    function parseAndRollRechargeDice(expr, maxVal) {
+        const s = String(expr || '').trim();
+        const m = s.match(/^(\d+)d(\d+)(?:\s*\+\s*(\d+))?$/i);
+        if (!m) return maxVal;
+        const cnt = parseInt(m[1], 10) || 1;
+        const sides = parseInt(m[2], 10) || 4;
+        const bonus = parseInt(m[3], 10) || 0;
+        let sum = bonus;
+        for (let i = 0; i < cnt; i++) sum += Math.floor(Math.random() * sides) + 1;
+        return sum;
     }
     function rechargeItemCharges(restType = 'long') {
         if (!adapter) return 0;
@@ -4141,11 +4836,40 @@
         let restoredCount = 0;
         items.forEach(raw => {
             const meta = getItemMeta(raw);
-            const act = meta && meta.useAction;
-            if (!act || !act.maxCharges || act.maxCharges <= 0) return;
+            if (!meta) return;
+            const k = normKey(raw);
+            if (meta.chargePool && meta.chargePool.max > 0) {
+                const rec = meta.chargePool.recharge || 'long';
+                if (rec !== 'never' && (restType === 'long' || rec === 'short')) {
+                    const cur = typeof map[k] === 'number' ? map[k] : meta.chargePool.max;
+                    if (cur < meta.chargePool.max) {
+                        const add = meta.chargePool.rechargeDice
+                            ? parseAndRollRechargeDice(meta.chargePool.rechargeDice, meta.chargePool.max)
+                            : meta.chargePool.max;
+                        map[k] = Math.min(meta.chargePool.max, cur + add);
+                        restoredCount++;
+                    }
+                }
+                return;
+            }
+            if (Array.isArray(meta.multiActions) && meta.multiActions.length > 0) {
+                meta.multiActions.forEach((act, sIdx) => {
+                    if (!act || !act.maxCharges || act.maxCharges <= 0 || act.recharge === 'never') return;
+                    const rec = act.recharge || 'long';
+                    if (restType === 'long' || rec === 'short') {
+                        const sk = getItemChargeStorageId(k, sIdx, false);
+                        if (typeof map[sk] === 'number' && map[sk] < act.maxCharges) {
+                            map[sk] = act.maxCharges;
+                            restoredCount++;
+                        }
+                    }
+                });
+                return;
+            }
+            const act = meta.useAction;
+            if (!act || !act.maxCharges || act.maxCharges <= 0 || act.recharge === 'never') return;
             const rec = act.recharge || 'long';
             if (restType === 'long' || rec === 'short') {
-                const k = normKey(raw);
                 if (typeof map[k] === 'number' && map[k] < act.maxCharges) {
                     map[k] = act.maxCharges;
                     restoredCount++;
@@ -4254,7 +4978,7 @@
                 else reqArmor = 'light';
             }
         }
-        if (reqArmor && reqArmor !== 'robe' && !armorList.includes(reqArmor)) {
+        if (reqArmor && reqArmor !== 'robe' && reqArmor !== 'any' && !armorList.includes(reqArmor)) {
             return {
                 allowed: false,
                 reqKind: 'armor',
@@ -6351,18 +7075,23 @@
             spellDcBonus: 0,
             spellAtkBonus: 0,
             initBonus: 0,
+            maxHpBonus: 0,
+            unarmoredAcBonus: 0,
             spellFireBonus: null,
             skillAdv: [],
             resistances: [],
             robeKey: 'none',
             equippedWeaponTags: [],
             equippedAbilities: [],
+            activeSets: [],
+            activeBoons: [],
             activePerks: [],
             mainHand2H: isMainHandTwoHanded(eq),
             equippedMap: eq
         };
 
         const countedKeys = new Set();
+        const setCounts = {};
         const activeSlots = getActiveSlots();
         for (const s of activeSlots) {
             const k = eq[s.id];
@@ -6378,6 +7107,10 @@
                 bonuses.attunedNames.push(shortLabel(raw));
                 countedKeys.add('att:' + k);
             }
+            if (meta.setId && !countedKeys.has('set:' + k)) {
+                setCounts[meta.setId] = (setCounts[meta.setId] || 0) + 1;
+                countedKeys.add('set:' + k);
+            }
             if (s.id === 'body' && meta.baseAC) {
                 bonuses.baseAC = meta.baseAC;
                 bonuses.addDex = !!meta.addDex;
@@ -6391,10 +7124,12 @@
             } else if (meta.acBonus && !meta.isShield) {
                 bonuses.acBonus += meta.acBonus;
             }
+            if (meta.unarmoredAcBonus) bonuses.unarmoredAcBonus += meta.unarmoredAcBonus;
             if (meta.saveBonus) bonuses.saveBonus += meta.saveBonus;
             if (meta.spellDcBonus) bonuses.spellDcBonus += meta.spellDcBonus;
             if (meta.spellAtkBonus) bonuses.spellAtkBonus += meta.spellAtkBonus;
             if (meta.initBonus) bonuses.initBonus += meta.initBonus;
+            if (meta.maxHpBonus) bonuses.maxHpBonus += meta.maxHpBonus;
             if (meta.spellFireBonus) bonuses.spellFireBonus = meta.spellFireBonus;
             if (meta.robeKey && s.id === 'body') bonuses.robeKey = meta.robeKey;
             if (Array.isArray(meta.skillAdv)) {
@@ -6422,6 +7157,60 @@
                 if (wCombat.coating) bonuses.activePerks.push(`<strong>${esc(shortLabel(raw))} Coating:</strong> ${esc(wCombat.coating.label)}`);
             }
         }
+
+        // Authentic 5e Unarmored AC Bonus check (e.g. Bracers of Defense: +2 AC ONLY if unarmored & no shield)
+        if (bonuses.unarmoredAcBonus > 0) {
+            if (!bonuses.armorWorn && bonuses.shieldBonus === 0) {
+                bonuses.acBonus += bonuses.unarmoredAcBonus;
+            } else {
+                bonuses.activePerks.push(`<span style="color:#fca5a5;"><strong>⚠️ Bracers of Defense Inactive:</strong> Unequip armor &amp; shield to gain +${bonuses.unarmoredAcBonus} AC.</span>`);
+            }
+        }
+
+        // Auto-Active Soul-Bound Boons & Passive Field Tools (Dark Gifts, Bandolier, Guides — 0 Slots, 0/3 Attunement!)
+        const invItems = adapter ? adapter.getItems() : [];
+        const equippedKeysSet = new Set(Object.values(eq || {}).filter(Boolean));
+        invItems.forEach(raw => {
+            const k = normKey(raw);
+            if (countedKeys.has('boon:' + k) || equippedKeysSet.has(k)) return;
+            const meta = getItemMeta(raw);
+            if (!meta || !meta.autoActiveBoon) return;
+            countedKeys.add('boon:' + k);
+            if (meta.acBonus) bonuses.acBonus += meta.acBonus;
+            if (meta.saveBonus) bonuses.saveBonus += meta.saveBonus;
+            if (meta.spellDcBonus) bonuses.spellDcBonus += meta.spellDcBonus;
+            if (meta.spellAtkBonus) bonuses.spellAtkBonus += meta.spellAtkBonus;
+            if (meta.initBonus) bonuses.initBonus += meta.initBonus;
+            if (meta.maxHpBonus) bonuses.maxHpBonus += meta.maxHpBonus;
+            if (Array.isArray(meta.skillAdv)) {
+                meta.skillAdv.forEach(sk => { if (!bonuses.skillAdv.includes(sk)) bonuses.skillAdv.push(sk); });
+            }
+            if (meta.resistance && !bonuses.resistances.includes(meta.resistance)) {
+                bonuses.resistances.push(meta.resistance);
+            }
+            const lbl = shortLabel(raw);
+            bonuses.activeBoons.push({ name: lbl, summary: meta.summary || 'Active Boon' });
+            bonuses.activePerks.unshift(`<span style="color:#e9d5ff;"><strong>🌑 ${esc(lbl)} (Auto-Active):</strong> ${esc(meta.summary || 'Soul-Bound Passive')}</span>`);
+        });
+
+        // Armor Set Synergy Evaluation (2-Piece & 3-Piece Live Bonuses!)
+        Object.entries(setCounts).forEach(([setId, count]) => {
+            const def = ARMOR_SET_BONUSES[setId];
+            if (!def || count < 2) return;
+            const tier = (count >= 3 && def.tiers[3]) ? 3 : 2;
+            const tb = def.tiers[tier];
+            if (!tb) return;
+            if (tb.acBonus) bonuses.acBonus += tb.acBonus;
+            if (tb.saveBonus) bonuses.saveBonus += tb.saveBonus;
+            if (tb.spellDcBonus) bonuses.spellDcBonus += tb.spellDcBonus;
+            if (tb.spellAtkBonus) bonuses.spellAtkBonus += tb.spellAtkBonus;
+            if (tb.initBonus) bonuses.initBonus += tb.initBonus;
+            if (tb.resistance && !bonuses.resistances.includes(tb.resistance)) {
+                bonuses.resistances.push(tb.resistance);
+            }
+            bonuses.activeSets.push({ id: setId, name: def.name, count, tier, summary: tb.summary });
+            bonuses.activePerks.unshift(`<span style="color:#fde68a;"><strong>⚡ SET SYNERGY — ${esc(def.name)} (${tier}-Pc Active):</strong> ${esc(tb.summary)}</span>`);
+        });
 
         if (typeof hudState === 'object' && hudState && Array.isArray(hudState.statuses)) {
             if (hudState.statuses.includes('half_cover')) bonuses.acBonus += 2;
@@ -6823,8 +7612,8 @@
             if (tDiv && lamTab.dataset.origLbl === undefined) lamTab.dataset.origLbl = tDiv.textContent || '';
             if (tDiv) {
                 if (awkMap.lament) {
-                    tDiv.textContent = awkMap.lament.mode === 'cursed' ? '🩸 "LAMENT" (MIST-CURSED +3)' : '☀️ "LAMENT" (LEGENDARY +3)';
-                    tDiv.style.color = awkMap.lament.mode === 'cursed' ? '#fecdd3' : '#fef08a';
+                    tDiv.textContent = '🩸 "LAMENT" (+3)';
+                    tDiv.style.color = '#fecdd3';
                 } else if (lamTab.dataset.origLbl !== undefined) {
                     tDiv.textContent = lamTab.dataset.origLbl;
                     tDiv.style.color = '';
@@ -6837,8 +7626,8 @@
             if (tDiv && revTab.dataset.origLbl === undefined) revTab.dataset.origLbl = tDiv.textContent || '';
             if (tDiv) {
                 if (awkMap.mercy) {
-                    tDiv.textContent = awkMap.mercy.mode === 'cursed' ? '🩸 "MERCY & LESS" (CURSED +3)' : '☀️ "MERCY & LESS" (LEGENDARY +3)';
-                    tDiv.style.color = awkMap.mercy.mode === 'cursed' ? '#fecdd3' : '#fef08a';
+                    tDiv.textContent = '🩸 "MERCY & LESS" (+3)';
+                    tDiv.style.color = '#fecdd3';
                 } else if (revTab.dataset.origLbl !== undefined) {
                     tDiv.textContent = revTab.dataset.origLbl;
                     tDiv.style.color = '';
@@ -7584,16 +8373,19 @@
     // =========================================================================
     // CONSUMABLE, SPELL SCROLL & MAGIC-ITEM POWER ENGINE (QUICK-BELT & BACKPACK)
     // =========================================================================
-    function useConsumableByIndex(invIndex) {
+    function useConsumableByIndex(invIndex, subActionIdx = null) {
         const items = adapter.getItems();
         const raw = items[invIndex];
         if (!raw) return;
         const meta = getItemMeta(raw);
         const parsed = parseItem(raw);
-        if (!meta.useAction) return;
+        const hasMulti = Array.isArray(meta.multiActions) && meta.multiActions.length > 0;
+        const effSubIdx = hasMulti ? (typeof subActionIdx === 'number' ? subActionIdx : 0) : null;
+        const act = hasMulti ? meta.multiActions[effSubIdx] : meta.useAction;
+        if (!act) return;
 
-        const act = meta.useAction;
         const itemKey = normKey(raw);
+        const pool = (hasMulti && meta.chargePool && meta.chargePool.max > 0) ? meta.chargePool : null;
         if (act.type === 'learnRecipe' && act.recipeId) {
             const rec = CRAFTING_RECIPES.find(r => r.id === act.recipeId);
             if (rec && isRecipeUnlocked(rec)) {
@@ -7606,36 +8398,71 @@
             return;
         }
 
-        if (act.type === 'itemSpell') {
-            let remAfter = null;
-            if (act.maxCharges > 0) {
-                const rem = getItemRemainingCharges(itemKey, act);
-                if (rem <= 0) {
-                    adapter.log(`⚠️ <strong>${esc(shortLabel(raw))}</strong> has <strong>0/${act.maxCharges} charges</strong> left — take a ${act.recharge === 'short' ? 'Short or Long' : 'Long'} Rest to recharge!`);
-                    return;
+        // Helper for shared chargePool OR per-action charges (used by itemSpell, magicPower, bagOfTricks, deckOfIllusions)
+        const consumeReusableCharges = () => {
+            if (pool) {
+                const cost = typeof act.cost === 'number' ? act.cost : 1;
+                const rem = getItemRemainingCharges(itemKey, act, effSubIdx, pool);
+                if (cost > 0 && rem < cost) {
+                    adapter.log(`⚠️ <strong>${esc(shortLabel(raw))}</strong> only has <strong>${rem}/${pool.max} charges</strong> left (needs ${cost}) — take a ${pool.recharge === 'short' ? 'Short or Long' : 'Long'} Rest to recharge!`);
+                    return { ok: false };
                 }
-                remAfter = rem - 1;
-                setItemRemainingCharges(itemKey, remAfter);
+                const remAfter = Math.max(0, rem - cost);
+                if (cost > 0) setItemRemainingCharges(itemKey, remAfter, effSubIdx, true);
+                return { ok: true, remAfter, maxCharges: pool.max, cost };
             }
-            executeSpellEffectLog(shortLabel(raw), act, false, remAfter, act.maxCharges || 0);
+            if (act.maxCharges > 0) {
+                const rem = getItemRemainingCharges(itemKey, act, effSubIdx, null);
+                if (rem <= 0) {
+                    const recMsg = act.recharge === 'never' ? 'no charges remaining!' : `take a ${act.recharge === 'short' ? 'Short or Long' : 'Long'} Rest to recharge!`;
+                    adapter.log(`⚠️ <strong>${esc(shortLabel(raw))}</strong> (${esc(act.label || 'Power')}) has <strong>0/${act.maxCharges} uses</strong> left — ${recMsg}`);
+                    return { ok: false };
+                }
+                const remAfter = rem - 1;
+                setItemRemainingCharges(itemKey, remAfter, effSubIdx, false);
+                return { ok: true, remAfter, maxCharges: act.maxCharges, cost: 1 };
+            }
+            return { ok: true, remAfter: null, maxCharges: 0, cost: 0 };
+        };
+
+        if (act.type === 'bagOfTricks') {
+            const c = consumeReusableCharges();
+            if (!c.ok) return;
+            const beasts = ['Weasel (AC 13, 1 HP)', 'Giant Rat (AC 12, 7 HP)', 'Badger (AC 10, 3 HP)', 'Boar (AC 11, 11 HP)', 'Panther (AC 12, 13 HP)', 'Giant Badger (AC 10, 13 HP)', 'Dire Wolf (AC 14, 37 HP, Pack Tactics!)', 'Giant Elk (AC 14, 42 HP, Charge!)'];
+            const roll = Math.floor(Math.random() * 8);
+            if (act.actionCost && act.actionCost !== 'none') spendTurnAction(act.actionCost);
+            adapter.log(`🐾 <strong>${esc(shortLabel(raw))}</strong> <span style="color:#d8b4fe;">(${c.remAfter}/${c.maxCharges} left)</span>: Tossed fuzzy ball ➔ d8[<strong>${roll + 1}</strong>] summoned a loyal <strong style="color:#6ee7b7;">${esc(beasts[roll])}</strong> until dawn!`);
             applyEquipmentToSheet(true);
             return;
         }
 
-        if (act.type === 'magicPower' || act.keepItem) {
-            let chgTag = act.charges ? ` <span style="color:#d8b4fe; font-size:0.76rem;">(${esc(act.charges)})</span>` : '';
-            if (act.maxCharges > 0) {
-                const rem = getItemRemainingCharges(itemKey, act);
-                if (rem <= 0) {
-                    adapter.log(`⚠️ <strong>${esc(shortLabel(raw))}</strong> has <strong>0/${act.maxCharges} uses</strong> left — take a ${act.recharge === 'short' ? 'Short or Long' : 'Long'} Rest to recharge!`);
-                    return;
-                }
-                const remAfter = rem - 1;
-                setItemRemainingCharges(itemKey, remAfter);
-                chgTag = ` <span style="color:#d8b4fe; font-size:0.76rem; font-weight:700;">(${remAfter}/${act.maxCharges} left)</span>`;
-            }
+        if (act.type === 'deckOfIllusions') {
+            const c = consumeReusableCharges();
+            if (!c.ok) return;
+            const cards = ['Red Dragon', 'Knight & Four Guards', 'Succubus / Incubus', 'Druid', 'Cloud Giant', 'Ettin', 'Bugbear', 'Goblin', 'Beholder', 'Archmage & Apprentice', 'Night Hag', 'Assassin', 'Fire Giant', 'Ogre Mage', 'Gnoll', 'Kobold', 'Lich', 'Priest & Two Acolytes', 'Medusa', 'Veteran', 'Frost Giant', 'Troll', 'Hobgoblin', 'Iron Golem', 'Bandit Captain', 'Erinyes', 'Berserker', 'Hill Giant', 'Ogre', 'Orc', 'Illusion of Yourself!'];
+            const pick = cards[Math.floor(Math.random() * cards.length)];
             if (act.actionCost && act.actionCost !== 'none') spendTurnAction(act.actionCost);
-            adapter.log(`✨ <strong>Activated ${esc(shortLabel(raw))}:</strong>${chgTag} ${esc(act.effect || act.label || 'Magic ability triggered!')}`);
+            adapter.log(`🃏 <strong>${esc(shortLabel(raw))}</strong> <span style="color:#d8b4fe;">(${c.remAfter}/${c.maxCharges} cards left)</span>: Conjured a lifelike moving illusion of <strong style="color:#fde68a;">${esc(pick)}</strong> up to 30 ft away!`);
+            applyEquipmentToSheet(true);
+            return;
+        }
+
+        if (act.type === 'itemSpell') {
+            const c = consumeReusableCharges();
+            if (!c.ok) return;
+            executeSpellEffectLog(shortLabel(raw), act, false, c.remAfter, c.maxCharges || 0);
+            applyEquipmentToSheet(true);
+            return;
+        }
+
+        if (act.type === 'magicPower' || act.keepItem || hasMulti) {
+            const c = consumeReusableCharges();
+            if (!c.ok) return;
+            const chgTag = c.maxCharges > 0
+                ? ` <span style="color:#d8b4fe; font-size:0.76rem; font-weight:700;">(${c.remAfter}/${c.maxCharges} ${pool ? 'charges' : 'uses'} left)</span>`
+                : (act.charges ? ` <span style="color:#d8b4fe; font-size:0.76rem;">(${esc(act.charges)})</span>` : '');
+            if (act.actionCost && act.actionCost !== 'none') spendTurnAction(act.actionCost);
+            adapter.log(`✨ <strong>${esc(act.label || shortLabel(raw))}</strong> <em>(${esc(shortLabel(raw))})</em>:${chgTag} ${esc(act.effect || act.label || 'Magic ability triggered!')}`);
             applyEquipmentToSheet(true);
             return;
         }
@@ -8487,67 +9314,13 @@
     }
 
     function buildHeroSignatureAwakeningPlan(mode, presetId, customTitle) {
-        const isCursed = mode === 'cursed';
+        // Endgame Cursed Mist Awakening ONLY (+3 Boss-Primed for Campaign 3 Dread Vanguard!)
         const hid = adapter ? adapter.heroId : '';
-        const effPreset = presetId || (hid === 'yvaine' ? `yvaine_${mode}` : (hid === 'jacomir' ? `jacomir_${mode}` : (hid === 'piper' ? `piper_${mode}` : 'universal')));
+        const effPreset = presetId || (hid === 'yvaine' ? 'yvaine_cursed' : (hid === 'jacomir' ? 'jacomir_cursed' : (hid === 'piper' ? 'piper_cursed' : 'universal')));
 
         if (effPreset.startsWith('yvaine_')) {
-            if (!isCursed) {
-                return {
-                    title: '☀️ Arsenal of the Unbroken Dawn (Lament, Mercy & Less)',
-                    targets: [
-                        {
-                            wid: 'lament',
-                            matchKeywords: ['lament'],
-                            newRaw: customTitle || '🎯 "Lament", Dawn-Piercer of Solmere +3',
-                            displayName: customTitle || '☀️ "Lament", Dawn-Piercer of Solmere +3',
-                            atkBonus: 3, dmgBonus: 3, extraDice: '1d8', extraType: 'Radiant',
-                            isSilvered: true, isMagical: true, mistSight: true,
-                            saveNote: 'Halts Vampire Regeneration for 1 round & pierces Barovian Mist',
-                            badgeLabel: '+3 Hit/Dmg • +1d8 Radiant • Silvered • Halts Regen',
-                            meta: {
-                                category: 'weapon', slots: ['ranged'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 2,
-                                weaponTag: 'lament', stance: 'lament', attune: true, quickBelt: true,
-                                useAction: { type: 'itemSpell', keepItem: true, spellId: 'daylight', spellName: 'Solmere Dawn-Flare (Daylight)', spellLevel: 3, actionCost: 'action', maxCharges: 1, recharge: 'long', label: '☀️ Dawn-Flare (Daylight)', effect: '60-ft bright sunlight-clear flare dispelling darkness & revealing mist stalkers (1 hr).' },
-                                summary: '🟠 Legendary Rifle • +3 Hit/Dmg • +1d8 Radiant • Halts Regen • 1/LR Dawn-Flare'
-                            },
-                            lore: { rarity: 'Legendary Awakened Signature Rifle • Attunement', cost: 'Priceless (Dawn-Crowned)', mechanics: '• <strong>Signature Awakening (+3):</strong> +3 to Attack &amp; Damage rolls, deals <strong>+1d8 Radiant</strong> damage on every shot, counts as <strong>Silvered &amp; Magical</strong>, grants <strong>Mist-Piercing Sight</strong>, and halts Vampire Regeneration for 1 round.<br>• <strong>1/Long Rest — Solmere Dawn-Flare:</strong> Cast <em>Daylight</em> from your Quick-Belt.' }
-                        },
-                        {
-                            wid: 'mercy',
-                            matchKeywords: ['"mercy"', 'mercy'],
-                            newRaw: '🔴 "Mercy", Morning-Star Six-Shooter +3',
-                            displayName: '☀️ "Mercy", Morning-Star +3',
-                            atkBonus: 3, dmgBonus: 3, extraDice: '1d6', extraType: 'Radiant',
-                            isSilvered: true, isMagical: true,
-                            badgeLabel: '+3 Hit/Dmg • +1d6 Radiant • Silvered',
-                            meta: {
-                                category: 'weapon', slots: ['mainHand', 'offHand'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 1,
-                                weaponTag: 'mercy', stance: 'revolvers',
-                                summary: '🟠 Legendary Sidearm • +3 Hit/Dmg • +1d6 Radiant • 6-Cyl'
-                            },
-                            lore: { rarity: 'Legendary Awakened Sidearm', cost: 'Priceless', mechanics: '• <strong>Twin Star of Dawn (+3):</strong> +3 to Attack &amp; Damage rolls, +1d6 Radiant damage, Silvered &amp; Magical.' }
-                        },
-                        {
-                            wid: 'less',
-                            matchKeywords: ['"less"', 'less (off', 'less revolver'],
-                            newRaw: '🔵 "Less", Solmere\'s Last Light +3',
-                            displayName: '☀️ "Less", Solmere\'s Last Light +3',
-                            atkBonus: 3, dmgBonus: 3, extraDice: '1d6', extraType: 'Radiant',
-                            isSilvered: true, isMagical: true,
-                            badgeLabel: '+3 Hit/Dmg • +1d6 Radiant • Silvered',
-                            meta: {
-                                category: 'weapon', slots: ['offHand', 'mainHand'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 1,
-                                weaponTag: 'less', stance: 'revolvers',
-                                summary: '🟠 Legendary Off-Hand Sidearm • +3 Hit/Dmg • +1d6 Radiant • 6-Cyl'
-                            },
-                            lore: { rarity: 'Legendary Awakened Off-Hand Sidearm', cost: 'Priceless', mechanics: '• <strong>Twin Star of Dawn (+3):</strong> +3 to Attack &amp; Damage rolls, +1d6 Radiant damage, Silvered &amp; Magical.' }
-                        }
-                    ]
-                };
-            }
             return {
-                title: '🩸 Arsenal of Domain Zero (Cursed Mist Lament, Mercy & Less)',
+                title: '🩸 Mist-Wrought Arsenal (Lament, Mercy & Less +3)',
                 targets: [
                     {
                         wid: 'lament',
@@ -8563,29 +9336,29 @@
                             category: 'weapon', slots: ['ranged'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 2,
                             weaponTag: 'lament', stance: 'lament', attune: true, quickBelt: true,
                             useAction: { type: 'itemSpell', keepItem: true, spellId: 'misty_step', spellName: 'Phantom Mist-Step', spellLevel: 2, actionCost: 'bonus', maxCharges: 2, recharge: 'short', label: '🌫️ Phantom Mist-Step', effect: 'Bonus Action: Dissolve into freezing gray Mist and teleport up to 30 ft to an unoccupied space.' },
-                            summary: '🩸 Cursed Legendary Rifle • +3 Hit/Dmg • +1d8 Necrotic • 2/SR Mist-Step • Curse (-1 Saves)'
+                            summary: '🩸 Cursed Rifle +3 • +1d8 Necrotic • 2/SR Mist-Step • Curse (-1 Saves)'
                         },
-                        lore: { rarity: 'Cursed Legendary Mist-Bound Rifle • Attunement', cost: 'Soul-Bound', mechanics: '• <strong>Mist-Wrought Rifle (+3):</strong> +3 Hit/Dmg, +1d8 Necrotic, Silvered/Magical, Mist-Sight, and blocks target HP healing.<br>• <strong>2/Short Rest — Phantom Mist-Step:</strong> Bonus Action 30-ft teleport.<br>• <strong>🩸 Curse Trade-Off:</strong> Imposes -1 to Saving Throws while bound to the Mists.' }
+                        lore: { rarity: 'Cursed Mist-Bound Rifle • Attunement', cost: 'Soul-Bound', mechanics: '• <strong>Mist-Wrought Rifle (+3):</strong> +3 Hit/Dmg, +1d8 Necrotic, Silvered/Magical, Mist-Sight, and blocks target HP healing.<br>• <strong>2/Short Rest — Phantom Mist-Step:</strong> Bonus Action 30-ft teleport.<br>• <strong>🩸 Curse Trade-Off:</strong> Imposes -1 to Saving Throws while bound to the Mists.' }
                     },
                     {
                         wid: 'mercy',
                         matchKeywords: ['"mercy"', 'mercy'],
-                        newRaw: '🩸 "Mercy", Phantom of Domain Zero +3',
-                        displayName: '🩸 "Mercy", Phantom +3',
+                        newRaw: '🩸 "Mercy", Mist-Walker +3',
+                        displayName: '🩸 "Mercy", Mist-Walker +3',
                         atkBonus: 3, dmgBonus: 3, extraDice: '1d6', extraType: 'Necrotic',
                         isSilvered: true, isMagical: true,
                         badgeLabel: '+3 Hit/Dmg • +1d6 Necrotic • Silvered',
                         meta: {
                             category: 'weapon', slots: ['mainHand', 'offHand'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 1,
                             weaponTag: 'mercy', stance: 'revolvers',
-                            summary: '🩸 Cursed Sidearm • +3 Hit/Dmg • +1d6 Necrotic • 6-Cyl'
+                            summary: '🩸 Cursed Sidearm +3 • +1d6 Necrotic • 6-Cyl'
                         },
-                        lore: { rarity: 'Cursed Legendary Sidearm', cost: 'Soul-Bound', mechanics: '• <strong>Domain Zero Sidearm (+3):</strong> +3 Hit/Dmg, +1d6 Necrotic, Silvered &amp; Magical.' }
+                        lore: { rarity: 'Cursed Mist-Bound Sidearm', cost: 'Soul-Bound', mechanics: '• <strong>Mist-Walker (+3):</strong> +3 Hit/Dmg, +1d6 Necrotic, Silvered &amp; Magical.' }
                     },
                     {
                         wid: 'less',
                         matchKeywords: ['"less"', 'less (off', 'less revolver'],
-                        newRaw: '🩸 "Less", Grim-Smile Sidearm +3',
+                        newRaw: '🩸 "Less", Grim-Smile +3',
                         displayName: '🩸 "Less", Grim-Smile +3',
                         atkBonus: 3, dmgBonus: 3, extraDice: '1d6', extraType: 'Necrotic',
                         isSilvered: true, isMagical: true,
@@ -8593,40 +9366,15 @@
                         meta: {
                             category: 'weapon', slots: ['offHand', 'mainHand'], reqWeapon: 'firearm', ammoKind: 'firearm', hands: 1,
                             weaponTag: 'less', stance: 'revolvers',
-                            summary: '🩸 Cursed Off-Hand Sidearm • +3 Hit/Dmg • +1d6 Necrotic • 6-Cyl'
+                            summary: '🩸 Cursed Off-Hand Sidearm +3 • +1d6 Necrotic • 6-Cyl'
                         },
-                        lore: { rarity: 'Cursed Legendary Off-Hand Sidearm', cost: 'Soul-Bound', mechanics: '• <strong>Domain Zero Off-Hand (+3):</strong> +3 Hit/Dmg, +1d6 Necrotic, Silvered &amp; Magical.' }
+                        lore: { rarity: 'Cursed Mist-Bound Off-Hand Sidearm', cost: 'Soul-Bound', mechanics: '• <strong>Grim-Smile (+3):</strong> +3 Hit/Dmg, +1d6 Necrotic, Silvered &amp; Magical.' }
                     }
                 ]
             };
         }
 
         if (effPreset.startsWith('jacomir_')) {
-            if (!isCursed) {
-                const nm = customTitle || "☀️ Sovereign's Dawnblade of Oakenshire +3";
-                return {
-                    title: nm,
-                    targets: [{
-                        wid: 'greatsword',
-                        matchKeywords: ['ancestral greatsword', 'greatsword'],
-                        autoEquipSlot: 'mainHand',
-                        autoEquipGrip: '2h',
-                        newRaw: nm,
-                        displayName: nm,
-                        atkBonus: 3, dmgBonus: 3, acBonus: 1, saveBonus: 1, extraDice: '1d8', extraType: 'Radiant',
-                        isSilvered: true, isMagical: true,
-                        saveNote: 'Halts Vampire Regeneration & sheds 20-ft Golden Dawnlight',
-                        badgeLabel: '+3 Hit/Dmg • +1d8 Radiant • +1 AC/Saves • Silvered',
-                        meta: {
-                            category: 'weapon', slots: ['mainHand'], reqWeapon: 'martial', hands: 2,
-                            weaponTag: 'greatsword', attune: true, quickBelt: true,
-                            useAction: { type: 'itemSpell', keepItem: true, spellName: "Sovereign's Dawn Aura", spellLevel: 3, spellKind: 'utility', spellRange: '30-ft aura (1 min)', actionCost: 'bonus', maxCharges: 1, recharge: 'long', label: '☀️ Dawn Aura (+1d4 Rad)', effect: 'Allies within 30 ft deal +1d4 Radiant damage on weapon hits and have Advantage vs Frightened for 1 minute!' },
-                            summary: '🟠 Legendary Greatsword • +3 Hit/Dmg • +1d8 Radiant • +1 AC & Saves • Savage + Graze'
-                        },
-                        lore: { rarity: 'Legendary Awakened Royal Greatsword • Attunement', cost: 'Priceless (Oakenshire Crown)', mechanics: '• <strong>Awakened Royal Greatsword (+3):</strong> Retains <strong>Savage Attacker</strong> &amp; <strong>Graze</strong>, gains <strong>+3 Hit/Dmg</strong>, <strong>+1d8 Radiant</strong>, <strong>+1 AC &amp; All Saves</strong>, Silvered &amp; Magical.<br>• <strong>1/Long Rest — Sovereign\'s Dawn Aura:</strong> Bonus Action 30-ft royal aura (+1d4 Radiant to allies).' }
-                    }]
-                };
-            }
             const nm = customTitle || '🩸 Dreadblade of the Mist-Bound King +3';
             return {
                 title: nm,
@@ -8646,58 +9394,17 @@
                         category: 'weapon', slots: ['mainHand'], reqWeapon: 'martial', hands: 2,
                         weaponTag: 'greatsword', attune: true, quickBelt: true,
                         useAction: { type: 'itemSpell', keepItem: true, spellId: 'fear', spellName: 'Dread Sovereign\'s Roar (Fear)', spellLevel: 3, spellKind: 'utility', spellSave: 'WIS Save (Frightened)', spellRange: '30-ft cone', actionCost: 'action', maxCharges: 1, recharge: 'long', label: '🩸 Dread Sovereign\'s Roar', effect: 'Unleash a 30-ft cone of freezing Mist dread — creatures fail WIS Save or drop held items and flee Frightened!' },
-                        summary: '🩸 Cursed Legendary Greatsword • +3 Hit/Dmg • +2d6 Necrotic • +1 AC • 1/LR Dread Roar'
+                        summary: '🩸 Cursed Greatsword +3 • +2d6 Necrotic • +1 AC • Savage + Graze • 1/LR Dread Roar'
                     },
-                    lore: { rarity: 'Cursed Legendary Mist-Bound Greatsword • Attunement', cost: 'Soul-Bound', mechanics: '• <strong>Mist-Tempered Ancestral Blade (+3):</strong> Retains <strong>Savage Attacker</strong> &amp; <strong>Graze</strong>, gains <strong>+3 Hit/Dmg</strong>, <strong>+2d6 Necrotic</strong>, <strong>+1 AC</strong>, Silvered/Magical, and siphons <strong>+1d8 Temp HP</strong> on kills.<br>• <strong>1/Long Rest — Dread Sovereign\'s Roar:</strong> Cast <em>Fear</em> (30-ft cone).<br>• <strong>🩸 Curse Trade-Off:</strong> Disadvantage on peaceful Persuasion parleys while drawn.' }
+                    lore: { rarity: 'Cursed Mist-Bound Greatsword • Attunement', cost: 'Soul-Bound', mechanics: '• <strong>Mist-Tempered Ancestral Blade (+3):</strong> Retains <strong>Savage Attacker</strong> &amp; <strong>Graze</strong>, gains <strong>+3 Hit/Dmg</strong>, <strong>+2d6 Necrotic</strong>, <strong>+1 AC</strong>, Silvered/Magical, and siphons <strong>+1d8 Temp HP</strong> on kills.<br>• <strong>1/Long Rest — Dread Sovereign\'s Roar:</strong> Cast <em>Fear</em> (30-ft cone).<br>• <strong>🩸 Curse Trade-Off:</strong> Disadvantage on peaceful Persuasion parleys while drawn.' }
                 }]
             };
         }
 
         if (effPreset.startsWith('piper_')) {
-            if (isCursed) {
-                const nm = customTitle || '🩸 Nocturne, Cursed Staff of the Weeping Mists +2';
-                return {
-                    title: `${nm} + 🩸 Cursed Obsidian Mist-Core`,
-                    targets: [{
-                        wid: 'staff',
-                        matchKeywords: ['quarterstaff', "magician's cane", 'cane', 'staff'],
-                        fallbackCreateRaw: '🪄 Quarterstaff',
-                        autoEquipSlot: 'mainHand',
-                        autoEquipGrip: '2h',
-                        newRaw: nm,
-                        displayName: nm,
-                        atkBonus: 2, dmgBonus: 2, saveBonus: 1,
-                        isSilvered: true, isMagical: true,
-                        curseNote: 'Cursed Mist Conduit: Rolling a natural 1 on a leveled spell triggers an immediate Dark Mist Surge',
-                        badgeLabel: '+2 Staff Hit/Dmg • +1 Saves • Silvered Focus',
-                        injectCore: {
-                            slotId: 'crown',
-                            modObj: {
-                                modKey: 'piper_cursed_core_mist',
-                                slotType: 'crown',
-                                raw: '🩸 Heart-Core of the Weeping Mists',
-                                modName: '🩸 Heart-Core of the Weeping Mists',
-                                atkBonus: 0, dmgBonus: 0, acBonus: 1, saveBonus: 0,
-                                spellDcBonus: 2, spellAtkBonus: 2, initBonus: 0,
-                                extraDice: '1d8', extraType: 'Psychic',
-                                isSilvered: true, isMagical: true, mistSight: true,
-                                debuffNote: '🩸 Cursed Core: Whispers of the Root Anchor echo in your spells (Nat 1 triggers Mist Surge)',
-                                badgeLabel: '🩸 Cursed Mist-Core (+2 Spell DC/Atk, +1 AC, +1d8 Psychic, Mist-Sight)'
-                            }
-                        },
-                        meta: {
-                            category: 'weapon', slots: ['mainHand'], reqWeapon: 'simple', hands: 1, versatile: true,
-                            weaponTag: 'staff', attune: true, quickBelt: true,
-                            useAction: { type: 'itemSpell', keepItem: true, spellName: 'Hunger of the Weeping Mists', spellLevel: 3, spellKind: 'dmg', spellDice: '4d8', spellDmgType: 'Necrotic', spellSave: 'CON Save (half & Blinded in fog)', spellRange: '20-ft sphere (120 ft)', actionCost: 'action', maxCharges: 1, recharge: 'long', label: '🩸 Hunger of the Mists (4d8)', effect: '20-ft sphere of freezing black Barovian Mist deals 4d8 Necrotic (CON Save half) and heavily obscures foes for 1 round!' },
-                            summary: '🩸 Cursed Staff + Fused Mist-Core • +2 Spell DC/Atk • +1 AC/Saves • +1d8 Psychic • 1/LR Mist Storm'
-                        },
-                        lore: { rarity: 'Cursed Legendary Staff & Fused Mist-Core • Attunement', cost: 'Soul-Bound', mechanics: '• <strong>Transformed Staff &amp; Fused Cursed Core:</strong> Replaces your staff\'s crown with the <strong>🩸 Heart-Core of the Weeping Mists</strong> — granting <strong>+2 Spell Save DC &amp; +2 Spell Attack</strong>, <strong>+1 AC</strong>, <strong>+1 All Saves</strong>, <strong>Mist-Sight</strong>, and <strong>+2 Hit/Dmg + 1d8 Psychic</strong> on staff strikes.<br>• <strong>1/Long Rest — Hunger of the Weeping Mists:</strong> Unleash a 20-ft sphere of 4d8 Necrotic fog from your Quick-Belt.<br>• <strong>🩸 Curse Trade-Off:</strong> Rolling a Nat 1 on a leveled spell triggers an immediate Dark Mist Surge!' }
-                    }]
-                };
-            }
-            const nm = customTitle || '☀️ Astral Cane of the Unbroken Dawn +2';
+            const nm = customTitle || '🩸 Nocturne, Staff of the Weeping Mists +3';
             return {
-                title: `${nm} + ☀️ Radiant Phoenix-Sun Core`,
+                title: `${nm} + 🩸 Heart-Core of the Weeping Mists`,
                 targets: [{
                     wid: 'staff',
                     matchKeywords: ['quarterstaff', "magician's cane", 'cane', 'staff'],
@@ -8706,35 +9413,37 @@
                     autoEquipGrip: '2h',
                     newRaw: nm,
                     displayName: nm,
-                    atkBonus: 2, dmgBonus: 2, saveBonus: 1,
+                    atkBonus: 3, dmgBonus: 3, saveBonus: 1,
                     isSilvered: true, isMagical: true,
-                    badgeLabel: '+2 Staff Hit/Dmg • +1 Saves • Dawn Focus',
+                    curseNote: 'Cursed Mist Conduit: Rolling a natural 1 on a leveled spell triggers an immediate Dark Mist Surge',
+                    badgeLabel: '+3 Staff Hit/Dmg • +1 Saves • Silvered Focus',
                     injectCore: {
                         slotId: 'crown',
                         modObj: {
-                            modKey: 'piper_dawn_core_sun',
+                            modKey: 'piper_cursed_core_mist',
                             slotType: 'crown',
-                            raw: '☀️ Radiant Phoenix-Sun Core',
-                            modName: '☀️ Radiant Phoenix-Sun Core',
-                            atkBonus: 0, dmgBonus: 0, acBonus: 1, saveBonus: 1,
-                            spellDcBonus: 2, spellAtkBonus: 2, initBonus: 1,
-                            extraDice: '1d8', extraType: 'Radiant',
+                            raw: '🩸 Heart-Core of the Weeping Mists',
+                            modName: '🩸 Heart-Core of the Weeping Mists',
+                            atkBonus: 0, dmgBonus: 0, acBonus: 1, saveBonus: 0,
+                            spellDcBonus: 2, spellAtkBonus: 2, initBonus: 0,
+                            extraDice: '1d8', extraType: 'Psychic',
                             isSilvered: true, isMagical: true, mistSight: true,
-                            badgeLabel: '☀️ Phoenix-Sun Core (+2 Spell DC/Atk, +1 AC/Saves, +1d8 Radiant)'
+                            debuffNote: '🩸 Cursed Core: Whispers of the Mists echo in your spells (Nat 1 triggers Dark Mist Surge)',
+                            badgeLabel: '🩸 Heart-Core of the Weeping Mists (+2 Spell DC/Atk, +1 AC, +1d8 Psychic, Mist-Sight)'
                         }
                     },
                     meta: {
                         category: 'weapon', slots: ['mainHand'], reqWeapon: 'simple', hands: 1, versatile: true,
                         weaponTag: 'staff', attune: true, quickBelt: true,
-                        useAction: { type: 'itemSpell', keepItem: true, spellName: 'Sunburst Lance of Dawn', spellLevel: 4, spellKind: 'dmg', spellDice: '6d8', spellDmgType: 'Radiant', spellSave: 'CON Save (half & Blinded)', spellRange: '60-ft line', actionCost: 'action', maxCharges: 1, recharge: 'long', label: '☀️ Sunburst Lance (6d8)', effect: '60-ft beam of true golden dawnlight deals 6d8 Radiant damage (CON Save half; Undead have Disadvantage on the save)!' },
-                        summary: '🟠 Legendary Staff + Phoenix-Sun Core • +2 Spell DC/Atk • +1 AC • +2 Saves • 1/LR Sunburst'
+                        useAction: { type: 'itemSpell', keepItem: true, spellName: 'Hunger of the Weeping Mists', spellLevel: 3, spellKind: 'dmg', spellDice: '4d8', spellDmgType: 'Necrotic', spellSave: 'CON Save (half & Blinded in fog)', spellRange: '20-ft sphere (120 ft)', actionCost: 'action', maxCharges: 1, recharge: 'long', label: '🩸 Hunger of the Mists (4d8)', effect: '20-ft sphere of freezing black Barovian Mist deals 4d8 Necrotic (CON Save half) and heavily obscures foes for 1 round!' },
+                        summary: '🩸 Cursed Staff +3 & Fused Mist-Core • +2 Spell DC/Atk • +1 AC/Saves • +1d8 Psychic • 1/LR Mist Storm'
                     },
-                    lore: { rarity: 'Legendary Awakened Arcane Staff & Core • Attunement', cost: 'Priceless', mechanics: '• <strong>Awakened Staff &amp; Phoenix-Sun Core:</strong> Grants <strong>+2 Spell Save DC &amp; +2 Spell Attack</strong>, <strong>+1 AC</strong>, <strong>+2 All Saves</strong>, <strong>+1d8 Radiant</strong>, and <strong>1/Long Rest Sunburst Lance (6d8 Radiant)</strong>.' }
+                    lore: { rarity: 'Cursed Mist-Bound Staff & Fused Core • Attunement', cost: 'Soul-Bound', mechanics: '• <strong>Transformed Staff &amp; Fused Cursed Core (+3):</strong> Replaces your staff\'s crown with the <strong>🩸 Heart-Core of the Weeping Mists</strong> — granting <strong>+2 Spell Save DC &amp; +2 Spell Attack</strong>, <strong>+1 AC</strong>, <strong>+1 All Saves</strong>, <strong>Mist-Sight</strong>, and <strong>+3 Hit/Dmg + 1d8 Psychic</strong> on staff strikes.<br>• <strong>1/Long Rest — Hunger of the Weeping Mists:</strong> Unleash a 20-ft sphere of 4d8 Necrotic fog from your Quick-Belt.<br>• <strong>🩸 Curse Trade-Off:</strong> Rolling a Nat 1 on a leveled spell triggers an immediate Dark Mist Surge!' }
                 }]
             };
         }
 
-        // UNIVERSAL ANY-HERO / FUTURE NEW PLAYER STARTER WEAPON AWAKENER!
+        // UNIVERSAL ANY-HERO / FUTURE NEW PLAYER CURSED MIST STARTER WEAPON AWAKENER (+3)!
         const items = adapter.getItems();
         const eq = getEquippedState();
         let chosenRaw = null;
@@ -8761,9 +9470,7 @@
         const baseLabel = shortLabel(chosenRaw).replace(/\s*\+\d+\s*$/g, '').trim();
         const nativeSet = new Set((adapter && adapter.nativeWeaponTags) || []);
         const isCasterStaff = Boolean(baseMeta.weaponTag === 'staff' || /staff|wand|rod|cane|scepter|orb/i.test(baseLabel));
-        const newName = customTitle || (isCursed
-            ? `🩸 ${baseLabel}, Mist-Cursed +3`
-            : `☀️ ${baseLabel}, Dawn-Awakened +3`);
+        const newName = customTitle || `🩸 ${baseLabel}, Mist-Cursed +3`;
         const resolvedWid = (baseMeta.weaponTag && nativeSet.has(baseMeta.weaponTag))
             ? baseMeta.weaponTag
             : normKey(newName);
@@ -8782,31 +9489,29 @@
                 atkBonus: 3,
                 dmgBonus: 3,
                 acBonus: 1,
-                saveBonus: isCursed ? -1 : 1,
+                saveBonus: -1,
                 spellDcBonus: isCasterStaff ? 2 : 0,
                 spellAtkBonus: isCasterStaff ? 2 : 0,
-                extraDice: isCursed ? '2d6' : '1d8',
-                extraType: isCursed ? 'Necrotic' : 'Radiant',
+                extraDice: '2d6',
+                extraType: 'Necrotic',
                 isSilvered: true,
                 isMagical: true,
                 mistSight: true,
-                saveNote: isCursed ? 'Blocks target HP healing until your next turn' : 'Halts Vampire Regeneration for 1 round',
-                curseNote: isCursed ? 'Mist-Bound Curse: -1 to Saving Throws while whispers of Domain Zero cling to the weapon' : '',
-                badgeLabel: isCursed
-                    ? `+3 Hit/Dmg • +2d6 Necrotic${isCasterStaff ? ' • +2 Spell DC/Atk' : ''} • Silvered`
-                    : `+3 Hit/Dmg • +1d8 Radiant${isCasterStaff ? ' • +2 Spell DC/Atk' : ''} • +1 AC/Saves`,
+                saveNote: 'Blocks target HP healing until your next turn',
+                curseNote: 'Mist-Bound Curse: -1 to Saving Throws while cold whispers of the Mists cling to the weapon',
+                badgeLabel: `+3 Hit/Dmg • +2d6 Necrotic${isCasterStaff ? ' • +2 Spell DC/Atk' : ''} • Silvered`,
                 ...(isCasterStaff ? {
                     injectCore: {
                         slotId: 'crown',
                         modObj: {
-                            modKey: isCursed ? 'univ_cursed_core_mist' : 'univ_dawn_core_sun',
+                            modKey: 'univ_cursed_core_mist',
                             slotType: 'crown',
-                            raw: isCursed ? '🩸 Cursed Obsidian Mist-Core' : '☀️ Radiant Dawn Core',
-                            modName: isCursed ? '🩸 Cursed Obsidian Mist-Core' : '☀️ Radiant Dawn Core',
+                            raw: '🩸 Cursed Obsidian Mist-Core',
+                            modName: '🩸 Cursed Obsidian Mist-Core',
                             atkBonus: 0, dmgBonus: 0, acBonus: 0, saveBonus: 0,
                             spellDcBonus: 0, spellAtkBonus: 0, initBonus: 0,
                             isSilvered: true, isMagical: true, mistSight: true,
-                            badgeLabel: isCursed ? '🩸 Fused Cursed Mist-Core' : '☀️ Fused Radiant Dawn Core'
+                            badgeLabel: '🩸 Fused Cursed Mist-Core'
                         }
                     }
                 } : {}),
@@ -8816,9 +9521,8 @@
                     slots: (baseMeta.slots && baseMeta.slots.length) ? baseMeta.slots : ['mainHand'],
                     attune: true,
                     quickBelt: true,
-                    // Native-card weapons get these via the awakening record (getWeaponCombatMods) — avoid double counting!
                     acBonus: isNativeCard ? 0 : 1,
-                    saveBonus: isNativeCard ? 0 : (isCursed ? -1 : 1),
+                    saveBonus: isNativeCard ? 0 : -1,
                     spellDcBonus: (isCasterStaff && !isNativeCard) ? 2 : 0,
                     spellAtkBonus: (isCasterStaff && !isNativeCard) ? 2 : 0,
                     weaponStats: {
@@ -8827,23 +9531,17 @@
                         magicBonus: 3,
                         dmgDice: baseSt.dmgDice || '1d8',
                         dmgType: `Silvered ${String(baseSt.dmgType || 'Slashing').replace(/^Silvered\s+/i, '')}`,
-                        extraDice: isCursed ? '2d6' : '1d8',
-                        extraType: isCursed ? 'Necrotic' : 'Radiant',
+                        extraDice: '2d6',
+                        extraType: 'Necrotic',
                         mastery: baseSt.mastery || ''
                     },
-                    useAction: isCursed
-                        ? { type: 'itemSpell', keepItem: true, spellId: 'misty_step', spellName: 'Mist-Bound Ghost Step', spellLevel: 2, actionCost: 'bonus', maxCharges: 2, recharge: 'short', label: '🩸 Mist-Step (2/SR)', effect: 'Bonus Action: Dissolve into gray Barovian Mist and teleport up to 30 ft.' }
-                        : { type: 'itemSpell', keepItem: true, spellId: 'daylight', spellName: 'Dawnbreaker Flare', spellLevel: 3, actionCost: 'action', maxCharges: 1, recharge: 'long', label: '☀️ Dawnbreaker Flare', effect: 'Ignite a 60-ft aura of golden dawnlight for 1 hour.' },
-                    summary: isCursed
-                        ? `🩸 Cursed Signature Weapon (+3) • +2d6 Necrotic${isCasterStaff ? ' • +2 Spell DC/Atk' : ''} • 2/SR Mist-Step • Curse (-1 Saves)`
-                        : `🟠 Legendary Signature Weapon (+3) • +1d8 Radiant${isCasterStaff ? ' • +2 Spell DC/Atk' : ''} • +1 AC & Saves • 1/LR Dawn Flare`
+                    useAction: { type: 'itemSpell', keepItem: true, spellId: 'misty_step', spellName: 'Mist-Bound Ghost Step', spellLevel: 2, actionCost: 'bonus', maxCharges: 2, recharge: 'short', label: '🩸 Mist-Step (2/SR)', effect: 'Bonus Action: Dissolve into gray Barovian Mist and teleport up to 30 ft.' },
+                    summary: `🩸 Cursed Signature Weapon (+3) • +2d6 Necrotic${isCasterStaff ? ' • +2 Spell DC/Atk' : ''} • 2/SR Mist-Step • Curse (-1 Saves)`
                 },
                 lore: {
-                    rarity: isCursed ? 'Cursed Legendary Mist-Bound Signature Weapon • Attunement' : 'Legendary Dawn-Awakened Signature Weapon • Attunement',
-                    cost: isCursed ? 'Soul-Bound' : 'Priceless',
-                    mechanics: isCursed
-                        ? `• <strong>Mist-Bound Awakening (+3):</strong> Transforms <em>${esc(baseLabel)}</em> into a +3 Silvered/Magical weapon dealing <strong>+2d6 Necrotic</strong> damage, granting Mist-Sight &amp; <strong>2/SR Mist-Step</strong>.<br>• <strong>🩸 Curse Trade-Off:</strong> -1 to Saving Throws.`
-                        : `• <strong>Dawn-Crowned Awakening (+3):</strong> Transforms <em>${esc(baseLabel)}</em> into a +3 Silvered/Magical weapon dealing <strong>+1d8 Radiant</strong> damage, +1 AC &amp; Saves, and <strong>1/LR Dawnbreaker Flare</strong>.`
+                    rarity: 'Cursed Mist-Bound Signature Weapon • Attunement',
+                    cost: 'Soul-Bound',
+                    mechanics: `• <strong>Mist-Bound Awakening (+3):</strong> Transforms <em>${esc(baseLabel)}</em> into a +3 Silvered/Magical weapon dealing <strong>+2d6 Necrotic</strong> damage, granting Mist-Sight &amp; <strong>2/SR Mist-Step</strong>.<br>• <strong>🩸 Curse Trade-Off:</strong> -1 to Saving Throws.`
                 }
             }]
         };
@@ -8851,8 +9549,7 @@
 
     function applyRemoteWeaponAwakening(cmd) {
         if (!adapter || !cmd) return false;
-        // First cleanly revert any existing awakening on the same weapon tags so re-awakening (e.g. Legendary <-> Cursed) never nests names!
-        const mode = cmd.mode === 'cursed' ? 'cursed' : 'legendary';
+        const mode = 'cursed';
         const existingMap = getAwakenedWeaponsMap();
         if (Object.keys(existingMap).length > 0) {
             revertWeaponAwakening('all', true);
@@ -10353,21 +11050,44 @@
             `);
         }
 
-        // Build Quick-Belt combat consumables, Spell Scrolls, Equipped Item Spells & coating vials
+        // Build Quick-Belt combat consumables, Spell Scrolls, Multi-Action Relics, Dark Gifts & coating vials
         const equippedKeySet = new Set(Object.values(eq || {}).filter(Boolean));
         const quickBtns = [];
         items.forEach((raw, idx) => {
             const meta = getItemMeta(raw);
+            const hasMulti = Array.isArray(meta.multiActions) && meta.multiActions.length > 0;
             const act = meta && meta.useAction;
             const isScrollOrSpell = Boolean(act && (act.type === 'spellScroll' || act.type === 'itemSpell'));
-            if (!meta.quickBelt && !isScrollOrSpell) return;
-            // If an equippable item (slots.length > 0) has an itemSpell / magicPower, only surface its spell button on the Quick-Belt while equipped!
+            if (!meta.quickBelt && !isScrollOrSpell && !hasMulti) return;
+            // If an equippable item (slots.length > 0) has an itemSpell / magicPower / multiActions, only surface its buttons while equipped!
+            // (Auto-active boons / Dark Gifts with slots:[] always surface immediately!)
             const itemKey = normKey(raw);
             const hasEquipSlots = Array.isArray(meta.slots) && meta.slots.length > 0;
-            if (hasEquipSlots && act && (act.type === 'itemSpell' || act.type === 'magicPower' || act.keepItem) && !equippedKeySet.has(itemKey)) {
+            if (hasEquipSlots && !meta.autoActiveBoon && (hasMulti || (act && (act.type === 'itemSpell' || act.type === 'magicPower' || act.keepItem))) && !equippedKeySet.has(itemKey)) {
                 return;
             }
             const p = parseItem(raw);
+            if (hasMulti) {
+                const pool = (meta.chargePool && meta.chargePool.max > 0) ? meta.chargePool : null;
+                const poolRem = pool ? getItemRemainingCharges(itemKey, null, null, pool) : null;
+                meta.multiActions.forEach((sub, sIdx) => {
+                    const qbSlot = getConsumableTurnSlot(sub);
+                    const subRem = pool ? poolRem : (sub.maxCharges > 0 ? getItemRemainingCharges(itemKey, sub, sIdx, null) : null);
+                    const maxVal = pool ? pool.max : (sub.maxCharges || 0);
+                    const chgPill = maxVal > 0
+                        ? ` <span style="color:${subRem > 0 ? '#d8b4fe' : '#f87171'}; font-family:'JetBrains Mono',monospace;">(${subRem}/${maxVal})</span>`
+                        : '';
+                    const btnStyle = meta.autoActiveBoon
+                        ? 'border-color:rgba(192,132,252,0.75); color:#f3e8ff; background:rgba(88,28,135,0.28);'
+                        : 'border-color:rgba(250,204,21,0.58); color:#fef08a;';
+                    quickBtns.push(`
+                        <button type="button" class="rpg-qb-btn" style="${btnStyle}" data-rpg-turn-slot="${qbSlot}" onclick="COS_RPG.useConsumableByIndex(${idx}, ${sIdx})" title="${esc(p.name)}: ${esc(sub.effect || sub.label)}">
+                            ${esc(sub.label)}${chgPill}
+                        </button>
+                    `);
+                });
+                return;
+            }
             if (meta.coatMelee && !act) {
                 quickBtns.push(`
                     <button type="button" class="rpg-qb-btn" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })" title="Coat Weapon or Magazine (${esc(p.name)})">
@@ -10382,10 +11102,12 @@
             const chgPill = remChg !== null
                 ? ` <span style="color:${remChg > 0 ? '#d8b4fe' : '#f87171'}; font-family:'JetBrains Mono',monospace;">(${remChg}/${act.maxCharges})</span>`
                 : (p.qty > 1 ? ` <span style="color:#6ee7b7; font-family:'JetBrains Mono',monospace;">(${p.qty}x)</span>` : '');
-            const btnStyle = act.type === 'spellScroll'
-                ? 'border-color:rgba(250,204,21,0.55); color:#fef08a;'
-                : (act.type === 'itemSpell' ? 'border-color:rgba(192,132,252,0.6); color:#e9d5ff;' : '');
-            const lblPrefix = act.type === 'spellScroll' ? '' : (act.type === 'itemSpell' ? '✨ ' : p.emoji);
+            const btnStyle = meta.autoActiveBoon
+                ? 'border-color:rgba(192,132,252,0.75); color:#f3e8ff; background:rgba(88,28,135,0.28);'
+                : (act.type === 'spellScroll'
+                    ? 'border-color:rgba(250,204,21,0.55); color:#fef08a;'
+                    : (act.type === 'itemSpell' ? 'border-color:rgba(192,132,252,0.6); color:#e9d5ff;' : ''));
+            const lblPrefix = (act.type === 'spellScroll' || meta.autoActiveBoon) ? '' : (act.type === 'itemSpell' ? '✨ ' : p.emoji);
             quickBtns.push(`
                 <button type="button" class="rpg-qb-btn" style="${btnStyle}" data-rpg-turn-slot="${qbSlot}" onclick="COS_RPG.useConsumableByIndex(${idx})" title="${act.type === 'spellScroll' ? 'Cast Single-Use Spell Scroll' : (act.type === 'itemSpell' ? 'Cast Item Spell (keeps item)' : '1-Tap Combat Use')} (${esc(p.name)})">
                     ${lblPrefix}${esc(act.label || act.spellName || p.name)}${chgPill}
@@ -11068,9 +11790,12 @@
                     ${bonuses.spellDcBonus ? `<span class="rpg-stat-pill purple">Spell DC: ${bonuses.spellDcBonus > 0 ? '+' : ''}${bonuses.spellDcBonus}</span>` : ''}
                     ${bonuses.spellAtkBonus ? `<span class="rpg-stat-pill purple">Spell Atk: ${bonuses.spellAtkBonus > 0 ? '+' : ''}${bonuses.spellAtkBonus}</span>` : ''}
                     ${bonuses.initBonus ? `<span class="rpg-stat-pill gold">Init: ${bonuses.initBonus > 0 ? '+' : ''}${bonuses.initBonus}</span>` : ''}
+                    ${bonuses.maxHpBonus ? `<span class="rpg-stat-pill" style="border-color:#f43f5e; color:#fecdd3;">Boon Max HP: +${bonuses.maxHpBonus}</span>` : ''}
                     ${bonuses.spellFireBonus ? `<span class="rpg-stat-pill" style="border-color:#ef4444; color:#fca5a5;">Spell Fire: +${esc(bonuses.spellFireBonus)}</span>` : ''}
                     ${bonuses.skillAdv.length ? `<span class="rpg-stat-pill green">Adv: ${esc(bonuses.skillAdv.join(', '))}</span>` : ''}
                     ${bonuses.resistances && bonuses.resistances.length ? `<span class="rpg-stat-pill blue">Resist: ${esc(bonuses.resistances.join(', '))}</span>` : ''}
+                    ${(bonuses.activeSets || []).map(st => `<span class="rpg-stat-pill" style="border-color:#f59e0b; background:rgba(245,158,11,0.16); color:#fde68a;" title="${esc(st.summary)}">⚡ ${esc(st.name)} (${st.tier}-Pc)</span>`).join('')}
+                    ${(bonuses.activeBoons || []).length ? `<span class="rpg-stat-pill purple" title="${esc(bonuses.activeBoons.map(b => b.name).join(' • '))}">🌑 Active Boons: ${bonuses.activeBoons.length}</span>` : ''}
                     <span class="rpg-stat-pill purple" title="D&D 5e Attunement Limit: You can bond with at most 3 powerful magic items at the same time (e.g. Cloak of Protection, Sunsword, Bloodwell Vial).">Attuned: ${bonuses.attunedCount} / 3</span>
                 </div>
                 <div class="rpg-override-bar">
@@ -11530,12 +12255,21 @@
             const isAttachMod = Boolean(meta.attachMeta);
             const ammoNeedsContainer = Boolean(hasLoadableAmmo && !isCoatingVial && meta.ammoMeta.ammoKind === 'firearm' && !hasBulletContainerInBag());
             const isStudyAction = Boolean(meta.useAction && meta.useAction.type === 'learnRecipe');
-            const bpRemChg = (meta.useAction && meta.useAction.maxCharges > 0) ? getItemRemainingCharges(key, meta.useAction) : null;
+            const hasMulti = Array.isArray(meta.multiActions) && meta.multiActions.length > 0;
+            const pool = (hasMulti && meta.chargePool && meta.chargePool.max > 0) ? meta.chargePool : null;
+            const poolRem = pool ? getItemRemainingCharges(key, null, null, pool) : null;
+            const multiBtnsHtml = hasMulti ? meta.multiActions.map((sub, sIdx) => {
+                const subRem = pool ? poolRem : (sub.maxCharges > 0 ? getItemRemainingCharges(key, sub, sIdx, null) : null);
+                const maxV = pool ? pool.max : (sub.maxCharges || 0);
+                const tag = maxV > 0 ? ` (${subRem}/${maxV})` : '';
+                return `<button type="button" class="rpg-mini-btn btn-equip" data-rpg-turn-slot="${getConsumableTurnSlot(sub)}" onclick="COS_RPG.useConsumableByIndex(${idx}, ${sIdx})">${esc(sub.label)}${tag}</button>`;
+            }).join('') : '';
+            const bpRemChg = (!hasMulti && meta.useAction && meta.useAction.maxCharges > 0) ? getItemRemainingCharges(key, meta.useAction) : null;
             const useBtnLbl = !meta.useAction ? ''
                 : (isStudyAction ? 'Study'
                 : (meta.useAction.type === 'spellScroll' ? '📜 Cast Scroll'
                 : (meta.useAction.type === 'itemSpell' ? `✨ Cast${bpRemChg !== null ? ` (${bpRemChg}/${meta.useAction.maxCharges})` : ''}`
-                : (meta.useAction.type === 'magicPower' ? `Activate${bpRemChg !== null ? ` (${bpRemChg}/${meta.useAction.maxCharges})` : ''}`
+                : (['magicPower', 'bagOfTricks', 'deckOfIllusions'].includes(meta.useAction.type) ? `Activate${bpRemChg !== null ? ` (${bpRemChg}/${meta.useAction.maxCharges})` : ''}`
                 : (['customBomb', 'holyWater', 'alchemistsFire', 'phosphorBomb'].includes(meta.useAction.type) ? 'Throw'
                 : (meta.useAction.verb === 'Ate' ? 'Eat'
                 : (meta.useAction.verb === 'Drank' ? 'Drink' : 'Use')))))));
@@ -11549,6 +12283,7 @@
                                 ${p.hasQty ? `${p.emoji}${p.name}` : esc(raw)}
                             </button>
                             ${isEquipped ? `<span class="rpg-card-equipped-pill">✓ ${eqSlot.icon} ${eqSlot.label}</span>` : ''}
+                            ${meta.autoActiveBoon ? ` <span class="rpg-card-equipped-pill" style="background:rgba(126,34,206,0.28); color:#e9d5ff; border-color:rgba(192,132,252,0.55);">🌑 AUTO-ACTIVE</span>` : ''}
                             ${isRestricted ? ` <span class="rpg-restrict-tag">Requires ${esc(profCheck.requirement)}</span>` : ''}
                             ${canEquip && !profCheck.allowed && dmOverrideOn ? ` <span class="rpg-restrict-tag is-override">DM Override</span>` : ''}
                         </div>
@@ -11571,7 +12306,8 @@
                                     ? `<button type="button" class="rpg-mini-btn btn-restricted" disabled title="Buy a Partitioned Bullet Sling &amp; Pouch (15 GP in any shop) first">Load (Locked)</button>`
                                     : `<button type="button" class="rpg-mini-btn btn-use" onclick="COS_RPG.openAmmoLoaderModal({ invIndex: ${idx} })">Load</button>`))
                             : ''}
-                        ${meta.useAction ? `<button type="button" class="rpg-mini-btn ${isStudyAction || meta.useAction.type === 'magicPower' ? 'btn-equip' : 'btn-use'}" data-rpg-turn-slot="${getConsumableTurnSlot(meta.useAction)}" onclick="COS_RPG.useConsumableByIndex(${idx})">${useBtnLbl}</button>` : ''}
+                        ${multiBtnsHtml}
+                        ${!hasMulti && meta.useAction ? `<button type="button" class="rpg-mini-btn ${isStudyAction || ['magicPower', 'bagOfTricks', 'deckOfIllusions'].includes(meta.useAction.type) ? 'btn-equip' : 'btn-use'}" data-rpg-turn-slot="${getConsumableTurnSlot(meta.useAction)}" onclick="COS_RPG.useConsumableByIndex(${idx})">${useBtnLbl}</button>` : ''}
                         <button type="button" class="rpg-mini-btn btn-send" onclick="COS_RPG.openSendForItem(${idx})" title="Send to party member">Send</button>
                         <div class="inv-stepper" style="display:inline-flex; align-items:center; gap:3px; background:#090e1a; border:1px solid #334155; border-radius:5px; padding:1px 4px;">
                             ${p.qty > 1 ? `<button type="button" class="rpg-mini-btn" style="min-block-size:22px; padding:0 5px; border:none;" onclick="COS_RPG.stepBackpackQty(${idx}, -1)" aria-label="Decrease quantity">−</button><span style="font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:800; color:#fde68a; min-width:22px; text-align:center;">${p.qty}x</span>` : ''}

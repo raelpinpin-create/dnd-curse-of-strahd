@@ -11666,8 +11666,8 @@ const NPC_DATA = {
         ],
         rp: "Polishes gold spectacles delicately behind pitch blackness; chuckles softly like dry parchment whenever counterspelling a healer.",
         offerings: "Accepts heavy magic bribes for safe passage through Area X5, reveals Exethanter's wing location, and guards Vault treasures!",
-        loot: "Robe of Useful Items (X5a), Gold Spectacles w/ Pink Crystal Lenses (250 GP — CoS X5a), Neferon's Spellbook, &amp; Optional Chain Lightning / Wall of Stone Scrolls.",
-        lootLinks: [{ key: "robe_of_useful_items", note: "Worn in Study X5a!" }, { key: "amber_temple_library", note: "Exethanter &amp; Library Spellbooks" }, { key: "scroll_amber_vault", note: "Chain Lightning & Wall of Stone Scrolls" }],
+        loot: "Robe of Useful Items (X5a), Gold Spectacles w/ Pink Crystal Lenses (250 GP — CoS X5a), &amp; Optional Chain Lightning / Wall of Stone Scrolls.",
+        lootLinks: [{ key: "robe_of_useful_items", note: "Worn in Study X5a!" }, { key: "scroll_amber_vault", note: "Chain Lightning & Wall of Stone Scrolls" }],
         loreDrawers: [
             { title: "🦊 Origins: How a Gehenna Yugoloth Came to Own Mount Ghakis", body: "<p>Centuries before the Morninglord fell from Barovia's sky, the ancient Dawn Wizards constructed this obsidian-and-amber prison to lock away shards of primeval evil—summoning a cunning Arcanaloth librarian to index their forbidden tomes under iron contract. When Strahd flooded the temple in blood and Barovia tore into the Mists, the portal home slammed shut, leaving Neferon crouching happily atop mountain gold ever since.</p>" },
             { title: "🎭 DM Social Encounter Tip: Playing 'Heinrich Stolt' First", body: "<p>Never open X5 directly with initiative! Have echoes from the 40-ft statue's hollow eyes welcome the freezing party as <em>'Master Archivist Heinrich Stolt,'</em> testing whether greedy trespassers lie or offer genuine tribute—making the sudden <em>Darkness</em> + <em>Chain Lightning</em> betrayal unforgettable if they cross his boundaries!</p>" }
@@ -11701,9 +11701,9 @@ const NPC_DATA = {
             "💡 Linked directly to Section 3 Exethanter Lich Card & Full L1–L9 Engine in Tab 2!"
         ],
         rp: "Tilts yellowed skull politely to one side, taps bony ink-stained knuckles gently on empty velvet sleeves searching for forgotten chalk.",
-        offerings: "Unlocks ALL Amber Temple Vault passwords, PHB Wizard Spell Library (X30), Tome of Understanding (+2 WIS) & Staff of Frost guidance if cured politely!",
-        loot: "Amber Temple Command Passwords, The Incants of Exethanter (Spellbook X27), &amp; Access to the Complete PHB Library (X30).",
-        lootLinks: [{ key: "amber_temple_library", note: "Incants (X27) & PHB Library (X30)!" }],
+        offerings: "Unlocks ALL Amber Temple Vault passwords, reveals Strahd's Vampyr pact lore, &amp; guides the party safely to the Tome of Understanding (+2 WIS) and Staff of Frost!",
+        loot: "Amber Temple Command Passwords &amp; Safe Passage to Vault Treasures (X27/X30/X42).",
+        lootLinks: [{ key: "tome_understanding", note: "Vault Area X20 (+2 WIS)" }, { key: "staff_of_frost", note: "West Hall X17" }],
         loreDrawers: [
             { title: "💀 Origins: Last Survivor of the Amber Dawn Builders", body: "<p>Unlike Neferon, Exethanter was once a mortal archmage devoted to charting Barovia's darkest imprisoned Vestiges—embracing lichdom precisely so no mortal greed would ever lose track of their iron seals. As millennia drifted inside Ravenloft's mist quarantine, the lack of souls gradually scrubbed his memory clean until friendly footsteps reminded him what company felt like.</p>" },
             { title: "📖 Greater Restoration Diplomacy Payoff (Sessions 15–16)", body: "<p>Reward clever players (especially <strong>Cael / Piper</strong>) hugely if they choose kindness over violence in X27! Casting <em>Greater Restoration</em> returns his radiant golden-skull brilliance (<code>Memory Restored</code> toggle), turning Barovia's deadliest CR 21 Lich into a respectful librarian who unlocks safe rooms against extreme <code>-30°F</code> cold and explains Strahd's dark pact in full!</p>" }
@@ -12926,7 +12926,6 @@ const BIOME_DATA = {
             { key: "wand_of_secrets", note: "Architect Room X2b" },
             { key: "staff_of_frost", note: "Frozen Wizard X17" },
             { key: "tome_understanding", note: "Book Area X20 (+2 WIS)" },
-            { key: "amber_temple_library", note: "Exethanter X27 &amp; Library X30" },
             { key: "scroll_amber_vault", note: "Amber Temple Scrolls" },
             { key: "robe_of_useful_items", note: "Neferon Study X5a" },
             { key: "shield_guardian_amulet", note: "Vilnius X9 / Guardian X35" },
@@ -13094,10 +13093,10 @@ const LOOT_DATA = {
     "holy_symbol": {
         "cat": "quest",
         "name": "The Holy Symbol of Ravenkind",
-        "rarity": "Legendary Amulet • Attunement",
+        "rarity": "Legendary Amulet • Attunement (Reloaded)",
         "cost": "Priceless (Tarokka Artifact #2)",
         "location": "Act III • Argynvostholt Beacon Sanctum (Session 11, Lvl 7) • Cael / Good PC",
-        "mechanics": "<strong>Official 5e Mode (10 Charges, regains 1d6+4 at dawn):</strong><br>• <strong>Hold Vampires (1 Charge):</strong> Action; vampires within 30 ft make DC 15 WIS Save or are <strong>Paralyzed for 1 minute</strong>!<br>• <strong>Sunlight Burst (5 Charges):</strong> Action; sheds <strong>30-ft True Sunlight</strong> for 10 min (20 Radiant dmg/turn to vampires & halts regeneration!).<br><br><strong>DragnaCarta Reloaded Mode (Bonus Option — +1 Spell Focus, 5 Charges):</strong><br>• <strong>Dawn's Embrace (1 Charge, Reaction):</strong> When an ally within 60 ft drops to 0 HP, they drop to <strong>1 HP instead and gain Immunity to ALL damage</strong> until the start of their next turn!<br>• <strong>Light of Hope (1 Charge, Action):</strong> Ends <em>Blinded, Charmed, Frightened, Paralyzed, Poisoned,</em> or <em>Stunned</em> on an ally within 30 ft.<br>• <strong>Sun's Blessing (3 Charges):</strong> 30-ft aura for 1 min granting all allies <strong>+1d4 Radiant damage</strong> on weapon attacks!",
+        "mechanics": "<strong>DragnaCarta <em>Reloaded</em> Mode (5 Charges, regains 1d4+1 at dawn • +1 Spell Focus):</strong><br>• <strong>Consecrated Focus:</strong> Grants a permanent <strong>+1 bonus to Spell Attack Rolls and Spell Save DC</strong> while attuned.<br>• <strong>🛡️ Dawn's Embrace (2 Charges, Reaction):</strong> When a nonhostile ally within 30 ft is reduced to 0 HP, they drop to <strong>1 HP instead and gain Immunity to ALL damage</strong> until the start of their next turn!<br>• <strong>✨ Light of Hope (1 Charge, Action):</strong> Immediately ends <em>Blinded, Charmed, Deafened, Frightened, Paralyzed, Poisoned,</em> and <em>Stunned</em> on an ally within 30 ft.<br>• <strong>☀️ Sun's Blessing (2 Charges, Action):</strong> Projects a 30-ft aura for 1 minute granting all nonhostile allies <strong>+1d4 Radiant damage</strong> on weapon attacks! <em>(All 3 live Quick-Belt buttons &amp; shared 5-charge pool auto-activate when equipped!)</em>",
         "lore": "A sacred platinum sunburst amulet with a giant crystal raven embedded in its core, delivered by a giant raven to the prophet Lugdana and guarded by the Order of the Silver Dragon."
     },
     "sunsword": {
@@ -13660,17 +13659,8 @@ const LOOT_DATA = {
         "rarity": "Very Rare Grimoire",
         "cost": "5,000 GP (9th-Lvl Archmage Tome)",
         "location": "Act IV • Castle Ravenloft Catacombs — Crypt 21 (Official CoS p.89) • Piper",
-        "mechanics": "• High-level Dusk Elf Archmage spellbook buried beside Patrina's stone bier (levels 1–9 wizard spells: <em>Time Stop, Mind Blank, Maze, Globe of Invulnerability, Teleport, Cloudkill, Wall of Force</em>!).",
+        "mechanics": "• High-level Dusk Elf Archmage spellbook buried beside Patrina's stone bier (levels 1–9 wizard spells: <em>Time Stop, Mind Blank, Maze, Globe of Invulnerability, Teleport, Cloudkill, Wall of Force</em>!).<br>• <strong>Live Sheet Power:</strong> Hold in Off-Hand to cast <em>Wall of Force / Cloudkill / Globe of Invulnerability</em> (1/Long Rest) from Quick-Belt!",
         "lore": "Protected for four centuries beside the weeping banshee spirit of Kasimir's stone-martyred sister."
-    },
-    "amber_temple_library": {
-        "cat": "caster",
-        "name": "Exethanter's Amber Temple Arcane Library",
-        "rarity": "Legendary Arcane Library",
-        "cost": "Priceless (Full Spell Archive)",
-        "location": "Act IV • The Amber Temple Sanctuary & West Library (Areas X27 & X30 — Sessions 15–16) • Piper / Cael",
-        "mechanics": "• <strong>Exethanter's Spellbook (<code>X27</code>) &amp; Black-Marble Shelves (<code>X30</code>):</strong> Once Lich Exethanter's amnesia is cured via <em>Greater Restoration</em>, grants safe study access to <strong>every single Wizard spell in the Player's Handbook</strong> (for transcription, ritual casting, or arcane study!).",
-        "lore": "Forged two millennia ago by the Dawn Wizards before the Dark Powers froze Mount Ghakis in timeless silence."
     },
     "scroll_raise_dead": {
         "cat": "caster",
@@ -13747,16 +13737,16 @@ const LOOT_DATA = {
     "silvered_dragonplate": {
         "cat": "armor",
         "name": "Silvered Dragonplate +1",
-        "rarity": "Rare Heavy Armor (+1 Plate)",
+        "rarity": "Rare Heavy Armor (+1 Plate • Set Piece)",
         "cost": "3,500 GP (1,500 Plate + Forge/Ench.)",
         "location": "Act III • Possible Vault Tier in Argynvostholt (Beacon Sanctum) • Best for Jacomir",
-        "mechanics": "Masterwork silver-chased <strong>+1 Full Plate Armor (Base AC 19; AC 20 with Jacomir's Defense Fighting Style)</strong> granting <strong>Cold Resistance</strong>. While worn, undead creatures have <strong>Disadvantage on grapple checks</strong> against you.",
+        "mechanics": "Masterwork silver-chased <strong>+1 Full Plate Armor (Base AC 19; AC 20 with Jacomir's Defense Fighting Style)</strong> granting <strong>Cold Resistance</strong>. While worn, undead creatures have <strong>Disadvantage on grapple checks</strong> against you.<br>• <strong>🐉 Order of the Silver Vanguard Set Piece:</strong> <em>2-Pc:</em> +1 AC &amp; Cold Resist • <em>3-Pc:</em> +1 AC, +1 All Saves, Cold Resist &amp; 10-ft Courage Aura (Adv vs Frightened)!",
         "lore": "Forged in star-silver steel and embossed with the spread wings of Lord Argynvost."
     },
     "strahd_animated_plate": {
         "cat": "armor",
         "name": "Strahd's +2 Plate Armor",
-        "rarity": "Very Rare Heavy Armor (+1 Plate)",
+        "rarity": "Very Rare Heavy Armor (+2 Plate)",
         "cost": "8,500 GP (Royal Enchanted Plate)",
         "location": "Act IV • Castle Ravenloft Sealed Treasury Vault (Area K41) • Best for Jacomir",
         "mechanics": "Count Strahd's animated trophy plate. Once defeated and claimed by the party, functions as <strong>+2 Plate Armor (Base AC 20; AC 21 with Defense Fighting Style)</strong> granting <strong>Lightning Resistance</strong>.",
@@ -13765,10 +13755,10 @@ const LOOT_DATA = {
     "shield_plus2": {
         "cat": "armor",
         "name": "+2 Heraldic Shield of the Silver Dragon",
-        "rarity": "Very Rare Magic Shield",
+        "rarity": "Very Rare Magic Shield (Set Piece)",
         "cost": "6,000 GP (+2 Heraldic Shield)",
         "location": "Act IV • Castle Ravenloft Treasury Ground Floor — Inside Daern's Instant Fortress (Book Area K41)",
-        "mechanics": "• <strong>+4 Total Armor Class:</strong> Grants a <strong>+2 magical bonus to AC</strong> on top of a shield's base +2 AC.<br>• <strong>Dragon Knight Reflexes (Official CoS p.66):</strong> Emblazoned with the Order of the Silver Dragon's crest—grants a permanent <strong>+2 bonus to Initiative checks</strong> while held and not incapacitated!",
+        "mechanics": "• <strong>+4 Total Armor Class:</strong> Grants a <strong>+2 magical bonus to AC</strong> on top of a shield's base +2 AC.<br>• <strong>Dragon Knight Reflexes (Official CoS p.66):</strong> Emblazoned with the Order of the Silver Dragon's crest—grants a permanent <strong>+2 bonus to Initiative checks</strong> while held and not incapacitated!<br>• <strong>🐉 Order of the Silver Vanguard Set Piece:</strong> Combines with Vanguard Helm, Greaves, Sabatons, War Mantle, or Silvered Dragonplate for live 2-Pc / 3-Pc Set Bonuses!",
         "lore": "Stamped with the rampant dragon crest of the Order of the Silver Dragon."
     },
     "luckstone": {
@@ -13879,6 +13869,354 @@ const LOOT_DATA = {
         "mechanics": "• <strong>Wilderness True Long Rest (10 Min Setup • Covers 4–6 Travelers):</strong> Pitching the waxed dire-pelt canvas tent, insulated groundsheet, low-smoke brazier, and silver-salt perimeter cord allows the party to complete a <strong>full, uninterrupted True Long Rest</strong> in the Barovian wilderness or during multi-day travel (restoring <strong>100% Max HP, all Spell Slots, Sorcery Points, Superiority Dice, Help Tokens, &amp; clearing 1 level of Exhaustion</strong> instead of suffering damp mud/exhaustion checks!).<br>• <strong>Silver-Salt &amp; Wolfbane Perimeter Ward:</strong> Masks campfire scent/smoke (<strong>+5 Group Stealth / Passive Perception</strong> against road patrols) and chimes a soft copper bell if beasts or undead step within 30 ft of camp.<br>• <strong>Alpine Storm Shelter:</strong> Grants <strong>Advantage on CON Saves</strong> against freezing mountain sleet (Tsolenka Pass / Mt. Ghakis). <em>(Reusable permanent utility gear; must pitch on dry ground outside active dungeon rooms).</em><br>• <strong>Where Bought (Selected Shops):</strong> Bildrath's Mercantile (<code>E1</code>: <code>45–50 GP</code> gouged / <code>30 GP</code> haggled), Petru's Tser Pool Outfitters (<code>G</code>: <code>25–30 GP</code>), Arasek Stockyard in Vallaki (<code>N5</code>: <code>25 GP</code>), &amp; Krezk Commune Supply (<code>S3</code>: <code>25 GP</code>).<br>• <strong>Challenging Craft Formula (Unlock Code <code>MIST-CAMP</code> • <code>DC 14 Survival</code>):</strong> <code>2x Treated Dire-Pelt &amp; Waxed Canvas + 2x Pine Pitch &amp; Lamp Oil + 1x Svalich Wolfbane Root + 1x Powdered Silver Dust</code>.",
         "lore": "Stitched from heavy pitch-sealed wolf hides, cedar stakes, and silvered alarm wire—the difference between freezing to death under Svalich pines and waking with unbroken steel.",
         "actTag": "Act I"
+    },
+
+    // =========================================================================
+    // 🛡️ BAROVIAN ARMOR EXPANSION (COMMON BANDIT/SHOP GEAR, 3 SYNERGY SETS & ICONIC MAGIC ARMOR)
+    // =========================================================================
+    "leather_armor_common": {
+        "cat": "armor",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "room_attic", "forest_road"],
+        "rollTier": "everyday",
+        "name": "Weathered Bandit Leather Armor",
+        "rarity": "Common Light Armor (Body Slot)",
+        "cost": "10 GP",
+        "location": "Act I–II • Svalich Road Bandits, Bildrath's Mercantile (E1), or Barovia Cellars",
+        "mechanics": "• <strong>Light Armor (Body):</strong> Sets Base AC to <strong>11 + Full DEX</strong> with zero Stealth penalty—reliable salvaged hide cuirass stripped from road brigands or hunters.",
+        "lore": "Boiled cowhide scarred by wolf claws and mended with waxed hemp cord."
+    },
+    "studded_leather_common": {
+        "cat": "armor",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "room_attic"],
+        "rollTier": "high",
+        "name": "Reinforced Studded Leather",
+        "rarity": "Common Light Armor (Body Slot)",
+        "cost": "45 GP",
+        "location": "Act I–II • Bandit Captains, Tser Pool Traders (G), &amp; Vallaki Arasek Stockyard (N5)",
+        "mechanics": "• <strong>Light Armor (Body):</strong> Sets Base AC to <strong>12 + Full DEX</strong> with zero Stealth penalty—riveted with blackened iron studs to turn slashing claws.",
+        "lore": "Supple dark leather reinforced across the ribs and shoulders with tarnished iron rivets."
+    },
+    "chain_shirt_common": {
+        "cat": "armor",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "church_crypt"],
+        "rollTier": "high",
+        "name": "Barovian Chain Shirt",
+        "rarity": "Common Medium Armor (Body Slot)",
+        "cost": "50 GP",
+        "location": "Act I–II • Fallen Militia Scouts, Vallaki Guard Barracks, or Arasek Stockyard (N5)",
+        "mechanics": "• <strong>Medium Armor (Body):</strong> Sets Base AC to <strong>13 + DEX (max +2)</strong> with <strong>NO Stealth Disadvantage</strong>—worn quietly beneath a wool coat.",
+        "lore": "Oiled steel links muffled in rough linen so patrols don't rattle along misty roads."
+    },
+    "breastplate_armor": {
+        "cat": "armor",
+        "actTag": "Act II",
+        "sceneTags": ["corpse_monster", "church_crypt"],
+        "rollTier": "nat20",
+        "name": "Vallakian Steel Breastplate",
+        "rarity": "Common Medium Armor (Body Slot)",
+        "cost": "400 GP",
+        "location": "Act II • Vallaki Master Smithy / Arasek Stockyard (N5) or Fallen Argynvostholt Squires",
+        "mechanics": "• <strong>Medium Armor (Body):</strong> Sets Base AC to <strong>14 + DEX (max +2)</strong> with <strong>NO Stealth Disadvantage</strong>—gold-standard quiet medium torso protection.",
+        "lore": "Hammered charcoal-tempered steel fitted with leather shoulder straps and brass buckles."
+    },
+    "half_plate_armor": {
+        "cat": "armor",
+        "actTag": "Act II",
+        "sceneTags": ["corpse_monster", "church_crypt"],
+        "rollTier": "nat20",
+        "name": "Guard Captain's Half Plate",
+        "rarity": "Common Medium Armor (Body Slot)",
+        "cost": "750 GP",
+        "location": "Act II–III • Vallaki Guard Armory (N3), Argynvostholt (Q), or Arasek Stockyard (N5)",
+        "mechanics": "• <strong>Medium Armor (Body):</strong> Sets Base AC to <strong>15 + DEX (max +2)</strong> (Imposes Stealth Disadvantage)—heavy pauldrons and plated breastplate.",
+        "lore": "Worn by Baron Vargas's senior watch captains and veteran Barovian mercenaries."
+    },
+    "iron_heater_shield": {
+        "cat": "armor",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "room_attic", "church_crypt"],
+        "rollTier": "everyday",
+        "name": "Iron-Rimmed Heater Shield",
+        "rarity": "Common Shield (Off-Hand Slot)",
+        "cost": "10 GP",
+        "location": "Act I–II • Bandit Camps, Barovia Guards, Bildrath's (E1), &amp; Vallaki Smithy (N5)",
+        "mechanics": "• <strong>Off-Hand Shield:</strong> Grants a live <strong>+2 bonus to Armor Class</strong> while held in Off-Hand.",
+        "lore": "Oak planks banded in hammered iron, scratched clean of its faded Barovian coat of arms."
+    },
+    "traveler_leather_boots": {
+        "cat": "armor",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road", "room_attic", "corpse_monster"],
+        "rollTier": "everyday",
+        "name": "Hobnailed Svalich Road Boots",
+        "rarity": "Common Footwear (Feet Slot)",
+        "cost": "8 GP",
+        "location": "Act I–II • Svalich Road Bandits, Bildrath's (E1), or Vistani Outfitters (G)",
+        "mechanics": "• <strong>Feet Slot:</strong> Thick iron-studded soles ignore nonmagical mud/snow difficult terrain and grant <strong>Advantage on Survival checks</strong> for long Barovian trail marches!",
+        "lore": "Greased bullhide boots that keep freezing Barovian mire out of your socks."
+    },
+    "padded_iron_greaves": {
+        "cat": "armor",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "room_attic"],
+        "rollTier": "everyday",
+        "name": "Patrolman's Riveted Greaves",
+        "rarity": "Common Leg Armor (Legs Slot)",
+        "cost": "15 GP",
+        "location": "Act I–II • Road Brigands, Vallaki Watch Patrols, or Barovia Barracks",
+        "mechanics": "• <strong>Legs Slot:</strong> Strapped leather-and-iron shin plates granting <strong>Advantage on Athletics checks</strong> to keep footing, climb, or resist shoves!",
+        "lore": "Scuffed shin guards buckled tightly over wool hose by Barovian gate guards."
+    },
+    "bandit_iron_sallet": {
+        "cat": "armor",
+        "actTag": "Act I",
+        "sceneTags": ["corpse_monster", "room_attic"],
+        "rollTier": "everyday",
+        "name": "Dented Bandit Iron Helm",
+        "rarity": "Common Headgear (Head Slot)",
+        "cost": "12 GP",
+        "location": "Act I–II • Svalich Bandits, Fallen Militia, or Bildrath's Surplus Bin (E1)",
+        "mechanics": "• <strong>Head Slot • 1/Short Rest Quick-Belt Reaction:</strong> Click <strong>[🪖 Brace Helm]</strong> to turn a glancing blow, reducing incoming nonmagical Bludgeoning or Slashing damage by <strong>2</strong>!",
+        "lore": "A scratched kettle-sallet that has already saved at least one owner from a wolf's jaw."
+    },
+
+    // --- SET #1: 🐺 SVALICH SHADOW-STALKER SET (LIGHT / SCOUT & GUNSLINGER BUILD — YVAINE) ---
+    "stalker_studded_coat": {
+        "cat": "armor",
+        "bestHeroId": "yvaine",
+        "actTag": "Act II",
+        "name": "Shadow-Stalker Studded Coat",
+        "rarity": "Rare Light Armor (Body Slot • Set Piece)",
+        "cost": "1,400 GP",
+        "location": "Act II–III • Ezmerelda's Cache / Werewolf Den Hunter Corpse / Vallaki Black Market • Yvaine",
+        "mechanics": "• <strong>+1 Studded Leather (Body):</strong> Sets Base AC to <strong>13 + Full DEX</strong> with zero Stealth penalty!<br>• <strong>🐺 Svalich Shadow-Stalker Set Synergy:</strong> <em>2-Pc:</em> <strong>+1 AC &amp; +1 Initiative</strong> • <em>3-Pc:</em> <strong>+1 AC, +2 Initiative &amp; Ambush Strike (+1d6 dmg on 1st hit each combat!)</strong>.",
+        "lore": "Tailored in mist-gray dire-wolf leather stitched with matte-black silver eyelets that never catch moonlight."
+    },
+    "stalker_wolf_hood": {
+        "cat": "armor",
+        "bestHeroId": "yvaine",
+        "actTag": "Act I",
+        "sceneTags": ["forest_road", "corpse_monster"],
+        "rollTier": "nat20",
+        "name": "Shadow-Stalker Wolf Hood",
+        "rarity": "Uncommon Headgear (Head Slot • Set Piece)",
+        "cost": "350 GP",
+        "location": "Act I–II • Svalich Hunter Blind / Tser Pool Vistani (G) / Werewolf Scout Drop • Yvaine",
+        "mechanics": "• <strong>Head Slot:</strong> Grants a live <strong>+1 to Initiative</strong> and <strong>Advantage on Perception checks</strong> in dim forest/mist!<br>• <strong>🐺 Svalich Shadow-Stalker Set Synergy:</strong> <em>2-Pc:</em> <strong>+1 AC &amp; +1 Init</strong> • <em>3-Pc:</em> <strong>+1 AC, +2 Init &amp; +1d6 Ambush Strike</strong>!",
+        "lore": "A cowled timber-wolf hood lined in dark felt that sharpens peripheral sight through swirling fog."
+    },
+    "stalker_silent_boots": {
+        "cat": "armor",
+        "bestHeroId": "yvaine",
+        "actTag": "Act II",
+        "sceneTags": ["forest_road", "room_attic"],
+        "rollTier": "nat20",
+        "name": "Shadow-Stalker Silent Boots",
+        "rarity": "Uncommon Footwear (Feet Slot • Set Piece)",
+        "cost": "450 GP",
+        "location": "Act II • Blue Water Inn Keepers Reward / Vallaki Arasek Backroom / Van Richten's Tower • Yvaine",
+        "mechanics": "• <strong>Feet Slot:</strong> Muffled deer-sinew soles grant <strong>Advantage on Stealth checks</strong> (footsteps make zero sound on gravel, snow, or floorboards)!<br>• <strong>🐺 Svalich Shadow-Stalker Set Synergy:</strong> <em>2-Pc:</em> <strong>+1 AC &amp; +1 Init</strong> • <em>3-Pc:</em> <strong>+1 AC, +2 Init &amp; +1d6 Ambush Strike</strong>!",
+        "lore": "Soled in layered elk hide and owl-down—crafted by Keepers scouts to slip right past castle patrols."
+    },
+    "stalker_strider_trousers": {
+        "cat": "armor",
+        "bestHeroId": "yvaine",
+        "actTag": "Act II",
+        "name": "Shadow-Stalker Strider Trousers",
+        "rarity": "Uncommon Leg Armor (Legs Slot • Set Piece)",
+        "cost": "380 GP",
+        "location": "Act II–III • Wizard of Wines Loft / Ezmerelda's Wagon / Yester Hill Hunter Corpse • Yvaine",
+        "mechanics": "• <strong>Legs Slot:</strong> Reinforced thigh-holster leather granting <strong>+5 ft Walking Speed</strong> and <strong>+1 to Initiative</strong>!<br>• <strong>🐺 Svalich Shadow-Stalker Set Synergy:</strong> <em>2-Pc:</em> <strong>+1 AC &amp; +1 Init</strong> • <em>3-Pc:</em> <strong>+1 AC, +2 Init &amp; +1d6 Ambush Strike</strong>!",
+        "lore": "Cut for sudden sprints across wet rooftops with reinforced knee leather and quick-draw straps."
+    },
+
+    // --- SET #2: 🐉 ORDER OF THE SILVER VANGUARD SET (HEAVY KNIGHT BUILD — JACOMIR) ---
+    "vanguard_silver_helm": {
+        "cat": "armor",
+        "bestHeroId": "jacomir",
+        "actTag": "Act III",
+        "sceneTags": ["church_crypt", "corpse_monster"],
+        "rollTier": "nat20",
+        "name": "Silver Vanguard Helm",
+        "rarity": "Rare Headgear (Head Slot • Set Piece)",
+        "cost": "1,200 GP",
+        "location": "Act II–III • Argynvostholt Knight Armory (Q) or Fallen Paladin Crypt • Jacomir",
+        "mechanics": "• <strong>Head Slot:</strong> Silver-crested barbute granting a live <strong>+1 bonus to Armor Class</strong> and <strong>Advantage on saves vs Frightened</strong>!<br>• <strong>🐉 Order of the Silver Vanguard Set Synergy:</strong> Combines with <em>Silvered Dragonplate +1/+2</em>, <em>+2 Heraldic Shield</em>, Greaves, Sabatons &amp; War Mantle — <em>2-Pc:</em> <strong>+1 AC &amp; Cold Resist</strong> • <em>3-Pc:</em> <strong>+1 AC, +1 All Saves, Cold Resist &amp; 10-ft Courage Aura</strong>!",
+        "lore": "Engraved along the brow with twin silver wings that catch even a single candle flame."
+    },
+    "vanguard_greaves": {
+        "cat": "armor",
+        "bestHeroId": "jacomir",
+        "actTag": "Act II",
+        "name": "Silver Vanguard Greaves",
+        "rarity": "Uncommon Leg Armor (Legs Slot • Set Piece)",
+        "cost": "650 GP",
+        "location": "Act II–III • Vallaki Smithy Relic / Argynvostholt Courtyard (Q1–Q7) • Jacomir",
+        "mechanics": "• <strong>Legs Slot:</strong> Fluted silver-steel leg plates granting a live <strong>+1 bonus to Armor Class</strong> and <strong>Advantage on saves vs being knocked Prone or pushed</strong>!<br>• <strong>🐉 Order of the Silver Vanguard Set Synergy:</strong> <em>2-Pc:</em> <strong>+1 AC &amp; Cold Resist</strong> • <em>3-Pc:</em> <strong>+1 AC, +1 All Saves, Cold Resist &amp; 10-ft Courage Aura</strong>!",
+        "lore": "Weighted to anchor a knight's stance against vampire charges and dire-wolf leaps."
+    },
+    "vanguard_sabatons": {
+        "cat": "armor",
+        "bestHeroId": "jacomir",
+        "actTag": "Act III",
+        "name": "Silver Vanguard Sabatons",
+        "rarity": "Rare Footwear (Feet Slot • Set Piece)",
+        "cost": "900 GP",
+        "location": "Act III • Argynvostholt Beacon Stair (Q36) or Tsolenka Pass Guard Cache • Jacomir",
+        "mechanics": "• <strong>Feet Slot:</strong> Frost-warded steel sabatons granting <strong>Cold Resistance</strong> and sure-footed traction on ice and blood-slick stone!<br>• <strong>🐉 Order of the Silver Vanguard Set Synergy:</strong> <em>2-Pc:</em> <strong>+1 AC &amp; Cold Resist</strong> • <em>3-Pc:</em> <strong>+1 AC, +1 All Saves, Cold Resist &amp; 10-ft Courage Aura</strong>!",
+        "lore": "Warm metal boots blessed by Argynvost's breath so knights could march straight up Mount Ghakis."
+    },
+    "vanguard_war_mantle": {
+        "cat": "armor",
+        "bestHeroId": "jacomir",
+        "actTag": "Act II",
+        "sceneTags": ["church_crypt", "room_attic"],
+        "rollTier": "nat20",
+        "name": "Silver Vanguard War Mantle",
+        "rarity": "Uncommon Cloak (Cape Slot • Set Piece)",
+        "cost": "500 GP",
+        "location": "Act II–III • Argynvostholt Chapel (Q13) or Sir Godfrey's Gift • Jacomir",
+        "mechanics": "• <strong>Cape Slot:</strong> Heavy azure-and-silver wool half-cape granting a live <strong>+1 bonus to ALL Saving Throws</strong>!<br>• <strong>🐉 Order of the Silver Vanguard Set Synergy:</strong> <em>2-Pc:</em> <strong>+1 AC &amp; Cold Resist</strong> • <em>3-Pc:</em> <strong>+1 AC, +1 All Saves, Cold Resist &amp; 10-ft Courage Aura</strong>!",
+        "lore": "Fastened with a tarnished silver dragon clasp that refuses to tear or stain in battle."
+    },
+
+    // --- SET #3: 🔮 VISTANI MIST-WEAVER REGALIA SET (UNARMORED CASTER BUILD — PIPER / CAEL) ---
+    "mistweaver_circlet": {
+        "cat": "armor",
+        "bestHeroId": "piper",
+        "actTag": "Act I",
+        "sceneTags": ["lab_study", "church_crypt"],
+        "rollTier": "nat20",
+        "name": "Mist-Weaver Silver Circlet",
+        "rarity": "Uncommon Headgear (Head Slot • Set Piece)",
+        "cost": "450 GP",
+        "location": "Act I–II • Tser Pool Vistani (G) / Wachterhaus Arcane Study (N4) • Piper / Cael",
+        "mechanics": "• <strong>Head Slot:</strong> Filigree moonstone circlet granting a live <strong>+1 bonus to Spell Attack Rolls</strong> and <strong>Advantage on Arcana checks</strong>!<br>• <strong>🔮 Vistani Mist-Weaver Regalia Synergy:</strong> Combines with <em>Kolyan's Black Robe of Warding</em>, Starlight Shawl, Shadow Slippers &amp; Silk Leggings — <em>2-Pc:</em> <strong>+1 AC &amp; +1 Spell Save DC</strong> • <em>3-Pc:</em> <strong>+1 AC, +1 Spell DC/Atk &amp; +1 All Saves</strong>!",
+        "lore": "Hammered Vistani silver cradling a tear of cloudy moonstone that hums whenever wild magic flares."
+    },
+    "mistweaver_shawl": {
+        "cat": "armor",
+        "bestHeroId": "piper",
+        "actTag": "Act II",
+        "sceneTags": ["room_attic", "lab_study"],
+        "rollTier": "nat20",
+        "name": "Mist-Weaver Starlight Shawl",
+        "rarity": "Uncommon Cloak (Cape Slot • Set Piece)",
+        "cost": "420 GP",
+        "location": "Act II • Vallaki Vistani Camp (N9) / Madam Eva's Caravan / Blinsky Backroom • Piper",
+        "mechanics": "• <strong>Cape Slot:</strong> Embroidered midnight-indigo velvet shawl granting a live <strong>+1 bonus to Armor Class</strong>!<br>• <strong>🔮 Vistani Mist-Weaver Regalia Synergy:</strong> <em>2-Pc:</em> <strong>+1 AC &amp; +1 Spell Save DC</strong> • <em>3-Pc:</em> <strong>+1 AC, +1 Spell DC/Atk &amp; +1 All Saves</strong>!",
+        "lore": "Stitched with tiny silver Tarokka constellations that shimmer and deflect glancing blades."
+    },
+    "mistweaver_slippers": {
+        "cat": "armor",
+        "bestHeroId": "piper",
+        "actTag": "Act III",
+        "name": "Mist-Weaver Shadow Slippers",
+        "rarity": "Rare Footwear (Feet Slot • Set Piece)",
+        "cost": "1,100 GP",
+        "location": "Act II–III • Berez Ruins / Van Richten's Tower / Vistani Elder Reward • Piper / Cael",
+        "mechanics": "• <strong>Feet Slot:</strong> Grants <strong>Advantage on Acrobatics</strong> AND a live Quick-Belt <strong>1/Short Rest Bonus Action [🌫️ Mist-Hop (15 ft)]</strong> teleport without provoking Opportunity Attacks!<br>• <strong>🔮 Vistani Mist-Weaver Regalia Synergy:</strong> <em>2-Pc:</em> <strong>+1 AC &amp; +1 Spell Save DC</strong> • <em>3-Pc:</em> <strong>+1 AC, +1 Spell DC/Atk &amp; +1 All Saves</strong>!",
+        "lore": "Soft silk-and-suede dancing slippers that leave wisps of harmless stage smoke across the flagstones."
+    },
+    "mistweaver_silk_leggings": {
+        "cat": "armor",
+        "bestHeroId": "piper",
+        "actTag": "Act II",
+        "name": "Mist-Weaver Silk Leggings",
+        "rarity": "Uncommon Leg Attire (Legs Slot • Set Piece)",
+        "cost": "380 GP",
+        "location": "Act II • Vallaki Tailor Vault / Wachterhaus Wardrobe / Krezk Loom • Piper / Cael",
+        "mechanics": "• <strong>Legs Slot:</strong> Rune-hemmed dark silk trousers granting a live <strong>+1 bonus to ALL Saving Throws</strong>!<br>• <strong>🔮 Vistani Mist-Weaver Regalia Synergy:</strong> <em>2-Pc:</em> <strong>+1 AC &amp; +1 Spell Save DC</strong> • <em>3-Pc:</em> <strong>+1 AC, +1 Spell DC/Atk &amp; +1 All Saves</strong>!",
+        "lore": "Woven with protective abjuration hems favored by wandering Vistani seers and traveling illusionists."
+    },
+
+    // --- 8 ICONIC STANDALONE BUILD-DEFINING MAGIC ARMORS & SLOT GEAR ---
+    "bracers_of_defense": {
+        "cat": "armor",
+        "bestHeroId": "piper",
+        "actTag": "Act II",
+        "name": "Bracers of Defense",
+        "rarity": "Rare Magic Bracers (Off-Hand / Ring Slot • Attune)",
+        "cost": "1,800 GP (+2 Unarmored AC)",
+        "location": "Act II–III • Van Richten's Tower / Wachterhaus Secret Vault / Amber Temple • Best for Piper!",
+        "mechanics": "• <strong>Authentic 5e Unarmored Ward:</strong> Grants a live <strong>+2 bonus to Armor Class</strong> while you wear <strong>no armor and carry no shield</strong> (stacks cleanly with <em>Mage Armor</em> &amp; <em>Kolyan's Black Robe</em> — automatically validates on your Equipment sheet!).",
+        "lore": "Twin cuffs of etched dark platinum that conjure hairline ripples of invisible force whenever fangs lunge close."
+    },
+    "sentinel_shield": {
+        "cat": "armor",
+        "bestHeroId": "jacomir",
+        "actTag": "Act II",
+        "name": "Sentinel Shield",
+        "rarity": "Uncommon Magic Shield (Off-Hand Slot)",
+        "cost": "650 GP (+2 AC • Adv Init &amp; Percep)",
+        "location": "Act II–III • Vallaki Guard Vault / Argynvostholt Guardroom (Q2) / Abbey Armory • Jacomir",
+        "mechanics": "• <strong>Off-Hand Shield (No Attunement!):</strong> Grants <strong>+2 AC</strong> AND permanent <strong>Advantage on Initiative rolls and Wisdom (Perception) checks</strong> while held!",
+        "lore": "Stamped with a wide silver eye at its boss that silently swivels toward ambushers in the mist."
+    },
+    "mithral_half_plate": {
+        "cat": "armor",
+        "actTag": "Act III",
+        "name": "Mithral Half Plate",
+        "rarity": "Uncommon Magic Medium Armor (Body Slot)",
+        "cost": "1,200 GP (AC 15+DEX max 2 • Quiet!)",
+        "location": "Act II–III • Argynvostholt Vault / Vallaki Master Smithy Commission / Berez • Any Medium Armor PC",
+        "mechanics": "• <strong>Feather-Light Medium Armor (Body • No Attunement!):</strong> Sets Base AC to <strong>15 + DEX (max +2)</strong> with <strong>ZERO Stealth Disadvantage</strong> and can be worn invisibly under ordinary cloaks!",
+        "lore": "Silvery feather-light plates forged from ancient mountain mithral that chime softer than falling snow."
+    },
+    "adamantine_splint": {
+        "cat": "armor",
+        "bestHeroId": "jacomir",
+        "actTag": "Act III",
+        "name": "Adamantine Splint Armor",
+        "rarity": "Rare Magic Heavy Armor (Body Slot)",
+        "cost": "2,200 GP (AC 17 • Crit Immunity!)",
+        "location": "Act III • Argynvostholt Forge / Werewolf Den Hoard / Castle Ravenloft Armory • Jacomir",
+        "mechanics": "• <strong>Heavy Armor (Body • No Attunement!):</strong> Sets Base AC to <strong>17</strong> AND turns <strong>every Critical Hit scored against you into a normal hit</strong> (massive life-saver vs Strahd, Rahadin &amp; Roc crits!).",
+        "lore": "Mirror-black meteoric steel splints riveted onto boiled oxhide—virtually impossible to pierce through a vital seam."
+    },
+    "mantle_spell_resistance": {
+        "cat": "armor",
+        "actTag": "Act III",
+        "name": "Mantle of Spell Resistance",
+        "rarity": "Rare Magic Cloak (Cape Slot • Attunement)",
+        "cost": "3,000 GP (Adv vs Spells &amp; +1 Saves)",
+        "location": "Act III–IV • Amber Temple Vaults / Baba Lysaga's Hut / Castle Ravenloft • Any Hero",
+        "mechanics": "• <strong>Cape Slot (Attune):</strong> Grants <strong>Advantage on all Saving Throws against Spells</strong> plus a live <strong>+1 bonus to All Saving Throws</strong>—elite endgame defense vs Strahd, Neferon &amp; Exethanter!",
+        "lore": "A sweeping midnight mantle threaded with spun silver wards that drink hostile lightning and necrotic rays."
+    },
+    "winged_boots_barovia": {
+        "cat": "armor",
+        "actTag": "Act III",
+        "name": "Winged Boots of Barovia",
+        "rarity": "Rare Magic Footwear (Feet Slot • Attunement)",
+        "cost": "2,800 GP (4 hrs/Day Fly Speed)",
+        "location": "Act III–IV • Castle Ravenloft High Towers / Tsolenka Pass Roc Eyrie / Amber Temple • Any Hero",
+        "mechanics": "• <strong>Feet Slot (Attune • Quick-Belt Toggle):</strong> Grants a <strong>Magical Flying Speed equal to your walking speed</strong> for up to <strong>4 hours per day</strong> (usable in 1-minute increments; regains 2 hrs every 12 hrs unused)!",
+        "lore": "Supple raven-black boots stitched with silver pinions along each heel—blessed by Keepers wind-runes."
+    },
+    "boots_of_speed": {
+        "cat": "armor",
+        "actTag": "Act III",
+        "name": "Boots of Speed",
+        "rarity": "Rare Magic Footwear (Feet Slot • Attunement)",
+        "cost": "2,600 GP (Bonus Action 2x Speed)",
+        "location": "Act III–IV • Van Richten's Secret Cache / Castle Ravenloft Crypts / Berez • Any Hero",
+        "mechanics": "• <strong>Feet Slot (Attune • Quick-Belt Button):</strong> Click <strong>[⚡ Click Heels]</strong> as a Bonus Action to <strong>DOUBLE your walking speed</strong> and impose <strong>Disadvantage on Opportunity Attacks</strong> against you (up to 10 min/day)!",
+        "lore": "Burnished crimson leather riding boots fitted with tiny silver spurs that spark when clicked together."
+    },
+    "elven_chain_shirt": {
+        "cat": "armor",
+        "bestHeroId": "piper",
+        "actTag": "Act III",
+        "name": "Elven Chain Shirt",
+        "rarity": "Rare Magic Medium Armor (Body • Any Class!)",
+        "cost": "2,400 GP (AC 14+DEX max 2 • Auto-Proficient)",
+        "location": "Act III • Kasimir Velikov's Dusk Elf Vault (N9a) / Amber Temple / Ravenloft • Piper / Cael / Any PC",
+        "mechanics": "• <strong>No Proficiency Required (Body • No Attunement!):</strong> Grants <strong>Base AC 14 + DEX (max +2)</strong> with zero Stealth Disadvantage—<strong>even Sorcerers &amp; Wizards are automatically proficient</strong> and can cast spells freely while wearing it!",
+        "lore": "Gossamer Dusk Elf mithral rings handed down from before Strahd burned the valley's ancient groves."
     },
     "healing_potion": {
         "cat": "heal",
@@ -15493,20 +15831,6 @@ const LOOT_DATA = {
         "mechanics": "<strong>DM Remote Upgrade:</strong> Click <strong>[Upgrade]</strong> when Argynvost's Beacon is lit to bless the hero's <em>Silvered Dragonplate +1</em> into <strong>Reforged Silvered Dragonplate +2 (Base AC 20; AC 21 with Defense Style)</strong>.",
         "lore": "Silver scales etched across the cuirass gleam with warm spectral dragonlight."
     },
-    "awaken_yvaine_legendary": {
-        "cat": "weapon",
-        "bestHeroId": "yvaine",
-        "actTag": "Act IV",
-        "isUpgradeItem": true,
-        "isAwakeningItem": true,
-        "awakenSpec": { "heroId": "yvaine", "heroLabel": "🔫 Yvaine", "mode": "legendary", "presetId": "yvaine_legendary" },
-        "name": "☀️ Yvaine's Dawn-Crowned Arsenal (Lament, Mercy & Less +3)",
-        "rarity": "Legendary Signature Weapon Awakening • Attunement",
-        "cost": "Endgame Dawn Awakening (1-Click Transform)",
-        "location": "Act IV • Solmere Vow / Morninglord Consecration • Transforms Lament, Mercy & Less in-place!",
-        "mechanics": "• <strong>1-Click Signature Firearm Awakening:</strong> Keeps Yvaine's beloved <em>Lament (10-Round)</em>, <em>Mercy (6-Cyl)</em>, and <em>Less (6-Cyl)</em> intact while transforming them into <strong>☀️ Dawn-Piercer of Solmere +3 (+1d8 Radiant, Mist-Sight, Halts Regen)</strong> and <strong>☀️ Morning-Star &amp; Solmere's Last Light +3 (+1d6 Radiant, Silvered/Magical)</strong>.<br>• <strong>1/Long Rest Quick-Belt Power:</strong> Grants <strong>☀️ Solmere Dawn-Flare (Daylight)</strong>.",
-        "lore": "Golden dawnlight races down every rifled groove—turning Solmere's mourning guns into twin stars cutting clean through Barovia's fog."
-    },
     "awaken_yvaine_cursed": {
         "cat": "weapon",
         "bestHeroId": "yvaine",
@@ -15515,25 +15839,11 @@ const LOOT_DATA = {
         "isAwakeningItem": true,
         "awakenSpec": { "heroId": "yvaine", "heroLabel": "🔫 Yvaine", "mode": "cursed", "presetId": "yvaine_cursed" },
         "name": "🩸 Yvaine's Mist-Wrought Arsenal (Lament, Mercy & Less +3)",
-        "rarity": "Cursed Legendary Signature Weapon Awakening • Attunement",
-        "cost": "Domain Zero Root-Mist Binding (1-Click Transform)",
-        "location": "Act IV • Amber Vault X42 / Root Anchor Collapse • Cursed Transformation of Lament, Mercy & Less!",
-        "mechanics": "• <strong>1-Click Cursed Signature Awakening:</strong> Transforms <em>Lament</em>, <em>Mercy</em>, and <em>Less</em> in-place into <strong>🩸 Hollow-Mist Repeater +3 (+1d8 Necrotic, Mist-Sight, Blocks Healing)</strong> and <strong>🩸 Phantom &amp; Grim-Smile +3 (+1d6 Necrotic, Silvered/Magical)</strong>.<br>• <strong>2/Short Rest Quick-Belt Power:</strong> Grants <strong>🌫️ Phantom Mist-Step</strong> (Bonus Action 30-ft teleport).<br>• <strong>🩸 Curse Trade-Off:</strong> Cold whispers of Domain Zero impose <strong>-1 to Saving Throws</strong>.",
+        "rarity": "Cursed Signature Weapon Awakening • Attunement",
+        "cost": "Endgame Cursed Mist Binding (1-Click Transform)",
+        "location": "Act IV • Amber Vault X42 / Root Anchor Collapse • Boss-Primed Transformation of Lament, Mercy & Less!",
+        "mechanics": "• <strong>1-Click Cursed Signature Awakening (+3):</strong> Transforms <em>Lament</em>, <em>Mercy</em>, and <em>Less</em> in-place into <strong>🩸 \"Lament\", Hollow-Mist Repeater +3 (+1d8 Necrotic, Mist-Sight, Blocks Healing)</strong>, <strong>🩸 \"Mercy\", Mist-Walker +3 (+1d6 Necrotic)</strong>, and <strong>🩸 \"Less\", Grim-Smile +3 (+1d6 Necrotic)</strong>.<br>• <strong>2/Short Rest Quick-Belt Power:</strong> Grants <strong>🌫️ Phantom Mist-Step</strong> (Bonus Action 30-ft teleport).<br>• <strong>🩸 Curse Trade-Off:</strong> Cold whispers of the Mists impose <strong>-1 to Saving Throws</strong>.",
         "lore": "Freezing gray fog pours out of the breech with every trigger pull, locking the crosshairs onto whoever breathes in the dark."
-    },
-    "awaken_jacomir_legendary": {
-        "cat": "weapon",
-        "bestHeroId": "jacomir",
-        "actTag": "Act IV",
-        "isUpgradeItem": true,
-        "isAwakeningItem": true,
-        "awakenSpec": { "heroId": "jacomir", "heroLabel": "👑 Jacomir", "mode": "legendary", "presetId": "jacomir_legendary" },
-        "name": "☀️ Sovereign's Dawnblade of Oakenshire +3 (Ancestral Greatsword)",
-        "rarity": "Legendary Signature Weapon Awakening • Attunement",
-        "cost": "Endgame Dawn Awakening (1-Click Transform)",
-        "location": "Act IV • Beacon of Argynvost / True Royal Oath • Transforms Ancestral Greatsword in-place!",
-        "mechanics": "• <strong>1-Click Signature Greatsword Awakening:</strong> Transforms Jacomir's <em>Ancestral Greatsword</em> (keeping <strong>Savage Attacker</strong> &amp; <strong>Graze</strong>!) into a <strong>+3 Legendary Greatsword</strong> dealing <strong>+1d8 Radiant</strong>, granting <strong>+1 AC &amp; +1 All Saving Throws</strong>, Silvered/Magical, and halting Vampire Regeneration.<br>• <strong>1/Long Rest Quick-Belt Power:</strong> <strong>☀️ Sovereign's Dawn Aura</strong> (Bonus Action: allies within 30 ft deal +1d4 Radiant &amp; Adv vs Frightened for 1 min).",
-        "lore": "The battered heirloom steel of Oakenshire blazes awake like a rising crown of unyielding sunlight."
     },
     "awaken_jacomir_cursed": {
         "cat": "weapon",
@@ -15543,10 +15853,10 @@ const LOOT_DATA = {
         "isAwakeningItem": true,
         "awakenSpec": { "heroId": "jacomir", "heroLabel": "👑 Jacomir", "mode": "cursed", "presetId": "jacomir_cursed" },
         "name": "🩸 Dreadblade of the Mist-Bound King +3 (Ancestral Greatsword)",
-        "rarity": "Cursed Legendary Signature Weapon Awakening • Attunement",
-        "cost": "Domain Zero Dread-Crown Binding (1-Click Transform)",
-        "location": "Act IV • Amber Sarcophagus / Root Anchor Turn • Cursed Transformation of Ancestral Greatsword!",
-        "mechanics": "• <strong>1-Click Cursed Signature Awakening:</strong> Transforms Jacomir's <em>Ancestral Greatsword</em> (keeping <strong>Savage Attacker</strong> &amp; <strong>Graze</strong>!) into a <strong>+3 Cursed Dreadblade</strong> dealing <strong>+2d6 Necrotic</strong>, granting <strong>+1 AC</strong>, Silvered/Magical, and siphoning <strong>+1d8 Temp HP</strong> on kills.<br>• <strong>1/Long Rest Quick-Belt Power:</strong> <strong>🩸 Dread Sovereign's Roar (Fear — 30-ft cone)</strong>.<br>• <strong>🩸 Curse Trade-Off:</strong> Disadvantage on Persuasion checks to parley peacefully while drawn.",
+        "rarity": "Cursed Signature Weapon Awakening • Attunement",
+        "cost": "Endgame Cursed Mist Binding (1-Click Transform)",
+        "location": "Act IV • Amber Sarcophagus / Root Anchor Turn • Boss-Primed Transformation of Ancestral Greatsword!",
+        "mechanics": "• <strong>1-Click Cursed Signature Awakening (+3):</strong> Transforms Jacomir's <em>Ancestral Greatsword</em> (keeping <strong>Savage Attacker</strong> &amp; <strong>Graze</strong>!) into a <strong>+3 Cursed Dreadblade</strong> dealing <strong>+2d6 Necrotic</strong>, granting <strong>+1 AC</strong>, Silvered/Magical, and siphoning <strong>+1d8 Temp HP</strong> on kills.<br>• <strong>1/Long Rest Quick-Belt Power:</strong> <strong>🩸 Dread Sovereign's Roar (Fear — 30-ft cone)</strong>.<br>• <strong>🩸 Curse Trade-Off:</strong> Disadvantage on Persuasion checks to parley peacefully while drawn.",
         "lore": "Obsidian frost creeps across the Oakenshire fuller—turning a king's promise to save his people into an iron command over the fog."
     },
     "awaken_piper_cursed": {
@@ -15556,26 +15866,12 @@ const LOOT_DATA = {
         "isUpgradeItem": true,
         "isAwakeningItem": true,
         "awakenSpec": { "heroId": "piper", "heroLabel": "🎩 Piper", "mode": "cursed", "presetId": "piper_cursed" },
-        "name": "🩸 Nocturne, Staff of the Weeping Mists +2 & Fused Mist-Core",
-        "rarity": "Cursed Legendary Staff & Fused Arcane Core • Attunement",
-        "cost": "Domain Zero Chaotic Conduit Binding (1-Click Transform)",
-        "location": "Act IV • Stage 3 Blank Card / Amber Vault X42 • Transforms Piper's Staff AND Fuses Cursed Core!",
-        "mechanics": "• <strong>1-Click Cursed Staff + Core Transformation:</strong> Completely transforms Piper's held <em>Quarterstaff (Magician's Cane)</em> into <strong>🩸 Nocturne, Staff of the Weeping Mists +2</strong> AND fuses the <strong>🩸 Heart-Core of the Weeping Mists</strong> directly into its Arcane Core slot!<br>• <strong>Combined Power:</strong> Grants <strong>+2 Spell Save DC &amp; +2 Spell Attack</strong>, <strong>+1 AC</strong>, <strong>+1 All Saves</strong>, <strong>Mist-Sight</strong>, <strong>+2 Staff Hit/Dmg + 1d8 Psychic</strong>, and <strong>1/Long Rest 🩸 Hunger of the Weeping Mists (4d8 Necrotic 20-ft fog sphere)</strong>.<br>• <strong>🩸 Curse Trade-Off:</strong> Rolling a Nat 1 on a leveled spell triggers an immediate Dark Mist Surge!",
+        "name": "🩸 Nocturne, Staff of the Weeping Mists +3 & Fused Mist-Core",
+        "rarity": "Cursed Staff & Fused Arcane Core • Attunement",
+        "cost": "Endgame Cursed Mist Binding (1-Click Transform)",
+        "location": "Act IV • Stage 3 Blank Card / Amber Vault X42 • Boss-Primed Transformation of Piper's Staff & Core!",
+        "mechanics": "• <strong>1-Click Cursed Staff + Core Transformation (+3):</strong> Completely transforms Piper's held <em>Quarterstaff (Magician's Cane)</em> into <strong>🩸 Nocturne, Staff of the Weeping Mists +3</strong> AND fuses the <strong>🩸 Heart-Core of the Weeping Mists</strong> directly into its Arcane Core slot!<br>• <strong>Combined Power:</strong> Grants <strong>+2 Spell Save DC &amp; +2 Spell Attack</strong>, <strong>+1 AC</strong>, <strong>+1 All Saves</strong>, <strong>Mist-Sight</strong>, <strong>+3 Staff Hit/Dmg + 1d8 Psychic</strong>, and <strong>1/Long Rest 🩸 Hunger of the Weeping Mists (4d8 Necrotic 20-ft fog sphere)</strong>.<br>• <strong>🩸 Curse Trade-Off:</strong> Rolling a Nat 1 on a leveled spell triggers an immediate Dark Mist Surge!",
         "lore": "Charcoal ink bleeds out of Piper's Blank Tarokka Card straight up her sleeve, twisting polished stage-wood around a beating sphere of captive midnight fog."
-    },
-    "awaken_piper_legendary": {
-        "cat": "caster",
-        "bestHeroId": "piper",
-        "actTag": "Act IV",
-        "isUpgradeItem": true,
-        "isAwakeningItem": true,
-        "awakenSpec": { "heroId": "piper", "heroLabel": "🎩 Piper", "mode": "legendary", "presetId": "piper_legendary" },
-        "name": "☀️ Astral Cane of the Unbroken Dawn +2 & Phoenix-Sun Core",
-        "rarity": "Legendary Signature Staff & Arcane Core • Attunement",
-        "cost": "Endgame Dawn Awakening (1-Click Transform)",
-        "location": "Act IV • Defying the Mists • Transforms Piper's Staff AND Mounts Radiant Phoenix-Sun Core!",
-        "mechanics": "• <strong>1-Click Legendary Staff + Core Transformation:</strong> Transforms Piper's <em>Quarterstaff</em> into <strong>☀️ Astral Cane of the Unbroken Dawn +2</strong> AND mounts the <strong>☀️ Radiant Phoenix-Sun Core</strong> into its Arcane Core slot!<br>• <strong>Combined Power:</strong> Grants <strong>+2 Spell Save DC &amp; +2 Spell Attack</strong>, <strong>+1 AC</strong>, <strong>+2 All Saves</strong>, <strong>+1 Initiative</strong>, <strong>+1d8 Radiant</strong>, and <strong>1/Long Rest ☀️ Sunburst Lance (6d8 Radiant 60-ft beam)</strong>.",
-        "lore": "Her theatrical magician's cane blossoms into spun star-gold crowned with a warm, unquenchable ember of dawn."
     },
     "quicksilver_quickdraw_pommel": {
         "cat": "weapon",
@@ -18156,7 +18452,7 @@ function dmSendItemUpgrade(lootKey, toId, toName, ev) {
     }
 }
 
-function dmTriggerSignatureAwakening(heroId, heroName, mode = 'legendary', presetId = '', customTitle = '', ev = null) {
+function dmTriggerSignatureAwakening(heroId, heroName, mode = 'cursed', presetId = '', customTitle = '', ev = null) {
     if (ev) ev.stopPropagation();
     const cleanHeroId = String(heroId || '').trim().toLowerCase();
     if (!cleanHeroId) return;
@@ -18164,15 +18460,14 @@ function dmTriggerSignatureAwakening(heroId, heroName, mode = 'legendary', prese
     const rtdb = dmGetRtdb();
     const cmdPayload = {
         action: 'awaken_weapon',
-        mode: mode === 'cursed' ? 'cursed' : 'legendary',
+        mode: 'cursed',
         presetId: presetId || '',
         customTitle: String(customTitle || '').trim(),
         createdAt: Date.now()
     };
     if (rtdb) {
         rtdb.ref(`campaigns/${room}/heroes/${cleanHeroId}/dm_commands`).push(cmdPayload).then(() => {
-            const tag = mode === 'cursed' ? '🩸 CURSED MIST AWAKENING' : '🟠 LEGENDARY DAWN AWAKENING';
-            dmShowQuickToast(`${tag} sent to <strong>${escapeEncounterHtml(heroName || cleanHeroId)}</strong>! Their signature weapon transformed in-place.`);
+            dmShowQuickToast(`🩸 <strong>CURSED MIST AWAKENING (+3)</strong> sent to <strong>${escapeEncounterHtml(heroName || cleanHeroId)}</strong>! Their signature weapon transformed in-place.`);
         }).catch(err => {
             dmShowQuickToast(`⚠️ Awakening command failed: ${err.message}`);
         });
@@ -18216,11 +18511,10 @@ function dmRunUniversalAwakenerForm(mode) {
         dmRevertSignatureAwakening(targetId, targetName);
         return;
     }
-    // Use bespoke preset for Piper/Jacomir/Yvaine unless customTitle overrides or hero is a new character!
     const presetId = (['piper', 'jacomir', 'yvaine'].includes(targetId) && !customTitle)
-        ? `${targetId}_${mode}`
+        ? `${targetId}_cursed`
         : 'universal';
-    dmTriggerSignatureAwakening(targetId, targetName, mode, presetId, customTitle);
+    dmTriggerSignatureAwakening(targetId, targetName, 'cursed', presetId, customTitle);
 }
 
 function renderDmSignatureAwakeningPanelHtml(compact = false) {
@@ -18228,42 +18522,39 @@ function renderDmSignatureAwakeningPanelHtml(compact = false) {
         <div class="loot-awaken-panel">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px;">
                 <div>
-                    <div style="font-family:'Cinzel',serif; font-size:0.86rem; font-weight:800; color:#fecdd3;">🌑☀️ ENDGAME SIGNATURE WEAPON AWAKENING STUDIO (DAWN LEGENDARY vs. CURSED MIST)</div>
-                    <div style="font-size:0.73rem; color:#cbd5e1; margin-top:2px;">Transforms each hero's starter weapon <strong>in-place</strong> (preserving Yvaine's 10/6/6 chambers, Jacomir's Savage + Graze, &amp; fusing a Cursed/Dawn Core into Piper's Staff — plus works on <strong>any future new player</strong>!).</div>
+                    <div style="font-family:'Cinzel',serif; font-size:0.86rem; font-weight:800; color:#fecdd3;">🩸 ENDGAME CURSED MIST AWAKENING STUDIO (+3 BOSS-PRIMED DREAD VANGUARD)</div>
+                    <div style="font-size:0.73rem; color:#cbd5e1; margin-top:2px;">Transforms each hero's starter weapon <strong>in-place</strong> for the CoS climax &amp; Campaign 3 Boss Turn (preserving Yvaine's 10/6/6 chambers, Jacomir's Savage + Graze, &amp; fusing the Cursed Mist-Core into Piper's Staff — plus works on <strong>any future replacement player</strong>!).</div>
                 </div>
             </div>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(235px, 1fr)); gap:8px;">
                 <div style="background:#090e1a; border:1px solid #334155; border-top:2.5px solid #38bdf8; border-radius:7px; padding:8px 10px; display:flex; flex-direction:column; gap:5px;">
-                    <div style="font-size:0.77rem; font-weight:800; color:#f8fafc;">🔫 Yvaine — Lament, Mercy &amp; Less</div>
-                    <div style="font-size:0.68rem; color:#94a3b8;">Awakens all 3 guns (+3, Radiant Dawn-Piercer vs. Necrotic Hollow-Mist + Mist-Step).</div>
+                    <div style="font-size:0.77rem; font-weight:800; color:#f8fafc;">🔫 Yvaine — Lament, Mercy &amp; Less (+3)</div>
+                    <div style="font-size:0.68rem; color:#94a3b8;">Awakens into <em>Hollow-Mist Repeater +3</em>, <em>Mist-Walker +3</em> &amp; <em>Grim-Smile +3</em> (+Necrotic, Mist-Sight, 2/SR Mist-Step).</div>
                     <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:auto;">
-                        <button type="button" class="btn-modal-mini" style="border-color:#fbbf24; color:#fef08a;" onclick="dmTriggerSignatureAwakening('yvaine', '🔫 Yvaine', 'legendary', 'yvaine_legendary')">☀️ Legendary</button>
-                        <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.28);" onclick="dmTriggerSignatureAwakening('yvaine', '🔫 Yvaine', 'cursed', 'yvaine_cursed')">🩸 Cursed Mist</button>
-                        <button type="button" class="btn-modal-mini" onclick="dmRevertSignatureAwakening('yvaine', '🔫 Yvaine')" title="Revert back to starter guns">↺</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.32);" onclick="dmTriggerSignatureAwakening('yvaine', '🔫 Yvaine', 'cursed', 'yvaine_cursed')">🩸 Awaken Cursed (+3)</button>
+                        <button type="button" class="btn-modal-mini" onclick="dmRevertSignatureAwakening('yvaine', '🔫 Yvaine')" title="Revert back to starter guns">↺ Revert</button>
                     </div>
                 </div>
                 <div style="background:#090e1a; border:1px solid #334155; border-top:2.5px solid #f59e0b; border-radius:7px; padding:8px 10px; display:flex; flex-direction:column; gap:5px;">
-                    <div style="font-size:0.77rem; font-weight:800; color:#f8fafc;">👑 Jacomir — Ancestral Greatsword</div>
-                    <div style="font-size:0.68rem; color:#94a3b8;">Keeps Savage + Graze (+3 Dawnblade +1d8 Rad vs. Cursed Dreadblade +2d6 Necrotic).</div>
+                    <div style="font-size:0.77rem; font-weight:800; color:#f8fafc;">👑 Jacomir — Ancestral Greatsword (+3)</div>
+                    <div style="font-size:0.68rem; color:#94a3b8;">Transforms into <em>Dreadblade of the Mist-Bound King +3</em> (keeps Savage + Graze, +2d6 Necrotic, +1 AC, 1/LR Dread Roar).</div>
                     <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:auto;">
-                        <button type="button" class="btn-modal-mini" style="border-color:#fbbf24; color:#fef08a;" onclick="dmTriggerSignatureAwakening('jacomir', '👑 Jacomir', 'legendary', 'jacomir_legendary')">☀️ Legendary</button>
-                        <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.28);" onclick="dmTriggerSignatureAwakening('jacomir', '👑 Jacomir', 'cursed', 'jacomir_cursed')">🩸 Cursed Mist</button>
-                        <button type="button" class="btn-modal-mini" onclick="dmRevertSignatureAwakening('jacomir', '👑 Jacomir')" title="Revert back to Ancestral Greatsword">↺</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.32);" onclick="dmTriggerSignatureAwakening('jacomir', '👑 Jacomir', 'cursed', 'jacomir_cursed')">🩸 Awaken Cursed (+3)</button>
+                        <button type="button" class="btn-modal-mini" onclick="dmRevertSignatureAwakening('jacomir', '👑 Jacomir')" title="Revert back to Ancestral Greatsword">↺ Revert</button>
                     </div>
                 </div>
                 <div style="background:#090e1a; border:1px solid #334155; border-top:2.5px solid #c084fc; border-radius:7px; padding:8px 10px; display:flex; flex-direction:column; gap:5px;">
-                    <div style="font-size:0.77rem; font-weight:800; color:#f8fafc;">🎩 Piper — Staff + Fused Core</div>
-                    <div style="font-size:0.68rem; color:#94a3b8;">Transforms Staff <em>and</em> fuses 🩸 Cursed Mist-Core (+2 Spell DC/Atk, 4d8 Mist Storm) or ☀️ Sun Core!</div>
+                    <div style="font-size:0.77rem; font-weight:800; color:#f8fafc;">🎩 Piper — Nocturne Staff +3 &amp; Mist-Core</div>
+                    <div style="font-size:0.68rem; color:#94a3b8;">Transforms Staff into <em>Nocturne +3</em> &amp; fuses <em>Heart-Core of the Weeping Mists</em> (+2 Spell DC/Atk, +1 AC/Saves, 4d8 Mist Storm).</div>
                     <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:auto;">
-                        <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.32);" onclick="dmTriggerSignatureAwakening('piper', '🎩 Piper', 'cursed', 'piper_cursed')">🩸 Cursed Staff + Core</button>
-                        <button type="button" class="btn-modal-mini" style="border-color:#fbbf24; color:#fef08a;" onclick="dmTriggerSignatureAwakening('piper', '🎩 Piper', 'legendary', 'piper_legendary')">☀️ Legendary</button>
-                        <button type="button" class="btn-modal-mini" onclick="dmRevertSignatureAwakening('piper', '🎩 Piper')" title="Revert Staff &amp; Core">↺</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.32);" onclick="dmTriggerSignatureAwakening('piper', '🎩 Piper', 'cursed', 'piper_cursed')">🩸 Awaken Staff + Core (+3)</button>
+                        <button type="button" class="btn-modal-mini" onclick="dmRevertSignatureAwakening('piper', '🎩 Piper')" title="Revert Staff &amp; Core">↺ Revert</button>
                     </div>
                 </div>
             </div>
             ${compact ? '' : `
             <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center; background:#090e1a; border:1px dashed #475569; border-radius:7px; padding:7px 10px;">
-                <span style="font-size:0.72rem; font-weight:800; color:#fde68a;">🆕 Any / New Player Starter Weapon:</span>
+                <span style="font-size:0.72rem; font-weight:800; color:#fecdd3;">🆕 Any / New Player Cursed Weapon (+3):</span>
                 <select id="dm-univ-awaken-hero" class="dm-forge-select" style="width:auto; padding:4px 8px; font-size:0.74rem;" aria-label="Choose hero to awaken weapon" onchange="const el=document.getElementById('dm-univ-awaken-custom-id'); if(el) el.style.display=(this.value.startsWith('__custom__')?'inline-block':'none');">
                     <option value="cael|🐾 Cael">🐾 Cael (Companion)</option>
                     <option value="__custom__|New Hero">🆕 New / Replacement Player (Type ID)...</option>
@@ -18272,9 +18563,8 @@ function renderDmSignatureAwakeningPanelHtml(compact = false) {
                     <option value="yvaine|🔫 Yvaine">🔫 Yvaine (Custom Title)</option>
                 </select>
                 <input type="text" id="dm-univ-awaken-custom-id" class="dm-forge-input" style="display:none; width:130px; padding:4px 8px; font-size:0.74rem;" placeholder="heroId (e.g. kael)" aria-label="Custom hero ID">
-                <input type="text" id="dm-univ-awaken-title" class="dm-forge-input" style="flex:1 1 190px; min-width:160px; padding:4px 8px; font-size:0.74rem;" placeholder="Optional custom awakened name (auto-names if blank)" aria-label="Optional custom awakened weapon name">
-                <button type="button" class="btn-modal-mini" style="border-color:#fbbf24; color:#fef08a;" onclick="dmRunUniversalAwakenerForm('legendary')">🟠 Awaken Legendary</button>
-                <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.28);" onclick="dmRunUniversalAwakenerForm('cursed')">🩸 Awaken Cursed</button>
+                <input type="text" id="dm-univ-awaken-title" class="dm-forge-input" style="flex:1 1 190px; min-width:160px; padding:4px 8px; font-size:0.74rem;" placeholder="Optional custom cursed name (auto-names if blank)" aria-label="Optional custom awakened weapon name">
+                <button type="button" class="btn-modal-mini" style="border-color:#f43f5e; color:#fecdd3; background:rgba(159,18,57,0.32);" onclick="dmRunUniversalAwakenerForm('cursed')">🩸 Awaken Cursed (+3)</button>
                 <button type="button" class="btn-modal-mini" onclick="dmRunUniversalAwakenerForm('revert')" title="Revert target hero's weapon">↺ Revert</button>
             </div>`}
         </div>
@@ -23470,7 +23760,7 @@ const DM_AREA_SHOPS = {
         keeper: 'Bildrath Cantemir & nephew Parriwimple ("If you want it badly enough, you\'ll pay for it!")',
         defaultMult: 3,
         maxRarity: ['common', 'uncommon'],
-        guaranteedKeys: ['bandages_field', 'silvered_bolts', 'silvered_arrows', 'sturdy_hempen_rope', 'bent_iron_crowbar', 'box_beeswax_candles', 'iron_hunters_bear_trap', 'empty_glass_vials_3', 'pitch_oil', 'clean_linen_cloth', 'light_crossbow', 'shortbow']
+        guaranteedKeys: ['bandages_field', 'leather_armor_common', 'iron_heater_shield', 'traveler_leather_boots', 'bandit_iron_sallet', 'silvered_bolts', 'silvered_arrows', 'sturdy_hempen_rope', 'bent_iron_crowbar', 'box_beeswax_candles', 'iron_hunters_bear_trap', 'empty_glass_vials_3', 'pitch_oil', 'clean_linen_cloth', 'light_crossbow', 'shortbow']
     },
     tser_pool: {
         id: 'tser_pool',
@@ -23479,7 +23769,7 @@ const DM_AREA_SHOPS = {
         keeper: "Madam Eva's Vistani Traders & silversmith Petru (Fair 1x prices to honored guests)",
         defaultMult: 1,
         maxRarity: ['common', 'uncommon', 'rare'],
-        guaranteedKeys: ['silvered_bullets', 'silvered_bolts', 'silvered_arrows', 'liquid_silver_coating', 'bullet_sling', 'healing_potion', 'vistani_stag_tonic', 'quicksilver_quickdraw_pommel', 'vistani_snap_sight', 'powdered_silver_dust', 'scroll_identify', 'scroll_mage_armor', 'scroll_protection_evil', 'scroll_detect_magic']
+        guaranteedKeys: ['silvered_bullets', 'silvered_bolts', 'silvered_arrows', 'liquid_silver_coating', 'bullet_sling', 'studded_leather_common', 'stalker_wolf_hood', 'mistweaver_circlet', 'mistweaver_shawl', 'healing_potion', 'vistani_stag_tonic', 'quicksilver_quickdraw_pommel', 'vistani_snap_sight', 'powdered_silver_dust', 'scroll_identify', 'scroll_mage_armor', 'scroll_protection_evil', 'scroll_detect_magic']
     },
     arasek: {
         id: 'arasek',
@@ -23488,7 +23778,7 @@ const DM_AREA_SHOPS = {
         keeper: "Gunther & Yelena Arasek + Vallaki Town Weaponsmith",
         defaultMult: 1.2,
         maxRarity: ['common', 'uncommon', 'rare'],
-        guaranteedKeys: ['healing_potion', 'mist_ward_camp_kit', 'silvered_bullets', 'silvered_bolts', 'silvered_arrows', 'fire_bolts', 'fire_arrows', 'heavy_crossbow', 'hand_crossbow', 'longbow', 'rapier_martial', 'breastplate_armor', 'half_plate_armor', 'alchemists_fire', 'ash_smoke_bomb', 'balinok_frost_sight']
+        guaranteedKeys: ['healing_potion', 'mist_ward_camp_kit', 'studded_leather_common', 'chain_shirt_common', 'breastplate_armor', 'half_plate_armor', 'iron_heater_shield', 'padded_iron_greaves', 'sentinel_shield', 'vanguard_greaves', 'stalker_strider_trousers', 'mistweaver_silk_leggings', 'silvered_bullets', 'silvered_bolts', 'silvered_arrows', 'fire_bolts', 'fire_arrows', 'heavy_crossbow', 'hand_crossbow', 'longbow', 'rapier_martial', 'alchemists_fire', 'ash_smoke_bomb', 'balinok_frost_sight']
     },
     blinsky: {
         id: 'blinsky',
@@ -24141,12 +24431,51 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         exploreToggleBtn.innerText = exploreOpenNow ? '🔎 Exploring ▴' : '🔎 Exploring ▾';
     }
 
-    // Live Rarity Filter Bar counts (scoped to current Act/Location/Scene BEFORE rarity filter so counts stay visible!)
+    // Category definitions (evaluated BEFORE rarity filter so Rarity Bar counts strictly match active Category + Act/Location/Scene!)
+    const catDefs = [
+        { id: 'weapons', btnId: 'btn-lcat-weapons', shortLabel: '⚔️ Weapons & Ammo', title: '⚔️ Weapons, Silvered Arms & Specialty Ammo', cls: 'loot-header-weapon' },
+        { id: 'attachments', btnId: 'btn-loot-attachments', shortLabel: '🔧 Attachments', title: '🔧 Weapon Attachments (2 Non-Overlapping Slots per Weapon)', cls: 'loot-header-weapon' },
+        { id: 'upgrades', btnId: 'btn-loot-upgrades', shortLabel: '⬆️ Upgrades', title: '⬆️ DM Remote Gear Upgrades & Cursed Signature Awakenings', cls: 'loot-header-quest' },
+        { id: 'caster', btnId: 'btn-lcat-caster', shortLabel: '🔮 Caster & Relics', title: '🔮 Arcane Staves, Spellbooks, Foci & Relics', cls: 'loot-header-caster' },
+        { id: 'scrolls', btnId: 'btn-lcat-scrolls', shortLabel: '📜 Spell Scrolls', title: '📜 Buyable & Dungeon Spell Scrolls (Auto-Cast on Quick-Belt!)', cls: 'loot-header-caster' },
+        { id: 'armor', btnId: 'btn-lcat-armor', shortLabel: '🛡️ Armor & Gear', title: '🛡️ Armor, Shields, Set Regalia, Rings, Cloaks & Camp Gear', cls: 'loot-header-armor' },
+        { id: 'consumables', btnId: 'btn-lcat-consumables', shortLabel: '🧪 Potions & Food', title: '🧪 Potions, Food & Drink, Coating Vials, Bombs & Boons', cls: 'loot-header-heal' },
+        { id: 'craftables', btnId: 'btn-loot-craftables', shortLabel: '⚗️ Craft & Recipes', title: '📜 Physical Crafting Recipe Writings & Formula Scrolls', cls: 'loot-header-quest' },
+        { id: 'materials', btnId: 'btn-loot-materials', shortLabel: '🌿 Materials', title: '🌿 All Barovian Crafting Materials & Wilderness Forage (Where Found & Recipes)', cls: 'loot-header-material' },
+        { id: 'quest', btnId: 'btn-lcat-quest', shortLabel: '🗝️ Quest & Loot', title: '🗝️ Fated Relics, Story Books, Valuables & Normal Loot', cls: 'loot-header-quest' }
+    ];
+
+    const byBucketPre = {};
+    catDefs.forEach(c => { byBucketPre[c.id] = []; });
+    scopeEntries.forEach(([k, it]) => {
+        const b = getLootViewBucket(it, k);
+        if (byBucketPre[b]) byBucketPre[b].push([k, it]);
+    });
+    const matGlobalPre = allEntries.filter(([_, it]) => it.cat === 'material');
+    const scrollsGlobalPre = allEntries.filter(([k, it]) => isSpellScrollItem(it, k));
+    const upgradesGlobalPre = allEntries.filter(([k, it]) => (it.isUpgradeItem || it.isAwakeningItem));
+
+    // Live Rarity Filter Bar counts (strictly scoped to current Act/Location/Scene AND active Category!)
     const rarityBarEl = document.getElementById('loot-rarity-bar');
     if (rarityBarEl) {
-        const baseForRarity = (!isSearchExpand && renderCat === 'scrolls' && renderScope === 'Act I' && activeLootLoc === 'all')
-            ? allEntries.filter(([k, it]) => isSpellScrollItem(it, k))
-            : scopeEntries;
+        let baseForRarity = scopeEntries;
+        if (!isSearchExpand) {
+            if (renderCat === 'overview') {
+                baseForRarity = inSceneMode ? scopeEntries : scopeEntries.filter(([_, it]) => it.cat !== 'material');
+            } else if (renderCat === 'materials') {
+                baseForRarity = (!inSceneMode && activeLootLoc === 'all') ? matGlobalPre : (byBucketPre.materials.length ? byBucketPre.materials : matGlobalPre);
+            } else if (renderCat === 'scrolls') {
+                baseForRarity = (!inSceneMode && activeLootLoc === 'all' && byBucketPre.scrolls.length === 0) ? scrollsGlobalPre : byBucketPre.scrolls;
+            } else if (renderCat === 'upgrades') {
+                baseForRarity = (!inSceneMode && activeLootLoc === 'all' && byBucketPre.upgrades.length === 0) ? upgradesGlobalPre : byBucketPre.upgrades;
+            } else if (renderCat === 'attachments') {
+                baseForRarity = activeLootSlot !== 'all'
+                    ? byBucketPre.attachments.filter(([_, it]) => it.attachSlot === activeLootSlot)
+                    : byBucketPre.attachments;
+            } else if (byBucketPre[renderCat]) {
+                baseForRarity = byBucketPre[renderCat];
+            }
+        }
         const rarCounts = { all: baseForRarity.length, common: 0, uncommon: 0, rare: 0, very_rare: 0, legendary: 0, cursed: 0 };
         baseForRarity.forEach(([_, it]) => {
             const rt = detectLootRarityTier(it);
@@ -24165,29 +24494,15 @@ function renderLootVault(filterTag = activeLootTag, preserveActive = false) {
         scopeEntries = scopeEntries.filter(([_, it]) => detectLootRarityTier(it) === activeLootRarity);
     }
 
-    // Live counts for Category Bar buttons scoped to current Act/Location or Scene!
-    const catDefs = [
-        { id: 'weapons', btnId: 'btn-lcat-weapons', shortLabel: '⚔️ Weapons & Ammo', title: '⚔️ Weapons, Silvered Arms & Specialty Ammo', cls: 'loot-header-weapon' },
-        { id: 'attachments', btnId: 'btn-loot-attachments', shortLabel: '🔧 Attachments', title: '🔧 Weapon Attachments (2 Non-Overlapping Slots per Weapon)', cls: 'loot-header-weapon' },
-        { id: 'upgrades', btnId: 'btn-loot-upgrades', shortLabel: '⬆️ Upgrades', title: '⬆️ DM Remote Gear Upgrades & Signature Weapon Awakenings', cls: 'loot-header-quest' },
-        { id: 'caster', btnId: 'btn-lcat-caster', shortLabel: '🔮 Caster & Relics', title: '🔮 Arcane Staves, Spellbooks, Foci & Relics', cls: 'loot-header-caster' },
-        { id: 'scrolls', btnId: 'btn-lcat-scrolls', shortLabel: '📜 Spell Scrolls', title: '📜 Buyable & Dungeon Spell Scrolls (Auto-Cast on Quick-Belt!)', cls: 'loot-header-caster' },
-        { id: 'armor', btnId: 'btn-lcat-armor', shortLabel: '🛡️ Armor & Gear', title: '🛡️ Armor, Shields, Rings, Cloaks & Camp Gear', cls: 'loot-header-armor' },
-        { id: 'consumables', btnId: 'btn-lcat-consumables', shortLabel: '🧪 Potions & Food', title: '🧪 Potions, Food & Drink, Coating Vials, Bombs & Boons', cls: 'loot-header-heal' },
-        { id: 'craftables', btnId: 'btn-loot-craftables', shortLabel: '⚗️ Craft & Recipes', title: '📜 Physical Crafting Recipe Writings & Formula Scrolls', cls: 'loot-header-quest' },
-        { id: 'materials', btnId: 'btn-loot-materials', shortLabel: '🌿 Materials', title: '🌿 All Barovian Crafting Materials & Wilderness Forage (Where Found & Recipes)', cls: 'loot-header-material' },
-        { id: 'quest', btnId: 'btn-lcat-quest', shortLabel: '🗝️ Quest & Loot', title: '🗝️ Fated Relics, Story Books, Valuables & Normal Loot', cls: 'loot-header-quest' }
-    ];
-
     const byBucket = {};
     catDefs.forEach(c => { byBucket[c.id] = []; });
     scopeEntries.forEach(([k, it]) => {
         const b = getLootViewBucket(it, k);
         if (byBucket[b]) byBucket[b].push([k, it]);
     });
-    const matGlobal = allEntries.filter(([_, it]) => it.cat === 'material');
-    const scrollsGlobal = allEntries.filter(([k, it]) => isSpellScrollItem(it, k) && (activeLootRarity === 'all' || detectLootRarityTier(it) === activeLootRarity));
-    const upgradesGlobal = allEntries.filter(([k, it]) => (it.isUpgradeItem || it.isAwakeningItem) && (activeLootRarity === 'all' || detectLootRarityTier(it) === activeLootRarity));
+    const matGlobal = matGlobalPre;
+    const scrollsGlobal = scrollsGlobalPre.filter(([_, it]) => activeLootRarity === 'all' || detectLootRarityTier(it) === activeLootRarity);
+    const upgradesGlobal = upgradesGlobalPre.filter(([_, it]) => activeLootRarity === 'all' || detectLootRarityTier(it) === activeLootRarity);
     if (!inSceneMode && activeLootLoc === 'all' && (renderScope === 'all' || renderScope === 'search_all')) {
         byBucket.materials = matGlobal.filter(([_, it]) => activeLootRarity === 'all' || detectLootRarityTier(it) === activeLootRarity);
     }
