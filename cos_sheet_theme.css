@@ -3922,9 +3922,9 @@
         border: 1px solid var(--card-border);
     }
 
-    /* Portrait Tablet Gear Tab: 4-Column Hub + Coin Pouch */
+    /* Portrait Tablet Inventory Tab: 3-Column Hub + Coin Pouch */
     :root[data-view-mode="tablet"]:not([data-tablet-orient="landscape"]) .rpg-hub-btn-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
         gap: 8px;
     }
 
@@ -4397,10 +4397,13 @@
         inset: -6px;
     }
 
-    /* Mobile Gear Hub & Coin Pouch */
+    /* Mobile Inventory Hub & Coin Pouch */
     :root[data-view-mode="mobile"] .rpg-hub-btn-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
         gap: 8px;
+    }
+    :root[data-view-mode="mobile"] .rpg-hub-btn-grid .rpg-hub-tile:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
     }
 
     :root[data-view-mode="mobile"] .rpg-hub-tile {

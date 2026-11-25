@@ -144,12 +144,15 @@ header.header-banner .pill-badge-group {
 }
 .rpg-hub-btn-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 6px;
 }
 @media (max-width: 640px) {
     .rpg-hub-btn-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    .rpg-hub-btn-grid .rpg-hub-tile:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
     }
 }
 .rpg-hub-tile {
@@ -1923,6 +1926,54 @@ header.header-banner .pill-badge-group {
 }
 .rpg-tab-hidden {
     display: none !important;
+}
+.rpg-view-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.rpg-tab-alert-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #ef4444;
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 1;
+}
+.rpg-mobile-tab .rpg-tab-alert-badge {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    min-width: 15px;
+    height: 15px;
+    font-size: 0.58rem;
+}
+.rpg-trade-inline-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.rpg-trade-inline-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+}
+.rpg-trade-inline-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--accent-gold, #f59e0b);
+    letter-spacing: 0.4px;
 }
 
 /* 🧠 AUTO-CONCENTRATION & QUICK STATUS PILLS STRIP */

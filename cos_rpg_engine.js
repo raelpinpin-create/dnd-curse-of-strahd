@@ -39,6 +39,7 @@
         { id: 'piper',   name: 'Piper',   emoji: '🎩', label: '🎩 Piper' },
         { id: 'jacomir', name: 'Jacomir', emoji: '👑', label: '👑 Jacomir' },
         { id: 'yvaine',  name: 'Yvaine',  emoji: '🔫', label: '🔫 Yvaine' },
+        { id: 'cael',    name: 'Cael',    emoji: '🌟', label: '🌟 Cael' },
         { id: 'dm',      name: 'DM Vault', emoji: '🛡️', label: '🛡️ Return to DM' }
     ];
 
@@ -10439,12 +10440,14 @@
             msgThreads = filtered;
             saveCachedMsgThreads();
 
-            if (tradeActiveTab === 'messages' && document.getElementById('rpg-trade-modal')?.open) {
+            if (tradeActiveTab === 'messages' && isTradeViewActive()) {
                 ensureDefaultMsgSelection(true);
                 renderTradeModal();
+                renderHeaderBadges();
             } else {
                 renderHubPanel();
                 renderHeaderBadges();
+                if (isTradeViewActive()) renderTradeModal();
             }
         }, err => console.warn('[COS_RPG] Whispers RTDB listener error:', err));
     }
@@ -10550,7 +10553,7 @@
         }
         renderHubPanel();
         renderHeaderBadges();
-        if (document.getElementById('rpg-trade-modal')?.open) renderTradeModal();
+        if (isTradeViewActive()) renderTradeModal();
     }
 
     function clearAllMyWhisperThreads() {
@@ -10570,7 +10573,7 @@
         saveMsgReadMap({});
         renderHubPanel();
         renderHeaderBadges();
-        if (document.getElementById('rpg-trade-modal')?.open && tradeActiveTab === 'messages') {
+        if (isTradeViewActive() && tradeActiveTab === 'messages') {
             renderTradeModal();
         }
     }
@@ -10656,8 +10659,8 @@
                     ? { ...hudState.turn }
                     : { action: true, bonus: true, reaction: true, move: true },
                 advLocked: isRemoteSync ? Boolean(hudState.advLocked) : false,
-                rightTab: (hudState.rightTab && hudState.rightTab !== 'magic') ? hudState.rightTab : 'combat',
-                mobileTab: (hudState.mobileTab && hudState.mobileTab !== 'magic') ? hudState.mobileTab : 'combat',
+                rightTab: normalizeRightTabId(hudState.rightTab),
+                mobileTab: normalizeMobileTabId(hudState.mobileTab),
                 tabPrefV3: true,
                 skillsTrainedOnly: Boolean(hudState.skillsTrainedOnly),
                 showPartyHud: isRemoteSync
@@ -10840,7 +10843,7 @@
         renderIncomingBanner();
         renderHubPanel();
         renderHeaderBadges();
-        if (document.getElementById('rpg-trade-modal')?.open) renderTradeModal();
+        if (isTradeViewActive()) renderTradeModal();
         if (brandNew.length > 0) {
             const first = brandNew[0];
             const desc = first.kind === 'gold'
@@ -11009,7 +11012,7 @@
                 const list = [];
                 snap.forEach(doc => list.push({ id: doc.id, ...doc.data() }));
                 outgoingTrades = list;
-                if (document.getElementById('rpg-trade-modal')?.open) renderTradeModal();
+                if (isTradeViewActive()) renderTradeModal();
             }, err => console.warn('[COS_RPG] Outgoing listener error:', err));
 
         unsubDeclined = transfersCol()
@@ -11394,12 +11397,28 @@
             partyHud.insertAdjacentElement('afterend', combatStrip);
         }
 
-        // Replace bloated inventory panel contents with compact Adventure Gear Hub!
+        // Replace bloated inventory panel contents with compact Adventure Inventory Hub + dedicated inline Trade & Chat panel!
         const invList = document.getElementById('inventory-list');
         if (invList) {
             const invPanel = invList.closest('.panel');
             if (invPanel && !document.getElementById('rpg-hub-mount')) {
                 invPanel.innerHTML = `<div id="rpg-hub-mount" class="rpg-hub-panel"></div>`;
+            }
+            if (invPanel && !document.getElementById('rpg-trade-panel')) {
+                const tradePanel = document.createElement('div');
+                tradePanel.id = 'rpg-trade-panel';
+                tradePanel.className = 'panel rpg-trade-inline-panel';
+                tradePanel.dataset.rpgCats = 'trade';
+                tradePanel.dataset.mobileCats = 'trade';
+                tradePanel.dataset.mobileOrder = '58';
+                tradePanel.innerHTML = `
+                    <div class="rpg-trade-inline-head">
+                        <span class="rpg-trade-inline-title">💬 PARTY TRADE &amp; LIVE CHAT</span>
+                        <span id="rpg-trade-inline-status-pill" class="rpg-status-dot offline">🟡 Offline Trade Codes</span>
+                    </div>
+                    <div id="rpg-trade-inline-body"></div>
+                `;
+                invPanel.insertAdjacentElement('afterend', tradePanel);
             }
         }
 
@@ -11587,6 +11606,15 @@
                 });
             }
 
+            // Restore inline Trade & Chat body whenever the popup Trade modal closes (keeps DOM IDs single-homed)
+            const tradeDlg = document.getElementById('rpg-trade-modal');
+            if (tradeDlg) {
+                tradeDlg.addEventListener('close', () => {
+                    renderTradeModal();
+                    renderHeaderBadges();
+                });
+            }
+
             // Modern Web Guidance Safari fallback for <dialog closedby="any">
             if (!('closedBy' in HTMLDialogElement.prototype)) {
                 const outside = (e, dialog) => {
@@ -11614,6 +11642,16 @@
         if (tradeBadge) {
             tradeBadge.textContent = alertCount > 0 ? String(alertCount) : '';
             tradeBadge.style.display = alertCount > 0 ? 'inline-flex' : 'none';
+        }
+        const tabTradeBadge = document.getElementById('rpg-tab-trade-badge');
+        if (tabTradeBadge) {
+            tabTradeBadge.textContent = alertCount > 0 ? String(alertCount) : '';
+            tabTradeBadge.style.display = alertCount > 0 ? 'inline-flex' : 'none';
+        }
+        const mobTradeBadge = document.getElementById('rpg-mob-trade-badge');
+        if (mobTradeBadge) {
+            mobTradeBadge.textContent = alertCount > 0 ? String(alertCount) : '';
+            mobTradeBadge.style.display = alertCount > 0 ? 'inline-flex' : 'none';
         }
         const fabDot = document.getElementById('rpg-fab-alert-dot');
         if (fabDot) fabDot.style.display = alertCount > 0 ? 'inline-block' : 'none';
@@ -11753,9 +11791,9 @@
 
         mount.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
-                <span style="font-family:'Cinzel',serif; font-size:0.84rem; font-weight:700; color:var(--accent-gold, #f59e0b); letter-spacing:0.4px;">🎒 ADVENTURE GEAR, EQUIPMENT &amp; TRADES</span>
+                <span style="font-family:'Cinzel',serif; font-size:0.84rem; font-weight:700; color:var(--accent-gold, #f59e0b); letter-spacing:0.4px;">🎒 ADVENTURE INVENTORY &amp; EQUIPMENT</span>
                 <span style="font-size:0.68rem; color:var(--text-dim, #94a3b8);">
-                    ✨ Attuned: <strong style="color:#d8b4fe;">${bonuses.attunedCount}/3</strong> • ${firebaseReady ? '<span style="color:#4ade80;">🟢 Live Table Sync</span>' : '<span style="color:#fbbf24;">📲 Trade Codes Ready</span>'}
+                    ✨ Attuned: <strong style="color:#d8b4fe;">${bonuses.attunedCount}/3</strong> • ${firebaseReady ? '<span style="color:#4ade80;">🟢 Live Table Sync</span>' : '<span style="color:#fbbf24;">📲 Offline Ready</span>'}
                 </span>
             </div>
 
@@ -11782,14 +11820,6 @@
                         <span class="rpg-badge-count ${craftReady > 0 ? 'pulse-alert' : ''}">${craftReady} ready</span>
                     </div>
                     <span class="rpg-hub-tile-sub">Brew potions &amp; bandages</span>
-                </button>
-
-                <button type="button" class="rpg-hub-tile tile-trade" onclick="COS_RPG.openTradeModal(${pendingCnt > 0 ? "'inbox'" : (getTotalUnreadMessages() > 0 ? "'messages'" : "'send'")})">
-                    <div class="rpg-hub-tile-top">
-                        <span>🤝 Trade &amp; Chat</span>
-                        <span class="rpg-badge-count ${(pendingCnt + getTotalUnreadMessages()) > 0 ? 'pulse-alert' : ''}">${pendingCnt > 0 ? pendingCnt + ' drop' : (getTotalUnreadMessages() > 0 ? getTotalUnreadMessages() + ' msg' : 'Open')}</span>
-                    </div>
-                    <span class="rpg-hub-tile-sub">Trade items, gold &amp; private whispers</span>
                 </button>
             </div>
 
@@ -13142,14 +13172,38 @@
         }
     }
 
+    function isTradeInlineVisible() {
+        const p = document.getElementById('rpg-trade-panel');
+        if (!p) return false;
+        return !p.classList.contains('rpg-tab-hidden') && !p.classList.contains('rpg-mobile-tab-hidden');
+    }
+
+    function isTradeViewActive() {
+        const m = document.getElementById('rpg-trade-modal');
+        return Boolean((m && m.open) || isTradeInlineVisible());
+    }
+
     function renderTradeModal() {
-        const body = document.getElementById('rpg-trade-body');
+        const modalEl = document.getElementById('rpg-trade-modal');
+        const modalOpen = Boolean(modalEl && modalEl.open);
+        const modalBody = document.getElementById('rpg-trade-body');
+        const inlineBody = document.getElementById('rpg-trade-inline-body');
+        const body = modalOpen ? modalBody : (inlineBody || modalBody);
         const pill = document.getElementById('rpg-trade-status-pill');
+        const inlinePill = document.getElementById('rpg-trade-inline-status-pill');
         if (!body) return;
 
-        if (pill) {
-            pill.className = `rpg-status-dot ${firebaseReady ? 'online' : 'offline'}`;
-            pill.innerText = firebaseReady ? '🟢 Live Firestore Sync' : '🟡 Offline Trade Codes';
+        [pill, inlinePill].forEach(pEl => {
+            if (!pEl) return;
+            pEl.className = `rpg-status-dot ${firebaseReady ? 'online' : 'offline'}`;
+            pEl.innerText = firebaseReady ? '🟢 Live Table Sync' : '🟡 Offline Trade Codes';
+        });
+
+        // Keep interactive form/input IDs strictly single-homed across modal vs inline tab panel
+        if (modalOpen && inlineBody) {
+            inlineBody.innerHTML = `<div style="font-size:0.75rem; color:var(--text-dim, #94a3b8); padding:10px 4px;">Trade &amp; Chat is currently open in the popup window.</div>`;
+        } else if (!modalOpen && modalBody && inlineBody) {
+            modalBody.innerHTML = '';
         }
 
         const others = PARTY_MEMBERS.filter(m => m.id !== adapter.heroId);
@@ -13286,7 +13340,7 @@
         `;
 
         if (tradeActiveTab === 'messages') {
-            ensureDefaultMsgSelection(true);
+            ensureDefaultMsgSelection(isTradeViewActive());
         }
         const unreadTotal = getTotalUnreadMessages();
         const msgPeers = PARTY_MEMBERS.filter(m => m.id !== adapter.heroId).map(m => ({
@@ -13398,7 +13452,7 @@
             </div>
             ${tradeActiveTab === 'send' ? sendTabHtml : (tradeActiveTab === 'messages' ? messagesTabHtml : inboxTabHtml)}
         `;
-        if (tradeActiveTab === 'messages') {
+        if (tradeActiveTab === 'messages' && isTradeViewActive()) {
             scrollMsgLogToBottom(false);
         }
     }
@@ -13430,9 +13484,10 @@
     function openTradeModal(tab = 'send') {
         tradeActiveTab = tab;
         lastGeneratedCode = '';
-        renderTradeModal();
         const m = document.getElementById('rpg-trade-modal');
         if (m && !m.open) m.showModal();
+        renderTradeModal();
+        renderHeaderBadges();
     }
 
     function openSendForItem(invIdx) {
@@ -13560,6 +13615,18 @@
         return `cos_rpg_hud_${adapter ? adapter.heroId : 'hero'}_v1`;
     }
 
+    function normalizeRightTabId(tabId) {
+        if (tabId === 'magic') return 'combat';
+        if (tabId === 'gear') return 'inventory';
+        return ['combat', 'inventory', 'trade', 'all'].includes(tabId) ? tabId : 'combat';
+    }
+
+    function normalizeMobileTabId(tabId) {
+        if (tabId === 'magic') return 'combat';
+        if (tabId === 'gear') return 'inventory';
+        return ['combat', 'checks', 'inventory', 'trade', 'notes', 'all'].includes(tabId) ? tabId : 'combat';
+    }
+
     function loadHudState() {
         try {
             const raw = localStorage.getItem(getHudStorageKey());
@@ -13583,10 +13650,8 @@
                 };
             }
             hudState.advLocked = Boolean(p.advLocked);
-            const rawRightTab = (p.tabPrefV3 && typeof p.rightTab === 'string') ? (p.rightTab === 'magic' ? 'combat' : p.rightTab) : 'combat';
-            hudState.rightTab = ['combat', 'gear', 'all'].includes(rawRightTab) ? rawRightTab : 'combat';
-            const rawMobTab = (typeof p.mobileTab === 'string') ? (p.mobileTab === 'magic' ? 'combat' : p.mobileTab) : 'combat';
-            hudState.mobileTab = ['combat', 'checks', 'gear', 'notes', 'all'].includes(rawMobTab) ? rawMobTab : 'combat';
+            hudState.rightTab = (p.tabPrefV3 && typeof p.rightTab === 'string') ? normalizeRightTabId(p.rightTab) : 'combat';
+            hudState.mobileTab = (typeof p.mobileTab === 'string') ? normalizeMobileTabId(p.mobileTab) : 'combat';
             hudState.tabPrefV3 = true;
             hudState.skillsTrainedOnly = Boolean(p.skillsTrainedOnly);
             hudState.showPartyHud = Boolean(p.showPartyHud);
@@ -13974,7 +14039,7 @@
                     el.dataset.mobileCats = 'combat checks';
                     el.dataset.mobileOrder = '25';
                 } else if (el.classList.contains('rpg-gold-panel')) {
-                    el.dataset.mobileCats = 'gear';
+                    el.dataset.mobileCats = 'inventory';
                     el.dataset.mobileOrder = '55';
                 } else if (el.id === 'player-notes-panel' || el.classList.contains('notes-panel')) {
                     el.dataset.mobileCats = 'notes';
@@ -13993,9 +14058,15 @@
         const panels = Array.from(rightCol.children).filter(el => el.classList && el.classList.contains('panel'));
         panels.forEach((p, idx) => {
             if (p.querySelector('#rpg-hub-mount')) {
-                p.dataset.rpgCats = 'gear';
-                p.dataset.mobileCats = 'gear';
+                p.dataset.rpgCats = 'inventory';
+                p.dataset.mobileCats = 'inventory';
                 p.dataset.mobileOrder = '50';
+                return;
+            }
+            if (p.id === 'rpg-trade-panel' || p.querySelector('#rpg-trade-inline-body')) {
+                p.dataset.rpgCats = 'trade';
+                p.dataset.mobileCats = 'trade';
+                p.dataset.mobileOrder = '58';
                 return;
             }
             const titleTxt = (p.querySelector('.panel-title')?.innerText || '').toLowerCase();
@@ -14026,9 +14097,18 @@
         return false;
     }
 
+    function activateInlineTradeTabIfNeeded(tabId) {
+        if (tabId !== 'trade' && tabId !== 'all') return;
+        if (tabId === 'trade') {
+            if (incomingTrades.length > 0) tradeActiveTab = 'inbox';
+            else if (getTotalUnreadMessages() > 0) tradeActiveTab = 'messages';
+        }
+        renderTradeModal();
+        renderHeaderBadges();
+    }
+
     function setRightColumnTab(tabId) {
-        const normalized = (tabId === 'magic') ? 'combat' : (tabId || 'all');
-        hudState.rightTab = ['combat', 'gear', 'all'].includes(normalized) ? normalized : 'combat';
+        hudState.rightTab = normalizeRightTabId(tabId || 'all');
         saveHudState();
         classifyRightColumnPanels();
         const unifiedMode = isUnifiedTabMode();
@@ -14040,7 +14120,7 @@
                     el.classList.remove('rpg-tab-hidden');
                     return;
                 }
-                const cats = (el.dataset.rpgCats || 'combat gear').split(/\s+/);
+                const cats = (el.dataset.rpgCats || 'combat inventory trade').split(/\s+/);
                 const show = (hudState.rightTab === 'all') || cats.includes(hudState.rightTab);
                 el.classList.toggle('rpg-tab-hidden', !show);
             });
@@ -14053,6 +14133,8 @@
         }
         if (unifiedMode) {
             applyMobileTabLayout();
+        } else {
+            activateInlineTradeTabIfNeeded(hudState.rightTab);
         }
     }
 
@@ -14061,7 +14143,7 @@
         const vm = document.documentElement.getAttribute('data-view-mode') || 'pc';
         const isPortraitTablet = (vm === 'tablet' && document.documentElement.getAttribute('data-tablet-orient') !== 'landscape');
         const unifiedMode = isUnifiedTabMode();
-        const mobTab = (hudState.mobileTab === 'magic' || !hudState.mobileTab) ? 'combat' : hudState.mobileTab;
+        const mobTab = normalizeMobileTabId(hudState.mobileTab || 'combat');
 
         // Clear desktop right-tab hiding when in Mobile / Portrait-Tablet mode; clear mobile-tab hiding when in PC / Landscape-Tablet mode
         document.querySelectorAll('.main-layout [data-mobile-cats]').forEach(el => {
@@ -14085,7 +14167,7 @@
             if (rightCol) {
                 Array.from(rightCol.children).forEach(el => {
                     if (!el.classList || !el.classList.contains('panel')) return;
-                    const cats = (el.dataset.rpgCats || 'combat gear').split(/\s+/);
+                    const cats = (el.dataset.rpgCats || 'combat inventory trade').split(/\s+/);
                     const show = (hudState.rightTab === 'all') || cats.includes(hudState.rightTab);
                     el.classList.toggle('rpg-tab-hidden', !show);
                 });
@@ -14102,12 +14184,13 @@
                 }
             });
         }
+        if (unifiedMode) {
+            activateInlineTradeTabIfNeeded(mobTab);
+        }
     }
 
     function setMobileTab(tabId) {
-        const normalized = (tabId === 'magic') ? 'combat' : tabId;
-        const valid = ['combat', 'checks', 'gear', 'notes', 'all'];
-        hudState.mobileTab = valid.includes(normalized) ? normalized : 'combat';
+        hudState.mobileTab = normalizeMobileTabId(tabId);
         saveHudState();
         applyMobileTabLayout();
     }
@@ -16245,7 +16328,8 @@
             tabs.setAttribute('aria-label', 'Sheet View Filter');
             tabs.innerHTML = `
                 <button type="button" class="rpg-view-tab" data-tab="combat" aria-pressed="true" onclick="COS_RPG.setRightColumnTab('combat')">⚔️ Combat &amp; Magic</button>
-                <button type="button" class="rpg-view-tab" data-tab="gear" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('gear')">🎒 Gear &amp; Bag</button>
+                <button type="button" class="rpg-view-tab" data-tab="inventory" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('inventory')">🎒 Inventory</button>
+                <button type="button" class="rpg-view-tab" data-tab="trade" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('trade')">💬 Trade &amp; Chat <span id="rpg-tab-trade-badge" class="rpg-tab-alert-badge" style="display:none;"></span></button>
                 <button type="button" class="rpg-view-tab" data-tab="all" aria-pressed="false" onclick="COS_RPG.setRightColumnTab('all')">📋 All</button>
             `;
             const mobTabs = document.createElement('div');
@@ -16263,9 +16347,14 @@
                     <span class="mob-tab-ico" aria-hidden="true">🎯</span>
                     <span class="mob-tab-lbl">Checks</span>
                 </button>
-                <button type="button" class="rpg-mobile-tab" data-mob-tab="gear" aria-pressed="false" onclick="COS_RPG.setMobileTab('gear')">
+                <button type="button" class="rpg-mobile-tab" data-mob-tab="inventory" aria-pressed="false" onclick="COS_RPG.setMobileTab('inventory')">
                     <span class="mob-tab-ico" aria-hidden="true">🎒</span>
-                    <span class="mob-tab-lbl">Gear</span>
+                    <span class="mob-tab-lbl">Inventory</span>
+                </button>
+                <button type="button" class="rpg-mobile-tab" data-mob-tab="trade" aria-pressed="false" onclick="COS_RPG.setMobileTab('trade')">
+                    <span class="mob-tab-ico" aria-hidden="true">💬</span>
+                    <span class="mob-tab-lbl">Trade &amp; Chat</span>
+                    <span id="rpg-mob-trade-badge" class="rpg-tab-alert-badge" style="display:none;"></span>
                 </button>
                 <button type="button" class="rpg-mobile-tab" data-mob-tab="notes" aria-pressed="false" onclick="COS_RPG.setMobileTab('notes')">
                     <span class="mob-tab-ico" aria-hidden="true">📓</span>
@@ -16502,6 +16591,8 @@
         setRightColumnTab(hudState.rightTab || 'all');
         applyMobileTabLayout();
         renderHubPanel();
+        renderTradeModal();
+        renderHeaderBadges();
         applySkillsFilter();
         // Initialize HP baseline silently before first diff so boot doesn't spawn a fake float
         prevTrackedHp = parseCurrentVitalsFromDom();
