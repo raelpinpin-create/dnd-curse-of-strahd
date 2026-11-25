@@ -2589,7 +2589,7 @@
     // ==========================================
     // 🎲 SPELL EXECUTION & CHAOS BOLT ENGINE
     // ==========================================
-    function rollChaosBoltScaled(slotLevel) {
+    function rollChaosBoltScaled(slotLevel, forceCrit = false) {
         const lvl = slotLevel || 1;
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
             const parts = [
@@ -2601,8 +2601,11 @@
                 label: `🌈 Chaos Bolt (Level ${lvl} Slot)`,
                 diceParts: parts,
                 dmgType: 'Elemental',
+                isCrit: Boolean(forceCrit),
+                allowOnHitAddons: false,
                 htmlNote: `<strong>d8 Element Chart:</strong> 1=Acid • 2=Cold • 3=Fire • 4=Force • 5=Lightning • 6=Poison • 7=Psychic • 8=Thunder.<br><span style="color:#fde68a;">⚡ If both d8s match, CHAOS LEAP triggers to a 2nd target within 30 ft!</span>`,
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl))
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl, false)),
+                onDigitalCritRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl, true))
             });
             return;
         }
@@ -2616,7 +2619,8 @@
             d6Rolls.push(r);
             d6Sum += r;
         }
-        const totalDmg = d8_1 + d8_2 + d6Sum;
+        const critBaseMax = forceCrit ? (16 + extraD6Count * 6) : 0;
+        const totalDmg = critBaseMax + d8_1 + d8_2 + d6Sum;
 
         const dmgTypes = {
             1: "🧪 Acid", 2: "❄️ Cold", 3: "🔥 Fire", 4: "✨ Force",
@@ -2634,12 +2638,13 @@
         let grandTotal = totalDmg;
         if (activeRobe === 'red') {
             const robeD4 = Math.floor(Math.random() * 4) + 1;
-            const robeFire = robeD4 + 1;
+            const robeFire = (forceCrit ? 4 : 0) + robeD4 + 1;
             grandTotal += robeFire;
-            redRobeStr = ` + 🔥 Red Robe [1d4(${robeD4})+1 = <strong>+${robeFire} Fire</strong>] ➔ Total: <span style="font-size:1.12rem; color:#fb923c; font-weight:800;">${grandTotal}</span>`;
+            redRobeStr = ` + 🔥 Red Robe [${forceCrit ? '4 Max + ' : ''}1d4(${robeD4})+1 = <strong>+${robeFire} Fire</strong>] ➔ Total: <span style="font-size:1.12rem; color:#fb923c; font-weight:800;">${grandTotal}</span>`;
         }
 
-        logRoll(`🌈 <strong>Chaos Bolt (Level ${lvl} Slot):</strong> d8s [${d8_1}, ${d8_2}] + ${extraD6Count}d6 [${d6Rolls.join('+')}] = <span style="font-size:1.1rem; color:#f472b6; font-weight:800;">${totalDmg}</span> Damage (Type: <strong>${typeChoiceStr}</strong>)${redRobeStr}!${leapAlert}`);
+        const critHead = forceCrit ? `<strong style="color:#facc15;">🔥 BRUTAL CRIT — </strong>Max(${critBaseMax}) + ` : '';
+        logRoll(`🌈 ${critHead}<strong>Chaos Bolt (Level ${lvl} Slot):</strong> d8s [${d8_1}, ${d8_2}] + ${extraD6Count}d6 [${d6Rolls.join('+')}] = <span style="font-size:1.1rem; color:#f472b6; font-weight:800;">${totalDmg}</span> Damage (Type: <strong>${typeChoiceStr}</strong>)${redRobeStr}!${leapAlert}`);
     }
 
     function activateMageArmorSpell(slotLevel) {

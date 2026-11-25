@@ -2118,6 +2118,9 @@
         const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.join(' &bull; ')})</small>` : '';
         const critHead = isCrit ? `<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — </strong>` : '';
         const valColor = isSilv ? '#e2e8f0' : accentColor;
+        if (window.COS_RPG && COS_RPG.setLastDamageContext) {
+            COS_RPG.setLastDamageContext({ total, isCrit, label: weaponLabel, allowOnHitAddons: !slayersPreyActive });
+        }
         logRoll(`${critHead}<strong>${weaponLabel} Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:${valColor}; font-weight:800;">${total} ${dmgLabel}</span>!${noteHtml}`);
     }
 
@@ -2588,18 +2591,26 @@
         }
     }
 
-    function rollSlayerDieOnly() {
+    function rollSlayerDieOnly(isCrit = false, baseDmgTotal = null) {
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
             COS_RPG.logManualDamage({
-                label: "Slayer's Prey Extra Die",
+                label: "🎯 Slayer's Prey Extra Die",
                 diceParts: [{ expr: '1d6', type: 'Extra Weapon Damage' }],
                 dmgType: 'Extra Damage',
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollSlayerDieOnly())
+                isCrit: Boolean(isCrit),
+                allowOnHitAddons: false,
+                notes: typeof baseDmgTotal === 'number' ? `Add to your ${baseDmgTotal} weapon damage!` : "First hit each turn against your marked Slayer's Prey target!",
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollSlayerDieOnly(false, baseDmgTotal)),
+                onDigitalCritRoll: () => COS_RPG.runManualDigitalFallback(() => rollSlayerDieOnly(true, baseDmgTotal))
             });
             return;
         }
         const d6 = Math.floor(Math.random() * 6) + 1;
-        logRoll(`🎯 <strong>Slayer's Prey Extra Die:</strong> [1d6: <strong>${d6}</strong>] = <span style="font-size:1.15rem; color:#f87171; font-weight:800;">+${d6} Extra Damage</span>!`);
+        const bonus = isCrit ? (6 + d6) : d6;
+        const combinedHtml = typeof baseDmgTotal === 'number'
+            ? ` ➔ <strong style="color:#fde68a; font-size:1.1rem;">Combined Total: ${baseDmgTotal + bonus} Damage!</strong>`
+            : '';
+        logRoll(`🎯 <strong>${isCrit ? '🔥 BRUTAL CRIT — ' : ''}Slayer's Prey Extra Die:</strong> ${isCrit ? `Max(6) + 1d6[<strong>${d6}</strong>]` : `[1d6: <strong>${d6}</strong>]`} = <span style="font-size:1.15rem; color:#f87171; font-weight:800;">+${bonus} Extra Damage</span>!${combinedHtml}`);
     }
 
     // ==========================================
@@ -4950,6 +4961,14 @@
                 },
                 log: logRoll,
                 openItemModal: openItemDetailsModal,
+                getOnHitAddons: ({ isCrit, lastDamageTotal }) => {
+                    if (slayersPreyActive) return [];
+                    return [{
+                        label: isCrit ? "🎯🔥 +Crit Slayer's Prey (6+1d6)" : "🎯 +Slayer's Prey (+1d6)",
+                        cls: isCrit ? 'btn-crit' : 'btn-help',
+                        onClick: () => rollSlayerDieOnly(Boolean(isCrit), typeof lastDamageTotal === 'number' ? lastDamageTotal : null)
+                    }];
+                },
                 captureSheetState: () => ({
                     curHP,
                     maxHP,

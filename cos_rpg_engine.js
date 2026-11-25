@@ -7354,6 +7354,65 @@
         };
     }
 
+    function getEquippedMeleeWeapons() {
+        if (!adapter) return [];
+        const eq = getEquippedState();
+        const nativeSet = new Set((adapter && adapter.nativeWeaponTags) || []);
+        const results = [];
+        const seenKeys = new Set();
+
+        ['mainHand', 'offHand'].forEach(slotId => {
+            const itemKey = eq[slotId];
+            if (!itemKey || seenKeys.has(itemKey)) return;
+            const raw = findInventoryRawByKey(itemKey);
+            if (!raw) return;
+            const meta = getItemMeta(raw);
+            if (meta.isShield || meta.category !== 'weapon') return;
+            if (meta.ammoKind) return; // Skip pure ranged ammo weapons (bows/crossbows/firearms) for melee Riposte
+
+            seenKeys.add(itemKey);
+            const weaponId = (meta.weaponTag && nativeSet.has(meta.weaponTag)) ? meta.weaponTag : normKey(raw);
+            const is2H = slotId === 'mainHand' && (meta.hands === 2 || (meta.versatile && eq._grip === '2h'));
+            const st = resolveWeaponCombatStats(raw, meta, is2H);
+            const wCombat = getWeaponCombatMods(weaponId);
+            const isSilvered = Boolean(wCombat.isSilvered || String(st.dmgType || '').toLowerCase().includes('silver') || /silver/i.test(raw));
+            const effDmgType = (isSilvered && !String(st.dmgType || '').toLowerCase().includes('silver'))
+                ? `Silvered ${st.dmgType}`
+                : (st.dmgType || 'Slashing');
+            const extras = [];
+            if (st.extraDice) extras.push({ dice: st.extraDice, type: st.extraType || 'Bonus' });
+            (wCombat.extras || []).forEach(ex => {
+                if (ex && ex.dice) extras.push({ dice: ex.dice, type: ex.type || 'Mod' });
+            });
+            const gripTag = meta.versatile ? (is2H ? '2H' : '1H') : (meta.hands === 2 ? '2H' : '1H');
+
+            results.push({
+                slot: slotId,
+                raw,
+                name: shortLabel(raw),
+                weaponId,
+                is2H,
+                gripTag,
+                versatile: Boolean(meta.versatile),
+                atkBonus: (st.atkBonus || 0) + (wCombat.atkBonus || 0),
+                dmgDice: st.dmgDice || '1d8',
+                flatMod: (st.dmgBonus || 0) + (wCombat.dmgBonus || 0),
+                abilityMod: st.abilityMod || 0,
+                dmgType: effDmgType,
+                extras,
+                isSilvered,
+                isMagical: Boolean(wCombat.isMagical || (st.magicBonus && st.magicBonus > 0)),
+                mastery: st.mastery || '',
+                toppleDc: st.toppleDc || 13,
+                saveNotes: Array.isArray(wCombat.saveNotes) ? [...wCombat.saveNotes] : [],
+                modBadge: wCombat.mod ? wCombat.mod.badge : '',
+                coatingLabel: wCombat.coating ? wCombat.coating.label : ''
+            });
+        });
+
+        return results;
+    }
+
     function rollDiceExpr(expr) {
         const m = String(expr || '1d6').trim().match(/^(\d+)d(\d+)$/i);
         if (!m) return { count: 1, sides: 6, rolls: [1], sum: 1, max: 6 };
@@ -7435,6 +7494,7 @@
                     critTotal += exR.max + exR.sum;
                     extraHtml += ` + ${exR.max}+[${exR.rolls.join('+')}](${esc(exM.type)})`;
                 });
+                setLastDamageContext({ total: critTotal, isCrit: true, label: name, allowOnHitAddons: true });
                 adapter.log(`<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(name)}!</strong> d20[<strong>20</strong>]${modeNote} + ${effAtkBonus} = <strong>${total} to Hit</strong>!${ammoTag}${modBadgeTag}${coatBadgeTag} Brutal Crit Damage: ${base.max} (Max) + [${base.rolls.join('+')}] + ${effDmgBonus}${extraHtml} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${critTotal} ${esc(effDmgType)} Damage</span>!${masteryRiderHtml}`);
                 return;
             }
@@ -7594,6 +7654,7 @@
         });
         const noteHtml = notes.length ? ` <small style="color:#cbd5e1;">(${notes.map(esc).join(' &bull; ')})</small>` : '';
         const headPrefix = forceCrit ? `<strong style="color:#facc15;">🔥 BRUTAL CRIT — ${esc(shortLabel(raw))}${gripTag}:</strong> ` : `<strong>${esc(shortLabel(raw))}${gripTag} Damage:</strong> `;
+        setLastDamageContext({ total, isCrit: Boolean(forceCrit), label: `${shortLabel(raw)}${gripTag}`, allowOnHitAddons: true });
         adapter.log(`${headPrefix}${breakdown} = <span style="color:#f87171; font-size:1.12rem; font-weight:800;">${total} ${esc(effDmgType)} Damage</span>!${noteHtml}`);
     }
 
@@ -14971,6 +15032,10 @@
             });
         }
         (opts.extraButtons || []).forEach(b => actionBtns.push(b));
+        if ((typeof hitFn === 'function' || typeof critFn === 'function') && !opts.suppressOnHitAddons && adapter && typeof adapter.getOnHitAddons === 'function') {
+            const addons = adapter.getOnHitAddons({ phase: 'attack', isCrit: false, isManual: true, label }) || [];
+            addons.forEach(a => actionBtns.push(a));
+        }
         if (typeof window.rollHelpToken === 'function' && !opts.hideHelpBtn) {
             const helpEl = typeof document !== 'undefined' ? document.getElementById('help-tokens-disp') : null;
             const helpRem = helpEl ? parseInt(helpEl.innerText, 10) : 0;
@@ -15024,6 +15089,86 @@
         if (adapter && adapter.log) adapter.log(html);
     }
 
+    let pendingDamageAddons = null;
+
+    function setLastDamageContext(ctx) {
+        pendingDamageAddons = ctx ? { ...ctx, ts: Date.now() } : null;
+    }
+
+    function rollDigitalDamageFromManualSpec(opts = {}, forceCrit = false) {
+        const label = String(opts.label || 'Damage');
+        const diceParts = Array.isArray(opts.diceParts) ? opts.diceParts : [];
+        const flatMod = parseInt(opts.flatMod, 10) || 0;
+        const dmgType = String(opts.dmgType || '').trim();
+        const isCrit = Boolean(forceCrit);
+        const isSavage = Boolean(opts.isSavage);
+
+        let total = flatMod;
+        let extraFlatSum = 0;
+        const chunks = [];
+
+        diceParts.forEach((part, idx) => {
+            if (!part) return;
+            const rawExpr = typeof part === 'string' ? part : part.expr;
+            const parsed = parseManualDicePart(rawExpr);
+            const subLbl = (typeof part === 'object' && (part.label || part.type)) ? String(part.label || part.type) : '';
+            if (parsed.count > 0) {
+                extraFlatSum += parsed.flat;
+                const rollSet = () => {
+                    const arr = [];
+                    let s = 0;
+                    for (let i = 0; i < parsed.count; i++) {
+                        const r = Math.floor(Math.random() * parsed.sides) + 1;
+                        arr.push(r);
+                        s += r;
+                    }
+                    return { arr, sum: s };
+                };
+                let rolled = rollSet();
+                let savageTag = '';
+                if (isSavage && idx === 0) {
+                    const set2 = rollSet();
+                    if (set2.sum > rolled.sum) {
+                        savageTag = ` <em>(Savage: [${rolled.arr.join('+')}] vs <strong>[${set2.arr.join('+')}]</strong>)</em>`;
+                        rolled = set2;
+                    } else {
+                        savageTag = ` <em>(Savage: <strong>[${rolled.arr.join('+')}]</strong> vs [${set2.arr.join('+')}])</em>`;
+                    }
+                }
+                const partTotal = (isCrit ? parsed.max : 0) + rolled.sum + parsed.flat;
+                total += (isCrit ? parsed.max : 0) + rolled.sum + parsed.flat;
+                const typeHint = (subLbl && subLbl.toLowerCase() !== dmgType.toLowerCase()) ? ` ${esc(subLbl)}` : '';
+                const flatInline = parsed.flat > 0 ? `+${parsed.flat}` : (parsed.flat < 0 ? `${parsed.flat}` : '');
+                if (isCrit) {
+                    chunks.push(`<span style="color:#fde68a;">Max(${parsed.max})</span> + ${esc(parsed.expr)}[<strong>${rolled.arr.join('+')}</strong>]${savageTag}${flatInline}${typeHint}`);
+                } else {
+                    chunks.push(`${esc(parsed.expr)}[<strong>${rolled.arr.join('+')}</strong>]${savageTag}${flatInline}${typeHint}`);
+                }
+            }
+        });
+
+        const modStr = flatMod > 0 ? ` + ${flatMod}` : (flatMod < 0 ? ` - ${Math.abs(flatMod)}` : '');
+        const cueBits = (opts.extraCues || []).map(c => c && c.text ? `<span style="color:#fde68a; font-weight:700;">${esc(c.text)}</span>` : '').filter(Boolean);
+        const noteBits = [];
+        if (opts.notes) noteBits.push(esc(opts.notes));
+        if (opts.htmlNote) noteBits.push(opts.htmlNote);
+        const detailTail = (cueBits.length || noteBits.length)
+            ? `<br><small style="color:#cbd5e1;">${[...cueBits, ...noteBits].join(' • ')}</small>`
+            : '';
+
+        if (opts.allowOnHitAddons !== false) {
+            setLastDamageContext({ total, isCrit, label, allowOnHitAddons: true });
+        }
+
+        const header = isCrit
+            ? `🔥 <strong style="color:#facc15;">NAT 20 BRUTAL CRIT — ${esc(label)}!</strong>`
+            : `💥 <strong>${esc(label)}:</strong>`;
+        const dmgSuffix = dmgType ? ` ${esc(dmgType)}` : '';
+        const msg = `${header} ${chunks.join(' + ')}${modStr} = <span style="font-size:1.15rem; color:#f87171; font-weight:900;">${total}${dmgSuffix} Damage</span>!${detailTail}`;
+        if (adapter && adapter.log) adapter.log(msg);
+        return total;
+    }
+
     function logManualDamage(opts = {}) {
         const label = String(opts.label || 'Damage');
         const diceParts = Array.isArray(opts.diceParts) ? opts.diceParts : [];
@@ -15068,11 +15213,25 @@
                 onClick: () => logManualDamage({ ...opts, isCrit: true })
             });
         }
-        if (typeof opts.onDigitalRoll === 'function') {
+        if (opts.allowOnHitAddons !== false && adapter && typeof adapter.getOnHitAddons === 'function') {
+            const addons = adapter.getOnHitAddons({ phase: 'damage', isCrit, isManual: true, label }) || [];
+            addons.forEach(a => actionBtns.push(a));
+        }
+
+        // Universal Crit-Accurate "Roll for Me": when isCrit is true, ALWAYS roll Brutal Crit math!
+        const digitalHandler = isCrit
+            ? (typeof opts.onDigitalCritRoll === 'function'
+                ? () => runManualDigitalFallback(opts.onDigitalCritRoll)
+                : (diceParts.length > 0 ? () => runManualDigitalFallback(() => rollDigitalDamageFromManualSpec(opts, true)) : null))
+            : (typeof opts.onDigitalRoll === 'function'
+                ? () => runManualDigitalFallback(opts.onDigitalRoll)
+                : (diceParts.length > 0 ? () => runManualDigitalFallback(() => rollDigitalDamageFromManualSpec(opts, false)) : null));
+
+        if (typeof digitalHandler === 'function') {
             actionBtns.push({
-                label: '💻 Roll for Me',
+                label: isCrit ? '💻 Roll Crit for Me' : '💻 Roll for Me',
                 cls: 'btn-escape',
-                onClick: opts.onDigitalRoll
+                onClick: digitalHandler
             });
         }
 
@@ -15218,7 +15377,9 @@
                 dmgType: opts.dmgType || '',
                 isCrit: true,
                 isSavage: Boolean(opts.isSavage),
-                onDigitalRoll: () => runManualDigitalFallback(() => rollBrutalCrit(opts))
+                notes: opts.notes || '',
+                allowOnHitAddons: opts.allowOnHitAddons !== false,
+                onDigitalCritRoll: () => runManualDigitalFallback(() => rollBrutalCrit(opts))
             });
             return;
         }
@@ -15253,6 +15414,9 @@
         });
         const modStr = flatMod > 0 ? ` + ${flatMod}` : (flatMod < 0 ? ` - ${Math.abs(flatMod)}` : '');
         const msg = `🔥 <strong style="color:#facc15;">BRUTAL CRIT — ${esc(opts.label || 'Attack')}!</strong> Max(<strong>${maxBase}</strong>) + Roll([<strong>${rolled.arr.join('+')}</strong>])${savageNote}${modStr}${extraHtml} = <span style="font-size:1.18rem; color:#f87171; font-weight:900;">${total} ${esc(opts.dmgType || '')} Damage!</span>`;
+        if (opts.allowOnHitAddons !== false) {
+            setLastDamageContext({ total, isCrit: true, label: opts.label || 'Attack', allowOnHitAddons: true });
+        }
         if (adapter && adapter.log) adapter.log(msg);
     }
 
@@ -15652,12 +15816,48 @@
                     const isNat20 = /NAT 20|CRITICAL/i.test(String(htmlMsg || ''));
                     const wrap = document.createElement('div');
                     wrap.className = 'rpg-hud-followup-wrap';
+                    let btnsHtml = '';
                     if (isNat20 && typeof f.onCrit === 'function') {
-                        wrap.innerHTML = `<button type="button" class="rpg-hud-crit-btn" onclick="COS_RPG.triggerRollFollowup(true)">${esc(f.critLabel || '🔥 ROLL BRUTAL CRIT!')}</button>`;
+                        btnsHtml += `<button type="button" class="rpg-hud-crit-btn" onclick="COS_RPG.triggerRollFollowup(true)">${esc(f.critLabel || '🔥 ROLL BRUTAL CRIT!')}</button>`;
                     } else if (typeof f.onDamage === 'function') {
-                        wrap.innerHTML = `<button type="button" class="rpg-hud-followup-btn" onclick="COS_RPG.triggerRollFollowup(false)">${esc(f.label || '💥 Roll Damage')}</button>`;
+                        btnsHtml += `<button type="button" class="rpg-hud-followup-btn" onclick="COS_RPG.triggerRollFollowup(false)">${esc(f.label || '💥 Roll Damage')}</button>`;
                     }
-                    if (wrap.innerHTML) hudBody.appendChild(wrap);
+                    if (!f.suppressOnHitAddons && adapter && typeof adapter.getOnHitAddons === 'function') {
+                        const addons = adapter.getOnHitAddons({ phase: 'attack', isCrit: isNat20, isManual: false, label: f.label || '' }) || [];
+                        addons.forEach(a => {
+                            if (!a || typeof a.onClick !== 'function') return;
+                            const aid = registerManualAction(a.onClick);
+                            const cls = a.cls ? `rpg-manual-btn ${a.cls}` : 'rpg-manual-btn';
+                            btnsHtml += ` <button type="button" class="${cls}" onclick="COS_RPG.runManualAction(${aid}, this)">${esc(a.label)}</button>`;
+                        });
+                    }
+                    if (btnsHtml) {
+                        wrap.innerHTML = btnsHtml;
+                        hudBody.appendChild(wrap);
+                    }
+                } else if (pendingDamageAddons && (Date.now() - pendingDamageAddons.ts < 350)) {
+                    const dCtx = pendingDamageAddons;
+                    pendingDamageAddons = null;
+                    if (dCtx.allowOnHitAddons !== false && adapter && typeof adapter.getOnHitAddons === 'function') {
+                        const addons = adapter.getOnHitAddons({
+                            phase: 'damage',
+                            isCrit: Boolean(dCtx.isCrit),
+                            lastDamageTotal: dCtx.total,
+                            label: dCtx.label || '',
+                            isManual: false
+                        }) || [];
+                        if (addons.length > 0) {
+                            const wrap = document.createElement('div');
+                            wrap.className = 'rpg-hud-followup-wrap';
+                            wrap.innerHTML = addons.map(a => {
+                                if (!a || typeof a.onClick !== 'function') return '';
+                                const aid = registerManualAction(a.onClick);
+                                const cls = a.cls ? `rpg-manual-btn ${a.cls}` : 'rpg-manual-btn';
+                                return `<button type="button" class="${cls}" onclick="COS_RPG.runManualAction(${aid}, this)">${esc(a.label)}</button>`;
+                            }).join('');
+                            if (wrap.innerHTML) hudBody.appendChild(wrap);
+                        }
+                    }
                 }
                 if (pendingConcAlert && (Date.now() - pendingConcAlert.ts < 350)) {
                     const info = pendingConcAlert;
@@ -17080,6 +17280,10 @@
         logManualDamage,
         logManualHeal,
         logManualSpell,
+        rollDigitalDamageFromManualSpec,
+        setLastDamageContext,
+        resolveWeaponCombatStats,
+        getEquippedMeleeWeapons,
         publishInitiativeRoll,
         submitManualInitForm,
         submitManualHealForm,

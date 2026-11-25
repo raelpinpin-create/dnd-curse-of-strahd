@@ -1719,6 +1719,7 @@
         const ex = rollJacomirExtraDice(wMods);
         const total = chosenSum + flatMod + ex.extraSum;
         const notes = wMods.saveNotes && wMods.saveNotes.length ? ` <small style="color:#fde68a;">(${wMods.saveNotes.join(' • ')})</small>` : '';
+        if (window.COS_RPG && COS_RPG.setLastDamageContext) COS_RPG.setLastDamageContext({ total, isCrit: false, label: 'Ancestral Greatsword', allowOnHitAddons: true });
         logRoll(`🗡️ <strong>Ancestral Greatsword Damage (Savage Attacker):</strong> Roll 1 [${r1a}+${r1b}=${sum1}] vs Roll 2 [${r2a}+${r2b}=${sum2}] ➔ Kept <strong>${chosenSum}</strong> + ${flatMod}${ex.extraText} = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} ${dmgType} Damage</span>!${notes}`);
     }
 
@@ -1753,6 +1754,7 @@
         const ex = rollJacomirExtraDice(wMods);
         const total = chosen + flatMod + ex.extraSum;
         const notes = wMods.saveNotes && wMods.saveNotes.length ? ` • ${wMods.saveNotes.join(' • ')}` : '';
+        if (window.COS_RPG && COS_RPG.setLastDamageContext) COS_RPG.setLastDamageContext({ total, isCrit: false, label: `Silvered Longsword (${twoHanded ? '2H' : '1H'})`, allowOnHitAddons: true });
         logRoll(`⚔️ <strong>Ismark's Silvered Longsword Damage (${grip} • Savage Attacker):</strong> Roll 1 [${d1}] vs Roll 2 [${d2}] ➔ Kept <strong>${chosen}</strong> + ${flatMod}${ex.extraText} = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} Silvered Slashing Damage</span>! <small style="color:#cbd5e1;">(Bypasses Undead/Werewolf Resistance • 🛡️ Sap: target has Disadvantage on next attack!${notes})</small>`);
     }
 
@@ -1784,6 +1786,7 @@
         const ex = rollJacomirExtraDice(wMods);
         const total = chosen + flatMod + ex.extraSum;
         const notes = wMods.saveNotes && wMods.saveNotes.length ? ` <small style="color:#fde68a;">(${wMods.saveNotes.join(' • ')})</small>` : '';
+        if (window.COS_RPG && COS_RPG.setLastDamageContext) COS_RPG.setLastDamageContext({ total, isCrit: false, label: 'Handaxe', allowOnHitAddons: true });
         logRoll(`🪓 <strong>Handaxe Damage (Savage Attacker • Vex):</strong> Roll 1 [${d1}] vs Roll 2 [${d2}] ➔ Kept <strong>${chosen}</strong> + ${flatMod}${ex.extraText} = <span style="font-size:1.08rem; color:#f87171; font-weight:800;">${total} ${dmgType} Damage</span>! <em>(🎯 Vex: You have Advantage on your next attack roll against this target before the end of your next turn!)</em>${notes}`);
     }
 
@@ -1860,23 +1863,104 @@
         }
     ];
 
+    function getJacomirEquippedRiposteWeapons() {
+        const list = (window.COS_RPG && typeof COS_RPG.getEquippedMeleeWeapons === 'function')
+            ? COS_RPG.getEquippedMeleeWeapons()
+            : [];
+        if (list.length > 0) return list;
+        const gsMods = getJacomirWpnMods('greatsword');
+        return [{
+            slot: 'mainHand',
+            name: 'Ancestral Greatsword',
+            weaponId: 'greatsword',
+            is2H: true,
+            gripTag: '2H',
+            versatile: false,
+            atkBonus: 5 + (gsMods.atkBonus || 0),
+            dmgDice: '2d6',
+            flatMod: 3 + (gsMods.dmgBonus || 0),
+            abilityMod: 3,
+            dmgType: gsMods.isSilvered ? 'Silvered Slashing' : 'Slashing',
+            extras: gsMods.extras || [],
+            isSilvered: Boolean(gsMods.isSilvered),
+            isMagical: Boolean(gsMods.isMagical),
+            mastery: 'Graze',
+            saveNotes: gsMods.saveNotes || []
+        }];
+    }
+
+    function formatRiposteShortName(wpn) {
+        const clean = String(wpn.name || 'Weapon').replace(/^[^\w"]+/, '').trim();
+        const grip = wpn.versatile ? ` (${wpn.gripTag})` : '';
+        if (clean.length <= 22) return `${clean}${grip}`;
+        return `${clean.split(/\s+/).slice(0, 3).join(' ')}${grip}`;
+    }
+
+    function formatRiposteFormula(wpn) {
+        const flatStr = wpn.flatMod > 0 ? `+${wpn.flatMod}` : (wpn.flatMod < 0 ? `${wpn.flatMod}` : '');
+        const exStr = (wpn.extras || []).map(x => `+${x.dice}`).join('');
+        return `${wpn.dmgDice}+1d8${flatStr}${exStr}`;
+    }
+
+    function getRiposteDynamicButtons() {
+        const equipped = getJacomirEquippedRiposteWeapons();
+        const btns = [];
+        equipped.forEach((wpn, idx) => {
+            const shortNm = formatRiposteShortName(wpn);
+            const atkStr = wpn.atkBonus >= 0 ? `+${wpn.atkBonus}` : `${wpn.atkBonus}`;
+            const formula = formatRiposteFormula(wpn);
+            btns.push({
+                label: `⚔️ Riposte: ${shortNm} (-1 d8 • ${atkStr} Hit)`,
+                class: 'btn-roll-action btn-roll-martial',
+                costDie: true,
+                slotKind: 'reaction',
+                onClick: () => execRiposteAttack(idx)
+            });
+            btns.push({
+                label: `💥 Dmg (${formula})`,
+                class: 'btn-roll-action btn-roll-dmg',
+                costDie: false,
+                slotKind: 'none',
+                onClick: () => execRiposteWeaponDamage(idx, false)
+            });
+        });
+        return btns;
+    }
+
     function renderManeuvers() {
         const container = document.getElementById('maneuvers-grid');
         if (!container) return;
         container.innerHTML = '';
+
+        const riposteEquipped = getJacomirEquippedRiposteWeapons();
+        const ripostePrimary = riposteEquipped[0];
+        const riposteAtkStr = ripostePrimary.atkBonus >= 0 ? `+${ripostePrimary.atkBonus}` : `${ripostePrimary.atkBonus}`;
 
         battleMasterManeuvers.forEach((m, mIdx) => {
             const card = document.createElement('div');
             card.className = 'action-card';
             if (m.id === 'maneuver_parry' || m.id === 'maneuver_riposte') card.dataset.turnKind = 'reaction';
 
+            const activeButtons = (m.id === 'maneuver_riposte') ? getRiposteDynamicButtons() : m.buttons;
+            if (m.id === 'maneuver_riposte') {
+                m.buttons = activeButtons;
+                m.attackMod = `${riposteAtkStr} Melee Attack with ${formatRiposteShortName(ripostePrimary)} (Equipped)`;
+                m.damage = riposteEquipped.map(w => `${formatRiposteShortName(w)} (${formatRiposteFormula(w)} ${w.dmgType})`).join(' or ');
+            }
+
             let btnsHtml = '';
-            m.buttons.forEach((b, bIdx) => {
-                const slotAttr = (m.id === 'maneuver_parry' || (m.id === 'maneuver_riposte' && bIdx === 0))
-                    ? ' data-rpg-turn-slot="reaction"'
-                    : ' data-rpg-turn-slot="none"';
-                btnsHtml += `<button class="${b.class}"${slotAttr} onclick="execManeuverButton(${mIdx}, ${bIdx})">${b.label}</button>`;
+            activeButtons.forEach((b, bIdx) => {
+                const slotAttr = b.slotKind
+                    ? ` data-rpg-turn-slot="${b.slotKind}"`
+                    : ((m.id === 'maneuver_parry' || (m.id === 'maneuver_riposte' && b.costDie))
+                        ? ' data-rpg-turn-slot="reaction"'
+                        : ' data-rpg-turn-slot="none"');
+                btnsHtml += `<button type="button" class="${b.class}"${slotAttr} onclick="execManeuverButton(${mIdx}, ${bIdx})">${b.label}</button>`;
             });
+
+            const descText = (m.id === 'maneuver_riposte')
+                ? `Reaction when a melee attack misses you: expend 1 Superiority Die to counter-strike with your equipped <strong>${formatRiposteShortName(ripostePrimary)}</strong> (${riposteAtkStr} Hit, ${formatRiposteFormula(ripostePrimary)} ${ripostePrimary.dmgType})!`
+                : m.desc;
 
             card.innerHTML = `
                 <div class="action-header">
@@ -1886,9 +1970,9 @@
                         </div>
                         <div style="font-size:0.67rem; font-weight:700; color:${m.tagColor}; margin-top:1px;">${m.tag}</div>
                     </div>
-                    <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;">${curSupDice}/4 D8</span>
+                    <span class="pill-badge pill-gold" style="font-size:0.62rem; padding:1px 6px;">${curSupDice}/${maxSupDice} D8</span>
                 </div>
-                <div class="action-desc">${m.desc}</div>
+                <div class="action-desc">${descText}</div>
                 <div class="action-btn-row">${btnsHtml}</div>
             `;
             container.appendChild(card);
@@ -1902,7 +1986,7 @@
 
         if (btn.costDie) {
             if (curSupDice <= 0) {
-                logRoll(`⚠️ <strong>0 Superiority Dice remaining!</strong> Take a Short or Long Rest (or click Refill) to restore your 4d8 pool.`);
+                logRoll(`⚠️ <strong>0 Superiority Dice remaining!</strong> Take a Short or Long Rest (or click Refill) to restore your ${maxSupDice}d8 pool.`);
                 return;
             }
             curSupDice--;
@@ -1915,7 +1999,7 @@
     function execParryManeuver() {
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
             COS_RPG.logManualHeal({
-                label: `🛡️ Maneuver — Parry (Reaction • ${curSupDice}/4 d8s left)`,
+                label: `🛡️ Maneuver — Parry (Reaction • ${curSupDice}/${maxSupDice} d8s left)`,
                 diceParts: [{ expr: '1d8', type: 'Superiority' }],
                 flatMod: 3,
                 healMode: false,
@@ -1928,87 +2012,180 @@
         }
         const d8 = Math.floor(Math.random() * 8) + 1;
         const red = d8 + 3; // 1d8 + STR (+3)
-        logRoll(`🛡️ <strong>Maneuver — Parry (Reaction • ${curSupDice}/4 d8s left):</strong> Rolled 1d8(${d8}) + 3 STR = Reduce incoming melee damage by <strong><span style="color:#38bdf8; font-size:1.08rem;">-${red} Damage</span></strong>! <button class="btn-act btn-act-heal" style="margin-left:6px;" onclick="stepHPMulti(${red}, 'Parry Damage Reduction')">💚 Refund ${red} HP</button>`);
+        logRoll(`🛡️ <strong>Maneuver — Parry (Reaction • ${curSupDice}/${maxSupDice} d8s left):</strong> Rolled 1d8(${d8}) + 3 STR = Reduce incoming melee damage by <strong><span style="color:#38bdf8; font-size:1.08rem;">-${red} Damage</span></strong>! <button type="button" class="btn-act btn-act-heal" style="margin-left:6px;" onclick="stepHPMulti(${red}, 'Parry Damage Reduction')">💚 Refund ${red} HP</button>`);
     }
 
-    function execRiposteAttack() {
+    function buildRiposteDamageSpec(wpn, isCrit = false) {
+        const shortNm = formatRiposteShortName(wpn);
+        const parts = [
+            { expr: wpn.dmgDice, type: wpn.dmgType },
+            { expr: '1d8', type: 'Superiority' }
+        ];
+        (wpn.extras || []).forEach(ex => {
+            if (ex && ex.dice) parts.push({ expr: ex.dice, type: ex.type || 'Mod' });
+        });
+        const notes = [];
+        if (wpn.isSilvered) notes.push('Bypasses Undead/Werewolf Resistance');
+        if (wpn.mastery === 'Sap') notes.push('🛡️ Sap: Target has Disadvantage on next attack!');
+        if (wpn.mastery === 'Vex') notes.push('🎯 Vex: Advantage on your next attack vs target!');
+        if (wpn.mastery === 'Graze') notes.push(`⚡ Graze: Still deals +${Math.max(0, wpn.abilityMod + (wpn.flatMod - wpn.abilityMod))} on a miss`);
+        (wpn.saveNotes || []).forEach(sn => notes.push(sn));
+        return {
+            label: `Riposte — ${shortNm}`,
+            diceParts: parts,
+            flatMod: wpn.flatMod,
+            dmgType: wpn.dmgType,
+            isCrit: Boolean(isCrit),
+            isSavage: true,
+            notes: notes.join(' • '),
+            allowOnHitAddons: false
+        };
+    }
+
+    function execRiposteAttack(slotIdx = 0) {
+        const equipped = getJacomirEquippedRiposteWeapons();
+        const wpn = equipped[slotIdx] || equipped[0];
+        const shortNm = formatRiposteShortName(wpn);
+        const formula = formatRiposteFormula(wpn);
+        const dmgSpecNormal = buildRiposteDamageSpec(wpn, false);
+        const dmgSpecCrit = buildRiposteDamageSpec(wpn, true);
+
+        const modTags = [];
+        if (wpn.modBadge) modTags.push(wpn.modBadge);
+        if (wpn.coatingLabel) modTags.push(wpn.coatingLabel);
+        const noteStr = [
+            `Equipped: ${shortNm}`,
+            ...modTags,
+            wpn.mastery ? `Mastery: ${wpn.mastery}` : ''
+        ].filter(Boolean).join(' • ');
+
+        const grazeOpts = wpn.mastery === 'Graze'
+            ? {
+                grazeLabel: `⚡ Graze (+${wpn.flatMod} on Miss)`,
+                onGraze: () => logRoll(`⚡ <strong>Riposte Graze (${shortNm}):</strong> Even on a miss, deal <strong style="color:#fbbf24;">${wpn.flatMod} ${wpn.dmgType} Damage</strong>!`)
+            }
+            : {};
+
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
             COS_RPG.logManualD20({
-                label: `⚔️ Maneuver — Riposte Counter-Attack (Reaction • ${curSupDice}/4 d8s left)`,
-                mod: 5,
+                label: `⚔️ Riposte — ${shortNm} (Reaction • ${curSupDice}/${maxSupDice} d8s left)`,
+                mod: wpn.atkBonus,
+                notes: noteStr,
                 suppressPendingFollowup: true,
-                hitLabel: '💥 Hit! Greatsword (2d6+1d8+3)',
-                onHit: () => execRiposteDamage(),
-                onCrit: () => COS_RPG.logManualDamage({
-                    label: 'Riposte Greatsword',
-                    diceParts: [{ expr: '2d6', type: 'Slashing' }, { expr: '1d8', type: 'Superiority' }],
-                    flatMod: 3,
-                    dmgType: 'Slashing',
-                    isCrit: true
-                }),
-                extraButtons: [
-                    { label: '⚔️ Hit! Silver LS (1d10+1d8+3)', cls: 'btn-hit', onClick: () => execRiposteSilverLongswordDamage() }
-                ],
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => execRiposteAttack())
+                suppressOnHitAddons: true,
+                hitLabel: `💥 Hit! Riposte (${formula})`,
+                onHit: () => COS_RPG.logManualDamage(dmgSpecNormal),
+                onCrit: () => COS_RPG.logManualDamage(dmgSpecCrit),
+                ...grazeOpts,
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => execRiposteAttack(slotIdx))
             });
             return;
         }
-        const d20 = Math.floor(Math.random() * 20) + 1;
-        const atkTotal = d20 + 5;
-        let critNote = d20 === 20 ? " 🔥 <span style='color:#facc15; font-weight:800;'>NAT 20 BRUTAL CRIT!</span>" : (d20 === 1 ? " 💀 <span style='color:#ef4444; font-weight:800;'>NAT 1!</span>" : "");
-        logRoll(`⚔️ <strong>Maneuver — Riposte Counter-Attack (Reaction • ${curSupDice}/4 d8s left):</strong> d20(${d20}) + 5 = <span style="color:var(--accent-gold); font-size:1.08rem; font-weight:800;">${atkTotal} to Hit</span>!${critNote} <button class="btn-roll-action btn-roll-dmg" style="margin-left:6px;" onclick="execRiposteDamage()">💥 Greatsword (2d6+1d8+3)</button> <button class="btn-roll-action btn-roll-dmg" style="margin-left:4px; background:#475569;" onclick="execRiposteSilverLongswordDamage()">⚔️ Silver LS (1d10+1d8+3)</button>`);
+
+        if (window.COS_RPG && typeof COS_RPG.setRollFollowup === 'function') {
+            COS_RPG.setRollFollowup({
+                label: `💥 Roll Riposte — ${shortNm} (${formula})`,
+                critLabel: `🔥 ROLL BRUTAL CRIT — Riposte ${shortNm}!`,
+                suppressOnHitAddons: true,
+                onDamage: () => execRiposteWeaponDamage(slotIdx, false),
+                onCrit: () => execRiposteWeaponDamage(slotIdx, true)
+            });
+        }
+        rollD20(`⚔️ Riposte — ${shortNm} (Reaction • ${curSupDice}/${maxSupDice} d8s left)`, wpn.atkBonus, {
+            ...grazeOpts
+        });
     }
 
-    function execRiposteDamage() {
+    function execRiposteWeaponDamage(slotIdx = 0, forceCrit = false) {
+        const equipped = getJacomirEquippedRiposteWeapons();
+        const wpn = equipped[slotIdx] || equipped[0];
+        const spec = buildRiposteDamageSpec(wpn, forceCrit);
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
-            COS_RPG.logManualDamage({
-                label: 'Riposte Greatsword',
-                diceParts: [{ expr: '2d6', type: 'Slashing' }, { expr: '1d8', type: 'Superiority' }],
-                flatMod: 3,
-                dmgType: 'Slashing',
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => execRiposteDamage())
-            });
+            COS_RPG.logManualDamage(spec);
+            return;
+        }
+        if (window.COS_RPG && typeof COS_RPG.rollDigitalDamageFromManualSpec === 'function') {
+            COS_RPG.rollDigitalDamageFromManualSpec(spec, Boolean(forceCrit));
             return;
         }
         const g1 = Math.floor(Math.random() * 6) + 1;
         const g2 = Math.floor(Math.random() * 6) + 1;
         const sup = Math.floor(Math.random() * 8) + 1;
-        const total = g1 + g2 + sup + 3;
-        logRoll(`💥 <strong>Riposte Greatsword Damage:</strong> 2d6[${g1}+${g2}] + Superiority d8[${sup}] + 3 STR = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">${total} Slashing Damage</span>!`);
+        const total = (forceCrit ? 20 : 0) + g1 + g2 + sup + wpn.flatMod;
+        logRoll(`💥 <strong>Riposte ${wpn.name}:</strong> ${total} ${wpn.dmgType} Damage!`);
+    }
+
+    function execRiposteDamage() {
+        execRiposteWeaponDamage(0, false);
     }
 
     function execRiposteSilverLongswordDamage() {
-        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
-            COS_RPG.logManualDamage({
-                label: "Riposte — Ismark's Silvered Longsword (2H)",
-                diceParts: [{ expr: '1d10', type: 'Silvered Slashing' }, { expr: '1d8', type: 'Superiority' }],
-                flatMod: 3,
-                dmgType: 'Silvered Slashing',
-                notes: 'Bypasses Undead/Werewolf Resistance + 🛡️ Sap!',
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => execRiposteSilverLongswordDamage())
-            });
-            return;
-        }
-        const ls = Math.floor(Math.random() * 10) + 1;
-        const sup = Math.floor(Math.random() * 8) + 1;
-        const total = ls + sup + 3;
-        logRoll(`⚔️ <strong>Riposte — Ismark's Silvered Longsword Damage (2H):</strong> 1d10[${ls}] + Superiority d8[${sup}] + 3 STR = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">${total} Silvered Slashing Damage</span>! <small style="color:#cbd5e1;">(Bypasses Undead/Werewolf Resist + 🛡️ Sap!)</small>`);
+        const equipped = getJacomirEquippedRiposteWeapons();
+        const idx = equipped.findIndex(w => w.weaponId === 'silvered_longsword' || /silver.*longsword/i.test(w.name));
+        execRiposteWeaponDamage(idx >= 0 ? idx : 0, false);
     }
 
-    function execMenacingAttack() {
+    function spendSuperiorityOnHit(kind, isCrit = false, baseDmgTotal = null) {
+        if (curSupDice <= 0) {
+            logRoll(`⚠️ <strong>0 Superiority Dice remaining!</strong> Take a Short or Long Rest (or click Refill) to restore your ${maxSupDice}d8 pool.`);
+            return;
+        }
+        curSupDice--;
+        updateSuperiorityDiceUI();
+        renderManeuvers();
+        if (kind === 'menacing') {
+            execMenacingAttack(Boolean(isCrit), baseDmgTotal);
+            return;
+        }
+        // Generic +1d8 Superiority Die spend on hit (crit-aware!)
+        const spec = {
+            label: `⚔️ Superiority Die Spent (${curSupDice}/${maxSupDice} d8s left)`,
+            diceParts: [{ expr: '1d8', type: 'Superiority' }],
+            flatMod: 0,
+            dmgType: 'Bonus',
+            isCrit: Boolean(isCrit),
+            notes: typeof baseDmgTotal === 'number' ? `Add to your ${baseDmgTotal} weapon damage!` : 'Add to your weapon hit or maneuver!',
+            allowOnHitAddons: false
+        };
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
-            COS_RPG.logManualSpell({
-                icon: '👹',
-                title: `Maneuver — Menacing Attack (${curSupDice}/4 d8s left)`,
-                saveText: 'Tell DM: DC 13 WIS Save or Frightened until end of next turn!',
-                diceParts: [{ expr: '1d8', type: 'Bonus Damage' }],
-                notes: 'Add 1d8 to your weapon hit damage!',
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => execMenacingAttack())
-            });
+            COS_RPG.logManualDamage(spec);
             return;
         }
         const d8 = Math.floor(Math.random() * 8) + 1;
-        logRoll(`👹 <strong>Maneuver — Menacing Attack (${curSupDice}/4 d8s left):</strong> Add <strong><span style="color:#f87171; font-size:1.08rem;">+${d8} Damage</span></strong> (1d8) to your weapon hit, AND the target must succeed on a <strong>DC 13 Wisdom Saving Throw</strong> or be <strong>Frightened of Jacomir</strong> until the end of your next turn!`);
+        const bonus = isCrit ? (8 + d8) : d8;
+        const combinedHtml = typeof baseDmgTotal === 'number'
+            ? ` ➔ <strong style="color:#fde68a; font-size:1.1rem;">Combined Total: ${baseDmgTotal + bonus} Damage!</strong>`
+            : '';
+        logRoll(`⚔️ <strong>${isCrit ? '🔥 BRUTAL CRIT ' : ''}Superiority Die Spent (${curSupDice}/${maxSupDice} d8s left):</strong> ${isCrit ? `Max(8) + 1d8[${d8}]` : `1d8[${d8}]`} = <span style="color:#f87171; font-size:1.08rem; font-weight:800;">+${bonus} Bonus Damage</span>!${combinedHtml}`);
+    }
+
+    function execMenacingAttack(isCrit = false, baseDmgTotal = null) {
+        const menacingSpec = {
+            label: `👹 Maneuver — Menacing Attack (${curSupDice}/${maxSupDice} d8s left)`,
+            diceParts: [{ expr: '1d8', type: 'Menacing Bonus' }],
+            flatMod: 0,
+            dmgType: 'Weapon',
+            isCrit: Boolean(isCrit),
+            extraCues: [{ text: '🛡️ Tell DM: DC 13 WIS Save or Frightened until end of next turn!', cls: 'is-save' }],
+            notes: typeof baseDmgTotal === 'number'
+                ? `Add to your ${baseDmgTotal} hit damage!`
+                : 'Add to your weapon hit damage!',
+            allowOnHitAddons: false
+        };
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            COS_RPG.logManualDamage(menacingSpec);
+            return;
+        }
+        const d8 = Math.floor(Math.random() * 8) + 1;
+        const bonus = isCrit ? (8 + d8) : d8;
+        const rollFormula = isCrit ? `Max(<strong>8</strong>) + 1d8[<strong>${d8}</strong>]` : `1d8[<strong>${d8}</strong>]`;
+        const combinedHtml = typeof baseDmgTotal === 'number'
+            ? ` ➔ <strong style="color:#fde68a; font-size:1.12rem;">Combined Total: ${baseDmgTotal + bonus} Damage!</strong>`
+            : '';
+        const critBtnHtml = !isCrit
+            ? ` <button type="button" class="btn-act btn-act-pre" style="margin-left:6px; border-color:#facc15; color:#fef08a;" onclick="logRoll('🔥 <strong>Menacing Attack Brutal Crit Upgrade:</strong> Add <strong>+8 Max</strong> ➔ <strong>+${bonus + 8} Menacing Damage</strong>${typeof baseDmgTotal === 'number' ? ` (Combined: <strong>${baseDmgTotal + bonus + 8}</strong>)` : ''}!')">🔥 Nat 20? (+8 Crit Max)</button>`
+            : '';
+        logRoll(`👹 <strong>${isCrit ? '🔥 BRUTAL CRIT — ' : ''}Maneuver — Menacing Attack (${curSupDice}/${maxSupDice} d8s left):</strong> ${rollFormula} = <strong><span style="color:#f87171; font-size:1.08rem;">+${bonus} Damage</span></strong>${combinedHtml} — target must pass a <strong>DC 13 Wisdom Saving Throw</strong> or be <strong>Frightened of Jacomir</strong> until the end of your next turn!${critBtnHtml}`);
     }
 
     // ==========================================
@@ -4224,6 +4401,30 @@
                 const btnDmgAxe = document.getElementById('btn-dmg-axe');
                 if (btnAtkAxe) btnAtkAxe.textContent = `🪓 Attack (+${5 + (axeMods.atkBonus || 0)})`;
                 if (btnDmgAxe) btnDmgAxe.textContent = `💥 1d6+${3 + (axeMods.dmgBonus || 0)}${axeEx} (Savage)`;
+
+                renderManeuvers();
+            },
+            getOnHitAddons: ({ phase, isCrit, lastDamageTotal }) => {
+                if (curSupDice <= 0) return [];
+                const addons = [
+                    {
+                        label: isCrit
+                            ? `👹🔥 +Crit Menacing (-1 d8 • 8+1d8 • ${curSupDice}/${maxSupDice})`
+                            : `👹 +Menacing Attack (-1 d8 • ${curSupDice}/${maxSupDice})`,
+                        cls: isCrit ? 'btn-crit' : 'btn-hit',
+                        onClick: () => spendSuperiorityOnHit('menacing', Boolean(isCrit), typeof lastDamageTotal === 'number' ? lastDamageTotal : null)
+                    }
+                ];
+                if (phase === 'damage') {
+                    addons.push({
+                        label: isCrit
+                            ? `⚔️🔥 +Crit 1d8 Die (-1 d8)`
+                            : `⚔️ +Spend 1d8 Die (${curSupDice}/${maxSupDice})`,
+                        cls: 'btn-help',
+                        onClick: () => spendSuperiorityOnHit('die', Boolean(isCrit), typeof lastDamageTotal === 'number' ? lastDamageTotal : null)
+                    });
+                }
+                return addons;
             }
         });
     }
