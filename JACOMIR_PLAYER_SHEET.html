@@ -1217,7 +1217,7 @@
                             </div>
                             <div class="action-desc">Expend 1 use as a <strong>Bonus Action</strong> to immediately heal <strong>1d10 + 3 HP</strong> (automatically adds to Jacomir's HP!).</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action btn-roll-heal" onclick="useSecondWindHeal()">💚 Second Wind (Heal 1d10+3)</button>
+                                <button class="btn-roll-action btn-roll-heal" onclick="useSecondWindHeal()">Second Wind</button>
                                 <button class="btn-act btn-act-pre" style="font-size:0.68rem;" onclick="modSecondWind(1)" title="Restore +1 Second Wind use">+1 Use</button>
                             </div>
                         </div>
@@ -1235,8 +1235,8 @@
                             </div>
                             <div class="action-desc">When you fail an Ability Check, expend 1 Second Wind use to add <strong>+1d10</strong>! <em>If it still fails, the use is NOT expended!</em></div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action" onclick="useTacticalMind()">🧠 Roll +1d10 (Tactical Mind)</button>
-                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#86efac;" onclick="refundTacticalMind()" title="If the check still failed, click to refund the Second Wind charge!">↩️ Still Failed (Refund)</button>
+                                <button class="btn-roll-action" onclick="useTacticalMind()">Tactical Mind</button>
+                                <button class="btn-act btn-act-pre" style="font-size:0.68rem; color:#86efac;" onclick="refundTacticalMind()" title="If the check still failed, click to refund the Second Wind charge!">↩️ Refund</button>
                             </div>
                         </div>
 
@@ -1253,7 +1253,7 @@
                             </div>
                             <div class="action-desc">Push beyond mortal limits on your turn to take <strong>one additional Action</strong> (two full Greatsword cleaves in one turn!).</div>
                             <div class="action-btn-row">
-                                <button class="btn-roll-action btn-roll-martial" onclick="useActionSurge()" id="btn-use-as">⚡ Activate Action Surge!</button>
+                                <button class="btn-roll-action btn-roll-martial" onclick="useActionSurge()" id="btn-use-as">Action Surge</button>
                             </div>
                         </div>
 
@@ -1521,7 +1521,7 @@
             asBadge.className = actionSurgeReady ? 'pill-badge pill-gold' : 'pill-badge pill-neutral';
         }
         if (asBtn) {
-            asBtn.innerText = actionSurgeReady ? '⚡ Activate Action Surge!' : '🔄 Reset Action Surge';
+            asBtn.innerText = actionSurgeReady ? 'Action Surge' : 'Reset Action Surge';
         }
     }
 
@@ -1817,7 +1817,7 @@
             fullRules: "When another creature damages you with a melee attack, you can use your <strong>Reaction</strong> and expend one Superiority Die to reduce the damage by the number you roll on your Superiority Die + your Strength modifier (<strong>1d8 + 3</strong>).",
             flavor: "King Jacomir catches the beast's fangs on the crossguard of his ancestral greatsword and shoves it aside with iron force.",
             buttons: [
-                { label: "🛡️ Parry (-1 d8 • Reduce 1d8+3)", class: "btn-roll-action", costDie: true, onClick: () => execParryManeuver() }
+                { label: "Parry", class: "btn-roll-action", costDie: true, onClick: () => execParryManeuver() }
             ]
         },
         {
@@ -1837,9 +1837,8 @@
             fullRules: "When a creature misses you with a melee attack, you can use your <strong>Reaction</strong> and expend one Superiority Die to make a melee weapon attack against the creature. If you hit, you add the Superiority Die (<strong>+1d8</strong>) to the attack's damage roll!",
             flavor: "As the enemy's claw whistles past his chain mail, Jacomir pivots on his heel and drives two feet of Oakenshire steel through their ribs.",
             buttons: [
-                { label: "⚔️ Riposte Attack (-1 d8 • +5 Hit)", class: "btn-roll-action btn-roll-martial", costDie: true, onClick: () => execRiposteAttack() },
-                { label: "💥 Greatsword (2d6+1d8+3)", class: "btn-roll-action btn-roll-dmg", costDie: false, onClick: () => execRiposteDamage() },
-                { label: "⚔️ Silvered LS (1d10+1d8+3)", class: "btn-roll-action btn-roll-dmg", costDie: false, onClick: () => execRiposteSilverLongswordDamage() }
+                { label: "Riposte Attack", class: "btn-roll-action btn-roll-martial", costDie: true, onClick: () => execRiposteAttack() },
+                { label: "Damage", class: "btn-roll-action btn-roll-dmg rpg-manual-hide", costDie: false, onClick: () => execRiposteDamage() }
             ]
         },
         {
@@ -1859,7 +1858,7 @@
             fullRules: "When you hit a creature with a weapon attack, you can expend one Superiority Die to attempt to frighten the target. You add the Superiority Die (<strong>+1d8</strong>) to the attack's damage roll, and the target must make a <strong>DC 13 Wisdom saving throw</strong>. On a failed save, it is <strong>Frightened</strong> of you until the end of your next turn (Disadvantage on all attack rolls and ability checks while you are in line of sight, and it cannot willingly move closer to you!).",
             flavor: "Jacomir's eyes lock onto his foe with the terrifying, unyielding authority of a king who has walked through the death of his own realm.",
             buttons: [
-                { label: "Menacing Attack (-1 d8 • +1d8 & DC 13 WIS)", class: "btn-roll-action btn-roll-dmg", costDie: true, onClick: () => execMenacingAttack() }
+                { label: "Menacing Attack", class: "btn-roll-action btn-roll-dmg", costDie: true, onClick: () => execMenacingAttack() }
             ]
         }
     ];
@@ -1905,20 +1904,19 @@
 
     function getRiposteDynamicButtons() {
         const equipped = getJacomirEquippedRiposteWeapons();
+        const multi = equipped.length > 1;
         const btns = [];
         equipped.forEach((wpn, idx) => {
             const shortNm = formatRiposteShortName(wpn);
-            const atkStr = wpn.atkBonus >= 0 ? `+${wpn.atkBonus}` : `${wpn.atkBonus}`;
-            const formula = formatRiposteFormula(wpn);
             btns.push({
-                label: `Riposte: ${shortNm} (-1 d8 • ${atkStr} Hit)`,
+                label: multi ? `Riposte: ${shortNm}` : 'Riposte Attack',
                 class: 'btn-roll-action btn-roll-martial',
                 costDie: true,
                 slotKind: 'reaction',
                 onClick: () => execRiposteAttack(idx)
             });
             btns.push({
-                label: `Dmg (${formula})`,
+                label: multi ? `Damage: ${shortNm}` : 'Damage',
                 class: 'btn-roll-action btn-roll-dmg rpg-manual-hide',
                 costDie: false,
                 slotKind: 'none',
@@ -2313,7 +2311,7 @@
             fullRules: "You have a limited well of physical and mental stamina that you can draw on. As a <strong>Bonus Action</strong>, you can expend one use of this feature to regain Hit Points equal to <strong>1d10 + your Fighter level (1d10 + 3)</strong>.<br><br>• You have <strong>3 uses</strong> of Second Wind at Level 3, regaining <strong>1 expended use</strong> when you finish a Short Rest and all 3 uses when you finish a Long Rest.",
             flavor: "Jacomir steadies his breathing,Tightening his grip on his hilt as a sovereign's resolve dulls the pain of his wounds.",
             modalButtons: [
-                { label: "💚 Use Second Wind (1d10+3)", class: "btn-roll-action btn-roll-heal", onClick: () => { closeSpellModal(); useSecondWindHeal(); } }
+                { label: "Second Wind", class: "btn-roll-action btn-roll-heal", onClick: () => { closeSpellModal(); useSecondWindHeal(); } }
             ]
         },
         "tactical_mind": {
@@ -2330,7 +2328,7 @@
             fullRules: "You have a mind for tactics on and off the battlefield. When you fail an ability check, you can expend a use of your <strong>Second Wind</strong> to push yourself toward success. Rather than regaining Hit Points, you roll <strong>1d10</strong> and add the number rolled to the ability check, potentially turning it into a success.<br><br>💡 <strong>No-Waste Clause:</strong> If the check still fails, this use of Second Wind is <strong>not expended</strong>!",
             flavor: "Trained in royal statecraft, siege warfare, and Dragonchess, Jacomir calculates an angle others missed.",
             modalButtons: [
-                { label: "🧠 Roll +1d10 (Tactical Mind)", class: "btn-roll-action", onClick: () => { closeSpellModal(); useTacticalMind(); } }
+                { label: "Tactical Mind", class: "btn-roll-action", onClick: () => { closeSpellModal(); useTacticalMind(); } }
             ]
         },
         "action_surge": {
@@ -2347,7 +2345,7 @@
             fullRules: "You can push yourself beyond your normal limits for a moment. On your turn, you can take <strong>one additional action</strong> (except the Magic action).<br><br>Once you use this feature, you can't do so again until you finish a <strong>Short or Long Rest</strong>.",
             flavor: "When the frontline wavers, the King of Oakenshire strikes twice before the thunder finishes rolling.",
             modalButtons: [
-                { label: "⚡ Activate Action Surge!", class: "btn-roll-action btn-roll-martial", onClick: () => { closeSpellModal(); useActionSurge(); } }
+                { label: "Action Surge", class: "btn-roll-action btn-roll-martial", onClick: () => { closeSpellModal(); useActionSurge(); } }
             ]
         },
         "savage_attacker": {
@@ -4454,8 +4452,8 @@
                 {
                     id: 'menacing_attack',
                     label: ({ isCrit }) => isCrit
-                        ? `+ Crit Menacing Attack (-1 d8 • 8+1d8 • ${curSupDice}/${maxSupDice})`
-                        : `+ Menacing Attack (-1 d8 • +1d8 & DC 13 WIS • ${curSupDice}/${maxSupDice})`,
+                        ? `+ Crit Menacing Attack (${curSupDice}/${maxSupDice})`
+                        : `+ Menacing Attack (${curSupDice}/${maxSupDice})`,
                     cls: ({ isCrit }) => isCrit ? 'btn-crit' : 'btn-hit',
                     attackKinds: ['weapon'],
                     phases: ['damage'],
