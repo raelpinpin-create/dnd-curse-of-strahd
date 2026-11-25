@@ -9170,6 +9170,11 @@
         const notesList = typeof window.getStoredNotes === 'function' ? window.getStoredNotes() : [];
         const { sheetStr, notesStr } = captureNativeExportStrings();
         const resSummary = extractResourcesSummary(sheetStr);
+        let rawUnifiedPresets = null;
+        try {
+            const pRaw = localStorage.getItem(getUnifiedPresetsKey());
+            if (pRaw) rawUnifiedPresets = JSON.parse(pRaw);
+        } catch (e) {}
 
         return {
             heroId: adapter.heroId,
@@ -9184,6 +9189,10 @@
             sp: wallet.sp || 0,
             preset: activePreset.label + (activePreset.isCustom ? ' [Custom]' : ''),
             equippedSlots: equippedLabels,
+            equippedMap: getEquippedState(),
+            customGearMap: getCustomGearMap(),
+            rawUnifiedPresets,
+            sheetState: (typeof adapter.captureSheetState === 'function') ? adapter.captureSheetState() : null,
             customPresets: getCustomPresets().map(cp => ({ label: cp.label, slotLabels: cp.slotLabels || {} })),
             items: adapter.getItems(),
             notes: notesList,
@@ -9219,8 +9228,10 @@
                     sp: snap.sp,
                     pr: snap.preset,
                     eq: snap.equippedSlots,
+                    em: snap.equippedMap,
                     it: snap.items,
                     nt: snap.notes,
+                    ss: snap.sheetState,
                     am: snap.ammoState,
                     wm: snap.weaponMods,
                     wc: snap.weaponCoatings,
@@ -9239,24 +9250,17 @@
         }, forceNow ? 20 : 140);
     }
 
-    function pushSyncedCheckpoint(silentToast = false) {
+    function pushSyncedCheckpoint(silentToast = false, opts = {}) {
         if (!adapter) return;
         const snap = buildHeroSnapshot();
         const now = new Date();
         const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        let rawUnifiedPresets = null;
-        try {
-            const pRaw = localStorage.getItem(getUnifiedPresetsKey());
-            if (pRaw) rawUnifiedPresets = JSON.parse(pRaw);
-        } catch (e) {}
         const checkpointPayload = {
             ...snap,
-            equippedMap: getEquippedState(),
-            customGearMap: getCustomGearMap(),
-            rawUnifiedPresets,
-            sheetState: (typeof adapter.captureSheetState === 'function') ? adapter.captureSheetState() : null,
             syncedAt: Date.now(),
-            syncedTimeStr: timeStr
+            syncedTimeStr: timeStr,
+            syncedBy: (opts && opts.syncedBy) ? String(opts.syncedBy) : 'Player',
+            reqTs: (opts && opts.reqTs) ? Number(opts.reqTs) : null
         };
         try {
             localStorage.setItem(getCheckpointBackupKey(), JSON.stringify(checkpointPayload));
@@ -9283,6 +9287,8 @@
                         navigator.clipboard.writeText(combined).catch(() => {});
                     }
                     adapter.log(`☁️ <strong>Synced Official Checkpoint to DM (${esc(timeStr)})!</strong><br><small style="color:var(--accent-green);">Sheet state saved to DM Screen &amp; set as your 🔄 Reset restore point.</small>`);
+                } else if (opts && opts.notifyRemoteSync) {
+                    adapter.log(`☁️ <strong>DM Saved Official Live Checkpoint (${esc(timeStr)})!</strong><br><small style="color:var(--accent-green);">Your current live sheet is now locked as your 🔄 Reset restore point.</small>`);
                 }
             }).catch(err => {
                 if (!silentToast) adapter.log(`⚠️ Cloud Sync failed: ${esc(err.message)}`);
@@ -9458,7 +9464,11 @@
                     } else if (cmd.action === 'convert_item' && cmd.outName) {
                         applyRemoteNpcConversion(cmd);
                     } else if (cmd.action === 'request_checkpoint') {
-                        pushSyncedCheckpoint(true);
+                        pushSyncedCheckpoint(true, {
+                            syncedBy: cmd.requestedBy || 'DM Live Sync',
+                            reqTs: cmd.reqTs || Date.now(),
+                            notifyRemoteSync: true
+                        });
                     } else if (cmd.action === 'reset_sheet_baseline') {
                         resetSheetToOfficialBaseline(true);
                     }
@@ -10561,22 +10571,14 @@
         }
     }
 
-    function executeSession1FactoryReset() {
+    function executeOfficialBaselineReset(alsoUpdateCloudCheckpoint = false) {
         try {
             if (typeof window.resetHP === 'function') window.resetHP();
-            // Jacomir's Session 1 end baseline is 23/31 HP
-            if (adapter.heroId === 'jacomir') {
-                const hpInp = document.getElementById('hp-input');
-                if (hpInp && typeof window.applyDamage === 'function') {
-                    hpInp.value = '8';
-                    window.applyDamage();
-                    hpInp.value = '';
-                }
-            }
             if (typeof window.resetGoldPurse === 'function') window.resetGoldPurse();
             if (typeof window.clearGoldHistory === 'function') window.clearGoldHistory();
             if (typeof window.resetPlayerNotes === 'function') window.resetPlayerNotes();
             adapter.resetItems();
+            localStorage.removeItem(getCheckpointBackupKey());
             localStorage.removeItem(getEquipStorageKey());
             localStorage.removeItem(getCustomGearKey());
             localStorage.removeItem(getCustomPresetsKey());
@@ -10609,12 +10611,18 @@
             presetEditor = null;
             applyEquipmentToSheet(true);
             syncCombatActionLocks();
-            syncHeroStateToFirebase(true);
-            adapter.log(`🔄 <strong>Sheet Reset to Official Session 1 Baseline!</strong> (No prior ☁️ Sync to DM checkpoint existed yet.)`);
+            const baselineLbl = adapter.baselineLabel || 'Official Campaign Baseline';
+            if (alsoUpdateCloudCheckpoint) {
+                pushSyncedCheckpoint(true, { syncedBy: baselineLbl });
+            } else {
+                syncHeroStateToFirebase(true);
+            }
+            adapter.log(`🔄 <strong>Sheet Reset to ${esc(baselineLbl)}!</strong> All unsaved &amp; test changes have been cleared.`);
         } catch (e) {
             console.warn('[COS_RPG] Reset error:', e);
         }
     }
+    const executeSession1FactoryReset = executeOfficialBaselineReset;
 
     function resetSheetToOfficialBaseline(skipConfirm = false) {
         if (!adapter) return;
@@ -10624,6 +10632,9 @@
             if (raw) localCp = JSON.parse(raw);
         } catch (e) {}
 
+        const bakedTs = Number(adapter.baselineTimestamp || 0);
+        const baselineLbl = adapter.baselineLabel || 'Official Campaign Baseline';
+
         const finishReset = (cloudCp) => {
             let bestCp = null;
             const localTs = (localCp && localCp.syncedAt) ? Number(localCp.syncedAt) : 0;
@@ -10632,24 +10643,29 @@
             else if (localCp) bestCp = localCp;
             else if (cloudCp) bestCp = cloudCp;
 
-            if (bestCp) {
+            const bestTs = (bestCp && bestCp.syncedAt) ? Number(bestCp.syncedAt) : 0;
+            const checkpointIsFresh = Boolean(bestCp && (!bakedTs || bestTs >= bakedTs));
+
+            if (checkpointIsFresh) {
                 const whenTxt = bestCp.syncedTimeStr
                     ? bestCp.syncedTimeStr
                     : (bestCp.syncedAt ? new Date(bestCp.syncedAt).toLocaleString() : 'last saved');
+                const byTxt = bestCp.syncedBy ? ` by ${bestCp.syncedBy}` : '';
                 if (!skipConfirm && typeof window.confirm === 'function') {
-                    const ok = window.confirm(`Restore ${adapter.heroName}'s sheet back to your last ☁️ Sync to DM checkpoint (${whenTxt})? This undoes unsaved changes since your last sync.`);
+                    const ok = window.confirm(`Restore ${adapter.heroName}'s sheet back to the last official ☁️ Sync checkpoint (${whenTxt}${byTxt})? This undoes all unsaved/test changes since that sync.`);
                     if (!ok) return;
                 }
                 applyRestoredCheckpoint(bestCp);
                 return;
             }
 
-            // Fallback ONLY if no ☁️ Sync to DM checkpoint has ever been saved
+            // Baked GitHub HTML baseline is newer than any stale cloud/local checkpoint (or none exists yet)
             if (!skipConfirm && typeof window.confirm === 'function') {
-                const ok = window.confirm(`No ☁️ Sync to DM checkpoint found yet for ${adapter.heroName}. Reset sheet back to the Session 1 starting baseline?`);
+                const staleNote = bestCp ? ' (ignoring older previous-session checkpoint)' : '';
+                const ok = window.confirm(`Reset ${adapter.heroName}'s sheet to the official ${baselineLbl}${staleNote}? This clears all unsaved/test changes and updates your baseline.`);
                 if (!ok) return;
             }
-            executeSession1FactoryReset();
+            executeOfficialBaselineReset(true);
         };
 
         if (firebaseReady && rtdb) {

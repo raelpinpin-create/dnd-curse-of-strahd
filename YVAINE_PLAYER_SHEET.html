@@ -1712,7 +1712,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <script src="cos_firebase_config.js"></script>
-<script src="cos_rpg_engine.js?v=20261125v4"></script>
+<script src="cos_rpg_engine.js?v=20261125v5"></script>
 <script>
     // ==========================================
     // 🧙‍♂️ CHARACTER BASELINE STATE (LEVEL 3 RANGER)
@@ -3645,6 +3645,7 @@
         "2x Barovian Medicinal Herbs",
         "3x Apple",
         "Specialty Cartridge Rig",
+        "10x Silvered Bullets",
         "Amulet of the Whispering Grave",
         "Masterwork Lockpicks",
         "Bottle of Vintage Barovian Wine",
@@ -3660,7 +3661,6 @@
         "Chipped Bloodstone Gem Pendant",
         "Engraved Silver Pocket Watch",
         "Monster-Hunting Journal",
-        "2x Consecrated Holy Water",
         "Hooded Lantern with Black Lens Shutter",
         "Dungeoneer's Pack & Crowbar"
     ];
@@ -3880,9 +3880,9 @@
     }
 
     function getStoredItems() {
-        const stored = localStorage.getItem('cos_inv_yvaine_v10');
+        const stored = localStorage.getItem('cos_inv_yvaine_v11');
         if (!stored) {
-            localStorage.setItem('cos_inv_yvaine_v10', JSON.stringify(defaultItems));
+            localStorage.setItem('cos_inv_yvaine_v11', JSON.stringify(defaultItems));
             return [...defaultItems];
         }
         try {
@@ -3892,7 +3892,7 @@
     }
 
     function saveItems(items) {
-        localStorage.setItem('cos_inv_yvaine_v10', JSON.stringify(items));
+        localStorage.setItem('cos_inv_yvaine_v11', JSON.stringify(items));
     }
 
     function consumeAndHealItem(index, dice, sides, bonus, verb, itemName) {
@@ -4947,6 +4947,8 @@
                 heroId: 'yvaine',
                 heroName: 'Yvaine',
                 heroEmoji: '🔫',
+                baselineTimestamp: 1795595400000,
+                baselineLabel: 'Post-Session 2 Baseline',
                 defaultNotes: defaultPlayerNotes,
                 equipStorageVersion: 'v2',
                 extraSlots: [

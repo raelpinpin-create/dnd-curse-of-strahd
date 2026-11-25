@@ -49,8 +49,8 @@
     * **Speak with Dead & Church Loot:** Yvaine invoked her **🩸 Amulet of the Whispering Grave** (*Speak with Dead*) on Doru's corpse, learning about infamous monster hunter **Dr. Rudolph van Richten** and the **giant red crystal beating inside Ravenloft's North Tower** (*Heart of Sorrow*). Exhausted, Father Donavich rested and entrusted Ismark with the burial rites.
     * **Church & Village Haul Synced via Firebase:**
       * **Piper:** `Father Donovich's Crossbow`, `10x Silvered Crossbow Bolts`, `Holy Barovian Book` (`5 GP`), `Barovian Holy Chalice` (`5 GP`), `Flask of Morninglord Spring Water`, `3x Barovian Medicinal Herbs`, `2x Apple` *(consumed 1x Potion of Healing)*.
-      * **Yvaine:** `2x Consecrated Holy Water`, `2x Barovian Medicinal Herbs`, `3x Apple`, `Specialty Cartridge Rig`, `5x Silvered Rounds` loaded into *Lament*.
-      * **Jacomir:** `Alchemical Catalyst` *(mysterious reagent—function unknown to Jacomir yet!)*, `Apple`, and `Liquid Silver Coating` applied to his Ancestral Greatsword.
+      * **Yvaine:** `10x Silvered Bullets` *(unloaded in bag)*, `2x Barovian Medicinal Herbs`, `3x Apple`, `Specialty Cartridge Rig`.
+      * **Jacomir:** `Alchemical Catalyst` *(mysterious reagent—function unknown to Jacomir yet!)* and `Apple`.
   * **2. Kolyan's Burial, Volenta's Rooftop Cameo & The Legendary Dragonchess Duel:**
     * During the tearful burial of **Burgomaster Kolyan Indirovich**, **Bride Volenta Popofsky** made a laughing, unhinged cameo atop the church roof—right before **Count Strahd von Zarovich** himself arrived and sent shivers down the entire table!
     * **A Duel Between Kings (Dragonchess!):** **King Jacomir** caught Strahd's intense interest as a fellow sovereign. When tensions escalated and Strahd offered a duel to test Jacomir's worthiness, **Jacomir counter-proposed Dragonchess!** Strahd eagerly accepted (*no better way to peer into a ruler's mind and tactics*), conjuring a table and two chairs in the graveyard (`Best of 3 / 5 Rounds`: Strahd `+5 INT` vs. Jacomir `+1 WIS`; each win granted Jacomir 1 free question):

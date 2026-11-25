@@ -2433,6 +2433,67 @@
             padding-top: 4px;
             border-top: 1px solid var(--border-subtle);
         }
+        .dm-hero-sync-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.67rem;
+            color: #94a3b8;
+            background: rgba(15, 23, 42, 0.55);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            border-radius: 5px;
+            padding: 3px 7px;
+        }
+        .dm-hero-sync-meta.is-synced {
+            color: #86efac;
+            border-color: rgba(52, 211, 153, 0.32);
+            background: rgba(6, 78, 59, 0.22);
+        }
+        .dm-hero-sync-meta.is-unsynced {
+            color: #fde68a;
+            border-color: rgba(245, 158, 11, 0.42);
+            background: rgba(120, 53, 15, 0.25);
+        }
+        #dm-quick-drop-toast {
+            position: fixed;
+            inset: auto 18px 74px auto;
+            margin: 0;
+            z-index: 9999;
+            max-width: min(460px, calc(100vw - 36px));
+            background: linear-gradient(135deg, #064e3b, #0f172a);
+            border: 1.5px solid #34d399;
+            color: #ecfdf5;
+            padding: 10px 12px;
+            border-radius: 8px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+        #dm-quick-drop-toast:popover-open {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .dm-toast-close-btn {
+            background: transparent;
+            border: 1px solid rgba(167, 243, 208, 0.35);
+            color: #d1fae5;
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-size: 0.72rem;
+            cursor: pointer;
+            flex-shrink: 0;
+            line-height: 1.3;
+        }
+        .dm-toast-close-btn:hover,
+        .dm-toast-close-btn:focus-visible {
+            background: rgba(52, 211, 153, 0.22);
+            outline: 2px solid #6ee7b7;
+            outline-offset: 1px;
+        }
         .dm-escort-drawer {
             margin-top: 10px;
             border: 1px solid var(--border-color);
@@ -2880,7 +2941,8 @@
         <button type="button" id="dm-view-mode-btn" class="nav-btn" onclick="toggleDmViewMode()" title="Toggle between Focused Single-Section Mode and All-Sections Stack Mode (Hotkey: 0)">🗂️ Focus: ON</button>
         <button type="button" id="dm-collapse-all-btn" class="nav-btn" style="display:none;" onclick="toggleAllDmSections()" title="Collapse or Expand all sections">▾ Collapse All</button>
         <button type="button" class="nav-btn" onclick="openWorldMapLightbox()" title="Open Full High-Res Map of Barovia">🗺️ Map</button>
-        <button type="button" class="nav-btn" style="border-color:#34d399; color:#86efac;" onclick="openDmCustomDropModal('party')" title="Live Party Monitor, Remote Inventory &amp; Checkpoints">📡 Sync</button>
+        <button type="button" id="dm-nav-sync-all-btn" class="nav-btn" style="border-color:#38bdf8; color:#bae6fd; background:rgba(14,116,144,0.22);" onclick="dmSyncAllPlayersToFirebase(this)" aria-label="Sync all players' live sheets to Firebase checkpoints">☁️ Sync All</button>
+        <button type="button" class="nav-btn" style="border-color:#34d399; color:#86efac;" onclick="openDmCustomDropModal('party')" aria-label="Open Live Party Monitor, Remote Inventory, and Checkpoints">📡 Monitor</button>
         <button type="button" class="nav-btn nav-btn-forge" onclick="openDmCustomDropModal('forge')" title="Open Custom Item Forge from any section (Hotkey: F • Quick Drop Hotkey: D)">🛠️ Forge</button>
         <button type="button" id="dm-whisper-btn" class="nav-btn" style="border-color:#60a5fa; color:#bfdbfe;" onclick="openDmWhisperModal()" title="Private DM-to-Player Whispers">💬 Whispers</button>
         <div class="dm-theme-wrap" id="dm-theme-wrap">
@@ -2889,6 +2951,9 @@
         </div>
     </div>
 </nav>
+
+<!-- CENTRALIZED LIVE ANNOUNCER FOR SCREEN READERS (PRESENT ON PAGE LOAD) -->
+<div id="dm-live-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
 
 <!-- GLOBAL LIVE TURN RIBBON (STAYS VISIBLE ACROSS ALL TABS WHEN COMBAT IS ACTIVE) -->
 <div id="dm-global-combat-ribbon" class="dm-global-combat-ribbon" role="region" aria-label="Active Combat Turn Control"></div>
@@ -2902,6 +2967,8 @@
         <div class="section-header" onclick="if(!event.target.closest('button')) toggleDmSectionCollapse('party-specs')">
             <span>🛡️ SECTION 1: LIVE PARTY HUD &amp; COMPANION ROSTER</span>
             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                <span id="dm-live-stream-badge" class="pill green" style="font-size:0.67rem;">🟢 Live RTDB Monitor</span>
+                <button type="button" id="dm-sync-all-players-btn" class="btn-modal-mini" style="border-color:#38bdf8; background:rgba(14,116,144,0.34); color:#e0f2fe; font-weight:700;" onclick="dmSyncAllPlayersToFirebase(this)" aria-label="Sync all players' live mid-session status to Firebase checkpoints">☁️ Sync All Players</button>
                 <button type="button" class="btn-modal-mini" style="border-color:#34d399; color:#a7f3d0;" onclick="openDmCustomDropModal('party')">📡 Full Monitor &amp; Checkpoints</button>
                 <button type="button" class="btn-modal-mini" onclick="addPartyToEncounter(); jumpToCombatBoard();">⚔️ + All 4 to Combat</button>
                 <button type="button" class="dm-sec-collapse-btn" data-sec-btn="party-specs" onclick="toggleDmSectionCollapse('party-specs')">▾ Collapse</button>
@@ -2919,6 +2986,7 @@
                     ✨ 3/3 SP • L1 4/4 L2 2/2 • 💖 Charm 1/1 • 💛 2/2 Help • Surge #87
                 </div>
                 <div style="font-size:0.73rem; color:var(--text-muted);">Pass. Perc 10 • 🏹 Donovich Crossbow + 10x Silver Bolts • ⬛ Black Robe • 🃏 Blank Card (Stage 1)</div>
+                <div id="dm-sec0-sync-piper" class="dm-hero-sync-meta"><span>📡 Connecting to Firebase live stream...</span><span>💰 15 GP</span></div>
                 <div class="dm-hero-strip-actions">
                     <div style="display:inline-flex; gap:3px;">
                         <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteAdjustHeroHp('piper', '🎩 Piper', -5)">-5</button>
@@ -2943,7 +3011,8 @@
                 <div id="dm-sec0-res-jacomir" style="font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--accent-gold-soft);">
                     ⚔️ 4/4 d8 • ☕ 3/3 SW • ⚡ Surge 1/1 • 🌟 Insp READY • 💛 2/2 Help
                 </div>
-                <div style="font-size:0.73rem; color:var(--text-muted);">✉️ Strahd's Black Letter (Ireena Favor) • ⚗️ Alchemical Catalyst • 🗡️ Liquid Silver GS • 📖 Diary</div>
+                <div style="font-size:0.73rem; color:var(--text-muted);">✉️ Strahd's Black Letter (Ireena Favor) • ⚗️ Alchemical Catalyst • 🗡️ Greatsword &amp; Silver LS • 📖 Diary</div>
+                <div id="dm-sec0-sync-jacomir" class="dm-hero-sync-meta"><span>📡 Connecting to Firebase live stream...</span><span>💰 0 GP</span></div>
                 <div class="dm-hero-strip-actions">
                     <div style="display:inline-flex; gap:3px;">
                         <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteAdjustHeroHp('jacomir', '👑 Jacomir', -5)">-5</button>
@@ -2966,9 +3035,10 @@
                     <span class="pill green" id="dm-sec0-vitals-yvaine">HP 28/28 • AC 16</span>
                 </div>
                 <div id="dm-sec0-res-yvaine" style="font-family:'JetBrains Mono',monospace; font-size:0.73rem; color:var(--accent-blue-soft);">
-                    💥 Mercy 6/6 Less 6/6 • 🎯 Lament 10/10 (5x Silver) • L1 3/3 • 🔍 Sense 2/2
+                    💥 Mercy 6/6 Less 6/6 • 🎯 Lament 10/10 • L1 3/3 • 🔍 Sense 2/2
                 </div>
-                <div style="font-size:0.73rem; color:var(--text-muted);">Pass. Perc 16 • Alert (+6 Init) • 🎗️ Cartridge Rig • 💧 2x Holy Water • 🩸 Whispering Grave</div>
+                <div style="font-size:0.73rem; color:var(--text-muted);">Pass. Perc 16 • Alert (+6 Init) • 🎗️ Cartridge Rig • 🪙 10x Silvered Bullets • 🩸 Whispering Grave</div>
+                <div id="dm-sec0-sync-yvaine" class="dm-hero-sync-meta"><span>📡 Connecting to Firebase live stream...</span><span>💰 17 GP, 5 SP</span></div>
                 <div class="dm-hero-strip-actions">
                     <div style="display:inline-flex; gap:3px;">
                         <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteAdjustHeroHp('yvaine', '🔫 Yvaine', -5)">-5</button>
@@ -4675,7 +4745,7 @@ function resetMonsterState(key) {
 const ENCOUNTER_STORAGE_KEY = 'cos_dm_encounter_board_v1';
 const PARTY_INIT_PRESETS = [
     { allyKey: 'piper', name: '🎭 Piper', initBonus: 2, defaultCurHp: 17, defaultMaxHp: 17, defaultAc: '13', sheetUrl: 'PIPER_PLAYER_SHEET.html', fullTitle: '🎭 Piper ("The Incomparable") — Level 3 Sorcerer' },
-    { allyKey: 'jacomir', name: '👑 Jacomir', initBonus: 0, defaultCurHp: 23, defaultMaxHp: 31, defaultAc: '17', sheetUrl: 'JACOMIR_PLAYER_SHEET.html', fullTitle: '👑 Jacomir Yulle ("King of Oakenshire") — Level 3 Fighter' },
+    { allyKey: 'jacomir', name: '👑 Jacomir', initBonus: 0, defaultCurHp: 31, defaultMaxHp: 31, defaultAc: '17', sheetUrl: 'JACOMIR_PLAYER_SHEET.html', fullTitle: '👑 Jacomir Yulle ("King of Oakenshire") — Level 3 Fighter' },
     { allyKey: 'yvaine', name: '🎯 Yvaine', initBonus: 6, defaultCurHp: 28, defaultMaxHp: 28, defaultAc: '16', sheetUrl: 'YVAINE_PLAYER_SHEET.html', fullTitle: '🎯 Eclipsa "Yvaine" — Level 3 Monster Slayer Ranger' },
     { allyKey: 'cael', name: '🌟 Cael', initBonus: 2, defaultCurHp: 24, defaultMaxHp: 24, defaultAc: '14', sheetUrl: 'CAEL_PLAYER_SHEET.html', npcKey: 'cael', fullTitle: '🌟 Caelum Jude ("Cael") — Level 3 Circle of the Stars Druid (2024)' }
 ];
@@ -18363,22 +18433,81 @@ function dmToggleHeroGearOverride(heroId, heroName, allowNow = true) {
     }
 }
 
+function dmAnnounceStatus(plainText) {
+    const clean = String(plainText || '').replace(/\s+/g, ' ').trim();
+    if (!clean) return;
+    if (typeof document.ariaNotify === 'function') {
+        try {
+            document.ariaNotify(clean);
+            return;
+        } catch (e) {}
+    }
+    const announcer = document.getElementById('dm-live-announcer');
+    if (announcer) {
+        announcer.textContent = '';
+        requestAnimationFrame(() => {
+            announcer.textContent = clean;
+        });
+    }
+}
+
+function dmHideQuickToast() {
+    clearTimeout(window.__dmToastTimer);
+    const toast = document.getElementById('dm-quick-drop-toast');
+    if (!toast) return;
+    if (Object.hasOwn(HTMLElement.prototype, 'popover') && toast.matches(':popover-open')) {
+        try { toast.hidePopover(); } catch (e) {}
+    } else {
+        toast.style.display = 'none';
+    }
+}
+
 function dmShowQuickToast(htmlMsg) {
     setModalLogsHtml(htmlMsg);
+    const supportsPopover = Object.hasOwn(HTMLElement.prototype, 'popover');
     let toast = document.getElementById('dm-quick-drop-toast');
     if (!toast) {
         toast = document.createElement('div');
         toast.id = 'dm-quick-drop-toast';
-        toast.style.cssText = 'position:fixed; bottom:74px; right:18px; z-index:9999; max-width:440px; background:linear-gradient(135deg,#064e3b,#0f172a); border:1.5px solid #34d399; color:#ecfdf5; padding:10px 14px; border-radius:8px; box-shadow:0 10px 28px rgba(0,0,0,0.65); font-size:0.8rem; line-height:1.4; transition:opacity 0.2s;';
+        if (supportsPopover) {
+            toast.setAttribute('popover', 'manual');
+        } else {
+            toast.style.display = 'none';
+        }
+        const pauseHide = () => {
+            window.__dmToastPinned = true;
+            clearTimeout(window.__dmToastTimer);
+        };
+        const resumeHide = () => {
+            window.__dmToastPinned = false;
+            clearTimeout(window.__dmToastTimer);
+            window.__dmToastTimer = setTimeout(dmHideQuickToast, 2600);
+        };
+        toast.addEventListener('mouseenter', pauseHide);
+        toast.addEventListener('focusin', pauseHide);
+        toast.addEventListener('mouseleave', resumeHide);
+        toast.addEventListener('focusout', resumeHide);
         document.body.appendChild(toast);
     }
-    toast.innerHTML = htmlMsg;
-    toast.style.opacity = '1';
-    toast.style.display = 'block';
+    toast.innerHTML = `<div style="flex:1;">${htmlMsg}</div><button type="button" class="dm-toast-close-btn" aria-label="Dismiss notification" onclick="dmHideQuickToast()">✕</button>`;
+    if (supportsPopover) {
+        try {
+            if (toast.matches(':popover-open')) toast.hidePopover();
+            toast.showPopover();
+        } catch (e) {
+            toast.style.display = 'flex';
+        }
+    } else {
+        toast.style.display = 'flex';
+        toast.style.alignItems = 'flex-start';
+        toast.style.gap = '10px';
+    }
+    const plainText = toast.firstElementChild ? toast.firstElementChild.textContent : '';
+    dmAnnounceStatus(plainText);
     clearTimeout(window.__dmToastTimer);
-    window.__dmToastTimer = setTimeout(() => {
-        if (toast) toast.style.display = 'none';
-    }, 4200);
+    if (!window.__dmToastPinned) {
+        window.__dmToastTimer = setTimeout(dmHideQuickToast, 5000);
+    }
 }
 
 function dmLookupCustomMetaForItem(itemRaw) {
@@ -19212,7 +19341,7 @@ function dmRemoteAdjustHeroHp(heroId, heroName, delta) {
 
 function dmRemoteResetHeroToBaseline(heroId, heroName, skipConfirm = false) {
     if (!skipConfirm && typeof window.confirm === 'function') {
-        const ok = window.confirm(`Reset ${heroName}'s sheet (HP, Slots/Ammo, Gold Purse, Backpack Inventory, Equipped Gear, Presets & Notes) back to the official Session 1 baseline?`);
+        const ok = window.confirm(`Reset ${heroName}'s sheet (HP, Slots/Ammo, Gold Purse, Backpack Inventory, Equipped Gear, Presets & Notes) back to the Official Campaign Baseline / last synced checkpoint?`);
         if (!ok) return;
     }
     const rtdb = dmGetRtdb();
@@ -19240,17 +19369,17 @@ function dmRemoteResetHeroToBaseline(heroId, heroName, skipConfirm = false) {
     }).then(() => {
         dmUpdateSection0LiveVitals();
         updateEncounterBoardLivePartyVitals();
-        dmShowQuickToast(`🔄 <strong>Sent Full Baseline Reset to ${heroName}!</strong>`);
+        dmShowQuickToast(`🔄 <strong>Sent Official Baseline Reset to ${heroName}!</strong>`);
     });
 }
 
 function dmResetAllPartyToBaseline() {
     if (typeof window.confirm === 'function') {
-        const ok = window.confirm('Reset ALL 3 Player Sheets (Piper, Jacomir & Yvaine) back to their official Session 1 baseline?');
+        const ok = window.confirm('Reset ALL 3 Player Sheets (Piper, Jacomir & Yvaine) back to their Official Campaign Baseline / last synced checkpoint?');
         if (!ok) return;
     }
     DM_PARTY_TARGETS.forEach(t => dmRemoteResetHeroToBaseline(t.id, t.label, true));
-    dmShowQuickToast(`🔄 <strong>Reset All 3 Heroes (Piper, Jacomir &amp; Yvaine)</strong> to Official Session 1 Baseline!`);
+    dmShowQuickToast(`🔄 <strong>Reset All 3 Heroes (Piper, Jacomir &amp; Yvaine)</strong> to Official Campaign Baseline!`);
 }
 
 function dmRemoteAdjustHeroGold(heroId, heroName, gpDelta) {
@@ -19265,18 +19394,166 @@ function dmRemoteAdjustHeroGold(heroId, heroName, gpDelta) {
     });
 }
 
-function dmRequestAllCheckpoints() {
+function dmFormatShortClock(ts) {
+    if (!ts || !Number.isFinite(Number(ts))) return '';
+    try {
+        return new Date(Number(ts)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } catch (e) {
+        return '';
+    }
+}
+
+function dmBuildMergedCheckpointFromLive(liveState, prevCp, nowTs, timeStr) {
+    const base = liveState && typeof liveState === 'object' ? { ...liveState } : {};
+    const prev = prevCp && typeof prevCp === 'object' ? prevCp : {};
+    return {
+        ...base,
+        equippedMap: base.equippedMap || prev.equippedMap || {},
+        customGearMap: base.customGearMap || prev.customGearMap || {},
+        rawUnifiedPresets: base.rawUnifiedPresets !== undefined ? base.rawUnifiedPresets : (prev.rawUnifiedPresets !== undefined ? prev.rawUnifiedPresets : null),
+        sheetState: base.sheetState || prev.sheetState || null,
+        syncedAt: nowTs,
+        syncedTimeStr: timeStr,
+        syncedBy: 'DM Live Monitor'
+    };
+}
+
+function dmSetSyncButtonsBusy(isBusy, doneText = null) {
+    const configs = [
+        { id: 'dm-nav-sync-all-btn', idle: '☁️ Sync All', busy: '☁️ Syncing...' },
+        { id: 'dm-sync-all-players-btn', idle: '☁️ Sync All Players', busy: '☁️ Syncing 3 Heroes...' },
+        { id: 'dm-modal-sync-all-btn', idle: '☁️ Sync All Players to Firebase', busy: '☁️ Syncing All 3 Players...' }
+    ];
+    configs.forEach(cfg => {
+        const btn = document.getElementById(cfg.id);
+        if (!btn) return;
+        btn.setAttribute('aria-busy', isBusy ? 'true' : 'false');
+        if (isBusy) {
+            btn.textContent = cfg.busy;
+        } else if (doneText) {
+            btn.textContent = doneText;
+            clearTimeout(btn.__resetLblTimer);
+            btn.__resetLblTimer = setTimeout(() => {
+                const liveBtn = document.getElementById(cfg.id);
+                if (liveBtn && liveBtn.getAttribute('aria-busy') !== 'true') {
+                    liveBtn.textContent = cfg.idle;
+                }
+            }, 3500);
+        } else {
+            btn.textContent = cfg.idle;
+        }
+    });
+}
+
+function dmSyncSingleHeroToFirebase(heroId, heroName) {
     const rtdb = dmGetRtdb();
-    if (!rtdb) return;
+    if (!rtdb) {
+        dmShowQuickToast(`⚠️ Firebase RTDB is not connected yet — open over web or wait for connection.`);
+        return;
+    }
     const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    const reqTs = Date.now();
+    rtdb.ref(`campaigns/${room}/heroes/${heroId}/dm_commands`).push({
+        action: 'request_checkpoint',
+        reqTs,
+        requestedBy: 'DM Live Sync',
+        createdAt: reqTs
+    }).catch(() => {});
+
+    setTimeout(() => {
+        rtdb.ref(`campaigns/${room}/heroes/${heroId}`).once('value').then(snap => {
+            const hObj = snap.val() || {};
+            const cp = hObj.synced_checkpoint || null;
+            const live = hObj.state || null;
+            const nowTs = Date.now();
+            const timeStr = new Date(nowTs).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            if (cp && Number(cp.syncedAt || 0) >= reqTs) {
+                dmShowQuickToast(`☁️ <strong>Synced ${heroName} (${timeStr})!</strong> Live open sheet saved directly to Firebase checkpoint.`);
+                return;
+            }
+            if (live) {
+                const merged = dmBuildMergedCheckpointFromLive(live, cp, nowTs, timeStr);
+                return rtdb.ref(`campaigns/${room}/heroes/${heroId}/synced_checkpoint`).set(merged).then(() => {
+                    dmShowQuickToast(`☁️ <strong>Synced ${heroName} (${timeStr})!</strong> Promoted real-time Firebase live stream into official checkpoint.`);
+                });
+            }
+            dmShowQuickToast(`⚠️ No live Firebase data found yet for ${heroName}.`);
+        }).catch(err => {
+            dmShowQuickToast(`⚠️ Sync error for ${heroName}: ${escapeEncounterHtml(err && err.message ? err.message : 'Unknown error')}`);
+        });
+    }, 1500);
+}
+
+function dmSyncAllPlayersToFirebase(triggerBtn) {
+    if (window.__dmSyncAllInFlight) return;
+    const rtdb = dmGetRtdb();
+    if (!rtdb) {
+        dmShowQuickToast(`⚠️ Firebase RTDB is not connected yet — check internet or Firebase config.`);
+        return;
+    }
+    window.__dmSyncAllInFlight = true;
+    dmSetSyncButtonsBusy(true);
+    const room = window.COS_CAMPAIGN_ROOM || 'curse_of_strahd_main';
+    const reqTs = Date.now();
+
+    // Layer 1: Ping all open player tabs to flush full live sheet state immediately
     DM_PARTY_TARGETS.forEach(t => {
         rtdb.ref(`campaigns/${room}/heroes/${t.id}/dm_commands`).push({
             action: 'request_checkpoint',
-            createdAt: Date.now()
-        });
+            reqTs,
+            requestedBy: 'DM Live Sync',
+            createdAt: reqTs
+        }).catch(() => {});
     });
-    dmShowQuickToast(`📡 <strong>Requested Live Checkpoint Sync</strong> from all open Player Sheets!`);
+
+    // Layer 2: After 1.8s, verify every hero — promote real-time Firebase `state` to `synced_checkpoint` for closed tabs
+    setTimeout(() => {
+        rtdb.ref(`campaigns/${room}/heroes`).once('value').then(snap => {
+            const allVal = snap.val() || {};
+            const nowTs = Date.now();
+            const timeStr = new Date(nowTs).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const writes = [];
+            const liveTabs = [];
+            const streamPromoted = [];
+            const missing = [];
+
+            DM_PARTY_TARGETS.forEach(t => {
+                const hObj = allVal[t.id] || {};
+                const cp = hObj.synced_checkpoint || null;
+                const live = hObj.state || null;
+                if (cp && Number(cp.syncedAt || 0) >= reqTs) {
+                    liveTabs.push(t.label);
+                } else if (live) {
+                    const merged = dmBuildMergedCheckpointFromLive(live, cp, nowTs, timeStr);
+                    writes.push(rtdb.ref(`campaigns/${room}/heroes/${t.id}/synced_checkpoint`).set(merged));
+                    streamPromoted.push(t.label);
+                } else if (cp) {
+                    streamPromoted.push(t.label);
+                } else {
+                    missing.push(t.label);
+                }
+            });
+
+            return Promise.all(writes).then(() => {
+                const syncedTotal = liveTabs.length + streamPromoted.length;
+                const shortClock = dmFormatShortClock(nowTs) || timeStr;
+                dmSetSyncButtonsBusy(false, `✅ Synced ${syncedTotal}/${DM_PARTY_TARGETS.length} (${shortClock})`);
+                const parts = [];
+                if (liveTabs.length) parts.push(`Live open tabs: <strong>${liveTabs.join(', ')}</strong>`);
+                if (streamPromoted.length) parts.push(`Live stream saved: <strong>${streamPromoted.join(', ')}</strong>`);
+                if (missing.length) parts.push(`No data yet: ${missing.join(', ')}`);
+                dmShowQuickToast(`☁️ <strong>Synced ${syncedTotal}/${DM_PARTY_TARGETS.length} Players to Firebase (${timeStr})!</strong><br><small style="color:#a7f3d0;">${parts.join(' • ')}</small>`);
+                dmUpdateSection0LiveVitals();
+            });
+        }).catch(err => {
+            dmSetSyncButtonsBusy(false);
+            dmShowQuickToast(`⚠️ Firebase Sync failed: ${escapeEncounterHtml(err && err.message ? err.message : 'Unknown error')}`);
+        }).finally(() => {
+            window.__dmSyncAllInFlight = false;
+        });
+    }, 1800);
 }
+const dmRequestAllCheckpoints = dmSyncAllPlayersToFirebase;
 
 function dmCopySingleHeroCheckpoint(heroId) {
     const cp = dmSyncedCheckpoints[heroId] || dmLiveHeroes[heroId];
@@ -19315,8 +19592,12 @@ function dmCopyAllSyncedCheckpoints() {
 }
 
 function dmUpdateSection0LiveVitals() {
+    let syncedCount = 0;
+    let unsyncedCount = 0;
     DM_PARTY_TARGETS.forEach(t => {
-        const st = dmLiveHeroes[t.id] || dmSyncedCheckpoints[t.id];
+        const live = dmLiveHeroes[t.id] || null;
+        const cp = dmSyncedCheckpoints[t.id] || null;
+        const st = live || cp;
         if (!st) return;
         const vitEl = document.getElementById(`dm-sec0-vitals-${t.id}`);
         if (vitEl && st.hpDisplay) {
@@ -19326,7 +19607,38 @@ function dmUpdateSection0LiveVitals() {
         if (resEl && st.resourcesSummary) {
             resEl.textContent = st.resourcesSummary;
         }
+        const syncEl = document.getElementById(`dm-sec0-sync-${t.id}`);
+        if (syncEl) {
+            const liveTs = live ? Number(live.updatedAt || 0) : 0;
+            const cpTs = cp ? Number(cp.syncedAt || 0) : 0;
+            const hasUnsyncedLive = Boolean(live && (!cp || liveTs > cpTs + 5000));
+            const liveClk = dmFormatShortClock(liveTs);
+            const syncClk = cp && cp.syncedTimeStr ? cp.syncedTimeStr : dmFormatShortClock(cpTs);
+            const gpTxt = `💰 ${st.gp || 0} GP${st.sp ? ', ' + st.sp + ' SP' : ''}`;
+            syncEl.classList.remove('is-synced', 'is-unsynced');
+            if (hasUnsyncedLive) {
+                unsyncedCount++;
+                syncEl.classList.add('is-unsynced');
+                syncEl.innerHTML = `<span>🟡 Live ${escapeEncounterHtml(liveClk || 'Now')} • Unsynced (${syncClk ? 'Last: ' + escapeEncounterHtml(syncClk) : 'Not synced'})</span><span>${gpTxt}</span>`;
+            } else if (cp) {
+                syncedCount++;
+                syncEl.classList.add('is-synced');
+                syncEl.innerHTML = `<span>🟢 Live • ☁️ Synced ${escapeEncounterHtml(syncClk || 'OK')}</span><span>${gpTxt}</span>`;
+            } else {
+                syncEl.innerHTML = `<span>📡 Live Stream Active</span><span>${gpTxt}</span>`;
+            }
+        }
     });
+    const hdrBadge = document.getElementById('dm-live-stream-badge');
+    if (hdrBadge) {
+        if (unsyncedCount > 0) {
+            hdrBadge.className = 'pill gold';
+            hdrBadge.textContent = `🟡 Live Monitor • ${unsyncedCount} Unsynced`;
+        } else if (syncedCount > 0) {
+            hdrBadge.className = 'pill green';
+            hdrBadge.textContent = `🟢 Live Monitor • ${syncedCount}/${DM_PARTY_TARGETS.length} Synced`;
+        }
+    }
 }
 
 function dmDeleteCustomLoot(lootKey) {
@@ -21181,9 +21493,15 @@ function renderDmDropModalBody() {
             }).join('')
             : '<div style="font-size:0.72rem; color:#64748b; font-style:italic;">No player notes recorded.</div>';
 
-        const cpBadgeHtml = cp && cp.syncedTimeStr
-            ? `<span class="pill green" style="font-size:0.66rem;" title="Player clicked ☁️ Sync to DM at this time">☁️ Synced Checkpoint: ${escapeEncounterHtml(cp.syncedTimeStr)}</span>`
-            : `<span class="pill" style="font-size:0.66rem; background:#1e293b; color:#94a3b8;">📡 Live Stream (No manual ☁️ Sync clicked yet)</span>`;
+        const liveTs = dmLiveHeroes[t.id] ? Number(dmLiveHeroes[t.id].updatedAt || 0) : 0;
+        const cpTs = cp ? Number(cp.syncedAt || 0) : 0;
+        const hasUnsyncedLive = Boolean(dmLiveHeroes[t.id] && (!cp || liveTs > cpTs + 5000));
+        const liveClk = dmFormatShortClock(liveTs);
+        const cpBadgeHtml = hasUnsyncedLive
+            ? `<span class="pill gold" style="font-size:0.66rem;">🟡 Live ${escapeEncounterHtml(liveClk || 'Now')} • Unsynced Changes${cp && cp.syncedTimeStr ? ' (Last Sync: ' + escapeEncounterHtml(cp.syncedTimeStr) + ')' : ''}</span>`
+            : (cp && cp.syncedTimeStr
+                ? `<span class="pill green" style="font-size:0.66rem;">🟢 Live • ☁️ Synced: ${escapeEncounterHtml(cp.syncedTimeStr)}${cp.syncedBy ? ' (' + escapeEncounterHtml(cp.syncedBy) + ')' : ''}</span>`
+                : `<span class="pill" style="font-size:0.66rem; background:#1e293b; color:#94a3b8;">📡 Live Stream (Not checkpointed yet)</span>`);
 
         const cpText = [
             (cp && cp.sheetExportStr) || st.sheetExportStr || '',
@@ -21202,8 +21520,9 @@ function renderDmDropModalBody() {
                         <span style="font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:#86efac;">
                             HP: <strong>${escapeEncounterHtml(st.hpDisplay || '--')}</strong> • AC: <strong>${escapeEncounterHtml(st.acDisplay || '--')}</strong> • 💰 <strong>${st.gp || 0} GP, ${st.sp || 0} SP</strong>
                         </span>
+                        <button type="button" class="btn-modal-mini" style="padding:2px 8px; font-size:0.68rem; border-color:#38bdf8; color:#bae6fd;" onclick="dmSyncSingleHeroToFirebase('${t.id}', '${t.label}')">☁️ Sync Hero</button>
                         <button type="button" class="btn-modal-mini" style="padding:2px 8px; font-size:0.68rem; border-color:#34d399; color:#a7f3d0;" onclick="dmCopySingleHeroCheckpoint('${t.id}')">📋 Copy Hero Sync</button>
-                        <button type="button" class="btn-modal-mini" style="padding:2px 8px; font-size:0.68rem; border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteResetHeroToBaseline('${t.id}', '${t.label}')" title="Undo test changes &amp; reset ${t.label}'s sheet back to Session 1 baseline">🔄 Reset Hero</button>
+                        <button type="button" class="btn-modal-mini" style="padding:2px 8px; font-size:0.68rem; border-color:#ef4444; color:#fca5a5;" onclick="dmRemoteResetHeroToBaseline('${t.id}', '${t.label}')" title="Undo test changes &amp; reset ${t.label}'s sheet back to Official Campaign Baseline / last checkpoint">🔄 Reset Hero</button>
                     </div>
                 </div>
 
@@ -21299,12 +21618,12 @@ function renderDmDropModalBody() {
     contentEl.innerHTML = tabsHtml + `
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; background:#0b1120; border:1px solid #1e293b; border-radius:8px; padding:8px 12px; margin-bottom:10px;">
             <div style="font-size:0.75rem; color:#cbd5e1;">
-                <strong>2-Tier Cloud System:</strong> Sheets stream live below as players play, and players click <strong>☁️ Sync to DM</strong> on their header to save an official Checkpoint without overwriting GitHub files.
+                <strong>2-Tier Real-Time Cloud Monitor:</strong> Player sheets stream live mid-session below automatically. Click <strong>☁️ Sync All Players to Firebase</strong> anytime (or at session end) to lock every hero's real-time state—even closed tabs—into official Firebase checkpoints!
             </div>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button type="button" class="btn-modal-mini" style="border-color:#38bdf8; color:#bae6fd; padding:4px 10px;" onclick="dmRequestAllCheckpoints()">📡 Request Sync from Open Sheets</button>
+                <button type="button" id="dm-modal-sync-all-btn" class="btn-modal-mini" style="border-color:#38bdf8; background:rgba(14,116,144,0.35); color:#e0f2fe; font-weight:700; padding:4px 10px;" onclick="dmSyncAllPlayersToFirebase(this)">☁️ Sync All Players to Firebase</button>
                 <button type="button" class="btn-modal-mini" style="border-color:#34d399; color:#a7f3d0; padding:4px 10px;" onclick="dmCopyAllSyncedCheckpoints()">📋 Copy All 3 Heroes' Synced Data &amp; Notes</button>
-                <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5; padding:4px 10px;" onclick="dmResetAllPartyToBaseline()" title="Reset Piper, Jacomir &amp; Yvaine back to official Session 1 baseline">🔄 Reset All 3 Sheets to Baseline</button>
+                <button type="button" class="btn-modal-mini" style="border-color:#ef4444; color:#fca5a5; padding:4px 10px;" onclick="dmResetAllPartyToBaseline()" title="Reset Piper, Jacomir &amp; Yvaine back to Official Campaign Baseline / last checkpoint">🔄 Reset All 3 Sheets to Baseline</button>
             </div>
         </div>
         <div style="display:flex; flex-direction:column; gap:10px;">

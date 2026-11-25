@@ -57,7 +57,7 @@
 * **Saving Throws:** **STR ★ `+5`**, **CON ★ `+5`**, WIS `+1`, CHA `+1`, DEX `+0`, INT `+0`
 * **Proficient Skills:** **Athletics (STR) ★ `+5`**, **Insight (WIS) ★ `+3`**, **Perception (WIS) ★ `+3`** *(Human: Skillful)*, **Survival (WIS) ★ `+3`** *(Skilled)*, **Persuasion (CHA) ★ `+3`** *(Noble)*, **Intimidation (CHA) ★ `+3`** *(Skilled)*, **History (INT) ★ `+2`** *(Noble)* • **Tool Proficiency:** *Dragonchess Set* *(Tied Count Strahd in a legendary 5-round stalemate `16 vs. 16` in Session 2!)*
 * **Weapons & 5.5e Weapon Masteries:**
-  - 🗡️ **Ancestral Greatsword *(Liquid Silver Coating Applied in S2!)*:** `+5 to hit`, `2d6 + 3` Slashing *(Savage Attacker: rolls 2d6 twice 1/turn and uses higher total)* • **Graze Mastery:** Deals **3 Slashing damage** (STR mod) even on a missed attack roll!
+  - 🗡️ **Ancestral Greatsword:** `+5 to hit`, `2d6 + 3` Slashing *(Savage Attacker: rolls 2d6 twice 1/turn and uses higher total)* • **Graze Mastery:** Deals **3 Slashing damage** (STR mod) even on a missed attack roll!
   - ⚔️ **Ismark's Silvered Longsword *(Spared by Ismark in S1)*:** `+5 to hit`, `1d8 + 3` (1H) or `1d10 + 3` (2H) **Silvered Slashing** *(bypasses nonmagical resistances/immunities of Undead, Vampire Spawn, Werewolves, & Night Hags!)* • **Sap Mastery:** Target hit has **Disadvantage on its next attack roll** before the start of your next turn!
   - 🪓 **2x Handaxes (Melee or Thrown 20/60 ft):** `+5 to hit`, `1d6 + 3` Slashing • **Vex Mastery:** Hitting grants **Advantage** on the next attack roll against that target before the end of your next turn!
 * **Battle Master Combat Superiority (`Maneuver Save DC 13`):**
@@ -115,13 +115,13 @@
   - 🌫️ **Smokescreen:** *(Fog Cloud)* 1 Action, 120 ft, Conc 1 hr. 20-ft-radius sphere of heavy obscuration.
   - 🩸 **Amulet of the Whispering Grave (`Speak with Dead` • `1 / 1` Ready Post-LR — Used on Doru in S2!):** Casts ***Speak with Dead*** (`3rd-level Necromancy`, 1 Action, 10 ft, 10 min, ask up to 5 questions of a corpse with a mouth) once per Long Rest without spending a spell slot!
 * **Weapons, Firearms Arsenal & Reload Engine *(Post-Session 2 Long Rest)*:**
-  - 🎯 **"Lament" (Heavy Long Rifle / Musket):** `+8 to hit`, `1d12 + 4` Piercing | Range 80/240 ft (5 ft point-blank w/ Gunner) | Two-Handed. Live Chamber: **`10 / 10`** *(**`5x Silvered Rounds`** currently loaded!)* • Reserve Clips: **`2 / 2`** (1 Bonus Action reload).
+  - 🎯 **"Lament" (Heavy Long Rifle / Musket):** `+8 to hit`, `1d12 + 4` Piercing | Range 80/240 ft (5 ft point-blank w/ Gunner) | Two-Handed. Live Chamber: **`10 / 10`** • Reserve Clips: **`2 / 2`** (1 Bonus Action reload).
   - 💥 **Twin Revolvers ("Mercy & Less" — ACTIVE STANCE):** Main-Hand `+8 to hit`, `1d6 + 4` Piercing (Action) | Off-Hand `+8 to hit`, `1d6` Piercing (Bonus Action) | Range 5/90 ft. Live Cylinders: **Mercy `6 / 6`**, **Less `6 / 6`** • Twin Speedloaders: **`2 / 2`** (1 Bonus Action reloads BOTH).
   - 🗡️ **Solmere Royal Trench Knife / Stiletto:** Backup Melee. Finesse, Light. `+6 to hit` (DEX + PB), `1d4 + 4` Piercing. Concealed boot blade, unlimited melee strikes.
   - ☕ **Short Rest Restock (Chamber Top-Off):** Yvaine hand-feeds loose powder and slugs during a short rest, fully replenishing her active firearm chambers (`10/10` for Lament, `6/6 & 6/6` for Mercy & Less). Spent emergency reserve clips and speedloaders only recharge on a **Long Rest**!
 * **Equipment, Session 1–2 Loot & Relics (`17 GP, 5 SP` — Synced Post-S2 Firebase):**
-  - 🎗️ ***Specialty Cartridge Rig (Claimed S2):*** Tactical ammunition rig for specialty/silvered rounds (`5x Silvered Rounds` loaded in *Lament*!).
-  - 💧 ***2x Consecrated Holy Water (Claimed S2):*** `20 ft` splash, `2d6 Radiant` & halts Vampire Regeneration.
+  - 🎗️ ***Specialty Cartridge Rig (Claimed S2):*** Tactical ammunition rig for specialty/silvered rounds (unlocks firearm specialty ammo loading).
+  - 🪙 ***10x Silvered Bullets (Claimed S2 — Unloaded in Bag):*** Silvered firearm rounds that bypass nonmagical resistance/immunity of Vampire Spawn, Werewolves & Night Hags!
   - 🌿 ***2x Barovian Medicinal Herbs*** & 🍎 ***3x Apples*** (`1d4 + 1 HP` each) *(Claimed S2)*.
   - 🩸 ***Amulet of the Whispering Grave*** *(Appraised Red Amulet — `Speak with Dead` 1/Long Rest)*
   - 🗝️ ***Lockpicks*** *(Permanent Thieves' Tools access for picking locks & disarming traps)*
