@@ -9183,6 +9183,113 @@
         } catch (e) {}
     }
 
+    function getAppliedBaselineTsKey() {
+        return `cos_applied_baseline_ts_${adapter ? adapter.heroId : 'hero'}_v1`;
+    }
+
+    function getAppliedBaselineTs() {
+        try {
+            const raw = localStorage.getItem(getAppliedBaselineTsKey());
+            const n = Number(raw || 0);
+            return (Number.isFinite(n) && n > 0) ? n : 0;
+        } catch (e) {
+            return 0;
+        }
+    }
+
+    function setAppliedBaselineTs(ts) {
+        const n = Number(ts || 0);
+        if (!Number.isFinite(n) || n <= 0) return;
+        try {
+            localStorage.setItem(getAppliedBaselineTsKey(), String(n));
+        } catch (e) {}
+    }
+
+    function applyAutoBaselineUpgradeOnBoot() {
+        if (!adapter) return false;
+        const bakedTs = Number(adapter.baselineTimestamp || 0);
+        if (!bakedTs) return false;
+
+        const appliedTs = getAppliedBaselineTs();
+        if (appliedTs >= bakedTs) return false;
+
+        const localTs = getLocalUpdatedAt();
+        let cpSyncedAt = 0;
+        try {
+            const rawCp = localStorage.getItem(getCheckpointBackupKey());
+            if (rawCp) cpSyncedAt = Number(JSON.parse(rawCp)?.syncedAt || 0);
+        } catch (e) {}
+
+        // If this browser already saved live state or a checkpoint at/after the current HTML baseline, keep it!
+        if (localTs >= bakedTs || cpSyncedAt >= bakedTs) {
+            setAppliedBaselineTs(bakedTs);
+            return false;
+        }
+
+        // Check whether this browser actually holds stale prior-session localStorage (vs a brand-new device)
+        let hadPriorSession = false;
+        try {
+            hadPriorSession = Boolean(
+                appliedTs > 0 ||
+                localTs > 0 ||
+                cpSyncedAt > 0 ||
+                localStorage.getItem(getEquipStorageKey()) !== null ||
+                localStorage.getItem(getHudStorageKey()) !== null ||
+                localStorage.getItem(getUnifiedPresetsKey()) !== null ||
+                localStorage.getItem(getAmmoStorageKey()) !== null ||
+                localStorage.getItem(getWeaponModsStorageKey()) !== null ||
+                localStorage.getItem(getWeaponCoatingStorageKey()) !== null
+            );
+        } catch (e) {}
+
+        setAppliedBaselineTs(bakedTs);
+        if (!hadPriorSession) return false;
+
+        // Clear stale previous-session gameplay localStorage so a plain Refresh loads the new HTML baseline cleanly
+        // (while preserving strictly device-local UI preferences: layout, tablet orientation, theme, Real Dice Mode, tabs!)
+        const origLog = window.logRoll;
+        try {
+            window.logRoll = () => {};
+            if (typeof window.resetGoldPurse === 'function') window.resetGoldPurse();
+            if (typeof window.clearGoldHistory === 'function') window.clearGoldHistory();
+            if (typeof window.resetPlayerNotes === 'function') window.resetPlayerNotes();
+            if (typeof adapter.resetItems === 'function') adapter.resetItems();
+            localStorage.removeItem(getCheckpointBackupKey());
+            localStorage.removeItem(getEquipStorageKey());
+            localStorage.removeItem(getCustomGearKey());
+            localStorage.removeItem(getCustomPresetsKey());
+            localStorage.removeItem(getUnifiedPresetsKey());
+            localStorage.removeItem(getLocalDmOverrideKey());
+            localStorage.removeItem(getAmmoStorageKey());
+            localStorage.removeItem(getWeaponModsStorageKey());
+            localStorage.removeItem(getWeaponCoatingStorageKey());
+            localStorage.removeItem(getAwakenedWeaponsStorageKey());
+            localStorage.removeItem(getLocalUpdatedAtKey());
+
+            loadHudState();
+            hudState = {
+                conc: null,
+                statuses: [],
+                deathSaves: { succ: 0, fail: 0 },
+                turn: { action: true, bonus: true, reaction: true, move: true },
+                advLocked: false,
+                rightTab: normalizeRightTabId(hudState.rightTab),
+                mobileTab: normalizeMobileTabId(hudState.mobileTab),
+                tabPrefV3: true,
+                skillsTrainedOnly: Boolean(hudState.skillsTrainedOnly),
+                showPartyHud: Boolean(hudState.showPartyHud)
+            };
+            saveHudState();
+            lastAppliedPresetId = null;
+            presetEditor = null;
+        } catch (e) {
+            console.warn('[COS_RPG] Auto-baseline boot upgrade error:', e);
+        } finally {
+            if (origLog) window.logRoll = origLog;
+        }
+        return true;
+    }
+
     function normalizeFpValue(v) {
         if (v === undefined || v === null) return null;
         if (Array.isArray(v)) {
@@ -10749,6 +10856,7 @@
                 skillsTrainedOnly: false
             };
             cloudBootHydrated = true;
+            setAppliedBaselineTs(Number(adapter.baselineTimestamp || 0));
             renderStatusStrip();
             renderActionEconomyBar();
             setRightColumnTab('all');
@@ -17852,6 +17960,7 @@
 
     function init(sheetAdapter) {
         adapter = sheetAdapter;
+        const autoUpgradedBaseline = applyAutoBaselineUpgradeOnBoot();
         loadManualDiceMode();
         hydrateCustomAmmoDefs();
         loadCachedMsgThreads();
@@ -17864,6 +17973,10 @@
         applyEquipmentToSheet(true);
         syncDiceModeUI();
         checkUrlClaimParam();
+        if (autoUpgradedBaseline && adapter && typeof adapter.log === 'function') {
+            const lbl = adapter.baselineLabel || 'New Official Sheet Baseline';
+            adapter.log(`✨ <strong>Updated to ${esc(lbl)}!</strong> Previous-session cache was refreshed automatically.`);
+        }
     }
 
     // Export public API
