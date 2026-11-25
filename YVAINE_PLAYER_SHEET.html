@@ -1846,6 +1846,7 @@
                 mod: totalBonus,
                 mode: rollMode,
                 isInitiative: Boolean(opts && opts.isInitiative),
+                attackKind: opts && opts.attackKind,
                 notes: (opts && opts.notes) || '',
                 onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollD20(label, bonus, opts))
             });
@@ -2022,6 +2023,7 @@
             COS_RPG.setRollFollowup({
                 label: `💥 Roll ${niceName} Damage`,
                 critLabel: `🔥 ROLL BRUTAL CRIT (${niceName})!`,
+                attackKind: 'ranged',
                 onDamage: () => dmgFn(false),
                 onCrit: () => dmgFn(true)
             });
@@ -2031,7 +2033,7 @@
         if (slayersPreyActive) noteBits.push("🎯 Slayer's Prey (+1d6)");
         if (isTracerActive) noteBits.push("🏹 Hunter's Mark (+1d6)");
         if (aDef) noteBits.push(`Ammo: ${aDef.shortName} (${shot.remaining} left)`);
-        const res = rollD20(`${baseLabel} (+${effAtk})${tag}`, effAtk, { notes: noteBits.join(' • ') });
+        const res = rollD20(`${baseLabel} (+${effAtk})${tag}`, effAtk, { notes: noteBits.join(' • '), attackKind: 'ranged' });
         lastShotCritByWeapon[weaponId] = Boolean(res && res.isCrit);
         return { shot, res };
     }
@@ -2067,9 +2069,11 @@
                 diceParts: parts,
                 flatMod: modBonus,
                 dmgType: isSilv ? 'Silvered Piercing' : 'Piercing',
+                attackKind: 'ranged',
                 isCrit,
                 notes: notes.join(' • '),
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollYvaineFirearmDamage(weaponId, weaponLabel, dieSides, dexBonus, chamberRemain, maxChamber, accentColor, isCrit))
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollYvaineFirearmDamage(weaponId, weaponLabel, dieSides, dexBonus, chamberRemain, maxChamber, accentColor, false)),
+                onDigitalCritRoll: () => COS_RPG.runManualDigitalFallback(() => rollYvaineFirearmDamage(weaponId, weaponLabel, dieSides, dexBonus, chamberRemain, maxChamber, accentColor, true))
             });
             return;
         }
@@ -2119,7 +2123,7 @@
         const critHead = isCrit ? `<strong style="color:#facc15;">NAT 20 BRUTAL CRIT — </strong>` : '';
         const valColor = isSilv ? '#e2e8f0' : accentColor;
         if (window.COS_RPG && COS_RPG.setLastDamageContext) {
-            COS_RPG.setLastDamageContext({ total, isCrit, label: weaponLabel, allowOnHitAddons: !slayersPreyActive });
+            COS_RPG.setLastDamageContext({ total, isCrit, label: weaponLabel, attackKind: 'ranged', allowOnHitAddons: true });
         }
         logRoll(`${critHead}<strong>${weaponLabel} Damage:</strong> ${breakdown} = <span style="font-size:1.15rem; color:${valColor}; font-weight:800;">${total} ${dmgLabel}</span>!${noteHtml}`);
     }
@@ -2338,11 +2342,12 @@
             COS_RPG.setRollFollowup({
                 label: `💥 Roll ${info ? info.name : 'Knife'} Off-Hand Damage`,
                 critLabel: `🔥 ROLL BRUTAL CRIT (${info ? info.name : 'Knife'})!`,
+                attackKind: 'melee',
                 onDamage: () => rollStrappedDaggerDamage(true),
                 onCrit: () => rollStrappedDaggerDamage(true, true)
             });
         }
-        rollD20(label, info ? info.atkBonus : 6);
+        rollD20(label, info ? info.atkBonus : 6, { attackKind: 'melee' });
     }
 
     function rollStrappedDaggerDamage(isOffhand = true, forceCrit = false) {
@@ -2519,11 +2524,12 @@
             COS_RPG.setRollFollowup({
                 label: '💥 Roll Trench Knife Damage',
                 critLabel: '🔥 ROLL BRUTAL CRIT (Knife)!',
+                attackKind: 'melee',
                 onDamage: () => rollKnifeDamage(false),
                 onCrit: () => rollKnifeDamage(false, true)
             });
         }
-        rollD20(`Trench Knife Attack (+${atk})`, atk);
+        rollD20(`Trench Knife Attack (+${atk})`, atk, { attackKind: 'melee' });
     }
 
     function rollKnifeDamage(isOffhand = false, forceCrit = false) {
@@ -2532,27 +2538,44 @@
         const dmgLabel = km.isSilvered ? 'Silvered Piercing Damage' : 'Piercing Damage';
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
             const parts = [{ expr: '1d4', type: km.isSilvered ? 'Silvered Piercing' : 'Piercing' }];
+            if (slayersPreyActive) parts.push({ expr: '1d6', type: "Slayer's Prey" });
+            if (isTracerActive) parts.push({ expr: '1d6', type: "Hunter's Mark" });
             (km.extras || []).forEach(exM => { if (exM.dice) parts.push({ expr: exM.dice, type: exM.type || 'Mod' }); });
             COS_RPG.logManualDamage({
                 label: `Solmere Trench Knife (${isOffhand ? 'Off-Hand' : 'Main-Hand'})`,
                 diceParts: parts,
                 flatMod: flat,
                 dmgType: km.isSilvered ? 'Silvered Piercing' : 'Piercing',
+                attackKind: 'melee',
                 isCrit: Boolean(forceCrit),
                 notes: (km.saveNotes && km.saveNotes.length) ? km.saveNotes.join(' • ') : '',
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollKnifeDamage(isOffhand, forceCrit))
+                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollKnifeDamage(isOffhand, false)),
+                onDigitalCritRoll: () => COS_RPG.runManualDigitalFallback(() => rollKnifeDamage(isOffhand, true))
             });
             return;
         }
         const d4 = Math.floor(Math.random() * 4) + 1;
         let total = (forceCrit ? 4 : 0) + d4 + flat;
         let breakdown = `${forceCrit ? 'Max(4) + ' : ''}[1d4: ${d4}]` + (isOffhand ? '' : ' + 4 DEX') + (km.dmgBonus ? ` + ${km.dmgBonus} Mod/Coat` : '');
+        if (slayersPreyActive) {
+            const spD6 = Math.floor(Math.random() * 6) + 1;
+            total += (forceCrit ? 6 : 0) + spD6;
+            breakdown += ` + <span style="color:#f87171;">Slayer's Prey (+${forceCrit ? '6+' : ''}${spD6})</span>`;
+        }
+        if (isTracerActive) {
+            const trD6 = Math.floor(Math.random() * 6) + 1;
+            total += (forceCrit ? 6 : 0) + trD6;
+            breakdown += ` + <span style="color:#ef4444;">Hunter's Mark (+${forceCrit ? '6+' : ''}${trD6})</span>`;
+        }
         (km.extras || []).forEach(exM => {
             const exR = rollDiceExprLocal(exM.dice);
             total += (forceCrit ? exR.max : 0) + exR.sum;
             breakdown += ` + <span style="color:#fde68a;">+${forceCrit ? exR.max + '+' : ''}${exR.sum} ${exM.type} (${exM.dice}: ${exR.rolls.join('+')})</span>`;
         });
         const noteHtml = (km.saveNotes && km.saveNotes.length) ? ` <small style="color:#cbd5e1;">(${km.saveNotes.join(' &bull; ')})</small>` : '';
+        if (window.COS_RPG && COS_RPG.setLastDamageContext) {
+            COS_RPG.setLastDamageContext({ total, isCrit: Boolean(forceCrit), label: 'Solmere Trench Knife', attackKind: 'melee', allowOnHitAddons: true });
+        }
         logRoll(`🗡️ <strong>${forceCrit ? 'BRUTAL CRIT — ' : ''}Solmere Trench Knife Damage (${isOffhand ? 'Off-Hand' : 'Main-Hand'}):</strong> ${breakdown} = <span style="font-size:1.15rem; color:#cbd5e1; font-weight:800;">${total} ${dmgLabel}</span>!${noteHtml}`);
     }
 
@@ -4961,14 +4984,26 @@
                 },
                 log: logRoll,
                 openItemModal: openItemDetailsModal,
-                getOnHitAddons: ({ isCrit, lastDamageTotal }) => {
-                    if (slayersPreyActive) return [];
-                    return [{
-                        label: isCrit ? "🎯🔥 +Crit Slayer's Prey (6+1d6)" : "🎯 +Slayer's Prey (+1d6)",
-                        cls: isCrit ? 'btn-crit' : 'btn-help',
-                        onClick: () => rollSlayerDieOnly(Boolean(isCrit), typeof lastDamageTotal === 'number' ? lastDamageTotal : null)
-                    }];
+                followupPillLabel: '⚡ +On-Hit Spell',
+                getPassiveWeaponBonusDice: () => {
+                    const out = [];
+                    if (slayersPreyActive) out.push({ dice: '1d6', type: "Slayer's Prey" });
+                    if (isTracerActive) out.push({ dice: '1d6', type: "Hunter's Mark" });
+                    return out;
                 },
+                postAttackFollowups: [
+                    {
+                        id: 'phosphor_grenade',
+                        label: () => `💣 Phosphor Grenade (BA • -1 Slot • ${curSpellSlots}/${maxSpellSlots} • 1d10 AoE)`,
+                        cls: 'btn-hit',
+                        attackKinds: ['ranged'],
+                        phases: ['attack', 'damage'],
+                        requiresActionSlot: 'bonus',
+                        spendActionSlot: 'bonus',
+                        isAvailable: () => curSpellSlots > 0,
+                        onTrigger: () => castPhosphorGrenade()
+                    }
+                ],
                 captureSheetState: () => ({
                     curHP,
                     maxHP,

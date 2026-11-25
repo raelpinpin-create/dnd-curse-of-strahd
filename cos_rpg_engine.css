@@ -2938,6 +2938,86 @@ header.header-banner .pill-badge-group {
     color: #ffffff;
 }
 
+/* ⚡ SMART COLLAPSIBLE POST-ATTACK FOLLOW-UP PILL & DRAWER (ZERO BAR BLOAT) */
+.rpg-followup-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-block-size: 32px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(56, 189, 248, 0.65);
+    background: linear-gradient(135deg, rgba(14, 116, 144, 0.34) 0%, rgba(15, 23, 42, 0.92) 100%);
+    color: #e0f2fe;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.rpg-followup-pill:hover {
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.28);
+}
+.rpg-followup-pill.is-crit {
+    border-color: #facc15;
+    background: linear-gradient(135deg, rgba(161, 98, 7, 0.45) 0%, rgba(127, 29, 29, 0.45) 100%);
+    color: #fef08a;
+}
+.rpg-followup-pill[aria-expanded="true"] {
+    border-color: #fbbf24;
+    background: rgba(180, 83, 9, 0.36);
+    color: #fef3c7;
+}
+.rpg-followup-caret {
+    display: inline-block;
+    font-size: 0.7rem;
+    transition: transform 0.16s ease;
+}
+.rpg-followup-pill[aria-expanded="true"] .rpg-followup-caret {
+    transform: rotate(180deg);
+}
+.rpg-followup-drawer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    margin-top: 4px;
+    padding: 7px 9px;
+    border-radius: 7px;
+    background: rgba(9, 13, 24, 0.88);
+    border: 1px dashed rgba(56, 189, 248, 0.48);
+}
+.rpg-followup-drawer[hidden] {
+    display: none;
+}
+.rpg-followup-drawer-lbl {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.35px;
+    color: #94a3b8;
+    margin-inline-end: 2px;
+}
+[data-theme="parchment"] .rpg-followup-pill {
+    background: #e0f2fe;
+    border-color: #0369a1;
+    color: #0c4a6e;
+}
+[data-theme="parchment"] .rpg-followup-pill.is-crit {
+    background: #fef3c7;
+    border-color: #b45309;
+    color: #78350f;
+}
+[data-theme="parchment"] .rpg-followup-drawer {
+    background: #f1e9d8;
+    border-color: #0369a1;
+}
+[data-theme="parchment"] .rpg-followup-drawer-lbl {
+    color: #57534e;
+}
+
 /* 4-Button Physical Death Saves Grid (Real Dice Mode) */
 .rpg-ds-manual-grid {
     display: grid;

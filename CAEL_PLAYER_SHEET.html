@@ -1659,8 +1659,9 @@
             COS_RPG.setRollFollowup({
                 label: '💥 Roll Archer Damage (1d8+3 Radiant)',
                 critLabel: '🔥 ROLL BRUTAL CRIT! (8 + 1d8+3 Radiant)',
+                suppressOnHitAddons: true,
                 onDamage: () => rollStarryArcherDamage(),
-                onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Starry Archer Arrow', diceCount: 1, sides: 8, flatMod: 3, dmgType: 'Radiant' })
+                onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Starry Archer Arrow', diceCount: 1, sides: 8, flatMod: 3, dmgType: 'Radiant', allowOnHitAddons: false })
             });
         }
         rollD20('Starry Form — Archer Arrow (60 ft)', atkMod);
@@ -4151,16 +4152,22 @@
             log: logRoll,
             openItemModal: openItemDetailsModal,
             getConSaveMinDie: () => (activeStarryForm === 'dragon' ? 10 : 1),
-            onAfterLogRoll: (hudBody) => {
-                if (activeStarryForm === 'archer' && pendingActionForArcher) {
-                    pendingActionForArcher = false;
-                    const wrap = document.createElement('div');
-                    wrap.className = 'rpg-hud-followup-wrap';
-                    wrap.innerHTML = `<button type="button" class="rpg-hud-followup-btn" style="border-color:#38bdf8; color:#bae6fd;" onclick="useArcherBonusAction()">🏹 Use Archer Bonus Action (+${getSpellAttackMod()}, 1d8+3 Rad)</button>`;
-                    hudBody.appendChild(wrap);
-                } else {
-                    pendingActionForArcher = false;
+            followupPillLabel: '✨ +Bonus Action',
+            postAttackFollowups: [
+                {
+                    id: 'starry_archer_ba',
+                    label: () => `🏹 Starry Archer Shot (BA • +${getSpellAttackMod()}, 1d8+3 Rad)`,
+                    cls: 'btn-help',
+                    attackKinds: ['any'],
+                    phases: ['attack', 'damage'],
+                    requiresActionSlot: 'bonus',
+                    spendActionSlot: 'bonus',
+                    isAvailable: () => activeStarryForm === 'archer',
+                    onTrigger: () => rollStarryArcherAttack()
                 }
+            ],
+            onAfterLogRoll: () => {
+                pendingActionForArcher = false;
             },
             captureSheetState: () => ({
                 curHP,

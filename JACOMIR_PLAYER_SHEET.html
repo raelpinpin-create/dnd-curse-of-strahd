@@ -4404,28 +4404,31 @@
 
                 renderManeuvers();
             },
-            getOnHitAddons: ({ phase, isCrit, lastDamageTotal }) => {
-                if (curSupDice <= 0) return [];
-                const addons = [
-                    {
-                        label: isCrit
-                            ? `👹🔥 +Crit Menacing (-1 d8 • 8+1d8 • ${curSupDice}/${maxSupDice})`
-                            : `👹 +Menacing Attack (-1 d8 • ${curSupDice}/${maxSupDice})`,
-                        cls: isCrit ? 'btn-crit' : 'btn-hit',
-                        onClick: () => spendSuperiorityOnHit('menacing', Boolean(isCrit), typeof lastDamageTotal === 'number' ? lastDamageTotal : null)
-                    }
-                ];
-                if (phase === 'damage') {
-                    addons.push({
-                        label: isCrit
-                            ? `⚔️🔥 +Crit 1d8 Die (-1 d8)`
-                            : `⚔️ +Spend 1d8 Die (${curSupDice}/${maxSupDice})`,
-                        cls: 'btn-help',
-                        onClick: () => spendSuperiorityOnHit('die', Boolean(isCrit), typeof lastDamageTotal === 'number' ? lastDamageTotal : null)
-                    });
+            followupPillLabel: '⚔️ +Maneuver',
+            postAttackFollowups: [
+                {
+                    id: 'menacing_attack',
+                    label: ({ isCrit }) => isCrit
+                        ? `👹🔥 Crit Menacing Attack (-1 d8 • 8+1d8 • ${curSupDice}/${maxSupDice})`
+                        : `👹 Menacing Attack (-1 d8 • +1d8 & DC 13 WIS • ${curSupDice}/${maxSupDice})`,
+                    cls: ({ isCrit }) => isCrit ? 'btn-crit' : 'btn-hit',
+                    attackKinds: ['weapon'],
+                    phases: ['attack', 'damage'],
+                    isAvailable: () => curSupDice > 0,
+                    onTrigger: ({ isCrit, lastDamageTotal }) => spendSuperiorityOnHit('menacing', Boolean(isCrit), typeof lastDamageTotal === 'number' ? lastDamageTotal : null)
+                },
+                {
+                    id: 'spend_sup_die',
+                    label: ({ isCrit }) => isCrit
+                        ? `⚔️🔥 Crit Superiority Die (-1 d8 • 8+1d8 • ${curSupDice}/${maxSupDice})`
+                        : `⚔️ Spend Superiority Die (+1d8 • ${curSupDice}/${maxSupDice})`,
+                    cls: 'btn-help',
+                    attackKinds: ['weapon'],
+                    phases: ['damage'],
+                    isAvailable: () => curSupDice > 0,
+                    onTrigger: ({ isCrit, lastDamageTotal }) => spendSuperiorityOnHit('die', Boolean(isCrit), typeof lastDamageTotal === 'number' ? lastDamageTotal : null)
                 }
-                return addons;
-            }
+            ]
         });
     }
 </script>
