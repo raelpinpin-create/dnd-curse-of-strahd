@@ -2706,6 +2706,62 @@ header.header-banner .pill-badge-group {
     margin-inline-end: 2px;
 }
 
+/* Dedicated Secondary Add-On Dice Row (Save / AoE / Non-Crit Burst on Same Card) */
+.rpg-manual-tray-row.is-separate {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    background: rgba(124, 45, 18, 0.22);
+    border: 1px dashed rgba(251, 146, 60, 0.58);
+    border-inline-start: 3px solid #f97316;
+}
+.rpg-sep-row-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    width: 100%;
+}
+.rpg-sep-row-title {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: #fed7aa;
+}
+.rpg-sep-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 6px;
+    border-radius: 999px;
+    font-size: 0.64rem;
+    font-weight: 800;
+    letter-spacing: 0.25px;
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.42);
+    color: #e2e8f0;
+}
+.rpg-sep-badge.is-save {
+    background: rgba(161, 98, 7, 0.34);
+    border-color: #fbbf24;
+    color: #fef08a;
+}
+.rpg-sep-badge.is-nocrit {
+    background: rgba(127, 29, 29, 0.38);
+    border-color: rgba(248, 113, 113, 0.65);
+    color: #fecaca;
+    text-transform: uppercase;
+}
+.rpg-sep-row-dice {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+.rpg-sep-row-note {
+    font-size: 0.71rem;
+    color: #cbd5e1;
+    line-height: 1.35;
+}
+
 /* Color-Coded Polyhedral Dice Pills (always paired with explicit die text) */
 .rpg-die-pill {
     display: inline-flex;
@@ -3038,6 +3094,44 @@ header.header-banner .pill-badge-group {
     color: #cbd5e1;
     line-height: 1.35;
 }
+.rpg-dmg-addon-line.is-separate {
+    background: rgba(124, 45, 18, 0.24);
+    border-color: rgba(251, 146, 60, 0.55);
+    border-inline-start-color: #f97316;
+}
+.rpg-dmg-addon-bonus.is-sep {
+    color: #fb923c;
+}
+.rpg-dmg-save-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 6px;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #e2e8f0;
+}
+.rpg-dmg-save-chip.is-save {
+    background: rgba(161, 98, 7, 0.34);
+    border-color: #fbbf24;
+    color: #fef08a;
+}
+.rpg-dmg-sep-targets {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    font-size: 0.78rem;
+    color: #e2e8f0;
+    margin-top: 2px;
+}
+.rpg-dmg-grand-total.is-saved {
+    background: rgba(30, 41, 59, 0.85);
+    border-color: #64748b;
+    color: #cbd5e1;
+}
 .rpg-followup-caret {
     display: inline-block;
     font-size: 0.7rem;
@@ -3104,6 +3198,38 @@ header.header-banner .pill-badge-group {
     border-color: #15803d;
     color: #14532d;
 }
+[data-theme="parchment"] .rpg-dmg-grand-total.is-saved {
+    background: #e7e5e4;
+    border-color: #78716c;
+    color: #292524;
+}
+[data-theme="parchment"] .rpg-manual-tray-row.is-separate,
+[data-theme="parchment"] .rpg-dmg-addon-line.is-separate {
+    background: #fff7ed;
+    border-color: #c2410c;
+    border-inline-start-color: #ea580c;
+}
+[data-theme="parchment"] .rpg-sep-row-title { color: #9a3412; }
+[data-theme="parchment"] .rpg-sep-row-note,
+[data-theme="parchment"] .rpg-dmg-sep-targets { color: #44403c; }
+[data-theme="parchment"] .rpg-sep-badge,
+[data-theme="parchment"] .rpg-dmg-save-chip {
+    background: #ede6d6;
+    border-color: #a8a29e;
+    color: #292524;
+}
+[data-theme="parchment"] .rpg-sep-badge.is-save,
+[data-theme="parchment"] .rpg-dmg-save-chip.is-save {
+    background: #fef3c7;
+    border-color: #b45309;
+    color: #78350f;
+}
+[data-theme="parchment"] .rpg-sep-badge.is-nocrit {
+    background: #fee2e2;
+    border-color: #b91c1c;
+    color: #7f1d1d;
+}
+[data-theme="parchment"] .rpg-dmg-addon-bonus.is-sep { color: #c2410c; }
 [data-theme="parchment"] .rpg-followup-drawer {
     background: #f1e9d8;
     border-color: #0369a1;

@@ -15058,15 +15058,24 @@
                 const labelTxt = typeof rule.label === 'function' ? rule.label(ctx) : String(rule.label || 'Follow-Up');
                 const clsTxt = typeof rule.cls === 'function' ? rule.cls(ctx) : String(rule.cls || 'btn-hit');
                 const triggerFn = rule.onTrigger || rule.onClick;
-                if (typeof triggerFn !== 'function') return;
+                const hasEffect = Boolean(rule.effect);
+                if (!hasEffect && typeof triggerFn !== 'function') return;
                 out.push({
                     id: rule.id || '',
                     label: labelTxt,
                     cls: clsTxt,
                     onClick: () => {
                         pendingRollFollowup = null;
+                        if (typeof rule.spend === 'function') {
+                            const ok = rule.spend(ctx);
+                            if (ok === false) return;
+                        }
                         if (rule.spendActionSlot) spendTurnAction(rule.spendActionSlot);
-                        triggerFn(ctx);
+                        if (hasEffect) {
+                            executeDeclarativeAddonEffect(rule, ctx);
+                        } else {
+                            triggerFn(ctx);
+                        }
                     }
                 });
             });
@@ -15257,21 +15266,174 @@
         pendingDamageAddons = ctx ? { ...ctx, ts: Date.now() } : null;
     }
 
+    function resolveRuleVal(val, ctx) {
+        return typeof val === 'function' ? val(ctx) : val;
+    }
+
+    function rollDicePartsSummary(diceParts = [], flatMod = 0, shouldCrit = false) {
+        let total = parseInt(flatMod, 10) || 0;
+        const chunks = [];
+        (diceParts || []).forEach(part => {
+            if (!part) return;
+            const rawExpr = typeof part === 'string' ? part : part.expr;
+            const parsed = parseManualDicePart(rawExpr);
+            if (!parsed) return;
+            if (parsed.isFlat) {
+                total += parsed.flat;
+                chunks.push(`${parsed.flat >= 0 ? '+' : ''}${parsed.flat}`);
+            } else {
+                const arr = [];
+                let sum = 0;
+                for (let i = 0; i < parsed.count; i++) {
+                    const r = Math.floor(Math.random() * parsed.sides) + 1;
+                    arr.push(r);
+                    sum += r;
+                }
+                total += (shouldCrit ? parsed.max : 0) + sum + parsed.flat;
+                const flatBit = parsed.flat > 0 ? `+${parsed.flat}` : (parsed.flat < 0 ? `${parsed.flat}` : '');
+                if (shouldCrit) {
+                    chunks.push(`Max(<strong>${parsed.max}</strong>) + ${esc(parsed.expr)}[<strong>${arr.join('+')}</strong>]${flatBit}`);
+                } else {
+                    chunks.push(`${esc(parsed.expr)}[<strong>${arr.join('+')}</strong>]${flatBit}`);
+                }
+            }
+        });
+        if (flatMod > 0) chunks.push(`+${flatMod}`);
+        else if (flatMod < 0) chunks.push(`${flatMod}`);
+        return { total, formulaHtml: chunks.join(' + ') };
+    }
+
+    function executeDeclarativeAddonEffect(rule, ctx = {}) {
+        const eff = resolveRuleVal(rule.effect, ctx);
+        if (!eff || typeof eff !== 'object') return;
+        const id = rule.id || eff.id || '';
+        const name = String(resolveRuleVal(eff.name, ctx) || 'Bonus Effect');
+        const badge = resolveRuleVal(eff.badge, ctx) ? String(resolveRuleVal(eff.badge, ctx)) : '';
+        const saveText = resolveRuleVal(eff.saveText, ctx) ? String(resolveRuleVal(eff.saveText, ctx)) : '';
+        const dmgType = resolveRuleVal(eff.dmgType, ctx) ? String(resolveRuleVal(eff.dmgType, ctx)) : '';
+        const note = resolveRuleVal(eff.note, ctx) ? String(resolveRuleVal(eff.note, ctx)) : '';
+        const cueText = resolveRuleVal(eff.cueText, ctx) ? String(resolveRuleVal(eff.cueText, ctx)) : '';
+        const halfOnSave = Boolean(resolveRuleVal(eff.halfOnSave, ctx));
+        const aoe = Boolean(resolveRuleVal(eff.aoe, ctx));
+        const separateTarget = Boolean(resolveRuleVal(eff.separateTarget, ctx));
+        const explicitCrit = resolveRuleVal(eff.critMultiplies, ctx);
+
+        // Smart Auto-Classification: Save-for-damage / AoE / secondary-target effects render as a dedicated 'separate' row;
+        // direct on-hit attack riders (Smite, Menacing, Sneak Attack) merge straight into 'direct' damage!
+        let kind = resolveRuleVal(eff.kind, ctx);
+        if (kind !== 'direct' && kind !== 'separate') {
+            const isSeparateSaveOrAoe = Boolean(
+                aoe
+                || separateTarget
+                || explicitCrit === false
+                || (saveText && halfOnSave)
+            );
+            kind = isSeparateSaveOrAoe ? 'separate' : 'direct';
+        }
+        const critMultiplies = explicitCrit !== undefined ? Boolean(explicitCrit) : (kind === 'direct');
+
+        const rawParts = resolveRuleVal(eff.diceParts, ctx);
+        const rawDice = resolveRuleVal(eff.dice || eff.diceExpr, ctx);
+        const flatMod = parseInt(resolveRuleVal(eff.flatMod, ctx), 10) || 0;
+        let diceParts = [];
+        if (Array.isArray(rawParts)) {
+            diceParts = rawParts.map(p => (typeof p === 'string' ? { expr: p, type: dmgType || name } : { ...p }));
+        } else if (rawDice) {
+            diceParts = [{ expr: String(rawDice), type: dmgType || name }];
+        }
+
+        if (ctx.isManual && typeof ctx.mergeManualAddon === 'function') {
+            if (kind === 'separate') {
+                ctx.mergeManualAddon({
+                    id,
+                    separateRow: {
+                        id,
+                        title: name,
+                        badge,
+                        saveText,
+                        halfOnSave,
+                        critMultiplies,
+                        diceParts,
+                        flatMod,
+                        dmgType,
+                        note
+                    }
+                });
+            } else {
+                const resolvedCue = cueText
+                    ? { text: cueText, cls: eff.cueCls || 'is-save' }
+                    : (saveText ? { text: `${name}: Tell DM — ${saveText}`, cls: eff.cueCls || 'is-save' } : null);
+                ctx.mergeManualAddon({
+                    id,
+                    diceParts,
+                    flatDelta: flatMod,
+                    cue: resolvedCue,
+                    note
+                });
+            }
+            return;
+        }
+
+        const shouldCrit = Boolean(ctx.isCrit && critMultiplies);
+        const rolled = rollDicePartsSummary(diceParts, flatMod, shouldCrit);
+        if (!ctx.isManual && typeof ctx.appendDigitalAddon === 'function') {
+            ctx.appendDigitalAddon({
+                id,
+                kind,
+                name: shouldCrit ? `Crit ${name}` : name,
+                badge,
+                formulaHtml: rolled.formulaHtml,
+                bonusDmg: rolled.total,
+                dmgType,
+                saveText,
+                halfOnSave,
+                noteHtml: note ? esc(note) : ''
+            });
+            return;
+        }
+
+        // Graceful standalone fallback if somehow triggered without an active Damage card
+        if (adapter && adapter.log) {
+            const dmgLbl = dmgType ? ` ${esc(dmgType)}` : '';
+            const savePart = saveText ? ` (${esc(saveText)}${halfOnSave ? ', half on save' : ''})` : '';
+            adapter.log(`<strong>${esc(name)}${savePart}:</strong> ${rolled.formulaHtml} = <strong style="color:#f87171;">${rolled.total}${dmgLbl} Damage</strong>${note ? ` <small style="color:#cbd5e1;">(${esc(note)})</small>` : ''}`);
+        }
+    }
+
     function appendDigitalDamageAddonToHud(addon) {
         const st = activeDigitalDamageState;
         if (!st || !st.bodyEl || !addon) return false;
         if (addon.id && st.appliedIds.includes(addon.id)) return false;
         if (addon.id) st.appliedIds.push(addon.id);
         const bonusVal = typeof addon.bonusDmg === 'number' ? addon.bonusDmg : 0;
-        st.runningTotal += bonusVal;
+        const isSeparate = addon.kind === 'separate';
 
         const line = document.createElement('div');
-        line.className = 'rpg-dmg-addon-line';
+        line.className = isSeparate ? 'rpg-dmg-addon-line is-separate' : 'rpg-dmg-addon-line';
+        const badgePart = addon.badge ? `<span class="rpg-dmg-save-chip">${esc(addon.badge)}</span>` : '';
+        const saveChip = addon.saveText ? `<span class="rpg-dmg-save-chip is-save">${esc(addon.saveText)}${addon.halfOnSave ? ' • Half' : ''}</span>` : '';
         const formulaPart = addon.formulaHtml ? ` <span class="rpg-dmg-addon-formula">${addon.formulaHtml}</span>` : '';
-        const bonusPart = bonusVal > 0 ? ` <strong class="rpg-dmg-addon-bonus">+${bonusVal}</strong>` : '';
-        const totalPart = bonusVal > 0 ? ` <span class="rpg-dmg-addon-arrow">➔</span> <strong class="rpg-dmg-grand-total">${st.runningTotal} Total Damage</strong>` : '';
-        const notePart = addon.noteHtml ? `<div class="rpg-dmg-addon-note">${addon.noteHtml}</div>` : '';
-        line.innerHTML = `<div class="rpg-dmg-addon-main"><span class="rpg-dmg-addon-name">+ ${esc(addon.name || 'Add-On')}</span>${formulaPart}${bonusPart}${totalPart}</div>${notePart}`;
+        const dmgTypeStr = addon.dmgType ? ` ${esc(addon.dmgType)}` : '';
+
+        if (isSeparate) {
+            const savedVal = addon.halfOnSave ? Math.floor(bonusVal / 2) : 0;
+            const halfTag = addon.halfOnSave && bonusVal > 0 ? ` <span class="rpg-dmg-addon-formula">(${savedVal} on save)</span>` : '';
+            const valPart = bonusVal > 0 ? ` <strong class="rpg-dmg-addon-bonus is-sep">${bonusVal}${dmgTypeStr}</strong>${halfTag}` : '';
+            let targetLine = '';
+            if (bonusVal > 0 && typeof st.runningTotal === 'number') {
+                const failTotal = st.runningTotal + bonusVal;
+                const saveTotal = st.runningTotal + savedVal;
+                targetLine = `<div class="rpg-dmg-sep-targets">Primary Target Total: <strong class="rpg-dmg-grand-total">${failTotal}</strong> <span>(failed save)</span> / <strong class="rpg-dmg-grand-total is-saved">${saveTotal}</strong> <span>(${addon.halfOnSave ? 'saved = half' : 'saved = 0'})</span></div>`;
+            }
+            const notePart = addon.noteHtml ? `<div class="rpg-dmg-addon-note">${addon.noteHtml}</div>` : '';
+            line.innerHTML = `<div class="rpg-dmg-addon-main"><span class="rpg-dmg-addon-name">+ ${esc(addon.name || 'Secondary Effect')}</span>${badgePart}${saveChip}${formulaPart}${valPart}</div>${targetLine}${notePart}`;
+        } else {
+            st.runningTotal += bonusVal;
+            const bonusPart = bonusVal > 0 ? ` <strong class="rpg-dmg-addon-bonus">+${bonusVal}${dmgTypeStr}</strong>` : '';
+            const totalPart = bonusVal > 0 ? ` <span class="rpg-dmg-addon-arrow">➔</span> <strong class="rpg-dmg-grand-total">${st.runningTotal} Total Damage</strong>` : '';
+            const notePart = addon.noteHtml ? `<div class="rpg-dmg-addon-note">${addon.noteHtml}</div>` : '';
+            line.innerHTML = `<div class="rpg-dmg-addon-main"><span class="rpg-dmg-addon-name">+ ${esc(addon.name || 'Add-On')}</span>${badgePart}${saveChip}${formulaPart}${bonusPart}${totalPart}</div>${notePart}`;
+        }
 
         if (st.wrapEl && st.wrapEl.parentNode === st.bodyEl) {
             st.bodyEl.insertBefore(line, st.wrapEl);
@@ -15379,13 +15541,34 @@
         const dmgSuffix = dmgType ? ` ${esc(dmgType)}` : '';
         const msg = `${header} ${chunks.join(' + ')}${modStr} = <span style="font-size:1.15rem; color:#f87171; font-weight:900;">${total}${dmgSuffix} Damage</span>!${detailTail}`;
         if (adapter && adapter.log) adapter.log(msg);
+        if (Array.isArray(opts.separateRows) && opts.separateRows.length) {
+            opts.separateRows.forEach(row => {
+                if (!row) return;
+                const rowCrit = Boolean(isCrit && row.critMultiplies);
+                const rSum = rollDicePartsSummary(row.diceParts || [], row.flatMod || 0, rowCrit);
+                appendDigitalDamageAddonToHud({
+                    id: null,
+                    kind: 'separate',
+                    name: rowCrit ? `Crit ${row.title || 'Bonus Effect'}` : (row.title || 'Bonus Effect'),
+                    badge: row.badge || '',
+                    formulaHtml: rSum.formulaHtml,
+                    bonusDmg: rSum.total,
+                    dmgType: row.dmgType || '',
+                    saveText: row.saveText || '',
+                    halfOnSave: Boolean(row.halfOnSave),
+                    noteHtml: row.note ? esc(row.note) : ''
+                });
+            });
+        }
         return total;
     }
 
     function logManualDamage(opts = {}) {
+        pendingRollFollowup = null;
         const spec = {
             ...opts,
             diceParts: Array.isArray(opts.diceParts) ? opts.diceParts.map(p => (typeof p === 'object' && p ? { ...p } : p)) : [],
+            separateRows: Array.isArray(opts.separateRows) ? opts.separateRows.map(r => (r ? { ...r, diceParts: Array.isArray(r.diceParts) ? r.diceParts.map(p => (typeof p === 'object' && p ? { ...p } : p)) : [] } : r)).filter(Boolean) : [],
             extraCues: Array.isArray(opts.extraCues) ? opts.extraCues.map(c => (typeof c === 'object' && c ? { ...c } : c)) : [],
             appliedAddonIds: Array.isArray(opts.appliedAddonIds) ? [...opts.appliedAddonIds] : []
         };
@@ -15418,6 +15601,37 @@
             `;
         }
 
+        const separateRowsHtml = spec.separateRows.map(row => {
+            const rParts = Array.isArray(row.diceParts) ? row.diceParts : [];
+            const rFlat = parseInt(row.flatMod, 10) || 0;
+            const rCrit = Boolean(isCrit && row.critMultiplies);
+            let rDiceHtml = '';
+            if (rCrit && rParts.length) {
+                const rc = computeBrutalCritGuide(rParts, rFlat);
+                rDiceHtml = `<span class="rpg-die-pill die-static">Start at ${rc.staticStart}</span> <span style="color:#fde68a; font-weight:800;">+ Roll</span> ${rc.diceToRollHtml}`;
+            } else {
+                rDiceHtml = formatDicePillsHtml(rParts, rFlat);
+            }
+            const badges = [];
+            if (row.badge) badges.push(`<span class="rpg-sep-badge">${esc(row.badge)}</span>`);
+            if (row.saveText) badges.push(`<span class="rpg-sep-badge is-save">${esc(row.saveText)}${row.halfOnSave ? ' • Half' : ''}</span>`);
+            if (isCrit && !row.critMultiplies) badges.push(`<span class="rpg-sep-badge is-nocrit">No Crit</span>`);
+            return `
+                <div class="rpg-manual-tray-row is-separate">
+                    <div class="rpg-sep-row-head">
+                        <span class="rpg-sep-row-title">+ ${esc(row.title || 'Secondary Effect')}</span>
+                        ${badges.join('')}
+                    </div>
+                    <div class="rpg-sep-row-dice">
+                        <span class="rpg-manual-tray-lbl">Also Roll:</span>
+                        ${rDiceHtml}
+                        ${row.dmgType ? `<span style="color:#fb923c; font-weight:800; font-size:0.78rem; margin-inline-start:3px;">${esc(row.dmgType)}</span>` : ''}
+                    </div>
+                    ${row.note ? `<div class="rpg-sep-row-note">${esc(row.note)}</div>` : ''}
+                </div>
+            `;
+        }).join('');
+
         const cues = [];
         if (isSavage) {
             cues.push(`<span class="rpg-manual-cue is-savage">Savage Attacker: Roll weapon dice twice &amp; keep higher</span>`);
@@ -15437,10 +15651,11 @@
             const nextSpec = {
                 ...spec,
                 diceParts: [...spec.diceParts],
+                separateRows: [...spec.separateRows],
                 extraCues: [...spec.extraCues],
                 appliedAddonIds: [...spec.appliedAddonIds],
                 flatMod: (parseInt(spec.flatMod, 10) || 0) + (parseInt(addon.flatDelta, 10) || 0),
-                // Clear legacy single-weapon digital fallbacks so 💻 Roll / Roll Crit rolls the FULL merged dice pool!
+                // Clear legacy single-weapon digital fallbacks so 💻 Roll / Roll Crit rolls the FULL merged dice pool + separate rows!
                 onDigitalRoll: null,
                 onDigitalCritRoll: null
             };
@@ -15449,6 +15664,8 @@
             }
             if (addon.dicePart) nextSpec.diceParts.push(addon.dicePart);
             if (Array.isArray(addon.diceParts)) addon.diceParts.forEach(dp => nextSpec.diceParts.push(dp));
+            if (addon.separateRow) nextSpec.separateRows.push(addon.separateRow);
+            if (Array.isArray(addon.separateRows)) addon.separateRows.forEach(sr => nextSpec.separateRows.push(sr));
             if (addon.cue) nextSpec.extraCues.push(addon.cue);
             if (addon.note) {
                 nextSpec.notes = nextSpec.notes ? `${nextSpec.notes} • ${addon.note}` : addon.note;
@@ -15494,6 +15711,7 @@
                     <span class="rpg-manual-badge">${isCrit ? 'NAT 20 CRIT' : 'REAL DICE'}</span>
                 </div>
                 ${trayHtml}
+                ${separateRowsHtml}
                 ${cues.length ? `<div class="rpg-manual-hints">${cues.join('')}</div>` : ''}
                 ${spec.notes ? `<div class="rpg-manual-notes">${esc(spec.notes)}</div>` : ''}
                 ${spec.htmlNote ? `<div class="rpg-manual-notes">${spec.htmlNote}</div>` : ''}
@@ -16091,9 +16309,10 @@
                 } else if (pendingDamageAddons && (Date.now() - pendingDamageAddons.ts < 350)) {
                     const dCtx = pendingDamageAddons;
                     pendingDamageAddons = null;
+                    const appliedIds = Array.isArray(dCtx.appliedIds) ? [...dCtx.appliedIds] : [];
+                    const resolvedKind = dCtx.attackKind || inferAttackKind(null, dCtx.label || '');
+                    let wrap = null;
                     if (dCtx.allowOnHitAddons !== false) {
-                        const appliedIds = Array.isArray(dCtx.appliedIds) ? [...dCtx.appliedIds] : [];
-                        const resolvedKind = dCtx.attackKind || inferAttackKind(null, dCtx.label || '');
                         const eligible = resolveEligibleFollowups({
                             phase: 'damage',
                             isCrit: Boolean(dCtx.isCrit),
@@ -16106,22 +16325,22 @@
                         });
                         const pack = buildFollowupPillAndDrawer(eligible, { isCrit: Boolean(dCtx.isCrit) });
                         if (pack.pillHtml) {
-                            const wrap = document.createElement('div');
+                            wrap = document.createElement('div');
                             wrap.className = 'rpg-hud-followup-wrap rpg-followup-host';
                             wrap.innerHTML = pack.pillHtml + pack.drawerHtml;
                             hudBody.appendChild(wrap);
-                            activeDigitalDamageState = {
-                                baseTotal: dCtx.total,
-                                runningTotal: dCtx.total,
-                                isCrit: Boolean(dCtx.isCrit),
-                                label: dCtx.label || '',
-                                attackKind: resolvedKind,
-                                appliedIds,
-                                wrapEl: wrap,
-                                bodyEl: hudBody
-                            };
                         }
                     }
+                    activeDigitalDamageState = {
+                        baseTotal: dCtx.total,
+                        runningTotal: dCtx.total,
+                        isCrit: Boolean(dCtx.isCrit),
+                        label: dCtx.label || '',
+                        attackKind: resolvedKind,
+                        appliedIds,
+                        wrapEl: wrap,
+                        bodyEl: hudBody
+                    };
                 }
                 if (pendingConcAlert && (Date.now() - pendingConcAlert.ts < 350)) {
                     const info = pendingConcAlert;
