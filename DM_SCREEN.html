@@ -2864,15 +2864,15 @@
         <button type="button" id="nav-combat-btn" class="nav-btn nav-btn-combat" onclick="jumpToCombatBoard()" title="Open / Jump to Active Encounter Board (Hotkey: C)">
             ⚔️ Combat <span id="nav-combat-badge" class="nav-count-pill">0</span>
         </button>
-        <button type="button" class="nav-btn" data-dm-tab="party-specs" onclick="selectDmSection('party-specs')" title="Section 0: Live Party Vitals &amp; Allies (Hotkey: 1)">🛡️ Party</button>
-        <button type="button" class="nav-btn" data-dm-tab="active-quests" onclick="selectDmSection('active-quests')" title="Section 1: 15–20 Session Roadmap (Hotkey: 2)">📜 Roadmap</button>
-        <button type="button" class="nav-btn" data-dm-tab="tarokka-oracle" onclick="selectDmSection('tarokka-oracle')" title="Section 1.1: Madam Eva Tarokka Oracle (Hotkey: 3)">🔮 Tarokka</button>
-        <button type="button" class="nav-btn" data-dm-tab="biomes-explorer" onclick="selectDmSection('biomes-explorer')" title="Section 1.5: 25 Locations &amp; Biomes (Hotkey: 4)">🗺️ Locations</button>
-        <button type="button" id="nav-npc-link" class="nav-btn" data-dm-tab="npc-directory" onclick="selectDmSection('npc-directory')" title="Section 2: 37 Barovian NPCs (Hotkey: 5)">👥 NPCs</button>
-        <button type="button" id="nav-monster-link" class="nav-btn" data-dm-tab="monsters-section" onclick="selectDmSection('monsters-section')" title="Section 3: 57 Enemies &amp; Bosses + Encounter Board (Hotkey: 6)">💀 Bestiary</button>
-        <button type="button" id="nav-loot-link" class="nav-btn" data-dm-tab="loot-vault" onclick="selectDmSection('loot-vault')" title="Section 4: 106 World Loot &amp; Crafting (Hotkey: 7)">🎒 Loot</button>
-        <button type="button" class="nav-btn" data-dm-tab="factions-lore" onclick="selectDmSection('factions-lore')" title="Section 4.5: 55 Factions &amp; Lore Dossiers (Hotkey: 8)">🏛️ Lore</button>
-        <button type="button" class="nav-btn" data-dm-tab="dm-rules-guide" onclick="selectDmSection('dm-rules-guide')" title="Section 5: Barovian Laws, DCs &amp; Gold Pacing (Hotkey: 9)">⚖️ Rules</button>
+        <button type="button" class="nav-btn" data-dm-tab="party-specs" onclick="selectDmSection('party-specs')" title="1. Live Party Vitals &amp; Allies (Hotkey: 1)">1. 🛡️ Party</button>
+        <button type="button" id="nav-npc-link" class="nav-btn" data-dm-tab="npc-directory" onclick="selectDmSection('npc-directory')" title="2. 36 Barovian NPCs &amp; Dossiers (Hotkey: 2)">2. 👥 NPCs</button>
+        <button type="button" id="nav-monster-link" class="nav-btn" data-dm-tab="monsters-section" onclick="selectDmSection('monsters-section')" title="3. Encounter Board &amp; 57 Enemies/Bosses (Hotkey: 3)">3. 💀 Bestiary</button>
+        <button type="button" id="nav-loot-link" class="nav-btn" data-dm-tab="loot-vault" onclick="selectDmSection('loot-vault')" title="4. World Loot Vault, Armors, Shops &amp; Crafting (Hotkey: 4)">4. 🎒 Loot</button>
+        <button type="button" class="nav-btn" data-dm-tab="biomes-explorer" onclick="selectDmSection('biomes-explorer')" title="5. 25 Barovian Locations, Biomes &amp; Maps (Hotkey: 5)">5. 🗺️ Locations</button>
+        <button type="button" class="nav-btn" data-dm-tab="factions-lore" onclick="selectDmSection('factions-lore')" title="6. 55 Factions &amp; Cosmic Lore Dossiers (Hotkey: 6)">6. 🏛️ Lore</button>
+        <button type="button" class="nav-btn" data-dm-tab="tarokka-oracle" onclick="selectDmSection('tarokka-oracle')" title="7. Madam Eva Tarokka Oracle (Hotkey: 7)">7. 🔮 Tarokka</button>
+        <button type="button" class="nav-btn" data-dm-tab="active-quests" onclick="selectDmSection('active-quests')" title="8. 15–20 Session Director's Cut Roadmap (Hotkey: 8)">8. 📜 Roadmap</button>
+        <button type="button" class="nav-btn" data-dm-tab="dm-rules-guide" onclick="selectDmSection('dm-rules-guide')" title="9. Barovian Laws, DCs &amp; Gold Pacing (Hotkey: 9)">9. ⚖️ Rules</button>
     </div>
 
     <div class="dm-nav-tools">
@@ -2897,10 +2897,10 @@
     <!-- DOCK SLOT WHEN ENCOUNTER BOARD IS PINNED TO TOP -->
     <div id="dm-pinned-encounter-slot"></div>
 
-    <!-- SECTION 0: COMPACT LIVE PARTY HUD STRIP & COLLAPSIBLE ESCORT DRAWER -->
+    <!-- SECTION 1: COMPACT LIVE PARTY HUD STRIP & COLLAPSIBLE ESCORT DRAWER -->
     <section id="party-specs">
         <div class="section-header" onclick="if(!event.target.closest('button')) toggleDmSectionCollapse('party-specs')">
-            <span>🛡️ SECTION 0: LIVE PARTY HUD &amp; COMPANION ROSTER</span>
+            <span>🛡️ SECTION 1: LIVE PARTY HUD &amp; COMPANION ROSTER</span>
             <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
                 <button type="button" class="btn-modal-mini" style="border-color:#34d399; color:#a7f3d0;" onclick="openDmCustomDropModal('party')">📡 Full Monitor &amp; Checkpoints</button>
                 <button type="button" class="btn-modal-mini" onclick="addPartyToEncounter(); jumpToCombatBoard();">⚔️ + All 4 to Combat</button>
@@ -3042,90 +3042,282 @@
         </details>
     </section>
 
-    <!-- SECTION 1: 15-20 SESSION ROADMAP -->
-    <section id="active-quests">
+    <!-- SECTION 2: MASTER NPC DIRECTORY -->
+    <section id="npc-directory">
         <div class="section-header">
-            <span>📜 SECTION 1: THE 15–20 SESSION "DIRECTOR'S CUT" ROADMAP</span>
-            <span class="section-tag">CLICK ANY ACT CARD FOR SESSION BREAKDOWN & DCs</span>
+            <span id="npc-sec-title">👥 SECTION 2: MASTER BAROVIAN NPC DIRECTORY &amp; DOSSIERS (36 NPCS)</span>
+            <search class="section-search-wrap" aria-label="Search Barovian NPCs">
+                <label class="visually-hidden" for="npc-search">Search Section 2 NPCs</label>
+                <input type="search" id="npc-search" class="section-search-input" placeholder="🔍 Search NPCs, roles, towns, offerings..." autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" oninput="filterSectionSearch('npc', this.value)">
+                <button type="button" id="npc-search-clear" class="section-search-clear" onclick="clearSectionSearch('npc')" aria-label="Clear NPC search" title="Clear">✕</button>
+            </search>
         </div>
-        <div class="grid-2">
-            <div class="card clickable" onclick="openQuestModal('act1')">
-                <div class="card-header">
-                    <span class="card-title">🌲 ACT I: Into the Mists (Sessions 1–4)</span>
-                    <span class="pill crimson">Levels 3 ➔ 4</span>
-                </div>
-                <div class="card-body">
-                    <p><strong>Session 1 (Done):</strong> Svalich Carriage Chase, Morgantha pie, Piper's Blank Card, Kolyan's Wizard Diary, Doru attic standoff &amp; Derek's 1st Time-Stop.<br><strong>Session 2 (Done):</strong> Brutal Doru kill (Jacomir 2 Nat 20s; Ireena Nat 20 Med saves Yvaine; *Speak w/ Dead* reveals Heart of Sorrow) ➔ Volenta rooftop cameo + <strong>Count Strahd vs. Jacomir legendary 16–16 Dragonchess stalemate</strong> (Silence bubble + <strong>James &amp; Orin</strong>; Strahd gives <strong>Black Letter</strong> for Ireena favor &amp; Oakenshire help!) ➔ <strong>Cael</strong> busted as talking cat &amp; joins ➔ <strong>Madam Eva's 5 Cards + Stage 1 Blank Card</strong> (shivers over Derek!) ➔ Derek M1 leaves Cael under suspicion.<br><strong>Session 3 (Next):</strong> Old Bonegrinder Windmill (Morgantha's Night Hag Coven) &amp; Road to Vallaki!</p>
-                </div>
-            </div>
-            <div class="card clickable" onclick="openQuestModal('act2')">
-                <div class="card-header">
-                    <span class="card-title">🔥 ACT II: The Powderkeg of Vallaki (Sessions 5–9)</span>
-                    <span class="pill crimson">Levels 4 ➔ 6</span>
-                </div>
-                <div class="card-body">
-                    <p><strong>Session 5:</strong> Feast of St. Andral & Vampire Spawn Ambush.<br><strong>Session 6:</strong> Blazing Sun Festival Coup; party claims 📜 <strong>The Tome of Strahd</strong>.<br><strong>Session 7:</strong> Wizard of Wines Winery Siege (Keepers of the Feather alliance).<br><strong>Session 8:</strong> Yester Hill, Kavan's Blood Spear & Wintersplinter.<br><strong>Session 9:</strong> Dinner with Strahd at Castle Ravenloft.</p>
-                </div>
-            </div>
-            <div class="card clickable" onclick="openQuestModal('act3')">
-                <div class="card-header">
-                    <span class="card-title">🐉 ACT III: Dragons, Saints & Witches (Sessions 10–14)</span>
-                    <span class="pill crimson">Levels 6 ➔ 8</span>
-                </div>
-                <div class="card-body">
-                    <p><strong>Session 10–11:</strong> Argynvostholt Dragon Beacon & 🕊️ <strong>The Holy Symbol of Ravenkind</strong>.<br><strong>Session 12:</strong> Krezk, The Abbot & Flesh Golem Vasilka.<br><strong>Session 13–14:</strong> Drowned Ruins of Berez, Baba Lysaga & 🗡️ <strong>The Sunsword</strong>!</p>
-                </div>
-            </div>
-            <div class="card clickable" onclick="openQuestModal('act4')">
-                <div class="card-header">
-                    <span class="card-title">⚡ ACT IV: Amber Corruption & Ravenloft Reckoning (Sessions 15–20)</span>
-                    <span class="pill crimson">Levels 8 ➔ 10</span>
-                </div>
-                <div class="card-body">
-                    <p><strong>Session 15–16:</strong> The Amber Temple & Dark Powers (Vampyr & Vecna Monoliths).<br><strong>Session 17–18:</strong> Castle Ravenloft Siege (Heart of Sorrow, Brides & Rahadin).<br><strong>Session 19–20:</strong> Apex Strahd Showdown & The Cosmic Knot Conduits for Campaign 3 crossover!</p>
-                </div>
-            </div>
+        <div class="loot-filter-bar" id="npc-filter-bar">
+            <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">📍 Location:</span>
+            <button type="button" class="btn-loot-filter active" data-npcloc="met_active" onclick="filterNpcDirectory('met_active', this)">🟢 Met &amp; Active</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="all" onclick="filterNpcDirectory('all', this)">All</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="village" onclick="filterNpcDirectory('village', this)">🌲 Barovia</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="tser_mill" onclick="filterNpcDirectory('tser_mill', this)">🔮 Tser &amp; Mill</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="vallaki" onclick="filterNpcDirectory('vallaki', this)">⚔️ Vallaki</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="argyn_krezk" onclick="filterNpcDirectory('argyn_krezk', this)">🐉 Argynvost &amp; Krezk</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="berez_baratok" onclick="filterNpcDirectory('berez_baratok', this)">🌊 Berez &amp; Den</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="pass_temple" onclick="filterNpcDirectory('pass_temple', this)">🏔️ Pass &amp; Temple</button>
+            <button type="button" class="btn-loot-filter" data-npcloc="ravenloft" onclick="filterNpcDirectory('ravenloft', this)">🏰 Ravenloft</button>
+        </div>
+        <div class="table-wrap" id="npc-table-wrap" tabindex="0" role="region" aria-labelledby="npc-sec-title">
+            <table class="guide-table" id="npc-table">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width:21%;">NPC Name &amp; Condition</th>
+                        <th scope="col" style="width:13%;">Live Status</th>
+                        <th scope="col" style="width:19%;">Role &amp; Location</th>
+                        <th scope="col" style="width:28%;">Key Offerings, Services, Quests &amp; Advice</th>
+                        <th scope="col" style="width:19%;">🎭 Voice &amp; Roleplay Cue</th>
+                    </tr>
+                </thead>
+                <tbody id="npc-tbody"></tbody>
+            </table>
         </div>
     </section>
 
-    <!-- SECTION 1.1: CURATED TAROKKA READING -->
-    <section id="tarokka-oracle">
+    <!-- SECTION 3: ENEMIES & POINTY HAT BOSSES -->
+    <section id="monsters-section">
         <div class="section-header">
-            <span>🔮 SECTION 1.1: CURATED MADAM EVA TAROKKA ORACLE (SESSION 2 — TSER POOL)</span>
-            <span class="section-tag">CLICK ANY CARD FOR ART, READ-ALOUD PROPHECY (NO SPOILERS!) &amp; DM DECODER KEY</span>
+            <span id="monster-sec-title">💀 SECTION 3: COMBAT ENCOUNTER BOARD &amp; MASTER BESTIARY (57 ENEMIES)</span>
         </div>
-        <div class="grid-3">
-            <div class="card clickable" onclick="openQuestModal('tarokka1')">
-                <div class="card-header"><span class="card-title">📜 1. The Tome of Strahd</span><span class="pill gold">The Master of Stars</span></div>
-                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>DM Key (Do Not Read Aloud):</strong> Wachterhaus Secret Cult Library (Vallaki — Sessions 5–6, Lvl 5). Grants 30-ft Adv vs Charm &amp; 1/day DC 15 Wis Stun on Strahd/Brides!</p></div>
+
+        <!-- LIVE ACTIVE ENCOUNTER BOARD -->
+        <div class="encounter-board" id="encounter-board-panel">
+            <div class="encounter-board-head">
+                <div class="encounter-board-title">
+                    <span>⚔️ ACTIVE ENCOUNTER BOARD</span>
+                    <span class="pill crimson" id="encounter-count-badge">0 Active • 0 Alive</span>
+                </div>
+                <div class="encounter-board-controls">
+                    <button type="button" id="encounter-combat-toggle-btn" class="btn-roll" style="background:linear-gradient(135deg,#b91c1c,#991b1b); border-color:#f87171; color:#fef2f2;" onclick="toggleEncounterCombatBroadcast()" title="Broadcast sanitized Fog-of-War Turn Order strip to all player sheets">⚔️ Start Combat</button>
+                    <button type="button" id="enc-preset-toggle-btn" class="btn-roll" onclick="toggleEncounterDrawer('presets')" title="1-Click Load Scene Encounter Presets (Party + Enemies + Auto-Roll Init)">⚡ Presets</button>
+                    <button type="button" class="btn-step" onclick="addPartyToEncounter()" title="Add Piper, Jacomir, Yvaine &amp; Cael Initiative Cards">🛡️ + Party</button>
+                    <button type="button" id="enc-ally-toggle-btn" class="btn-step btn-heal" onclick="toggleEncounterDrawer('ally')" aria-expanded="false" aria-controls="enc-ally-drawer" title="Search &amp; Add Story NPCs (Ireena, Ismark, Ezmerelda...) OR Generate a Smart Ally with full combat actions!">👤 + Ally / NPC</button>
+                    <button type="button" id="enc-enemy-toggle-btn" class="btn-roll" style="border-color:#f87171; color:#fecaca;" onclick="toggleEncounterDrawer('enemy')" aria-expanded="false" aria-controls="enc-enemy-drawer" title="Search &amp; Quick-Add any Bestiary Enemy directly into the Encounter Board">⚔️ + Enemy</button>
+                    <button type="button" id="enc-custom-toggle-btn" class="btn-step" onclick="toggleEncounterDrawer('custom')" aria-expanded="false" aria-controls="enc-custom-drawer" title="Spawn an ad-hoc custom enemy onto the Encounter Board">➕ Custom</button>
+                    <button type="button" class="btn-roll" onclick="rollAllEncounterInits()" title="Roll Initiative for Enemies and sort all combatants">🎲 Roll Inits</button>
+                    <button type="button" class="btn-step" onclick="sortEncounterBoard(true)" title="Sort all Allies &amp; Enemies by Initiative">🔃 Sort</button>
+                    <button type="button" class="btn-step" onclick="clearDeadEncounterEntries()" title="Remove 0 HP slain enemies">🧹 Clear Dead</button>
+                    <button type="button" class="btn-step btn-heal" onclick="healAllEncounterEntries()" title="Restore all enemies to full HP">💚 Heal All</button>
+                    <button type="button" class="btn-step" onclick="clearEncounterBoard()" title="Clear entire Encounter Board">🗑️ Clear</button>
+                    <button type="button" id="encounter-pin-btn" class="btn-step" onclick="togglePinEncounterBoard()" title="Pin Encounter Board to top of screen across all tabs">📌 Pin Top</button>
+                    <button type="button" id="encounter-collapse-btn" class="btn-step" aria-expanded="true" aria-controls="encounter-board-body" onclick="toggleEncounterBoardCollapse()">▾ Collapse</button>
+                </div>
             </div>
-            <div class="card clickable" onclick="openQuestModal('tarokka2')">
-                <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🕊️ 2. Holy Symbol of Ravenkind</span><span class="pill gold">The Paladin</span></div>
-                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>DM Key (Do Not Read Aloud):</strong> Argynvostholt Beacon Sanctum (Vladimir Horngaard — Sessions 10–11, Lvl 7). 10 Charges: Hold Vampires &amp; 30-ft True Sunlight!</p></div>
+
+            <!-- 1-CLICK SCENE ENCOUNTER PRESETS DRAWER -->
+            <div id="enc-preset-drawer" class="enc-drawer-bar">
+                <div class="enc-preset-toolbar">
+                    <span style="font-family:'Cinzel',serif; font-size:0.76rem; font-weight:700; color:var(--accent-gold);">⚡ Encounter Presets (1-Click Spawn • Edit ✏️ • Delete ✕):</span>
+                    <div class="enc-preset-actions">
+                        <label style="font-size:0.72rem; color:var(--text-muted); display:inline-flex; align-items:center; gap:5px; cursor:pointer; margin-right:4px;">
+                            <input type="checkbox" id="enc-preset-replace-chk" checked> Replace existing enemies
+                        </label>
+                        <button type="button" class="btn-step btn-heal" onclick="openPresetEditorFromBoard()" title="Capture all enemies currently on the Active Encounter Board into a named preset">💾 Save Board as Preset</button>
+                        <button type="button" class="btn-roll" onclick="openPresetEditorModal(null)" title="Create and name a brand-new combat encounter preset">+ New Preset</button>
+                        <button type="button" id="enc-preset-restore-btn" class="btn-step" style="display:none;" onclick="restoreDefaultEncounterPresets()" title="Restore built-in campaign scene presets">↺ Restore Defaults</button>
+                    </div>
+                </div>
+                <div class="enc-preset-pills" id="enc-preset-pills"></div>
             </div>
-            <div class="card clickable" onclick="openQuestModal('tarokka3')">
-                <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🗡️ 3. The Sunsword</span><span class="pill gold">The Tempter</span></div>
-                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>DM Key (Do Not Read Aloud):</strong> Ruins of Berez (Baba Lysaga's Creeping Hut — Sessions 13–14, Lvl 8). +2 Finesse/Versatile 2d8 Radiant vs Undead + 15–30 ft Sunlight!</p></div>
+
+            <!-- 🔍 SEARCHABLE ALLY NPC PICKER & ⚡ SMART ALLY GENERATOR DRAWER -->
+            <div id="enc-ally-drawer" class="enc-drawer-bar">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                    <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                        <span style="font-family:'Cinzel',serif; font-size:0.78rem; font-weight:800; color:#86efac;">👤 ADD ALLY / STORY NPC OR SMART-GENERATE COMBATANT</span>
+                        <button type="button" id="enc-ally-tab-npc" class="btn-modal-mini" style="border-color:#34d399; background:rgba(6,78,59,0.45); color:#a7f3d0;" aria-pressed="true" onclick="switchEncAllyDrawerTab('npc')">🔍 Story NPCs (36)</button>
+                        <button type="button" id="enc-ally-tab-smart" class="btn-modal-mini" style="border-color:#60a5fa; color:#bfdbfe;" aria-pressed="false" onclick="switchEncAllyDrawerTab('smart')">⚡ Smart Ally Generator (Guard / Archer / Priest...)</button>
+                    </div>
+                    <button type="button" class="btn-modal-mini" style="border-color:#f87171; color:#fca5a5;" onclick="toggleEncounterDrawer('ally')">✕ Close</button>
+                </div>
+
+                <!-- PANE A: SEARCHABLE STORY NPC PICKER -->
+                <div id="enc-ally-pane-npc">
+                    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+                        <input type="search" id="enc-ally-search-input" class="enc-custom-input" style="flex:1 1 260px; min-width:210px;" placeholder="🔍 Type NPC name or role (e.g. Ireena, Ismark, Ezmerelda, Van Richten, Wereraven, Godfrey...)" autocorrect="off" autocapitalize="none" spellcheck="false" oninput="renderEncAllyNpcResults(this.value)" aria-label="Search Story NPCs to add as combat ally">
+                        <span style="font-size:0.7rem; color:#94a3b8;">Clicking an added NPC on the board opens their <strong>⚔️ Combat &amp; Actions Sheet</strong>!</span>
+                    </div>
+                    <div id="enc-ally-npc-results" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(235px, 1fr)); gap:6px; max-height:245px; overflow-y:auto; padding-right:2px;"></div>
+                </div>
+
+                <!-- PANE B: SMART ALLY ARCHETYPE GENERATOR -->
+                <div id="enc-ally-pane-smart" style="display:none;">
+                    <div style="font-size:0.72rem; color:#cbd5e1; margin-bottom:6px;">Pick any ready-to-fight archetype below — auto-generates <strong>full Attacks, Traits, Spells &amp; Combat Sheet</strong> when clicked on the Encounter Board!</div>
+                    <div id="enc-smart-ally-presets" style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px;"></div>
+                    <form class="enc-custom-form" onsubmit="event.preventDefault(); spawnSmartGeneratedAlly();">
+                        <input type="text" id="enc-sally-name" class="enc-custom-input" placeholder="Ally Name (e.g. Vallaki Gate Guard)" style="width:190px;" required aria-label="Smart Ally Name">
+                        <input type="number" id="enc-sally-hp" class="enc-custom-input" placeholder="HP" value="11" min="1" max="500" style="width:64px;" title="Max HP" aria-label="Max HP" required>
+                        <input type="number" id="enc-sally-ac" class="enc-custom-input" placeholder="AC" value="16" min="1" max="30" style="width:58px;" title="Armor Class" aria-label="Armor Class" required>
+                        <input type="number" id="enc-sally-init" class="enc-custom-input" placeholder="+Init" value="1" min="-5" max="20" style="width:60px;" title="Initiative Bonus" aria-label="Initiative Bonus">
+                        <input type="number" id="enc-sally-qty" class="enc-custom-input" placeholder="Qty" value="1" min="1" max="8" style="width:56px;" title="How many copies" aria-label="Quantity">
+                        <button type="submit" class="btn-roll" style="background:linear-gradient(135deg,#059669,#047857); border-color:#34d399; color:#ecfdf5; padding:5px 12px;">⚡ Spawn Smart Ally</button>
+                    </form>
+                    <div id="enc-sally-preview" style="margin-top:6px; font-size:0.72rem; color:#a7f3d0; background:#090e1a; border:1px solid #1e293b; border-radius:6px; padding:6px 9px;"></div>
+                </div>
             </div>
-            <div class="card clickable" onclick="openQuestModal('tarokka4')">
-                <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🧵 4. The Hidden Hand</span><span class="pill purple">The Marionette</span></div>
-                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>DM Secret Betrayal Omen (Replaces Ally Slot):</strong> Multi-layered riddle hiding <strong>Cael's Session 20 twist</strong> behind Barovian decoys (Milivoj, Blinsky dolls, Vassili, Vasilka &amp; Solmere)!</p></div>
+
+            <!-- 🔍 SEARCHABLE BESTIARY ENEMY PICKER DRAWER -->
+            <div id="enc-enemy-drawer" class="enc-drawer-bar">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                    <span style="font-family:'Cinzel',serif; font-size:0.78rem; font-weight:800; color:#fca5a5;">⚔️ QUICK-SEARCH &amp; ADD ENEMIES TO ENCOUNTER BOARD</span>
+                    <div style="display:flex; gap:6px; align-items:center;">
+                        <button type="button" class="btn-modal-mini" style="border-color:#34d399; color:#86efac;" onclick="toggleEncounterDrawer('custom')">➕ Custom Enemy Instead</button>
+                        <button type="button" class="btn-modal-mini" style="border-color:#f87171; color:#fca5a5;" onclick="toggleEncounterDrawer('enemy')">✕ Close</button>
+                    </div>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+                    <input type="search" id="enc-enemy-search-input" class="enc-custom-input" style="flex:1 1 260px; min-width:210px;" placeholder="🔍 Search any monster or boss (e.g. Dire Wolf, Vampire Spawn, Hag, Ghoul, Strahd, Blight...)" autocorrect="off" autocapitalize="none" spellcheck="false" oninput="renderEncEnemySearchResults(this.value)" aria-label="Search Bestiary enemies to add to Encounter Board">
+                    <span style="font-size:0.7rem; color:#94a3b8;">Click <strong>+1 / +2 / +4</strong> to spawn instantly &amp; roll Initiative!</span>
+                </div>
+                <div id="enc-enemy-search-results" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(250px, 1fr)); gap:6px; max-height:245px; overflow-y:auto; padding-right:2px;"></div>
             </div>
-            <div class="card clickable" onclick="openQuestModal('tarokka5')">
-                <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🏰 5. The Final Battlefield</span><span class="pill crimson">The Executioner</span></div>
-                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>DM Key (Do Not Read Aloud):</strong> Castle Ravenloft — Chapel of Ravenloft (K15) ➔ Sergei's Crypt (K85) ➔ Overlook Spire (K6) storm finale (Sessions 19–20, Lvl 10).</p></div>
+
+            <!-- 1-LINE AD-HOC CUSTOM ENEMY SPAWNER DRAWER -->
+            <div id="enc-custom-drawer" class="enc-drawer-bar">
+                <div style="font-family:'Cinzel',serif; font-size:0.76rem; font-weight:700; color:var(--accent-green-soft);">➕ Quick-Spawn Custom Enemy / Improvised Foe:</div>
+                <form class="enc-custom-form" onsubmit="event.preventDefault(); spawnCustomEncounterEnemy();">
+                    <input type="text" id="enc-cust-name" class="enc-custom-input" placeholder="Name (e.g. Vallaki Cultist)" style="width:165px;" required>
+                    <input type="number" id="enc-cust-hp" class="enc-custom-input" placeholder="HP" value="22" min="1" max="999" style="width:68px;" title="Max HP" required>
+                    <input type="number" id="enc-cust-ac" class="enc-custom-input" placeholder="AC" value="14" min="1" max="35" style="width:62px;" title="Armor Class" required>
+                    <input type="number" id="enc-cust-init" class="enc-custom-input" placeholder="+Init" value="1" min="-10" max="25" style="width:64px;" title="Initiative Modifier">
+                    <input type="text" id="enc-cust-wpn" class="enc-custom-input" placeholder="Attack Name (Halberd)" value="Strike" style="width:130px;" title="Primary Weapon/Attack Label">
+                    <input type="number" id="enc-cust-hit" class="enc-custom-input" placeholder="+Hit" value="4" min="-5" max="25" style="width:64px;" title="Attack Roll Bonus (+Hit)">
+                    <input type="text" id="enc-cust-dmg" class="enc-custom-input" placeholder="Dmg (1d8+2)" value="1d8+2" style="width:92px;" title="Damage Dice Formula">
+                    <input type="number" id="enc-cust-qty" class="enc-custom-input" placeholder="Qty" value="1" min="1" max="12" style="width:58px;" title="How many copies to spawn">
+                    <button type="submit" class="btn-roll" style="padding:5px 11px;">⚔️ Spawn</button>
+                </form>
             </div>
-            <div class="card clickable" onclick="openQuestModal('tarokka6')">
-                <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🃏 6. Piper's Blank Omen Card</span><span class="pill purple">The Unwritten Card</span></div>
-                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>3-Stage Progressive Mist Bleed:</strong> Eva recoils in cold dread. Charcoal Mist/Vessel ink creeps upward across Acts I–IV (Dead Pines ➔ Cracked Glass ➔ Inward Vortex).</p></div>
+
+            <p id="encounter-status-live" role="status" class="visually-hidden"></p>
+            <div class="encounter-board-body" id="encounter-board-body">
+                <div id="encounter-combat-ribbon" class="enc-combat-ribbon"></div>
+                <div id="encounter-board-grid"></div>
             </div>
+        </div>
+
+        <!-- BESTIARY DIRECTORY SEARCH BAR (CLEANLY BELOW ENCOUNTER BOARD, DIRECTLY ABOVE FILTERS!) -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin:12px 0 6px 0; padding:7px 12px; background:rgba(15,23,42,0.72); border:1px solid var(--border-color); border-left:3px solid var(--accent-crimson); border-radius:7px;">
+            <span style="font-family:'Cinzel',serif; font-size:0.82rem; font-weight:800; color:var(--accent-gold-soft);">🐉 MASTER BESTIARY ROSTER &amp; POINTY HAT BOSSES (57 ENEMIES)</span>
+            <search class="section-search-wrap" aria-label="Search Enemies and Bosses">
+                <label class="visually-hidden" for="monster-search">Search Bestiary Enemies</label>
+                <input type="search" id="monster-search" class="section-search-input" placeholder="🔍 Search enemies, CR, spells, areas..." autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" oninput="filterSectionSearch('monster', this.value)">
+                <button type="button" id="monster-search-clear" class="section-search-clear" onclick="clearSectionSearch('monster')" aria-label="Clear enemy search" title="Clear">✕</button>
+            </search>
+        </div>
+
+        <div class="loot-filter-bar" id="monster-filter-bar">
+            <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">📍 Tier / Region:</span>
+            <button type="button" class="btn-loot-filter" data-monsterloc="all" onclick="filterMonsterDirectory('all', this)">All</button>
+            <button type="button" class="btn-loot-filter active" data-monsterloc="mobs" onclick="filterMonsterDirectory('mobs', this)">💀 Core Mobs</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="bosses" onclick="filterMonsterDirectory('bosses', this)">👑 Bosses</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="barovia_mill" onclick="filterMonsterDirectory('barovia_mill', this)">🌲 Barovia &amp; Mill</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="vallaki_hill" onclick="filterMonsterDirectory('vallaki_hill', this)">⚔️ Vallaki &amp; Hill</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="argyn_krezk_berez" onclick="filterMonsterDirectory('argyn_krezk_berez', this)">🐉 Argynvost, Krezk &amp; Berez</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="pass_temple" onclick="filterMonsterDirectory('pass_temple', this)">🏔️ Pass &amp; Temple</button>
+            <button type="button" class="btn-loot-filter" data-monsterloc="ravenloft" onclick="filterMonsterDirectory('ravenloft', this)">🏰 Ravenloft</button>
+        </div>
+        <div class="table-wrap" id="monster-table-wrap" tabindex="0" role="region" aria-labelledby="monster-sec-title">
+            <table class="guide-table" id="monster-table">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width:7%;">Add</th>
+                        <th scope="col" style="width:22%;">Enemy Name &amp; Encounter Role</th>
+                        <th scope="col" style="width:6%;">CR</th>
+                        <th scope="col" style="width:6%;">INIT</th>
+                        <th scope="col" style="width:6%;">AC</th>
+                        <th scope="col" style="width:8%;">HP</th>
+                        <th scope="col" style="width:8%;">Speed</th>
+                        <th scope="col" style="width:15%;">⚔️ Weapons &amp; Style</th>
+                        <th scope="col" style="width:22%;">📍 Where Encountered</th>
+                    </tr>
+                </thead>
+                <tbody id="monster-tbody"></tbody>
+            </table>
         </div>
     </section>
 
-    <!-- SECTION 1.5: BIOMES, DUNGEONS & LOCATIONS EXPLORER -->
+    <!-- SECTION 4: WORLD LOOT VAULT -->
+    <section id="loot-vault">
+        <div class="section-header">
+            <span id="loot-sec-title">🎒 SECTION 4: BAROVIAN WORLD LOOT VAULT, ATTACHMENTS &amp; CRAFTING LEDGER</span>
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <search class="section-search-wrap" aria-label="Search World Loot Vault">
+                    <label class="visually-hidden" for="loot-search">Search Section 4 Loot</label>
+                    <input type="search" id="loot-search" class="section-search-input" placeholder="🔍 Search items, slots, costs, heroes, acts, materials..." autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" oninput="filterSectionSearch('loot', this.value)">
+                    <button type="button" id="loot-search-clear" class="section-search-clear" onclick="clearSectionSearch('loot')" aria-label="Clear loot search" title="Clear">✕</button>
+                </search>
+            </div>
+        </div>
+        <div class="loot-filter-bar" id="loot-filter-bar" role="group" aria-label="Filter loot by Act, Hero, Exploration, or Shopkeeper">
+            <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:2px;">1. Act / Hero:</span>
+            <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Acts</button>
+            <button type="button" class="btn-loot-filter active" data-loottag="Act I" onclick="filterLootVault('Act I', this)">🩸 Act I</button>
+            <button type="button" class="btn-loot-filter" data-loottag="Act II" onclick="filterLootVault('Act II', this)">⚔️ Act II</button>
+            <button type="button" class="btn-loot-filter" data-loottag="Act III" onclick="filterLootVault('Act III', this)">🐉 Act III</button>
+            <button type="button" class="btn-loot-filter" data-loottag="Act IV" onclick="filterLootVault('Act IV', this)">🏰 Act IV</button>
+            <span style="color:#334155; margin:0 2px;">|</span>
+            <button type="button" class="btn-loot-filter" data-loottag="Piper" onclick="filterLootVault('Piper', this)">🎩 Piper</button>
+            <button type="button" class="btn-loot-filter" data-loottag="Jacomir" onclick="filterLootVault('Jacomir', this)">👑 Jacomir</button>
+            <button type="button" class="btn-loot-filter" data-loottag="Yvaine" onclick="filterLootVault('Yvaine', this)">🔫 Yvaine</button>
+            <span style="margin-left:auto; display:inline-flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" id="btn-toggle-explore" class="btn-loot-filter" style="border-color:rgba(52,211,153,0.6); color:#6ee7b7;" aria-expanded="false" aria-controls="loot-scene-bar" onclick="toggleLootExploreBar()">🔎 Exploring ▾</button>
+                <button type="button" id="btn-toggle-shops" class="btn-loot-filter" style="border-color:rgba(251,191,36,0.65); color:#fde68a;" aria-expanded="false" aria-controls="loot-shop-panel" onclick="toggleLootShopBar()">🏪 Shopkeepers ▾</button>
+            </span>
+        </div>
+        <div class="loot-loc-bar" id="loot-loc-bar" role="group" aria-label="Filter by specific location in active Act"></div>
+        <div class="loot-scene-bar" id="loot-scene-bar" role="group" aria-label="Quick search where players are exploring right now">
+            <span style="font-family:'Cinzel',serif; font-size:0.73rem; color:#6ee7b7; font-weight:700; margin-right:2px;">🔎 Exploring Scene:</span>
+            <button type="button" class="btn-loot-scene" data-lootscene="room_attic" onclick="filterLootScene('room_attic')" aria-pressed="false">🏠 Room / Attic</button>
+            <button type="button" class="btn-loot-scene" data-lootscene="forest_road" onclick="filterLootScene('forest_road')" aria-pressed="false">🌲 Forest / Travel</button>
+            <button type="button" class="btn-loot-scene" data-lootscene="tavern_kitchen" onclick="filterLootScene('tavern_kitchen')" aria-pressed="false">🍺 Tavern / Kitchen</button>
+            <button type="button" class="btn-loot-scene" data-lootscene="church_crypt" onclick="filterLootScene('church_crypt')" aria-pressed="false">⛪ Church / Crypt</button>
+            <button type="button" class="btn-loot-scene" data-lootscene="corpse_monster" onclick="filterLootScene('corpse_monster')" aria-pressed="false">💀 Corpse / Monster</button>
+            <button type="button" class="btn-loot-scene" data-lootscene="lab_study" onclick="filterLootScene('lab_study')" aria-pressed="false">⚗️ Lab / Study</button>
+            <button type="button" id="btn-loot-scene-clear" class="btn-modal-mini" style="margin-left:auto; border-color:#f87171; color:#fca5a5;" onclick="closeLootExploreBar()">✕ Close Exploring</button>
+        </div>
+        <div class="loot-tier-bar" id="loot-tier-bar" role="group" aria-label="Filter or roll exploration loot by check tier"></div>
+        <div id="loot-shop-panel" class="loot-shop-panel" role="region" aria-label="Barovian Area Shopkeeper Stock Generator"></div>
+        <div class="loot-cat-bar" id="loot-cat-bar">
+            <span style="font-family:'Cinzel',serif; font-size:0.74rem; color:#93c5fd; font-weight:700; margin-right:2px;">2. Category:</span>
+            <button type="button" id="btn-lcat-overview" class="btn-loot-cat active" data-lootcat="overview" onclick="filterLootCategory('overview', this)">📋 Overview</button>
+            <button type="button" id="btn-lcat-weapons" class="btn-loot-cat" data-lootcat="weapons" onclick="filterLootCategory('weapons', this)">⚔️ Weapons &amp; Ammo</button>
+            <button type="button" id="btn-loot-attachments" class="btn-loot-cat" style="border-color:rgba(96,165,250,0.55); color:#93c5fd;" data-lootcat="attachments" onclick="filterLootCategory('attachments', this)">🔧 Attachments</button>
+            <button type="button" id="btn-loot-upgrades" class="btn-loot-cat" style="border-color:rgba(251,191,36,0.55); color:#fde68a;" data-lootcat="upgrades" onclick="filterLootCategory('upgrades', this)">⬆️ Upgrades</button>
+            <button type="button" id="btn-lcat-caster" class="btn-loot-cat" data-lootcat="caster" onclick="filterLootCategory('caster', this)">🔮 Caster &amp; Relics</button>
+            <button type="button" id="btn-lcat-scrolls" class="btn-loot-cat" style="border-color:rgba(250,204,21,0.55); color:#fef08a;" data-lootcat="scrolls" onclick="filterLootCategory('scrolls', this)">📜 Spell Scrolls</button>
+            <button type="button" id="btn-lcat-armor" class="btn-loot-cat" style="border-color:rgba(56,189,248,0.55); color:#7dd3fc;" data-lootcat="armor" onclick="filterLootCategory('armor', this)">🛡️ Armor</button>
+            <button type="button" id="btn-lcat-gear" class="btn-loot-cat" data-lootcat="gear" onclick="filterLootCategory('gear', this)">🎒 Gear &amp; Rings</button>
+            <button type="button" id="btn-lcat-consumables" class="btn-loot-cat" data-lootcat="consumables" onclick="filterLootCategory('consumables', this)">🧪 Potions &amp; Food</button>
+            <button type="button" id="btn-loot-craftables" class="btn-loot-cat" style="border-color:rgba(192,132,252,0.55); color:#e9d5ff;" data-lootcat="craftables" onclick="filterLootCategory('craftables', this)">⚗️ Craft &amp; Recipes</button>
+            <button type="button" id="btn-loot-materials" class="btn-loot-cat" style="border-color:rgba(52,211,153,0.55); color:#6ee7b7;" data-lootcat="materials" onclick="filterLootCategory('materials', this)">🌿 Materials</button>
+            <button type="button" id="btn-lcat-quest" class="btn-loot-cat" data-lootcat="quest" onclick="filterLootCategory('quest', this)">🗝️ Quest &amp; Loot</button>
+        </div>
+        <div class="loot-rarity-bar" id="loot-rarity-bar" role="group" aria-label="Filter loot by power scale and rarity"></div>
+        <div class="loot-slot-bar" id="loot-armor-slot-bar" role="group" aria-label="Filter armor by slot or synergy set"></div>
+        <div class="loot-slot-bar" id="loot-slot-bar">
+            <span style="font-size:0.72rem; color:#7dd3fc; font-weight:700; margin-right:2px;">3. Weapon Slot:</span>
+            <button type="button" class="btn-loot-slot active" data-lootslot="all" onclick="filterLootSlot('all', this)">All Slots</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="hilt" onclick="filterLootSlot('hilt', this)">🗡️ Hilt / Pommel (Handling &amp; Init)</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="guard" onclick="filterLootSlot('guard', this)">🛡️ Edge / Guard (Dmg &amp; AC)</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="optic" onclick="filterLootSlot('optic', this)">🎯 Optic / Sight (Hit &amp; Vision)</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="barrel" onclick="filterLootSlot('barrel', this)">🔫 Barrel / Mag (Dmg &amp; Cap)</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="crown" onclick="filterLootSlot('crown', this)">🔮 Arcane Core (Spell &amp; Elements)</button>
+            <button type="button" class="btn-loot-slot" data-lootslot="grip" onclick="filterLootSlot('grip', this)">🎗️ Shaft Grip (Conc, Saves &amp; AC)</button>
+        </div>
+        <div id="loot-rolled-panel" role="status" aria-live="polite"></div>
+        <div class="loot-vault-stack" id="loot-containers"></div>
+    </section>
+
+    <!-- SECTION 5: BIOMES, DUNGEONS & LOCATIONS EXPLORER -->
     <section id="biomes-explorer">
         <div class="section-header">
-            <span>🗺️ SECTION 1.5: CAMPAIGN BIOMES, DUNGEONS &amp; LOCATIONS EXPLORER (25 LOCATIONS)</span>
+            <span>🗺️ SECTION 5: CAMPAIGN BIOMES, DUNGEONS &amp; LOCATIONS EXPLORER (25 LOCATIONS)</span>
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <button type="button" class="btn-map-ref" onclick="openWorldMapLightbox()">🗺️ Full Map of Barovia</button>
                 <search class="section-search-wrap" aria-label="Search Locations and Biomes">
@@ -3306,224 +3498,10 @@
         </div>
     </section>
 
-    <!-- SECTION 2: MASTER NPC DIRECTORY -->
-    <section id="npc-directory">
-        <div class="section-header">
-            <span id="npc-sec-title">👥 SECTION 2: MASTER BAROVIAN NPC DIRECTORY &amp; DOSSIERS (36 NPCS)</span>
-            <search class="section-search-wrap" aria-label="Search Barovian NPCs">
-                <label class="visually-hidden" for="npc-search">Search Section 2 NPCs</label>
-                <input type="search" id="npc-search" class="section-search-input" placeholder="🔍 Search NPCs, roles, towns, offerings..." autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" oninput="filterSectionSearch('npc', this.value)">
-                <button type="button" id="npc-search-clear" class="section-search-clear" onclick="clearSectionSearch('npc')" aria-label="Clear NPC search" title="Clear">✕</button>
-            </search>
-        </div>
-        <div class="loot-filter-bar" id="npc-filter-bar">
-            <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">📍 Location:</span>
-            <button type="button" class="btn-loot-filter active" data-npcloc="met_active" onclick="filterNpcDirectory('met_active', this)">🟢 Met &amp; Active</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="all" onclick="filterNpcDirectory('all', this)">All</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="village" onclick="filterNpcDirectory('village', this)">🌲 Barovia</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="tser_mill" onclick="filterNpcDirectory('tser_mill', this)">🔮 Tser &amp; Mill</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="vallaki" onclick="filterNpcDirectory('vallaki', this)">⚔️ Vallaki</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="argyn_krezk" onclick="filterNpcDirectory('argyn_krezk', this)">🐉 Argynvost &amp; Krezk</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="berez_baratok" onclick="filterNpcDirectory('berez_baratok', this)">🌊 Berez &amp; Den</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="pass_temple" onclick="filterNpcDirectory('pass_temple', this)">🏔️ Pass &amp; Temple</button>
-            <button type="button" class="btn-loot-filter" data-npcloc="ravenloft" onclick="filterNpcDirectory('ravenloft', this)">🏰 Ravenloft</button>
-        </div>
-        <div class="table-wrap" id="npc-table-wrap" tabindex="0" role="region" aria-labelledby="npc-sec-title">
-            <table class="guide-table" id="npc-table">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width:21%;">NPC Name &amp; Condition</th>
-                        <th scope="col" style="width:13%;">Live Status</th>
-                        <th scope="col" style="width:19%;">Role &amp; Location</th>
-                        <th scope="col" style="width:28%;">Key Offerings, Services, Quests &amp; Advice</th>
-                        <th scope="col" style="width:19%;">🎭 Voice &amp; Roleplay Cue</th>
-                    </tr>
-                </thead>
-                <tbody id="npc-tbody"></tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- SECTION 3: ENEMIES & POINTY HAT BOSSES -->
-    <section id="monsters-section">
-        <div class="section-header">
-            <span id="monster-sec-title">💀 SECTION 3: MASTER ENEMY DIRECTORY &amp; POINTY HAT BOSS STAT BLOCKS (57 ENEMIES)</span>
-            <search class="section-search-wrap" aria-label="Search Enemies and Bosses">
-                <label class="visually-hidden" for="monster-search">Search Section 3 Enemies</label>
-                <input type="search" id="monster-search" class="section-search-input" placeholder="🔍 Search enemies, CR, spells, areas..." autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" oninput="filterSectionSearch('monster', this.value)">
-                <button type="button" id="monster-search-clear" class="section-search-clear" onclick="clearSectionSearch('monster')" aria-label="Clear enemy search" title="Clear">✕</button>
-            </search>
-        </div>
-
-        <!-- LIVE ACTIVE ENCOUNTER BOARD -->
-        <div class="encounter-board" id="encounter-board-panel">
-            <div class="encounter-board-head">
-                <div class="encounter-board-title">
-                    <span>⚔️ ACTIVE ENCOUNTER BOARD</span>
-                    <span class="pill crimson" id="encounter-count-badge">0 Active • 0 Alive</span>
-                </div>
-                <div class="encounter-board-controls">
-                    <button type="button" id="encounter-combat-toggle-btn" class="btn-roll" style="background:linear-gradient(135deg,#b91c1c,#991b1b); border-color:#f87171; color:#fef2f2;" onclick="toggleEncounterCombatBroadcast()" title="Broadcast sanitized Fog-of-War Turn Order strip to all player sheets">⚔️ Start Combat</button>
-                    <button type="button" id="enc-preset-toggle-btn" class="btn-roll" onclick="toggleEncounterDrawer('presets')" title="1-Click Load Scene Encounter Presets (Party + Enemies + Auto-Roll Init)">⚡ Presets</button>
-                    <button type="button" id="enc-custom-toggle-btn" class="btn-step btn-heal" onclick="toggleEncounterDrawer('custom')" title="Spawn an ad-hoc custom enemy or NPC onto the Encounter Board">➕ Custom Enemy</button>
-                    <button type="button" class="btn-step" onclick="addPartyToEncounter()" title="Add Piper, Jacomir, Yvaine &amp; Cael Initiative Cards">🛡️ + Party</button>
-                    <button type="button" class="btn-step btn-heal" onclick="addAllyToEncounter()" title="Add an Ally Initiative Card">👤 + Ally</button>
-                    <button type="button" class="btn-roll" onclick="rollAllEncounterInits()" title="Roll Initiative for Enemies and sort all combatants">🎲 Roll Inits</button>
-                    <button type="button" class="btn-step" onclick="sortEncounterBoard(true)" title="Sort all Allies &amp; Enemies by Initiative">🔃 Sort</button>
-                    <button type="button" class="btn-step" onclick="clearDeadEncounterEntries()" title="Remove 0 HP slain enemies">🧹 Clear Dead</button>
-                    <button type="button" class="btn-step btn-heal" onclick="healAllEncounterEntries()" title="Restore all enemies to full HP">💚 Heal All</button>
-                    <button type="button" class="btn-step" onclick="clearEncounterBoard()" title="Clear entire Encounter Board">🗑️ Clear</button>
-                    <button type="button" id="encounter-pin-btn" class="btn-step" onclick="togglePinEncounterBoard()" title="Pin Encounter Board to top of screen across all tabs">📌 Pin Top</button>
-                    <button type="button" id="encounter-collapse-btn" class="btn-step" aria-expanded="true" aria-controls="encounter-board-body" onclick="toggleEncounterBoardCollapse()">▾ Collapse</button>
-                </div>
-            </div>
-
-            <!-- 1-CLICK SCENE ENCOUNTER PRESETS DRAWER -->
-            <div id="enc-preset-drawer" class="enc-drawer-bar">
-                <div class="enc-preset-toolbar">
-                    <span style="font-family:'Cinzel',serif; font-size:0.76rem; font-weight:700; color:var(--accent-gold);">⚡ Encounter Presets (1-Click Spawn • Edit ✏️ • Delete ✕):</span>
-                    <div class="enc-preset-actions">
-                        <label style="font-size:0.72rem; color:var(--text-muted); display:inline-flex; align-items:center; gap:5px; cursor:pointer; margin-right:4px;">
-                            <input type="checkbox" id="enc-preset-replace-chk" checked> Replace existing enemies
-                        </label>
-                        <button type="button" class="btn-step btn-heal" onclick="openPresetEditorFromBoard()" title="Capture all enemies currently on the Active Encounter Board into a named preset">💾 Save Board as Preset</button>
-                        <button type="button" class="btn-roll" onclick="openPresetEditorModal(null)" title="Create and name a brand-new combat encounter preset">+ New Preset</button>
-                        <button type="button" id="enc-preset-restore-btn" class="btn-step" style="display:none;" onclick="restoreDefaultEncounterPresets()" title="Restore built-in campaign scene presets">↺ Restore Defaults</button>
-                    </div>
-                </div>
-                <div class="enc-preset-pills" id="enc-preset-pills"></div>
-            </div>
-
-            <!-- 1-LINE AD-HOC CUSTOM ENEMY SPAWNER DRAWER -->
-            <div id="enc-custom-drawer" class="enc-drawer-bar">
-                <div style="font-family:'Cinzel',serif; font-size:0.76rem; font-weight:700; color:var(--accent-green-soft);">➕ Quick-Spawn Custom Enemy / Improvised NPC Combatant:</div>
-                <form class="enc-custom-form" onsubmit="event.preventDefault(); spawnCustomEncounterEnemy();">
-                    <input type="text" id="enc-cust-name" class="enc-custom-input" placeholder="Name (e.g. Vallaki Guard)" style="width:165px;" required>
-                    <input type="number" id="enc-cust-hp" class="enc-custom-input" placeholder="HP" value="22" min="1" max="999" style="width:68px;" title="Max HP" required>
-                    <input type="number" id="enc-cust-ac" class="enc-custom-input" placeholder="AC" value="14" min="1" max="35" style="width:62px;" title="Armor Class" required>
-                    <input type="number" id="enc-cust-init" class="enc-custom-input" placeholder="+Init" value="1" min="-10" max="25" style="width:64px;" title="Initiative Modifier">
-                    <input type="text" id="enc-cust-wpn" class="enc-custom-input" placeholder="Attack Name (Halberd)" value="Strike" style="width:130px;" title="Primary Weapon/Attack Label">
-                    <input type="number" id="enc-cust-hit" class="enc-custom-input" placeholder="+Hit" value="4" min="-5" max="25" style="width:64px;" title="Attack Roll Bonus (+Hit)">
-                    <input type="text" id="enc-cust-dmg" class="enc-custom-input" placeholder="Dmg (1d8+2)" value="1d8+2" style="width:92px;" title="Damage Dice Formula">
-                    <input type="number" id="enc-cust-qty" class="enc-custom-input" placeholder="Qty" value="1" min="1" max="12" style="width:58px;" title="How many copies to spawn">
-                    <button type="submit" class="btn-roll" style="padding:5px 11px;">⚔️ Spawn</button>
-                </form>
-            </div>
-
-            <p id="encounter-status-live" role="status" class="visually-hidden"></p>
-            <div class="encounter-board-body" id="encounter-board-body">
-                <div id="encounter-combat-ribbon" class="enc-combat-ribbon"></div>
-                <div id="encounter-board-grid"></div>
-            </div>
-        </div>
-
-        <div class="loot-filter-bar" id="monster-filter-bar">
-            <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:4px;">📍 Tier / Region:</span>
-            <button type="button" class="btn-loot-filter" data-monsterloc="all" onclick="filterMonsterDirectory('all', this)">All</button>
-            <button type="button" class="btn-loot-filter active" data-monsterloc="mobs" onclick="filterMonsterDirectory('mobs', this)">💀 Core Mobs</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="bosses" onclick="filterMonsterDirectory('bosses', this)">👑 Bosses</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="barovia_mill" onclick="filterMonsterDirectory('barovia_mill', this)">🌲 Barovia &amp; Mill</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="vallaki_hill" onclick="filterMonsterDirectory('vallaki_hill', this)">⚔️ Vallaki &amp; Hill</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="argyn_krezk_berez" onclick="filterMonsterDirectory('argyn_krezk_berez', this)">🐉 Argynvost, Krezk &amp; Berez</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="pass_temple" onclick="filterMonsterDirectory('pass_temple', this)">🏔️ Pass &amp; Temple</button>
-            <button type="button" class="btn-loot-filter" data-monsterloc="ravenloft" onclick="filterMonsterDirectory('ravenloft', this)">🏰 Ravenloft</button>
-        </div>
-        <div class="table-wrap" id="monster-table-wrap" tabindex="0" role="region" aria-labelledby="monster-sec-title">
-            <table class="guide-table" id="monster-table">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width:7%;">Add</th>
-                        <th scope="col" style="width:22%;">Enemy Name &amp; Encounter Role</th>
-                        <th scope="col" style="width:6%;">CR</th>
-                        <th scope="col" style="width:6%;">INIT</th>
-                        <th scope="col" style="width:6%;">AC</th>
-                        <th scope="col" style="width:8%;">HP</th>
-                        <th scope="col" style="width:8%;">Speed</th>
-                        <th scope="col" style="width:15%;">⚔️ Weapons &amp; Style</th>
-                        <th scope="col" style="width:22%;">📍 Where Encountered</th>
-                    </tr>
-                </thead>
-                <tbody id="monster-tbody"></tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- SECTION 4: WORLD LOOT VAULT -->
-    <section id="loot-vault">
-        <div class="section-header">
-            <span id="loot-sec-title">🎒 SECTION 4: BAROVIAN WORLD LOOT VAULT, ATTACHMENTS &amp; CRAFTING LEDGER</span>
-            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-                <search class="section-search-wrap" aria-label="Search World Loot Vault">
-                    <label class="visually-hidden" for="loot-search">Search Section 4 Loot</label>
-                    <input type="search" id="loot-search" class="section-search-input" placeholder="🔍 Search items, slots, costs, heroes, acts, materials..." autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="search" oninput="filterSectionSearch('loot', this.value)">
-                    <button type="button" id="loot-search-clear" class="section-search-clear" onclick="clearSectionSearch('loot')" aria-label="Clear loot search" title="Clear">✕</button>
-                </search>
-            </div>
-        </div>
-        <div class="loot-filter-bar" id="loot-filter-bar" role="group" aria-label="Filter loot by Act, Hero, Exploration, or Shopkeeper">
-            <span style="font-family:'Cinzel',serif; font-size:0.75rem; color:var(--accent-gold); font-weight:700; margin-right:2px;">1. Act / Hero:</span>
-            <button type="button" id="btn-loot-all" class="btn-loot-filter" data-loottag="all" onclick="filterLootVault('all', this)">📦 All Acts</button>
-            <button type="button" class="btn-loot-filter active" data-loottag="Act I" onclick="filterLootVault('Act I', this)">🩸 Act I</button>
-            <button type="button" class="btn-loot-filter" data-loottag="Act II" onclick="filterLootVault('Act II', this)">⚔️ Act II</button>
-            <button type="button" class="btn-loot-filter" data-loottag="Act III" onclick="filterLootVault('Act III', this)">🐉 Act III</button>
-            <button type="button" class="btn-loot-filter" data-loottag="Act IV" onclick="filterLootVault('Act IV', this)">🏰 Act IV</button>
-            <span style="color:#334155; margin:0 2px;">|</span>
-            <button type="button" class="btn-loot-filter" data-loottag="Piper" onclick="filterLootVault('Piper', this)">🎩 Piper</button>
-            <button type="button" class="btn-loot-filter" data-loottag="Jacomir" onclick="filterLootVault('Jacomir', this)">👑 Jacomir</button>
-            <button type="button" class="btn-loot-filter" data-loottag="Yvaine" onclick="filterLootVault('Yvaine', this)">🔫 Yvaine</button>
-            <span style="margin-left:auto; display:inline-flex; gap:6px; flex-wrap:wrap;">
-                <button type="button" id="btn-toggle-explore" class="btn-loot-filter" style="border-color:rgba(52,211,153,0.6); color:#6ee7b7;" aria-expanded="false" aria-controls="loot-scene-bar" onclick="toggleLootExploreBar()">🔎 Exploring ▾</button>
-                <button type="button" id="btn-toggle-shops" class="btn-loot-filter" style="border-color:rgba(251,191,36,0.65); color:#fde68a;" aria-expanded="false" aria-controls="loot-shop-panel" onclick="toggleLootShopBar()">🏪 Shopkeepers ▾</button>
-            </span>
-        </div>
-        <div class="loot-loc-bar" id="loot-loc-bar" role="group" aria-label="Filter by specific location in active Act"></div>
-        <div class="loot-scene-bar" id="loot-scene-bar" role="group" aria-label="Quick search where players are exploring right now">
-            <span style="font-family:'Cinzel',serif; font-size:0.73rem; color:#6ee7b7; font-weight:700; margin-right:2px;">🔎 Exploring Scene:</span>
-            <button type="button" class="btn-loot-scene" data-lootscene="room_attic" onclick="filterLootScene('room_attic')" aria-pressed="false">🏠 Room / Attic</button>
-            <button type="button" class="btn-loot-scene" data-lootscene="forest_road" onclick="filterLootScene('forest_road')" aria-pressed="false">🌲 Forest / Travel</button>
-            <button type="button" class="btn-loot-scene" data-lootscene="tavern_kitchen" onclick="filterLootScene('tavern_kitchen')" aria-pressed="false">🍺 Tavern / Kitchen</button>
-            <button type="button" class="btn-loot-scene" data-lootscene="church_crypt" onclick="filterLootScene('church_crypt')" aria-pressed="false">⛪ Church / Crypt</button>
-            <button type="button" class="btn-loot-scene" data-lootscene="corpse_monster" onclick="filterLootScene('corpse_monster')" aria-pressed="false">💀 Corpse / Monster</button>
-            <button type="button" class="btn-loot-scene" data-lootscene="lab_study" onclick="filterLootScene('lab_study')" aria-pressed="false">⚗️ Lab / Study</button>
-            <button type="button" id="btn-loot-scene-clear" class="btn-modal-mini" style="margin-left:auto; border-color:#f87171; color:#fca5a5;" onclick="closeLootExploreBar()">✕ Close Exploring</button>
-        </div>
-        <div class="loot-tier-bar" id="loot-tier-bar" role="group" aria-label="Filter or roll exploration loot by check tier"></div>
-        <div id="loot-shop-panel" class="loot-shop-panel" role="region" aria-label="Barovian Area Shopkeeper Stock Generator"></div>
-        <div class="loot-cat-bar" id="loot-cat-bar">
-            <span style="font-family:'Cinzel',serif; font-size:0.74rem; color:#93c5fd; font-weight:700; margin-right:2px;">2. Category:</span>
-            <button type="button" id="btn-lcat-overview" class="btn-loot-cat active" data-lootcat="overview" onclick="filterLootCategory('overview', this)">📋 Overview</button>
-            <button type="button" id="btn-lcat-weapons" class="btn-loot-cat" data-lootcat="weapons" onclick="filterLootCategory('weapons', this)">⚔️ Weapons &amp; Ammo</button>
-            <button type="button" id="btn-loot-attachments" class="btn-loot-cat" style="border-color:rgba(96,165,250,0.55); color:#93c5fd;" data-lootcat="attachments" onclick="filterLootCategory('attachments', this)">🔧 Attachments</button>
-            <button type="button" id="btn-loot-upgrades" class="btn-loot-cat" style="border-color:rgba(251,191,36,0.55); color:#fde68a;" data-lootcat="upgrades" onclick="filterLootCategory('upgrades', this)">⬆️ Upgrades</button>
-            <button type="button" id="btn-lcat-caster" class="btn-loot-cat" data-lootcat="caster" onclick="filterLootCategory('caster', this)">🔮 Caster &amp; Relics</button>
-            <button type="button" id="btn-lcat-scrolls" class="btn-loot-cat" style="border-color:rgba(250,204,21,0.55); color:#fef08a;" data-lootcat="scrolls" onclick="filterLootCategory('scrolls', this)">📜 Spell Scrolls</button>
-            <button type="button" id="btn-lcat-armor" class="btn-loot-cat" style="border-color:rgba(56,189,248,0.55); color:#7dd3fc;" data-lootcat="armor" onclick="filterLootCategory('armor', this)">🛡️ Armor</button>
-            <button type="button" id="btn-lcat-gear" class="btn-loot-cat" data-lootcat="gear" onclick="filterLootCategory('gear', this)">🎒 Gear &amp; Rings</button>
-            <button type="button" id="btn-lcat-consumables" class="btn-loot-cat" data-lootcat="consumables" onclick="filterLootCategory('consumables', this)">🧪 Potions &amp; Food</button>
-            <button type="button" id="btn-loot-craftables" class="btn-loot-cat" style="border-color:rgba(192,132,252,0.55); color:#e9d5ff;" data-lootcat="craftables" onclick="filterLootCategory('craftables', this)">⚗️ Craft &amp; Recipes</button>
-            <button type="button" id="btn-loot-materials" class="btn-loot-cat" style="border-color:rgba(52,211,153,0.55); color:#6ee7b7;" data-lootcat="materials" onclick="filterLootCategory('materials', this)">🌿 Materials</button>
-            <button type="button" id="btn-lcat-quest" class="btn-loot-cat" data-lootcat="quest" onclick="filterLootCategory('quest', this)">🗝️ Quest &amp; Loot</button>
-        </div>
-        <div class="loot-rarity-bar" id="loot-rarity-bar" role="group" aria-label="Filter loot by power scale and rarity"></div>
-        <div class="loot-slot-bar" id="loot-armor-slot-bar" role="group" aria-label="Filter armor by slot or synergy set"></div>
-        <div class="loot-slot-bar" id="loot-slot-bar">
-            <span style="font-size:0.72rem; color:#7dd3fc; font-weight:700; margin-right:2px;">3. Weapon Slot:</span>
-            <button type="button" class="btn-loot-slot active" data-lootslot="all" onclick="filterLootSlot('all', this)">All Slots</button>
-            <button type="button" class="btn-loot-slot" data-lootslot="hilt" onclick="filterLootSlot('hilt', this)">🗡️ Hilt / Pommel (Handling &amp; Init)</button>
-            <button type="button" class="btn-loot-slot" data-lootslot="guard" onclick="filterLootSlot('guard', this)">🛡️ Edge / Guard (Dmg &amp; AC)</button>
-            <button type="button" class="btn-loot-slot" data-lootslot="optic" onclick="filterLootSlot('optic', this)">🎯 Optic / Sight (Hit &amp; Vision)</button>
-            <button type="button" class="btn-loot-slot" data-lootslot="barrel" onclick="filterLootSlot('barrel', this)">🔫 Barrel / Mag (Dmg &amp; Cap)</button>
-            <button type="button" class="btn-loot-slot" data-lootslot="crown" onclick="filterLootSlot('crown', this)">🔮 Arcane Core (Spell &amp; Elements)</button>
-            <button type="button" class="btn-loot-slot" data-lootslot="grip" onclick="filterLootSlot('grip', this)">🎗️ Shaft Grip (Conc, Saves &amp; AC)</button>
-        </div>
-        <div id="loot-rolled-panel" role="status" aria-live="polite"></div>
-        <div class="loot-vault-stack" id="loot-containers"></div>
-    </section>
-
-    <!-- SECTION 4.5: BAROVIAN FACTIONS, LOCATIONS, HISTORY, SECRETS & COSMIC LORE CODEX -->
+    <!-- SECTION 6: BAROVIAN FACTIONS, LOCATIONS, HISTORY, SECRETS & COSMIC LORE CODEX -->
     <section id="factions-lore">
         <div class="section-header">
-            <span>🏛️ SECTION 4.5: BAROVIAN FACTIONS, LOCATIONS, HISTORY, SECRETS &amp; COSMIC LORE CODEX (55 DOSSIERS)</span>
+            <span>🏛️ SECTION 6: BAROVIAN FACTIONS, LOCATIONS, HISTORY, SECRETS &amp; COSMIC LORE CODEX (55 DOSSIERS)</span>
             <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
                 <button type="button" class="btn-map-ref" onclick="openWorldMapLightbox()">🗺️ Full Map of Barovia</button>
                 <search class="section-search-wrap" aria-label="Search Factions and Lore Codex">
@@ -3929,10 +3907,90 @@
         </div>
     </section>
 
-    <!-- SECTION 5: DM RULES & BAROVIAN LAWS -->
+    <!-- SECTION 7: CURATED TAROKKA READING -->
+    <section id="tarokka-oracle">
+        <div class="section-header">
+            <span>🔮 SECTION 7: CURATED MADAM EVA TAROKKA ORACLE (SESSION 2 — TSER POOL)</span>
+            <span class="section-tag">CLICK ANY CARD FOR ART, READ-ALOUD PROPHECY (NO SPOILERS!) &amp; DM DECODER KEY</span>
+        </div>
+        <div class="grid-3">
+            <div class="card clickable" onclick="openQuestModal('tarokka1')">
+                <div class="card-header"><span class="card-title">📜 1. The Tome of Strahd</span><span class="pill gold">The Master of Stars</span></div>
+                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>DM Key (Do Not Read Aloud):</strong> Wachterhaus Secret Cult Library (Vallaki — Sessions 5–6, Lvl 5). Grants 30-ft Adv vs Charm &amp; 1/day DC 15 Wis Stun on Strahd/Brides!</p></div>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('tarokka2')">
+                <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🕊️ 2. Holy Symbol of Ravenkind</span><span class="pill gold">The Paladin</span></div>
+                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>DM Key (Do Not Read Aloud):</strong> Argynvostholt Beacon Sanctum (Vladimir Horngaard — Sessions 10–11, Lvl 7). 10 Charges: Hold Vampires &amp; 30-ft True Sunlight!</p></div>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('tarokka3')">
+                <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🗡️ 3. The Sunsword</span><span class="pill gold">The Tempter</span></div>
+                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>DM Key (Do Not Read Aloud):</strong> Ruins of Berez (Baba Lysaga's Creeping Hut — Sessions 13–14, Lvl 8). +2 Finesse/Versatile 2d8 Radiant vs Undead + 15–30 ft Sunlight!</p></div>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('tarokka4')">
+                <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🧵 4. The Hidden Hand</span><span class="pill purple">The Marionette</span></div>
+                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>DM Secret Betrayal Omen (Replaces Ally Slot):</strong> Multi-layered riddle hiding <strong>Cael's Session 20 twist</strong> behind Barovian decoys (Milivoj, Blinsky dolls, Vassili, Vasilka &amp; Solmere)!</p></div>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('tarokka5')">
+                <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🏰 5. The Final Battlefield</span><span class="pill crimson">The Executioner</span></div>
+                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>DM Key (Do Not Read Aloud):</strong> Castle Ravenloft — Chapel of Ravenloft (K15) ➔ Sergei's Crypt (K85) ➔ Overlook Spire (K6) storm finale (Sessions 19–20, Lvl 10).</p></div>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('tarokka6')">
+                <div class="card-title" style="padding:10px 14px; background:var(--bg-card-header); border-bottom:1px solid var(--border-color);"><span>🃏 6. Piper's Blank Omen Card</span><span class="pill purple">The Unwritten Card</span></div>
+                <div class="card-body"><p style="font-size:0.81rem; color:var(--text-muted);"><strong>3-Stage Progressive Mist Bleed:</strong> Eva recoils in cold dread. Charcoal Mist/Vessel ink creeps upward across Acts I–IV (Dead Pines ➔ Cracked Glass ➔ Inward Vortex).</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: 15-20 SESSION ROADMAP -->
+    <section id="active-quests">
+        <div class="section-header">
+            <span>📜 SECTION 8: THE 15–20 SESSION "DIRECTOR'S CUT" ROADMAP</span>
+            <span class="section-tag">CLICK ANY ACT CARD FOR SESSION BREAKDOWN & DCs</span>
+        </div>
+        <div class="grid-2">
+            <div class="card clickable" onclick="openQuestModal('act1')">
+                <div class="card-header">
+                    <span class="card-title">🌲 ACT I: Into the Mists (Sessions 1–4)</span>
+                    <span class="pill crimson">Levels 3 ➔ 4</span>
+                </div>
+                <div class="card-body">
+                    <p><strong>Session 1 (Done):</strong> Svalich Carriage Chase, Morgantha pie, Piper's Blank Card, Kolyan's Wizard Diary, Doru attic standoff &amp; Derek's 1st Time-Stop.<br><strong>Session 2 (Done):</strong> Brutal Doru kill (Jacomir 2 Nat 20s; Ireena Nat 20 Med saves Yvaine; *Speak w/ Dead* reveals Heart of Sorrow) ➔ Volenta rooftop cameo + <strong>Count Strahd vs. Jacomir legendary 16–16 Dragonchess stalemate</strong> (Silence bubble + <strong>James &amp; Orin</strong>; Strahd gives <strong>Black Letter</strong> for Ireena favor &amp; Oakenshire help!) ➔ <strong>Cael</strong> busted as talking cat &amp; joins ➔ <strong>Madam Eva's 5 Cards + Stage 1 Blank Card</strong> (shivers over Derek!) ➔ Derek M1 leaves Cael under suspicion.<br><strong>Session 3 (Next):</strong> Old Bonegrinder Windmill (Morgantha's Night Hag Coven) &amp; Road to Vallaki!</p>
+                </div>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('act2')">
+                <div class="card-header">
+                    <span class="card-title">🔥 ACT II: The Powderkeg of Vallaki (Sessions 5–9)</span>
+                    <span class="pill crimson">Levels 4 ➔ 6</span>
+                </div>
+                <div class="card-body">
+                    <p><strong>Session 5:</strong> Feast of St. Andral & Vampire Spawn Ambush.<br><strong>Session 6:</strong> Blazing Sun Festival Coup; party claims 📜 <strong>The Tome of Strahd</strong>.<br><strong>Session 7:</strong> Wizard of Wines Winery Siege (Keepers of the Feather alliance).<br><strong>Session 8:</strong> Yester Hill, Kavan's Blood Spear & Wintersplinter.<br><strong>Session 9:</strong> Dinner with Strahd at Castle Ravenloft.</p>
+                </div>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('act3')">
+                <div class="card-header">
+                    <span class="card-title">🐉 ACT III: Dragons, Saints & Witches (Sessions 10–14)</span>
+                    <span class="pill crimson">Levels 6 ➔ 8</span>
+                </div>
+                <div class="card-body">
+                    <p><strong>Session 10–11:</strong> Argynvostholt Dragon Beacon & 🕊️ <strong>The Holy Symbol of Ravenkind</strong>.<br><strong>Session 12:</strong> Krezk, The Abbot & Flesh Golem Vasilka.<br><strong>Session 13–14:</strong> Drowned Ruins of Berez, Baba Lysaga & 🗡️ <strong>The Sunsword</strong>!</p>
+                </div>
+            </div>
+            <div class="card clickable" onclick="openQuestModal('act4')">
+                <div class="card-header">
+                    <span class="card-title">⚡ ACT IV: Amber Corruption & Ravenloft Reckoning (Sessions 15–20)</span>
+                    <span class="pill crimson">Levels 8 ➔ 10</span>
+                </div>
+                <div class="card-body">
+                    <p><strong>Session 15–16:</strong> The Amber Temple & Dark Powers (Vampyr & Vecna Monoliths).<br><strong>Session 17–18:</strong> Castle Ravenloft Siege (Heart of Sorrow, Brides & Rahadin).<br><strong>Session 19–20:</strong> Apex Strahd Showdown & The Cosmic Knot Conduits for Campaign 3 crossover!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 9: DM RULES & BAROVIAN LAWS -->
     <section id="dm-rules-guide">
         <div class="section-header">
-            <span>⚖️ SECTION 5: BAROVIAN GOTHIC LAWS, DIFFICULTY DCS & TABLE HOUSE RULES</span>
+            <span>⚖️ SECTION 9: BAROVIAN GOTHIC LAWS, DIFFICULTY DCS & TABLE HOUSE RULES</span>
             <span class="section-tag">GLANCEABLE TABLE RULINGS</span>
         </div>
         <div class="grid-3">
@@ -4676,6 +4734,19 @@ function resolveAllyEncounterVitals(entry) {
         const ac = (st && st.acDisplay) ? String(st.acDisplay) : (preset ? preset.defaultAc : '15');
         return { isLiveHero: true, heroId: entry.allyKey, cur, max, temp, ac };
     }
+    // Story NPC Ally synced directly to NPC_DATA / linkedMonster state!
+    if (entry && entry.npcKey && typeof NPC_DATA !== 'undefined' && NPC_DATA[entry.npcKey]) {
+        const n = NPC_DATA[entry.npcKey];
+        const linkedKey = n.linkedMonster || null;
+        const cDef = (linkedKey && MONSTER_DATA[linkedKey]) ? MONSTER_DATA[linkedKey] : n;
+        const stateKey = linkedKey || ('npc::' + entry.npcKey);
+        const st = (typeof getMonsterState === 'function') ? getMonsterState(stateKey) : null;
+        const defMax = parseInt((cDef && (cDef.maxHp || cDef.hp)) || entry.maxHp || 20, 10) || 20;
+        const max = typeof entry.maxHp === 'number' ? entry.maxHp : defMax;
+        const cur = (st && typeof st.hp === 'number') ? st.hp : (typeof entry.curHp === 'number' ? entry.curHp : max);
+        const ac = String(entry.ac || (cDef && cDef.ac) || 12);
+        return { isLiveHero: false, heroId: null, npcKey: entry.npcKey, stateKey, cur, max, temp: 0, ac };
+    }
     const defMax = preset ? preset.defaultMaxHp : 28;
     const defCur = preset ? preset.defaultCurHp : 28;
     const max = typeof entry.maxHp === 'number' ? entry.maxHp : defMax;
@@ -4695,6 +4766,14 @@ function modAllyEncounterHP(uid, delta) {
     }
     entry.maxHp = v.max;
     entry.curHp = Math.max(0, Math.min(v.max + 20, v.cur + delta));
+    if (v.stateKey && typeof getMonsterState === 'function') {
+        const st = getMonsterState(v.stateKey);
+        if (st) {
+            st.hp = entry.curHp;
+            if (typeof saveBossEngineState === 'function') saveBossEngineState();
+            if (typeof updateNpcRowLiveVitals === 'function' && v.npcKey) updateNpcRowLiveVitals(v.npcKey);
+        }
+    }
     saveEncounterBoard();
     renderEncounterBoard();
     logRoll(`🩸 <strong>${escapeEncounterHtml(displayTitle)} HP</strong> ${delta > 0 ? '+' + delta : delta} ➔ <strong style="color:#fde047;">${entry.curHp} / ${entry.maxHp} HP</strong>`);
@@ -5503,7 +5582,42 @@ function shortenAttackLabelForBoard(rawName) {
 }
 
 function renderEncounterQuickAttacksHtml(entry, m) {
-    if (!entry || entry.kind === 'ally') return '';
+    if (!entry) return '';
+    // Support Quick-Attack Rollers on Story NPC Allies & Smart Generated Allies!
+    if (entry.kind === 'ally') {
+        if (entry.smartProfile && Array.isArray(entry.smartProfile.attacks) && entry.smartProfile.attacks.length > 0) {
+            const rows = entry.smartProfile.attacks.slice(0, 3).map((atk, idx) => {
+                const nm = escapeEncounterHtml(atk.name || 'Action');
+                const hitBtn = (typeof atk.hit === 'number')
+                    ? `<button type="button" class="btn-enc-atk" onclick="rollSmartAllyAction('${entry.uid}', ${idx}, false)" title="Roll Attack (+${atk.hit})">🎯 +${atk.hit}</button>`
+                    : '';
+                const dmgBtn = atk.dmg
+                    ? `<button type="button" class="btn-enc-dmg" onclick="rollSmartAllyAction('${entry.uid}', ${idx}, true)" title="Roll ${escapeEncounterHtml(atk.dmg)}">💥 ${escapeEncounterHtml(atk.dmg)}</button>`
+                    : '';
+                const utilBtn = (!hitBtn && !dmgBtn)
+                    ? `<button type="button" class="btn-enc-atk" onclick="rollSmartAllyAction('${entry.uid}', ${idx}, false)" title="${escapeEncounterHtml(atk.desc || atk.name)}">✨ Use</button>`
+                    : '';
+                return `
+                    <div class="enc-quick-atk-row">
+                        <span class="enc-quick-atk-name" title="${escapeEncounterHtml(atk.desc || atk.name)}">🛡️ ${nm}</span>
+                        <div class="enc-quick-atk-btns">${hitBtn}${dmgBtn}${utilBtn}</div>
+                    </div>
+                `;
+            });
+            return `<div class="enc-quick-atk-list">${rows.join('')}</div>`;
+        }
+        if (entry.npcKey && typeof NPC_DATA !== 'undefined' && NPC_DATA[entry.npcKey]) {
+            const n = NPC_DATA[entry.npcKey];
+            const combatSrc = (n.linkedMonster && MONSTER_DATA[n.linkedMonster]) ? MONSTER_DATA[n.linkedMonster] : n;
+            if (combatSrc && Array.isArray(combatSrc.attacks) && combatSrc.attacks.length > 0) {
+                m = combatSrc;
+            } else {
+                return '';
+            }
+        } else {
+            return '';
+        }
+    }
     if (entry.kind === 'custom') {
         const wpnName = escapeEncounterHtml(entry.customWpn || 'Strike');
         const hitSign = (entry.customHit || 0) >= 0 ? `+${entry.customHit || 0}` : `${entry.customHit || 0}`;
@@ -5696,15 +5810,32 @@ function renderEncounterBoard() {
                 </div>`;
         } else if (isAlly) {
             const allyPreset = entry.allyKey ? PARTY_INIT_PRESETS.find(p => p.allyKey === entry.allyKey) : null;
-            const clickAction = allyPreset ? `openAllyCharacterWindow('${entry.allyKey}')` : `startRenameEncounterEntry('${entry.uid}')`;
-            const clickTitle = allyPreset ? 'Click to open Character Sheet Window' : 'Click to rename Ally';
+            const hasNpc = Boolean(entry.npcKey && typeof NPC_DATA !== 'undefined' && NPC_DATA[entry.npcKey]);
+            const hasSmart = Boolean(entry.smartProfile);
+            const clickAction = allyPreset
+                ? `openAllyCharacterWindow('${entry.allyKey}')`
+                : (hasNpc
+                    ? `openNpcModal('${entry.npcKey}', { initialTab: 'combat' })`
+                    : (hasSmart ? `openSmartAllyModal('${entry.uid}')` : `startRenameEncounterEntry('${entry.uid}')`));
+            const clickTitle = allyPreset
+                ? 'Click to open Character Sheet Window'
+                : (hasNpc
+                    ? 'Click to open NPC Combat, Actions & Spells Sheet'
+                    : (hasSmart ? 'Click to open Smart Ally Full Combat Stat Block' : 'Click to rename Ally'));
+            const subLinkHtml = allyPreset && entry.customLabel !== allyPreset.name
+                ? `<div><button type="button" class="enc-sheet-link" style="color:#94c9a9;" onclick="${clickAction}">📄 ${escapeEncounterHtml(allyPreset.name)} Sheet</button></div>`
+                : (hasNpc
+                    ? `<div><button type="button" class="enc-sheet-link" style="color:#86efac;" onclick="${clickAction}">⚔️ NPC Combat Sheet &amp; Actions</button></div>`
+                    : (hasSmart
+                        ? `<div><button type="button" class="enc-sheet-link" style="color:#93c5fd;" onclick="${clickAction}">⚡ ${escapeEncounterHtml(entry.smartProfile.roleLabel || 'Smart Ally')} Sheet (CR ${escapeEncounterHtml(entry.smartProfile.cr || '1/4')})</button></div>`
+                        : ''));
             titleBlockHtml = `
                 <div class="enc-title-row">
                     ${isCurrentTurn ? `<span class="pill gold" style="font-size:0.6rem; padding:1px 5px; background:#f59e0b; color:#090d16; font-weight:900;">▶ TURN</span>` : ''}
                     <button type="button" class="link-btn" style="font-size:0.88rem; color:#a3cbb4;" onclick="${clickAction}" title="${clickTitle}">${safeTitle}</button>
                     <button type="button" class="btn-enc-edit" onclick="startRenameEncounterEntry('${entry.uid}')" aria-label="Rename ${safeTitle}" title="Edit Name">✏️</button>
                 </div>
-                ${allyPreset && entry.customLabel !== allyPreset.name ? `<div><button type="button" class="enc-sheet-link" style="color:#94c9a9;" onclick="${clickAction}">📄 ${escapeEncounterHtml(allyPreset.name)} Sheet</button></div>` : ''}`;
+                ${subLinkHtml}`;
         } else if (entry.kind === 'custom') {
             titleBlockHtml = `
                 <div class="enc-title-row">
@@ -5775,6 +5906,7 @@ function renderEncounterBoard() {
                             <button type="button" class="btn-enc-step is-heal" onclick="modAllyEncounterHP('${entry.uid}', 5)" title="Heal ${safeTitle} by 5 (syncs to player sheet)">+5</button>
                         </div>
                     </div>
+                    ${renderEncounterQuickAttacksHtml(entry, null)}
                     ${renderConditionsBlock(entry)}
                 </div>
             `;
@@ -23552,17 +23684,11 @@ function matchesLootFilter(it, filterTag, itemKey = '') {
 }
 
 const DM_CRAFTING_RECIPES = [
-    {
-        id: 'craft_healing_potion',
-        lootKey: 'healing_potion',
-        badge: '2d6+1 HP • Bonus Action',
-        code: 'UNLOCKED',
-        unlockedDefault: true,
-        ingredients: [{ key: 'medicinal_herbs', qty: 2 }]
-    },
+    // --- ACT I • ⚪ COMMON (SESSION 1 STARTER & EARLY FIELD CRAFT) ---
     {
         id: 'craft_field_bandages',
         lootKey: 'bandages_field',
+        actGroup: 'Act I',
         badge: '1d6+1 HP • Action',
         code: 'UNLOCKED',
         unlockedDefault: true,
@@ -23570,20 +23696,42 @@ const DM_CRAFTING_RECIPES = [
         note: 'Tip: Clean Linen Wraps & Salve Jar lets allies assist or double yield on a DC 14 Medicine check.'
     },
     {
-        id: 'craft_greater_healing',
-        lootKey: 'greater_healing',
-        recipeLootKey: 'recipe_greater_healing',
-        badge: '4d4+4 HP • Bonus Action',
-        code: 'GREATER-HEAL',
-        ingredients: [
-            { key: 'medicinal_herbs', qty: 4 },
-            { key: 'alchemical_catalyst', qty: 1 }
-        ]
+        id: 'craft_healing_potion',
+        lootKey: 'healing_potion',
+        actGroup: 'Act I',
+        badge: '2d6+1 HP • Bonus Action',
+        code: 'UNLOCKED',
+        unlockedDefault: true,
+        ingredients: [{ key: 'medicinal_herbs', qty: 2 }]
     },
+    {
+        id: 'craft_silver_smelt',
+        lootKey: 'powdered_silver_dust',
+        actGroup: 'Act I',
+        badge: 'Smelt Silverware / Quartz ➔ Silver Dust',
+        code: 'SILVER-SMELT',
+        ingredients: [
+            { key: 'tarnished_silver_cutlery', orKeys: ['tarnished_silver_cutlery', 'silver_veined_quartz'], qty: 1 }
+        ],
+        note: 'Camp Crucible: File Tarnished Silver Cutlery or crush Silver-Veined Quartz into 1x Powdered Silver Dust!'
+    },
+    {
+        id: 'craft_cold_iron_caltrops',
+        lootKey: 'cold_iron_caltrops',
+        actGroup: 'Act I',
+        badge: '1d4 (+1d4 vs Fey/Hags)',
+        code: 'COLD-IRON',
+        ingredients: [
+            { key: 'cold_iron_scrap_shards', qty: 2 }
+        ],
+        note: 'Anti-Hag Smithing: Learned at Petru\'s Forge, Vallaki Smithy, or Ismark.'
+    },
+    // --- ACT I • 🟢 UNCOMMON (BAROVIA, TSER POOL & OLD BONEGRINDER) ---
     {
         id: 'craft_holy_water',
         lootKey: 'holy_water',
         recipeLootKey: 'recipe_holy_water',
+        actGroup: 'Act I',
         badge: '2d6 Radiant • Halts Regen',
         code: 'MORNINGLORD',
         ingredients: [
@@ -23595,6 +23743,7 @@ const DM_CRAFTING_RECIPES = [
         id: 'craft_antitoxin',
         lootKey: 'barovian_antitoxin',
         recipeLootKey: 'recipe_antitoxin',
+        actGroup: 'Act I',
         badge: 'Adv vs Poison (1 hr)',
         code: 'WOLFBANE',
         ingredients: [
@@ -23603,9 +23752,22 @@ const DM_CRAFTING_RECIPES = [
         ]
     },
     {
+        id: 'craft_night_sight_brew',
+        lootKey: 'ghost_cap_night_sight',
+        actGroup: 'Act I',
+        badge: 'Darkvision 60 ft • 2 hrs',
+        code: 'NIGHT-SIGHT',
+        ingredients: [
+            { key: 'ghost_cap_mushrooms', qty: 2 },
+            { key: 'pure_spring_water', qty: 1 }
+        ],
+        note: 'Herbalist Concoction: Learned from Jeny Greenteeth, Vistani herbalists, or DC 13 Nature.'
+    },
+    {
         id: 'craft_silver_oil',
         lootKey: 'liquid_silver_coating',
         recipeLootKey: 'recipe_silver_oil',
+        actGroup: 'Act I',
         badge: 'Silvered • Full Mag or Blade',
         code: 'SILVER-COAT',
         ingredients: [
@@ -23614,54 +23776,22 @@ const DM_CRAFTING_RECIPES = [
         ]
     },
     {
-        id: 'craft_incendiary_vial',
-        lootKey: 'incendiary_vial',
-        recipeLootKey: 'recipe_incendiary_vial',
-        badge: '+1d4 Fire • Full Mag or Blade',
-        code: 'INCENDIARY-VIAL',
+        id: 'craft_predator_fang_talisman',
+        lootKey: 'predator_fang_talisman',
+        actGroup: 'Act I',
+        badge: 'Adv Intimidation • 1/LR vs Fear',
+        code: 'FANG-CHARM',
         ingredients: [
-            { key: 'charcoal_sulfur', qty: 1 },
-            { key: 'pitch_oil', qty: 1 }
-        ]
-    },
-    {
-        id: 'craft_fire_flask',
-        lootKey: 'alchemists_fire',
-        recipeLootKey: 'recipe_fire_flask',
-        badge: '1d4 Fire / Turn (20 ft)',
-        code: 'BRIMSTONE',
-        ingredients: [
-            { key: 'charcoal_sulfur', qty: 1 },
-            { key: 'pitch_oil', qty: 1 }
-        ]
-    },
-    {
-        id: 'craft_smoke_bomb',
-        lootKey: 'ash_smoke_bomb',
-        recipeLootKey: 'recipe_smoke_bomb',
-        badge: '15-ft Heavily Obscured',
-        code: 'ASH-CLOUD',
-        ingredients: [
-            { key: 'charcoal_sulfur', qty: 1 },
-            { key: 'medicinal_herbs', qty: 1 }
-        ]
-    },
-    {
-        id: 'craft_phosphor_bomb',
-        lootKey: 'phosphor_grenades',
-        recipeLootKey: 'recipe_phosphor_bomb',
-        badge: '2d6 Fire/Rad + Blind',
-        code: 'PHOSPHOR',
-        ingredients: [
-            { key: 'charcoal_sulfur', qty: 1 },
-            { key: 'powdered_silver_dust', qty: 1 },
-            { key: 'alchemical_catalyst', qty: 1 }
-        ]
+            { key: 'dire_wolf_fangs', qty: 2 },
+            { key: 'wolfbane_root', qty: 1 }
+        ],
+        note: 'Vistani Hunter Charm: Learned at Tser Pool Camp or Krezk trappers.'
     },
     {
         id: 'craft_camp_kit',
         lootKey: 'mist_ward_camp_kit',
         recipeLootKey: 'recipe_camp_kit',
+        actGroup: 'Act I',
         badge: 'Wilderness True Long Rest',
         code: 'MIST-CAMP',
         ingredients: [
@@ -23672,81 +23802,47 @@ const DM_CRAFTING_RECIPES = [
         ],
         note: 'Field Craft: 1 Short Rest + DC 14 Survival or Tinker check.'
     },
+    // --- ACT II • 🟢 UNCOMMON / TACTICAL ALCHEMY (VALLAKI, BLINSKY & WINES) ---
     {
-        id: 'craft_witch_iron_vial',
-        lootKey: 'witch_iron_vial',
-        recipeLootKey: 'recipe_witch_iron_vial',
-        badge: '+1 Hit/Dmg Magical • Full Mag or Blade',
-        code: 'WITCH-IRON',
+        id: 'craft_fire_flask',
+        lootKey: 'alchemists_fire',
+        recipeLootKey: 'recipe_fire_flask',
+        actGroup: 'Act II',
+        badge: '1d4 Fire / Turn (20 ft)',
+        code: 'BRIMSTONE',
         ingredients: [
-            { key: 'powdered_silver_dust', qty: 1 },
-            { key: 'wolfbane_root', qty: 1 },
-            { key: 'alchemical_catalyst', qty: 1 }
-        ]
-    },
-    {
-        id: 'craft_superior_healing',
-        lootKey: 'superior_healing',
-        recipeLootKey: 'recipe_superior_healing',
-        badge: '8d4+8 HP • Rare Elixir',
-        code: 'MOONPETAL',
-        ingredients: [
-            { key: 'medicinal_herbs', qty: 4 },
-            { key: 'alchemical_catalyst', qty: 2 },
-            { key: 'svalich_moonpetal', qty: 1 }
-        ]
-    },
-    {
-        id: 'craft_vampire_ward',
-        lootKey: 'sun_ash_balm',
-        recipeLootKey: 'recipe_sun_ash',
-        badge: '+1d4 Radiant • 6 Rnds or Blade',
-        code: 'SUN-ASH',
-        ingredients: [
-            { key: 'svalich_moonpetal', qty: 1 },
-            { key: 'powdered_silver_dust', qty: 1 },
-            { key: 'pure_spring_water', qty: 1 }
-        ]
-    },
-    {
-        id: 'craft_elixir_of_health',
-        lootKey: 'elixir_of_health',
-        recipeLootKey: 'recipe_elixir_of_health',
-        badge: 'Legendary Revival • 50% Max HP',
-        code: 'HEART-ELIXIR',
-        ingredients: [
-            { key: 'heart_of_sorrow_shard', orKeys: ['heart_of_sorrow_shard', 'hag_heartstone'], qty: 1 },
-            { key: 'alchemical_catalyst', qty: 2 },
-            { key: 'svalich_moonpetal', qty: 1 },
-            { key: 'pure_spring_water', qty: 1 }
-        ],
-        note: 'Heartstone Transmutation: Permanently consumes EITHER Heart of Sorrow Shard (K20) OR Night Hag Heartstone.'
-    },
-    {
-        id: 'craft_night_sight_brew',
-        lootKey: 'ghost_cap_night_sight',
-        badge: 'Darkvision 60 ft • 2 hrs',
-        code: 'NIGHT-SIGHT',
-        ingredients: [
-            { key: 'ghost_cap_mushrooms', qty: 2 },
-            { key: 'pure_spring_water', qty: 1 }
-        ],
-        note: 'Herbalist Concoction: Learned from Jeny Greenteeth, Vistani herbalists, or DC 13 Nature.'
-    },
-    {
-        id: 'craft_grave_salt_coating',
-        lootKey: 'grave_salt_coating',
-        badge: '+1d6 Necrotic • Blocks Regen',
-        code: 'GRAVE-SALT',
-        ingredients: [
-            { key: 'grave_salt_ward_pouch', qty: 1 },
+            { key: 'charcoal_sulfur', qty: 1 },
             { key: 'pitch_oil', qty: 1 }
-        ],
-        note: 'Sanctified Hunter Coating: Learned from Ezmerelda, Van Richten notes, or Barovia Church.'
+        ]
+    },
+    {
+        id: 'craft_incendiary_vial',
+        lootKey: 'incendiary_vial',
+        recipeLootKey: 'recipe_incendiary_vial',
+        actGroup: 'Act II',
+        badge: '+1d4 Fire • Full Mag or Blade',
+        code: 'INCENDIARY-VIAL',
+        ingredients: [
+            { key: 'charcoal_sulfur', qty: 1 },
+            { key: 'pitch_oil', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_smoke_bomb',
+        lootKey: 'ash_smoke_bomb',
+        recipeLootKey: 'recipe_smoke_bomb',
+        actGroup: 'Act II',
+        badge: '15-ft Heavily Obscured',
+        code: 'ASH-CLOUD',
+        ingredients: [
+            { key: 'charcoal_sulfur', qty: 1 },
+            { key: 'medicinal_herbs', qty: 1 }
+        ]
     },
     {
         id: 'craft_whisper_silk_snare',
         lootKey: 'whisper_silk_snare',
+        actGroup: 'Act II',
         badge: '30-ft Grapple / DC 13 Snare',
         code: 'SILK-SNARE',
         ingredients: [
@@ -23756,35 +23852,97 @@ const DM_CRAFTING_RECIPES = [
         note: 'Tinker / Ranger Trap: Learned from Blinsky, Ezmerelda, or Martikov scouts.'
     },
     {
-        id: 'craft_cold_iron_caltrops',
-        lootKey: 'cold_iron_caltrops',
-        badge: '1d4 (+1d4 vs Fey/Hags)',
-        code: 'COLD-IRON',
+        id: 'craft_grave_salt_coating',
+        lootKey: 'grave_salt_coating',
+        actGroup: 'Act II',
+        badge: '+1d6 Necrotic • Blocks Regen',
+        code: 'GRAVE-SALT',
         ingredients: [
-            { key: 'cold_iron_scrap_shards', qty: 2 }
+            { key: 'grave_salt_ward_pouch', qty: 1 },
+            { key: 'pitch_oil', qty: 1 }
         ],
-        note: 'Anti-Hag Smithing: Learned at Petru\'s Forge, Vallaki Smithy, or Ismark.'
+        note: 'Sanctified Hunter Coating: Learned from Ezmerelda, Van Richten notes, or Barovia Church.'
     },
     {
-        id: 'craft_predator_fang_talisman',
-        lootKey: 'predator_fang_talisman',
-        badge: 'Adv Intimidation • 1/LR vs Fear',
-        code: 'FANG-CHARM',
+        id: 'craft_greater_healing',
+        lootKey: 'greater_healing',
+        recipeLootKey: 'recipe_greater_healing',
+        actGroup: 'Act II',
+        badge: '4d4+4 HP • Bonus Action',
+        code: 'GREATER-HEAL',
         ingredients: [
-            { key: 'dire_wolf_fangs', qty: 2 },
-            { key: 'wolfbane_root', qty: 1 }
-        ],
-        note: 'Vistani Hunter Charm: Learned at Tser Pool Camp or Krezk trappers.'
+            { key: 'medicinal_herbs', qty: 4 },
+            { key: 'alchemical_catalyst', qty: 1 }
+        ]
+    },
+    // --- ACT III • 🔵 RARE (VAN RICHTEN'S TOWER, ARGYNVOSTHOLT, KREZK & BEREZ) ---
+    {
+        id: 'craft_phosphor_bomb',
+        lootKey: 'phosphor_grenades',
+        recipeLootKey: 'recipe_phosphor_bomb',
+        actGroup: 'Act III',
+        badge: '2d6 Fire/Rad + Blind',
+        code: 'PHOSPHOR',
+        ingredients: [
+            { key: 'charcoal_sulfur', qty: 1 },
+            { key: 'powdered_silver_dust', qty: 1 },
+            { key: 'alchemical_catalyst', qty: 1 }
+        ]
     },
     {
-        id: 'craft_silver_smelt',
-        lootKey: 'powdered_silver_dust',
-        badge: 'Smelt Silverware / Quartz ➔ Silver Dust',
-        code: 'SILVER-SMELT',
+        id: 'craft_witch_iron_vial',
+        lootKey: 'witch_iron_vial',
+        recipeLootKey: 'recipe_witch_iron_vial',
+        actGroup: 'Act III',
+        badge: '+1 Hit/Dmg Magical • Full Mag or Blade',
+        code: 'WITCH-IRON',
         ingredients: [
-            { key: 'tarnished_silver_cutlery', orKeys: ['tarnished_silver_cutlery', 'silver_veined_quartz'], qty: 1 }
+            { key: 'powdered_silver_dust', qty: 1 },
+            { key: 'wolfbane_root', qty: 1 },
+            { key: 'alchemical_catalyst', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_vampire_ward',
+        lootKey: 'sun_ash_balm',
+        recipeLootKey: 'recipe_sun_ash',
+        actGroup: 'Act III',
+        badge: '+1d4 Radiant • 6 Rnds or Blade',
+        code: 'SUN-ASH',
+        ingredients: [
+            { key: 'svalich_moonpetal', qty: 1 },
+            { key: 'powdered_silver_dust', qty: 1 },
+            { key: 'pure_spring_water', qty: 1 }
+        ]
+    },
+    {
+        id: 'craft_superior_healing',
+        lootKey: 'superior_healing',
+        recipeLootKey: 'recipe_superior_healing',
+        actGroup: 'Act III',
+        badge: '8d4+8 HP • Rare Elixir',
+        code: 'MOONPETAL',
+        ingredients: [
+            { key: 'medicinal_herbs', qty: 4 },
+            { key: 'alchemical_catalyst', qty: 2 },
+            { key: 'svalich_moonpetal', qty: 1 }
+        ]
+    },
+    // --- ACT IV • 🟠 LEGENDARY ENDGAME ALCHEMY (AMBER TEMPLE & CASTLE RAVENLOFT) ---
+    {
+        id: 'craft_elixir_of_health',
+        lootKey: 'elixir_of_health',
+        recipeLootKey: 'recipe_elixir_of_health',
+        actGroup: 'Act IV',
+        badge: 'Legendary Revival • 50% Max HP',
+        code: 'HEART-ELIXIR',
+        ingredients: [
+            { key: 'heart_of_sorrow_shard', orKeys: ['heart_of_sorrow_shard', 'hag_heartstone'], qty: 1 },
+            { key: 'alchemical_catalyst', qty: 2 },
+            { key: 'svalich_moonpetal', qty: 1 },
+            { key: 'pure_spring_water', qty: 1 }
         ],
-        note: 'Camp Crucible: File Tarnished Silver Cutlery or crush Silver-Veined Quartz into 1x Powdered Silver Dust!'
+        note: 'Heartstone Transmutation: Permanently consumes EITHER Heart of Sorrow Shard (K20) OR Night Hag Heartstone.'
     }
 ];
 const DM_CRAFTING_BY_LOOT = Object.fromEntries(DM_CRAFTING_RECIPES.map(r => [r.lootKey, r]));
@@ -24195,12 +24353,26 @@ function renderLootCardHtml(k, it) {
 }
 
 function renderDmCraftingTableHtml() {
+    const actHeaders = {
+        'Act I':   '🩸 ACT I — Starter & Barovian Field Craft (Common ➔ Uncommon)',
+        'Act II':  '⚔️ ACT II — Vallaki, Blinsky & Hunter Alchemy (Uncommon ➔ Rare)',
+        'Act III': '🐉 ACT III — High Barovia, Argynvostholt & Berez Concoctions (Rare)',
+        'Act IV':  '🏰 ACT IV — Legendary Endgame Alchemy (Amber Temple & Ravenloft)'
+    };
+    let lastActGroup = '';
     const recipeRowsHtml = DM_CRAFTING_RECIPES.map(r => {
         const isUnl = r.unlockedDefault || !!dmUnlockedRecipes[r.id];
         const outItem = LOOT_DATA[r.lootKey];
         const cleanTitle = outItem ? outItem.name : r.lootKey;
+        const rarPillHtml = outItem ? renderRarityBadgeHtml(outItem) : '';
         const safeT = cleanTitle.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         const recItem = r.recipeLootKey ? LOOT_DATA[r.recipeLootKey] : null;
+        const actGrp = r.actGroup || 'Act I';
+        let dividerRow = '';
+        if (actGrp !== lastActGroup) {
+            lastActGroup = actGrp;
+            dividerRow = `<tr class="biome-row-header"><td colspan="3" style="background:rgba(30,41,59,0.85); color:#fde68a; font-family:'Cinzel',serif; font-size:0.74rem; font-weight:800; padding:6px 10px; letter-spacing:0.3px;">${actHeaders[actGrp] || actGrp}</td></tr>`;
+        }
         const learnedHtml = recItem
             ? `<div style="display:flex; flex-wrap:wrap; align-items:center; gap:4px; margin-top:4px;">
                     <span style="font-size:0.67rem; color:#94a3b8; font-weight:700;">Recipe:</span>
@@ -24228,13 +24400,14 @@ function renderDmCraftingTableHtml() {
                     <span><span class="pill ${isUnl ? 'green' : 'crimson'}">${isUnl ? 'UNLOCKED LIVE' : 'LOCKED'}</span> • <code>${r.code}</code></span>
                     <button type="button" class="btn-modal-mini" style="padding:2px 7px; font-size:0.66rem; border-color:${isUnl ? '#ef4444' : '#34d399'}; color:${isUnl ? '#fca5a5' : '#6ee7b7'};" aria-label="${isUnl ? 'Re-lock' : 'Unlock live'} ${safeT}" onclick="dmToggleRecipeUnlock('${r.id}', '${safeT}', ${!isUnl})">${isUnl ? '🔒 Re-Lock' : '🔓 Unlock Live'}</button>
                </div>`;
-        return `
+        return `${dividerRow}
             <tr class="searchable-row">
                 <td>
                     <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
-                        <span>
+                        <span style="display:inline-flex; align-items:center; gap:5px; flex-wrap:wrap;">
+                            ${rarPillHtml}
                             <button type="button" class="link-btn" onclick="openItemModal('${r.lootKey}')">${escapeEncounterHtml(cleanTitle)}</button>
-                            ${r.badge ? ` <span style="font-size:0.67rem; color:#94a3b8;">(${escapeEncounterHtml(r.badge)})</span>` : ''}
+                            ${r.badge ? `<span style="font-size:0.67rem; color:#94a3b8;">(${escapeEncounterHtml(r.badge)})</span>` : ''}
                         </span>
                         <span style="display:inline-flex; gap:3px;">
                             <button type="button" class="btn-modal-mini" style="padding:1px 5px; font-size:0.64rem;" onclick="dmQuickDropByKey('${r.lootKey}', 'piper', '🎩 Piper', event, 1)" title="Drop finished item to Piper">🎩</button>
@@ -24253,12 +24426,12 @@ function renderDmCraftingTableHtml() {
     return `
         <details class="table-wrap loot-cat-details" open>
             <summary id="dm-crafting-recipes-heading" class="loot-cat-summary loot-cat-title loot-header-quest">
-                <span>🔒 DM-ONLY: Secret Crafting Recipes (${DM_CRAFTING_RECIPES.length}) &amp; 1-Click Live Firebase Unlocker</span>
+                <span>🔒 DM-ONLY: Secret Crafting Recipes (${DM_CRAFTING_RECIPES.length} • Sorted Chronologically Act I ➔ Act IV &amp; Rarity) &amp; Live Firebase Unlocker</span>
                 <span class="loot-cat-summary-caret">▶</span>
             </summary>
             <div class="loot-vault-wrap" tabindex="0" role="region" aria-labelledby="dm-crafting-recipes-heading">
                 <table class="guide-table loot-vault-table">
-                    <thead><tr><th scope="col" style="width:38%;">Craftable Item &amp; Recipe Writing (Click to View)</th><th scope="col" style="width:34%;">Required Materials (Click to View)</th><th scope="col" style="width:28%;">Status, Code &amp; Live Unlock</th></tr></thead>
+                    <thead><tr><th scope="col" style="width:40%;">Craftable Item, Rarity &amp; Recipe Writing (Click to View)</th><th scope="col" style="width:32%;">Required Materials (Click to View)</th><th scope="col" style="width:28%;">Status, Code &amp; Live Unlock</th></tr></thead>
                     <tbody>${recipeRowsHtml}</tbody>
                 </table>
             </div>
@@ -25064,13 +25237,13 @@ function filterDashboard(query, skipExpand = false) {
 // =========================================================
 const DM_SECTION_IDS = [
     'party-specs',
-    'active-quests',
-    'tarokka-oracle',
-    'biomes-explorer',
     'npc-directory',
     'monsters-section',
     'loot-vault',
+    'biomes-explorer',
     'factions-lore',
+    'tarokka-oracle',
+    'active-quests',
     'dm-rules-guide'
 ];
 const DM_FOCUS_STORAGE_KEY = 'cos_dm_focus_mode_v1';
@@ -25359,19 +25532,512 @@ function jumpToCombatBoard() {
     }
 }
 
-function toggleEncounterDrawer(which) {
-    const presetEl = document.getElementById('enc-preset-drawer');
-    const customEl = document.getElementById('enc-custom-drawer');
-    if (which === 'presets' && presetEl) {
-        const next = !presetEl.classList.contains('is-open');
-        presetEl.classList.toggle('is-open', next);
-        if (next && customEl) customEl.classList.remove('is-open');
-    } else if (which === 'custom' && customEl) {
-        const next = !customEl.classList.contains('is-open');
-        customEl.classList.toggle('is-open', next);
-        if (next && presetEl) presetEl.classList.remove('is-open');
-        if (next) document.getElementById('enc-cust-name')?.focus();
+// =========================================================================
+// 👤 SEARCHABLE ALLY NPC PICKER, ⚔️ ENEMY PICKER & ⚡ SMART ALLY GENERATOR
+// =========================================================================
+const SMART_ALLY_TEMPLATES = {
+    guard: {
+        id: 'guard',
+        pill: '🛡️ Town Guard (CR 1/8)',
+        defaultName: 'Vallaki Town Guard',
+        roleLabel: 'Barovian Watch Guard',
+        cr: '1/8',
+        hp: 11,
+        ac: 16,
+        initBonus: 1,
+        speed: '30 ft.',
+        stats: 'STR 13 (+1) | DEX 12 (+1) | CON 12 (+1) | INT 10 (+0) | WIS 11 (+0) | CHA 10 (+0)',
+        traits: ['<strong>Shield Wall:</strong> Carries chain shirt &amp; shield (AC 16). Can use the <em>Help</em> action to grant an adjacent Hero Advantage on their next attack roll!'],
+        attacks: [
+            { name: 'Spear (1H / Thrown 20/60)', hit: 3, dmg: '1d6+1', dmgType: 'Piercing', desc: 'Melee or Thrown 20/60 ft: +3 to hit, 1d6+1 piercing (1d8+1 two-handed).' },
+            { name: 'Shield Shove (Athletics)', hit: null, dmg: '', dmgType: '', desc: 'Contested Athletics (+3) to knock a creature Prone or push 5 ft back from an ally!' }
+        ]
+    },
+    commoner: {
+        id: 'commoner',
+        pill: '👨‍🌾 Villager / Militia (CR 0)',
+        defaultName: 'Barovian Villager',
+        roleLabel: 'Commoner / Civilian',
+        cr: '0',
+        hp: 4,
+        ac: 10,
+        initBonus: 0,
+        speed: '30 ft.',
+        stats: 'STR 10 (+0) | DEX 10 (+0) | CON 10 (+0) | INT 10 (+0) | WIS 10 (+0) | CHA 10 (+0)',
+        traits: ['<strong>Desperate Courage:</strong> Best used to take the <em>Help</em> action (grant Advantage), throw a torch/flask, or stabilize a downed ally (DC 10 Medicine)!'],
+        attacks: [
+            { name: 'Pitchfork / Club', hit: 2, dmg: '1d4', dmgType: 'Bludgeoning', desc: 'Melee Weapon Attack: +2 to hit, reach 5 ft, 1d4 bludgeoning/piercing.' },
+            { name: 'Help Action (Distract Foe)', hit: null, dmg: '', dmgType: '', desc: 'Distracts an enemy within 5 ft — the next Hero attack against them has Advantage!' }
+        ]
+    },
+    scout: {
+        id: 'scout',
+        pill: '🏹 Scout / Archer (CR 1/2)',
+        defaultName: 'Barovian Woodsman Scout',
+        roleLabel: 'Woodsman Archer',
+        cr: '1/2',
+        hp: 16,
+        ac: 13,
+        initBonus: 2,
+        speed: '30 ft.',
+        stats: 'STR 11 (+0) | DEX 14 (+2) | CON 12 (+1) | INT 11 (+0) | WIS 13 (+1) | CHA 11 (+0)',
+        traits: ['<strong>Multiattack:</strong> Makes 2 melee or 2 ranged Longbow attacks per turn.', '<strong>Keen Hearing &amp; Sight:</strong> Advantage on Perception checks (Passive 15; Stealth +6).'],
+        attacks: [
+            { name: 'Longbow (150/600 ft)', hit: 4, dmg: '1d8+2', dmgType: 'Piercing', desc: 'Ranged Weapon Attack (2x/turn): +4 to hit, 1d8+2 piercing.' },
+            { name: 'Shortsword', hit: 4, dmg: '1d6+2', dmgType: 'Piercing', desc: 'Melee Weapon Attack (2x/turn): +4 to hit, 1d6+2 piercing.' }
+        ]
+    },
+    veteran: {
+        id: 'veteran',
+        pill: '⚔️ Veteran Knight (CR 3)',
+        defaultName: 'Veteran Sellsword',
+        roleLabel: 'Seasoned Frontline Fighter',
+        cr: '3',
+        hp: 58,
+        ac: 17,
+        initBonus: 1,
+        speed: '30 ft.',
+        stats: 'STR 16 (+3) | DEX 13 (+1) | CON 14 (+2) | INT 10 (+0) | WIS 11 (+0) | CHA 10 (+0)',
+        traits: ['<strong>Multiattack:</strong> Makes 2 Longsword attacks (plus 1 Shortsword off-hand strike if drawn).'],
+        attacks: [
+            { name: 'Longsword (Versatile)', hit: 5, dmg: '1d8+3', dmgType: 'Slashing', desc: 'Melee Weapon Attack: +5 to hit, 1d8+3 slashing (1d10+3 two-handed).' },
+            { name: 'Heavy Crossbow', hit: 3, dmg: '1d10+1', dmgType: 'Piercing', desc: 'Ranged Weapon Attack (100/400 ft): +3 to hit, 1d10+1 piercing.' }
+        ]
+    },
+    priest: {
+        id: 'priest',
+        pill: '✝️ Parish Priest / Healer (CR 2)',
+        defaultName: 'Morninglord Acolyte',
+        roleLabel: 'Divine Support & Healer',
+        cr: '2',
+        hp: 27,
+        ac: 13,
+        initBonus: 0,
+        speed: '30 ft.',
+        stats: 'STR 10 (+0) | DEX 10 (+0) | CON 12 (+1) | INT 13 (+1) | WIS 16 (+3) | CHA 13 (+1)',
+        traits: ['<strong>Spellcasting (DC 13 / +5 Hit):</strong> <em>Bless</em> (3 allies +1d4 atk/saves), <em>Cure Wounds</em> (1d8+3), <em>Lesser Restoration</em>, <em>Sanctuary</em>, &amp; <em>Spirit Guardians</em> (3d8 Rad)!'],
+        attacks: [
+            { name: 'Cure Wounds (Heal Ally)', hit: null, dmg: '1d8+3', dmgType: 'Healing', desc: 'Touch an ally to restore 1d8+3 HP (or upcast 2d8+3 HP with 2nd-level slot)!' },
+            { name: 'Sacred Flame (DC 13 DEX)', hit: null, dmg: '2d8', dmgType: 'Radiant', desc: '60 ft, ignores cover: target makes DC 13 DEX Save or takes 2d8 Radiant damage!' },
+            { name: 'Mace (+2)', hit: 2, dmg: '1d6', dmgType: 'Bludgeoning', desc: 'Melee Weapon Attack: +2 to hit, 1d6 bludgeoning (+3d6 Radiant w/ Divine Eminence).' }
+        ]
+    },
+    mage: {
+        id: 'mage',
+        pill: '🧙 Hedge Mage / Seer (CR 1)',
+        defaultName: 'Vistani Hedge-Mage',
+        roleLabel: 'Arcane Support Caster',
+        cr: '1',
+        hp: 22,
+        ac: 12,
+        initBonus: 2,
+        speed: '30 ft.',
+        stats: 'STR 9 (-1) | DEX 14 (+2) | CON 11 (+0) | INT 16 (+3) | WIS 12 (+1) | CHA 12 (+1)',
+        traits: ['<strong>Spellcasting (DC 13 / +5 Hit):</strong> <em>Mage Armor</em> (AC 15), <em>Shield</em> (+5 AC Reaction), <em>Magic Missile</em> (3d4+3), <em>Misty Step</em>, <em>Burning Hands</em> (3d6 Fire).'],
+        attacks: [
+            { name: 'Fire Bolt (120 ft)', hit: 5, dmg: '1d10', dmgType: 'Fire', desc: 'Ranged Spell Attack: +5 to hit, 1d10 fire damage.' },
+            { name: 'Magic Missile (Auto-Hit)', hit: null, dmg: '3d4+3', dmgType: 'Force', desc: '3 glowing darts auto-hit targets within 120 ft for 3d4+3 Force damage!' },
+            { name: 'Burning Hands (DC 13 DEX)', hit: null, dmg: '3d6', dmgType: 'Fire', desc: '15-ft cone of fire: DC 13 DEX Save for half of 3d6 Fire damage!' }
+        ]
+    },
+    wereraven: {
+        id: 'wereraven',
+        pill: '🦅 Keepers Wereraven (CR 2)',
+        defaultName: 'Keepers Wereraven Scout',
+        roleLabel: 'Keepers of the Feather Ally',
+        cr: '2',
+        hp: 31,
+        ac: 12,
+        initBonus: 2,
+        speed: '30 ft. (50 ft. Fly in Raven/Hybrid)',
+        stats: 'STR 10 (+0) | DEX 15 (+2) | CON 11 (+0) | INT 13 (+1) | WIS 15 (+2) | CHA 14 (+2)',
+        traits: ['<strong>Regeneration:</strong> Regains 10 HP at start of turn unless hit by silvered weapons or spells!', '<strong>Shapechanger:</strong> Bonus action to shift into Giant Raven (50-ft fly) or Hybrid form!'],
+        attacks: [
+            { name: 'Shortsword (2x/turn)', hit: 4, dmg: '1d6+2', dmgType: 'Piercing', desc: 'Melee Weapon Attack: +4 to hit, 1d6+2 piercing.' },
+            { name: 'Hand Crossbow (30/120)', hit: 4, dmg: '1d6+2', dmgType: 'Piercing', desc: 'Ranged Weapon Attack: +4 to hit, 1d6+2 piercing.' }
+        ]
+    },
+    hound: {
+        id: 'hound',
+        pill: '🐺 Loyal Dire Wolf / Hound (CR 1)',
+        defaultName: 'Loyal Barovian Wolfhound',
+        roleLabel: 'Beast Companion',
+        cr: '1',
+        hp: 37,
+        ac: 14,
+        initBonus: 2,
+        speed: '50 ft.',
+        stats: 'STR 17 (+3) | DEX 15 (+2) | CON 15 (+2) | INT 3 (-4) | WIS 12 (+1) | CHA 7 (-2)',
+        traits: ['<strong>Pack Tactics:</strong> Advantage on attack rolls if an ally is within 5 ft of the target!', '<strong>Keen Hearing &amp; Smell:</strong> Advantage on Perception checks.'],
+        attacks: [
+            { name: 'Bite (DC 13 Prone)', hit: 5, dmg: '2d6+3', dmgType: 'Piercing', desc: 'Melee Weapon Attack: +5 to hit, 2d6+3 piercing; target fails DC 13 STR Save or knocked Prone!' }
+        ]
     }
+};
+
+let activeSmartAllyTemplateId = 'guard';
+
+function toggleEncounterDrawer(which) {
+    const map = {
+        presets: { el: document.getElementById('enc-preset-drawer'), btn: document.getElementById('enc-preset-toggle-btn') },
+        ally:    { el: document.getElementById('enc-ally-drawer'),   btn: document.getElementById('enc-ally-toggle-btn') },
+        enemy:   { el: document.getElementById('enc-enemy-drawer'),  btn: document.getElementById('enc-enemy-toggle-btn') },
+        custom:  { el: document.getElementById('enc-custom-drawer'), btn: document.getElementById('enc-custom-toggle-btn') }
+    };
+    const target = map[which];
+    if (!target || !target.el) return;
+    const next = !target.el.classList.contains('is-open');
+    Object.entries(map).forEach(([k, obj]) => {
+        const open = (k === which) ? next : false;
+        if (obj.el) obj.el.classList.toggle('is-open', open);
+        if (obj.btn) obj.btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    if (next) {
+        if (which === 'ally') {
+            renderEncAllyNpcResults(document.getElementById('enc-ally-search-input')?.value || '');
+            renderSmartAllyTemplatePills();
+            setTimeout(() => document.getElementById('enc-ally-search-input')?.focus(), 20);
+        } else if (which === 'enemy') {
+            renderEncEnemySearchResults(document.getElementById('enc-enemy-search-input')?.value || '');
+            setTimeout(() => document.getElementById('enc-enemy-search-input')?.focus(), 20);
+        } else if (which === 'custom') {
+            setTimeout(() => document.getElementById('enc-cust-name')?.focus(), 20);
+        }
+    }
+}
+
+function switchEncAllyDrawerTab(tab) {
+    const npcPane = document.getElementById('enc-ally-pane-npc');
+    const smartPane = document.getElementById('enc-ally-pane-smart');
+    const npcBtn = document.getElementById('enc-ally-tab-npc');
+    const smartBtn = document.getElementById('enc-ally-tab-smart');
+    const isNpc = tab !== 'smart';
+    if (npcPane) npcPane.style.display = isNpc ? 'block' : 'none';
+    if (smartPane) smartPane.style.display = isNpc ? 'none' : 'block';
+    if (npcBtn) {
+        npcBtn.setAttribute('aria-pressed', isNpc ? 'true' : 'false');
+        npcBtn.style.background = isNpc ? 'rgba(6,78,59,0.45)' : '';
+    }
+    if (smartBtn) {
+        smartBtn.setAttribute('aria-pressed', !isNpc ? 'true' : 'false');
+        smartBtn.style.background = !isNpc ? 'rgba(30,58,138,0.45)' : '';
+    }
+    if (isNpc) {
+        renderEncAllyNpcResults(document.getElementById('enc-ally-search-input')?.value || '');
+        document.getElementById('enc-ally-search-input')?.focus();
+    } else {
+        renderSmartAllyTemplatePills();
+        document.getElementById('enc-sally-name')?.focus();
+    }
+}
+
+function renderEncAllyNpcResults(query = '') {
+    const mount = document.getElementById('enc-ally-npc-results');
+    if (!mount || typeof NPC_DATA === 'undefined') return;
+    const q = String(query || '').trim().toLowerCase();
+    const priorityIds = ['ireena', 'ismark', 'ezmerelda', 'van_richten', 'martikov', 'davian', 'donavich', 'parriwimple', 'kasimir', 'godfrey', 'muriel', 'cael', 'madam_eva', 'father_lucian', 'blinsky'];
+    const entries = Object.entries(NPC_DATA).filter(([k, n]) => {
+        if (!n) return false;
+        if (!q) return true;
+        const hay = `${k} ${n.name || ''} ${n.role || ''} ${n.region || ''}`.toLowerCase();
+        return hay.includes(q);
+    }).sort((a, b) => {
+        const ai = priorityIds.indexOf(a[0]);
+        const bi = priorityIds.indexOf(b[0]);
+        if (ai !== -1 && bi !== -1) return ai - bi;
+        if (ai !== -1) return -1;
+        if (bi !== -1) return 1;
+        return String(a[1].name || '').localeCompare(String(b[1].name || ''));
+    });
+
+    if (entries.length === 0) {
+        mount.innerHTML = `<div style="grid-column:1/-1; padding:10px; text-align:center; color:#94a3b8; font-size:0.75rem;">No Story NPC matched "<em>${escapeEncounterHtml(query)}</em>" — switch to <strong>⚡ Smart Ally Generator</strong> to spawn a Guard, Villager, Archer, Priest, or Mage instantly!</div>`;
+        return;
+    }
+
+    mount.innerHTML = entries.map(([k, n]) => {
+        const linked = n.linkedMonster && MONSTER_DATA[n.linkedMonster] ? MONSTER_DATA[n.linkedMonster] : null;
+        const ac = (linked && linked.ac) || n.ac || 12;
+        const hp = (linked && (linked.maxHp || linked.hp)) || n.maxHp || 16;
+        const initRaw = (linked && linked.init) || n.init || '+0';
+        const onBoard = encounterEntries.some(e => e.kind === 'ally' && e.npcKey === k);
+        return `
+            <div style="background:#090e1a; border:1px solid ${onBoard ? '#34d399' : '#334155'}; border-radius:6px; padding:6px 8px; display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                <div style="min-width:0;">
+                    <div style="font-size:0.76rem; font-weight:800; color:#f8fafc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeEncounterHtml(n.name)}">${escapeEncounterHtml(n.name)}</div>
+                    <div style="font-size:0.65rem; color:#94a3b8; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">AC ${escapeEncounterHtml(ac)} • ${escapeEncounterHtml(hp)} HP • Init ${escapeEncounterHtml(initRaw)}</div>
+                </div>
+                <div style="display:flex; gap:3px; flex-shrink:0;">
+                    <button type="button" class="btn-modal-mini" style="padding:2px 6px; font-size:0.66rem;" onclick="openNpcModal('${k}', { initialTab: 'combat' })" title="Preview Combat Sheet">👁️</button>
+                    <button type="button" class="btn-modal-mini" style="padding:2px 7px; font-size:0.68rem; border-color:#34d399; color:#86efac; background:rgba(6,78,59,0.35);" onclick="addNpcAllyToEncounter('${k}')">${onBoard ? '+ Another' : '+ Add'}</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function addNpcAllyToEncounter(npcKey) {
+    const n = (typeof NPC_DATA !== 'undefined') ? NPC_DATA[npcKey] : null;
+    if (!n) return;
+    const linkedKey = n.linkedMonster || null;
+    const combatDef = (linkedKey && MONSTER_DATA[linkedKey]) ? MONSTER_DATA[linkedKey] : n;
+    const ac = String((combatDef && combatDef.ac) || n.ac || 12);
+    const maxHp = parseInt((combatDef && (combatDef.maxHp || combatDef.hp)) || n.maxHp || 18, 10) || 18;
+    const stateKey = linkedKey || ('npc::' + npcKey);
+    const st = (typeof getMonsterState === 'function') ? getMonsterState(stateKey) : null;
+    const curHp = (st && typeof st.hp === 'number') ? st.hp : maxHp;
+    const initBonus = parseInt((combatDef && combatDef.init) || n.init || '0', 10) || 0;
+    const d20 = Math.floor(Math.random() * 20) + 1;
+
+    let maxAllyNum = 0;
+    encounterEntries.forEach(e => {
+        if (e.kind === 'ally' && e.num > maxAllyNum) maxAllyNum = e.num;
+    });
+    const num = maxAllyNum + 1;
+    const uid = `ally_npc_${npcKey}_${Date.now().toString(36)}_${num}`;
+    encounterEntries.push({
+        uid,
+        kind: 'ally',
+        key: `npc_${npcKey}`,
+        allyKey: null,
+        npcKey,
+        num,
+        customLabel: n.name,
+        variantTag: 'Story NPC Ally',
+        init: d20 + initBonus,
+        initBonus,
+        ac,
+        curHp,
+        maxHp,
+        visibleToPlayers: true,
+        masked: false,
+        playerAlias: '',
+        hideTier: false,
+        conditions: [],
+        targets: []
+    });
+    if (encounterBoardCollapsed) encounterBoardCollapsed = false;
+    sortEncounterBoard(false);
+    saveEncounterBoard();
+    renderEncounterBoard();
+    renderEncAllyNpcResults(document.getElementById('enc-ally-search-input')?.value || '');
+    announceEncounterStatus(`Added Story NPC Ally ${n.name} to Encounter Board.`);
+    logRoll(`👤 <strong>Added NPC Ally:</strong> ${escapeEncounterHtml(n.name)} (AC ${ac}, ${curHp}/${maxHp} HP • Init <strong>${d20 + initBonus}</strong>) — click their name to open Combat Actions!`);
+}
+
+function renderSmartAllyTemplatePills() {
+    const mount = document.getElementById('enc-smart-ally-presets');
+    if (!mount) return;
+    mount.innerHTML = Object.values(SMART_ALLY_TEMPLATES).map(t => {
+        const on = activeSmartAllyTemplateId === t.id;
+        return `<button type="button" class="btn-modal-mini" style="border-color:${on ? '#34d399' : '#475569'}; background:${on ? 'rgba(6,78,59,0.5)' : '#0f172a'}; color:${on ? '#a7f3d0' : '#cbd5e1'};" aria-pressed="${on ? 'true' : 'false'}" onclick="selectSmartAllyTemplate('${t.id}')">${escapeEncounterHtml(t.pill)}</button>`;
+    }).join('');
+    applySmartAllyTemplateToForm(activeSmartAllyTemplateId, false);
+}
+
+function selectSmartAllyTemplate(tplId) {
+    if (!SMART_ALLY_TEMPLATES[tplId]) return;
+    activeSmartAllyTemplateId = tplId;
+    renderSmartAllyTemplatePills();
+    applySmartAllyTemplateToForm(tplId, true);
+}
+
+function applySmartAllyTemplateToForm(tplId, overwriteName = true) {
+    const t = SMART_ALLY_TEMPLATES[tplId] || SMART_ALLY_TEMPLATES.guard;
+    const nameEl = document.getElementById('enc-sally-name');
+    const hpEl = document.getElementById('enc-sally-hp');
+    const acEl = document.getElementById('enc-sally-ac');
+    const initEl = document.getElementById('enc-sally-init');
+    const prevEl = document.getElementById('enc-sally-preview');
+    if (nameEl && (overwriteName || !nameEl.value.trim())) nameEl.value = t.defaultName;
+    if (hpEl && overwriteName) hpEl.value = t.hp;
+    if (acEl && overwriteName) acEl.value = t.ac;
+    if (initEl && overwriteName) initEl.value = t.initBonus;
+    if (prevEl) {
+        const atkSummary = t.attacks.map(a => `${a.name}${typeof a.hit === 'number' ? ` (+${a.hit}` : ''}${a.dmg ? `, ${a.dmg}${typeof a.hit === 'number' ? ')' : ''}` : (typeof a.hit === 'number' ? ')' : '')}`).join(' • ');
+        prevEl.innerHTML = `<strong>${escapeEncounterHtml(t.roleLabel)} (CR ${escapeEncounterHtml(t.cr)}):</strong> ${escapeEncounterHtml(atkSummary)}<br><span style="color:#94a3b8;">${t.traits[0] || ''}</span>`;
+    }
+}
+
+function spawnSmartGeneratedAlly() {
+    const t = SMART_ALLY_TEMPLATES[activeSmartAllyTemplateId] || SMART_ALLY_TEMPLATES.guard;
+    const name = (document.getElementById('enc-sally-name')?.value || '').trim() || t.defaultName;
+    const hp = Math.max(1, parseInt(document.getElementById('enc-sally-hp')?.value, 10) || t.hp);
+    const ac = Math.max(1, parseInt(document.getElementById('enc-sally-ac')?.value, 10) || t.ac);
+    const initBonus = parseInt(document.getElementById('enc-sally-init')?.value, 10);
+    const effInit = Number.isNaN(initBonus) ? t.initBonus : initBonus;
+    const qty = Math.max(1, Math.min(8, parseInt(document.getElementById('enc-sally-qty')?.value, 10) || 1));
+
+    for (let i = 0; i < qty; i++) {
+        let maxAllyNum = 0;
+        encounterEntries.forEach(e => {
+            if (e.kind === 'ally' && e.num > maxAllyNum) maxAllyNum = e.num;
+        });
+        const num = maxAllyNum + 1;
+        const uid = `ally_smart_${t.id}_${Date.now().toString(36)}_${i}`;
+        const d20 = Math.floor(Math.random() * 20) + 1;
+        const label = qty > 1 ? `${name} #${i + 1}` : name;
+        encounterEntries.push({
+            uid,
+            kind: 'ally',
+            key: `smart_${t.id}`,
+            allyKey: null,
+            npcKey: null,
+            num,
+            customLabel: label,
+            variantTag: t.roleLabel,
+            init: d20 + effInit,
+            initBonus: effInit,
+            ac: String(ac),
+            curHp: hp,
+            maxHp: hp,
+            smartProfile: {
+                templateId: t.id,
+                roleLabel: t.roleLabel,
+                cr: t.cr,
+                speed: t.speed,
+                stats: t.stats,
+                traits: [...t.traits],
+                attacks: t.attacks.map(a => ({ ...a }))
+            },
+            visibleToPlayers: true,
+            masked: false,
+            playerAlias: '',
+            hideTier: false,
+            conditions: [],
+            targets: []
+        });
+    }
+    if (encounterBoardCollapsed) encounterBoardCollapsed = false;
+    sortEncounterBoard(false);
+    saveEncounterBoard();
+    renderEncounterBoard();
+    announceEncounterStatus(`Spawned ${qty}x Smart Ally ${name} with full combat actions.`);
+    logRoll(`⚡ <strong>Spawned ${qty}x Smart Ally: ${escapeEncounterHtml(name)}</strong> (${t.roleLabel} • AC ${ac}, ${hp} HP) with full Attack &amp; Combat Sheet!`);
+}
+
+function rollSmartAllyAction(uid, atkIdx, isDmg = false) {
+    const entry = encounterEntries.find(e => e.uid === uid);
+    if (!entry || !entry.smartProfile) return;
+    const atk = entry.smartProfile.attacks[atkIdx];
+    if (!atk) return;
+    const label = `${getEncounterDisplayTitle(entry)}: ${atk.name}`;
+    if (isDmg && atk.dmg) {
+        if (atk.dmgType === 'Healing') {
+            rollSimpleDamage(`💚 ${label} (Healing)`, atk.dmg, '');
+        } else {
+            rollSimpleDamage(`${label} (${atk.dmgType || 'Damage'})`, atk.dmg, '');
+        }
+        return;
+    }
+    if (typeof atk.hit === 'number') {
+        rollAttack(label, atk.hit, atk.dmg || '1d4', '0', '');
+        return;
+    }
+    if (atk.dmg) {
+        rollSimpleDamage(`${label} (${atk.dmgType || 'Effect'})`, atk.dmg, '');
+        return;
+    }
+    logRoll(`🛡️ <strong>${escapeEncounterHtml(label)}:</strong> ${escapeEncounterHtml(atk.desc || 'Action used!')}`);
+}
+
+function openSmartAllyModal(uid) {
+    const entry = encounterEntries.find(e => e.uid === uid);
+    if (!entry || !entry.smartProfile) return;
+    const sp = entry.smartProfile;
+    const title = getEncounterDisplayTitle(entry);
+    const v = resolveAllyEncounterVitals(entry);
+    const modal = resetDmModalChrome();
+    document.getElementById('modal-title').innerHTML = `🛡️ Smart Ally Combat Sheet: ${escapeEncounterHtml(title)}`;
+    const bodyEl = document.getElementById('modal-content');
+    const atkRows = sp.attacks.map((atk, idx) => `
+        <div style="background:#0f172a; border:1px solid #334155; border-left:3px solid #34d399; border-radius:6px; padding:8px 11px; margin-bottom:7px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div style="flex:1 1 260px;">
+                <div style="font-size:0.84rem; font-weight:800; color:#f8fafc;">⚔️ ${escapeEncounterHtml(atk.name)}</div>
+                <div style="font-size:0.74rem; color:#cbd5e1; margin-top:2px;">${escapeEncounterHtml(atk.desc || '')}</div>
+            </div>
+            <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                ${typeof atk.hit === 'number' ? `<button type="button" class="btn-roll" onclick="rollSmartAllyAction('${uid}', ${idx}, false)">🎯 Attack (+${atk.hit})</button>` : ''}
+                ${atk.dmg ? `<button type="button" class="btn-step btn-heal" onclick="rollSmartAllyAction('${uid}', ${idx}, true)">💥 ${atk.dmgType === 'Healing' ? 'Heal' : 'Dmg'} (${escapeEncounterHtml(atk.dmg)})</button>` : ''}
+                ${typeof atk.hit !== 'number' && !atk.dmg ? `<button type="button" class="btn-roll" onclick="rollSmartAllyAction('${uid}', ${idx}, false)">✨ Use Action</button>` : ''}
+            </div>
+        </div>
+    `).join('');
+    bodyEl.innerHTML = `
+        <div style="background:#131c2c; border-left:3.5px solid #34d399; padding:10px 14px; border-radius:0 6px 6px 0; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+                <strong style="color:#a7f3d0; font-size:1.05rem;">${escapeEncounterHtml(title)}</strong>
+                <div style="font-size:0.76rem; color:#94a3b8;">${escapeEncounterHtml(sp.roleLabel)} • CR ${escapeEncounterHtml(sp.cr)} • Speed ${escapeEncounterHtml(sp.speed || '30 ft.')}</div>
+            </div>
+            <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                <span class="pill green">AC ${escapeEncounterHtml(v.ac)}</span>
+                <span class="pill gold">${v.cur} / ${v.max} HP</span>
+                <button type="button" class="btn-step" onclick="modAllyEncounterHP('${uid}', -5); openSmartAllyModal('${uid}')">-5</button>
+                <button type="button" class="btn-step is-heal" onclick="modAllyEncounterHP('${uid}', 5); openSmartAllyModal('${uid}')">+5</button>
+            </div>
+        </div>
+        <div style="background:#090e18; border:1px solid var(--border-color); padding:7px 12px; border-radius:6px; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:var(--accent-gold); text-align:center; margin-bottom:10px;">
+            ${escapeEncounterHtml(sp.stats || '')}
+        </div>
+        <div class="nbox nbox-emerald" style="margin-bottom:10px;">
+            <strong>🌟 Traits &amp; Tactical Role:</strong><br>${sp.traits.join('<br>')}
+        </div>
+        <div style="font-family:'Cinzel',serif; font-size:0.82rem; font-weight:800; color:#fde68a; margin-bottom:6px;">⚔️ COMBAT ACTIONS &amp; SUPPORT</div>
+        ${atkRows}
+        <div id="modal-dice-log" class="dice-log" style="margin-top:10px;">Click any Attack, Damage, or Heal button above to roll directly!</div>
+    `;
+    if (modal && !modal.open) modal.showModal();
+}
+
+function renderEncEnemySearchResults(query = '') {
+    const mount = document.getElementById('enc-enemy-search-results');
+    if (!mount || typeof MONSTER_DATA === 'undefined') return;
+    const q = String(query || '').trim().toLowerCase();
+    const entries = Object.entries(MONSTER_DATA).filter(([k, m]) => {
+        if (!m) return false;
+        if (!q) return true;
+        const hay = `${k} ${m.name || ''} ${m.cr || ''} ${m.type || ''} ${m.location || ''}`.toLowerCase();
+        return hay.includes(q);
+    }).sort((a, b) => String(a[1].name || '').localeCompare(String(b[1].name || '')));
+
+    if (entries.length === 0) {
+        mount.innerHTML = `<div style="grid-column:1/-1; padding:10px; text-align:center; color:#94a3b8; font-size:0.75rem;">No Bestiary monster matched "<em>${escapeEncounterHtml(query)}</em>" — click <strong>➕ Custom Enemy Instead</strong> above to spawn one on the fly!</div>`;
+        return;
+    }
+
+    const visibleList = q ? entries : entries.slice(0, 24);
+    mount.innerHTML = visibleList.map(([k, m]) => {
+        const hpDisp = m.isDualTarget ? (m.targets || []).map(t => t.maxHp).join('/') : (m.maxHp || m.hp || '?');
+        const acDisp = m.isDualTarget ? (m.targets && m.targets[0] ? m.targets[0].ac : '?') : (m.ac || '?');
+        return `
+            <div style="background:#090e1a; border:1px solid #334155; border-radius:6px; padding:6px 8px; display:flex; justify-content:space-between; align-items:center; gap:6px;">
+                <div style="min-width:0;">
+                    <div style="font-size:0.75rem; font-weight:800; color:#f8fafc; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${escapeEncounterHtml(m.name)}">${escapeEncounterHtml(m.name)}</div>
+                    <div style="font-size:0.64rem; color:#94a3b8;">CR ${escapeEncounterHtml(m.cr || '?')} • AC ${escapeEncounterHtml(acDisp)} • ${escapeEncounterHtml(hpDisp)} HP</div>
+                </div>
+                <div style="display:flex; gap:3px; flex-shrink:0;">
+                    <button type="button" class="btn-modal-mini" style="padding:2px 5px; font-size:0.65rem;" onclick="openMonsterModal('${k}')" title="View Stat Block">👁️</button>
+                    <button type="button" class="btn-modal-mini" style="padding:2px 6px; font-size:0.67rem; border-color:#f87171; color:#fecaca;" onclick="quickAddEnemyFromDrawer('${k}', 1)">+1</button>
+                    <button type="button" class="btn-modal-mini" style="padding:2px 5px; font-size:0.65rem; border-color:#fbbf24; color:#fef08a;" onclick="quickAddEnemyFromDrawer('${k}', 2)">+2</button>
+                    <button type="button" class="btn-modal-mini" style="padding:2px 5px; font-size:0.65rem; border-color:#c084fc; color:#e9d5ff;" onclick="quickAddEnemyFromDrawer('${k}', 4)">+4</button>
+                </div>
+            </div>
+        `;
+    }).join('') + (!q && entries.length > 24 ? `<div style="grid-column:1/-1; text-align:center; font-size:0.69rem; color:#94a3b8; padding:4px;">Showing first 24 of ${entries.length} enemies — type in the search box above to find any monster or boss instantly!</div>` : '');
+}
+
+function quickAddEnemyFromDrawer(key, count = 1) {
+    addToEncounter(key, count);
+    // Auto-roll initiative on newly added enemies without init so they drop straight into turn order!
+    encounterEntries.forEach(e => {
+        if (e.kind === 'monster' && e.key === key && typeof e.init !== 'number') {
+            const mod = getEncounterInitBonus(e);
+            e.init = Math.floor(Math.random() * 20) + 1 + mod;
+        }
+    });
+    sortEncounterBoard(false);
+    saveEncounterBoard();
+    renderEncounterBoard();
 }
 
 const DM_ENCOUNTER_PRESETS_STORAGE_KEY = 'cos_dm_encounter_presets_v1';
