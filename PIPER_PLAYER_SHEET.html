@@ -745,6 +745,174 @@
             border-color: #fde68a;
             box-shadow: 0 18px 52px rgba(0, 0, 0, 0.95), 0 0 32px rgba(245, 158, 11, 0.5);
         }
+
+        /* Persistent Wild Magic & Tides of Chaos Companion Tray inside Floating Roll HUD */
+        .piper-wild-hud-tray {
+            display: none;
+            border-top: 1px dashed rgba(192, 132, 252, 0.42);
+            margin-top: 2px;
+            padding: 9px 11px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(88, 28, 135, 0.28) 0%, rgba(15, 23, 42, 0.92) 100%);
+            border: 1px solid rgba(192, 132, 252, 0.55);
+            color: var(--text-light);
+            font-size: 0.8rem;
+            line-height: 1.45;
+            max-height: 38vh;
+            overflow-y: auto;
+        }
+        .piper-wild-hud-tray.is-visible {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .piper-wild-hud-tray.is-tides {
+            background: linear-gradient(135deg, rgba(120, 53, 15, 0.34) 0%, rgba(88, 28, 135, 0.34) 55%, rgba(15, 23, 42, 0.94) 100%);
+            border-color: rgba(245, 158, 11, 0.72);
+            box-shadow: 0 0 18px rgba(245, 158, 11, 0.16);
+        }
+        .piper-wild-hud-tray.is-check {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.92) 0%, rgba(49, 46, 129, 0.45) 100%);
+            border-color: rgba(148, 163, 184, 0.55);
+        }
+        .piper-wild-hud-tray.is-safe {
+            background: rgba(15, 23, 42, 0.88);
+            border-color: rgba(74, 222, 128, 0.42);
+            padding: 6px 10px;
+        }
+        .piper-wild-hud-tray.is-surged {
+            background: linear-gradient(135deg, rgba(107, 33, 168, 0.36) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border-color: #c084fc;
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.22);
+        }
+        .piper-wild-tray-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .piper-wild-tray-title {
+            font-weight: 800;
+            font-size: 0.78rem;
+            letter-spacing: 0.03em;
+            color: #fde68a;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .piper-wild-tray-badge {
+            font-size: 0.66rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 1px 6px;
+            border-radius: 999px;
+            background: rgba(192, 132, 252, 0.22);
+            border: 1px solid rgba(192, 132, 252, 0.55);
+            color: #f3e8ff;
+            font-family: var(--font-mono);
+        }
+        .piper-wild-recharged-pill {
+            font-size: 0.68rem;
+            font-weight: 800;
+            padding: 1px 7px;
+            border-radius: 999px;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(74, 222, 128, 0.65);
+            color: #86efac;
+        }
+        .piper-wild-tray-close {
+            background: transparent;
+            border: 1px solid rgba(148, 163, 184, 0.35);
+            border-radius: 5px;
+            color: var(--text-dim);
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            cursor: pointer;
+            line-height: 1.2;
+        }
+        .piper-wild-tray-close:hover {
+            border-color: var(--accent-gold);
+            color: var(--text-light);
+        }
+        .piper-wild-hud-tray button:focus-visible,
+        .piper-wild-hud-tray input:focus-visible {
+            outline: 2px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
+        .piper-wild-tray-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+        .piper-wild-tray-note {
+            font-size: 0.76rem;
+            color: #e2e8f0;
+        }
+        .piper-wild-flavor {
+            font-size: 0.73rem;
+            color: #cbd5e1;
+            font-style: italic;
+        }
+        .piper-wild-tray-subres {
+            margin-top: 2px;
+            padding: 6px 9px;
+            border-radius: 6px;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(250, 204, 21, 0.45);
+            font-size: 0.77rem;
+            color: #fef3c7;
+        }
+        .rpg-manual-cue.is-wild {
+            background: rgba(168, 85, 247, 0.22);
+            border-color: rgba(245, 158, 11, 0.72);
+            color: #fde68a;
+        }
+        [data-theme="parchment"] .piper-wild-hud-tray {
+            background: linear-gradient(135deg, #f3e8ff 0%, #faf5ff 100%);
+            border-color: #7e22ce;
+            color: #1f1916;
+        }
+        [data-theme="parchment"] .piper-wild-hud-tray.is-tides {
+            background: linear-gradient(135deg, #fef3c7 0%, #f3e8ff 100%);
+            border-color: #b45309;
+        }
+        [data-theme="parchment"] .piper-wild-hud-tray.is-check {
+            background: #f5f0e6;
+            border-color: #78716c;
+        }
+        [data-theme="parchment"] .piper-wild-hud-tray.is-safe {
+            background: #ecfdf5;
+            border-color: #15803d;
+        }
+        [data-theme="parchment"] .piper-wild-tray-title { color: #6b21a8; }
+        [data-theme="parchment"] .piper-wild-hud-tray.is-tides .piper-wild-tray-title { color: #92400e; }
+        [data-theme="parchment"] .piper-wild-tray-badge {
+            background: #ede9fe;
+            border-color: #7e22ce;
+            color: #581c87;
+        }
+        [data-theme="parchment"] .piper-wild-recharged-pill {
+            background: #dcfce7;
+            border-color: #15803d;
+            color: #14532d;
+        }
+        [data-theme="parchment"] .piper-wild-tray-note { color: #292524; }
+        [data-theme="parchment"] .piper-wild-flavor { color: #57534e; }
+        [data-theme="parchment"] .piper-wild-tray-subres {
+            background: #fffbeb;
+            border-color: #b45309;
+            color: #78350f;
+        }
+        [data-theme="parchment"] .rpg-manual-cue.is-wild {
+            background: #fef3c7;
+            border-color: #92400e;
+            color: #78350f;
+        }
     
         /* 🎯 ALL 18 SKILLS & ℹ️ INFO COMPENDIUM BUTTONS */
         .check-left-wrap {
@@ -1689,9 +1857,10 @@
                 <span style="font-size:0.78rem; font-weight:800; color:var(--accent-gold); text-transform:uppercase; letter-spacing:0.5px;">🎲 Live Roll &amp; Action Result</span>
                 <span id="floating-roll-time" style="font-size:0.72rem; color:var(--text-muted); font-family:'JetBrains Mono',monospace;"></span>
             </div>
-            <button class="btn-act btn-act-pre" onclick="dismissFloatingHud()" style="padding:3px 10px; font-size:0.74rem; color:var(--text-dim);" title="Dismiss floating roll drawer">✕ Dismiss</button>
+            <button type="button" class="btn-act btn-act-pre" onclick="dismissFloatingHud()" style="padding:3px 10px; font-size:0.74rem; color:var(--text-dim);" title="Dismiss floating roll drawer">✕ Dismiss</button>
         </div>
         <div id="floating-roll-body" style="font-size:0.98rem; color:var(--text-light); line-height:1.5; display:flex; align-items:center; flex-wrap:wrap; gap:8px;"></div>
+        <div id="piper-wild-hud-tray" class="piper-wild-hud-tray" aria-live="polite" onclick="event.stopPropagation()"></div>
     </div>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
@@ -1720,6 +1889,9 @@
     let curSP = 3;
     let maxSP = 3;
     let tidesOfChaosReady = true;  // true = Ready to grant Adv; false = Primed for Auto-Surge on next leveled spell!
+    let tidesAdvActive = false;    // true after clicking Use Tides (+Advantage) until consumed by an attack/roll
+    let activeWildSpellContext = null; // Persistent Wild Magic / Tides companion tray inside #floating-roll-hud
+    let preserveWildTrayDepth = 0; // Guard counter so Attack -> Hit -> Damage -> Crit keeps #piper-wild-hud-tray intact
     let fiernaCharmReady = true;   // Legacy of Phlegethos: 1/1 Ready (Restored after Tser Pool Long Rest)
     let lastWildSurgeText = "d100=87 (Aerial Stage Wire (Fly))";
 
@@ -1830,21 +2002,420 @@
         }
     }
 
+    function escapeWildHtml(str) {
+        return String(str == null ? '' : str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function withWildTrayPreserved(fn) {
+        preserveWildTrayDepth++;
+        try {
+            return fn();
+        } finally {
+            preserveWildTrayDepth = Math.max(0, preserveWildTrayDepth - 1);
+        }
+    }
+
+    function consumePiperTidesAdv() {
+        const wasActive = Boolean(tidesAdvActive && rollMode === 'adv');
+        tidesAdvActive = false;
+        if (wasActive && rollMode === 'adv') {
+            toggleAdvantage('adv');
+        }
+        return wasActive;
+    }
+
+    function clearPiperWildHudTray() {
+        activeWildSpellContext = null;
+        const tray = document.getElementById('piper-wild-hud-tray');
+        if (tray) {
+            tray.innerHTML = '';
+            tray.className = 'piper-wild-hud-tray';
+        }
+    }
+
+    function dismissPiperWildTray(ev) {
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        lastHudShowTime = Date.now();
+        clearPiperWildHudTray();
+    }
+
+    function formatWildDiePill(expr, label) {
+        if (window.COS_RPG && typeof COS_RPG.formatDicePillsHtml === 'function') {
+            return COS_RPG.formatDicePillsHtml([{ expr, label }], 0);
+        }
+        return `<span class="rpg-die-pill die-d100">${escapeWildHtml(expr)}</span>`;
+    }
+
+    function buildWildD100LookupFormHtml(extraBtnHtml = '') {
+        return `
+            <div class="piper-wild-tray-row">
+                ${formatWildDiePill('1d100', 'Wild Surge')}
+                <form class="rpg-manual-inline-form" style="margin-top:0;" onsubmit="return submitWildSurgeTrayD100(event, this)" onclick="event.stopPropagation()">
+                    <label for="piper-tray-d100-input" class="rpg-manual-inline-lbl">Physical d100 (1–100):</label>
+                    <input id="piper-tray-d100-input" name="d100" type="text" inputmode="numeric" pattern="\\d+" enterkeyhint="done" autocomplete="off" autocapitalize="none" spellcheck="false" class="rpg-manual-num" placeholder="1-100" aria-describedby="piper-tray-d100-err" oninput="clearWildTrayInputError(this)">
+                    <button type="submit" class="rpg-manual-submit-btn">📖 Look Up Surge</button>
+                    <button type="button" class="btn-roll-action btn-roll-wild" onclick="spinWildSurgeInTray(event)">💻 Spin d100</button>
+                    ${extraBtnHtml}
+                    <span id="piper-tray-d100-err" class="rpg-manual-err" aria-live="polite"></span>
+                </form>
+            </div>
+        `;
+    }
+
+    function renderPiperWildHudTray() {
+        const tray = document.getElementById('piper-wild-hud-tray');
+        if (!tray) return;
+        const ctx = activeWildSpellContext;
+        if (!ctx) {
+            tray.innerHTML = '';
+            tray.className = 'piper-wild-hud-tray';
+            return;
+        }
+        lastHudShowTime = Date.now();
+        const hud = document.getElementById('floating-roll-hud');
+        if (hud) hud.classList.add('visible');
+
+        const safeSpell = escapeWildHtml(ctx.spellName || 'Spell');
+        const lvlTag = ctx.slotLevel ? ` • Lvl ${ctx.slotLevel}` : '';
+        const closeBtn = `<button type="button" class="piper-wild-tray-close" onclick="dismissPiperWildTray(event)" title="Dismiss Wild Magic tray">✕</button>`;
+
+        if (ctx.mode === 'tides_pending') {
+            tray.className = 'piper-wild-hud-tray is-visible is-tides';
+            tray.innerHTML = `
+                <div class="piper-wild-tray-head">
+                    <span class="piper-wild-tray-title">⚡ Tides of Chaos Payback — Guaranteed Wild Magic Surge <span class="piper-wild-tray-badge">Recharges Tides</span></span>
+                    ${closeBtn}
+                </div>
+                <div class="piper-wild-tray-note">Casting <strong>${safeSpell}${lvlTag}</strong> triggers a <strong>Wild Magic Surge (1d100)</strong> &amp; restores Tides of Chaos. Roll or enter it below — your attack &amp; damage card stays open above!</div>
+                ${buildWildD100LookupFormHtml()}
+            `;
+            return;
+        }
+
+        if (ctx.mode === 'tides_attack_manual') {
+            tray.className = 'piper-wild-hud-tray is-visible is-tides';
+            const keepBtn = `<button type="button" class="btn-act btn-act-pre" style="padding:4px 9px; font-size:0.72rem;" onclick="dismissPiperWildTray(event)">⏳ Keep Primed for Next Spell</button>`;
+            tray.innerHTML = `
+                <div class="piper-wild-tray-head">
+                    <span class="piper-wild-tray-title">⚡ Tides of Chaos Advantage — Wild Magic Surge Included <span class="piper-wild-tray-badge">1d100 Surge</span></span>
+                    ${closeBtn}
+                </div>
+                <div class="piper-wild-tray-note"><strong>Tides of Chaos</strong> is spent &amp; Primed on <strong>${safeSpell}</strong>! Roll your <code>1d100</code> Surge right here (recharges Tides) without leaving your damage guide — or keep it primed for your next 1st+ level spell.</div>
+                ${buildWildD100LookupFormHtml(keepBtn)}
+            `;
+            return;
+        }
+
+        if (ctx.mode === 'tides_attack_digital') {
+            tray.className = 'piper-wild-hud-tray is-visible is-tides';
+            tray.innerHTML = `
+                <div class="piper-wild-tray-head">
+                    <span class="piper-wild-tray-title">⚡ Tides of Chaos Spent — Wild Magic Surge Primed <span class="piper-wild-tray-badge">Auto on Next Spell</span></span>
+                    ${closeBtn}
+                </div>
+                <div class="piper-wild-tray-row">
+                    <span class="piper-wild-tray-note">Your next 1st+ level spell auto-triggers a Surge &amp; recharges Tides — or trigger right now without leaving your attack/damage roll:</span>
+                    <button type="button" class="btn-roll-action btn-roll-wild" onclick="spinWildSurgeInTray(event)">💥 Spin d100 Surge Now</button>
+                    <button type="button" class="btn-act btn-act-pre" style="padding:3px 8px; font-size:0.7rem;" onclick="dismissPiperWildTray(event)">✓ Keep Primed</button>
+                </div>
+            `;
+            return;
+        }
+
+        if (ctx.mode === 'check_pending') {
+            tray.className = 'piper-wild-hud-tray is-visible is-check';
+            tray.innerHTML = `
+                <div class="piper-wild-tray-head">
+                    <span class="piper-wild-tray-title">🌀 Wild Magic Check — ${safeSpell}${lvlTag} <span class="piper-wild-tray-badge">Nat 1 = Surge</span></span>
+                    ${closeBtn}
+                </div>
+                <div class="piper-wild-tray-row">
+                    ${formatWildDiePill('1d20', 'Nat 1 = Surge')}
+                    <span class="piper-wild-tray-note">Roll physical <strong>1d20</strong> (2–20 Safe • Nat 1 triggers Surge). Stays pinned while you click Hit / Damage!</span>
+                </div>
+                <div class="piper-wild-tray-row">
+                    <button type="button" class="btn-roll-action btn-roll-heal" onclick="resolveWildCheckSafeInTray(event)">✅ Safe (2–20)</button>
+                    <button type="button" class="btn-roll-action btn-roll-wild" onclick="openWildSurgePromptInTray(event)">💥 Rolled a 1! Roll d100 Surge</button>
+                    <button type="button" class="btn-act btn-act-pre" style="padding:4px 9px; font-size:0.72rem;" onclick="rollWildCheckDigitalInTray(event)">💻 Roll d20</button>
+                </div>
+            `;
+            return;
+        }
+
+        if (ctx.mode === 'surge_d100_prompt') {
+            tray.className = 'piper-wild-hud-tray is-visible is-surged';
+            tray.innerHTML = `
+                <div class="piper-wild-tray-head">
+                    <span class="piper-wild-tray-title">💥 Natural 1! Wild Magic Surge (${safeSpell}${lvlTag}) <span class="piper-wild-tray-badge">Table 01–00</span></span>
+                    ${closeBtn}
+                </div>
+                <div class="piper-wild-tray-note">Roll physical <strong>1d100</strong> and enter the number below (or spin digitally) — your damage guide stays open above!</div>
+                ${buildWildD100LookupFormHtml()}
+            `;
+            return;
+        }
+
+        if (ctx.mode === 'safe') {
+            tray.className = 'piper-wild-hud-tray is-visible is-safe';
+            const rollTxt = ctx.d20Result
+                ? `d20 = <strong>${ctx.d20Result}</strong> (Safe — triggers on Nat 1)`
+                : 'Physical d20: <strong>Safe (2–20)</strong>';
+            tray.innerHTML = `
+                <div class="piper-wild-tray-head">
+                    <div class="piper-wild-tray-row">
+                        <span style="color:#86efac; font-weight:800; font-size:0.76rem;">✅ Wild Check (${safeSpell}${lvlTag}):</span>
+                        <span class="piper-wild-tray-note">${rollTxt}</span>
+                        <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.69rem; color:#fde68a;" onclick="openOrSpinSurgeFromSafe(event)">💥 Surge Anyway</button>
+                    </div>
+                    ${closeBtn}
+                </div>
+            `;
+            return;
+        }
+
+        if (ctx.mode === 'surged' && ctx.entry) {
+            tray.className = 'piper-wild-hud-tray is-visible is-surged';
+            const rechargePill = ctx.rechargedTides ? `<span class="piper-wild-recharged-pill">🃏 Tides Recharged!</span>` : '';
+            const actBtnHtml = ctx.entry.btnLabel
+                ? `<div class="piper-wild-tray-row"><button type="button" class="btn-roll-action btn-roll-wild" onclick="runWildSurgeActionInTray(event, ${ctx.entry.min})">${ctx.entry.btnLabel}</button></div>`
+                : '';
+            const subResHtml = ctx.subResultHtml
+                ? `<div class="piper-wild-tray-subres">${ctx.subResultHtml}</div>`
+                : '';
+            tray.innerHTML = `
+                <div class="piper-wild-tray-head">
+                    <span class="piper-wild-tray-title">💥 WILD MAGIC SURGE: ${escapeWildHtml(ctx.entry.title)} <span class="piper-wild-tray-badge">d100 = ${ctx.d100} [${escapeWildHtml(ctx.entry.range)}]</span> ${rechargePill}</span>
+                    ${closeBtn}
+                </div>
+                <div class="piper-wild-tray-note"><strong>Effect:</strong> ${ctx.entry.effect}</div>
+                <div class="piper-wild-flavor">🎩 ${ctx.entry.flavor}</div>
+                ${actBtnHtml}
+                ${subResHtml}
+            `;
+        }
+    }
+
+    function openTidesAttackTray(label, isManual) {
+        activeWildSpellContext = {
+            spellName: label || 'Attack',
+            slotLevel: 0,
+            mode: isManual ? 'tides_attack_manual' : 'tides_attack_digital',
+            wasTidesPayback: true
+        };
+        renderPiperWildHudTray();
+    }
+
+    function clearWildTrayInputError(inp) {
+        if (!inp) return;
+        inp.removeAttribute('aria-invalid');
+        const err = document.getElementById('piper-tray-d100-err');
+        if (err) err.textContent = '';
+    }
+
+    function resolveWildCheckSafeInTray(ev) {
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        if (!activeWildSpellContext) return;
+        activeWildSpellContext = { ...activeWildSpellContext, mode: 'safe', d20Result: null };
+        renderPiperWildHudTray();
+    }
+
+    function openWildSurgePromptInTray(ev) {
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        const prev = activeWildSpellContext || { spellName: 'Spell', slotLevel: 1 };
+        activeWildSpellContext = { ...prev, mode: 'surge_d100_prompt' };
+        renderPiperWildHudTray();
+        const inp = document.getElementById('piper-tray-d100-input');
+        if (inp && typeof inp.focus === 'function') inp.focus();
+    }
+
+    function openOrSpinSurgeFromSafe(ev) {
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        const isManual = Boolean(window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode());
+        if (isManual) {
+            openWildSurgePromptInTray(ev);
+        } else {
+            spinWildSurgeInTray(ev);
+        }
+    }
+
+    function rollWildCheckDigitalInTray(ev) {
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        const prev = activeWildSpellContext || { spellName: 'Spell', slotLevel: 1 };
+        const d20 = Math.floor(Math.random() * 20) + 1;
+        if (d20 === 1) {
+            triggerWildMagicSurge(`Nat 1 on Wild Magic Check [d20 = 1] after ${prev.spellName}`, false, null, { inTrayOnly: true });
+        } else {
+            activeWildSpellContext = { ...prev, mode: 'safe', d20Result: d20 };
+            renderPiperWildHudTray();
+        }
+    }
+
+    function spinWildSurgeInTray(ev) {
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        const prev = activeWildSpellContext || { spellName: 'Spell', slotLevel: 0, wasTidesPayback: !tidesOfChaosReady };
+        const isTides = Boolean(prev.wasTidesPayback || !tidesOfChaosReady);
+        const src = isTides
+            ? `Tides of Chaos Payback (${prev.spellName})`
+            : `Wild Magic Surge (${prev.spellName})`;
+        triggerWildMagicSurge(src, isTides, null, { inTrayOnly: true });
+    }
+
+    function submitWildSurgeTrayD100(ev, formEl) {
+        if (ev && typeof ev.preventDefault === 'function') ev.preventDefault();
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        const inp = formEl ? formEl.querySelector('#piper-tray-d100-input') : document.getElementById('piper-tray-d100-input');
+        const err = formEl ? formEl.querySelector('#piper-tray-d100-err') : document.getElementById('piper-tray-d100-err');
+        const raw = String(inp ? inp.value : '').trim();
+        const val = /^\d+$/.test(raw) ? parseInt(raw, 10) : NaN;
+        if (!Number.isFinite(val) || val < 1 || val > 100) {
+            if (inp) inp.setAttribute('aria-invalid', 'true');
+            if (err) err.textContent = 'Enter 1–100';
+            if (inp && typeof inp.focus === 'function') inp.focus();
+            lastHudShowTime = Date.now();
+            return false;
+        }
+        if (inp) inp.removeAttribute('aria-invalid');
+        if (err) err.textContent = '';
+        const prev = activeWildSpellContext || { spellName: 'Spell', slotLevel: 0, wasTidesPayback: !tidesOfChaosReady };
+        const isTides = Boolean(prev.wasTidesPayback || !tidesOfChaosReady);
+        triggerWildMagicSurge(`Physical d100 #${val} (${prev.spellName})`, isTides, val, { inTrayOnly: true });
+        return false;
+    }
+
+    function rollTrayDiceSimple(count, sides, flat = 0) {
+        const rolls = [];
+        let sum = flat;
+        for (let i = 0; i < count; i++) {
+            const r = Math.floor(Math.random() * sides) + 1;
+            rolls.push(r);
+            sum += r;
+        }
+        return { rolls, total: sum };
+    }
+
+    function runWildSurgeActionInTray(ev, entryMin) {
+        if (ev && typeof ev.stopPropagation === 'function') ev.stopPropagation();
+        if (!activeWildSpellContext) return;
+        const isManual = Boolean(window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode());
+        let subHtml = '';
+        if (entryMin === 1) {
+            triggerWildMagicSurge('01-02 Minute Cascade', false, null, { inTrayOnly: true });
+            return;
+        } else if (entryMin === 7) {
+            if (isManual) {
+                subHtml = `🔥 <strong>Self-Fireball (20ft • DC 14 DEX Save):</strong> Roll ${formatWildDiePill('8d6', 'Fire')} <em>(Piper has Fire Resistance = half damage!)</em>`;
+            } else {
+                const r = rollTrayDiceSimple(8, 6, 0);
+                subHtml = `🔥 <strong>8d6 Fireball:</strong> [${r.rolls.join('+')}] = <strong>${r.total} Fire Damage</strong> (DC 14 DEX half; Piper halves again w/ Fire Resist = ${Math.floor(r.total / 2)} or ${Math.floor(r.total / 4)})!`;
+            }
+        } else if (entryMin === 9) {
+            if (isManual) {
+                subHtml = `⚡ <strong>5th-Lvl Magic Missile (7 Darts, auto-hit):</strong> Roll ${formatWildDiePill('7d4', '+7 Force')}`;
+            } else {
+                const r = rollTrayDiceSimple(7, 4, 7);
+                subHtml = `⚡ <strong>7 Magic Missile Darts:</strong> [${r.rolls.join('+')}] + 7 = <strong>${r.total} Force Damage</strong>!`;
+            }
+        } else if (entryMin === 11) {
+            if (isManual) {
+                subHtml = `📏 <strong>Height Shift:</strong> Roll ${formatWildDiePill('1d10', 'Odd Shrink / Even Grow')} inches!`;
+            } else {
+                const d10 = Math.floor(Math.random() * 10) + 1;
+                subHtml = `📏 <strong>Height Shift (d10 = ${d10}):</strong> Piper <strong>${d10 % 2 === 1 ? 'SHRINKS' : 'GROWS'} by ${d10} inches</strong>!`;
+            }
+        } else if (entryMin === 15) {
+            curHP = Math.min(maxHP, curHP + 5);
+            updateHPUI();
+            subHtml = `💚 <strong>Regenerative Encore:</strong> Restored <strong>+5 HP</strong> (HP: ${curHP}/${maxHP})!`;
+        } else if (entryMin === 25) {
+            if (isManual) {
+                subHtml = `👁️ <strong>Third Eye Perception (Advantage):</strong> Roll ${formatWildDiePill('2d20', 'keep HIGH')} + 0!`;
+            } else {
+                const r1 = Math.floor(Math.random() * 20) + 1;
+                const r2 = Math.floor(Math.random() * 20) + 1;
+                subHtml = `👁️ <strong>Third Eye Perception (Adv):</strong> [${r1}, ${r2}] ➔ <strong>${Math.max(r1, r2)}</strong>!`;
+            }
+        } else if (entryMin === 39) {
+            const r = rollTrayDiceSimple(2, 10, 0);
+            curHP = Math.min(maxHP, curHP + r.total);
+            updateHPUI();
+            subHtml = `💚 <strong>Instant Second Wind (2d10):</strong> [${r.rolls.join('+')}] = <strong>+${r.total} HP</strong> restored (HP: ${curHP}/${maxHP})!`;
+        } else if (entryMin === 51) {
+            if (window.COS_RPG && typeof COS_RPG.toggleStatus === 'function') {
+                isSurgeACActive = false;
+                COS_RPG.toggleStatus('surge_ac');
+            } else {
+                isSurgeACActive = true;
+                updateACDisplay();
+            }
+            subHtml = `🛡️ <strong>Spectral Stage Shield Active:</strong> +2 AC &amp; Magic Missile immunity (AC: ${document.getElementById('ac-disp')?.innerText || ''})!`;
+        } else if (entryMin === 59) {
+            let refunded = 0;
+            for (let lvl = 1; lvl <= 3; lvl++) {
+                if (spellSlots[lvl].max > 0 && spellSlots[lvl].current < spellSlots[lvl].max) {
+                    spellSlots[lvl].current++;
+                    renderSpellSlots();
+                    refunded = lvl;
+                    break;
+                }
+            }
+            subHtml = refunded
+                ? `🟦 <strong>Arcane Slot Refund:</strong> Restored +1 Level ${refunded} Spell Slot (${spellSlots[refunded].current}/${spellSlots[refunded].max})!`
+                : `🟦 <strong>Arcane Slot Refund:</strong> All spell slots are already full!`;
+        } else if (entryMin === 65) {
+            if (isManual) {
+                subHtml = `⚡ <strong>Triple Arc Lightning (up to 3 targets in 30ft):</strong> Roll ${formatWildDiePill('4d10', 'Lightning')}`;
+            } else {
+                const r = rollTrayDiceSimple(4, 10, 0);
+                subHtml = `⚡ <strong>4d10 Triple Arc Lightning:</strong> [${r.rolls.join('+')}] = <strong>${r.total} Lightning Damage</strong> (up to 3 targets)!`;
+            }
+        } else if (entryMin === 77) {
+            const gc = window.__piperGearCache || null;
+            const saveBonus = gc ? (gc.saveBonus || 0) : ((activeRobe === 'black') ? 1 : 0);
+            if (isManual) {
+                subHtml = `🐑 <strong>Polymorph Sheep (DC 14 WIS Save):</strong> Roll ${formatWildDiePill('1d20', saveBonus >= 0 ? `+${saveBonus}` : `${saveBonus}`)} vs DC 14!`;
+            } else {
+                const d20 = Math.floor(Math.random() * 20) + 1;
+                const tot = d20 + saveBonus;
+                subHtml = `🐑 <strong>Polymorph WIS Save (DC 14):</strong> d20(${d20})${saveBonus ? ` + ${saveBonus}` : ''} = <strong>${tot}</strong> (${tot >= 14 ? '✅ SAFE!' : '🐑 SHEEP!'})!`;
+            }
+        } else if (entryMin === 83) {
+            if (isManual) {
+                subHtml = `🩸 <strong>Soul-Drain Spotlight (30ft AoE):</strong> Roll ${formatWildDiePill('1d10', 'Necrotic')} — heal equal to total dealt!`;
+            } else {
+                const r = rollTrayDiceSimple(1, 10, 0);
+                subHtml = `🩸 <strong>1d10 Necrotic Siphon:</strong> <strong>${r.total} Necrotic Damage</strong> to each creature within 30 ft (heal equal to total dealt)!`;
+            }
+        } else if (entryMin === 99) {
+            curSP = maxSP;
+            updateSorceryPointsUI();
+            subHtml = `🟣 <strong>Font of Magic Restored:</strong> Sorcery Points refilled to <strong>${curSP}/${maxSP} SP</strong>!`;
+        }
+        activeWildSpellContext = { ...activeWildSpellContext, subResultHtml: subHtml };
+        renderPiperWildHudTray();
+    }
+
     function useTidesOfChaos() {
         if (!tidesOfChaosReady) {
-            triggerWildMagicSurge('Tides of Chaos Cosmic Payback');
+            triggerWildMagicSurge('Tides of Chaos Cosmic Payback', true);
             return;
         }
         tidesOfChaosReady = false;
+        tidesAdvActive = true;
         if (rollMode !== 'adv') {
             toggleAdvantage('adv');
         }
         updateTidesUI();
-        logRoll(`🃏 <strong>Tides of Chaos ("Pick-a-Card, Any Card!"):</strong> Piper manipulates probability with shameless trickery! <strong>Advantage (Adv) is now ACTIVE</strong> on your roll, and <strong>⚡ Wild Magic Surge is PRIMED</strong> to automatically trigger &amp; recharge on your next 1st+ level spell!`);
+        logRoll(`🃏 <strong>Tides of Chaos ("Pick-a-Card, Any Card!"):</strong> Piper manipulates probability with shameless trickery! <strong>Advantage (Adv) is now ACTIVE</strong> on your next attack/roll, and <strong>⚡ Wild Magic Surge is PRIMED</strong> to automatically appear alongside your attack &amp; recharge on your next 1st+ level spell!`);
     }
 
     function toggleTidesManual() {
         tidesOfChaosReady = !tidesOfChaosReady;
+        if (tidesOfChaosReady) tidesAdvActive = false;
         updateTidesUI();
         logRoll(`🃏 <strong>Tides of Chaos:</strong> Manually set to <strong>${tidesOfChaosReady ? 'READY' : 'SURGE PRIMED'}</strong>.`);
     }
@@ -1854,43 +2425,40 @@
         const isAuto = autoCheck ? autoCheck.checked : true;
         const isManual = Boolean(window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode());
 
-        // 1. If Tides of Chaos was spent, trigger Wild Magic Surge and recharge Tides of Chaos!
+        // 1. If Tides of Chaos was spent, trigger/queue guaranteed Wild Magic Surge in the persistent companion tray (NEVER wipes spell/damage HUD!)
         if (!tidesOfChaosReady && isAuto) {
+            activeWildSpellContext = {
+                spellName: spellName || 'Spell',
+                slotLevel: slotLevel || 1,
+                mode: 'tides_pending',
+                wasTidesPayback: true
+            };
             if (isManual) {
-                setTimeout(() => {
-                    const hudBody = document.getElementById('floating-roll-body');
-                    if (hudBody) {
-                        hudBody.insertAdjacentHTML('beforeend', `<div style="margin-top:6px; padding:5px 8px; border-radius:6px; background:rgba(168,85,247,0.18); border:1px solid #c084fc; font-size:0.76rem; color:#f3e8ff;">🃏 <strong>Tides of Chaos Payback Primed!</strong> <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.7rem; margin-left:4px; color:#fde68a;" onclick="event.stopPropagation(); triggerWildMagicSurge('Tides of Chaos Payback after ${String(spellName || 'Spell').replace(/'/g, '')} (Lvl ${slotLevel})', true)">Spin Wild Magic d100 Surge</button></div>`);
-                    }
-                }, 60);
+                renderPiperWildHudTray();
                 return;
             }
-            setTimeout(() => {
-                triggerWildMagicSurge(`Tides of Chaos Payback after ${spellName} (Lvl ${slotLevel})`, true);
-            }, 60);
+            triggerWildMagicSurge(`Tides of Chaos Payback after ${spellName} (Lvl ${slotLevel})`, true, null, { inTrayOnly: true });
             return;
         }
 
-        // 2. Otherwise, if Auto-Check is enabled, prompt (Manual) or roll (Digital) the d20 Wild Magic Check!
+        // 2. Otherwise, if Auto-Check is enabled, prompt (Manual) or roll (Digital) the d20 Wild Magic Check inside the persistent companion tray!
         if (isAuto) {
+            activeWildSpellContext = {
+                spellName: spellName || 'Spell',
+                slotLevel: slotLevel || 1,
+                mode: 'check_pending',
+                wasTidesPayback: false
+            };
             if (isManual) {
-                setTimeout(() => {
-                    const hudBody = document.getElementById('floating-roll-body');
-                    if (hudBody) {
-                        hudBody.insertAdjacentHTML('beforeend', `<div style="margin-top:6px; padding:5px 8px; border-radius:6px; background:rgba(30,41,59,0.85); border:1px solid #64748b; font-size:0.75rem; color:#e2e8f0; display:flex; align-items:center; flex-wrap:wrap; gap:5px;">🎲 <strong>Wild Magic Check:</strong> Roll physical <code>1d20</code> (Nat 1 = Surge!) <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.69rem; color:#fde68a;" onclick="event.stopPropagation(); triggerWildMagicSurge('Nat 1 Physical d20 after ${String(spellName || 'Spell').replace(/'/g, '')}')">Rolled a 1 — Spin d100</button> <button type="button" class="btn-act btn-act-pre" style="padding:2px 7px; font-size:0.68rem;" onclick="event.stopPropagation(); COS_RPG.runManualDigitalFallback(() => rollWildMagicD20Check('Wild Check after ${String(spellName || 'Spell').replace(/'/g, '')}'))">💻 Roll d20</button></div>`);
-                    }
-                }, 60);
+                renderPiperWildHudTray();
                 return;
             }
             const d20 = Math.floor(Math.random() * 20) + 1;
             if (d20 === 1) {
-                setTimeout(() => {
-                    triggerWildMagicSurge(`Nat 1 on Wild Magic Check [d20 = 1] after ${spellName}!`, false);
-                }, 60);
+                triggerWildMagicSurge(`Nat 1 on Wild Magic Check [d20 = 1] after ${spellName}!`, false, null, { inTrayOnly: true });
             } else {
-                const checkBadge = ` <span style="margin-left:6px; padding:2px 7px; border-radius:4px; background:#1e293b; border:1px solid #475569; font-size:0.76rem; color:#cbd5e1;">🎲 Wild Check d20: <strong>${d20}</strong> (Safe) <button class="btn-act btn-act-pre" style="padding:1px 6px; font-size:0.68rem; margin-left:4px; color:#fde68a;" onclick="event.stopPropagation(); triggerWildMagicSurge('Manual Surge Override')">Surge Anyway</button></span>`;
-                const hudBody = document.getElementById('floating-roll-body');
-                if (hudBody) hudBody.insertAdjacentHTML('beforeend', checkBadge);
+                activeWildSpellContext = { ...activeWildSpellContext, mode: 'safe', d20Result: d20 };
+                renderPiperWildHudTray();
             }
         }
     }
@@ -1913,7 +2481,7 @@
         if (d20 === 1) {
             triggerWildMagicSurge(`${reason} rolled a NAT 1 on d20!`);
         } else {
-            logRoll(`🎲 <strong>${reason} (d20):</strong> Rolled <strong>${d20}</strong> (No Surge — triggers on a 1). <button class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.7rem; margin-left:6px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Override')">💥 Trigger d100 Surge Anyway</button>`);
+            logRoll(`🎲 <strong>${reason} (d20):</strong> Rolled <strong>${d20}</strong> (No Surge — triggers on a 1). <button type="button" class="btn-act btn-act-pre" style="padding:2px 8px; font-size:0.7rem; margin-left:6px; color:#fde68a;" onclick="triggerWildMagicSurge('Manual Override')">💥 Trigger d100 Surge Anyway</button>`);
         }
     }
 
@@ -1922,13 +2490,16 @@
         return WILD_SURGE_TABLE.find(row => clamped >= row.min && clamped <= row.max) || WILD_SURGE_TABLE[0];
     }
 
-    function triggerWildMagicSurge(sourceLabel = 'Wild Magic Surge', wasTidesRecharge = false, forcedRoll = null) {
+    function triggerWildMagicSurge(sourceLabel = 'Wild Magic Surge', wasTidesRecharge = false, forcedRoll = null, opts = {}) {
         const d100 = forcedRoll !== null ? forcedRoll : (Math.floor(Math.random() * 100) + 1);
         const entry = getSurgeEntryByD100(d100);
 
         let tidesMsg = '';
+        let rechargedTides = false;
         if (!tidesOfChaosReady || wasTidesRecharge) {
             tidesOfChaosReady = true;
+            tidesAdvActive = false;
+            rechargedTides = true;
             updateTidesUI();
             tidesMsg = ` <span style="color:#4ade80; font-weight:700;">[🃏 Tides of Chaos Recharged to READY!]</span>`;
         }
@@ -1944,18 +2515,38 @@
 
         lastWildSurgeText = `d100=${d100} (${entry.title})`;
 
-        // Update Live Wild Surge Banner
-        document.getElementById('surge-box-header').innerHTML = `💥 WILD MAGIC SURGE: ${entry.title}`;
-        document.getElementById('surge-box-roll-tag').innerHTML = `🎲 d100 = ${d100} (Table ${entry.range})`;
-        document.getElementById('surge-box-effect').innerHTML = `<strong>Official Effect:</strong> ${entry.effect}${tidesMsg}`;
-        document.getElementById('surge-box-flavor').innerHTML = `🎩 <em>"All Part of the Act!": ${entry.flavor}</em>`;
-
+        // Update Live Wild Surge Banner on Sheet
+        const hEl = document.getElementById('surge-box-header');
+        const tEl = document.getElementById('surge-box-roll-tag');
+        const eEl = document.getElementById('surge-box-effect');
+        const fEl = document.getElementById('surge-box-flavor');
         const actDiv = document.getElementById('surge-box-actions');
-        actDiv.innerHTML = '';
-        if (entry.btnLabel && entry.btnFn) {
-            actDiv.innerHTML = `<button class="btn-roll-action btn-roll-wild" onclick="${entry.btnFn}">${entry.btnLabel}</button>`;
+        if (hEl) hEl.innerHTML = `💥 WILD MAGIC SURGE: ${entry.title}`;
+        if (tEl) tEl.innerHTML = `🎲 d100 = ${d100} (Table ${entry.range})`;
+        if (eEl) eEl.innerHTML = `<strong>Official Effect:</strong> ${entry.effect}${tidesMsg}`;
+        if (fEl) fEl.innerHTML = `🎩 <em>"All Part of the Act!": ${entry.flavor}</em>`;
+        if (actDiv) {
+            actDiv.innerHTML = entry.btnLabel && entry.btnFn
+                ? `<button type="button" class="btn-roll-action btn-roll-wild" onclick="${entry.btnFn}">${entry.btnLabel}</button>`
+                : '';
         }
 
+        if (opts && opts.inTrayOnly) {
+            const prev = activeWildSpellContext || {};
+            activeWildSpellContext = {
+                ...prev,
+                mode: 'surged',
+                sourceLabel,
+                d100,
+                entry,
+                rechargedTides,
+                subResultHtml: ''
+            };
+            renderPiperWildHudTray();
+            return;
+        }
+
+        clearPiperWildHudTray();
         logRoll(`💥 <strong>WILD MAGIC SURGE (${sourceLabel} • d100 = <span style="color:var(--accent-gold); font-size:1.05rem;">${d100}</span> [${entry.range}] — ${entry.title}):</strong> ${entry.effect}${tidesMsg}<br><span style="color:#cbd5e1; font-size:0.8rem;">🎩 <em>${entry.flavor}</em></span>`);
     }
 
@@ -2197,8 +2788,8 @@
                 3: "Lvl 3 (2d8+3d6)"
             },
             buttons: [
-                { label: "Attack (+6)", class: "btn-roll-action rpg-manual-hide", costSlot: false, onClick: (lvl) => rollChaosBoltAttack(lvl) },
-                { label: "Cast Chaos Bolt (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => rollChaosBoltScaled(lvl) }
+                { label: "⚡ Leap / Attack (+6)", class: "btn-roll-action rpg-manual-hide", costSlot: false, onClick: (lvl) => rollChaosBoltAttack(lvl) },
+                { label: "Cast Chaos Bolt (-1 Slot)", class: "btn-roll-action btn-roll-wild", costSlot: true, onClick: (lvl) => castChaosBoltSpell(lvl) }
             ]
         },
         {
@@ -2589,18 +3180,32 @@
     // ==========================================
     // 🎲 SPELL EXECUTION & CHAOS BOLT ENGINE
     // ==========================================
-    function rollChaosBoltAttack(slotLevel) {
+    function castChaosBoltSpell(slotLevel) {
+        const lvl = slotLevel || 1;
+        if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            rollChaosBoltScaled(lvl, false, false);
+            return;
+        }
+        // In Digital Mode, Cast Chaos Bolt rolls the Attack FIRST with 1-click Damage/Crit follow-up while Wild Magic runs smoothly in the companion tray!
+        rollChaosBoltAttack(lvl, { skipTidesTray: true });
+    }
+
+    function rollChaosBoltAttack(slotLevel, opts = {}) {
         const lvl = slotLevel || 1;
         if (window.COS_RPG) {
             COS_RPG.setRollFollowup({
-                label: `Roll Chaos Bolt (2d8+${lvl}d6)`,
-                critLabel: `Roll Brutal Crit Chaos Bolt`,
+                label: `💥 Roll Chaos Bolt (2d8+${lvl}d6)`,
+                critLabel: `🔥 Roll Brutal Crit Chaos Bolt`,
                 attackKind: 'spell',
-                onDamage: () => rollChaosBoltScaled(lvl, false, true),
-                onCrit: () => rollChaosBoltScaled(lvl, true, true)
+                onDamage: () => withWildTrayPreserved(() => rollChaosBoltScaled(lvl, false, true)),
+                onCrit: () => withWildTrayPreserved(() => rollChaosBoltScaled(lvl, true, true))
             });
         }
-        rollD20(`Chaos Bolt (Lvl ${lvl})`, getSpellAttackMod());
+        rollD20(`Chaos Bolt (Lvl ${lvl})`, getSpellAttackMod(), {
+            skipTidesTray: Boolean(opts && opts.skipTidesTray),
+            forceMode: opts && opts.forceMode ? opts.forceMode : undefined,
+            forceTidesLabel: Boolean(opts && opts.forceTidesLabel)
+        });
     }
 
     function rollChaosBoltScaled(slotLevel, forceCrit = false, skipAttackPrompt = false) {
@@ -2608,16 +3213,24 @@
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
             // In Real Dice 1-button flow, Cast Chaos Bolt opens Attack Guide first with Hit/Nat 20 embedded!
             if (!skipAttackPrompt && !forceCrit) {
+                const usedTidesAdv = consumePiperTidesAdv();
+                const effMode = usedTidesAdv ? 'adv' : rollMode;
+                const advReasons = usedTidesAdv ? ['🃏 Tides of Chaos Advantage (Roll 2d20, keep HIGHER)'] : [];
+                const extraCues = (!tidesOfChaosReady || usedTidesAdv)
+                    ? [{ cls: 'is-wild', text: '⚡ Tides of Chaos — Guaranteed Wild Magic Surge (1d100) Included Below!' }]
+                    : [];
                 COS_RPG.logManualD20({
                     label: `Chaos Bolt (Level ${lvl} Slot)`,
                     mod: getSpellAttackMod(),
-                    mode: rollMode,
+                    mode: effMode,
+                    advReasons,
+                    extraCues,
                     attackKind: 'spell',
                     notes: `Ranged Spell Attack (120 ft) • On Hit: 2d8 + ${lvl}d6 Elemental${activeRobe === 'red' ? ' + 1d4+1 Red Robe Fire' : ''}`,
                     suppressPendingFollowup: true,
-                    onHit: () => rollChaosBoltScaled(lvl, false, true),
-                    onCrit: () => rollChaosBoltScaled(lvl, true, true),
-                    onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltAttack(lvl))
+                    onHit: () => withWildTrayPreserved(() => rollChaosBoltScaled(lvl, false, true)),
+                    onCrit: () => withWildTrayPreserved(() => rollChaosBoltScaled(lvl, true, true)),
+                    onDigitalRoll: () => withWildTrayPreserved(() => COS_RPG.runManualDigitalFallback(() => rollChaosBoltAttack(lvl, { skipTidesTray: true, forceMode: effMode, forceTidesLabel: usedTidesAdv })))
                 });
                 return;
             }
@@ -2634,8 +3247,11 @@
                 isCrit: Boolean(forceCrit),
                 allowOnHitAddons: false,
                 htmlNote: `<strong>d8 Element Chart:</strong> 1=Acid • 2=Cold • 3=Fire • 4=Force • 5=Lightning • 6=Poison • 7=Psychic • 8=Thunder.<br><span style="color:#fde68a;">If both d8s match, CHAOS LEAP triggers to a 2nd target within 30 ft.</span>`,
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl, false, true)),
-                onDigitalCritRoll: () => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl, true, true))
+                extraButtons: [
+                    { label: '⚡ Chaos Leap (2nd Target)', onClick: () => withWildTrayPreserved(() => rollChaosBoltScaled(lvl, false, false)) }
+                ],
+                onDigitalRoll: () => withWildTrayPreserved(() => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl, false, true))),
+                onDigitalCritRoll: () => withWildTrayPreserved(() => COS_RPG.runManualDigitalFallback(() => rollChaosBoltScaled(lvl, true, true)))
             });
             return;
         }
@@ -2714,8 +3330,8 @@
                 label: `Roll Fire Bolt Damage (${diceCount}d10${activeRobe === 'red' ? '+1d4+1' : ''})`,
                 critLabel: `Roll Brutal Crit (${diceCount * 10} + ${diceCount}d10 Fire)`,
                 attackKind: 'spell',
-                onDamage: () => rollFireBoltDamage(),
-                onCrit: () => COS_RPG.rollBrutalCrit({ label: 'Fire Bolt', diceCount, sides: 10, flatMod: 0, dmgType: 'Fire', extras })
+                onDamage: () => withWildTrayPreserved(() => rollFireBoltDamage()),
+                onCrit: () => withWildTrayPreserved(() => COS_RPG.rollBrutalCrit({ label: 'Fire Bolt', diceCount, sides: 10, flatMod: 0, dmgType: 'Fire', extras }))
             });
         }
         rollD20(label, getSpellAttackMod());
@@ -2741,8 +3357,8 @@
                 COS_RPG.setRollFollowup({
                     label: `Roll Dagger Damage (1d4+${flatMod})`,
                     critLabel: `Roll Brutal Crit (4 + 1d4+${flatMod})`,
-                    onDamage: () => rollFormulaDamage(label, 4, 2, dType, 1, weaponId),
-                    onCrit: () => COS_RPG.rollBrutalCrit({ label, diceCount: 1, sides: 4, flatMod, dmgType: dType, extras })
+                    onDamage: () => withWildTrayPreserved(() => rollFormulaDamage(label, 4, 2, dType, 1, weaponId)),
+                    onCrit: () => withWildTrayPreserved(() => COS_RPG.rollBrutalCrit({ label, diceCount: 1, sides: 4, flatMod, dmgType: dType, extras }))
                 });
             } else if (weaponId === 'staff') {
                 const hit = window.__piperGearCache?.equippedWeaponTags?.find(w => w.tag === 'staff');
@@ -2753,8 +3369,8 @@
                 COS_RPG.setRollFollowup({
                     label: `Roll Quarterstaff (${is2H ? '2H 1d8' : '1H 1d6'}${flatMod ? '+' + flatMod : ''})`,
                     critLabel: `Roll Brutal Crit (${sides} + 1d${sides}${flatMod ? '+' + flatMod : ''})`,
-                    onDamage: () => rollFormulaDamage(`Quarterstaff (${is2H ? '2H' : '1H'})`, sides, 0, dType, 1, 'staff'),
-                    onCrit: () => COS_RPG.rollBrutalCrit({ label: `Quarterstaff (${is2H ? '2H' : '1H'})`, diceCount: 1, sides, flatMod, dmgType: dType, extras })
+                    onDamage: () => withWildTrayPreserved(() => rollFormulaDamage(`Quarterstaff (${is2H ? '2H' : '1H'})`, sides, 0, dType, 1, 'staff')),
+                    onCrit: () => withWildTrayPreserved(() => COS_RPG.rollBrutalCrit({ label: `Quarterstaff (${is2H ? '2H' : '1H'})`, diceCount: 1, sides, flatMod, dmgType: dType, extras }))
                 });
             }
         }
@@ -2770,7 +3386,7 @@
                 label: `Fire Bolt (${diceCount}d10${activeRobe === 'red' ? ' + 🟥 Red Robe' : ''})`,
                 diceParts: parts,
                 dmgType: 'Fire',
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollFireBoltDamage())
+                onDigitalRoll: () => withWildTrayPreserved(() => COS_RPG.runManualDigitalFallback(() => rollFireBoltDamage()))
             });
             return;
         }
@@ -3773,6 +4389,14 @@
 
     function logRoll(htmlMsg) {
         lastHudShowTime = Date.now();
+        // Clear resolved or non-mandatory Wild Magic companion trays on a brand-new unrelated roll;
+        // preserve during Attack -> Hit -> Damage -> Crit follow-ups and while a leveled spell's Wild Check / Tides Payback is still pending!
+        if (preserveWildTrayDepth === 0 && activeWildSpellContext) {
+            const m = activeWildSpellContext.mode;
+            if (m === 'safe' || m === 'surged' || m === 'tides_attack_manual' || m === 'tides_attack_digital') {
+                clearPiperWildHudTray();
+            }
+        }
         const res = document.getElementById('roll-res');
         if (res) {
             res.innerHTML = htmlMsg;
@@ -3801,6 +4425,7 @@
     function dismissFloatingHud() {
         const hud = document.getElementById('floating-roll-hud');
         if (hud) hud.classList.remove('visible');
+        clearPiperWildHudTray();
     }
 
     // Dismiss Floating Bottom HUD Drawer when clicking/tapping anywhere outside it
@@ -3862,33 +4487,52 @@
         const modInput = parseInt(document.getElementById('dice-mod')?.value) || 0;
         const totalMod = mod + modInput;
         const modStr = totalMod >= 0 ? `+${totalMod}` : `${totalMod}`;
+        const usedTidesAdv = Boolean((opts && opts.forceTidesLabel) || consumePiperTidesAdv());
+        const effectiveMode = (opts && opts.forceMode) ? opts.forceMode : (usedTidesAdv ? 'adv' : rollMode);
 
         if (window.COS_RPG && COS_RPG.isManualDiceMode && COS_RPG.isManualDiceMode()) {
+            const advReasons = [...((opts && opts.advReasons) || [])];
+            const extraCues = [...((opts && opts.extraCues) || [])];
+            if (usedTidesAdv) {
+                advReasons.unshift('🃏 Tides of Chaos Advantage (Roll 2d20, keep HIGHER)');
+                if (!(opts && opts.skipTidesTray)) {
+                    extraCues.push({ cls: 'is-wild', text: '⚡ Tides of Chaos — Wild Magic Surge (1d100) Included Below!' });
+                }
+            }
             COS_RPG.logManualD20({
                 label,
                 mod: totalMod,
-                mode: rollMode,
+                mode: effectiveMode,
                 isInitiative: Boolean(opts && opts.isInitiative),
-                advReasons: (opts && opts.advReasons) || [],
+                advReasons,
+                extraCues,
                 notes: (opts && opts.notes) || '',
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollD20(label, mod, opts))
+                onDigitalRoll: () => withWildTrayPreserved(() => COS_RPG.runManualDigitalFallback(() => rollD20(label, mod, { ...opts, skipTidesTray: true, forceMode: effectiveMode, forceTidesLabel: usedTidesAdv })))
             });
+            if (usedTidesAdv && !(opts && opts.skipTidesTray)) {
+                openTidesAttackTray(label, true);
+            }
             return null;
         }
 
         let chosen = 0;
-        if (rollMode !== 'norm') {
+        if (effectiveMode !== 'norm') {
             const r1 = Math.floor(Math.random() * 20) + 1;
             const r2 = Math.floor(Math.random() * 20) + 1;
-            chosen = (rollMode === 'adv') ? Math.max(r1, r2) : Math.min(r1, r2);
+            chosen = (effectiveMode === 'adv') ? Math.max(r1, r2) : Math.min(r1, r2);
             const total = chosen + totalMod;
-            const modeLabel = rollMode === 'adv' ? 'Advantage' : 'Disadvantage';
+            const modeLabel = effectiveMode === 'adv'
+                ? (usedTidesAdv ? 'Advantage • 🃏 Tides of Chaos' : 'Advantage')
+                : 'Disadvantage';
             let msg = `🎯 <strong>${label}:</strong> [${r1}, ${r2}] ➔ d20(${chosen}) ${modStr} = <span style="font-size:1.05rem; color:var(--accent-gold); font-weight:700;">${total}</span> <small style="color:var(--text-muted);">(${modeLabel})</small>`;
             if (chosen === 20) msg += " 🔥 <span style='color:#facc15; font-weight:700;'>NAT 20 BRUTAL CRIT! (Max Die + Rolled Die + Mod)</span>";
             if (chosen === 1) msg += " 💀 <span style='color:#ef4444; font-weight:700;'>NAT 1!</span>";
             logRoll(msg);
             if (opts && opts.isInitiative && window.COS_RPG && COS_RPG.publishInitiativeRoll) {
                 COS_RPG.publishInitiativeRoll(total, 'digital');
+            }
+            if (usedTidesAdv && !(opts && opts.skipTidesTray)) {
+                openTidesAttackTray(label, false);
             }
             return total;
         }
@@ -3975,7 +4619,7 @@
                 flatMod: flatBonus,
                 dmgType: finalType,
                 notes: (wMods.saveNotes && wMods.saveNotes.length) ? wMods.saveNotes.join(' • ') : '',
-                onDigitalRoll: () => COS_RPG.runManualDigitalFallback(() => rollFormulaDamage(label, sides, bonus, type, diceCount, weaponId))
+                onDigitalRoll: () => withWildTrayPreserved(() => COS_RPG.runManualDigitalFallback(() => rollFormulaDamage(label, sides, bonus, type, diceCount, weaponId)))
             });
             return;
         }
