@@ -9150,9 +9150,85 @@
         return rtdb.ref(`campaigns/${room}/${subPath}`);
     }
 
+    const HERO_CLIENT_ID = 'tab_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 10);
+    let cloudBootHydrated = false;
+    let isApplyingRemoteHeroState = false;
+    let lastAppliedCloudTs = 0;
+    let unsubHeroStateRef = null;
+    let unsubHeroStateHandler = null;
     let heroSyncTimer = null;
     let lastSyncedFingerprint = '';
     let isCapturingExports = false;
+
+    function getLocalUpdatedAtKey() {
+        return `cos_local_updated_at_${adapter ? adapter.heroId : 'hero'}_v1`;
+    }
+
+    function getLocalUpdatedAt() {
+        try {
+            const raw = localStorage.getItem(getLocalUpdatedAtKey());
+            const n = Number(raw || 0);
+            return (Number.isFinite(n) && n > 0) ? n : 0;
+        } catch (e) {
+            return 0;
+        }
+    }
+
+    function setLocalUpdatedAt(ts) {
+        const n = Number(ts || 0);
+        if (!Number.isFinite(n) || n <= 0) return;
+        try {
+            localStorage.setItem(getLocalUpdatedAtKey(), String(n));
+        } catch (e) {}
+    }
+
+    function normalizeFpValue(v) {
+        if (v === undefined || v === null) return null;
+        if (Array.isArray(v)) {
+            const arr = v.map(normalizeFpValue).filter(x => x !== null);
+            return arr.length > 0 ? arr : null;
+        }
+        if (typeof v === 'object') {
+            const out = {};
+            const keys = Object.keys(v).sort();
+            for (let i = 0; i < keys.length; i++) {
+                const k = keys[i];
+                const nv = normalizeFpValue(v[k]);
+                if (nv !== null) out[k] = nv;
+            }
+            return Object.keys(out).length > 0 ? out : null;
+        }
+        return v;
+    }
+
+    function computeHeroSyncFingerprint(snap) {
+        if (!snap || typeof snap !== 'object') return '';
+        return JSON.stringify(normalizeFpValue({
+            hp: snap.hpDisplay || '',
+            ac: snap.acDisplay || '',
+            gp: Number(snap.gp || 0),
+            sp: Number(snap.sp || 0),
+            pr: snap.preset || '',
+            eq: snap.equippedSlots,
+            em: snap.equippedMap,
+            cg: snap.customGearMap,
+            up: snap.rawUnifiedPresets,
+            it: snap.items,
+            nt: snap.notes,
+            ss: snap.sheetState,
+            wa: snap.weaponAmmo,
+            am: snap.ammoState,
+            wm: snap.weaponMods,
+            wc: snap.weaponCoatings,
+            aw: snap.awakenedWeapons,
+            ov: Boolean(snap.dmOverrideActive),
+            cn: snap.concentration || null,
+            st: snap.conditions,
+            ds: snap.deathSaves,
+            ri: snap.rolledInit ? snap.rolledInit.rolledAt : 0,
+            rs: snap.resourcesSummary || ''
+        }));
+    }
 
     function captureNativeExportStrings() {
         let sheetStr = '', notesStr = '';
@@ -9259,40 +9335,26 @@
             resourcesSummary: resSummary,
             sheetExportStr: sheetStr,
             notesExportStr: notesStr,
+            clientId: HERO_CLIENT_ID,
             updatedAt: Date.now()
         };
     }
 
     function syncHeroStateToFirebase(forceNow = false) {
-        if (!firebaseReady || !rtdb || !adapter) return;
+        if (!firebaseReady || !rtdb || !adapter || !cloudBootHydrated || isApplyingRemoteHeroState) return;
         if (heroSyncTimer) clearTimeout(heroSyncTimer);
         heroSyncTimer = setTimeout(() => {
+            heroSyncTimer = null;
+            if (!firebaseReady || !rtdb || !adapter || !cloudBootHydrated || isApplyingRemoteHeroState) return;
             try {
                 const snap = buildHeroSnapshot();
-                const fp = JSON.stringify({
-                    hp: snap.hpDisplay,
-                    ac: snap.acDisplay,
-                    gp: snap.gp,
-                    sp: snap.sp,
-                    pr: snap.preset,
-                    eq: snap.equippedSlots,
-                    em: snap.equippedMap,
-                    it: snap.items,
-                    nt: snap.notes,
-                    ss: snap.sheetState,
-                    am: snap.ammoState,
-                    wm: snap.weaponMods,
-                    wc: snap.weaponCoatings,
-                    aw: snap.awakenedWeapons,
-                    ov: snap.dmOverrideActive,
-                    cn: snap.concentration,
-                    st: snap.conditions,
-                    ds: snap.deathSaves,
-                    ri: snap.rolledInit ? snap.rolledInit.rolledAt : 0,
-                    rs: snap.resourcesSummary
-                });
+                const fp = computeHeroSyncFingerprint(snap);
                 if (!forceNow && fp === lastSyncedFingerprint) return;
+                const writeTs = Math.max(Date.now(), lastAppliedCloudTs + 1, getLocalUpdatedAt() + 1);
+                snap.updatedAt = writeTs;
                 lastSyncedFingerprint = fp;
+                lastAppliedCloudTs = Math.max(lastAppliedCloudTs, writeTs);
+                setLocalUpdatedAt(writeTs);
                 campaignRtdbRef(`heroes/${adapter.heroId}/state`).set(snap).catch(() => {});
             } catch (e) {}
         }, forceNow ? 20 : 140);
@@ -9301,11 +9363,13 @@
     function pushSyncedCheckpoint(silentToast = false, opts = {}) {
         if (!adapter) return;
         const snap = buildHeroSnapshot();
+        const writeTs = Math.max(Date.now(), lastAppliedCloudTs + 1, getLocalUpdatedAt() + 1);
+        snap.updatedAt = writeTs;
         const now = new Date();
         const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
         const checkpointPayload = {
             ...snap,
-            syncedAt: Date.now(),
+            syncedAt: writeTs,
             syncedTimeStr: timeStr,
             syncedBy: (opts && opts.syncedBy) ? String(opts.syncedBy) : 'Player',
             reqTs: (opts && opts.reqTs) ? Number(opts.reqTs) : null
@@ -9315,6 +9379,9 @@
         } catch (e) {}
 
         if (firebaseReady && rtdb) {
+            lastSyncedFingerprint = computeHeroSyncFingerprint(snap);
+            lastAppliedCloudTs = Math.max(lastAppliedCloudTs, writeTs);
+            setLocalUpdatedAt(writeTs);
             campaignRtdbRef(`heroes/${adapter.heroId}/state`).set(snap).catch(() => {});
             campaignRtdbRef(`heroes/${adapter.heroId}/synced_checkpoint`).set(checkpointPayload).then(() => {
                 const btn = document.getElementById('rpg-hdr-sync-btn');
@@ -9527,11 +9594,11 @@
         // 4. Discreet Multi-Recipient Messages Listener (ONLY loads threads where this hero is a participant!)
         startMessagesListener();
 
-        // 5. Live Party Mini-HUD Listener (Reads ONLY piper, jacomir, yvaine states — never _dm_state)
+        // 5. Live Party Mini-HUD Listener (Reads ONLY piper, jacomir, yvaine, cael states — never _dm_state)
         campaignRtdbRef('heroes').on('value', snap => {
             const val = snap.val() || {};
             const nextParty = {};
-            ['jacomir', 'piper', 'yvaine'].forEach(hid => {
+            ['jacomir', 'piper', 'yvaine', 'cael'].forEach(hid => {
                 if (val[hid] && val[hid].state) nextParty[hid] = val[hid].state;
             });
             livePartyMap = nextParty;
@@ -10508,8 +10575,12 @@
         }
     }
 
-    function applyRestoredCheckpoint(cp) {
+    function applyRestoredCheckpoint(cp, opts = {}) {
         if (!cp || !adapter) return;
+        const isRemoteSync = Boolean(opts && opts.fromRemoteSync);
+        const isSilent = Boolean(opts && opts.silent);
+        const prevApplyingRemote = isApplyingRemoteHeroState;
+        if (isRemoteSync) isApplyingRemoteHeroState = true;
         try {
             // 1. Restore Backpack Items first so equipped slots resolve against restored inventory
             if (Array.isArray(cp.items)) {
@@ -10567,20 +10638,31 @@
             } else {
                 saveAwakenedWeaponsMap({});
             }
+            if (cp.rolledInit && typeof cp.rolledInit === 'object' && typeof cp.rolledInit.total === 'number') {
+                latestRolledInit = { ...cp.rolledInit };
+            } else if (cp.rolledInit === null) {
+                latestRolledInit = null;
+            }
 
-            // 5. Restore HUD State (Concentration, Statuses, Death Saves) & fresh Turn Pips
+            // 5. Restore HUD State (Concentration, Statuses, Death Saves) while preserving strictly device-local UI prefs
+            // (NEVER overwrite cos_sheet_view_mode_v1, cos_sheet_tablet_orient_v1, cos_sheet_theme_v1, cos_dice_mode_<heroId>_v1, or rightTab/mobileTab!)
             hudState = {
                 conc: (typeof cp.concentration === 'string' && cp.concentration.trim()) ? cp.concentration.trim() : null,
                 statuses: Array.isArray(cp.conditions) ? cp.conditions.filter(id => STATUS_CATALOG.some(s => s.id === id)) : [],
                 deathSaves: (cp.deathSaves && typeof cp.deathSaves === 'object')
                     ? { succ: Math.max(0, Math.min(3, parseInt(cp.deathSaves.succ) || 0)), fail: Math.max(0, Math.min(3, parseInt(cp.deathSaves.fail) || 0)) }
                     : { succ: 0, fail: 0 },
-                turn: { action: true, bonus: true, reaction: true, move: true },
-                advLocked: false,
+                turn: (isRemoteSync && hudState.turn)
+                    ? { ...hudState.turn }
+                    : { action: true, bonus: true, reaction: true, move: true },
+                advLocked: isRemoteSync ? Boolean(hudState.advLocked) : false,
                 rightTab: hudState.rightTab || 'combat',
+                mobileTab: hudState.mobileTab || 'combat',
                 tabPrefV3: true,
                 skillsTrainedOnly: Boolean(hudState.skillsTrainedOnly),
-                showPartyHud: typeof cp.showPartyHud === 'boolean' ? cp.showPartyHud : Boolean(hudState.showPartyHud)
+                showPartyHud: isRemoteSync
+                    ? Boolean(hudState.showPartyHud)
+                    : (typeof cp.showPartyHud === 'boolean' ? cp.showPartyHud : Boolean(hudState.showPartyHud))
             };
             saveHudState();
             syncPartyHudVisibility();
@@ -10599,23 +10681,38 @@
                 adapter.restoreSheetState(statePayload);
             }
 
-            // 7. Refresh all UI panels and sync LIVE state ONLY (never overwrite synced_checkpoint!)
+            // 7. Refresh all UI panels (never overwrite synced_checkpoint, and never echo-write on remote sync!)
             lastAppliedPresetId = null;
             presetEditor = null;
             applyEquipmentToSheet(true);
             renderStatusStrip();
             renderActionEconomyBar();
-            renderDeathSavesBox(parseCurrentVitalsFromDom().cur);
+            const vitalsAfter = parseCurrentVitalsFromDom();
+            prevTrackedHp = { cur: vitalsAfter.cur, max: vitalsAfter.max, temp: vitalsAfter.temp };
+            renderDeathSavesBox(vitalsAfter.cur);
             renderPartyMiniHud();
             syncCombatActionLocks();
-            syncHeroStateToFirebase(true);
 
-            const whenTxt = cp.syncedTimeStr
-                ? cp.syncedTimeStr
-                : (cp.syncedAt ? new Date(cp.syncedAt).toLocaleString() : 'Last Saved');
-            adapter.log(`🔄 <strong>Restored to Last ☁️ Sync to DM Checkpoint (${esc(whenTxt)})!</strong> All unsaved changes since your last sync have been undone.`);
+            if (isRemoteSync) {
+                const remoteTs = Number(cp.updatedAt || cp.syncedAt || 0);
+                if (remoteTs > 0) {
+                    lastAppliedCloudTs = Math.max(lastAppliedCloudTs, remoteTs);
+                    setLocalUpdatedAt(remoteTs);
+                }
+                lastSyncedFingerprint = computeHeroSyncFingerprint(buildHeroSnapshot());
+            } else {
+                syncHeroStateToFirebase(true);
+                if (!isSilent) {
+                    const whenTxt = cp.syncedTimeStr
+                        ? cp.syncedTimeStr
+                        : (cp.syncedAt ? new Date(cp.syncedAt).toLocaleString() : 'Last Saved');
+                    adapter.log(`🔄 <strong>Restored to Last ☁️ Sync to DM Checkpoint (${esc(whenTxt)})!</strong> All unsaved changes since your last sync have been undone.`);
+                }
+            }
         } catch (e) {
             console.warn('[COS_RPG] Checkpoint restore error:', e);
+        } finally {
+            if (isRemoteSync) isApplyingRemoteHeroState = prevApplyingRemote;
         }
     }
 
@@ -10644,8 +10741,11 @@
                 turn: { action: true, bonus: true, reaction: true, move: true },
                 advLocked: false,
                 rightTab: 'all',
+                mobileTab: 'combat',
+                tabPrefV3: true,
                 skillsTrainedOnly: false
             };
+            cloudBootHydrated = true;
             renderStatusStrip();
             renderActionEconomyBar();
             setRightColumnTab('all');
@@ -10750,6 +10850,89 @@
         }
     }
 
+    function bootAndWatchHeroStateSync() {
+        if (!firebaseReady || !rtdb || !adapter) return;
+        if (unsubHeroStateRef && unsubHeroStateHandler) {
+            try { unsubHeroStateRef.off('value', unsubHeroStateHandler); } catch (e) {}
+            unsubHeroStateRef = null;
+            unsubHeroStateHandler = null;
+        }
+        if (heroSyncTimer) {
+            clearTimeout(heroSyncTimer);
+            heroSyncTimer = null;
+        }
+        cloudBootHydrated = false;
+
+        const stateRef = campaignRtdbRef(`heroes/${adapter.heroId}/state`);
+        const bakedTs = Number(adapter.baselineTimestamp || 0);
+
+        const attachLiveHeroStateListener = () => {
+            const handler = (snap) => {
+                try {
+                    const val = (snap && typeof snap.val === 'function') ? snap.val() : null;
+                    if (!val || typeof val !== 'object') return;
+                    if (val.clientId && val.clientId === HERO_CLIENT_ID) return;
+                    if (isApplyingRemoteHeroState) return;
+                    const remoteTs = Number(val.updatedAt || 0);
+                    if (!remoteTs || remoteTs <= lastAppliedCloudTs) return;
+                    if (bakedTs > 0 && remoteTs < bakedTs) return;
+
+                    applyRestoredCheckpoint(val, { silent: true, fromRemoteSync: true });
+                    lastAppliedCloudTs = Math.max(lastAppliedCloudTs, remoteTs);
+                    setLocalUpdatedAt(remoteTs);
+                    lastSyncedFingerprint = computeHeroSyncFingerprint(buildHeroSnapshot());
+
+                    if (adapter && typeof adapter.log === 'function') {
+                        adapter.log(`🔄 <span style="color:var(--accent-blue, #38bdf8); font-weight:700;">Synced live from your other device</span>`);
+                    }
+                    announceStatus('Synced live from your other device.');
+                } catch (err) {
+                    console.warn('[COS_RPG] Live cross-device sync error:', err);
+                }
+            };
+            stateRef.on('value', handler, err => console.warn('[COS_RPG] Hero state listener error:', err));
+            unsubHeroStateRef = stateRef;
+            unsubHeroStateHandler = handler;
+        };
+
+        stateRef.once('value').then((snap) => {
+            try {
+                const cloudState = (snap && typeof snap.val === 'function') ? snap.val() : null;
+                const localTs = getLocalUpdatedAt();
+                const cloudTs = (cloudState && typeof cloudState === 'object') ? Number(cloudState.updatedAt || 0) : 0;
+
+                if (cloudState && typeof cloudState === 'object' && cloudTs > localTs && cloudTs >= bakedTs) {
+                    applyRestoredCheckpoint(cloudState, { silent: true, fromRemoteSync: true });
+                    lastAppliedCloudTs = Math.max(lastAppliedCloudTs, cloudTs);
+                    setLocalUpdatedAt(cloudTs);
+                    lastSyncedFingerprint = computeHeroSyncFingerprint(buildHeroSnapshot());
+                    cloudBootHydrated = true;
+                } else {
+                    if (cloudTs > 0 && cloudTs >= bakedTs) {
+                        lastAppliedCloudTs = Math.max(lastAppliedCloudTs, cloudTs);
+                    }
+                    cloudBootHydrated = true;
+                    const curSnap = buildHeroSnapshot();
+                    const curFp = computeHeroSyncFingerprint(curSnap);
+                    const cloudFp = (cloudState && typeof cloudState === 'object') ? computeHeroSyncFingerprint(cloudState) : '';
+                    if (cloudState && cloudTs >= bakedTs && localTs === cloudTs && curFp === cloudFp) {
+                        lastSyncedFingerprint = curFp;
+                    } else {
+                        syncHeroStateToFirebase(true);
+                    }
+                }
+            } catch (err) {
+                console.warn('[COS_RPG] Cloud boot hydration error:', err);
+                cloudBootHydrated = true;
+            }
+            attachLiveHeroStateListener();
+        }).catch((err) => {
+            console.warn('[COS_RPG] Cloud boot read failed, continuing with local state:', err);
+            cloudBootHydrated = true;
+            attachLiveHeroStateListener();
+        });
+    }
+
     function startTransferListeners() {
         if (!firebaseReady || !adapter) return;
         if (unsubRtdbRef && unsubRtdbHandler) {
@@ -10804,7 +10987,7 @@
             unsubRtdbRef = ref;
             unsubRtdbHandler = handler;
             startCloudVaultAndCommandListeners();
-            syncHeroStateToFirebase();
+            bootAndWatchHeroStateSync();
             return;
         }
 
@@ -13487,7 +13670,8 @@
         const roster = [
             { id: 'jacomir', name: 'Jacomir', defCur: 23, defMax: 31, defAc: '17' },
             { id: 'piper',   name: 'Piper',   defCur: 17, defMax: 17, defAc: '13' },
-            { id: 'yvaine',  name: 'Yvaine',  defCur: 28, defMax: 28, defAc: '16' }
+            { id: 'yvaine',  name: 'Yvaine',  defCur: 28, defMax: 28, defAc: '16' },
+            { id: 'cael',    name: 'Cael',    defCur: 24, defMax: 24, defAc: '14' }
         ].filter(r => r.id !== adapter.heroId);
         const chipsHtml = roster.map(r => {
             const remote = livePartyMap[r.id] || null;
@@ -14354,7 +14538,7 @@
         const clrBtn = document.getElementById('btn-clear-temp');
         if (clrBtn) clrBtn.style.display = v.temp > 0 ? 'inline-flex' : 'none';
 
-        if (prevTrackedHp) {
+        if (prevTrackedHp && !isApplyingRemoteHeroState) {
             const prevTot = prevTrackedHp.cur + prevTrackedHp.temp;
             const nextTot = v.cur + v.temp;
             const diff = nextTot - prevTot;
@@ -16353,7 +16537,7 @@
             window.updateHPUI = function () {
                 window.__origUpdateHPUI();
                 handleHpUpdateEffects();
-                if (!isCapturingExports) syncHeroStateToFirebase(true);
+                if (!isCapturingExports && !isApplyingRemoteHeroState) syncHeroStateToFirebase(true);
             };
         }
         // Wrap logRoll to append 1-click Damage / Brutal Crit follow-up & Auto-Concentration Check banners cleanly!
@@ -16520,13 +16704,13 @@
                 }
             }
             lastAllowedTurnSpend = null;
-            if (!isCapturingExports) syncHeroStateToFirebase(false);
+            if (!isCapturingExports && !isApplyingRemoteHeroState) syncHeroStateToFirebase(false);
         });
         document.addEventListener('change', () => {
-            if (!isCapturingExports) syncHeroStateToFirebase(false);
+            if (!isCapturingExports && !isApplyingRemoteHeroState) syncHeroStateToFirebase(false);
         });
         setInterval(() => {
-            if (!isCapturingExports) syncHeroStateToFirebase(false);
+            if (!isCapturingExports && !isApplyingRemoteHeroState) syncHeroStateToFirebase(false);
         }, 2500);
     }
 
@@ -17725,6 +17909,10 @@
         rollDynamicWeaponAttack,
         rollDynamicWeaponDamage,
         syncHeroStateToFirebase,
+        applyRestoredCheckpoint,
+        getClientId: () => HERO_CLIENT_ID,
+        isCloudBootHydrated: () => cloudBootHydrated,
+        getLivePartyMap: () => ({ ...livePartyMap }),
         equipItemToSlot,
         unequipSlot,
         toggleMainHandGrip,
